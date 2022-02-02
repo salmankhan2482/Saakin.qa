@@ -1,0 +1,79 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+<style>
+    body {
+        font-size: 14px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+</style>
+
+<body>
+
+    <table border="0" cellpadding="0" cellspacing="0" width="60%"
+        style="margin:0 auto;border:1px solid rgba(0, 0, 0, 0.2);padding:20px;">
+        <tr style="border:0">
+            <td style="text-align:center">
+                <a href="www.saakin.com" target="_blank">
+                    <img src="{{ URL::asset('assets/images/black_logo.png') }}" alt="Page Logo"
+                        style="width: 150px;height: 150px;"></a>
+            </td>
+        </tr>
+        <tr style="border:0">
+            <td>
+                Hello Saakin,
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 20px 20px 30px 20px;line-height:22px;">
+                We have Recieved the Details
+                <br><br>
+
+                <b>Name:</b> {{ $name }}<br>
+                <b>Email:</b> {{ $email }}<br>
+                <b>Phone:</b> {{ $phone }}<br>
+                <b>Subject:</b> {{ $subject }}<br>
+                <b>Message:</b> {{ $your_message }}<br><br>
+
+                Thanks!
+                <br />
+                <div>
+                    <a href="www.saakin.com">Saakin Inc.</a> 
+                    | 
+                    
+                    <a class="link-hov style2"
+                        href="https://www.saakin.com/properties?property_type=1&property_purpose=Rent&keyword=qatar">
+                        Apartments for rent in Qatar
+                    </a>
+                    | 
+                    <a class="link-hov style2"
+                        href="https://www.saakin.com/properties?property_type=1&property_purpose=Sale&keyword=qatar">
+                        Apartments for sale in Qatar
+                    </a>
+                    | 
+                    <a class="link-hov style2" href="https://www.saakin.com/buy/properties-for-sale">
+                        Real Estate Investment in Qatar
+                    </a>
+                    | 
+                    <a class="link-hov style2" href="https://www.saakin.com/city-guide">
+                        Doha City Guide
+                    </a>
+                    |
+                    <a class="link-hov style2" href="https://www.saakin.com/blogs">
+                        Qatar Blogs
+                    </a>
+                </div>
+
+
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

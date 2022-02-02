@@ -1,0 +1,32 @@
+image: php:7.4.7
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: production
+          deployment: production
+          caches:
+            - composer
+          script:
+            - apt-get update && apt-get install -y unzip
+            - apt-get install -y openssh-client
+            - cd /var/www/html
+            - git pull
+        #    - composer install
+            #- php artisan optimize:clear
+            - exit 0
+           # - ssh -t -t root@saakin.com 'bash -s' < execute.sh
+    # development:
+    #   - step:
+    #       name: development
+    #       caches:
+    #         - composer
+    #         script:
+    #         - apt-get update && apt-get install -qy git curl libmcrypt-dev mysql-client
+    #         - yes | pecl install mcrypt-1.0.1
+    #         - apt-get install -y openssh-client
+    #         - docker-php-ext-install pdo_mysql
+    #         - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    #         - composer install
+    #         - ssh git@bitbucket.org:sheensol/saakin.git 'bash -s' < execute_dev.sh

@@ -1,0 +1,449 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+use App\PropertyAmenity;
+use App\PropertyGallery;
+use App\PropertyNeighborhood;
+use App\Types;
+use App\User;
+use App\Properties;
+use App\Agency;
+use App\Http;
+
+
+use App\XmlRecord;
+use Geocoder\Geocoder;
+use http\Client;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
+use SimpleXMLElement;
+use App\Http\Requests;
+use App\LandingPage;
+use Illuminate\Support\Facades\DB;
+use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Str;
+use Orchestra\Parser\Xml\Facade as XmlParser;
+
+class AgenciesController extends Controller
+{
+    public function __construct()
+    {
+    }
+
+    public function UR_exists($filename){
+
+        dd("file_headers");
+        $file_headers = @get_headers($filename);
+        if($file_headers[0] == 'HTTP/1.0 404 Not Found'){
+            echo "The file $filename does not exist";
+        } else if ($file_headers[0] == 'HTTP/1.0 302 Found' && $file_headers[7] == 'HTTP/1.0 404 Not Found'){
+            echo "The file $filename does not exist, and I got redirected to a custom 404 page..";
+        } else {
+            echo "The file $filename exists";
+        }
+    }
+
+    public function index(Request $request)
+    {
+        if($request->get('sortSelect') == 'sortByName'){
+            $agencies = Agency::where('status', 1)->orderBy('name', 'asc')->paginate(12);
+        }else{
+       
+        $agencies =  DB::table('agencies')
+            ->leftJoin('properties', 'agencies.id', 'properties.agency_id')
+            ->select('agencies.*', DB::Raw( 'COUNT(properties.agency_id) as pcount' ))
+            ->groupBy('agencies.name')
+            ->orderBy('pcount', 'DESC')
+            ->paginate(12);
+            
+        }
+
+        $landing_page_content= LandingPage::find('55');
+        $page_des = strip_tags($landing_page_content->page_content);
+        $page_des = Str::limit($page_des, 170, '...');
+
+        return view('front.pages.agencies', compact('agencies','landing_page_content','page_des'));
+    }
+
+    public function agencyDetail($name, $id)
+    {
+
+        $agency = Agency::find($id);
+        $user = User::where("agency_id",$agency->id)->where("usertype","Agency")->first();
+        if(request()->ajax())
+            {
+                $properties = Properties::where('status', '1')
+                ->where('agency_id', $id)
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+                return view('front.pages.agency.list', compact('properties'))->render();
+
+            }else{
+                $properties = Properties::where('status', '1')
+                ->where('agency_id', $id)
+                ->orderBy('id', 'desc')
+                ->paginate(10, ['*'], 'properties');
+            }
+        
+
+        $saleProperties = Properties::where('status', '1')
+            ->where('agency_id', $id)
+            ->where('property_purpose', 'Sale')
+            ->orderBy('id', 'desc')
+            ->paginate(10, ['*'], 'saleProperties');
+
+        $rentProperties = Properties::where('status', '1')
+            ->where('agency_id', $id)
+            ->where('property_purpose', 'Rent')
+            ->orderBy('id', 'desc')
+            ->paginate(10, ['*'], 'rentProperties');
+
+
+        $propertyTypes = DB::select("SELECT property_types.id, COUNT(properties.id) AS property_count, property_types.types as property_type FROM properties JOIN property_types ON (properties.property_type=property_types.id) WHERE properties.status='1' AND agency_id='".$agency->id."' GROUP BY property_types.id ORDER BY property_count DESC");
+
+        $agency_des = strip_tags($agency->agency_detail);
+        $agency_des = Str::limit($agency_des, 170, '...');
+
+        return view('front.pages.agency', compact('agency', 'properties', 'saleProperties', 'rentProperties', 'propertyTypes','user','agency_des'));
+    }
+
+    public function searchAgencies(Request $request)
+    {
+
+        $inputs = $request->all();
+
+        $keyword = $inputs['keyword'];
+
+        //$properties = Properties::where('status',1)->SearchByKeyword($keyword)->get();
+        /*$properties = Properties::where('status',1)->where('city',$city)->
+        where(function ($query) use ($keyword) {
+            $query->where('property_name', 'like', '%'.$keyword.'%')
+                ->orWhere('description', 'like', '%'.$keyword.'%');
+        })->get();*/
+
+        $agencies = Agency::where('status', 1)->
+        where(function ($query) use ($keyword) {
+            $query->where('name', 'like', '%' . $keyword . '%')
+                ->orWhere('agency_detail', 'like', '%' . $keyword . '%');
+        })->get();
+
+
+        return view('front.pages.agencies', compact('agencies'));
+    }
+
+    public function agency_email(Request $request)
+    {
+
+        $data =  \Request::except(array('_token'));
+
+        $inputs = $request->all();
+
+        $rule = array(
+            'name' => 'required',
+            'email' => 'required',
+            'message' => 'required'
+        );
+
+        $validator = \Validator::make($data, $rule);
+
+        if ($validator->fails()) {
+            \Session::flash('flash_message_agent', 'name,email and message field are required');
+            return redirect()->back()->withErrors($validator->messages());
+        }
+
+        $enquire = new Enquire;
+
+        $enquire->property_id = $inputs['property_id'];
+        $enquire->agent_id = $inputs['agent_id'];
+        $enquire->name = $inputs['name'];
+        $enquire->email = $inputs['email'];
+        $enquire->phone = $inputs['phone'];
+        $enquire->message = $inputs['message'];
+
+
+        $enquire->save();
+
+        \Session::flash('flash_message_agent', 'Message send successfully');
+
+        return \Redirect::back();
+    }
+    public function partition( $list, $p ) {
+        $listlen = count( $list );
+        $partlen = floor( $listlen / $p );
+        $partrem = $listlen % $p;
+        $partition = array();
+        $mark = 0;
+        for ($px = 0; $px < $p; $px++) {
+            $incr = ($px < $partrem) ? $partlen + 1 : $partlen;
+            $partition[$px] = array_slice( $list, $mark, $incr );
+            $mark += $incr;
+        }
+        return $partition;
+    }
+
+    public function getProperties(Request $request)
+    {
+        $user_id = $request->user;
+
+        $property_type = $request->property_type;
+        $agency_id = $request->agency_id;
+//        $accesscode = $request->access_code;
+//        $groupcode = $request->group_code;
+        $accesscode = '3A28C51415';
+        $groupcode = 1575;
+
+        $response = "";
+        if ($property_type == "RentListings") {
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "http://api.gomasterkey.com/v1.2/website.asmx",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <RentListings xmlns=\"http://api.gomasterkey.com/\">\r\n      <AccessCode>$accesscode</AccessCode>\r\n      <GroupCode>$groupcode</GroupCode>\r\n      <PropertyType></PropertyType>\r\n      <Bedrooms></Bedrooms>\r\n      <StartPriceRange></StartPriceRange>\r\n      <EndPriceRange></EndPriceRange>\r\n      <categoryID></categoryID>\r\n      <CountryID></CountryID>\r\n      <StateID></StateID>\r\n      <CommunityID></CommunityID>\r\n      <FloorAreaMin></FloorAreaMin>\r\n      <FloorAreaMax></FloorAreaMax>\r\n      <UnitCategory></UnitCategory>\r\n      <UnitID></UnitID>\r\n      <BedroomsMax></BedroomsMax>\r\n      <PropertyID></PropertyID>\r\n      <ReadyNow></ReadyNow>\r\n      <PageIndex>1</PageIndex>\r\n    </RentListings>\r\n  </soap:Body>\r\n</soap:Envelope>",
+                CURLOPT_HTTPHEADER => array(
+                    "Content-Type: text/xml"
+                ),
+            ));
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+        } elseif ($property_type == "SalesListings") {
+
+
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "http://api.gomasterkey.com/v1.2/website.asmx",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\r\n  <soap:Body>\r\n    <SalesListings xmlns=\"http://api.gomasterkey.com/\">\r\n      <AccessCode>$accesscode</AccessCode>\r\n      <GroupCode>$groupcode</GroupCode>\r\n      <PropertyType></PropertyType>\r\n      <Bedrooms></Bedrooms>\r\n      <StartPriceRange></StartPriceRange>\r\n      <EndPriceRange></EndPriceRange>\r\n      <categoryID></categoryID>\r\n      <CountryID></CountryID>\r\n      <StateID></StateID>\r\n      <CommunityID></CommunityID>\r\n      <FloorAreaMin></FloorAreaMin>\r\n      <FloorAreaMax></FloorAreaMax>\r\n      <UnitCategory></UnitCategory>\r\n      <UnitID></UnitID>\r\n      <BedroomsMax></BedroomsMax>\r\n      <PropertyID></PropertyID>\r\n      <ReadyNow></ReadyNow>\r\n      <PageIndex></PageIndex>\r\n    </SalesListings>\r\n  </soap:Body>\r\n</soap:Envelope>",
+                CURLOPT_HTTPHEADER => array(
+                    "Content-Type: text/xml"
+                ),
+            ));
+
+            $response = curl_exec($curl);
+            curl_close($curl);
+
+
+        }
+        $string = str_replace('<?xml version="1.0" encoding="utf-8"?>', "", $response);
+        $string = str_replace('<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">', "", $string);
+        $string = str_replace('<soap:Body>', "", $string);
+        $string = str_replace('</soap:Body>', "", $string);
+        $string = str_replace('</soap:Envelope>', "", $string);
+
+
+        if ( strstr( $string, 'soap:Server' ) ) {
+            return response()->json(['status' =>'error', 'message'=> 'Sorry! Please Verify Your Credtionals is valid']);
+        }else {
+            $file = time() . rand() . '_file.xml';
+            $destinationPath = public_path() . "/upload/xml/";
+            if (!is_dir($destinationPath)) {
+                mkdir($destinationPath, 0777, true);
+            }
+            File::put($destinationPath . $file, $string);
+            $xml = new XmlRecord();
+            $xml->type = $property_type;
+            $xml->file = $file;
+            $xml->user_id = $user_id;
+            $xml->agency_id = $agency_id;
+            $xml->access_code = $accesscode;
+            $xml->group_code = $groupcode;
+            $xml->save();
+            $total_chunks=$this->uploadPropertiesInChunks($xml->id,0);
+        }
+
+        return response()->json(['total_chunks'=>$total_chunks,'xml_file_id'=>$xml->id]);
+
+    }
+    public function goMasterimport(){
+        $agency =  Agency::find(\request()->id);
+        if($agency){
+            $html = view('admin.pages.goimport',compact('agency'))->render();
+            return response()->json(['status' =>'success', 'html'=> $html]);
+        }
+    }
+    public function uploadPropertiesInChunks($xml_record_id,$chunk_id){
+
+        $file = XmlRecord::find($xml_record_id);
+        $property_type = $file->type;
+        $user_id = $file->user_id;
+        $agency_id = $file->agency_id;
+        $url = public_path() . "/upload/xml/" . $file->file;
+        if (file_exists($url)) {
+            $xmlString = file_get_contents($url);
+            $string = str_replace('<?xml version="1.0" encoding="utf-8"?>', "", $xmlString);
+            $document = simplexml_load_string($string);
+            $document = json_decode(json_encode($document), true);
+            if($property_type == 'RentListings') {
+                $data = $document['RentListingsResult']['ArrayOfUnitDTO']['UnitDTO'];
+            }elseif($property_type == 'SalesListings') {
+                $data = $document['SalesListingsResult']['ArrayOfUnitDTO']['UnitDTO'];
+            }
+            if(count($data)>0){
+                if(isset($data[$chunk_id])) {
+                    $property = $data[$chunk_id];
+                    $old_property = Properties::where('go_property_id', $property['PropertyID'])->first();
+                    if ($old_property == null) {
+                        $new_property = new Properties();
+                        $new_property->go_property_id = isset($property['PropertyID']) ? ($property['PropertyID']) : '';
+                        $new_property->property_name = isset($property['PropertyName']) ? ($property['PropertyName']) : '';
+                        $property_slug = Str::slug(isset($property['PropertyName']) ? ($property['PropertyName']) : '', "-");
+                        $new_property->property_slug = $property_slug;
+                        $category = isset($property['Category']) ? ($property['Category']) : '';
+                        $category_type = Types::where('types', 'like', '%' . $category . '%')->first();
+                        if ($category_type) {
+                            $new_property->property_type = $category_type->id;
+                        } else {
+                            $new_property->property_type = 1;
+                        }
+                        $new_property->user_id = $user_id;
+                        $new_property->agency_id = $agency_id;
+                        $new_property->refference_code = isset($property['RefNo']) ? ($property['RefNo']) : '';
+                        $new_property->build_area = isset($property['BuiltupArea']) ? ($property['BuiltupArea']) : '';
+                        $new_property->land_area = isset($property['BuiltupArea']) ? ($property['BuiltupArea']) : '';
+                        $new_property->bedrooms = isset($property['Bedrooms']) ? ($property['Bedrooms']) : '';
+                        $new_property->rooms = isset($property['Bedrooms']) ? ($property['Bedrooms']) : '';
+                        $new_property->bathrooms = isset($property['NoOfBathrooms']) ? ($property['NoOfBathrooms']) : '';
+                        $new_property->description = isset($property['Remarks']) ? ($property['Remarks']) : '';
+                        $subcommunity = isset($property['SubCommunity']) ? ($property['SubCommunity']) : '';
+                        $community = isset($property['Community']) ? ($property['Community']) : '';
+                        $cityname = isset($property['CityName']) ? ($property['CityName']) : '';
+                        $state = isset($property['StateName']) ? ($property['StateName']) : '';
+                        $country = isset($property['CountryName']) ? ($property['CountryName']) : '';
+
+                        $new_property->address = $subcommunity .  ',' . $cityname . ','  . $country;
+
+                        if ($property_type == 'RentListings') {
+                            $new_property->price = isset($property['Rent']) ? ($property['Rent']) : '';
+                            $new_property->property_purpose = "For Rent";
+
+                        } else {
+                            $new_property->price = isset($property['SellPrice']) ? ($property['SellPrice']) : '';
+                            $new_property->property_purpose = "For Sale";
+                        }
+
+                        $row = isset($property['ProGooglecoordinates']) ? ($property['ProGooglecoordinates']) : '';
+                        if ($row) {
+                            $idsArr = explode(',', $row);
+                            $new_property->map_latitude = $idsArr[0];
+                            $new_property->map_longitude = $idsArr[1];
+                        }
+                        $new_property->status = 1;
+                        $property_features = "";
+                        $features = isset($property['FittingFixtures']['FittingFixture']) ? ($property['FittingFixtures']['FittingFixture']) : '';
+                        if (is_array($features)) {
+                            if (count($features) > 0) {
+                                foreach ($features as $key => $feature) {
+                                    try {
+                                        $property_features .= $feature['ID'] . ',';
+                                    } catch (\Throwable $e) {
+
+                                    }
+                                }
+                            }
+                        }
+
+                        $new_property->property_features = $property_features;
+
+                        $featured = isset($property['Images']['Image']) ? ($property['Images']['Image']) : '';
+                        if (is_array($featured)) {
+                            if (count($featured) > 0) {
+                                try {
+                                    $f_image_url = $featured[0]['ImageURL'];
+                                    if (@fopen($f_image_url, 'r')) {
+
+                                        $images_splits = explode('&', $f_image_url);
+                                        $ffilename = basename($images_splits[0]);
+                                        $ffilename = '_' . time() . '.' . $ffilename;
+                                        Image::make($f_image_url)->save(public_path('upload/properties/' . $ffilename));
+                                        $new_property->featured_image = $ffilename;
+
+
+
+
+                                    }
+                                } catch (\Throwable $e) {
+
+                                }
+                                if($new_property->featured_image){
+                                    $new_property->Save();
+
+
+
+                                foreach ($featured as $key => $pro_image) {
+                                    try {
+                                        if (@fopen($f_image_url, 'r')) {
+                                            $image_url = $pro_image['ImageURL'];
+                                            $images_splits = explode('&', $image_url);
+                                            $filename = basename($images_splits[0]);
+                                            $filename = '_' . time() . '.' . $filename;
+                                            Image::make($image_url)->save(public_path('upload/gallery/' . $filename));
+                                            $property_gallery = new PropertyGallery();
+                                            $property_gallery->image_name = $filename;
+                                            $property_gallery->property_id = $new_property->id;
+                                            $property_gallery->save();
+                                        }
+                                    } catch (\Throwable $e) {
+
+                                    }
+                                }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return count($data);
+        }
+    }
+    public function getAgenciesChunks(Request $request){
+        $xml_record_id=$request->xml_record_id;
+        $chunk_id=$request->chunk_id;
+        $total_chunks=$request->total_chunks;
+        $chunk_id=$chunk_id+1;
+        if($chunk_id>=$total_chunks){
+            return response()->json(['status'=>'finished','message'=>'Your data has been successfully upload. Your Data Posted soon!']);
+        }
+        else{
+            $this->uploadPropertiesInChunks($xml_record_id,$chunk_id);
+            return response()->json(['next_chunk_id'=>$chunk_id]);
+        }
+    }
+    public function autocomplteAgencies(Request $request)
+    {
+          $search = $request->get('term');
+
+          $result = Agency::where('name', 'LIKE', '%'. $search. '%')->orWhere('agency_detail', 'like', '%' . $search . '%')->get();
+
+          return response()->json($result);
+
+    }
+     public function livesearch(Request $request){
+
+        $term = $request->get('keyword');
+        $data = Agency::select("name as name","image as img","agency_detail as detail","id as id")->where("name","LIKE","%{$request->input('keyword')}%")->where("agency_detail","LIKE","%{$request->input('keyword')}%")->get();
+
+        return response()->json($data);
+    }
+}
