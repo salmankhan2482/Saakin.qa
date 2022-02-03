@@ -1,7 +1,7 @@
 ﻿@extends("front.layouts.main")
 @if ($landing_page_content->meta_title !=null)
 
-@section('title',$landing_page_content->meta_title . ' | '.' Saakin.com')
+@section('title',$landing_page_content->meta_title . ' | '.' saakin.qa')
 @section('description',$landing_page_content->meta_description)
 @section('keyword',$landing_page_content->meta_keyword)
 @section('type','property')
@@ -9,7 +9,7 @@
 
 @else
 
-@section('title','Properties in Qatar | Saakin.com')
+@section('title','Properties in Qatar | saakin.qa')
 @section('description',$page_des)
 @section('type','property')
 @section('url',url()->current())
@@ -514,7 +514,7 @@ $agency = \App\Agency::where("id",$property->agency_id)->first();
 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 $whatsapText = 'Hello,
 I would like to inquire about this property posted on
-saakin.com
+saakin.qa
 
 Reference: '.$property->refference_code.'
 Price: QR '.$property->getPrice().'/month
@@ -1052,7 +1052,7 @@ $agency = \App\Agency::where('id', $property->agency_id)->first();
 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 $whatsapText =
 'Hello, 
-I would like to inquire about this property posted on saakin.com                                            Reference: ' . $property->refference_code . '
+I would like to inquire about this property posted on saakin.qa                                            Reference: ' . $property->refference_code . '
 Price: QR ' . $property->getPrice() . '/month
 Type: ' . $property->propertiesTypes->types .'
 Location: ' . $property->address . '

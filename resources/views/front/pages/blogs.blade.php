@@ -1,5 +1,5 @@
 @extends("front.layouts.main")
-@section('title','Saakin.com Blogs  |  Qatar #1 Property site')
+@section('title','saakin.qa Blogs  |  Qatar #1 Property site')
 @section('description','Blog Description')
 @section('keyword','Blog Keyword')
 @section('type','article')

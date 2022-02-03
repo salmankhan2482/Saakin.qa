@@ -1,19 +1,19 @@
 @extends("front.layouts.main")
 @if ($cityGuide->meta_title !=null)
 
-@section('title',$cityGuide->meta_title .  '  |  ' . 'Saakin.com')
+@section('title',$cityGuide->meta_title .  '  |  ' . 'saakin.qa')
 @section('description',$cityGuide->meta_description)
 @section('keyword',$cityGuide->meta_keyword)
-@section('type','City Guide Saakin.com')
+@section('type','City Guide saakin.qa')
 @section('url',url()->current())
 @section('image', asset('upload/cities/'.$cityGuide->city_image))
 
 @else
 
-@section('title',$cityGuide->name .  '  |  ' . 'Saakin.com')
+@section('title',$cityGuide->name .  '  |  ' . 'saakin.qa')
 @section('description',$cityGuide->short_description)
 @section('keyword',$cityGuide->attributes)
-@section('type','City Guide Saakin.com')
+@section('type','City Guide saakin.qa')
 @section('url',url()->current())
 @section('image', asset('upload/cities/'.$cityGuide->city_image))
 
