@@ -318,7 +318,7 @@ Route::get('{property_purpose}/{slug}/{id}', 'PropertiesController@single_proper
 Route::any('send-email-agent', 'PropertiesController@property_details_sendemail');
 
 
-Route::post('properties/inquiry', 'PropertiesController@inquiryEmail');
+Route::post('properties/inquiry', 'PropertiesController@property_details_sendemail');
 Route::get('properties', 'PropertiesController@getPropertyListing');
 Route::post('properties', 'PropertiesController@getPropertyListing');
 

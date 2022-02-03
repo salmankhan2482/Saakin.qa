@@ -453,8 +453,8 @@ class PropertiesController extends Controller
             \Mail::send('emails.inquiry',$data_email, function ($message) use ($property_data,$inputs) {
                 $message->from($inputs['user_email'])->subject
                 ('Saakin Inc. | Inquiry Email');
-                $message->to('hello@saakin.com');
-                $message->cc($inputs['user_email']);
+                $message->to('webmaster@saakin.qa');
+                // $message->cc($inputs['user_email']);
                 $message->bcc($property_data->Agency->email, 'Saakin');
             });
 
@@ -757,48 +757,48 @@ class PropertiesController extends Controller
         return redirect()->back();
     }
 
-    public function inquiryEmail(Request $request)
-    {
-        $data =  \Request::except(array('_token'));
+    // public function inquiryEmail(Request $request)
+    // {
+    //     $data =  \Request::except(array('_token'));
 
-        $inputs = $request->all();
+    //     $inputs = $request->all();
 
-        $rules = array(
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone' => 'required',
-            'message' => 'required'
-        );
+    //     $rules = array(
+    //         'name' => 'required',
+    //         'email' => 'required|email',
+    //         'phone' => 'required',
+    //         'message' => 'required'
+    //     );
 
-        $validator = \Validator::make($data, $rules);
+    //     $validator = \Validator::make($data, $rules);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->messages())->withInput();
-        }
-        $inquiry = new Enquire();
-        $inquiry->property_id = $inputs['property_id'];
-        $inquiry->agent_id = $inputs['agent_id'];
-        $inquiry->name = $inputs['name'];
-        $inquiry->email = $inputs['email'];
-        $inquiry->phone = $inputs['phone'];
-        $inquiry->message = $inputs['message'];
-        $inquiry->save();
+    //     if ($validator->fails()) {
+    //         return redirect()->back()->withErrors($validator->messages())->withInput();
+    //     }
+    //     $inquiry = new Enquire();
+    //     $inquiry->property_id = $inputs['property_id'];
+    //     $inquiry->agent_id = $inputs['agent_id'];
+    //     $inquiry->name = $inputs['name'];
+    //     $inquiry->email = $inputs['email'];
+    //     $inquiry->phone = $inputs['phone'];
+    //     $inquiry->message = $inputs['message'];
+    //     $inquiry->save();
 
 
-        $data_email = array(
-            'name' => $inputs['name'],
-            'email' => $inputs['email'],
-            'phone' => $inputs['phone'],
-            'message' => $inputs['message']
-        );
-        \Mail::send('emails.inquiry', $data_email, function ($message) use ($inputs) {
-            $message->to($inputs['email'], $inputs['name'])
-                ->from('admin@gmail.com', 'Admin')
-                ->subject('Inquiry Email');
-        });
-        \Session::flash('flash_message_contact', trans('words.thanks_for_contacting_us'));
-        return \Redirect::back();
-    }
+    //     $data_email = array(
+    //         'name' => $inputs['name'],
+    //         'email' => $inputs['email'],
+    //         'phone' => $inputs['phone'],
+    //         'message' => $inputs['message']
+    //     );
+    //     \Mail::send('emails.inquiry', $data_email, function ($message) use ($inputs) {
+    //         $message->to($inputs['email'], $inputs['name'])
+    //             ->from('admin@gmail.com', 'Admin')
+    //             ->subject('Inquiry Email');
+    //     });
+    //     \Session::flash('flash_message_contact', trans('words.thanks_for_contacting_us'));
+    //     return \Redirect::back();
+    // }
 
 
     public function propertiesForPurpose($buyOrRent, $property_purpose)

@@ -20,7 +20,7 @@
         style="margin:0 auto;border:1px solid rgba(0, 0, 0, 0.2);padding:20px;">
         <tr style="border:0">
             <td style="text-align:center">
-                <a href="www.saakin.com" target="_blank">
+                <a href="www.saakin.qa" target="_blank">
                     <img src="{{ URL::asset('assets/images/black_logo.png') }}" alt="Page Logo"
                         style="width: 150px;height: 150px;"></a>
             </td>
@@ -44,28 +44,28 @@
                 Thanks!
                 <br />
                 <div>
-                    <a href="www.saakin.com">Saakin Inc.</a> 
+                    <a href="www.saakin.qa">Saakin Qatar</a> 
                     | 
                     
                     <a class="link-hov style2"
-                        href="https://www.saakin.com/properties?property_type=1&property_purpose=Rent&keyword=qatar">
+                        href="https://www.saakin.qa/properties?property_type=1&property_purpose=Rent&keyword=qatar">
                         Apartments for rent in Qatar
                     </a>
                     | 
                     <a class="link-hov style2"
-                        href="https://www.saakin.com/properties?property_type=1&property_purpose=Sale&keyword=qatar">
+                        href="https://www.saakin.qa/properties?property_type=1&property_purpose=Sale&keyword=qatar">
                         Apartments for sale in Qatar
                     </a>
                     | 
-                    <a class="link-hov style2" href="https://www.saakin.com/buy/properties-for-sale">
+                    <a class="link-hov style2" href="https://www.saakin.qa/buy/properties-for-sale">
                         Real Estate Investment in Qatar
                     </a>
                     | 
-                    <a class="link-hov style2" href="https://www.saakin.com/city-guide">
+                    <a class="link-hov style2" href="https://www.saakin.qa/city-guide">
                         Doha City Guide
                     </a>
                     |
-                    <a class="link-hov style2" href="https://www.saakin.com/blogs">
+                    <a class="link-hov style2" href="https://www.saakin.qa/blogs">
                         Qatar Blogs
                     </a>
                 </div>

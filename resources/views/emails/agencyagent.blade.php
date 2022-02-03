@@ -41,7 +41,7 @@
 
                 <b>Password:</b> {{ $password }}<br>
 
-                <b>Login URL: <a href="https://www.saakin.com/login">https://www.saakin.com/login</a></b>
+                <b>Login URL: <a href="https://www.saakin.qa/login">https://www.saakin.qa/login</a></b>
 
             </td>
         </tr>

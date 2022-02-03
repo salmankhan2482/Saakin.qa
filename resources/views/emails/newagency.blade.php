@@ -37,13 +37,13 @@
                 <b>Email:</b> {{ $email }}<br>
                 <b>Phone:</b> {{ $phone }}<br>
                 <b>Password:</b> {{ $password }}<br>
-                <b>Login URL: <a href="https://www.saakin.com/login">https://www.saakin.com/login</a></b><br><br>
+                <b>Login URL: <a href="https://www.saakin.qa/login">https://www.saakin.qa/login</a></b><br><br>
 
 
-                Please contact us at hello@saakin.com for further inquiries.<br><br>
+                Please contact us at hello@saakin.qa for further inquiries.<br><br>
                 Thanks!<br />
                 Saakin Inc.<br>
-                www.saakin.com
+                www.saakin.qa
 
             </td>
         </tr>

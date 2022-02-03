@@ -112,7 +112,7 @@
                                                                         <p
                                                                             style="margin: 0; font-size: 14px; text-align: right;">
                                                                             <span
-                                                                                style="font-size:13px;color:#8c9497;">hello@saakin.com</span>
+                                                                                style="font-size:13px;color:#8c9497;">hello@saakin.qa</span>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -389,13 +389,13 @@
                                                                         style="font-size: 14px; mso-line-height-alt: 21px; color: #cccccc; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
                                                                         <p
                                                                             style="margin: 0; font-size: 14px; text-align: justify;">
-                                                                            <a href="https://www.saakin.com/"
+                                                                            <a href="https://www.saakin.qa/"
                                                                                 rel="noopener"
                                                                                 style="text-decoration: underline; color: #0068A5;"
                                                                                 target="_blank">Saakin</a> is the
                                                                             fastest growing Qatar Real Estate Directory
                                                                             you can find <a
-                                                                                href="https://www.saakin.com/properties"
+                                                                                href="https://www.saakin.qa/properties"
                                                                                 rel="noopener"
                                                                                 style="text-decoration: underline; color: #0068A5;"
                                                                                 target="_blank">Properties for Rent in
@@ -454,7 +454,7 @@
                                                                                     <td
                                                                                         style="text-align:center;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:6px;">
                                                                                         <a
-                                                                                            href="https://www.saakin.com/">
+                                                                                            href="https://www.saakin.qa/">
                                                                                             <img alt="Saakin Real Estate Directory in Qatar Logo"
                                                                                                 class="icon"
                                                                                                 height="32"
@@ -464,7 +464,7 @@
                                                                                     </td>
                                                                                     <td
                                                                                         style="font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:15px;color:#9d9d9d;vertical-align:middle;letter-spacing:undefined;text-align:center;">
-                                                                                        <a href="https://www.saakin.com/"
+                                                                                        <a href="https://www.saakin.qa/"
                                                                                             style="color:#9d9d9d;text-decoration:none;">SAAKIN
                                                                                             INC.</a>
                                                                                     </td>
