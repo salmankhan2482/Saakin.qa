@@ -21,7 +21,7 @@ role="dialog">
                     rows="6"
                     name="message"
                     required
-                    placeholder="Hi, I found your property with ref: On saakin.com. Please contact me. Thank you."
+                    placeholder="Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you."
                 ></textarea>
             </div>
             

@@ -1,5 +1,5 @@
 @extends("front.layouts.main")
-@section('title', 'Forgot Password | Saakin.com' )
+@section('title', 'Forgot Password | saakin.qa' )
 @section('description','Forgot Password')
 @section('type','saakin-forgot-password')
 @section('url', Request::url())

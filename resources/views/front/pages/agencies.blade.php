@@ -2,7 +2,7 @@
 
 @if ($landing_page_content->meta_title != null)
 
-    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.com')
+    @section('title', $landing_page_content->meta_title . ' | ' . ' saakin.qa')
     @section('description', $landing_page_content->meta_description)
     @section('keyword', $landing_page_content->meta_keyword)
     @section('type', 'Real Estate Agency')
@@ -10,7 +10,7 @@
 
 @else
 
-    @section('title', 'Real Estate Agencies in Qatar | Saakin.com')
+    @section('title', 'Real Estate Agencies in Qatar | saakin.qa')
     @section('description', $page_des)
     @section('type', 'Real Estate Agency')
     @section('url', url()->current())

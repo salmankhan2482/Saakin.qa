@@ -2,7 +2,7 @@
 
 @if ($agency->meta_title !=null)
 
-@section('title',$agency->meta_title .  '  |  ' . 'Saakin.com')
+@section('title',$agency->meta_title .  '  |  ' . 'saakin.qa')
 @section('description',$agency->meta_description)
 @section('keyword',$agency->meta_keyword)
 @section('type','agency')
@@ -10,7 +10,7 @@
 @section('image', asset('upload/agencies/'.$agency->image))
 
 @else
-@section('title',$agency->name .  '  |  ' . 'Saakin.com')
+@section('title',$agency->name .  '  |  ' . 'saakin.qa')
 @section('description',$agency_des)
 @section('type','agency')
 @section('url',url()->current())
@@ -210,7 +210,7 @@ $agency = \App\Agency::where("id",$property->agency_id)->first();
 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 $whatsapText = 'Hello,
 I would like to inquire about this property posted on
-saakin.com
+saakin.qa
 
 Reference: '.$property->refference_code.'
 Price: QR '.$property->getPrice().'/month
@@ -434,7 +434,7 @@ $agency = \App\Agency::where("id",$property->agency_id)->first();
 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 $whatsapText = 'Hello,
 I would like to inquire about this property posted on
-saakin.com
+saakin.qa
 
 Reference: '.$property->refference_code.'
 Price: QR '.$property->getPrice().'/month
@@ -662,7 +662,7 @@ $agency = \App\Agency::where("id",$property->agency_id)->first();
 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 $whatsapText = 'Hello,
 I would like to inquire about this property posted on
-saakin.com
+saakin.qa
 
 Reference: '.$property->refference_code.'
 Price: QR '.$property->getPrice().'/month

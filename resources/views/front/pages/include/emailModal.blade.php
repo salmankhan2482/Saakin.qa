@@ -73,7 +73,7 @@
                 <div class="form-group">
                     {{-- <label for="">Message</label> --}}
                     <textarea class="form-control" id="exampleFormControlTextarea1" name="user_message" rows="3"
-                        placeholder="Hi, I found your property with ref: On saakin.com. Please contact me. Thank you." required></textarea>
+                        placeholder="Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you." required></textarea>
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-4">

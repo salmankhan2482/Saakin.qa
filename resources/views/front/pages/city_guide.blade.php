@@ -1,7 +1,7 @@
 @extends("front.layouts.main")
 @if ($landing_page_content->meta_title !=null)
 
-@section('title',$landing_page_content->meta_title . ' | '.' Saakin.com')
+@section('title',$landing_page_content->meta_title . ' | '.' saakin.qa')
 @section('description',$landing_page_content->meta_description)
 @section('keyword',$landing_page_content->meta_keyword)
 @section('type','City Guide')
@@ -9,7 +9,7 @@
 
 @else
 
-@section('title','City Guide | Saakin.com')
+@section('title','City Guide | saakin.qa')
 @section('description',$page_des)
 @section('type','City Guide')
 @section('url',url()->current())
