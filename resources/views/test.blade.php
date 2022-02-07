@@ -7,11 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <a href="{{ route('PropertiesForPurpose', ['rent', 'rent']) }}">
+    <a href="{{ '' }}">
         First Phase Rent
     </a>
     <br><br>
-    <a href="{{ route('PropertiesForPurpose', ['buy', 'sale']) }}">
+    <a href="{{ '' }}">
         First Phase Sale
     </a>
 </body>

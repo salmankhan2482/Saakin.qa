@@ -100,6 +100,19 @@
 @endsection
 @section('scripts-custom')
     <script>
+
+        function initialize() {
+            var input = document.getElementById('name');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                var place = autocomplete.getPlace();
+                document.getElementById('longitude').value = place.geometry.location.lat();
+                document.getElementById('latitude').value = place.geometry.location.lng();
+            });
+        }
+        google.maps.event.addDomListener(window, 'load', initialize);
+
+
         function callSubCities(data) {
             var id = data.value;
             
@@ -117,10 +130,10 @@
                         $("#subCity").append('<option value="">No Result Found</option>');
                     }else{
                         $("#subCity").empty();     
-
                         $.each(subcities, function(key,value){
                         $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
                         });
+                        $("#subCity").append('<option value=""> Select Sub City</option>');
                     }
 
                 }

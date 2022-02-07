@@ -25,7 +25,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Property Title</th>
-                           
+                            {{-- <th>Count</th> --}}
                         </tr>
                     </thead>
 
@@ -38,15 +38,16 @@
                                         {{ $click->property_name }}
                                     </a>
                                 </td>
+                                {{-- <td>{{ $click->counter }}</td> --}}
                                 
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
-                                {{-- <td colspan="6" class="text-center">
-                                    @include('admin.pagination', ['paginator' => $top10Proprties])
-                                </td> --}}
+                            <td colspan="6" class="text-center">
+                                {{-- @include('admin.pagination', ['paginator' => $top10Proprties]) --}}
+                            </td>
                         </tr>
                     </tfoot>
                 </table>

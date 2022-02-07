@@ -207,4 +207,9 @@ class Properties extends Model
     {
         return $this->hasMany(PageVisits::class,'property_id');
     }
+
+    public function propertyCounter()
+    {
+        return $this->belongsTo(PropertyCounter::class,'property_id');
+    }
 }

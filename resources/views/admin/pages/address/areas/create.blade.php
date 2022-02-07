@@ -114,7 +114,6 @@
 @endsection
 @section('scripts-custom')
     <script>
-
         
         function initialize() {
             var input = document.getElementById('name');
@@ -127,9 +126,6 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-        google.maps.event.addDomListener(window, 'load', initializex);
-        
-
 
         function callSubCityTown(data) {
             var id = data.value;

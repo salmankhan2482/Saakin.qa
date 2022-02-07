@@ -621,7 +621,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-6 mr-auto ml-auto">
-                    <a href="{{url('properties').'?keyword=&city='.$cityGuide->id}}" class="btn btn-block v3">
+                    <a href="{{url('properties').$url}}" class="btn btn-block v3">
                         Properties in {{$cityGuide->name}}
                     </a>
                 </div>

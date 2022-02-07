@@ -337,6 +337,7 @@
                         $.each(subcities, function(key,value){
                             $("#subcity").append('<option value="'+value.id+'">'+value.name+'</option>');
                         });
+                        $("#subcity").append('<option value="">Select Sub City</option>');
                     }    
 
 
@@ -346,6 +347,8 @@
                         $.each(towns, function(key,value){
                             $("#town").append('<option value="'+value.id+'">'+value.name+'</option>');
                         });
+                        $("#town").append('<option value="">Select Town</option>');
+                        
                     }
                     
                     if(areas === '<option value="">No Result Found</option>'){
@@ -356,6 +359,8 @@
                         $.each(areas, function(key,value){
                             $("#area").append('<option value="'+value.id+'">'+value.name+'</option>');
                         });
+                        $("#area").append('<option value="">Select Area</option>');
+
                     }
                     
                     assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
@@ -391,6 +396,8 @@
                         $.each(towns, function(key,value){
                         $("#town").append('<option value="'+value.id+'">'+value.name+'</option>');
                         });
+                        $("#town").append('<option value="">Select Town</option>');
+
                     }
 
                     if(areas == '<option value="">No Result Found</option>'){
@@ -400,6 +407,8 @@
                         $.each(areas, function(key,value){
                             $("#area").append('<option value="'+value.id+'">'+value.name+'</option>');
                         });
+                        $("#area").append('<option value="">Select Area</option>');
+
                     }
 
                     assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
@@ -437,6 +446,8 @@
                             $("#p-lat").val(value.latitude);
                             $("#p-long").val(value.longitude);
                         });
+                        $("#area").append('<option value="">Select Area</option>');
+
                     }
 
                     assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
@@ -449,25 +460,27 @@
 
         function callLatLong(data) {
             var id = data.value;
-            
+            var pre = $("#town").val();
+            console.log(pre);
             $.ajax({
                 type: "GET",
                 url: "{{ route('callLatLong') }}",
                 async: true,
                 data: {
-                    id: id // as you are getting in request('id') 
+                    id: id, 
+                    pre: pre
                 },
                 success: function (response) {
                     
                     var subcities = response['subcities'];
                     var towns = response['towns'];
                     var areas = response['latLong'];
-                    
+                    console.log(areas);
                     $("#p-lat").val('');
                     $("#p-long").val('');
                     
-                    assingLatLong(areas.latitude, areas.longitude, towns.latitude, 
-                            towns.longitude, subcities.longitude, subcities.longitude);
+                    assingLatLong(areas.latitude, areas.longitude, towns.latitude ?? '', 
+                            towns.longitude ?? '', subcities.longitude ?? '', subcities.longitude ?? '');
 
                 }
             });

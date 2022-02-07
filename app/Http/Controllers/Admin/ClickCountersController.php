@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\PropertyCounter;
 
 class ClickCountersController extends Controller
 {
@@ -68,32 +69,38 @@ class ClickCountersController extends Controller
     public function topTenProperties()
     {
         if (auth()->user()->usertype == 'Agency') {
+           
+            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
             
             $top10Proprties = DB::table('properties')
-            ->leftJoin('page_visits', 'properties.id', 'page_visits.property_id')
-            ->select('properties.id',  'properties.property_purpose', 'properties.property_slug', 'properties.property_name',
-            DB::Raw('COUNT(properties.id) as topTen'))
+            ->join('property_counters', 'properties.id', 'property_counters.property_id')
+            ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 'properties.property_slug', 'property_counters.counter')
+            ->where('properties.agency_id', auth()->user()->agency_id)
             ->groupBy('properties.id')
-            ->orderByDesc('topTen')
-            ->paginate(10);
+            ->orderByDesc('property_counters.counter')
+            ->limit('10')
+            ->get();
 
         }else{
             $top10Proprties = '';
         }
-        
 
         return view('admin.pages.traffic-pages.topTenProperties', compact('top10Proprties'));
     }
 
     public function top5Areas()
     {
-        $top5Properties = DB::table('property_areas')
-                ->leftJoin('properties', 'property_areas.id', 'properties.area' )
-                ->select('property_areas.*', DB::Raw('COUNT(properties.id) as topFive'))
-                ->groupBy('property_areas.id')
-                ->orderBy('topFive', 'DESC')
-                ->limit(5)
-                ->get();
+        $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+        $top5Properties = DB::table('properties')
+        ->join('property_counters', 'properties.id', 'property_counters.property_id')
+        ->leftJoin('property_areas', 'properties.area', 'property_areas.id')
+        ->select('properties.id', 'property_areas.name as area_name', 'property_counters.counter')
+        ->whereIn('properties.id', $property_ids)
+        ->groupBy('properties.id')
+        ->orderByDesc('property_counters.counter')
+        ->limit('5')
+        ->get();
+
         return view('admin.pages.traffic-pages.top5Areas', compact('top5Properties'));
     }
 

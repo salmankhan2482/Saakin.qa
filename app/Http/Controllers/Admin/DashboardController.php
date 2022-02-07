@@ -42,13 +42,6 @@ class DashboardController extends MainAdminController
 
                 //Inquiries
                 $inquiries = Enquire::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->get()->count();
-            
-
-                //Total Leads
-                // $total_leads = Enquire::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->get()->count();
-                
-                // $clicksPerMonths = ClickCounters::whereBetween('created')
-                
                 
                 $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
                 
@@ -62,21 +55,9 @@ class DashboardController extends MainAdminController
                 
 
                 //top 10 properties
-                $top10Proprties = DB::table('properties')
-                ->leftJoin('page_visits', 'properties.id', 'property_id')
-                ->select('properties.id', DB::Raw('COUNT(properties.id) as topTen'))
-                ->groupBy('properties.id')
-                ->orderByDesc('topTen')
-                ->limit(10)
-                ->get();
+                $top10Proprties = '';
 
-                $top5Properties = DB::table('property_areas')
-                ->leftJoin('properties', 'property_areas.id', 'properties.area' )
-                ->select('property_areas.*', DB::Raw('COUNT(properties.id) as topFive'))
-                ->groupBy('property_areas.id')
-                ->orderBy('topFive', 'DESC')
-                ->limit(5)
-                ->get();
+                $top5Properties = '';
 
             }
             else

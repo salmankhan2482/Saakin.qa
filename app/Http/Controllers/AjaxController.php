@@ -104,12 +104,29 @@ class AjaxController extends Controller
 
     public function callLatLong()
     {
-        $store['latLong'] = DB::table('property_areas')
+        if(request()->id == null){
+            $store['latLong'] = DB::table('property_towns')
+            ->select('property_sub_cities_id', 'latitude', 'longitude')
+            ->where('id', request()->pre)
+            ->first();
+
+            $store['towns'] = DB::table('property_towns')
+            ->select('property_sub_cities_id', 'latitude', 'longitude')
+            ->where('id', request()->pre)
+            ->first();
+
+            $store['subcities'] = DB::table('property_sub_cities')
+            ->select('latitude', 'longitude')
+            ->where('id', $store['towns']->property_sub_cities_id)
+            ->first();
+            return $store;
+
+        }else{
+            $store['latLong'] = DB::table('property_areas')
                 ->select('property_towns_id','latitude','longitude')
                 ->where('id',request()->id)->first();
-        
-        
-        $store['towns'] = DB::table('property_towns')
+
+            $store['towns'] = DB::table('property_towns')
             ->select('property_sub_cities_id', 'latitude', 'longitude')
             ->where('id', $store['latLong']->property_towns_id)
             ->first();
@@ -120,6 +137,11 @@ class AjaxController extends Controller
             ->where('id', $store['towns']->property_sub_cities_id)
             ->first();
             return $store;
+        
+        }
+        
+
+        
     }
 
     public function callSubCities()
