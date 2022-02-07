@@ -68,6 +68,7 @@ class SettingsController extends MainAdminController
         putPermanentEnv('APP_TIMEZONE', $inputs['time_zone']);
        	$settings->time_zone = $inputs['time_zone'];
  		$settings->site_name = $inputs['site_name'];
+ 		$settings->site_url = $inputs['site_url'];
 		$settings->currency_sign = $inputs['currency_sign']; 
 		$settings->site_email = $inputs['site_email'];
 		$settings->google_map_key = $inputs['google_map_key'];

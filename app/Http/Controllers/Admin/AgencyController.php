@@ -9,6 +9,7 @@ use App\Imports\AgenciesImport;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Agency;
+use App\Mail\AgencyRegisterMail;
 use Illuminate\Support\Facades\Mail;
 use App\User;
 use Auth;
@@ -101,14 +102,12 @@ class AgencyController extends Controller
             $user->save();
 
         \Session::flash('flash_message', trans('words.added'));
+        
         //Sending Email to Agency 
         $to_email = $inputs['email'];
         $inputs['password'] = $password;
-        Mail::send('emails.newagency', $inputs, function ($message) use ($to_email) {
-            $message->from('hello@saakin.com', 'Saakin Inc.');
-            $message->subject('Account Created Successfully');
-            $message->to($to_email);
-        });
+
+        Mail::to($to_email)->send(new AgencyRegisterMail($inputs));
         return redirect('admin/agencies');
     }
 
