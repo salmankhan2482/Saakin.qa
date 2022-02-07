@@ -31,6 +31,8 @@ use App\Mail\TestMail;
 |
 */
 
+
+
 Route::get('/saakin', function(){
     
 Mail::to('test@gmail.com')->send(new TestMail());

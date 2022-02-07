@@ -45,7 +45,7 @@ class CityGuideController extends Controller
         $propertiesForSale = Properties::where('address_slug', 'like', '%'.$cityGuide->city_slug.'%')
         ->where('property_purpose', 'Sale')->get();
         
-        
+        $url = '';
         if($city = PropertyCities::where('name', $cityGuide->name)->value('id')){
             $url = '?city='.$city;
         }elseif($subcity = PropertySubCities::where('name', $cityGuide->name)->value('id')){
