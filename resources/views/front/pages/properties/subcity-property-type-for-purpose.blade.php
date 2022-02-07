@@ -56,6 +56,11 @@
                         <h1>
                             {{$type->plural_name}} for {{ucfirst($property_purpose) }} in {{$subcity->name}}
                         </h1>
+                        <span>
+                            <a  href="{{ route('cpt-purpose', [$buyOrRent, $city->slug, Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}">
+                            {{ $city->name }}</a>
+                        </span>
+                        <span>{{ $subcity->name }}</span>
                     </div>
                 </div>
             </div>

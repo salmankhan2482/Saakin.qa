@@ -25,7 +25,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Name</th>
-                            
                         </tr>
                     </thead>
 
@@ -33,7 +32,7 @@
                         @foreach ($top5Properties as $i => $click)
                             <tr>
                                 <td>{{ $click->id }}</td>
-                                <td>{{ $click->name }}</td>
+                                <td>{{ $click->area_name ?? '' }}</td>
                             </tr>
                         @endforeach
                     </tbody>
