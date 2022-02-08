@@ -3,17 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
+use Session;
 use App\User;
-use App\Enquire;
 
+use App\Agency;
+use App\Enquire;
 use Carbon\Carbon;
 use App\Http\Requests;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Session;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class InquiriesController extends MainAdminController
 {
@@ -37,7 +38,8 @@ class InquiriesController extends MainAdminController
             $inquirieslist = Enquire::orderBy('id', 'desc')->paginate(10);
             
         }
-        
+        // $agency_name = Agency::where('id',$inquirieslist->agency_id)->paginate(10);
+        // dd($agency_name);
 
         return view('admin.pages.inquiries',compact('inquirieslist'));
     }
@@ -56,6 +58,13 @@ class InquiriesController extends MainAdminController
 
         return redirect()->back();
 
+    }
+
+    public function view_inquiry($id)
+    {
+        $inquire = Enquire::where('id', $id)->get();
+
+        return view('admin.pages.view_inquiry',compact('inquire'));
     }
 
 

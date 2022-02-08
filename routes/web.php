@@ -1,14 +1,15 @@
 <?php
 
-use App\Mail\MyCustomMail;
-
 use App\City;
+
 use App\Types;
 use App\PageVisits;
 use App\Properties;
+use App\Mail\TestMail;
 use App\PropertyAreas;
 use App\PropertyTowns;
 use App\PropertyCities;
+use App\Mail\MyCustomMail;
 use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -20,16 +21,7 @@ use Stevebauman\Location\Facades\Location;
 use App\Http\Controllers\ClickCountersController;
 use App\Http\Controllers\PropertyReportController;
 use App\Http\Controllers\Admin\PropertiesController;
-
-use App\Http\Controllers\ClickCountersController;
-use App\PageVisits;
-use App\PropertyAreas;
-use App\PropertyCities;
-use App\PropertySubCities;
-use App\PropertyTowns;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Mail;
-use Stevebauman\Location\Facades\Location;
+// use App\Http\Controllers\Admin\ClickCountersController;
 
 
 /*
@@ -182,6 +174,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('partners/delete/{id}', 'PartnersController@delete');
 
 	Route::get('inquiries', 'InquiriesController@inquirieslist');
+    Route::get('inquiry_view/{id}', 'InquiriesController@view_inquiry');
 	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
 
 	Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');
