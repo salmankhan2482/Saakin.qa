@@ -13,6 +13,7 @@ use App\Partners;
 use App\CityGuide;
 use App\Properties;
 use App\Subscriber;
+use App\BlogCategory;
 use App\Testimonials;
 use App\PropertyAreas;
 use App\PropertyTowns;
@@ -20,10 +21,12 @@ use App\PropertyCities;
 use App\PropertyAmenity;
 use App\PropertyPurpose;
 use App\PropertySubCities;
+use App\Mail\Agent_Inquiry;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Mail\Contact_Inquiry;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
@@ -361,26 +364,33 @@ class IndexController extends Controller
         $enquire->save();
         
 
-        $data_email = array(
-            'name' => $inputs['name'],
-            'email' => $inputs['email'],
-            'phone' => $inputs['phone'],
-            'subject' => $inputs['subject'],
-            'your_message' => $inputs['your_message']
-        );
+        // $data_email = array(
+            $data_email ['name'] = $inputs['name'];
+            $data_email['email'] = $inputs['email'];
+            $data_email['phone'] = $inputs['phone'];
+            $data_email['subject'] = $inputs['subject'];
+            $data_email['your_message'] = $inputs['your_message'];
+        // );
         // return view('emails.contactAgent', compact('data_email'));
 
         if(isset($inputs['agency_mail']) &&  $inputs['agency_mail'] != ''){
-        Mail::send('emails.contactAgent', $data_email, function($message) use($inputs) {
-            $message->from($inputs['email'],$inputs['name']);
-            $message->to('info@saakin.com', 'Saakin Inc.')->subject('Saakin Inc. | Agent Contact Email');
-            $message->bcc($inputs['agency_mail'], 'Saakin');
-        });
+
+        Mail::to('webmaster@saakin.qa')->send(new Agent_Inquiry($data_email));
+
+        // // Mail::send('emails.contactAgent', $data_email, function($message) use($inputs) {
+        // //     $message->from($inputs['email'],$inputs['name']);
+        // //     $message->to('webmaster@saakin.qa', 'Contact Saakin Qatar')->subject('Saakin Qatar | Agent Contact Email');
+        // //     $message->bcc($inputs['agency_mail'], 'Saakin');
+        // });
         }else{
-        Mail::send('emails.contact', $data_email, function($message) use($inputs) {
-            $message->from($inputs['email'],$inputs['name']);
-            $message->to('info@saakin.com', 'Saakin Inc.')->subject('Saakin Inc. | Contact Us Email');
-        });
+
+            // dd($data_email);
+        Mail::to('webmaster@saakin.qa')->send(new Contact_Inquiry($data_email));
+
+        // Mail::send('emails.contact', $data_email, function($message) use($inputs) {
+        //     $message->from($inputs['email'],$inputs['name']);
+        //     $message->to('info@saakin.com', 'Saakin Inc.')->subject('Saakin Qatar | Contact Us Email');
+        // });
         }
 
 
@@ -571,9 +581,9 @@ class IndexController extends Controller
 
         $properties = Properties::where(['status'=>'1'])->orderBy('id', 'desc')->get();
         $blogs = Blog::get();
+        $blog_categories = BlogCategory::pluck('slug');
         $agencies = Agency::get();
         $city_guides =CityGuide::get();
-
         
         $salePropertyTypes =  DB::table('property_types')
         ->join('properties', "property_types.id", "properties.property_type")
@@ -611,7 +621,7 @@ class IndexController extends Controller
         ->orderBy("pcount", "desc")
         ->get();
 
-        return response()->view('pages.sitemap',compact('site_url','properties','blogs','agencies','salePropertyTypes','rentPropertyTypes','city_guides'))->header('Content-Type', 'text/xml');
+        return response()->view('pages.sitemap',compact('site_url','properties','blogs','blog_categories','agencies','salePropertyTypes','rentPropertyTypes','city_guides'))->header('Content-Type', 'text/xml');
     }
 
 }

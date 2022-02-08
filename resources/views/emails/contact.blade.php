@@ -13,7 +13,7 @@
     }
 
 </style>
-
+{{-- @dd($data); --}}
 <body>
 
     <table border="0" cellpadding="0" cellspacing="0" width="60%"
@@ -35,11 +35,11 @@
                 We have Recieved the Details
                 <br><br>
 
-                <b>Name:</b> {{ $name }}<br>
-                <b>Email:</b> {{ $email }}<br>
-                <b>Phone:</b> {{ $phone }}<br>
-                <b>Subject:</b> {{ $subject }}<br>
-                <b>Message:</b> {{ $your_message }}<br><br>
+                <b>Name:</b> {{ $data['name'] }}<br>
+                <b>Email:</b> {{ $data['email'] }}<br>
+                <b>Phone:</b> {{ $data['phone'] }}<br>
+                <b>Subject:</b> {{ $data['subject'] }}<br>
+                <b>Message:</b> {{ $data['your_message'] }}<br><br>
 
                 Thanks!
                 <br />

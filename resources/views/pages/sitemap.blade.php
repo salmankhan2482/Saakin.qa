@@ -28,6 +28,11 @@
         <changefreq>Daily</changefreq>
         <priority>1</priority>
     </url>
+    <url>
+        <loc>{{$site_url}}/faqs</loc>
+        <changefreq>Daily</changefreq>
+        <priority>1</priority>
+    </url>
     
     <url>
         <loc>{{$site_url}}/privacy-policy</loc>
@@ -523,6 +528,14 @@
     @foreach($blogs as $b => $blog)
     <url>
         <loc>{{url('blog/'.$blog->slug)}}</loc>
+        <changefreq>Daily</changefreq>
+        <priority>1</priority>
+     </url>  
+    @endforeach 
+
+    @foreach($blog_categories as $bc => $blog_category)
+    <url>
+        <loc>{{url('blog-categories/'.$blog_category)}}</loc>
         <changefreq>Daily</changefreq>
         <priority>1</priority>
      </url>  
