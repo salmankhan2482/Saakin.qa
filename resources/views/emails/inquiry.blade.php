@@ -56,8 +56,9 @@
 
     </style>
 </head>
+
 @php
-$price = $property_purpose == 'Rent' ? $price . '/month' : $price;
+$price = $data['property_purpose'] == 'Rent' ? $data['price'] . '/month' : $data['price'];
 @endphp
 
 <body style="background-color: #f6f8f8; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
@@ -282,7 +283,7 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                 <div align="center" style="line-height:10px"><img
                                                                         alt="saakin-property-image"
                                                                         class="big"
-                                                                        src="{{ asset('/upload/gallery/' . $featured_image ?? '') }}"
+                                                                        src="{{ asset('/upload/properties/' . $data['featured_image'] ?? '') }}"
                                                                         style="display: block; height: auto; border: 0; width: 608px; max-width: 100%;"
                                                                         title="I'm an image" width="608" /></div>
                                                             </td>
@@ -300,8 +301,9 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                         style="font-size: 12px; mso-line-height-alt: 18px; color: #555555; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
                                                                         <p
                                                                             style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 24px;">
-                                                                            <span
-                                                                                style="font-size:16px;color:#2b3940;"><strong>{{ $property_name }}</strong></span>
+                                                                            <span style="font-size:16px;color:#2b3940;">
+                                                                                <strong>{{ $data['property_name'] }}</strong>
+                                                                            </span>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -319,7 +321,7 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                         style="font-size: 14px; mso-line-height-alt: 16.8px; color: #555555; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
                                                                         <p
                                                                             style="margin: 0; font-size: 14px; text-align: center;">
-                                                                            {{ $address }}, {{ $city }}</p>
+                                                                            {{ $data['address'] }}, {{ $data['city'] }}</p>
                                                                     </div>
                                                                 </div>
                                                             </td>
@@ -338,14 +340,12 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                             style="margin: 0; font-size: 14px; text-align: center;">
                                                                             <span style="color:#7e8989;">Property
                                                                                 Purpose:
-                                                                                <strong>{{ $property_purpose }}</strong>
-                                                                                | Property Type: <strong
-                                                                                    class="fas fa-bed pr-1">{{ $property_type }}</strong>
-                                                                                | Bedrooms: <strong
-                                                                                    class="fas fa-bed pr-1">{{ $bedrooms }}</strong>
-                                                                                | Bathrooms: <strong
-                                                                                    class="fas fa-bath pr-1">{{ $bathrooms }}</strong>
-                                                                                | <strong>{{ $land_area }}</strong>
+                                                                                <strong>{{ $data['property_purpose'] }}</strong>
+                                                                                | Property Type: 
+                                                                                <strong class="fas fa-bed pr-1">{{ $data['property_type'] }}</strong>
+                                                                                | Bedrooms: <strong class="fas fa-bed pr-1">{{ $data['bedrooms'] }}</strong>
+                                                                                | Bathrooms: <strong class="fas fa-bath pr-1">{{ $data['bathrooms'] }}</strong>
+                                                                                | <strong>{{ $data['land_area'] }}</strong>
                                                                                 sqm</span>
                                                                         </p>
                                                                     </div>
@@ -365,7 +365,7 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                         <p
                                                                             style="margin: 0; font-size: 14px; text-align: center;">
                                                                             <span style="font-size:14px;">Price:
-                                                                                <strong>{{ $price }}
+                                                                                <strong>{{ $data['price'] }}
                                                                                 </strong></span>
                                                                         </p>
                                                                     </div>
@@ -385,7 +385,7 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                         <p
                                                                             style="margin: 0; font-size: 14px; text-align: center;">
                                                                             Ref. #
-                                                                            <strong>{{ $refference_code }}</strong>
+                                                                            <strong>{{ $data['refference_code'] }}</strong>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -405,7 +405,7 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                             style="margin: 0; font-size: 14px; text-align: justify;">
                                                                             <span style="font-size:14px;">
                                                                                 <strong>Name:
-                                                                                </strong> {{ $user_name ?? '' }}</span>
+                                                                                </strong> {{ $data['user_name'] ?? '' }}</span>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -425,7 +425,7 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                             style="margin: 0; font-size: 14px; text-align: justify;">
                                                                             <span style="font-size:14px;">
                                                                                 <strong>Phone No.:
-                                                                                </strong> {{ $telephone ?? '' }}</span>
+                                                                                </strong> {{$data['telephone'] ?? '' }}</span>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -446,7 +446,7 @@ $price = $property_purpose == 'Rent' ? $price . '/month' : $price;
                                                                             <span style="font-size:14px;">
                                                                                 <strong>Message:
                                                                                 </strong>
-                                                                                {{ $user_message ?? '' }}</span>
+                                                                                {{ $data['user_message'] ?? '' }}</span>
                                                                         </p>
                                                                     </div>
                                                                 </div>

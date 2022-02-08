@@ -12,5 +12,10 @@ class Enquire extends Model
  
 	
 	 public $timestamps = false;
+
+     public function Agencies()
+     {
+        return $this->belongsTo('App\Agency','agency_id','id');
+     }
     
 }

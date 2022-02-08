@@ -7,22 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class MyCustomMail extends Mailable
+class Contact_Inquiry extends Mailable
 {
     use Queueable, SerializesModels;
-// public $message;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
 
-    public $data;
+     public $data;
 
     public function __construct($data)
     {
-         $this->data = $data;
-        
+        $this->data = $data;
     }
 
     /**
@@ -32,12 +31,11 @@ class MyCustomMail extends Mailable
      */
     public function build()
     {
+        $address = 'contact@saakin.qa';
+        $subject = 'Contact Saakin Qatar';
+        $name = 'Contact Us Email';
 
-        $address = $this->data['user_email'];
-        $subject = 'Property Inquiry';
-        $name = 'Saakin Qatar';
-
-        return $this->view('emails.inquiry')
+        return $this->view('emails.contact')
                     ->from($address, $name)
                     ->cc($address, $name)
                     ->bcc($address, $name)

@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\MyCustomMail;
+
 use App\City;
 use App\Types;
 use App\Properties;
@@ -16,6 +18,7 @@ use App\PropertyCities;
 use App\PropertySubCities;
 use App\PropertyTowns;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 use Stevebauman\Location\Facades\Location;
 
 /*
@@ -28,6 +31,22 @@ use Stevebauman\Location\Facades\Location;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+use App\Mail\TestEmail;
+// Route::get('testmail',function(){
+
+//     $data = ['message' => 'This is a test!'];
+//     Mail::to('webmaster@saakin.qa')->send(new MyCustomMail($data));
+//     return redirect('/');
+
+// });
+    
+// Route::get('/testmail', function(){
+//     // $message= ['message' => 'This mail is for testing purpose'];
+//     Mail::to('webmaster@saakin.qa')->send(new MyCustomMail());
+//     return redirect('/');
+// })->name('testmail');
 
 
 Route::get('clear', function(){

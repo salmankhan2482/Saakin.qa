@@ -24,6 +24,7 @@
 	                <th>{{trans('words.name')}}</th>
 	                <th>{{trans('words.email')}}</th>
 	                <th>{{trans('words.phone')}}</th>
+	                <th>{{trans('words.agency')}}</th>
 	                <th>{{trans('words.message')}}</th>
 	                <th class="text-center width-100">{{trans('words.action')}}</th>
 	            </tr>
@@ -37,6 +38,7 @@
                 <td>{{ $inquiries->name }}</td>
                 <td>{{ $inquiries->email }}</td>
                 <td>{{ $inquiries->phone }}</td>
+                <td>{{ $inquiries->Agencies->name }} </td>
                 <td>{{ $inquiries->message }}</td>
                 <td class="text-center">
                 	 
