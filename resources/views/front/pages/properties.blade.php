@@ -704,7 +704,7 @@ Link:'.$propertyUrl;
                                     <div class="row">
                                         <div class="col-md-8 offset-md-2  col-xs-12 ">
                                             <div class="page-num text-center">
-                                                <h1>Record Not Found!</h1>
+                                                <h2>Record Not Found!</h1>
                                             </div>
                                         </div>
                                     </div>

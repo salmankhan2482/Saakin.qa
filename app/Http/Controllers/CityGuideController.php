@@ -7,6 +7,10 @@ use App\City;
 use App\CityDetail;
 use App\Properties;
 use App\LandingPage;
+use App\PropertyAreas;
+use App\PropertyCities;
+use App\PropertySubCities;
+use App\PropertyTowns;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -41,7 +45,20 @@ class CityGuideController extends Controller
         $propertiesForSale = Properties::where('address_slug', 'like', '%'.$cityGuide->city_slug.'%')
         ->where('property_purpose', 'Sale')->get();
         
-        return view('front.pages.city_guide_detail',compact('cityGuide','cityGuideDetails','propertiesForRent', 'propertiesForSale','cityGuideContent'));
+        $url = '';
+        if($city = PropertyCities::where('name', $cityGuide->name)->value('id')){
+            $url = '?city='.$city;
+        }elseif($subcity = PropertySubCities::where('name', $cityGuide->name)->value('id')){
+            $url = '?subcity='.$subcity;
+        }elseif($town = PropertyTowns::where('name', $cityGuide->name)->value('id')){
+            $url = '?town='.$town;
+        }elseif($area = PropertyAreas::where('name', $cityGuide->name)->value('id')){
+            $url = '?area='.$area;
+        }else{
+            $url = '?property_purpose=Rent';
+        }
+
+        return view('front.pages.city_guide_detail',compact('cityGuide','cityGuideDetails','propertiesForRent', 'propertiesForSale','cityGuideContent','url'));
     }
 
 }

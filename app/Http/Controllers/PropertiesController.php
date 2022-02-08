@@ -18,6 +18,7 @@ use App\PropertyAreas;
 use App\PropertyTowns;
 use App\PropertyCities;
 use App\PropertyAmenity;
+use App\PropertyCounter;
 use App\PropertyGallery;
 use App\PropertyPurpose;
 use App\PropertyDocument;
@@ -27,7 +28,11 @@ use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\PropertyNeighborhood;
+
 use App\Mail\Property_Inquiry;
+
+use Illuminate\Support\Carbon;
+
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -244,27 +249,23 @@ class PropertiesController extends Controller
 
     public function findKeyWord($city = null, $subcity = null, $town = null, $area = null)
     {   
-        $cityResult = '';
-        $subcityResult = '';
-        $townResult = '';
-        $areaResult = '';
         $keyword = '';
-        
+        // dd($subcity);
         if($city != null){
             $cityResult = PropertyCities::find($city);
             $keyword = $cityResult->name;
         }
         if($subcity != null){
             $subcityResult = PropertySubCities::find($subcity);
-            $keyword = $subcityResult->name.' ('.$cityResult->name.')';
+            $keyword = $subcityResult->name.' ('.$subcityResult->city->name.')';
         }
         if($town != null){
             $townResult = PropertyTowns::find($town);
-            $keyword = $townResult->name.' ('.$cityResult->name.' , '.$subcityResult->name.')';
+            $keyword = $townResult->name.' ('.$townResult->city->name.' , '.$townResult->subcity->name.')';
         }
         if($area != null){
             $areaResult = PropertyAreas::find($area);
-            $keyword = $areaResult->name.' ('.$cityResult->name.' , '.$subcityResult->name.', '.$townResult->name.')';
+            $keyword = $areaResult->name.' ('.$areaResult->city->name.' , '.$areaResult->subcity->name.', '.$areaResult->town->name.')';
         }
 
         return $keyword;
@@ -336,14 +337,28 @@ class PropertiesController extends Controller
         } else {
 
             $visitor = request()->ip();
-            $traffic = PageVisits::where('ip_address', $visitor)->where('property_id', $id)->first();
+            $traffic = PageVisits::where('ip_address', $visitor)
+            ->where('property_id', $id)
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->first();
 
             if (!$traffic) {
                 $traffic = new PageVisits();
                 $traffic->ip_address = $visitor;
                 $traffic->property_id = $id;
-                $traffic->count = 1;
-                $traffic->save();
+                if($traffic->save()){
+                    $exist = DB::table('property_counters')->where('property_id',  $id)->first();
+                    // PropertyCounter::where('property_id',  $id)->first();
+                    if($exist){
+                        $exist->counter = $exist->counter + 1;
+                        $exist->update(); 
+                    }else{
+                        $addNew = new PropertyCounter();
+                        $addNew->property_id = $id;
+                        $addNew->counter = 1;
+                        $addNew->save();
+                    };
+                }
             }
         }
 
@@ -952,7 +967,7 @@ class PropertiesController extends Controller
             if($buyOrRent == 'Rent' OR $buyOrRent == 'rent'){ $property_purpose = 'Rent'; } else{ $property_purpose = 'Sale'; }
         
         }
-        
+
         $subcitie_props = Properties::where('sub_city_slug',$property_type_purpose)->get();
         $town_props = Properties::where('town_slug', $property_type_purpose)->get();
         $area_props = Properties::where('area_slug', $property_type_purpose)->get();
@@ -1130,7 +1145,7 @@ class PropertiesController extends Controller
 
         }
 
-        $type = Types::where('slug', $property_type)->orWhere('plural', $property_type)->first();
+        $type = Types::where('plural', $property_type)->firstOrFail();
         $city = PropertyCities::where('slug', $city)->firstOrFail();
         
         $properties = Properties::where('status', 1)

@@ -340,7 +340,7 @@
                                     </h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">
-                                        {{$top5Properties->count()}}
+                                        {{-- {{$top5Properties->count()}} --}}
                                     </h2>
                                 </div>
                             </div>

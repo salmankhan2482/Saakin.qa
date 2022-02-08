@@ -4,13 +4,23 @@ use App\Mail\MyCustomMail;
 
 use App\City;
 use App\Types;
+use App\PageVisits;
 use App\Properties;
+use App\PropertyAreas;
+use App\PropertyTowns;
+use App\PropertyCities;
+use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\BlogController;
+use Stevebauman\Location\Facades\Location;
+use App\Http\Controllers\ClickCountersController;
 use App\Http\Controllers\PropertyReportController;
 use App\Http\Controllers\Admin\PropertiesController;
+
 use App\Http\Controllers\ClickCountersController;
 use App\PageVisits;
 use App\PropertyAreas;
@@ -20,6 +30,7 @@ use App\PropertyTowns;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Stevebauman\Location\Facades\Location;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,21 +44,11 @@ use Stevebauman\Location\Facades\Location;
 */
 
 
-use App\Mail\TestEmail;
-// Route::get('testmail',function(){
-
-//     $data = ['message' => 'This is a test!'];
-//     Mail::to('webmaster@saakin.qa')->send(new MyCustomMail($data));
-//     return redirect('/');
-
-// });
+Route::get('/saakin', function(){
     
-// Route::get('/testmail', function(){
-//     // $message= ['message' => 'This mail is for testing purpose'];
-//     Mail::to('webmaster@saakin.qa')->send(new MyCustomMail());
-//     return redirect('/');
-// })->name('testmail');
+Mail::to('test@gmail.com')->send(new TestMail());
 
+});
 
 Route::get('clear', function(){
     Artisan::call('storage:link');
@@ -60,7 +61,6 @@ Route::get('clear', function(){
 
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
-
 
 Route::get('auth/google', 'SocialController@redirectToGoogle')->name('google.login');
 Route::get('auth/facebook', 'SocialController@redirectToFacebook')->name('facebook.login');
@@ -287,10 +287,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('propertySubCities/delete/{id}', 'PropertySubCitiesController@destroy')->name('propertySubCities.destroy');
     //property towns routes
     Route::resource('propertyTowns', 'PropertyTownsController');
-    Route::get('propertyTowns/delete/{id}', 'propertyTownsController@destroy')->name('propertyTowns.destroy');
+    Route::get('propertyTowns/delete/{id}', 'PropertyTownsController@destroy')->name('propertyTowns.destroy');
     //property areas routes
     Route::resource('propertyAreas', 'PropertyAreasController');
-    Route::get('propertyAreas/delete/{id}', 'propertyAreasController@destroy')->name('propertyAreas.destroy');
+    Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
 
     //property click counter or traffic route
     Route::resource('click_counter', 'ClickCountersController');

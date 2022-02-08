@@ -113,6 +113,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">
+                            Site Url
+                        </label>
+                        <div class="col-sm-9">
+                            <input type="text" name="site_url" value="{{ $settings->site_url }}" class="form-control"
+                                value="">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
                         <label for="" class="col-sm-3 control-label">{{ trans('words.site_name') }}</label>
                         <div class="col-sm-9">
                             <input type="text" name="site_name" value="{{ $settings->site_name }}" class="form-control"
