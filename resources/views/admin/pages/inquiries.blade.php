@@ -25,7 +25,7 @@
 	                <th>{{trans('words.email')}}</th>
 	                <th>{{trans('words.phone')}}</th>
 	                <th>{{trans('words.agency')}}</th>
-	                <th>{{trans('words.message')}}</th>
+	                {{-- <th>{{trans('words.message')}}</th> --}}
 	                <th class="text-center width-100">{{trans('words.action')}}</th>
 	            </tr>
             </thead>
@@ -38,11 +38,25 @@
                 <td>{{ $inquiries->name }}</td>
                 <td>{{ $inquiries->email }}</td>
                 <td>{{ $inquiries->phone }}</td>
-                <td>{{ $inquiries->Agencies->name }} </td>
-                <td>{{ $inquiries->message }}</td>
+                <td>{{ $inquiries->Agencies->name ??''}} </td>
+                {{-- <td>{{ $inquiries->message }}</td> --}}
                 <td class="text-center">
-                	 
-                    <a href="{{ url('admin/inquiries/delete/'.Crypt::encryptString($inquiries->id)) }}" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return confirm('{{trans('words.dlt_warning_text')}}')" data-toggle="tooltip" title="{{trans('words.remove')}}"> <i class="fa fa-remove"></i> </a>
+                    <a 
+                                    href="{{ url('admin/inquiry_view', $inquiries->id ) }}" 
+                                    class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" 
+                                    title="{{trans('words.view')}}" target="_blank"
+                                > 
+                                    <i class="fa fa-eye"></i> </a>
+                                
+                                <a 
+                                    href="{{ url('admin/inquiries/delete/'.Crypt::encryptString($inquiries->id)) }}" 
+                                    class="cu_btn btn btn-icon waves-effect waves-light btn-danger m-b-5" 
+                                    onclick="return confirm('{{trans('words.dlt_warning_text')}}')" 
+                                    data-toggle="tooltip" 
+                                    title="{{trans('words.remove')}}"
+                                > 
+                                    <i class="fa fa-remove"></i> 
+                                </a>
                 
             </td>
                 
