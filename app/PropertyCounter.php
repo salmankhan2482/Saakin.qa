@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PropertyCounter extends Model
 {
     protected $table = 'property_counters';
-    protected $fillable = [];
+    protected $fillable = ['property_id','counter'];
 
     public function property()
     {

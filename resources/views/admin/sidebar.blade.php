@@ -265,10 +265,10 @@
                     </li>
 
                     
-                    <li class="submenu 
-                    {{ classActivePath('click_counter') }}">
+                    <li class="submenu  {{ classActivePath('click_counter') }}">
                     
-                        <a href="#" @if ( classActivePath('click_counter') ) class="open" @endif>
+                        <a href="#" 
+                        @if ( classActivePath('click_counter') ) class="open" @endif>
                         <i class="fa fa-send"></i>
                             Traffic
                         </a>
@@ -284,11 +284,7 @@
                                 </a>
                             </li>
                             
-                            <li class="{{ classActivePath('click_counter') }}">
-                                <a href="{{ route('click_counter.index') }}">
-                                    Click Counter
-                                </a>
-                            </li>
+                        
                             
                         </ul>
                     </li>
