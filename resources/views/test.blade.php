@@ -1,18 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <a href="{{ '' }}">
-        First Phase Rent
-    </a>
-    <br><br>
-    <a href="{{ '' }}">
-        First Phase Sale
-    </a>
-</body>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h2>Test Email</h2>
+    {{-- <p>{{ $test_message }}</p> --}}
+    <?php print_r($data); ?>
+  </body>
 </html>

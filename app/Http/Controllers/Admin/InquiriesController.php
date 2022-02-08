@@ -35,7 +35,7 @@ class InquiriesController extends MainAdminController
             
         } else {
             $inquirieslist = Enquire::orderBy('id', 'desc')->paginate(10);
-            dd($inquirieslist);
+            
         }
         
 

@@ -22,15 +22,21 @@ use App\PropertyCounter;
 use App\PropertyGallery;
 use App\PropertyPurpose;
 use App\PropertyDocument;
+use App\Mail\MyCustomMail;
 use App\PropertyFloorPlan;
 use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\PropertyNeighborhood;
+
+use App\Mail\Property_Inquiry;
+
 use Illuminate\Support\Carbon;
+
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -440,36 +446,42 @@ class PropertiesController extends Controller
         $enquire->updated_at = date("Y-m-d H:i:s");
         $enquire->save();
   
-        $data_email = array(
-                'user_name' => $inputs['user_name'],
-                'user_email' => $inputs['user_email'],
-                'telephone' => $inputs['telephone'],
-                'user_message' => $inputs['user_message'],
-                'movein_date' => $inputs['movein_date'],
-                'property_id' => $property_data['id'],
-                'property_name' => $property_data['property_name'],
-                'property_type' => $property_data->propertiesTypes->types,
-                'agency_name' => $property_data->Agency->name,
-                'agency_email' => $property_data->Agency->email,
-                'bathrooms' => $property_data['bathrooms'],
-                'bedrooms' => $property_data['bedrooms'],
-                'price' => $property_data['price'],
-                'property_purpose' => $property_data['property_purpose'],
-                'address' => $property_data['address'],
-                'city' => $property_data['city'],
-                'featured_image' => $property_data['featured_image'],
-                'land_area' => $property_data['land_area'],
-                'refference_code' => $property_data['refference_code'],
-            );
-                
-            \Mail::send('emails.inquiry',$data_email, function ($message) use ($property_data,$inputs) {
-                $message->from($inputs['user_email'])->subject
-                ('Saakin Inc. | Inquiry Email');
-                $message->to('webmaster@saakin.qa');
-                // $message->cc($inputs['user_email']);
-                $message->bcc($property_data->Agency->email, 'Saakin');
-            });
+        // $data_email = array(
+            $data_email['user_name'] = $inputs['user_name'];
+            $data_email['user_email'] = $inputs['user_email'];
+            $data_email['telephone'] = $inputs['telephone'];
+            $data_email['user_message'] = $inputs['user_message'];
+            $data_email['movein_date'] = $inputs['movein_date'];
+            $data_email['property_id'] = $property_data['id'];
+            $data_email['property_name'] = $property_data['property_name'];
+            $data_email['property_type'] = $property_data->propertiesTypes->types;
+            $data_email['agency_id'] = $property_data->Agency->id;
+            $data_email['agency_name'] = $property_data->Agency->name;
+            $data_email['agency_email'] = $property_data->Agency->email;
+            $data_email['bathrooms'] = $property_data['bathrooms'];
+            $data_email['bedrooms'] = $property_data['bedrooms'];
+            $data_email['price'] = $property_data['price'];
+            $data_email['property_purpose'] = $property_data['property_purpose'];
+            $data_email['address'] = $property_data['address'];
+            $data_email['city'] = $property_data['city'];
+            $data_email['featured_image'] = $property_data['featured_image'];
+            $data_email['land_area'] = $property_data['land_area'];
+            $data_email['refference_code'] = $property_data['refference_code'];
+            
+            Mail::to('webmaster@saakin.qa')->send(new MyCustomMail($data_email));
 
+            // dd($data_email);
+            // return view('emails.inquiry', compact('data'));
+            // Mail::to('webmaster@saakin.qa')->send(new Property_Inquiry($data));
+                
+            // \Mail::send('emails.inquiry',$data_email, function ($message) use ($property_data,$inputs) {
+            //     $message->subject
+            //     ('Saakin Inc. | Inquiry Email');
+            //     $message->to('umar.multitasksols@gmail.com');
+            //     // $message->cc($inputs['user_email']);
+            //     // $message->bcc($property_data->Agency->email, 'Saakin');
+            // });
+            
             Session::flash('message', trans('words.thanks_for_contacting_us')); 
             return redirect()->back();
     }

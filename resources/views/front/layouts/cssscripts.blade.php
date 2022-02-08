@@ -24,14 +24,15 @@
 <meta property="og:image" content="@yield('image',  url('/upload/favicon1.png'))"  />
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JHDF71ZW6S"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0DHP1WPHH9"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-JHDF71ZW6S');
+  gtag('config', 'G-0DHP1WPHH9');
 </script>
+
 
 <!-- Rich Result Test Code for https://saakin.com/ -->
 <script type="application/ld+json">

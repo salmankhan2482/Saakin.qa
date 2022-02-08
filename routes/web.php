@@ -1,5 +1,7 @@
 <?php
 
+use App\Mail\MyCustomMail;
+
 use App\City;
 use App\Types;
 use App\PageVisits;
@@ -18,7 +20,17 @@ use Stevebauman\Location\Facades\Location;
 use App\Http\Controllers\ClickCountersController;
 use App\Http\Controllers\PropertyReportController;
 use App\Http\Controllers\Admin\PropertiesController;
-use App\Mail\TestMail;
+
+use App\Http\Controllers\ClickCountersController;
+use App\PageVisits;
+use App\PropertyAreas;
+use App\PropertyCities;
+use App\PropertySubCities;
+use App\PropertyTowns;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
+use Stevebauman\Location\Facades\Location;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,12 +44,12 @@ use App\Mail\TestMail;
 */
 
 
-
 Route::get('/saakin', function(){
     
 Mail::to('test@gmail.com')->send(new TestMail());
 
 });
+
 Route::get('clear', function(){
     Artisan::call('storage:link');
     Artisan::call('config:cache');
