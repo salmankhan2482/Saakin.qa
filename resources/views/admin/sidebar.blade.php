@@ -264,12 +264,12 @@
                         </a>
                     </li>
 
+
+                    <li class="submenu  {{ classActivePath('click_counter') }}">
                     
-                    {{-- traffic counter click routes --}}
-                    <li class="submenu 
-                    {{ classActivePath('click_counter') }} {{ classActivePath('traffic_per_month') }} {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }} {{ classActivePath('top_5_areas') }} {{ classActivePath('total_leads') }} ">
-                    
-                        <a href="#" @if ( classActivePath('click_counter') or classActivePath('traffic_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads') ) class="open" @endif>
+                        <a href="#" 
+                        @if ( classActivePath('click_counter') ) class="open" @endif>
+
                         <i class="fa fa-send"></i>
                             Traffic
                         </a>
@@ -291,7 +291,7 @@
                                     Traffic / Month
                                 </a>
                             </li>
-                            
+
                             <li class="{{ classActivePath('total_clicks') }}">
                                 <a href="{{ route('total_clicks') }}">
                                     Total Clicks
@@ -315,6 +315,7 @@
                                     Total Leads 
                                 </a>
                             </li>
+
                             
                         </ul>
                     </li>

@@ -97,23 +97,7 @@ class PropertiesController extends Controller
         $max_price =  (int)$request->max_price;
         $min_area = (int)$request->min_area;
         $max_area = (int)$request->max_area;
-        // dd(Properties::where('property_type', request('property_type'))->when($city, function ($query) {
-        //     // city
-        //     $query->where('city', request()->city);
-        // })
-        // ->when($subcity, function ($query) {
-        //     // sub city
-        //     $query->where('subcity', request()->subcity);
-
-        // })
-        // ->when($town, function ($query) {
-        //     // town
-        //     $query->where('town', request()->town);
-        // })
-        // ->when($area, function ($query) {
-        //     // area
-        //     $query->where('area', request()->area);
-        // })->get());
+      
         $properties = Properties::where('status', 1)
             ->when(request()->property_purpose, function ($query) {
                 $query->where('property_purpose', request()->property_purpose);
@@ -332,34 +316,23 @@ class PropertiesController extends Controller
 
     public function single_properties(Request $request, $property_purpose, $slug, $id)
     {
-        if (Auth::check() && Auth::user()->usertype == 'Admin') {
-            //we dont want to count the views for the admin
-        } else {
+        $visitor = request()->ip();
+        $traffic = PageVisits::where('ip_address', $visitor)
+        ->where('property_id', $id)
+        ->whereMonth('created_at', Carbon::now()->month)
+        ->first();
 
-            $visitor = request()->ip();
-            $traffic = PageVisits::where('ip_address', $visitor)
-            ->where('property_id', $id)
-            ->whereMonth('created_at', Carbon::now()->month)
-            ->first();
+        if (!$traffic) {
+            $traffic = new PageVisits();
+            $traffic->ip_address = $visitor;
+            $traffic->property_id = $id;
+            $traffic->save();
 
-            if (!$traffic) {
-                $traffic = new PageVisits();
-                $traffic->ip_address = $visitor;
-                $traffic->property_id = $id;
-                if($traffic->save()){
-                    $exist = DB::table('property_counters')->where('property_id',  $id)->first();
-                    // PropertyCounter::where('property_id',  $id)->first();
-                    if($exist){
-                        $exist->counter = $exist->counter + 1;
-                        $exist->update(); 
-                    }else{
-                        $addNew = new PropertyCounter();
-                        $addNew->property_id = $id;
-                        $addNew->counter = 1;
-                        $addNew->save();
-                    };
-                }
-            }
+            $product = PropertyCounter::updateOrCreate(
+                [ 'property_id' => $traffic->property_id ],
+                [ 'counter' => \DB::raw('counter + 1'),                ]
+            );
+
         }
 
         $property = Properties::with('gallery')->where('property_slug', $slug)->findOrFail($id);
@@ -373,11 +346,17 @@ class PropertiesController extends Controller
         $property_gallery_images = PropertyGallery::where('property_id', $property->id)->get();
         $floorPlans = PropertyFloorPlan::where('property_id', $property->id)->get();
         $documents = PropertyDocument::where('property_id', $property->id)->get();
-        $views =  $property->views + 1;
-
-        $property->views  = $views;
-        $property->save();
-
+        $address =  '';
+        if($property->area){
+            if($property->city && $property->subcity){
+                $address = $property->propertyCity->name.', '.$property->propertySubCity->name.', '.$property->propertyTown->name;
+            }
+        }else{
+            if($property->city && $property->subcity){
+                $address = $property->propertyCity->name.', '.$property->propertySubCity->name;
+            }
+        }
+        
         $properties = Properties::where('address', $property->address)
                     ->where("status", "1")
                     ->where("property_purpose", $property->property_purpose)
@@ -389,7 +368,7 @@ class PropertiesController extends Controller
         
         $property_des = Str::limit($property->description, 170, '...');
 
-        return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des'));
+        return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address'));
 
     }
 

@@ -511,7 +511,7 @@ Link:'.$propertyUrl;
                                                 class="btn btn-sm btn-info">View</a>
                                         </div>
                                     </div>
-                                    <p>
+                                    <p style="width: 11em !important;">
                                         @if (isset($property->propertyArea->name))
                                             {{ $property->propertyArea->name }}
                                         @elseif(isset($property->propertyTown->name))
@@ -524,11 +524,8 @@ Link:'.$propertyUrl;
                                         
                                         <br><br>
                                         
-                                        @isset($property->propertyCity->name)
-                                        {{ $property->propertyCity->name.', ' }}
-                                        @endisset
+                                        {{ $address ? $address :  $property->address }}
 
-                                        {{ $property->address }}
                                     </p>
                                 </div>
                             </div>
