@@ -2,34 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\PropertyAmenity;
-use App\PropertyGallery;
-use App\PropertyNeighborhood;
-use App\Types;
-use App\User;
-use App\Properties;
-use App\Agency;
 use App\Http;
-
-
-use App\XmlRecord;
-use Geocoder\Geocoder;
+use App\User;
+use App\Types;
+use App\Agency;
+use App\Enquire;
 use http\Client;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Auth;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
-use Intervention\Image\Facades\Image;
+use App\XmlRecord;
+use App\Properties;
+use App\LandingPage;
+
 use SimpleXMLElement;
 use App\Http\Requests;
-use App\LandingPage;
-use Illuminate\Support\Facades\DB;
-use GuzzleHttp\RequestOptions;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Contracts\Encryption\DecryptException;
+use Geocoder\Geocoder;
+use App\PropertyAmenity;
+use App\PropertyGallery;
+use App\Mail\Agent_Inquiry;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\PropertyNeighborhood;
+use App\Http\Controllers\Auth;
+use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Redirect;
 use Orchestra\Parser\Xml\Facade as XmlParser;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Illuminate\Support\Facades\Validator;
 
 class AgenciesController extends Controller
 {
@@ -141,35 +146,38 @@ class AgenciesController extends Controller
     public function agency_email(Request $request)
     {
 
-        $data =  \Request::except(array('_token'));
-
+        $data =  \Request::except(array('_token')) ;  
+              
         $inputs = $request->all();
-
-        $rule = array(
+	    $rule=array(
             'name' => 'required',
-            'email' => 'required',
-            'message' => 'required'
+            'email' => 'required|email',
+            'your_message' => 'required'
         );
 
-        $validator = \Validator::make($data, $rule);
-
-        if ($validator->fails()) {
-            \Session::flash('flash_message_agent', 'name,email and message field are required');
-            return redirect()->back()->withErrors($validator->messages());
+	   	$validator = Validator::make($data,$rule);
+        if ($validator->fails()){
+            return redirect()->back()->withErrors($validator->messages())->withInput();
         }
-
-        $enquire = new Enquire;
-
-        $enquire->property_id = $inputs['property_id'];
-        $enquire->agent_id = $inputs['agent_id'];
+    
+        $enquire = new Enquire();
+        $enquire->agency_id = $inputs['agency_id'];
+        $enquire->type = $inputs['type'];
         $enquire->name = $inputs['name'];
         $enquire->email = $inputs['email'];
         $enquire->phone = $inputs['phone'];
-        $enquire->message = $inputs['message'];
-
-
+        $enquire->subject = $inputs['subject'];
+        $enquire->message = $inputs['your_message'];
         $enquire->save();
 
+        $data_email ['name'] = $inputs['name'];
+        $data_email['email'] = $inputs['email'];
+        $data_email['phone'] = $inputs['phone'];
+        $data_email['subject'] = $inputs['subject'];
+        $data_email['your_message'] = $inputs['your_message'];
+
+        Mail::to('webmaster@saakin.qa')->send(new Agent_Inquiry($data_email));
+        
         \Session::flash('flash_message_agent', 'Message send successfully');
 
         return \Redirect::back();

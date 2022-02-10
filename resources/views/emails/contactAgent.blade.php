@@ -1,3 +1,4 @@
+@dd($data_email);
 <!DOCTYPE html>
 
 <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
@@ -234,7 +235,7 @@
                                                                                 <strong>
                                                                                     Name:
                                                                                 </strong>
-                                                                                {{ $name ?? '' }}
+                                                                                {{ $data_email['name'] ?? '' }}
                                                                             </span>
                                                                         </p>
                                                                     </div>
@@ -257,7 +258,7 @@
                                                                                 <strong>
                                                                                     Email:
                                                                                 </strong>
-                                                                                {{ $email ?? '' }}
+                                                                                {{ $data_email['email'] ?? '' }}
                                                                             </span>
                                                                         </p>
                                                                     </div>
@@ -280,7 +281,7 @@
                                                                                 <strong>
                                                                                     Phone:
                                                                                 </strong>
-                                                                                {{ $phone ?? '' }}
+                                                                                {{ $data_email['phone'] ?? '' }}
                                                                             </span>
                                                                         </p>
                                                                     </div>
@@ -303,7 +304,7 @@
                                                                                 <strong>
                                                                                     Subject:
                                                                                 </strong>
-                                                                                {{ $subject ?? '' }}
+                                                                                {{ $data_email['subject'] ?? '' }}
                                                                             </span>
                                                                         </p>
                                                                     </div>
@@ -326,7 +327,7 @@
                                                                                 <strong>
                                                                                     Message:
                                                                                 </strong>
-                                                                                {{ $your_message ?? '' }}
+                                                                                {{ $data_email['your_message'] ?? '' }}
                                                                             </span>
                                                                         </p>
                                                                     </div>
@@ -490,4 +491,4 @@
     </table><!-- End -->
 </body>
 
-</html>
+</html> --}}

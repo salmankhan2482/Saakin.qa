@@ -334,13 +334,15 @@ class IndexController extends Controller
     public function contact_us_page()
     {
         $whatsapp_number = '+97470125000';
-        $whatsapp_text ='I would like to inquire about the Rent/Sale properties in Qatar posted on saakin.com';
+        $whatsapp_text ='I would like to inquire about the Rent/Sale properties in Qatar posted on saakin.qa';
         
         return view('front.pages.contact-us', compact('whatsapp_text','whatsapp_number'));
     }
     public function contact_us_sendemail(Request $request)
     {
-        $data =  \Request::except(array('_token')) ;        
+        
+        $data =  \Request::except(array('_token')) ;  
+              
         $inputs = $request->all();
 	    $rule=array(
             'name' => 'required',
@@ -364,34 +366,13 @@ class IndexController extends Controller
         $enquire->save();
         
 
-        // $data_email = array(
-            $data_email ['name'] = $inputs['name'];
-            $data_email['email'] = $inputs['email'];
-            $data_email['phone'] = $inputs['phone'];
-            $data_email['subject'] = $inputs['subject'];
-            $data_email['your_message'] = $inputs['your_message'];
-        // );
-        // return view('emails.contactAgent', compact('data_email'));
+        $data_email ['name'] = $inputs['name'];
+        $data_email['email'] = $inputs['email'];
+        $data_email['phone'] = $inputs['phone'];
+        $data_email['subject'] = $inputs['subject'];
+        $data_email['your_message'] = $inputs['your_message'];
 
-        if(isset($inputs['agency_mail']) &&  $inputs['agency_mail'] != ''){
-
-        Mail::to('webmaster@saakin.qa')->send(new Agent_Inquiry($data_email));
-
-        // // Mail::send('emails.contactAgent', $data_email, function($message) use($inputs) {
-        // //     $message->from($inputs['email'],$inputs['name']);
-        // //     $message->to('webmaster@saakin.qa', 'Contact Saakin Qatar')->subject('Saakin Qatar | Agent Contact Email');
-        // //     $message->bcc($inputs['agency_mail'], 'Saakin');
-        // });
-        }else{
-
-            // dd($data_email);
-        Mail::to('webmaster@saakin.qa')->send(new Contact_Inquiry($data_email));
-
-        // Mail::send('emails.contact', $data_email, function($message) use($inputs) {
-        //     $message->from($inputs['email'],$inputs['name']);
-        //     $message->to('info@saakin.com', 'Saakin Inc.')->subject('Saakin Qatar | Contact Us Email');
-        // });
-        }
+        Mail::to('webmaster@saakin.qa')->send(new Contact_Inquiry($data_email, request('email')));
 
 
         Session::flash('flash_message_contact', trans('words.thanks_for_contacting_us'));

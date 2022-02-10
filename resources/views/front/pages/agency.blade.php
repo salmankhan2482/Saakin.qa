@@ -825,12 +825,13 @@ Link:'.$propertyUrl;
     <div class="sidebar-right">
         <div class="widget">
             <h3 class="widget-title">Contact us</h3>
-            <form action="{{ url('contact-us') }}" id="" method="POST">
+            <form action="{{ url('agency-contact') }}" id="" method="POST">
                 @csrf
                 <input type="hidden" name="subject" class="form-control" value="">
                 <input type="hidden" name="agency_id" id="agency_id" value="{{ $agency->id }}" />
                 <input type="hidden" name="agency_name" id="agency_name" value="{{ $agency->name }}" />
                 <input type="hidden" name="agency_mail" value="{{$agency->email}}">
+                <input type="hidden" name="type" value="Agency Inquiry">
                 <div class="chat-group mt-1">
                     <input class="chat-field" type="text" name="name" id="name" placeholder="Your name"
                         required>

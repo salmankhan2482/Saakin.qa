@@ -30,11 +30,18 @@
             <div class="col-md-12">
                 <div class="section-title text-center">
                     <h2>Featured Properties</h2>
-                    <p class="text-justify">Saakin is the fastest growing Qatar Real Estate Directory you can find Properties for Rent in Qatar. For apartments on rent real estate agents in Qatar bring you the best apartments in Doha,
+                    <p class="text-justify">Saakin is the fastest-growing real estate directory in Qatar. 
+                        You can find featured properties on the website, 
+                        and you discover all the updates of the real estate market of Qatar through the listings. 
+                        Moreover, the portal has managed an amazing platform to connect buyers and sellers with real estate agencies.
                         <span id="dots">...</span>
                         <span id="more"> 
-                            The Pearl, West Bay, and properties from all over the country thourgh Qatar property
-                            directory.
+                            We respond to you quickly to connect with the agents to provide you with the best properties. 
+                            You find properties for Sale and Rent on the website, 
+                            and you get multiple choices to have the selling and buying properties in Qatar. 
+                            Whether you are searching for apartments for living or commercial properties for investment purposes, 
+                            we help you with fast assistance. Saakin inc tries its best to bring you the most desirable and ideal property. 
+                            You can have information on the specifications of the featured properties and prices through our portal.
                         </span>
                         <button onclick="myFunction()"  class="myBtn btn btn-sm btn-info-outline">Read more</button></p>
                 </div>

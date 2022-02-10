@@ -17,11 +17,11 @@ class Agent_Inquiry extends Mailable
      * @return void
      */
     
-     public $data;
+     public $data_email;
 
-    public function __construct($data)
+    public function __construct($data_email)
     {
-        $this->data = $data;
+        $this->data_email = $data_email;
     }
 
     /**
@@ -31,9 +31,10 @@ class Agent_Inquiry extends Mailable
      */
     public function build()
     {
-        $address = 'agent@saakin.qa';
-        $subject = 'Agent Inquiry';
-        $name = 'Agent Contact';
+
+        $address = $this->data_email['email'];
+        $subject = 'Agency Contact';
+        $name = $this->data_email['name'];
 
         return $this->view('emails.contactAgent')
                     ->from($address, $name)
@@ -41,6 +42,6 @@ class Agent_Inquiry extends Mailable
                     ->bcc($address, $name)
                     ->replyTo($address, $name)
                     ->subject($subject)
-                    ->with([ 'test_message' => $this->data ]);
+                    ->with([ 'data_email' => $this->data_email ]);
     }
 }

@@ -62,7 +62,7 @@ class InquiriesController extends MainAdminController
 
     public function view_inquiry($id)
     {
-        $inquire = Enquire::where('id', $id)->get();
+        $inquire = Enquire::where('id', $id)->first();
 
         return view('admin.pages.view_inquiry',compact('inquire'));
     }

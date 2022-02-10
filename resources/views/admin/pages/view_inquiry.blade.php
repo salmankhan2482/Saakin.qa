@@ -1,49 +1,38 @@
 @extends("admin.admin_app")
 
 @section('content')
-    <div id="main">
-        <div class="page-header">
-            <h4 style="font-size: 20px;">
-                <a class="property-img"
-                    {{-- href="{{ url(strtolower($clickCounters[0]->property->property_purpose) . '/' . $clickCounters[0]->property->property_slug . '/' . $clickCounters[0]->property->id) }}" --}}
-                    target="_blank">
-                    {{-- {!! \Illuminate\Support\Str::limit($clickCounters[0]->property->property_name, 40, '...') !!} --}}
-                </a>
-            </h4>
-        </div>
-        
-        @if (Session::has('flash_message'))
-            <div class="alert alert-success">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ Session::get('flash_message') }}
-            </div>
-        @endif
 
+    <div id="main">
         <div class="panel panel-default panel-shadow">
             <div class="panel-body">
 
                 <table id="data-table" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
-                    <thead>
                         <tr>
                             <th>Property ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Agency</th>
-                            <th>Message</th>
+                            <td>{{ $inquire->id }}</td>
                         </tr>
-                    </thead>
-
-                    <tbody>
-                        
-                            <tr>
-                                <td>{{ $inquire->id }}</td>
-                                <td>{{ $inquire->name }}</td>
-                                <td>{{ $inquire->email }}</td>
-                                <td>{{ $inquire->phone }}</td>
-                                <td>{{ $inquire->Agencies->name }}</td>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ $inquire->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>{{ $inquire->email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{ $inquire->phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Agency Name</th>
+                            <td>{{ $inquire->Agencies->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Subject</th>
+                            <td>{{ $inquire->subject }}</td>
+                        </tr>
+                        <tr> 
+                                <th>Message</th>
                                 <td>{{ $inquire->message }}</td>
                             </tr>
                     
@@ -61,29 +50,7 @@
         </div>
 
     </div>
-    {{-- <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="importModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import Agency</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('agencies.import') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="file" name="file" class="form-control">
-                        <br>
-                        <button class="btn btn-success">Import Agnecies Data</button>
-
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div> --}}
+    
 
     <!-- Modal -->
     <div class="modal fade" id="importAgencies" tabindex="-1" role="dialog" aria-labelledby="importAgenciesLabel"
@@ -93,29 +60,4 @@
 
 
 @endsection
-{{-- @section('scripts-custom') --}}
-    <script>
-        function importAgencies(id) {
-            $('#importAgencies').modal({
-                backdrop: 'static',
-                keyboard: true,
-                show: true
-            });
-            $.ajax({
-                url: '{{ route('get.agences.keys') }}',
-                type: "post",
-                dataType: 'json',
-                data: {
-                    '_token': '{{ @csrf_token() }}',
-                    id: id,
-                },
-                success: function(data) {
-                    if (data.status == 'success') {
-                        $('#importAgencies').html(data.html);
-                    }
-                },
 
-            });
-        }
-    </script>
-@endsection
