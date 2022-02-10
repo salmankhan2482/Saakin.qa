@@ -265,30 +265,47 @@
                     </li>
 
 
-                    <li class="submenu  {{ classActivePath('click_counter') }}">
+                    <li class="submenu  
+                    {{ classActivePath('click_counter') }} {{ classActivePath('traffic_per_month') }}
+                    {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }}
+                    {{ classActivePath('top_5_areas') }} {{ classActivePath('total_leads') }}
+                    {{ classActivePath('trafficUsers') }}
+                    "> 
                     
                         <a href="#" 
-                        @if ( classActivePath('click_counter') ) class="open" @endif>
+                        @if ( classActivePath('click_counter') or classActivePath('traffic_per_month') or 
+                        classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or 
+                        classActivePath('top_5_areas') or classActivePath('total_leads') or 
+                        classActivePath('trafficUsers') ) class="open" @endif>
 
                         <i class="fa fa-send"></i>
                             Traffic
                         </a>
                         <ul 
-                            @if ( classActivePath('click_counter') or classActivePath('traffic_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads')  ) 
+                            @if (   classActivePath('click_counter') or classActivePath('traffic_per_month') or 
+                                    classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or 
+                                    classActivePath('top_5_areas') or classActivePath('total_leads') or 
+                                    classActivePath('trafficUsers')   ) 
                             style="display: block" class="collapse in" 
                             @endif
                         >
 
-                            @if(auth()->user()->usertype == 'Admin')
-                                <li class="{{ classActivePath('click_counter') }}">
-                                    <a href="{{ route('click_counter.index') }}">
-                                        Clicks
-                                    </a>
-                                </li>
-                            @endif
+                            <li class="{{ classActivePath('click_counter') }}">
+                                <a href="{{ route('click_counter.index') }}">
+                                    Clicks
+                                </a>
+                            </li>
+
                             <li class="{{ classActivePath('traffic_per_month') }}">
                                 <a href="{{ route('traffic_per_month') }}">
-                                    Traffics
+                                    Traffic
+                                </a>
+                            </li>
+
+                            
+                            <li class="{{ classActivePath('trafficUsers') }}">
+                                <a href="{{ route('trafficUsers') }}">
+                                    Users
                                 </a>
                             </li>
 
@@ -487,13 +504,6 @@
                             @endif
                         >
 
-                            @if(auth()->user()->usertype == 'Admin')
-                                <li class="{{ classActivePath('click_counter') }}">
-                                    <a href="{{ route('click_counter.index') }}">
-                                        Click Counter
-                                    </a>
-                                </li>
-                            @endif
                             <li class="{{ classActivePath('traffic_per_month') }}">
                                 <a href="{{ route('traffic_per_month') }}">
                                     Traffic / Month
@@ -503,6 +513,12 @@
                             <li class="{{ classActivePath('total_clicks') }}">
                                 <a href="{{ route('total_clicks') }}">
                                     Total Clicks
+                                </a>
+                            </li>
+
+                            <li class="{{ classActivePath('trafficUsers') }}">
+                                <a href="{{ route('trafficUsers') }}">
+                                    Users
                                 </a>
                             </li>
                             

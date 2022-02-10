@@ -253,7 +253,7 @@
                                     </h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">
-                                        {{$trafficPerMonth->sum('counter')}}
+                                        {{$trafficPerMonth}}
                                     </h2>
                                 </div>
                             </div>
@@ -382,6 +382,36 @@
                 </div>
             </div>
         </a>
+
+
+        {{-- Number of users --}}
+        <a href="{{ route('trafficUsers') }}" style="text-decoration: none;">
+            <div class="col-sm-6 col-md-4">
+                <div class="panel panel-primary panel-shadow" style="background-color: #0ba19a !important;border-color:#0ba19a;">
+                    <div class="media">
+                        <div class="media-left">
+                            <div class="panel-body">
+                                <div style="width: 20rem ;">
+                                    <h5 class="margin-none" id="graphWeek-y">
+                                        No of Visitors / Month   
+                                    </h5>
+
+                                    <h2 class="margin-none" id="graphWeek-a">
+                                        {{$numberOfUsers->count()}}
+                                    </h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="media-body">
+                            <div class="pull-right width-150">
+                                <i class="fa fa-send fa-4x" style="margin: 8px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+
 
     </div>
     @endif

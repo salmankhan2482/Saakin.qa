@@ -12,6 +12,7 @@ use App\PropertyCities;
 use App\Mail\MyCustomMail;
 use App\PropertySubCities;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -289,6 +290,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('agencyTotalClicksList/{id}', 'ClickCountersController@agencyTotalClicksList')->name('agencyTotalClicksList');
     Route::get('traffic_per_month', 'ClickCountersController@trafficPerMonth')->name('traffic_per_month');
     Route::get('agencyTrafficList/{id}', 'ClickCountersController@agencyTrafficList')->name('agencyTrafficList');
+    Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
     Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
     Route::get('top_Ten_Properties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
     Route::get('top_5_areas', 'ClickCountersController@top5Areas')->name('top_5_areas');
