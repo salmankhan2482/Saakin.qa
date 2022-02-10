@@ -33,7 +33,7 @@ class MyCustomMail extends Mailable
     public function build()
     {
 
-        $address = $this->data['user_email'];
+        $address = 'umarwaqar1995@gmail.com';
         $subject = 'Property Inquiry';
         $name = 'Saakin Qatar';
 

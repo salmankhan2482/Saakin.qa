@@ -315,7 +315,8 @@ Route::post('subscribe', 'IndexController@subscribe');
 // Route::get('agencies', 'AgenciesController@index');
 Route::get('real-estate-agencies', 'AgenciesController@index')->name('real-estate-agencies');
 Route::post('real-estate-agencies', 'AgenciesController@index')->name('real-estate-agencies');
-Route::post('agency-email','AgenciesController@agency_email');
+// Route::post('agency-email','AgenciesController@agency_email');
+Route::post('agency-contact','AgenciesController@agency_email');
 
 Route::post('agencies', 'AgenciesController@searchAgencies');
 Route::get('agency/{name}/{id}', 'AgenciesController@agencyDetail');

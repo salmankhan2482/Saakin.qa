@@ -18,10 +18,12 @@ class Contact_Inquiry extends Mailable
      */
 
      public $data;
+     protected $email;
 
-    public function __construct($data)
+    public function __construct($data, $email)
     {
         $this->data = $data;
+        $this->email = $email;
     }
 
     /**
@@ -31,7 +33,8 @@ class Contact_Inquiry extends Mailable
      */
     public function build()
     {
-        $address = 'contact@saakin.qa';
+        // dd();
+        $address = $this->email;
         $subject = 'Contact Saakin Qatar';
         $name = 'Contact Us Email';
 
