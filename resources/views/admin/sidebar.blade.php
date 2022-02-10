@@ -282,21 +282,16 @@
                             @if(auth()->user()->usertype == 'Admin')
                                 <li class="{{ classActivePath('click_counter') }}">
                                     <a href="{{ route('click_counter.index') }}">
-                                        Click Counter
+                                        Clicks
                                     </a>
                                 </li>
                             @endif
                             <li class="{{ classActivePath('traffic_per_month') }}">
                                 <a href="{{ route('traffic_per_month') }}">
-                                    Traffic / Month
+                                    Traffics
                                 </a>
                             </li>
 
-                            <li class="{{ classActivePath('total_clicks') }}">
-                                <a href="{{ route('total_clicks') }}">
-                                    Total Clicks
-                                </a>
-                            </li>
                             
                             <li class="{{ classActivePath('top_Ten_Properties') }}">
                                 <a href="{{ route('top_Ten_Properties') }}">

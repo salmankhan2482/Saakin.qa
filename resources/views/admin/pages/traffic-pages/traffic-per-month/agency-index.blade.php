@@ -7,7 +7,30 @@
                Traffic Per Month
             </h4>
         </div>
-        
+        <div>
+            <div class="panel panel-shadow">
+                <div class="panel-body">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        {!! Form::open(['route' => 'traffic_per_month', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
+                        
+                        <div class="form-group">
+                            <label for="">From</label>
+                            <input type="date" id="start" name="from" value="{{ request('from') }}" >
+                        </div>
+                        <div class="form-group">
+                            <label for="">To</label>
+                            <input type="date" id="start" name="to" value="{{ request('to') }}" >
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default-dark ">{{ trans('words.search') }}</button>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -25,7 +48,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Property Link</th>
-                            <th>IP Address</th>
+                            <th>Total Traffic</th>
                         </tr>
                     </thead>
 
@@ -38,15 +61,15 @@
                                         {{ $click->property->property_name }}
                                     </a>
                                 </td>
-                                <td>{{ $click->ip_address }}</td>
+                                <td>{{ $click->counter }}</td>
                                
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="text-center">
-                                @include('admin.pagination', ['paginator' => $trafficPerMonth])
+                            <td colspan="3" class="text-center">
+                                {{-- @include('admin.pagination', ['paginator' => $trafficPerMonth]) --}}
                             </td>
                         </tr>
                     </tfoot>
@@ -56,5 +79,9 @@
         </div>
 
     </div>
+   
 
+@endsection
+@section('scripts-custom')
+   
 @endsection

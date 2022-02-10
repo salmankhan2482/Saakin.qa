@@ -2,12 +2,6 @@
 
 @section('content')
     <div id="main">
-        <div class="page-header">
-            <h4 style="font-size: 20px;">
-               Traffic Per Month
-            </h4>
-        </div>
-        
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -23,33 +17,31 @@
                 <table id="data-table" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Property Link</th>
-                            <th>IP Address</th>
+                            <th>Property ID</th>
+                            <th>Property Title</th>
+                            <th>Total Traffic</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($trafficPerMonth as $i => $click)
+                        @foreach ($totalTraffic as $i => $traffic)
                             <tr>
-                                <td>{{ $click->id }}</td>
+                                <td>{{ $traffic->pid }}</td>
                                 <td>
-                                    <a href="{{ url(strtolower($click->property->property_purpose) . '/' . $click->property->property_slug . '/' . $click->property->id) }}">
-                                        {{ $click->property->property_name }}
+                                    <a class="property-img"
+                                        href="{{ url(strtolower($traffic->ppurpose) . '/' . $traffic->pslug . '/' . $traffic->pid) }}"
+                                        target="_blank">
+                                        {!! \Illuminate\Support\Str::limit($traffic->pname, 40, '...') !!}
                                     </a>
                                 </td>
-                                <td>{{ $click->ip_address }}</td>
+                                <td>
+                                    {{ $traffic->count }}
+                                </td>
                                
                             </tr>
                         @endforeach
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="6" class="text-center">
-                                @include('admin.pagination', ['paginator' => $trafficPerMonth])
-                            </td>
-                        </tr>
-                    </tfoot>
+                   
                 </table>
             </div>
             <div class="clearfix"></div>
@@ -57,4 +49,10 @@
 
     </div>
 
+
+@endsection
+@section('scripts-custom')
+    <script>
+        
+    </script>
 @endsection

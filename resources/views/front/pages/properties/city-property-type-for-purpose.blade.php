@@ -551,7 +551,7 @@
                     @foreach ($subcities as $item)
                         <div>
                             <a class="px-3"
-                                href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose).'-'.$item->slug ]) }}">
+                            href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose).'-'.$item->slug ]) }}">
 
                                 <span style="color: #009FFF">
                                     {{ $item->name }}

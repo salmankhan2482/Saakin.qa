@@ -35,7 +35,6 @@ use App\Http\Controllers\Admin\PropertiesController;
 |
 */
 
-
 Route::get('/saakin', function(){
     
 Mail::to('test@gmail.com')->send(new TestMail());
@@ -289,6 +288,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('click_counter', 'ClickCountersController');
     Route::get('agencyTotalClicksList/{id}', 'ClickCountersController@agencyTotalClicksList')->name('agencyTotalClicksList');
     Route::get('traffic_per_month', 'ClickCountersController@trafficPerMonth')->name('traffic_per_month');
+    Route::get('agencyTrafficList/{id}', 'ClickCountersController@agencyTrafficList')->name('agencyTrafficList');
     Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
     Route::get('top_Ten_Properties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
     Route::get('top_5_areas', 'ClickCountersController@top5Areas')->name('top_5_areas');

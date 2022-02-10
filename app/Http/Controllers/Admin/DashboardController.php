@@ -14,6 +14,7 @@ use App\ClickCounters;
 
 use App\Http\Requests;
 use App\PageVisits;
+use App\PropertyCounter;
 use App\SubscriptionPlan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class DashboardController extends MainAdminController
                 $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
                 
                 //traffic per month
-                $trafficPerMonth = PageVisits:: whereMonth('created_at', Carbon::now()->month)
+                $trafficPerMonth = PropertyCounter:: whereMonth('created_at', Carbon::now()->month)
                 ->whereIn('property_id', $property_ids)->get();
 
                 // clicks per month

@@ -1,12 +1,17 @@
 @extends("admin.admin_app")
 
 @section('content')
+<div class="page-header">
+    <h4 style="font-size: 20px;">
+       Traffic Per Month
+    </h4>
+</div>
     <div>
         <div class="panel panel-shadow">
             <div class="panel-body">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-10">
-                    {!! Form::open(['route' => 'click_counter.index', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
+                    {!! Form::open(['route' => 'traffic_per_month', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
                     
                     <div class="form-group">
                         <label for="">From</label>
@@ -44,19 +49,19 @@
                         <tr>
                             <th>Agency ID</th>
                             <th>Agency Name</th>
-                            <th>Total Clicks</th>
+                            <th>Total Traffic</th>
                             <th class="text-center width-100">{{ trans('words.action') }}</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($clickCounters as $i => $click)
+                        @foreach ($trafficPerMonth as $i => $traffic)
                             <tr>
-                                <td>{{ $click->agency_id }}</td>
-                                <td>{{ $click->agency_name }}</td>
-                                <td>{{ $click->totalCall }}</td>
+                                <td>{{ $traffic->aid }}</td>
+                                <td>{{ $traffic->aname }}</td>
+                                <td>{{ $traffic->totalTraffic }}</td>
                                 <td>
-                                    <a class="btn btn-default-dark" href="{{ route('agencyTotalClicksList', $click->agency_id) }}">
+                                    <a class="btn btn-default-dark" href="{{ route('agencyTrafficList', $traffic->aid) }}">
                                         Show Properties
                                     </a>
                                 </td>
@@ -79,5 +84,5 @@
   
 @endsection
 @section('scripts-custom')
-
+   
 @endsection

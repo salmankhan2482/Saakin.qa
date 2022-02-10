@@ -562,7 +562,7 @@
                     @foreach ($areas as $item)
                     <div>
                         <a class="px-3"
-                            href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose).'-'.$subcity->slug.'-'.$town->slug.'-'.$item->slug ])  }}">
+                        href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose).'-'.$subcity->slug.'-'.$town->slug.'-'.$item->slug ]) }}">
 
                             <span style="color: #009FFF">
                                 {{ $item->name }}

@@ -78,7 +78,8 @@
                             <select class="form-control" id="property_type" name="property_type" required>
                                 <option value="">{{ trans('words.property_type') }}</option>
                                 @foreach ($types as $type)
-                                    <option value="{{ $type->id }}" @if (old('property_type') == $type->id) selected @endif>{{ $type->types }}
+                                    <option value="{{ $type->id }}" @if (old('property_type') == $type->id) selected @endif>
+                                        {{ $type->types }}
                                     </option>
                                 @endforeach
                             </select>

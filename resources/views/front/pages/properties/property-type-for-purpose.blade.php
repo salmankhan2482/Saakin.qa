@@ -349,7 +349,7 @@
                                     <ul class="property-short list-unstyled d-sm-flex mb-0">
                                         <li>
                                             <form
-                                                action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->slug) . '-for-' . $property_purpose]) }}"
+                                                action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->plural) . '-for-' . $property_purpose]) }}"
                                                 name="frmSortBy" id="frmSortBy" class="form-inline form-1" method="get">
                                                 <input type="hidden" name="buyOrRent"
                                                     value="{{ Request::segment(1) }}" />
@@ -558,7 +558,7 @@
                     @foreach ($cities as $item)
                         <div>
                             <a class="px-3"
-                                href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($item->slug), Str::slug($type->types) . '-for-' . strtolower($property_purpose)]) }}">
+                            href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($item->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}">
 
                                 <span style="color: #009FFF">
                                     {{ $item->name }}
