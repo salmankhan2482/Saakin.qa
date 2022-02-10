@@ -79,7 +79,7 @@ class SocialController extends Controller
 
         } catch (Exception $e) {
             // echo $e->getMessage();
-            echo '<pre> Email Address should be different and unique for facebbok and google login. </pre> <br>';
+            echo '<pre> Email Address should be different and unique for facebook and google login. </pre> <br>';
             echo '<a href="/"> Go To Home Page </a>';
         }
     }

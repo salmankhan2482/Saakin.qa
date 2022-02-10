@@ -30,14 +30,15 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
     'google' => [
-        'client_id' => '735444560856-s1199v07r6ip9ls8av315585bc5ok0qs.apps.googleusercontent.com',
-        'client_secret' => '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',
-        'redirect' => 'http://localhost:8000/auth/google/callback',
+
+        'client_id' => '254686404569-tff9kjq40khefgbahbrvqe0tssj0t6v0.apps.googleusercontent.com',
+        'client_secret' => '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',
+        'redirect' => 'https://www.saakin.qa/auth/google/callback',
     ],
     'facebook' => [
-        'client_id' => '897472160915230',
-        'client_secret' => '4dc73db9e2bd53f9462b4b4f78329a4f',
-        'redirect' => 'https://www.saakin.com/auth/facebook/callback',
+        'client_id' => '935870547061067',
+        'client_secret' => 'a2e9cbacbbbc3f8e7b60436d613bad1d',
+        'redirect' => 'https://www.saakin.qa/auth/facebook/callback',
     ],
 
 ];
