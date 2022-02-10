@@ -13,6 +13,17 @@ use App\PropertyCounter;
 
 class ClickCountersController extends Controller
 {
+
+    // $firstDay = Carbon::now()->startOfMonth()->modify('0 month')->toDateString(); 
+    // first day of a month
+    
+    // $lastDay = Carbon::now()->endOfMonth()->modify('0 month')->toDateString(); 
+    // last day of a month
+
+    
+    // '12/08/2020'
+    // $date = Carbon::createFromFormat('m/d/Y', $myDate)->endOfMonth()->format('Y-m-d');
+
     public function index()
     {
         $clickCounters = DB::table('click_counters')
@@ -29,6 +40,11 @@ class ClickCountersController extends Controller
         })
         ->when(request('from') && request('to'), function ($query) {
             $query->whereBetween('click_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
+        })
+        ->when(request('from') == '' && request('to') == '', function ($query) {
+            $query->whereMonth('click_counters.created_at', Carbon::now()->month);
+            request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
+            request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
         })
         ->groupBy('agency_name')
         ->get();
@@ -64,10 +80,21 @@ class ClickCountersController extends Controller
         if (auth()->user()->usertype == 'Agency') {
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
 
-            $trafficPerMonth = PropertyCounter:: whereMonth('created_at', Carbon::now()->month)
+            $trafficPerMonth = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
             ->whereIn('property_id', $property_ids)
+            ->when(request('from') , function ($query) {
+                $query->where('property_counters.created_at', '>=', request('from').' 00:00:01');
+            })
+            ->when(request('to') , function ($query) {
+                $query->where('property_counters.created_at', '<=', request('to').' 23:59:59');
+            })
             ->when(request('from') && request('to'), function ($query) {
-                $query->whereBetween('property_counters.created_at', [request('from') , request('to')]);
+                $query->whereBetween('property_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
+            })
+            ->when(request('from') == '' && request('to') == '', function ($query) {
+                $query->whereMonth('property_counters.created_at', Carbon::now()->month);
+                request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
+                request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
             })
             ->get();
 
@@ -88,6 +115,11 @@ class ClickCountersController extends Controller
             ->when(request('from') && request('to'), function ($query) {
                 $query->whereBetween('property_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
             })
+            ->when(request('from') == '' && request('to') == '', function ($query) {
+                $query->whereMonth('property_counters.created_at', Carbon::now()->month);
+                request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
+                request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
+            })
             ->groupBy('agencies.name')
             ->get();
             return view('admin.pages.traffic-pages.traffic-per-month.index', compact('trafficPerMonth'));
@@ -96,16 +128,87 @@ class ClickCountersController extends Controller
 
     public function agencyTrafficList($id)
     {
-            $totalTraffic = DB::table('property_counters')
-            ->join('properties', 'property_counters.property_id', 'properties.id')
-            ->select('properties.id as pid', 'properties.property_name as pname', 
-            'properties.property_purpose as ppurpose', 'properties.property_slug as pslug',
-            'property_counters.counter as count')
-            ->where('properties.agency_id', $id)
-            ->orderBy('count', 'desc')
+        $totalTraffic = DB::table('property_counters')
+        ->join('properties', 'property_counters.property_id', 'properties.id')
+        ->select('properties.id as pid', 'properties.property_name as pname', 
+        'properties.property_purpose as ppurpose', 'properties.property_slug as pslug',
+        'property_counters.counter as count')
+        ->where('properties.agency_id', $id)
+        ->orderBy('count', 'desc')
+        ->get();
+
+        return view('admin.pages.traffic-pages.traffic-per-month.show-list', compact('totalTraffic'));
+    }
+
+    public function trafficUsers()
+    {
+        if(auth()->user()->usertype == 'Admin'){
+            $users =  DB::table('page_visits')
+            ->leftJoin('properties', 'page_visits.property_id', 'properties.id')
+            ->join('agencies', 'properties.agency_id', 'agencies.id')
+            ->select('agencies.name as aname', 'agencies.id as aid', 
+            DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
+            ->when(request('from') , function ($query) {
+                $query->where('page_visits.created_at', '>=', request('from').' 00:00:01');
+            })
+            ->when(request('to') , function ($query) {
+                $query->where('page_visits.created_at', '<=', request('to').' 23:59:59');
+            })
+            ->when(request('from') && request('to'), function ($query) {
+                $query->whereBetween('page_visits.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
+            })
+            ->when(request('from') == '' && request('to') == '', function ($query) {
+                $query->whereMonth('page_visits.created_at', Carbon::now()->month);
+                request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
+                request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
+            })
+            ->orderBy('totalUsers', 'DESC')
+            ->groupBy('aname')
             ->get();
 
-            return view('admin.pages.traffic-pages.traffic-per-month.show-list', compact('totalTraffic'));
+            return view('admin.pages.traffic-pages.users.index', compact('users'));
+        }elseif(auth()->user()->usertype == 'Agency'){
+
+            // $users = DB::table('page_visits')
+            // ->leftJoin('properties', 'page_visits.property_id', 'properties.id')
+            // ->select('properties.id as pid', 'properties.property_name as pname', 
+            // 'properties.property_purpose as ppurpose', 'properties.property_slug as pslug', 
+            // DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
+            // ->when(request('from') , function ($query) {
+            //     $query->where('page_visits.created_at', '>=', request('from').' 00:00:01');
+            // })
+            // ->when(request('to') , function ($query) {
+            //     $query->where('page_visits.created_at', '<=', request('to').' 23:59:59');
+            // })
+            // ->when(request('from') && request('to'), function ($query) {
+            //     $query->whereBetween('page_visits.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
+            // })
+            // ->where('properties.agency_id', auth()->user()->agency_id)
+            // ->groupBy('pname')
+            // ->orderBy('totalUsers', 'DESC')
+            // ->get();
+
+            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+
+            $users = PageVisits::whereIn('property_id', $property_ids)
+                ->groupBy('ip_address')
+                ->when(request('from') , function ($query) {
+                    $query->where('page_visits.created_at', '>=', request('from').' 00:00:01');
+                })
+                ->when(request('to') , function ($query) {
+                    $query->where('page_visits.created_at', '<=', request('to').' 23:59:59');
+                })
+                ->when(request('from') && request('to'), function ($query) {
+                    $query->whereBetween('page_visits.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
+                })
+                ->when(request('from') == '' && request('to') == '', function ($query) {
+                    $query->whereMonth('created_at', Carbon::now()->month);
+                    request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
+                    request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
+                })->get();
+                
+            return view('admin.pages.traffic-pages.users.agency-index', compact('users'));
+        }
     }
 
     public function totalClicks()

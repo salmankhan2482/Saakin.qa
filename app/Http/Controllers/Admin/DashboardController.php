@@ -48,12 +48,15 @@ class DashboardController extends MainAdminController
                 
                 //traffic per month
                 $trafficPerMonth = PropertyCounter:: whereMonth('created_at', Carbon::now()->month)
-                ->whereIn('property_id', $property_ids)->get();
+                ->whereIn('property_id', $property_ids)->sum('counter');
 
                 // clicks per month
                 $clicksPerMonths = ClickCounters:: whereMonth('created_at', Carbon::now()->month)
                 ->whereIn('property_id', $property_ids)->get();
-                
+               
+                // number of users
+                $numberOfUsers = PageVisits:: whereMonth('created_at', Carbon::now()->month)
+                ->whereIn('property_id', $property_ids)->groupBy('ip_address')->get();
 
                 //top 10 properties
                 $top10Proprties = '';
@@ -71,9 +74,10 @@ class DashboardController extends MainAdminController
                 $clicksPerMonths = '';
                 $top10Proprties = '';
                 $top5Properties = '';
+                $numberOfUsers = '';
             }
             return view('admin.pages.dashboard',
-            compact('properties_count','pending_properties_count', 'trafficPerMonth', 'clicksPerMonths', 'featured_properties','inquiries', 'top10Proprties', 'top5Properties'));
+            compact('properties_count','pending_properties_count', 'trafficPerMonth', 'clicksPerMonths', 'featured_properties','inquiries', 'top10Proprties', 'top5Properties', 'numberOfUsers'));
     }
 
 
