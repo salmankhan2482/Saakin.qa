@@ -863,6 +863,9 @@ class PropertiesController extends Controller
 
     public function propertyTypeForPurpose($buyOrRent, $property)
     {
+        $property_type = '';
+        $property_purpose = '';
+        
         if(request()->filled('buyOrRent') && request()->filled('property')){
             $buyOrRent = request('buyOrRent');
             $property_type = explode('-for-', request('property'))[0];
@@ -872,6 +875,7 @@ class PropertiesController extends Controller
             $property_type = explode('-for-', $property)[0];
             $property_purpose = explode('-for-', $property)[1];
         }
+
 
         $type = Types::where('plural', $property_type)->firstOrFail();
         $properties = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose))->where('property_type', $type->id);

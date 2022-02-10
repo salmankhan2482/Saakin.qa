@@ -61,27 +61,6 @@
 @endsection
 @section('scripts-custom')
     <script>
-        function importAgencies(id) {
-            $('#importAgencies').modal({
-                backdrop: 'static',
-                keyboard: true,
-                show: true
-            });
-            $.ajax({
-                url: '{{ route('get.agences.keys') }}',
-                type: "post",
-                dataType: 'json',
-                data: {
-                    '_token': '{{ @csrf_token() }}',
-                    id: id,
-                },
-                success: function(data) {
-                    if (data.status == 'success') {
-                        $('#importAgencies').html(data.html);
-                    }
-                },
-
-            });
-        }
+        
     </script>
 @endsection

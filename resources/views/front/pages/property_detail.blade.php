@@ -358,7 +358,10 @@ Link:'.$propertyUrl;
 
                                         <a class="googleMapPopUp btn btn-sm btn-info" rel="nofollow" data-fancybox
                                             data-type="iframe" data-preload="false" data-width="640" data-height="480"
-                                            href="https://maps.google.com/maps?q={{ $property->address }}&output=embed"
+                                            href="https://maps.google.com/maps?q={{ $property->propertyArea->name ?? ''}}
+                                            {{  $property->propertyTown->name ?? '' }}
+                                            {{  $property->propertySubCity->name ?? ''  }}
+                                            {{  $property->propertyCity->name ?? '' }}&output=embed"
                                             target="_blank">View Map </a>
                                     </div>
 
@@ -396,7 +399,10 @@ Link:'.$propertyUrl;
                         <h5 class="address">
                             <a
                                 data-fancybox data-type="iframe" data-preload="false" data-width="640"
-                                data-height="480" href="https://maps.google.com/maps?q={{ $property->address }}&output=embed"
+                                data-height="480" href="https://maps.google.com/maps?q={{ $property->propertyArea->name ?? ''}}
+                                {{  $property->propertyTown->name ?? '' }}
+                                {{  $property->propertySubCity->name ?? ''  }}
+                                {{  $property->propertyCity->name ?? '' }}&output=embed"
                                 target="_blank"
                             >
                             <i class="fa fa-map-marker"></i>
@@ -507,7 +513,10 @@ Link:'.$propertyUrl;
                                                 data-preload="false"
                                                 data-width="640"
                                                 data-height="480"
-                                                href="https://maps.google.com/maps?q={{ $property->address }}&output=embed"
+                                                href="https://maps.google.com/maps?q={{ $property->propertyArea->name ?? ''}}
+                                                {{  $property->propertyTown->name ?? '' }}
+                                                {{  $property->propertySubCity->name ?? ''  }}
+                                                {{  $property->propertyCity->name ?? '' }}&output=embed"
                                                 class="btn btn-sm btn-info">View</a>
                                         </div>
                                     </div>
@@ -522,7 +531,7 @@ Link:'.$propertyUrl;
                                             {{ $property->propertyCity->name }}
                                         @endif
                                         
-                                        <br><br>
+                                        <br>
                                         
                                         {{ $address ? $address :  $property->address }}
 
@@ -1080,7 +1089,21 @@ Link:'.$propertyUrl;
                     <div class="col-md-8 col-6">
                         <div class="wrapper">
                             <h5 class="add">Location</h5>
-                            <p> {{ $property->address }}<br>{{ $property->city }}</p>
+                            <p> 
+                                @if (isset($property->propertyArea->name))
+                                    {{ $property->propertyArea->name }}
+                                @elseif(isset($property->propertyTown->name))
+                                    {{ $property->propertyTown->name }}
+                                @elseif(isset($property->propertySubCity->name))
+                                    {{ $property->propertySubCity->name }}
+                                @elseif(isset($property->propertyCity->name))
+                                    {{ $property->propertyCity->name }}
+                                @endif
+                                
+                                <br>
+                                
+                                {{ $address ? $address :  $property->address }}
+                            </p>
                         </div>
                     </div>
                     <div class="col-md-4 col-6">
@@ -1089,7 +1112,7 @@ Link:'.$propertyUrl;
                                 <img src="{{ asset('assets/images/70d76248e.JPG') }}" alt="Map"
                                     class="property-location__image">
                                 <div class="map_btn">
-                                    <a href="https://maps.google.com.au/maps?q='+{{ $property->address }}+'" target="_blank"
+                                    <a href="https://maps.google.com/maps?q='+{{ $property->propertyArea->name ?? ''}} {{  $property->propertyTown->name ?? '' }} {{  $property->propertySubCity->name ?? ''  }} {{  $property->propertyCity->name ?? '' }}+'" target="_blank"
                                         class="btn btn-sm btn-info">View</a>
                                 </div>
                             </div>

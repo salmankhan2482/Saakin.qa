@@ -253,7 +253,7 @@
                                     </h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">
-                                        {{$trafficPerMonth->count()}}
+                                        {{$trafficPerMonth->sum('counter')}}
                                     </h2>
                                 </div>
                             </div>
