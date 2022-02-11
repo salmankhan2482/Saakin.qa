@@ -103,7 +103,7 @@ class ClickCountersController extends Controller
         }else{
             $trafficPerMonth = DB::table('property_counters')
             ->leftJoin('properties', 'property_counters.property_id', 'properties.id')
-            ->leftJoin('agencies', 'properties.agency_id', 'agencies.id')
+            ->join('agencies', 'properties.agency_id', 'agencies.id')
             ->select('agencies.id as aid', 'agencies.name as aname', DB::raw(' SUM(property_counters.counter) as totalTraffic '))
             ->orderBy('totalTraffic', 'desc')
             ->when(request('from') , function ($query) {
@@ -168,26 +168,6 @@ class ClickCountersController extends Controller
 
             return view('admin.pages.traffic-pages.users.index', compact('users'));
         }elseif(auth()->user()->usertype == 'Agency'){
-
-            // $users = DB::table('page_visits')
-            // ->leftJoin('properties', 'page_visits.property_id', 'properties.id')
-            // ->select('properties.id as pid', 'properties.property_name as pname', 
-            // 'properties.property_purpose as ppurpose', 'properties.property_slug as pslug', 
-            // DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
-            // ->when(request('from') , function ($query) {
-            //     $query->where('page_visits.created_at', '>=', request('from').' 00:00:01');
-            // })
-            // ->when(request('to') , function ($query) {
-            //     $query->where('page_visits.created_at', '<=', request('to').' 23:59:59');
-            // })
-            // ->when(request('from') && request('to'), function ($query) {
-            //     $query->whereBetween('page_visits.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
-            // })
-            // ->where('properties.agency_id', auth()->user()->agency_id)
-            // ->groupBy('pname')
-            // ->orderBy('totalUsers', 'DESC')
-            // ->get();
-
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
 
             $users = PageVisits::whereIn('property_id', $property_ids)
@@ -216,7 +196,6 @@ class ClickCountersController extends Controller
         if (auth()->user()->usertype == 'Agency') {
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
 
-            // clicks per month
             $clicksPerMonths = ClickCounters:: whereMonth('created_at', Carbon::now()->month)
             ->whereIn('property_id', $property_ids)->paginate();
 
@@ -234,33 +213,73 @@ class ClickCountersController extends Controller
             
             $top10Proprties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
-            ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 'properties.property_slug', 'property_counters.counter')
+            ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 
+            'properties.property_slug', 'property_counters.counter')
             ->where('properties.agency_id', auth()->user()->agency_id)
             ->groupBy('properties.id')
             ->orderByDesc('property_counters.counter')
             ->limit('10')
             ->get();
 
+            return view('admin.pages.traffic-pages.top-ten-properties.agency-index', compact('top10Proprties'));
+
         }else{
-            $top10Proprties = '';
+            $top10Proprties = DB::table('property_counters')
+            ->leftJoin('properties', 'property_counters.property_id','properties.id')
+            ->join('agencies', 'properties.agency_id', 'agencies.id')
+            ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 
+            'properties.property_slug', DB::raw(' SUM(property_counters.counter) as counter '), 
+            'agencies.name as aname', 'agencies.id as aid')
+            ->orderBy('counter', 'DESC')
+            ->groupBy('aname')
+            ->get();
+            return view('admin.pages.traffic-pages.top-ten-properties.index', compact('top10Proprties'));
         }
 
-        return view('admin.pages.traffic-pages.topTenProperties', compact('top10Proprties'));
+    }
+
+    public function topTenPropertiesList($id)
+    {
+        $top10Proprties = DB::table('properties')
+        ->join('property_counters', 'properties.id', 'property_counters.property_id')
+        ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 
+        'properties.property_slug', DB::raw(' SUM(property_counters.counter) as counter '))
+        ->where('properties.agency_id', $id)
+        ->groupBy('properties.id')
+        ->orderByDesc('counter')
+        ->limit('10')
+        ->get();
+
+        return view('admin.pages.traffic-pages.top-ten-properties.agency-index', compact('top10Proprties'));
     }
 
     public function top5Areas()
     {
-        $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-        $top5Properties = DB::table('properties')
-        ->join('property_counters', 'properties.id', 'property_counters.property_id')
-        ->leftJoin('property_areas', 'properties.area', 'property_areas.id')
-        ->select('properties.id', 'property_areas.name as area_name', 'property_counters.counter')
-        ->whereIn('properties.id', $property_ids)
-        ->groupBy('properties.id')
-        ->orderByDesc('property_counters.counter')
-        ->limit('5')
-        ->get();
+        if (auth()->user()->usertype == 'Agency') {
 
+            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+            $top5Properties = DB::table('properties')
+            ->join('property_counters', 'properties.id', 'property_counters.property_id')
+            ->leftJoin('property_areas', 'properties.area', 'property_areas.id')
+            ->select('properties.id', 'property_areas.name as area_name', 'property_counters.counter')
+            ->whereIn('properties.id', $property_ids)
+            ->groupBy('properties.id')
+            ->orderByDesc('property_counters.counter')
+            ->limit('5')
+            ->get();
+        
+        }else{
+
+            $top5Properties = DB::table('properties')
+            ->join('property_counters', 'properties.id', 'property_counters.property_id')
+            ->join('agencies', 'properties.agency_id', 'agencies.id')
+            ->select('properties.id', 'agencies.name as aname', 'agencies.id as aid', 'property_counters.counter')
+            ->groupBy('aname')
+            ->orderByDesc('property_counters.counter')
+            ->limit('5')
+            ->get();
+
+        }
         return view('admin.pages.traffic-pages.top5Areas', compact('top5Properties'));
     }
 
