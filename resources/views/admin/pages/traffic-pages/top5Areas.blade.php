@@ -24,7 +24,8 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Name</th>
+                            <th>Agency Name</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
@@ -32,13 +33,18 @@
                         @foreach ($top5Properties as $i => $click)
                             <tr>
                                 <td>{{ $click->id }}</td>
-                                <td>{{ $click->area_name ?? '' }}</td>
+                                <td>{{ $click->aname ?? '' }}</td>
+                                <td>
+                                    <a href="" class="btn btn-default-dark">
+                                        Show List
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="text-center">
+                            <td colspan="2" class="text-center">
                                 {{-- @include('admin.pagination', ['paginator' => $top5Properties]) --}}
                             </td>
                         </tr>
