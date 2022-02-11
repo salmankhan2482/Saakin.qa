@@ -18,12 +18,10 @@ class Contact_Inquiry extends Mailable
      */
 
      public $data;
-     protected $email;
 
-    public function __construct($data, $email)
+    public function __construct($data)
     {
         $this->data = $data;
-        $this->email = $email;
     }
 
     /**
@@ -33,17 +31,14 @@ class Contact_Inquiry extends Mailable
      */
     public function build()
     {
-        // dd();
-        $address = $this->email;
+        $address = 'hello@saakin.qa';
         $subject = 'Contact Saakin Qatar';
         $name = 'Contact Us Email';
 
         return $this->view('emails.contact')
-                    ->from($address, $name)
-                    ->cc($address, $name)
-                    ->bcc($address, $name)
+                    ->cc($this->data['email'], $name)
                     ->replyTo($address, $name)
                     ->subject($subject)
-                    ->with([ 'test_message' => $this->data ]);
+                    ->with([ 'data' => $this->data ]);
     }
 }

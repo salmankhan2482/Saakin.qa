@@ -424,8 +424,48 @@ $price = $data['property_purpose'] == 'Rent' ? $data['price'] . '/month' : $data
                                                                         <p
                                                                             style="margin: 0; font-size: 14px; text-align: justify;">
                                                                             <span style="font-size:14px;">
+                                                                                <strong>Email:
+                                                                                </strong> {{ $data['user_email'] ?? '' }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table border="0" cellpadding="5" cellspacing="0"
+                                                        class="text_block" role="presentation"
+                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
+                                                        width="100%">
+                                                        <tr>
+                                                            <td>
+                                                                <div style="font-family: sans-serif">
+                                                                    <div
+                                                                        style="font-size: 14px; mso-line-height-alt: 16.8px; color: #000000; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
+                                                                        <p
+                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
+                                                                            <span style="font-size:14px;">
                                                                                 <strong>Phone No.:
                                                                                 </strong> {{$data['telephone'] ?? '' }}</span>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table border="0" cellpadding="5" cellspacing="0"
+                                                        class="text_block" role="presentation"
+                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
+                                                        width="100%">
+                                                        <tr>
+                                                            <td>
+                                                                <div style="font-family: sans-serif">
+                                                                    <div
+                                                                        style="font-size: 14px; mso-line-height-alt: 16.8px; color: #000000; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
+                                                                        <p
+                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
+                                                                            <span style="font-size:14px;">
+                                                                                <strong>Move in Date:
+                                                                                </strong> {{ $data['movein_date'] ?? '' }}</span>
                                                                         </p>
                                                                     </div>
                                                                 </div>

@@ -21,7 +21,6 @@ use App\PropertyCities;
 use App\PropertyAmenity;
 use App\PropertyPurpose;
 use App\PropertySubCities;
-use App\Mail\Agent_Inquiry;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -372,8 +371,7 @@ class IndexController extends Controller
         $data_email['subject'] = $inputs['subject'];
         $data_email['your_message'] = $inputs['your_message'];
 
-        Mail::to('webmaster@saakin.qa')->send(new Contact_Inquiry($data_email, request('email')));
-
+        Mail::to('hello@saakin.qa')->send(new Contact_Inquiry($data_email));
 
         Session::flash('flash_message_contact', trans('words.thanks_for_contacting_us'));
         return Redirect::back();
