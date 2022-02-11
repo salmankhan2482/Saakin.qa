@@ -280,6 +280,21 @@ class UsersController extends MainAdminController
         return \Redirect::back();
     }
 
+    public function view_user($id)
+    {
+        if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('admin/dashboard');
+        }
+
+        $agencies = Agency::all();
+
+        $decrypted_id = Crypt::decryptString($id);
+        $user = User::findOrFail($decrypted_id);
+        
+        return view('admin.pages.view_user', compact('user','agencies'));
+    }
+    
     public function delete($id)
     {
     	if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){

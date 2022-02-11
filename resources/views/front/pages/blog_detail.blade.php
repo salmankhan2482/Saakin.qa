@@ -2,7 +2,7 @@
 
 @if ($blog->meta_title != null)
 
-    @section('title', $blog->meta_title . ' | ' . 'saakin.qa')
+    @section('title', $blog->meta_title . ' | ' . 'Saakin.qa')
     @section('description', $blog->meta_description)
     @section('keyword', $blog->meta_keywords)
     @section('type', 'article')
@@ -11,7 +11,7 @@
 
 @else
 
-    @section('title', $blog->title . ' | ' . 'saakin.qa')
+    @section('title', $blog->title . ' | ' . 'Saakin.qa')
     @section('description', Illuminate\Support\Str::limit($blog->description, 170, '...') ?? '')
     @section('keyword', $blog->meta_keywords)
     @section('type', 'article')

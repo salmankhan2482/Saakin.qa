@@ -1,7 +1,7 @@
 @extends("front.layouts.main")
 @if ($cityGuide->meta_title !=null)
 
-@section('title',$cityGuide->meta_title .  '  |  ' . 'saakin.qa')
+@section('title',$cityGuide->meta_title .  '  |  ' . 'Saakin.qa')
 @section('description',$cityGuide->meta_description)
 @section('keyword',$cityGuide->meta_keyword)
 @section('type','City Guide saakin.qa')
@@ -10,7 +10,7 @@
 
 @else
 
-@section('title',$cityGuide->name .  '  |  ' . 'saakin.qa')
+@section('title',$cityGuide->name .  '  |  ' . 'Saakin.qa')
 @section('description',$cityGuide->short_description)
 @section('keyword',$cityGuide->attributes)
 @section('type','City Guide saakin.qa')

@@ -159,6 +159,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::post('users/adduser', 'UsersController@addnew');
 	Route::get('users/edituser/{id}', 'UsersController@editUser');
     Route::post('users/edituser/{id}', 'UsersController@updateUser');
+    Route::get('users/view_user/{id}', 'UsersController@view_user');
 	Route::get('users/delete/{id}', 'UsersController@delete');
 	Route::get('users/export', 'UsersController@user_export');
 

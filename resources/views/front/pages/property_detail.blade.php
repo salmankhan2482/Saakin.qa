@@ -2,7 +2,7 @@
 
 @if ( $property->meta_title !=null)
 
-@section('title',$property->meta_title .  '  |  ' . 'saakin.qa')
+@section('title',$property->meta_title .  '  |  ' . 'Saakin.qa')
 @section('description',$property->meta_description ?? $property_des)
 @section('keyword',$property->meta_keyword)
 @section('type','property')
@@ -11,7 +11,7 @@
 
 @else
 
-@section('title',$property->property_name .  '  |  ' . 'saakin.qa')
+@section('title',$property->property_name .  '  |  ' . 'Saakin.qa')
 @section('description',$property_des)
 @section('keyword',$property->meta_keyword)
 @section('type','property')

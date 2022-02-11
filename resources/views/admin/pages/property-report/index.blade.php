@@ -28,6 +28,7 @@
                         <tr>
                             <th>ID</th>
                             <th>User Name</th>
+                            <th>User Email</th>
                             <th>Property Title</th>
                             <th>Message</th>
                             <th>Status</th>
@@ -40,6 +41,7 @@
                             <tr>
                                 <td>{{ $report->id }}</td>
                                 <td>{{ $report->user->name }}</td>
+                                <td>{{ $report->user->email }}</td>
                                 <td>
                                     <a class="property-img"
                                         href="{{ url(strtolower($report->property->property_purpose) . '/' . $report->property->property_slug . '/' . $report->property->id) }}"
