@@ -447,7 +447,7 @@ class PropertiesController extends Controller
             $data_email['land_area'] = $property_data['land_area'];
             $data_email['refference_code'] = $property_data['refference_code'];
             
-            Mail::to('webmaster@saakin.qa')->send(new MyCustomMail($data_email));
+            Mail::to('hello@saakin.qa')->send(new Property_Inquiry($data_email));
 
             // dd($data_email);
             // return view('emails.inquiry', compact('data'));

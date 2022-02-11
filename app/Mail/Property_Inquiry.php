@@ -16,9 +16,12 @@ class Property_Inquiry extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $data;
+
+    public function __construct($data)
     {
-        //
+         $this->data = $data;
+        
     }
 
     /**
@@ -28,6 +31,14 @@ class Property_Inquiry extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        $address = 'hello@saakin.qa';
+        $subject = 'Property Inquiry';
+        $name = 'Saakin Qatar';
+
+        return $this->view('emails.inquiry')
+                    ->cc($this->data['user_email'], $name)
+                    ->replyTo($address, $name)
+                    ->subject($subject)
+                    ->with([ 'data' => $this->data ]);
     }
 }

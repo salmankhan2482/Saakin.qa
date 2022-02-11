@@ -824,6 +824,13 @@ Link:'.$propertyUrl;
 <div class="col-xl-4 order-xl-12 order-xl-1 order-2">
     <div class="sidebar-right">
         <div class="widget">
+            @if(Session::has('flash_message_contact_agency'))
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            </button>
+                            {{ Session::get('flash_message_contact_agency') }}
+                        </div>
+            @endif
             <h3 class="widget-title">Contact us</h3>
             <form action="{{ url('agency-contact') }}" id="" method="POST">
                 @csrf

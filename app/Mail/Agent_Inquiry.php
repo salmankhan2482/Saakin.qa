@@ -32,14 +32,13 @@ class Agent_Inquiry extends Mailable
     public function build()
     {
 
-        $address = $this->data_email['email'];
-        $subject = 'Agency Contact';
-        $name = $this->data_email['name'];
+
+        $address = 'hello@saakin.qa';
+        $subject = 'Contact Agency';
+        $name = 'Saakin Qatar';
 
         return $this->view('emails.contactAgent')
-                    ->from($address, $name)
-                    ->cc($address, $name)
-                    ->bcc($address, $name)
+                    ->cc($this->data_email['email'], $name)
                     ->replyTo($address, $name)
                     ->subject($subject)
                     ->with([ 'data_email' => $this->data_email ]);

@@ -176,9 +176,9 @@ class AgenciesController extends Controller
         $data_email['subject'] = $inputs['subject'];
         $data_email['your_message'] = $inputs['your_message'];
 
-        Mail::to('webmaster@saakin.qa')->send(new Agent_Inquiry($data_email));
+        Mail::to('hello@saakin.qa')->send(new Agent_Inquiry($data_email));
         
-        \Session::flash('flash_message_agent', 'Message send successfully');
+        \Session::flash('flash_message_contact_agency', trans('words.thanks_for_contacting_us'));
 
         return \Redirect::back();
     }
