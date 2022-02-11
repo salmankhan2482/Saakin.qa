@@ -295,6 +295,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('top_Ten_Properties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
     Route::get('top_Ten_Properties/{id}', 'ClickCountersController@topTenPropertiesList')->name('top_Ten_Properties.list');
     Route::get('top_5_areas', 'ClickCountersController@top5Areas')->name('top_5_areas');
+    Route::get('top_5_areas/{id}', 'ClickCountersController@top5AreasList')->name('top_5_areas.list');
     Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
 
 });
