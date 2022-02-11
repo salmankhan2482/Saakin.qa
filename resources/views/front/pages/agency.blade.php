@@ -2,7 +2,7 @@
 
 @if ($agency->meta_title !=null)
 
-@section('title',$agency->meta_title .  '  |  ' . 'saakin.qa')
+@section('title',$agency->meta_title .  '  |  ' . 'Saakin.qa')
 @section('description',$agency->meta_description)
 @section('keyword',$agency->meta_keyword)
 @section('type','agency')
@@ -10,7 +10,7 @@
 @section('image', asset('upload/agencies/'.$agency->image))
 
 @else
-@section('title',$agency->name .  '  |  ' . 'saakin.qa')
+@section('title',$agency->name .  '  |  ' . 'Saakin.qa')
 @section('description',$agency_des)
 @section('type','agency')
 @section('url',url()->current())

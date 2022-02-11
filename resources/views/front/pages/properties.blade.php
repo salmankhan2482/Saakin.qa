@@ -1,7 +1,7 @@
 ﻿@extends("front.layouts.main")
 @if ($landing_page_content->meta_title !=null)
 
-@section('title',$landing_page_content->meta_title . ' | '.' saakin.qa')
+@section('title',$landing_page_content->meta_title . ' | '.' Saakin.qa')
 @section('description',$landing_page_content->meta_description)
 @section('keyword',$landing_page_content->meta_keyword)
 @section('type','property')
@@ -9,7 +9,7 @@
 
 @else
 
-@section('title','Properties in Qatar | saakin.qa')
+@section('title','Properties in Qatar | Saakin.qa')
 @section('description',$page_des)
 @section('type','property')
 @section('url',url()->current())

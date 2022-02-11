@@ -1,7 +1,7 @@
 @extends("front.layouts.main")
 @if ($page_info !=null)
 
-@section('title',$page_info . ' | '.' saakin.qa')
+@section('title',$page_info . ' | '.' Saakin.qa')
 @section('description',$page_info)
 @section('keyword',$page_info)
 @section('type','property')
@@ -9,7 +9,7 @@
 
 @else
 
-@section('title',$page_info.'|'.'saakin.qa')
+@section('title',$page_info.'|'.'Saakin.qa')
 @section('description',$page_info)
 @section('type','property')
 @section('url',url()->current())

@@ -81,6 +81,11 @@
                                 <td>{{ $users->email }}</td>
                                 <td>{{ $users->phone }}</td>
                                 <td class="text-center">
+                                    <a 
+                                    href="{{ url('admin/users/view_user/' . Crypt::encryptString($users->id)) }}" 
+                                    class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" 
+                                    title="{{trans('words.view')}}"> 
+                                    <i class="fa fa-eye"></i> </a>
 
                                     <a href="{{ url('admin/users/edituser/' . Crypt::encryptString($users->id)) }}"
                                         class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"
