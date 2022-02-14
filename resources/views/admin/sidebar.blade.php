@@ -65,30 +65,35 @@
 
                     <li class="{{ classActivePath('scrapper') }}">
                         <a href="{{ URL::to('admin/scrapper') }}">
-                            <i class="md-settings"></i> 
+                            <i class="md md-description"></i> 
                             Scrapper
                         </a>
                     </li>
 
                     <li class=" submenu 
                     {{ classActivePath('menuOptions') }} 
+                    {{ classActivePath('permissions') }} 
+                    {{ classActivePath('roles') }} 
                     ">
 
                         <a href="#" 
                             @if (
                                 classActivePath('menuOptions') 
-                                or classActivePath('landing-pages')
+                                or classActivePath('permissions')
+                                or classActivePath('roles')
                                 )  
                                 class="open" 
                             @endif>
 
-                            <i class="md md-description"></i> 
-                            User Management
+                            <i class="md-settings"></i> 
+
+                            User Mgmt
                         </a>
 
                         <ul @if (
                                 classActivePath('menuOptions') 
-                                or classActivePath('landing-pages')
+                                or classActivePath('permissions')
+                                or classActivePath('roles')
                                 ) 
                             style="display: block" 
                             class="collapse in" 
@@ -97,6 +102,18 @@
                             <li class="{{ classActivePath('menuOptions') }}">
                                 <a href="{{ URL::to('admin/menuOptions') }}">
                                     Menu Options
+                                </a>
+                            </li>
+                            
+                            <li class="{{ classActivePath('permissions') }}">
+                                <a href="{{ URL::to('admin/permissions') }}">
+                                    Permissions
+                                </a>
+                            </li>
+                            
+                            <li class="{{ classActivePath('roles') }}">
+                                <a href="{{ URL::to('admin/roles') }}">
+                                    Roles
                                 </a>
                             </li>
                            

@@ -57,31 +57,37 @@ class User extends Authenticatable
         return $this->hasMany('App\PropertyReport');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+
     public function scopeSearchUserByKeyword($query, $keyword,$type)
     {
 
-            if($keyword!='' and $type!='')
-            {
-                $query->where(function ($query) use ($keyword,$type) {
-                $query->where("usertype", "$type")
-                     ->where("name", 'like', '%' .$keyword. '%')
-                     ->where("email", 'like', '%' .$keyword. '%');
-                });
-            }
-            elseif ($type!='')
-            {
-                        $query->where(function ($query) use ($keyword,$type) {
-                        $query->where("usertype", "$type");
-                        });
-            }
-            else
-            {
-                $query->where(function ($query) use ($keyword,$type) {
-                $query->where("usertype", "!=", "Admin")
+        if($keyword!='' and $type!='')
+        {
+            $query->where(function ($query) use ($keyword,$type) {
+            $query->where("usertype", "$type")
                     ->where("name", 'like', '%' .$keyword. '%')
                     ->where("email", 'like', '%' .$keyword. '%');
-                });
-            }
+            });
+        }
+        elseif ($type!='')
+        {
+                    $query->where(function ($query) use ($keyword,$type) {
+                    $query->where("usertype", "$type");
+                    });
+        }
+        else
+        {
+            $query->where(function ($query) use ($keyword,$type) {
+            $query->where("usertype", "!=", "Admin")
+                ->where("name", 'like', '%' .$keyword. '%')
+                ->where("email", 'like', '%' .$keyword. '%');
+            });
+        }
 
         return $query;
     }
@@ -96,14 +102,8 @@ class User extends Authenticatable
     {
         $user = User::where('email',$email)->first();
 
-        if($user)
-        {
-            return  true;
-        }
-        else
-        {
-            return  false;
-        }
+        if($user) { return  true; }
+        else { return  false; }
     }
 
 }
