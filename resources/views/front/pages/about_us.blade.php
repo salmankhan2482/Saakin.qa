@@ -2,7 +2,7 @@
 
 @if ($page_info->meta_title !=null)
 
-@section('title',$page_info->meta_title .  '  |  ' . 'saakin.qa')
+@section('title',$page_info->meta_title .  '  |  ' . 'Saakin.qa')
 @section('description',$page_info->meta_description)
 @section('keyword',$page_info->meta_keyword)
 @section('type','About saakin.qa')
@@ -10,7 +10,7 @@
 
 @else
 
-@section('title',$page_info->title .  '  |  ' . 'saakin.qa')
+@section('title',$page_info->title .  '  |  ' . 'Saakin.qa')
 @section('description',$page_info->page_content)
 @section('type','About saakin.qa')
 @section('url',url()->current())

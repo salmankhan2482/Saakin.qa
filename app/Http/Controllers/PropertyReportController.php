@@ -16,6 +16,7 @@ class PropertyReportController extends Controller
     public function index()
     {
         $reports = PropertyReport::all();
+
         return view('admin.pages.property-report.index', compact('reports'));
     }
 
