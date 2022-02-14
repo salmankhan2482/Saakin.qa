@@ -50,7 +50,6 @@ class FeaturedPropertiesController extends MainAdminController
             }
         if(Auth::User()->usertype=="Agency")
         {
-
             $propertieslist = Properties::where('status','0')->where("user_id",Auth::User()->id)->orderBy('id')->get();
         }
         else

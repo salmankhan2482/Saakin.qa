@@ -66,6 +66,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
 
+    //menu options
+    Route::resource('menuOptions','MenuOptionsController');
+    Route::get('menuOptions/delete/{id}','MenuOptionsController@destroy')->name('menuOptions.destroy');
+
+    //permissions
+    Route::resource('permissions','permissionsController');
+    Route::get('permissions/delete/{id}','permissionsController@destroy')->name('permissions.destroy');
+
+
 	Route::get('dashboard', 'DashboardController@index');
 	Route::get('profile', 'AdminController@profile');
 	Route::post('profile', 'AdminController@updateProfile');

@@ -93,7 +93,7 @@ if (!function_exists('classActivePath')) {
 if (!function_exists('classActivePathPublic')) {
     function classActivePathPublic($path)
     {
-        $path = explode('', $path);
+        $path = explode('-', $path);
         $segment = 1;
         foreach($path as $p) {
             if((request()->segment($segment) == $p) == false) {

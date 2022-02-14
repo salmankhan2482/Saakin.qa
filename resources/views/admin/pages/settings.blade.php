@@ -54,8 +54,8 @@
                         data-toggle="tab">{{ trans('words.social') }}</a>
                 </li>
                 <li role="presentation">
-                    <a href="#share_comments" aria-controls="share_comments" role="tab" data-toggle="tab">AddThis &
-                        Disqus</a>
+                    <a href="#share_comments" aria-controls="share_comments" role="tab" data-toggle="tab">
+                        AddThis & Disqus</a>
                 </li>
                 <li role="presentation">
                     <a href="#contact_us" aria-controls="contact_us" role="tab"

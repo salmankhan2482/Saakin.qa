@@ -941,7 +941,7 @@ Link:'.$propertyUrl;
                                                         {{ \Illuminate\Support\Str::limit($property->property_name, 20) }}
                                                     </h2>
                                                     <div class="property-card__location">
-                                                        {{ $property->propertiesTypes->plural }}
+                                                        {{ $property->propertiesTypes->types }}
                                                         <br>
                                                         {{ \Illuminate\Support\Str::limit($property->address, 30) }}
                                                     </div>
