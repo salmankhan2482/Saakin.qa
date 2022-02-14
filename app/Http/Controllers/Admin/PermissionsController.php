@@ -15,7 +15,8 @@ class PermissionsController extends Controller
      */
     public function index()
     {
-        
+        $permissions = Permissions::all();
+        return view('admin.pages.user-management.permissions.index', compact('permissions'));
     }
 
     /**
@@ -25,7 +26,7 @@ class PermissionsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.user-management.permissions.create');
     }
 
     /**
@@ -36,7 +37,12 @@ class PermissionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $permission = new Permissions();
+        $permission->title = request('title');
+        $permission->save();
+
+        \Session::flash('flash_message', 'Permission Added');
+        return redirect()->route('permissions.index');
     }
 
     /**
@@ -56,9 +62,10 @@ class PermissionsController extends Controller
      * @param  \App\Permissions  $permissions
      * @return \Illuminate\Http\Response
      */
-    public function edit(Permissions $permissions)
+    public function edit($id)
     {
-        //
+        $permission = Permissions::find($id);
+        return view('admin.pages.user-management.menu-options.edit', compact('permission'));
     }
 
     /**
@@ -68,9 +75,14 @@ class PermissionsController extends Controller
      * @param  \App\Permissions  $permissions
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Permissions $permissions)
+    public function update(Request $request, $id)
     {
-        //
+        $permission = Permissions::find($id);
+        $permission->title = request('title');
+        $permission->update();
+
+        \Session::flash('flash_message', 'Permission Updated');
+        return redirect()->route('permissions.index');
     }
 
     /**
@@ -79,8 +91,12 @@ class PermissionsController extends Controller
      * @param  \App\Permissions  $permissions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Permissions $permissions)
+    public function destroy($id)
     {
-        //
+        $permission = Permissions::find($id);
+        $permission->delete();
+
+        \Session::flash('flash_message', 'Permission Deleted');
+        return redirect()->route('permissions.index');
     }
 }

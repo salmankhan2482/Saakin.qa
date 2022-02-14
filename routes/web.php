@@ -71,8 +71,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('menuOptions/delete/{id}','MenuOptionsController@destroy')->name('menuOptions.destroy');
 
     //permissions
-    Route::resource('permissions','permissionsController');
-    Route::get('permissions/delete/{id}','permissionsController@destroy')->name('permissions.destroy');
+    Route::resource('permissions','PermissionsController');
+    Route::get('permissions/delete/{id}','PermissionsController@destroy')->name('permissions.destroy');
+    
+    //permissions
+    Route::resource('roles','RolesController');
+    Route::get('roles/delete/{id}','RolesController@destroy')->name('roles.destroy');
 
 
 	Route::get('dashboard', 'DashboardController@index');
