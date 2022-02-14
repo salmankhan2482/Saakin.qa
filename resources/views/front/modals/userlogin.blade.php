@@ -110,7 +110,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <input type="email" class="form-control"
-                                                                        tabindex="1"
+                                                                        
                                                                         placeholder="{{ trans('words.email') }}"
                                                                         name="email" id="email"
                                                                         style="margin-bottom: 5px;" />
@@ -143,7 +143,7 @@
                                                                     <div class="col-md-12 text-right">
                                                                         <div class="res-box sm-left">
                                                                             <a href="{{ route('password.email') }}"
-                                                                                tabindex="5" class="forgot-password">
+                                                                                 class="forgot-password">
                                                                                 {{ trans('words.forgot_password') }}
                                                                             </a>
                                                                         </div>

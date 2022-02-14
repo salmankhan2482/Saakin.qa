@@ -672,12 +672,10 @@ class PropertiesController extends Controller
 
         if (!Auth::user()) {
             \Session::flash('flash_message', 'Login required');
-
             return redirect('login');
         }
 
         $user_id = Auth::user()->id;
-
         $decrypted_id = Crypt::decryptString($id);
 
         if (Auth::user()->usertype == 'Admin') {
@@ -685,17 +683,25 @@ class PropertiesController extends Controller
         } else {
             $property = Properties::where('id', $decrypted_id)->where('user_id', $user_id)->first();
         }
-
-
+        ////
         if (!$property) {
             abort('404');
         }
-
         $types = Types::orderBy('types')->get();
+        $purposes = PropertyPurpose::get();
+        $amenities = PropertyAmenity::orderBy("name", "asc")->get();
+        //$agents = User::where('usertype','Agents')->get();
+        $agencies = Agency::where('status', 1)->get();
 
         $property_gallery_images = PropertyGallery::where('property_id', $property->id)->orderBy('image_name')->get();
+        $cities = PropertyCities::all();
+        $subCities = PropertySubCities::all();
+        $towns = PropertyTowns::all();
+        $areas = PropertyAreas::all();
 
-        return view('pages.edit_property', compact('property', 'types', 'property_gallery_images'));
+        return view('admin.pages.edit_property', 
+        compact('property', 'types', 'cities', 'subCities', 'towns' ,'areas', 'purposes', 'amenities', 'agencies', 'property_gallery_images'));
+
     }
 
     public function gallery_image_delete($id)
@@ -759,50 +765,6 @@ class PropertiesController extends Controller
 
         return redirect()->back();
     }
-
-    // public function inquiryEmail(Request $request)
-    // {
-    //     $data =  \Request::except(array('_token'));
-
-    //     $inputs = $request->all();
-
-    //     $rules = array(
-    //         'name' => 'required',
-    //         'email' => 'required|email',
-    //         'phone' => 'required',
-    //         'message' => 'required'
-    //     );
-
-    //     $validator = \Validator::make($data, $rules);
-
-    //     if ($validator->fails()) {
-    //         return redirect()->back()->withErrors($validator->messages())->withInput();
-    //     }
-    //     $inquiry = new Enquire();
-    //     $inquiry->property_id = $inputs['property_id'];
-    //     $inquiry->agent_id = $inputs['agent_id'];
-    //     $inquiry->name = $inputs['name'];
-    //     $inquiry->email = $inputs['email'];
-    //     $inquiry->phone = $inputs['phone'];
-    //     $inquiry->message = $inputs['message'];
-    //     $inquiry->save();
-
-
-    //     $data_email = array(
-    //         'name' => $inputs['name'],
-    //         'email' => $inputs['email'],
-    //         'phone' => $inputs['phone'],
-    //         'message' => $inputs['message']
-    //     );
-    //     \Mail::send('emails.inquiry', $data_email, function ($message) use ($inputs) {
-    //         $message->to($inputs['email'], $inputs['name'])
-    //             ->from('admin@gmail.com', 'Admin')
-    //             ->subject('Inquiry Email');
-    //     });
-    //     \Session::flash('flash_message_contact', trans('words.thanks_for_contacting_us'));
-    //     return \Redirect::back();
-    // }
-
 
     public function propertiesForPurpose($buyOrRent, $property_purpose)
     {

@@ -260,14 +260,15 @@ class ClickCountersController extends Controller
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
             $top5Properties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
-            ->leftJoin('property_areas', 'properties.area', 'property_areas.id')
-            ->select('properties.id', 'property_areas.name as area_name', 'property_counters.counter')
+            ->select('properties.id', 'properties.address as paddress', 'property_counters.counter')
             ->whereIn('properties.id', $property_ids)
             ->groupBy('properties.id')
             ->orderByDesc('property_counters.counter')
             ->limit('5')
             ->get();
-        
+            
+            return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top5Properties'));
+
         }else{
 
             $top5Properties = DB::table('properties')
@@ -278,9 +279,24 @@ class ClickCountersController extends Controller
             ->orderByDesc('property_counters.counter')
             ->limit('5')
             ->get();
+            return view('admin.pages.traffic-pages.top-five-areas.index', compact('top5Properties'));
 
         }
-        return view('admin.pages.traffic-pages.top5Areas', compact('top5Properties'));
+    }
+
+    public function top5AreasList($id)
+    {
+        $top5Properties = DB::table('property_counters')
+        ->leftJoin('properties', 'property_counters.property_id', 'properties.id')
+        ->select('properties.id as pid', 'property_counters.counter', 'properties.address as paddress')
+        ->where('properties.agency_id', $id)
+        ->groupBy('properties.id')
+        ->orderByDesc('property_counters.counter')
+        ->limit('5')
+        ->get();
+
+        return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top5Properties'));
+
     }
 
     public function totalLeads()

@@ -70,6 +70,40 @@
                         </a>
                     </li>
 
+                    <li class=" submenu 
+                    {{ classActivePath('menuOptions') }} 
+                    ">
+
+                        <a href="#" 
+                            @if (
+                                classActivePath('menuOptions') 
+                                or classActivePath('landing-pages')
+                                )  
+                                class="open" 
+                            @endif>
+
+                            <i class="md md-description"></i> 
+                            User Management
+                        </a>
+
+                        <ul @if (
+                                classActivePath('menuOptions') 
+                                or classActivePath('landing-pages')
+                                ) 
+                            style="display: block" 
+                            class="collapse in" 
+                            @endif>
+                            
+                            <li class="{{ classActivePath('menuOptions') }}">
+                                <a href="{{ URL::to('admin/menuOptions') }}">
+                                    Menu Options
+                                </a>
+                            </li>
+                           
+                            
+                        </ul>
+                    </li>
+
                     <li class="{{ classActivePath('agencies') }}">
                         <a href="{{ URL::to('admin/agencies') }}">
                             <i class="fa fa-tags"></i>
@@ -383,7 +417,8 @@
                             {{ trans('words.settings') }}
                         </a>
                     </li>
-
+                    
+                    
 
                     <li class="submenu 
                         {{ classActivePath('about_page') }} 
