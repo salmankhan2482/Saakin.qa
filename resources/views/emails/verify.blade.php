@@ -25,7 +25,7 @@
         </tr>
         <tr style="border:0">
             <td>
-                Hi {{ $name }},
+                Hi {{ $data['name'] }},
             </td>
         </tr>
         <tr>
@@ -36,7 +36,7 @@
         </tr>
         <tr>
             <td style="text-align:center; margin:10px auto;float:left;width:100%;line-height:48px;">
-                <a href="{{ URL::to('auth/confirm/' . $confirmation_code) }}"
+                <a href="{{ URL::to('auth/confirm/' . $data['confirmation_code']) }}"
                     style="font-size: 15px;margin-bottom:10px;text-align: center;background: #007ee6;color: #fff;border-radius: 6px;text-decoration:none;padding:15px 30px;">Verify
                     Account</a>
             </td>

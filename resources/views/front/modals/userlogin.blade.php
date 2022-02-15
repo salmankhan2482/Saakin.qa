@@ -250,6 +250,11 @@
                                                                 <div class="form-group">
                                                                     {!! NoCaptcha::renderJs() !!}
                                                                     {!! NoCaptcha::display() !!}
+                                                                    @if ($errors->has('g_recaptcha_confirmed'))
+                                                                    <span style="color:#fb0303">
+                                                                        {{ $errors->first('g_recaptcha_confirmed') }}
+                                                                    </span>
+                                                                @endif
                                                                 </div>
 
                                                                 <div class="res-box text-center mt-30">
@@ -277,7 +282,9 @@
         </div>
     </div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 @push('scripts')
+
     <script>
         $.ajaxSetup({
             headers: {
