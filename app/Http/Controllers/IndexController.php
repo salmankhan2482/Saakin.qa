@@ -6,6 +6,7 @@ use Auth;
 use App\Blog;
 use App\City;
 use App\User;
+use messages;
 use App\Types;
 use App\Agency;
 use App\Enquire;
@@ -23,9 +24,11 @@ use App\PropertyPurpose;
 use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Controller;
 use App\Mail\Contact_Inquiry;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use App\Mail\Register_Mail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
@@ -472,9 +475,10 @@ class IndexController extends Controller
         
 	    $inputs = $request->all();
         
+        
         if(getcong('recaptcha')==1)
         {
-           
+            
             $rule=array(
                 'name' => 'required',
                 'email' => 'required|email|max:75|unique:users',
@@ -498,10 +502,10 @@ class IndexController extends Controller
           
         if ($validator->fails())
         {
-         
+            
             return redirect()->back()->withErrors($validator->messages());
         }
-       
+        
         $user = new User;
 		$string = Str::random(15);
 		$user_name= $inputs['name'];
@@ -520,18 +524,19 @@ class IndexController extends Controller
             'confirmation_code' => $string
         );
         $subject = 'Welcome to'.getcong('site_name');
+        
         if(getenv("MAIL_USERNAME"))
         {
-           
-            \Mail::send('emails.verify', $data_email, function($message) use ($inputs){
-                $message->to($inputs['email'], $inputs['name'])
-                ->from(getenv("mail_from_address"))
-                ->subject('Welcome to'.getcong('site_name'));
-            });
+            Mail::to($inputs['email'])->send(new Register_Mail($data_email));
+            // \Mail::send('emails.verify', $data_email, function($message) use ($inputs){
+            //     $message->to($inputs['email'], $inputs['name'])
+            //     ->from(getenv("mail_from_address"))
+            //     ->subject('Welcome to'.getcong('site_name'));
+            // });
             
-            \Mail::send('emails.verify', $data_email, function($message) use ($inputs, $subject) {
-                $message->to($inputs['email'], $inputs['name'])->subject($subject);
-            });
+            // \Mail::send('emails.verify', $data_email, function($message) use ($inputs, $subject) {
+            //     $message->to($inputs['email'], $inputs['name'])->subject($subject);
+            // });
         }
 
             \Session::flash('flash_message', trans('words.verify_account_msg'));

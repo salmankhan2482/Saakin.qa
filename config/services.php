@@ -40,5 +40,8 @@ return [
         'client_secret' => 'a2e9cbacbbbc3f8e7b60436d613bad1d',
         'redirect' => 'https://www.saakin.qa/auth/facebook/callback',
     ],
-
+    'recaptcha' => [
+        'key' => env('935870547061067'),
+        'secret' => env('a2e9cbacbbbc3f8e7b60436d613bad1d'),
+    ],
 ];
