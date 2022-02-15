@@ -400,12 +400,15 @@ class IndexController extends Controller
     //exit;
     if(getcong('recaptcha')==1)
     {
+        
       $this->validate($request, [
-            'email' => 'required|email', 'password' => 'required','g-recaptcha-response' => 'required|captcha'
+
+            'email' => 'required|email', 'password' => 'required'
         ]);
     }
     else
     {
+        
         $this->validate($request, [
             'email' => 'required|email', 'password' => 'required'
         ]);
@@ -464,10 +467,14 @@ class IndexController extends Controller
 
     public function postRegister(Request $request)
     {
+        
     	$data =  \Request::except(array('_token')) ;
+        
 	    $inputs = $request->all();
+        
         if(getcong('recaptcha')==1)
         {
+           
             $rule=array(
                 'name' => 'required',
                 'email' => 'required|email|max:75|unique:users',
@@ -478,6 +485,7 @@ class IndexController extends Controller
             }
             else
             {
+                
                 $rule=array(
                     'name' => 'required',
                     'email' => 'required|email|max:75|unique:users',
@@ -487,11 +495,13 @@ class IndexController extends Controller
             }
 
 	   	$validator = \Validator::make($data,$rule);
+          
         if ($validator->fails())
         {
+         
             return redirect()->back()->withErrors($validator->messages());
         }
-
+       
         $user = new User;
 		$string = Str::random(15);
 		$user_name= $inputs['name'];
@@ -512,12 +522,13 @@ class IndexController extends Controller
         $subject = 'Welcome to'.getcong('site_name');
         if(getenv("MAIL_USERNAME"))
         {
+           
             \Mail::send('emails.verify', $data_email, function($message) use ($inputs){
                 $message->to($inputs['email'], $inputs['name'])
                 ->from(getenv("mail_from_address"))
                 ->subject('Welcome to'.getcong('site_name'));
             });
-
+            
             \Mail::send('emails.verify', $data_email, function($message) use ($inputs, $subject) {
                 $message->to($inputs['email'], $inputs['name'])->subject($subject);
             });

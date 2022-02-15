@@ -1,16 +1,17 @@
 @extends("front.layouts.main")
-@if ($page_info !=null)
 
-@section('title',$page_info . ' | '.' Saakin.qa')
-@section('description',$page_info)
-@section('keyword',$page_info)
+@if ($landing_page_content !=null)
+
+@section('title',$landing_page_content->meta_title . ' | '.' Saakin.qa')
+@section('description',$landing_page_content->meta_description)
+@section('keyword',$landing_page_content->meta_keyword)
 @section('type','property')
 @section('url',url()->current())
 
 @else
 
-@section('title',$page_info.'|'.'Saakin.qa')
-@section('description',$page_info)
+@section('title',$page_info. ' | '.' Saakin.qa')
+@section('description', $page_info)
 @section('type','property')
 @section('url',url()->current())
 
@@ -944,6 +945,15 @@ Link:'.$propertyUrl;
             </div>
         </div>
     </div>
+    @if ($properties->onFirstPage())
+    <div class="filter-wrapper style1">
+        <div class="container">
+            <div class="meta-paragraph-container">
+                {!! $landing_page_content->page_content ?? '' !!}
+            </div>
+        </div>
+    </div>
+    @endif
 
 @endsection
 

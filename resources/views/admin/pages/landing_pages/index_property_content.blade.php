@@ -9,7 +9,7 @@
                         class="fa fa-plus"></i></a>
 
             </div>
-            <h2>Landing Property Content</h2>
+            <h2>Landing Pages Content</h2>
         </div>
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
@@ -29,6 +29,7 @@
                             <th>ID</th>
                             <th>Property Purpose</th>
                             <th>Property Type</th>
+                            <th>Property City</th>
                             <th>Content</th>
                             <th class="text-center width-100">{{ trans('words.action') }}</th>
                         </tr>
@@ -41,7 +42,8 @@
                                 <td>{{ $landing_page_content->id }}</td>
                                 <td>{{ $landing_page_content->PropertyPurposes->name ?? 'Not Available' }}</td>
                                 <td>{{ $landing_page_content->PropertyTypes->types ?? 'Not Available' }}</td>
-                                <td>{!! \Illuminate\Support\Str::limit($landing_page_content->page_content, 250, '...') !!}</td>
+                                <td>{{ $landing_page_content->PropertyCities->name ?? 'Not Available' }}</td>
+                                <td>{!! \Illuminate\Support\Str::limit($landing_page_content->page_content, 250, '...')  !!}</td>
                                 <td class="text-center">
                                     <a href="{{ url('admin/landing-pages/edit/' . $landing_page_content->id) }}"
                                         class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"

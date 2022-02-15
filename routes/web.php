@@ -460,3 +460,6 @@ Route::get('callLatLong','AjaxController@callLatLong')->name('callLatLong');
 
 //ajax route to click count on call and whatsapp and email button 
 Route::get('click_count', 'AjaxController@clickCount')->name('click_count');
+    
+Route::get('site-register', 'SiteAuthController@siteRegister');
+Route::post('site-register', 'SiteAuthController@siteRegisterPost');

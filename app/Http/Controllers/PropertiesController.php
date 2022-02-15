@@ -886,11 +886,11 @@ class PropertiesController extends Controller
 
        if($buyOrRent == 'buy'){
         $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',$type->id)->first();
-        $page_info = $type->types.' for '.$property_purpose;
+        $page_info = $type->plural.' for '.$property_purpose;
        }
        else{
         $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',$type->id )->first();
-        $page_info = $type->types.' for '.$property_purpose;
+        $page_info = $type->plural.' for '.$property_purpose;
         }
 
         return view('front.pages.properties.property-type-for-purpose',
@@ -1139,10 +1139,21 @@ class PropertiesController extends Controller
         ->get();
 
         $propertyPurposes = PropertyPurpose::all();
-        $page_info = $type->types.' for '.$property_purpose.' in '.$city->slug;
+        
+    
+        if($buyOrRent == 'buy'){
+            $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',$type->id)->where('property_cities_id',$city->id)->first();
+            
+            $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
+           }
+           else{
+            $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',$type->id )->where('property_cities_id',$city->id)->first();
+            
+            $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
+            }
 
         return view('front.pages.properties.city-property-type-for-purpose',
-        compact('properties',  'propertyTypes', 'type', 'city', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
+        compact('properties',  'propertyTypes', 'type', 'city', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content'));
     }
 
 

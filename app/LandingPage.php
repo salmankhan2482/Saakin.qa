@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\PropertyCities;
 use Illuminate\Database\Eloquent\Model;
 
 class LandingPage extends Model
@@ -15,6 +16,10 @@ class LandingPage extends Model
     public function PropertyTypes()
     {
         return $this->belongsTo('App\Types', 'property_types_id', 'id');
+    }
+    public function PropertyCities()
+    {   
+        return $this->belongsTo('App\PropertyCities', 'property_cities_id', 'id');
     }
 
 }
