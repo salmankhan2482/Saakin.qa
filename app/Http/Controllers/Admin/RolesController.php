@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Roles;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\MenuOptions;
+use App\Permissions;
 
 class RolesController extends Controller
 {
@@ -26,7 +28,9 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
+        $menuOptions = MenuOptions::select('id', 'title')->get();
+        $permissions = Permissions::select('id', 'title')->get();
+        return view('admin.pages.user-management.roles.create', compact(['menuOptions','permissions']));
     }
 
     /**
