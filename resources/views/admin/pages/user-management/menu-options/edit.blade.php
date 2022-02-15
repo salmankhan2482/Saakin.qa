@@ -7,7 +7,7 @@
 		<h2>  
             Edit Menu Options
         </h2>
-		<a href="{{ route('permissions.index') }}" class="btn btn-default-light btn-xs">
+		<a href="{{ route('menuOptions.index') }}" class="btn btn-default-light btn-xs">
             <i class="md md-backspace"></i> 
             {{trans('words.back')}}
         </a>
@@ -32,12 +32,12 @@
 
    	<div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(array('route' => ['permissions.update', $permission->id], 'method'=>'PATCH','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                {!! Form::open(array('route' => ['menuOptions.update', $menu->id], 'method'=>'PATCH','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{trans('words.title')}}</label>
                       <div class="col-sm-9">
-                        <input type="text" name="title" id="title" value="{{ $permission->title }}" value="" class="form-control" required>
+                        <input type="text" name="title" id="title" value="{{ $menu->title }}" value="" class="form-control" required>
                     </div>
                 </div>
 

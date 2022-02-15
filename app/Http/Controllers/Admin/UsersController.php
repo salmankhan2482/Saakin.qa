@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 
 use App\Exports\UsersExport;
+use App\Roles;
 use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends MainAdminController
@@ -47,24 +48,22 @@ class UsersController extends MainAdminController
 
             $type=$_GET['type'];
             $keyword=$_GET['keyword'];
+
             if(Auth::User()->usertype=="Agency"){
-
-                $allusers = User::where('agency_id',Auth::User()->agency_id)->SearchUserByKeyword($keyword,$type)->paginate(10);
+                $allusers = User::where('agency_id',Auth::User()->agency_id)->SearchUserByKeyword($keyword,$type)->paginate(25);
             } else {
-                $allusers = User::SearchUserByKeyword($keyword,$type)->paginate(10);
+                $allusers = User::SearchUserByKeyword($keyword,$type)->paginate(25);
             }
-
-
 
             $allusers->appends($_GET)->links();
         }
         else
         {
             if(Auth::User()->usertype=="Agency"){
-                $allusers = User::where('usertype','Agents')->where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(10);
+                $allusers = User::where('usertype','Agents')->where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(25);
 
             }else {
-                $allusers = User::where('usertype', '!=', 'Admin')->where("usertype","!=","Agency")->orderBy('id', 'desc')->paginate(10);
+                $allusers = User::where('usertype', '!=', 'Admin')->orderBy('id', 'desc')->paginate(25);
             }
         }
 
@@ -83,8 +82,8 @@ class UsersController extends MainAdminController
         }
 
         $agencies = Agency::all();
-
-        return view('admin.pages.add_user', compact('agencies'));
+        $roles = Roles::all();
+        return view('admin.pages.add_user', compact(['agencies','roles']));
     }
 
     public function addnew(Request $request)
@@ -92,7 +91,6 @@ class UsersController extends MainAdminController
     	$data =  \Request::except(array('_token')) ;
 
 	    $inputs = $request->all();
-        
 
 	    if($inputs['usertype']=="Agents") {
             $rule=array(
@@ -156,7 +154,11 @@ class UsersController extends MainAdminController
 		$user->linkedin = $inputs['linkedin'];
         $user->status = $inputs['status'];
 		$user->password= bcrypt($inputs['password']);
-	    $user->save();
+	    
+        if($user->save())
+        {
+            $user->roles()->attach($request->roles); 
+        }
         //Sending Emails        
         $userEmail = $inputs["email"];
         if($inputs['usertype'] == "Agents") 
@@ -199,12 +201,11 @@ class UsersController extends MainAdminController
         }
 
         $agencies = Agency::all();
-
         $decrypted_id = Crypt::decryptString($id);
-
         $user = User::findOrFail($decrypted_id);
+        $roles = Roles::all();
 
-        return view('admin.pages.edit_user',compact('user','agencies'));
+        return view('admin.pages.edit_user',compact('user','agencies', 'roles'));
     }
 
     public function updateUser(Request $request, $id)
@@ -274,7 +275,9 @@ class UsersController extends MainAdminController
             $user->password= bcrypt($inputs['password']);
         }
 
-        $user->save();
+        if($user->save()){
+            $user->roles()->sync($request->roles);
+        }
 
         \Session::flash('flash_message', trans('words.successfully_updated'));
         return \Redirect::back();
@@ -333,7 +336,10 @@ class UsersController extends MainAdminController
 
             \File::delete(public_path() .'/upload/members/'.$user->image_icon);
 
-            $user->delete();
+            if($user->delete())
+            {
+                $user->roles()->detach();
+            } 
         }
         else
         {

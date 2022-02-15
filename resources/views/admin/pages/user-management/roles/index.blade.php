@@ -42,8 +42,20 @@
                             <tr>
                                 <td>{{ $role->id }}</td>
                                 <td>{{ $role->title }}</td>
-                                <td>{{ $role->title }}</td>
-                                <td>{{ $role->title }}</td>
+                                <td>
+                                    @foreach($role->rolepermissions as $item)
+                                        <span class="badge btn-danger">
+                                            {{ $item->title }}
+                                        </span>    
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($role->menuoptions as $item)
+                                        <span class="badge btn-info">
+                                            {{ $item->title }}
+                                        </span>
+                                    @endforeach
+                                </td>
                                 <td>
                                     <a class="btn btn-default-dark" href="{{ route('roles.edit', $role->id) }}">
                                         <i class="fa fa-pencil"></i>
@@ -57,7 +69,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" class="text-center">
+                            <td colspan="5" class="text-center">
                                 {{-- @include('admin.pagination', ['paginator' => $roles]) --}}
                             </td>
                         </tr>

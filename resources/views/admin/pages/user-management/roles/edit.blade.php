@@ -4,7 +4,7 @@
 <div id="main">
 	<div class="page-header">
 		<h2>  
-            Add Role
+            Edit Role
         </h2>
 		<a href="{{ route('roles.index') }}" class="btn btn-default-light btn-xs">
             <i class="md md-backspace"></i> 
@@ -31,12 +31,12 @@
 
    	<div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(array('route' => 'roles.store', 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                {!! Form::open(array('route' => ['roles.update', $role->id], 'method'=>'PATCH','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                 <div class="form-group">
                     <label for="" class="col-sm-4 control-label">{{trans('words.title')}}</label>
                       <div class="col-sm-8">
-                        <input type="text" name="title" id="title" placeholder="Title" class="form-control" required>
+                        <input type="text" name="title" id="title" value="{{ $role->title }}" class="form-control" required>
                     </div>
                 </div>
 
@@ -48,8 +48,9 @@
 
                     <div class="col-sm-8">
                         <select name="menu_options[]"  class="form-control select2 js-example-basic-multiple" multiple="multiple">
-                            @foreach($menuOptions as $id => $menuOption)
-                                <option value="{{ $menuOption->id }}">
+                            @foreach($menuOptions as $menuOption)
+                                <option value="{{ $menuOption->id }}" 
+                                    {{ $role->menuoptions->contains($menuOption->id) ? 'selected' : ''  }}>
                                     {{ $menuOption->title }}
                                 </option>
                             @endforeach
@@ -66,7 +67,8 @@
                     <div class="col-sm-8">
                         <select name="permissions[]" class="form-control select2 js-example-basic-multiple" required multiple="multiple">
                             @foreach($permissions as $permission)
-                                <option value="{{$permission->id}}">
+                                <option value="{{$permission->id}}"
+                                    {{ $role->rolepermissions->contains($permission->id) ? 'selected' : '' }}>
                                     {{$permission->title}}
                                 </option>
                             @endforeach
