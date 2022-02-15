@@ -10,6 +10,7 @@ use App\Agency;
 use App\Enquire;
 use Carbon\Carbon;
 use App\Http\Requests;
+use App\Properties;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -63,8 +64,13 @@ class InquiriesController extends MainAdminController
     public function view_inquiry($id)
     {
         $inquire = Enquire::where('id', $id)->first();
-
+        if($inquire->property_id != ''){
+            dd('aa');
+            $property = Properties::find($inquire->property_id);
+            return view('admin.pages.view_inquiry',compact('inquire', 'property'));
+        }
         return view('admin.pages.view_inquiry',compact('inquire'));
+
     }
 
 

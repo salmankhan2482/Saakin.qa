@@ -103,6 +103,17 @@
 						</select>
                     </div>
                 </div>
+				
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Assign Role *</label>
+                    <div class="col-sm-4">
+                        <select name="roles[]"  class="form-control select2 js-example-basic-multiple" multiple="multiple">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->title }}</option>
+                            @endforeach
+						</select>
+                    </div>
+                </div>
 
                 <div id="user_agency" class="form-group">
                     <label for="" class="col-sm-3 control-label">{{trans('words.agency')}} *</label>

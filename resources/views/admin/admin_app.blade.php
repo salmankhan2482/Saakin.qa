@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+$roles=App\RoleUser::where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get();
+?>
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -98,6 +103,22 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
+    $(document).ready(function(){
+
+        $('.select-all').click(function () {
+            let $select2 = $(this).parent().siblings().find('.select2')
+            console.log($select2);
+            $select2.find('option').prop('selected', 'selected')
+            $select2.trigger('change')
+        })
+    
+        $('.deselect-all').click(function () {
+            let $select2 = $(this).parent().siblings().find('.select2')
+            $select2.find('option').prop('selected', '')
+            $select2.trigger('change')
+        })
+    })
+
     
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2();

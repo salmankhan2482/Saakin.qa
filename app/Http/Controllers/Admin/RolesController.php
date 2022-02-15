@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Roles;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\MenuOptions;
 use App\Permissions;
+use App\PermissionRole;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\MenuOptionsRole;
+use Illuminate\Support\Facades\Auth;
 
 class RolesController extends Controller
 {
@@ -28,7 +31,7 @@ class RolesController extends Controller
      */
     public function create()
     {
-        $menuOptions = MenuOptions::select('id', 'title')->get();
+        $menuOptions = MenuOptions::where('parent_id', null)->select('id', 'title')->get();
         $permissions = Permissions::select('id', 'title')->get();
         return view('admin.pages.user-management.roles.create', compact(['menuOptions','permissions']));
     }
@@ -41,7 +44,16 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $role = new Roles();
+        $role->title = $request->title;
+        if($role->save())
+        {
+            
+            $role->rolepermissions()->attach($request->permissions); 
+            $role->menuoptions()->attach($request->menu_options); 
+            
+            return redirect()->route('roles.index');
+        }
     }
 
     /**
@@ -61,9 +73,14 @@ class RolesController extends Controller
      * @param  \App\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function edit(Roles $roles)
+    public function edit($id)
     {
-        //
+        $role = Roles::find($id);
+        $permissions = Permissions::select('id', 'title')->get();
+        $menuOptions = MenuOptions::where('parent_id', null)->select('id', 'title')->get();
+        $rights = MenuOptionsRole::where('role_id',$role->id)->get();
+
+        return view('admin.pages.user-management.roles.edit', compact('permissions', 'role','menuOptions','rights'));
     }
 
     /**
@@ -73,9 +90,16 @@ class RolesController extends Controller
      * @param  \App\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Roles $roles)
+    public function update(Request $request, $id)
     {
-        //
+        $role = Roles::find($id);
+        $role->title = $request->title;
+        if($role->update())
+        {
+            $role->rolepermissions()->sync($request->permissions); 
+            $role->menuoptions()->sync($request->menu_options); 
+            return redirect()->route('roles.index');
+        }
     }
 
     /**
@@ -84,8 +108,14 @@ class RolesController extends Controller
      * @param  \App\Roles  $roles
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Roles $roles)
+    public function destroy($id)
     {
-        //
+        $role = Roles::find($id);
+        if($role->delete())
+        {
+            $role->rolepermissions()->detach(); 
+            $role->menuoptions()->detach(); 
+            return redirect()->route('roles.index');
+        }
     }
 }

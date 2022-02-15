@@ -80,22 +80,31 @@
                                 <td>{{ $users->name }}</td>
                                 <td>{{ $users->email }}</td>
                                 <td>{{ $users->phone }}</td>
-                                <td class="text-center">
-                                    <a 
-                                    href="{{ url('admin/users/view_user/' . Crypt::encryptString($users->id)) }}" 
-                                    class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" 
-                                    title="{{trans('words.view')}}"> 
-                                    <i class="fa fa-eye"></i> </a>
+                                <td class="text-center p-20" style="display: flex;">
+                                    <a  href="{{ url('admin/users/view_user/' . Crypt::encryptString($users->id)) }}" 
+                                        class="cu_btn btn btn-icon waves-effect waves-light btn-success" 
+                                        data-toggle="tooltip" 
+                                        title="{{trans('words.view')}}"
+                                        style="margin-right:5px"
+                                        > 
+                                        <i class="fa fa-eye"></i>
+                                    </a>
 
-                                    <a href="{{ url('admin/users/edituser/' . Crypt::encryptString($users->id)) }}"
-                                        class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"
-                                        data-toggle="tooltip" title="{{ trans('words.edit') }}">
+                                    <a  href="{{ url('admin/users/edituser/' . Crypt::encryptString($users->id)) }}"
+                                        class="btn btn-icon waves-effect waves-light btn-success"
+                                        data-toggle="tooltip" 
+                                        title="{{ trans('words.edit') }}"
+                                        style="margin-right:5px"
+                                        >
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="{{ url('admin/users/delete/' . Crypt::encryptString($users->id)) }}"
+                                    <a  href="{{ url('admin/users/delete/' . Crypt::encryptString($users->id)) }}"
                                         class="btn btn-icon waves-effect waves-light btn-danger m-b-5"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
-                                        data-toggle="tooltip" title="{{ trans('words.remove') }}">
+                                        data-toggle="tooltip" 
+                                        title="{{ trans('words.remove') }}"
+                                        style="margin-right:5px"
+                                        >
                                         <i class="fa fa-remove"></i>
                                     </a>
 
