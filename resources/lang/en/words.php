@@ -17,6 +17,7 @@ return [
     'properties_page_content' => 'Properties Page Content',
     'city_guide_page_content' => 'City Guide Page Content',
     'agencies_page_content' => 'Agencies Page Content',
+    'page_content' => 'Page Content',
 
 
     'create_date' => 'Created at',

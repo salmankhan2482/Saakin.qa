@@ -10,6 +10,7 @@ use App\PropertyPurpose;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\PropertyCities;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -43,9 +44,10 @@ class LandingPagesController extends Controller
 
         $property_purposes = PropertyPurpose::all();
         $property_types = Types::all();
+        $cities = PropertyCities::all();
         $landing_pages_content = LandingPage::all();
 
-        return view('admin.pages.landing_pages.add_property_content', compact('property_purposes','property_types','landing_pages_content'));
+        return view('admin.pages.landing_pages.add_property_content', compact('property_purposes','property_types','landing_pages_content','cities'));
     }
     public function store(Request $request)
     {
@@ -68,6 +70,7 @@ class LandingPagesController extends Controller
         $landing_pages_content = new LandingPage();
         $landing_pages_content->property_purposes_id = $inputs['property_purpose'];
         $landing_pages_content->property_types_id = $inputs['property_type'];
+        $landing_pages_content->property_cities_id = $inputs['property_city'];
         $landing_pages_content->page_content = $inputs['page_content'];
         $landing_pages_content->meta_title = $inputs['meta_title'];
         $landing_pages_content->meta_description = $inputs['meta_description'];
@@ -88,8 +91,9 @@ class LandingPagesController extends Controller
 
         $property_purposes = PropertyPurpose::all();
         $property_types = Types::all();
+        $cities = PropertyCities::all();
         $landing_page_content = LandingPage::findOrFail($id);
-        return view('admin.pages.landing_pages.edit_property_content',compact('property_purposes', 'property_types','landing_page_content'));
+        return view('admin.pages.landing_pages.edit_property_content',compact('property_purposes', 'property_types','landing_page_content','cities'));
     }
     public function update(Request $request, $id)
     {

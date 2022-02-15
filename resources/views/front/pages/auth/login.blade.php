@@ -2,7 +2,7 @@
 
 @section('head_title', trans('words.sign_in').' | '.getcong('site_name') )
 @section('head_url', Request::url())
-@section('title', 'Sign in | saakin.qa' )
+@section('title', 'Sign in | Saakin.qa' )
 @section('description','Sign-in to your Saakin Account')
 @section('type','saakin-sign-in')
 @section('url', Request::url())

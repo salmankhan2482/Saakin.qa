@@ -4,7 +4,7 @@
 
     <div id="main">
         <div class="page-header">
-            <h2> {{ trans('words.add') . ' ' . trans('words.page_content') }}</h2>
+            <h2> {{ trans('words.edit') . ' ' . trans('words.page_content') }}</h2>
             <a href="{{ URL::to('admin/landing-pages') }}" class="btn btn-default-light btn-xs"><i
                     class="md md-backspace"></i> {{ trans('words.back') }}</a>
         </div>
@@ -55,6 +55,19 @@
                             @foreach ($property_types as $property_type)
                                 <option value="{{ $property_type->id }}" @if ($landing_page_content->property_types_id == $property_type->id) selected @endif>
                                     {{ $property_type->types }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">{{ trans('words.property_city') }}</label>
+                    <div class="col-sm-9">
+                        <select name="property_type" id="property_type" class="form-control" disabled>
+                            <option value="">Select property City</option>
+                            @foreach ($cities as $city)
+                                <option value="{{ $city->id }}" @if ($landing_page_content->property_cities_id == $city->id) selected @endif>
+                                    {{ $city->name }}</option>
                             @endforeach
                         </select>
                     </div>

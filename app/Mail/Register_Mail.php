@@ -7,18 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AgencyRegisterMail extends Mailable
+class Register_Mail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $inputs;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($inputs)
+    public $data;
+
+    public function __construct($data)
     {
-        $this->inputs = $inputs; 
+        $this->data = $data;
     }
 
     /**
@@ -28,18 +30,13 @@ class AgencyRegisterMail extends Mailable
      */
     public function build()
     {
-
         $address = 'hello@saakin.qa';
-        $subject = 'Account Created Successfully';
         $name = 'Saakin Qatar';
-
-        return $this->view('emails.AgencyRegisterMail')
+        $subject = 'Account Register';
+        
+        return $this->view('emails.verify')
                     ->from($address, $name)
-                    ->cc($address, $name)
-                    ->bcc($address, $name)
-                    ->replyTo($address, $name)
                     ->subject($subject)
-                    ->with('inputs', $this->inputs);
-
+                    ->with('data', $this->data);
     }
 }

@@ -57,6 +57,18 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">{{ trans('words.property_cities') }}</label>
+                    <div class="col-sm-9">
+                        <select name="property_city" id="property_city" class="form-control">
+                            <option value="">Select property City</option>
+                            @foreach ($cities as $city)
+                                <option value="{{ $city->id }}">{{ $city->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Page Content</label>
                     <div class="col-sm-9">
                         <textarea type="text" name="page_content" id="page_content" rows="7"
