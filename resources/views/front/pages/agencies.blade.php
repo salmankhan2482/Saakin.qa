@@ -573,7 +573,14 @@
         }
 
         @media only screen and (max-width: 767px) {
+            .change-style{
+                display: block !important;
+            }
 
+            .mbl-row{
+                margin-right: 0px !important; 
+                margin-left: 0px !important;
+            }
             .feat_property .details .tc_content h4 {
                 height: auto !important;
             }
@@ -605,13 +612,13 @@
                             @csrf
                             <div class="row">
                                 <div class="col-xl-10 col-lg-10 col-md-10 col-sm-12">
-                                    <div class="input-search">
+                                    <div class ="input-search">
                                         <input type="text" class="typeahead" name="keyword" id="keyword"
                                             autocomplete="off" placeholder="Enter Agent or Company Name...">
                                     </div>
                                 </div>
 
-                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 pl-0">
+                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-12 pl-0"> 
                                     <div class="submit_btn w-100">
                                         <!--<button class="btn v3" type="submit">Search</button>-->
                                         <button type="submit" class="btn btn-block v3">Search</button>
@@ -650,22 +657,20 @@
     </div>
 
     <section class="pt-50 ">
-        <div class="container" 
-             style="display: flex; padding-right: 15px !important; padding-left: 15px !important; flex-direction: row; 
-             align-items: center; justify-content: space-between; padding: 10px; border-bottom: 0.1rem solid #e2e2e2;"
-            >
-            <div>
-                <p>Companies Found</p>
+        <div class="container">
+           <div class="row d-flex">
+            <div class="col-sm-12 col-md-6">
+                <p>Companies Found {{ $agencies->count() }}</p>
             </div>
-            <div>
+            <div class="col-sm-12 col-md-6 d-flex justify-content-end change-style">
                 <form method="POST" action="{{url('real-estate-agencies')}}" id="sortForm">
                       @csrf
-                      <div class="form-group row">
+                      <div class="row mbl-row">
                         <label for="inputPassword" class="col-sm-3.5 col-form-label">
                             Sort by
                         </label>
                         <div class="col-sm-8.5" style="margin-left: 10px;">
-                            <select class="form-control" name="sortSelect" onchange="FormSubmit(this);">
+                            <select class="agency-select" name="sortSelect" onchange="FormSubmit(this);" >
                                 
                                 <option value="sortByNumber" {{request('sortSelect') == 'sortByNumber' ? 'selected' : '' }}>
                                     Number of Properties
@@ -678,6 +683,7 @@
                       </div>
                 </form>
             </div>
+           </div>
         </div>
 
         <div class="container pt-20">
@@ -813,8 +819,6 @@
     <script type="text/javascript">
 
     function FormSubmit(coming) {
-        var value = coming.value;
-        $("#sortSelect").val(value);
         document.getElementById('sortForm').submit();
     }
 

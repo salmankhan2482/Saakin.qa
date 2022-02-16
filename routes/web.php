@@ -337,7 +337,7 @@ Route::post('real-estate-agencies', 'AgenciesController@index')->name('real-esta
 Route::post('agency-contact','AgenciesController@agency_email');
 
 Route::post('agencies', 'AgenciesController@searchAgencies');
-Route::get('agency/{name}/{id}', 'AgenciesController@agencyDetail');
+Route::get('agency/{name}/{id}', 'AgenciesController@agencyDetail')->name('agency_detail');
 Route::post('agency/email', 'AgenciesController@agencyDetail')->name('email_inquiry');
 
 Route::get('blogs', 'BlogController@index');
