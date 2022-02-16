@@ -144,4 +144,17 @@
         height: 0px;
     }
 
+    .agency-select{
+        width: 100%; 
+        justify-content: space-between;
+        height: 2.2rem;
+        width: 100%;
+        color: #2d383f;
+        background-color: #fff; 
+        padding: 0.4rem 0.6rem 0.4rem 0.6rem;
+        font-size: 1rem;
+        border-radius: 0.3rem;
+        cursor: pointer;
+    }
+
 </style>

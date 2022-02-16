@@ -59,6 +59,13 @@
                         <input type="text" name="route" id="route" placeholder="route" value="" class="form-control" >
                     </div>
                 </div>
+               
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Url</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="url" id="url" placeholder="url" value="" class="form-control" >
+                    </div>
+                </div>
                 
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Icon</label>

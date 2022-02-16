@@ -33,6 +33,7 @@
                             <th>Name</th>
                             <th>Parent</th>
                             <th>Route</th>
+                            <th>Url</th>
                             <th>Icon</th>
                             <th class="text-center width-100">{{ trans('words.action') }}</th>
                         </tr>
@@ -45,6 +46,7 @@
                                 <td>{{ $menuOption->title }}</td>
                                 <td>{{ $menuOption->parent->title ?? '' }}</td>
                                 <td>{{ $menuOption->route }}</td>
+                                <td>{{ $menuOption->url }}</td>
                                 <td>{{ $menuOption->icon }}</td>
                                 <td>
                                     <a class="btn btn-default-dark" href="{{ route('menuOptions.edit', $menuOption->id) }}">

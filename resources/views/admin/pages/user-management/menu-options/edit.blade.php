@@ -41,6 +41,41 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Parent </label>
+                    <div class="col-sm-9">
+                        <select name="parent_id" id="parent_id" class="form-control" >
+                            <option value="">Select Parent Menu</option>
+                            @foreach($menuOptions as $menuOption)
+                                <option value="{{$menuOption->id}}" {{ $menu->parent_id ==  $menuOption->id ? 'selected' : ''}}>
+                                    {{$menuOption->title}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Route</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="route" id="route" value="{{ $menu->route }}" value="" class="form-control" >
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Url</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="url" id="url" value="{{ $menu->url }}" value="" class="form-control" >
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Icon</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="icon" id="icon" value="{{ $menu->icon }}" value="" class="form-control" >
+                    </div>
+                </div>
+
                 <hr>
                 <div class="form-group">
                     <div class="col-md-offset-3 col-sm-9 ">
