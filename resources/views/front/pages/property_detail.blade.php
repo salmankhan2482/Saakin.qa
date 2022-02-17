@@ -1,5 +1,36 @@
 @extends("front.layouts.main")
 
+@section('schem-markup')
+<script type="application/ld+json" data-schema="2950-post-Custom">
+    {
+        "@context": "https://schema.org/", 
+        "@type": "Property", 
+        "name":"{{ $property->property_name }}",
+        "image": "{{ asset('upload/properties/' . $property->featured_image) }}",
+        "description": "{{ $property_des }}",
+        "brand": "{{ $agency->name }}",
+        "sku": "{{ $property->propertiesTypes->types }}",
+        "offers": {
+        "@type": "{{ $property->property_purpose }}",
+        "url": "{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}",
+        "priceCurrency": "QAR",
+        "price": "{{ $property->price }}",
+        "priceValidUntil": "2022-12-31",
+        "availability": "https://schema.org/InStock",
+        "itemCondition": "https://schema.org/NewCondition"
+        },
+        "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "bestRating": "5",
+        "worstRating": "0",
+        "ratingCount": "500"
+        }
+    }
+</script>
+
+@endsection
+
 @if ( $property->meta_title !=null)
 
 @section('title',$property->meta_title .  '  |  ' . 'Saakin.qa')
@@ -19,6 +50,15 @@
 @section('image', asset('upload/properties/'.$property->featured_image))
 
 @endif
+
+
+
+
+
+
+
+
+
 @section('content')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />

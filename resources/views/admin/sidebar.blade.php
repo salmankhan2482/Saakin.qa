@@ -63,109 +63,64 @@
                                 </a>
                             </li>
                         </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Wrapper Reqired by Nicescroll (start scroll from here) -->
+            <div class="nicescroll">
+                <div class="wrapper" style="margin-bottom:90px">
+                    <ul class="nav nav-sidebar" id="sidebar-menu">
+                        
+                        @foreach($menu_options as $menu_option)
+                            @if(App\MenuOptions::find($menu_option->menu_option_id)->route!=null)
 
-                    </li>
+                            <li class="{{ classActivePath(App\MenuOptions::find($menu_option->menu_option_id)->url) }}">
+                                <a href="{{ route(App\MenuOptions::find($menu_option->menu_option_id)->route) }}">
+                                    <i class="{{ App\MenuOptions::find($menu_option->menu_option_id)->icon }}"></i> 
+                                    {{App\MenuOptions::find($menu_option->menu_option_id)->title}}
 
-
-                    <li class="{{ classActivePath('featuredproperties') }}">
-                        <a href="{{ URL::to('admin/featuredproperties') }}">
-                            <i class="md md-star"></i>
-                            {{ trans('words.featured') }}
-                        </a>
-                    </li>
-
-                    {{-- <li class="{{ classActivePath('inquiries') }}">
-                        <a href="{{ URL::to('admin/inquiries') }}">
-                            <i class="fa fa-send"></i>
-                            {{ trans('words.inquiries') }}
-                        </a>
-                    </li> --}}
-
-                    <li class="submenu
-                        {{ classActivePath('property_inquiries') }}
-                        {{ classActivePath('agency_inquiries') }} 
-                        {{ classActivePath('contact_inquiries') }}
-                        ">
-                        <a href="#" @if (
-                        classActivePath('property_inquiries')
-                        or classActivePath('agency_inquiries') 
-                        or classActivePath('contact_inquiries')
-                        ) class="open" 
-                        @endif>
-                            <i class="md md-description"></i> 
-                                {{ trans('words.inquiries') }}
-                        </a>
-                        <ul @if (classActivePath('property_inquiries') or classActivePath('agency_inquiries') or classActivePath('contact_inquiries')) 
-                            style="display: block" class="collapse in" @endif>
-                            <li class="{{ classActivePath('property_inquiries') }}">
-                                <a href="{{ URL::to('admin/property_inquiries') }}">
-                                    {{ trans('words.property_inquiries') }}
                                 </a>
                             </li>
                             
-                            <li class="{{ classActivePath('agency_inquiries') }}">
-                                <a href="{{ URL::to('admin/agency_inquiries') }}">
-                                    {{ trans('words.agency_inquiries') }}
-                                </a>
+                            @else
+                            
+                            <li class=" submenu 
+                                {{-- lopppp --}}
+                                @foreach(App\MenuOptions::where('parent_id',$menu_option->menu_option_id)->get() as $sub_menu_options)
+                                    {{ classActivePath($sub_menu_options->url) }} 
+                                @endforeach ">
+
+                                    <a href="#"
+                                        @foreach(App\MenuOptions::where('parent_id',$menu_option->menu_option_id)->get() as $sub_menu_options)
+                                        {{-- take the path which is visited from the above lopppp --}}
+                                            @if ( classActivePath($sub_menu_options->url))  class="open" @endif
+                                        @endforeach >
+                                        
+                                        <i class="{{ App\MenuOptions::find($menu_option->menu_option_id)->icon }}"></i> 
+                                        {{App\MenuOptions::find($menu_option->menu_option_id)->title}}
+                                    </a>
+
+                                   
+                                    <ul 
+                                        @foreach(App\MenuOptions::where('parent_id',$menu_option->menu_option_id)->get() as $sub_menu_options)
+                                            {{-- take the path which is visited from the above lopppp --}}
+                                            @if ( classActivePath($sub_menu_options->url))  
+                                                style="display: block"  class="collapse in"
+                                            @endif
+
+                                        @endforeach>
+
+                                        @foreach(App\MenuOptions::where('parent_id',$menu_option->menu_option_id)->get() as $sub_menu_options)
+                                            <li class="{{ classActivePath($sub_menu_options->url) }}">
+                                                <a href="{{ route($sub_menu_options->route) }}">
+                                                    {{$sub_menu_options->title}}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
                             </li>
-                            <li class="{{ classActivePath('contact_inquiries') }}">
-                                <a href="{{ URL::to('admin/contact_inquiries') }}">
-                                    {{ trans('words.contact_inquiries') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="{{ classActivePath('slider') }}">
-                        <a href="{{ URL::to('admin/slider') }}">
-                            <i class="fa fa-sliders"></i>
-                                {{ trans('words.home_slider') }}
-                            </a>
-                        </li>
-
-                    <li class="{{ classActivePath('users') }}">
-                        <a href="{{ URL::to('admin/users') }}">
-                            <i class="fa fa-users"></i>
-                                {{ trans('words.users') }}
-                            </a>
-                        </li>
-
-
-                    <li class="{{ classActivePath('testimonials') }}">
-                        <a href="{{ URL::to('admin/testimonials') }}">
-                            <i class="fa fa-list"></i>
-                            {{ trans('words.testimonials') }}
-                        </a>
-                    </li>
-
-                    <li class="{{ classActivePath('subscriber') }}">
-                        <a href="{{ URL::to('admin/subscriber') }}">
-                            <i class="md md-email"></i>
-                            {{ trans('words.subscribers') }}
-                        </a>
-                    </li>
-
-
-                    <li class="{{ classActivePath('settings') }}">
-                        <a href="{{ URL::to('admin/settings') }}">
-                            <i class="md md-settings"></i>
-                            {{ trans('words.settings') }}
-                        </a>
-                    </li>
-                    
-                    
-
-                    <li class="submenu 
-                        {{ classActivePath('about_page') }} 
-                        {{ classActivePath('terms_page') }}
-                        {{ classActivePath('privacy_policy_page') }}
-                        {{ classActivePath('faq_page') }}
-                        {{ classActivePath('properties_for_purpose_page') }}
-                        {{ classActivePath('property_type_for_purpose_page') }}
-                        {{ classActivePath('city_property_type_purpose_page') }}
-                        {{ classActivePath('featured_properties_page') }}
-                        
- 
+                            @endif
+                        @endforeach
                                 
                        
                     </ul>

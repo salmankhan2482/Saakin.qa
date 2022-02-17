@@ -19,4 +19,20 @@
     
     @include('front.pages.include.city_guide_area')
 
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5375398163072819"
+                crossorigin="anonymous"></script>
+            <!-- saakin ads -->
+            <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-client="ca-pub-5375398163072819"
+                data-ad-slot="6433115636"
+                data-ad-format="auto"
+                data-full-width-responsive="true"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
 @endsection

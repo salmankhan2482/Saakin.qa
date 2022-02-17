@@ -167,7 +167,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('property-amenity/update/{id}', 'PropertyAmenityController@update');
     Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy');
 
-	Route::get('users', 'UsersController@userslist');
+	Route::get('users', 'UsersController@userslist')->name('users.index');
 	Route::get('users/adduser', 'UsersController@addUser');
 	Route::post('users/adduser', 'UsersController@addnew');
 	Route::get('users/edituser/{id}', 'UsersController@editUser');

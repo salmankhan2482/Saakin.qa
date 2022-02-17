@@ -996,9 +996,7 @@ Link:'.$propertyUrl;
     </div>
     @endif
 
-
 @endsection
-
 
 @section('scripts-custom')
         
