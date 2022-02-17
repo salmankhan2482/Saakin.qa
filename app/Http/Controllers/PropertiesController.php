@@ -374,6 +374,7 @@ class PropertiesController extends Controller
 
     public function property_details_sendemail(Request $request)
     {
+        
     	$data =  \Request::except(array('_token')) ;
         $agency_id = $request->agency_id;
         $agency_name = $request->agency_name;
@@ -413,13 +414,13 @@ class PropertiesController extends Controller
             $enquire->agent_id = $property_data->agent_id;
         }else{
             $enquire->agent_id = 0;
-        }                
-        
+        }       
+
+        $enquire->type = $request->type;
         $enquire->name = $request->user_name;
         $enquire->email = $request->user_email;
         $enquire->phone = $request->telephone;
         $enquire->movein_date = $request->movein_date;
-        
         $enquire->message = $request->user_message;
         $enquire->created_at = date("Y-m-d H:i:s");
         $enquire->updated_at = date("Y-m-d H:i:s");
@@ -443,9 +444,12 @@ class PropertiesController extends Controller
             $data_email['property_purpose'] = $property_data['property_purpose'];
             $data_email['address'] = $property_data['address'];
             $data_email['city'] = $property_data['city'];
+            $data_email['property_slug'] = $property_data['property_slug'];
             $data_email['featured_image'] = $property_data['featured_image'];
             $data_email['land_area'] = $property_data['land_area'];
             $data_email['refference_code'] = $property_data['refference_code'];
+
+          
             
             Mail::to('hello@saakin.qa')->send(new Property_Inquiry($data_email));
 

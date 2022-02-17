@@ -302,7 +302,8 @@ $price = $data['property_purpose'] == 'Rent' ? $data['price'] . '/month' : $data
                                                                         <p
                                                                             style="margin: 0; font-size: 16px; text-align: center; mso-line-height-alt: 24px;">
                                                                             <span style="font-size:16px;color:#2b3940;">
-                                                                                <strong>{{ $data['property_name'] }}</strong>
+                                                                                    <a href="{{url(strtolower($data['property_purpose']) . '/' . $data['property_slug'] . '/' . $data['property_id'])}}">
+                                                                                        <strong> {{ $data['property_name'] }}</strong> </a>
                                                                             </span>
                                                                         </p>
                                                                     </div>

@@ -418,6 +418,15 @@ Link:'.$propertyUrl;
                     <textarea class="form-control chat-msg" name="your_message" rows="4"
                         placeholder="Your Message" required></textarea>
                 </div>
+                <div class="form-group col-md-3">
+                    {!! NoCaptcha::renderJs() !!}
+                    {!! NoCaptcha::display() !!}
+                    @if ($errors->has('g_recaptcha_confirmed'))
+                    <span style="color:#fb0303">
+                        {{ $errors->first('g_recaptcha_confirmed') }}
+                    </span>
+                @endif
+                </div>
                 <div class="chat-button mt-3">
                     <button type="submit" class="chat-btn" >
                         Send Message

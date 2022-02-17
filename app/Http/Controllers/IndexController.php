@@ -349,7 +349,9 @@ class IndexController extends Controller
 	    $rule=array(
             'name' => 'required',
             'email' => 'required|email',
-            'your_message' => 'required'
+            'your_message' => 'required',
+            'g-recaptcha-response' => 'required|captcha'
+            
         );
 
 	   	$validator = Validator::make($data,$rule);
@@ -363,6 +365,7 @@ class IndexController extends Controller
         $enquire->phone = $request->phone;
         $enquire->subject = $request->subject;
         $enquire->message = $request->your_message;
+        $enquire->type = $request->type;
         $enquire->created_at = date("Y-m-d H:i:s");
         $enquire->updated_at = date("Y-m-d H:i:s");
         $enquire->save();
@@ -524,7 +527,7 @@ class IndexController extends Controller
             'confirmation_code' => $string
         );
         $subject = 'Welcome to'.getcong('site_name');
-        
+
         if(getenv("MAIL_USERNAME"))
         {
             Mail::to($inputs['email'])->send(new Register_Mail($data_email));

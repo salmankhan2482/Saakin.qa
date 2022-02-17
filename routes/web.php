@@ -188,6 +188,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('partners/delete/{id}', 'PartnersController@delete');
 
 	Route::get('inquiries', 'InquiriesController@inquirieslist');
+	Route::get('property_inquiries', 'InquiriesController@property_inquiries');
+	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries');
+	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries');
     Route::get('inquiry_view/{id}', 'InquiriesController@view_inquiry');
 	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
 
