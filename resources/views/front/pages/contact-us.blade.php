@@ -89,6 +89,7 @@
                         <h3 class="mb-4 mt-2">Need assistance? Please complete the contact form</h3>
                         {!! Form::open(array('url' => 'contact-us','class'=>'','id'=>'contactform','role'=>'form')) !!}
 
+                        <input type="hidden" name="type" value="Contact Inquiry">
                         <div class="form-control-wrap form-row">
                             <!--<div id="message" class="alert alert-danger alert-dismissible fade"></div>-->
                             <div class="form-group col-md-6">
@@ -128,6 +129,15 @@
                     </span>
                                 @endif
                             </div>
+                            <div class="form-group col-md-3">
+                                {!! NoCaptcha::renderJs() !!}
+                                {!! NoCaptcha::display() !!}
+                                @if ($errors->has('g_recaptcha_confirmed'))
+                                <span style="color:#fb0303">
+                                    {{ $errors->first('g_recaptcha_confirmed') }}
+                                </span>
+                            @endif
+                            </div>
 
                             <div class="form-group col-md-12 mb-0">
                                 <button type="submit" class="btn v7">Send Message</button>
@@ -164,3 +174,4 @@
 
     
 @endsection
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>

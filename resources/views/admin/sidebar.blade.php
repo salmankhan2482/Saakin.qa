@@ -391,11 +391,46 @@
                         </a>
                     </li>
 
-                    <li class="{{ classActivePath('inquiries') }}">
+                    {{-- <li class="{{ classActivePath('inquiries') }}">
                         <a href="{{ URL::to('admin/inquiries') }}">
                             <i class="fa fa-send"></i>
                             {{ trans('words.inquiries') }}
                         </a>
+                    </li> --}}
+
+                    <li class="submenu
+                        {{ classActivePath('property_inquiries') }}
+                        {{ classActivePath('agency_inquiries') }} 
+                        {{ classActivePath('contact_inquiries') }}
+                        ">
+                        <a href="#" @if (
+                        classActivePath('property_inquiries')
+                        or classActivePath('agency_inquiries') 
+                        or classActivePath('contact_inquiries')
+                        ) class="open" 
+                        @endif>
+                            <i class="md md-description"></i> 
+                                {{ trans('words.inquiries') }}
+                        </a>
+                        <ul @if (classActivePath('property_inquiries') or classActivePath('agency_inquiries') or classActivePath('contact_inquiries')) 
+                            style="display: block" class="collapse in" @endif>
+                            <li class="{{ classActivePath('property_inquiries') }}">
+                                <a href="{{ URL::to('admin/property_inquiries') }}">
+                                    {{ trans('words.property_inquiries') }}
+                                </a>
+                            </li>
+                            
+                            <li class="{{ classActivePath('agency_inquiries') }}">
+                                <a href="{{ URL::to('admin/agency_inquiries') }}">
+                                    {{ trans('words.agency_inquiries') }}
+                                </a>
+                            </li>
+                            <li class="{{ classActivePath('contact_inquiries') }}">
+                                <a href="{{ URL::to('admin/contact_inquiries') }}">
+                                    {{ trans('words.contact_inquiries') }}
+                                </a>
+                            </li>
+                        </ul>
                     </li>
 
                     <li class="{{ classActivePath('slider') }}">

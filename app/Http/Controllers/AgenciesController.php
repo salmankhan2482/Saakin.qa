@@ -146,6 +146,7 @@ class AgenciesController extends Controller
     public function agency_email(Request $request)
     {
 
+      
         $data =  \Request::except(array('_token')) ;  
               
         $inputs = $request->all();
@@ -175,6 +176,8 @@ class AgenciesController extends Controller
         $data_email['phone'] = $inputs['phone'];
         $data_email['subject'] = $inputs['subject'];
         $data_email['your_message'] = $inputs['your_message'];
+        $data_email['agency_id'] = $inputs['agency_id'];
+        $data_email['agency_name'] = $inputs['agency_name'];
 
         Mail::to('hello@saakin.qa')->send(new Agent_Inquiry($data_email));
         

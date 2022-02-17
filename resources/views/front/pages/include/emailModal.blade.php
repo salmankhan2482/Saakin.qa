@@ -53,6 +53,7 @@
         
                 {{ Form::open(array('url' => 'send-email-agent','class'=>'','role'=>'form')) }}
                 {{-- Use Hidden Field For Getting Property ID and Agency ID --}}
+                <input type="hidden" name="type" value="Property Inquiry">
                 <input type="hidden" name="property_data" value="{{ $property->id ??'' }}">
                 <div class="row">
                     <div class="col-12 col-md-6">

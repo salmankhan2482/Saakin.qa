@@ -18,6 +18,10 @@ return [
     'city_guide_page_content' => 'City Guide Page Content',
     'agencies_page_content' => 'Agencies Page Content',
     'page_content' => 'Page Content',
+    
+    'property_inquiries' => 'Property Inquiries',
+    'agency_inquiries' => 'Agency Inquiries',
+    'contact_inquiries' => 'Contact Inquiries',
 
 
     'create_date' => 'Created at',

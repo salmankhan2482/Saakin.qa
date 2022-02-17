@@ -1,494 +1,298 @@
 
 <!DOCTYPE html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 
-<html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
+    <style type="text/css">
 
-<head>
-    <title>Saakin Inc. | Real Estate Directory in Qatar</title>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <style>
-        * {
-            box-sizing: border-box;
+      @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700|Open+Sans:400,700');
+      @media only screen {
+        .column, th, td, div, p {font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Roboto",Helvetica,Arial,sans-serif;}
+        .serif {font-family: "Montserrat",-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Roboto",Helvetica,Arial,sans-serif;}
+        .sans-serif {font-family: "Open Sans",-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI","Roboto",Helvetica,Arial,sans-serif;}
+      }
+
+      a {text-decoration: none;}
+      img {border: 0; line-height: 100%; max-width: 100%; vertical-align: middle;}
+
+      .wrapper {min-width: 700px;}
+      .row {margin: 0 auto; width: 700px;}
+      .row .row, th .row {width: 100%;}
+      .column {font-size: 13px; line-height: 23px;}
+
+      @media only screen and (max-width: 699px) {
+
+        .wrapper {min-width: 100% !important;}
+        .row {width: 90% !important;}
+        .row .row {width: 100% !important;}
+
+        .column {
+          box-sizing: border-box;
+          display: inline-block !important;
+          line-height: inherit !important;
+          width: 100% !important;
+          word-break: break-word;
+          -webkit-text-size-adjust: 100%;
+        }
+        .mobile-1  {max-width: 8.33333%;}
+        .mobile-2  {max-width: 16.66667%;}
+        .mobile-3  {max-width: 25%;}
+        .mobile-4  {max-width: 33.33333%;}
+        .mobile-5  {max-width: 41.66667%;}
+        .mobile-6  {max-width: 50%;}
+        .mobile-7  {max-width: 58.33333%;}
+        .mobile-8  {max-width: 66.66667%;}
+        .mobile-9  {max-width: 75%;}
+        .mobile-10 {max-width: 83.33333%;}
+        .mobile-11 {max-width: 91.66667%;}
+        .mobile-12 {
+          padding-right: 30px !important;
+          padding-left: 30px !important;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
+        .mobile-offset-1  {margin-left: 8.33333% !important;}
+        .mobile-offset-2  {margin-left: 16.66667% !important;}
+        .mobile-offset-3  {margin-left: 25% !important;}
+        .mobile-offset-4  {margin-left: 33.33333% !important;}
+        .mobile-offset-5  {margin-left: 41.66667% !important;}
+        .mobile-offset-6  {margin-left: 50% !important;}
+        .mobile-offset-7  {margin-left: 58.33333% !important;}
+        .mobile-offset-8  {margin-left: 66.66667% !important;}
+        .mobile-offset-9  {margin-left: 75% !important;}
+        .mobile-offset-10 {margin-left: 83.33333% !important;}
+        .mobile-offset-11 {margin-left: 91.66667% !important;}
+
+        .has-columns {
+          padding-right: 20px !important;
+          padding-left: 20px !important;
         }
 
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: inherit !important;
+        .has-columns .column {
+          padding-right: 10px !important;
+          padding-left: 10px !important;
         }
 
-        #MessageViewBody a {
-            color: inherit;
-            text-decoration: none;
+        .mobile-collapsed .column {
+          padding-left: 0 !important;
+          padding-right: 0 !important;
         }
 
-        p {
-            line-height: inherit
+        .mobile-center {
+          display: table !important;
+          float: none;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
+        .mobile-left {
+          float: none;
+          margin: 0 !important;
+        }
+        .mobile-text-center {text-align: center !important;}
+        .mobile-text-left   {text-align: left !important;}
+        .mobile-text-right  {text-align: right !important;}
+
+        .mobile-valign-top  {vertical-align: top !important;}
+
+        .mobile-full-width {
+          display: table;
+          width: 100% !important;
         }
 
-        @media (max-width:660px) {
-            .icons-inner {
-                text-align: center;
-            }
-
-            .icons-inner td {
-                margin: 0 auto;
-            }
-
-            .row-content {
-                width: 100% !important;
-            }
-
-            .image_block img.big {
-                width: auto !important;
-            }
-
-            .stack .column {
-                width: 100%;
-                display: block;
-            }
-        }
-
+        .spacer                     {height: 30px; line-height: 100% !important; font-size: 100% !important;}
+        .divider th                 {height: 60px;}
+        .mobile-padding-top         {padding-top: 30px !important;}
+        .mobile-padding-top-mini    {padding-top: 10px !important;}
+        .mobile-padding-bottom      {padding-bottom: 30px !important;}
+        .mobile-padding-bottom-mini {padding-bottom: 10px !important;}
+        .mobile-margin-top          {margin-top: 30px !important;}
+        .mobile-margin-top-mini     {margin-top: 10px !important;}
+        .mobile-margin-bottom       {margin-bottom: 30px !important;}
+        .mobile-margin-bottom-mini  {margin-bottom: 10px !important;}
+      }
     </style>
-</head>
+  </head>
+  <body style="box-sizing:border-box;margin:0;padding:0;width:100%;-webkit-font-smoothing:antialiased;">
 
-<body style="background-color: #f6f8f8; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
-    <table cellpadding="0" cellspacing="0" class="nl-container" role="presentation"
-        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f6f8f8;" width="100%">
-        <tbody>
+    <table class="wrapper" align="center" bgcolor="#EEEEEE" cellpadding="0" cellspacing="0" width="100%" role="presentation">
+      <tr>
+        <td style="padding: 30px 0;">
+
+          <!-- Header Left -->
+          <table class="row" align="center" bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" role="presentation">
             <tr>
-                <td>
-                    <table cellpadding="0" cellspacing="0" class="row row-1" role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #2b3940;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" class="row-content" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;"
-                                        width="640">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="50%">
-                                                    <table cellpadding="0" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td
-                                                                style="padding-bottom:20px;padding-left:20px;padding-top:20px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: left;">
-                                                                            <span
-                                                                                style="font-size:13px;color:#8c9497;">+97470125000</span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                                <td class="column"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="50%">
-                                                    <table cellpadding="0" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td
-                                                                style="padding-bottom:20px;padding-right:20px;padding-top:20px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 14.399999999999999px; color: #555555; line-height: 1.2;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: right;">
-                                                                            <span
-                                                                                style="font-size:13px;color:#8c9497;">hello@saakin.qa</span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table cellpadding="0" cellspacing="0" class="row row-2" role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;"
-                                        width="640">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="100%">
-                                                    <table cellpadding="0" cellspacing="0" class="image_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td style="width:100%;padding-right:0px;padding-left:0px;">
-                                                                <div style="line-height:10px"><img
-                                                                        src="{{ URL::asset('assets/images/black_logo.png') }}"
-                                                                        style="display: block; height: auto; border: 0; width: 100px; max-width: 100%;"
-                                                                        width="100" /></div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table cellpadding="0" cellspacing="0" class="row row-3" role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #2b3940;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;"
-                                        width="640">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="100%">
-                                                    <table cellpadding="0" cellspacing="0" class="divider_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td style="padding-left:20px;padding-right:20px;">
-                                                                <div>
-                                                                    <table cellpadding="0" cellspacing="0"
-                                                                        role="presentation"
-                                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                                                                        width="100%">
-                                                                        <tr>
-                                                                            <td class="divider_inner"
-                                                                                style="font-size: 1px; line-height: 1px; border-top: 1px solid #404D53;">
-                                                                                <span> </span>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table cellpadding="0" cellspacing="0" class="row row-5" role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; color: #000000; width: 100%;"
-                                        width="640">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column text-center"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="100%">
-
-                                                    <table cellpadding="5" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td>
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 14px; mso-line-height-alt: 16.8px; color: #000000; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
-                                                                            <span style="font-size:14px;">
-                                                                                <strong>
-                                                                                    Name:
-                                                                                </strong>
-                                                                                {{ $data_email['name'] ?? '' }}
-                                                                            </span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <table cellpadding="5" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td>
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 14px; mso-line-height-alt: 16.8px; color: #000000; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
-                                                                            <span style="font-size:14px;">
-                                                                                <strong>
-                                                                                    Email:
-                                                                                </strong>
-                                                                                {{ $data_email['email'] ?? '' }}
-                                                                            </span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <table cellpadding="5" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td>
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 14px; mso-line-height-alt: 16.8px; color: #000000; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
-                                                                            <span style="font-size:14px;">
-                                                                                <strong>
-                                                                                    Phone:
-                                                                                </strong>
-                                                                                {{ $data_email['phone'] ?? '' }}
-                                                                            </span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <table cellpadding="5" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td>
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 14px; mso-line-height-alt: 16.8px; color: #000000; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
-                                                                            <span style="font-size:14px;">
-                                                                                <strong>
-                                                                                    Subject:
-                                                                                </strong>
-                                                                                {{ $data_email['subject'] ?? '' }}
-                                                                            </span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <table cellpadding="5" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td>
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 14px; mso-line-height-alt: 16.8px; color: #000000; line-height: 1.2; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
-                                                                            <span style="font-size:14px;">
-                                                                                <strong>
-                                                                                    Message:
-                                                                                </strong>
-                                                                                {{ $data_email['your_message'] ?? '' }}
-                                                                            </span>
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table cellpadding="0" cellspacing="0" class="row row-2" role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;"
-                                        width="640">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 15px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="100%">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table cellpadding="0" cellspacing="0" class="row row-6" role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #263339;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;"
-                                        width="640">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 0px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="100%">
-                                                    <table cellpadding="0" cellspacing="0" class="text_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td
-                                                                style="padding-bottom:30px;padding-left:20px;padding-right:20px;padding-top:15px;">
-                                                                <div style="font-family: sans-serif">
-                                                                    <div
-                                                                        style="font-size: 14px; mso-line-height-alt: 21px; color: #cccccc; line-height: 1.5; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;">
-                                                                        <p
-                                                                            style="margin: 0; font-size: 14px; text-align: justify;">
-                                                                            <a href="https://www.saakin.qa/"
-                                                                                rel="noopener"
-                                                                                style="text-decoration: underline; color: #0068A5;"
-                                                                                target="_blank">Saakin</a> is the
-                                                                            fastest growing Qatar Real Estate Directory
-                                                                            you can find <a
-                                                                                href="https://www.saakin.qa/properties"
-                                                                                rel="noopener"
-                                                                                style="text-decoration: underline; color: #0068A5;"
-                                                                                target="_blank">Properties for Rent in
-                                                                                Qatar</a>. For apartments on rent real
-                                                                            estate agents in Qatar bring you the best
-                                                                            apartments in Doha, The Pearl, West Bay, and
-                                                                            properties from all over the country though
-                                                                            Qatar property directory
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table cellpadding="0" cellspacing="0" class="row row-7" role="presentation"
-                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <table cellpadding="0" cellspacing="0" class="row-content stack" role="presentation"
-                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 640px;"
-                                        width="640">
-                                        <tbody>
-                                            <tr>
-                                                <td class="column"
-                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 5px; padding-bottom: 5px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;"
-                                                    width="100%">
-                                                    <table cellpadding="0" cellspacing="0" class="icons_block"
-                                                        role="presentation"
-                                                        style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                                                        width="100%">
-                                                        <tr>
-                                                            <td
-                                                                style="color:#9d9d9d;font-family:inherit;font-size:15px;padding-bottom:5px;padding-top:5px;text-align:center;">
-                                                                <table cellpadding="0" cellspacing="0"
-                                                                    role="presentation"
-                                                                    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;"
-                                                                    width="100%">
-                                                                    <tr>
-                                                                        <td style="text-align:center;">
-
-                                                                            <table cellpadding="0" cellspacing="0"
-                                                                                class="icons-inner"
-                                                                                role="presentation"
-                                                                                style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; margin-right: -4px; padding-left: 0px; padding-right: 0px;">
-                                                                                <!--<![endif]-->
-                                                                                <tr>
-                                                                                    <td
-                                                                                        style="text-align:center;padding-top:5px;padding-bottom:5px;padding-left:5px;padding-right:6px;">
-                                                                                        <a
-                                                                                            href="https://www.saakin.qa/">
-                                                                                            <img alt="Saakin Real Estate Directory in Qatar Logo"
-                                                                                                class="icon"
-                                                                                                height="32"
-                                                                                                src="{{ asset('upload/favicon.png') }}"
-                                                                                                style="display: block; height: auto; border: 0;"
-                                                                                                width="34" /></a>
-                                                                                    </td>
-                                                                                    <td
-                                                                                        style="font-family:Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;font-size:15px;color:#9d9d9d;vertical-align:middle;letter-spacing:undefined;text-align:center;">
-                                                                                        <a href="https://www.saakin.qa/"
-                                                                                            style="color:#9d9d9d;text-decoration:none;">SAAKIN
-                                                                                            INC.</a>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </table>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </td>
+              <td class="spacer" height="20" style="line-height: 20px;">&nbsp;</td>
             </tr>
-        </tbody>
-    </table><!-- End -->
-</body>
+            <tr>
+              <th class="column" width="640" style="padding-left: 30px; padding-right: 30px; text-align: center;">
+                <a href="http://example.com" style="text-decoration: none;">
+                  <img class="mobile-center" src="{{ URL::asset('assets/images/black_logo.png') }}" alt="Header Logo" style="height:4em">
+                </a>
+              </th>
+            </tr>
+            <tr>
+              <td class="spacer" height="20" style="line-height: 20px;">&nbsp;</td>
+            </tr>
+          </table>
+          <!-- /Header Left -->
 
-</html> --}}
+          <!-- Intro Basic -->
+          <table class="row" align="center" bgcolor="#F8F8F8" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <td class="spacer" height="60" style="line-height: 20px;">&nbsp;</td>
+            </tr>
+            <tr>
+              <th class="column" width="640" style="padding-left: 30px; padding-right: 30px; font-weight: 400; text-align: left;">
+                <div style="color: #1F2225; font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 30px;"         
+                     class="serif" >
+                     Hello {{ $data_email['name'] ?? ''}}
+                </div>
+
+                <div class="sans-serif" style="color: #969AA1; font-size: 18px; line-height: 28px; margin-bottom: 40px;">
+                    We have Recieved the Details
+                </div>
+                <table class="row divider">
+                    <tbody>
+                        <tr>
+                            <td style="width: 7em;">
+                                <strong>Name : </strong>
+                            </td>
+                            <td>{{ $data_email['name'] ?? ''}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 7em;">
+                                <strong>Email : </strong>
+                            </td>
+                            <td>{{ $data_email['email'] ?? ''}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 7em;">
+                                <strong>Phone : </strong>
+                            </td>
+                            <td>{{ $data_email['phone'] ?? ''}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 7em;">
+                                <strong>Subject : </strong>
+                            </td>
+                            <td>{{ $data_email['subject'] ?? ''}}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 7em;">
+                                <strong>Message : </strong>
+                            </td>
+                            <td>{{ $data_email['your_message'] ?? ''}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div style="font-size: 13px; margin-top: 20px;">
+                  Thanks {{ $data['name'] ?? ''}} We have Successfully Received Your Query.
+                </div>
+                <div style="font-size: 13px; margin-top: 20px;">
+                  
+                  Regards,<br />
+                  <a href="{{url(strtolower('agency/'.$data_email['agency_name']) . '/' . $data_email['agency_id'])}}">
+                  <b>{{ $data_email['agency_name'] ??'' }}</b><br>
+                </a>
+
+                  {{-- <a href="{{ getcong('site_url') }}"></a> --}}
+                </div>
+              </th>
+            </tr>
+            <tr>
+              <td class="spacer" height="20" style="line-height:20px;">&nbsp;</td>
+            </tr>
+          </table>
+          <!-- /Intro Basic -->
+
+          <!-- Footer 1 -->
+          <table class="row" align="center" bgcolor="#1F2225" cellpadding="0" cellspacing="0" role="presentation">
+            <tr>
+              <th class="column has-columns" width="640" style="padding-left: 30px; padding-right: 30px;">
+
+                <div class="spacer" style="line-height: 20px;">&nbsp;</div>
+
+                <table class="row" cellpadding="0" cellspacing="0" role="presentation">
+                  <tr valign="top" style="vertical-align: top;">
+                    <th class="column mobile-padding-bottom" width="255" style="padding-top: 10px; padding-right: 10px; text-align: left;">
+                      <a href="{{ getcong('site_url') }}">
+                        <img src="{{ asset('upload/logo.png') }}" alt="Footer Logo" style="    height: 2rem;">
+                      </a>
+                    </th>
+                    <th class="column mobile-text-left" width="365" style="padding-left: 10px;">
+                      <table align="right" class="mobile-left" cellpadding="10" cellspacing="0" role="presentation">
+                        <tr>
+                          <td style="padding-left: 0;">
+                            <a href="{{ getcong('social_facebook') }}">
+                              <img src="{{ asset('assets/images/facebook.png') }}" alt="" style="width: 3em; border-radius: 8px;">
+                            </a>
+                          </td>
+                          <td>
+                            <a href="{{ getcong('social_instagram') }}">
+                              <img src="{{ asset('assets/images/instagram.png') }}" alt="" style="width: 3em; border-radius: 8px;">
+                            </a>
+                          </td>
+                          <td>
+                            <a href="{{ getcong('social_linkedin') }}">
+                              <img src="{{ asset('assets/images/linkedin.png') }}" alt="" style="width: 3em; border-radius: 8px;">
+                            </a>
+                          </td>
+                          
+                        </tr>
+                      </table>
+                    </th>
+                  </tr>
+                </table>
+
+                <table class="row divider" cellpadding="0" cellspacing="0" width="100%" role="presentation">
+                  <tr>
+                    <th height="81">
+                      <div style="border-top: 1px solid #2B2E32; line-height: 0;">&nbsp;</div>
+                    </th>
+                  </tr>
+                </table>
+
+                <table class="row" cellpadding="0" cellspacing="0" role="presentation">
+                  <tr valign="top" style="vertical-align: top;">
+                    <th class="column mobile-12" width="200" style="padding-right: 10px; color: #969AA1; font-weight: 400; text-align: left;">
+                      <div class="sans-serif" style="line-height: 2em; font-size: 14px; font-weight: 700; margin-bottom: 15px;">
+                        {{ getcong('site_name') }}  
+                      </div>
+                      <div class="sans-serif" style="line-height: 2em">
+                       {{ getcong('contact_us_address') }}
+                      </div>
+                      
+                    </th>
+                  </tr>
+                </table>
+
+                <div class="spacer" style="line-height: 40px;">&nbsp;</div>
+
+                <table class="row" cellpadding="0" cellspacing="0" role="presentation">
+                  <tr>
+                    <th class="column" width="640" style="color: #969AA1; font-weight: 400; text-align: left;">
+                      {{-- <div class="sans-serif">
+                        © Saakin Qatar | Find Property with our Online Real Estate Directory in Qatar | Real Estate Investments in Qatar | Doha City Guide  
+                      </div> --}}
+                    </th>
+                  </tr>
+                  <tr>
+                    <td class="spacer" height="30" style="line-height: 30px;">&nbsp;</td>
+                  </tr>
+                </table>
+
+              </th>
+            </tr>
+          </table>
+          <!-- /Footer 1 -->
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>

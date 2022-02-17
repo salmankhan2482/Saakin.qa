@@ -44,6 +44,65 @@ class InquiriesController extends MainAdminController
         return view('admin.pages.inquiries',compact('inquirieslist'));
     }
 
+    public function property_inquiries()
+    {
+        if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
+        }
+
+        if(Auth::User()->usertype=="Agency"){
+        $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)
+                                        ->whereIn('type','Property Inquiry')
+                                        ->orderBy('id','desc')->paginate(10);
+        
+        } else {
+        $inquirieslist = Enquire::where('type','Property Inquiry')->orderBy('id', 'desc')->paginate(10);
+        
+        }
+
+    return view('admin.pages.property_inquiries',compact('inquirieslist'));
+    }
+
+    public function agency_inquiries()
+    {
+        if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
+        }
+
+        if(Auth::User()->usertype=="Agency"){
+        $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)
+                                        ->whereIn('type','Agency Inquiry')
+                                        ->orderBy('id','desc')->paginate(10);
+        
+        } else {
+        $inquirieslist = Enquire::where('type','Agency Inquiry')->orderBy('id', 'desc')->paginate(10);
+        
+        }
+
+    return view('admin.pages.agency_inquiries',compact('inquirieslist'));
+    }
+
+    public function contact_inquiries()
+    {
+        if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
+        }
+
+        if(Auth::User()->usertype=="Agency"){
+        $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)
+                                        ->whereIn('type','Contact Inquiry')
+                                        ->orderBy('id','desc')->paginate(10);
+        
+        } else {
+        $inquirieslist = Enquire::where('type','Contact Inquiry')->orderBy('id', 'desc')->paginate(10);
+        
+        }
+
+    return view('admin.pages.contact_inquiries',compact('inquirieslist'));
+    }
 
     public function delete($id)
     {
