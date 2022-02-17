@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+$roles=App\RoleUser::where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get();
+?>
+
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -14,6 +19,10 @@
     <script src="{{ URL::asset('admin_assets/js/jquery.js') }}"></script>
     <script type="text/javascript" src="{{ asset('assets/js/parsley.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('site_assets/ckfinder/ckfinder.js') }}"></script>
+
+    {{-- select 2 css --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
     @php
     $settings = App\Settings::where("id",1)->get()->first();
@@ -90,7 +99,31 @@
 <script src="{{ URL::asset('admin_assets/js/scripts.js') }}"></script>
 <script src="https://cdn.ckeditor.com/4.13.0/full/ckeditor.js"></script>
 
+{{-- select 2 js --}}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script>
+    $(document).ready(function(){
+
+        $('.select-all').click(function () {
+            let $select2 = $(this).parent().siblings().find('.select2')
+            console.log($select2);
+            $select2.find('option').prop('selected', 'selected')
+            $select2.trigger('change')
+        })
+    
+        $('.deselect-all').click(function () {
+            let $select2 = $(this).parent().siblings().find('.select2')
+            $select2.find('option').prop('selected', '')
+            $select2.trigger('change')
+        })
+    })
+
+    
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2();
+    });
+
     function makeid(length) 
     {
         var result = '';

@@ -79,59 +79,30 @@ class AgenciesController extends Controller
 
     public function agencyDetail($name, $id)
     {
-
         $agency = Agency::find($id);
         $user = User::where("agency_id",$agency->id)->where("usertype","Agency")->first();
-        if(request()->ajax())
-            {
-                $properties = Properties::where('status', '1')
-                ->where('agency_id', $id)
-                ->orderBy('id', 'desc')
-                ->paginate(10);
-                return view('front.pages.agency.list', compact('properties'))->render();
-
-            }else{
-                $properties = Properties::where('status', '1')
-                ->where('agency_id', $id)
-                ->orderBy('id', 'desc')
-                ->paginate(10, ['*'], 'properties');
-            }
+            
+            $properties = Properties::where('status', '1')
+            ->where('agency_id', $id)
+            ->when(request('sortSelect') == 'Sale' || request('sortSelect') == 'Rent', function($query){
+                $query->where('property_purpose', request('sortSelect'));
+            })
+            ->orderBy('id', 'desc')
+            ->paginate(10);
         
-
-        $saleProperties = Properties::where('status', '1')
-            ->where('agency_id', $id)
-            ->where('property_purpose', 'Sale')
-            ->orderBy('id', 'desc')
-            ->paginate(10, ['*'], 'saleProperties');
-
-        $rentProperties = Properties::where('status', '1')
-            ->where('agency_id', $id)
-            ->where('property_purpose', 'Rent')
-            ->orderBy('id', 'desc')
-            ->paginate(10, ['*'], 'rentProperties');
-
-
         $propertyTypes = DB::select("SELECT property_types.id, COUNT(properties.id) AS property_count, property_types.types as property_type FROM properties JOIN property_types ON (properties.property_type=property_types.id) WHERE properties.status='1' AND agency_id='".$agency->id."' GROUP BY property_types.id ORDER BY property_count DESC");
 
         $agency_des = strip_tags($agency->agency_detail);
         $agency_des = Str::limit($agency_des, 170, '...');
 
-        return view('front.pages.agency', compact('agency', 'properties', 'saleProperties', 'rentProperties', 'propertyTypes','user','agency_des'));
+        return view('front.pages.agency', compact('agency', 'properties', 'propertyTypes','user','agency_des'));
     }
 
     public function searchAgencies(Request $request)
     {
 
         $inputs = $request->all();
-
         $keyword = $inputs['keyword'];
-
-        //$properties = Properties::where('status',1)->SearchByKeyword($keyword)->get();
-        /*$properties = Properties::where('status',1)->where('city',$city)->
-        where(function ($query) use ($keyword) {
-            $query->where('property_name', 'like', '%'.$keyword.'%')
-                ->orWhere('description', 'like', '%'.$keyword.'%');
-        })->get();*/
 
         $agencies = Agency::where('status', 1)->
         where(function ($query) use ($keyword) {

@@ -77,7 +77,7 @@ class AgencyController extends Controller
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imageNa0me = 'agency_'.time().'.'.$image->getClientOriginalExtension();
+            $imageName = 'agency_'.time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('upload/agencies/');
             $image->move($destinationPath, $imageName);
             $agency->image = $imageName;

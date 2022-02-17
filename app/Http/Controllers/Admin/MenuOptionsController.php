@@ -42,6 +42,7 @@ class MenuOptionsController extends Controller
         $menu->title = request('title');
         $menu->parent_id = request('parent_id');
         $menu->route = request('route');
+        $menu->url = request('url');
         $menu->icon = request('icon');
         $menu->save();
 
@@ -85,6 +86,7 @@ class MenuOptionsController extends Controller
         $menu->title = request('title');
         $menu->parent_id = request('parent_id');
         $menu->route = request('route');
+        $menu->url = request('url');
         $menu->icon = request('icon');
         $menu->update();
 

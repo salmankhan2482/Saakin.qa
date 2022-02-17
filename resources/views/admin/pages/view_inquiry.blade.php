@@ -8,8 +8,18 @@
 
                 <table id="data-table" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                         <tr>
-                            <th>Property ID</th>
+                            <th>Enquiry ID</th>
                             <td>{{ $inquire->id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Property ID</th>
+                            <td>
+                            @isset($property)
+                                <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
+                                    {{ $property->property_name }}
+                                </a>
+                            @endisset    
+                            </td>
                         </tr>
                         <tr>
                             <th>Name</th>
@@ -25,7 +35,7 @@
                         </tr>
                         <tr>
                             <th>Agency Name</th>
-                            <td>{{ $inquire->Agencies->name }}</td>
+                            <td>{{ $inquire->Agencies->name ?? '' }}</td>
                         </tr>
                         <tr>
                             <th>Subject</th>

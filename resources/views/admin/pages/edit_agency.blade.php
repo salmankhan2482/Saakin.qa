@@ -93,7 +93,7 @@
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Agency Image</label>
                     <div class="col-sm-5">
-                        <input type="file" name="image" id="image" class="form-control">
+                        <input type="file" name="image[]" id="image" class="form-control">
                     </div>
                     <div class="col-sm-4">
                     <img src="{{asset('upload/agencies/'.$agency->image)}}" alt="{{$agency->name}}" width="100%" />
@@ -140,8 +140,8 @@
 @section('scripts-custom')
  @php
     $image[] = ['id'=>$agency->id,'src'=>url('/').'/upload/agencies/'.$agency->image];
-$json_arry = json_encode($image);
-    @endphp
+    $json_arry = json_encode($image);
+@endphp
     <script>
         $(function() {
             let preloaded = {!! $json_arry !!}

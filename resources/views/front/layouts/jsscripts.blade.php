@@ -10,6 +10,9 @@
 <script src="{{asset('assets/js/jquery.validate.js')}}"></script>
 <script src="{{asset('assets/js/jquery.formtowizard.js')}}"></script>
 
+@if (request()->path() != 'real-estate-agencies' &&  Route::current()->getName() != 'agency_detail' )
+    <script src="{{asset('assets/js/preloadinator.js')}}"></script>;
+@endif
 
 <script src="{{asset('assets/js/dropzone.js')}}"></script>
 <script src="{{asset('assets/js/counting-up.js')}}"></script>
@@ -20,9 +23,6 @@
 <script src="{{asset('assets/js/jquery-mb.ytplayer.js')}}"></script>
 <script src="{{asset('assets/js/magnific.popup.js')}}"></script>
 <script src="{{asset('assets/js/datepicker.js')}}"></script>
-@if(Route::currentRouteName() != 'real-estate-agencies')
-<script src="{{asset('assets/js/preloadinator.js')}}"></script> 
-@endif
 <script src="{{asset('assets/js/wow.min.js')}}"></script>
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="{{asset('assets/js/custom.js')}}"></script>

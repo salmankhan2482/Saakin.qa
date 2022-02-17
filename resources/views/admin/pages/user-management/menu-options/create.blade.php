@@ -44,7 +44,7 @@
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Parent </label>
                     <div class="col-sm-9">
-                        <select name="parent_id" id="parent_id" class="form-control" required>
+                        <select name="parent_id" id="parent_id" class="form-control" >
                             <option value="">Select Parent Menu</option>
                             @foreach($menuOptions as $menuOption)
                                 <option value="{{$menuOption->id}}">{{$menuOption->title}}</option>
@@ -56,14 +56,21 @@
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Route</label>
                       <div class="col-sm-9">
-                        <input type="text" name="route" id="route" placeholder="route" value="" class="form-control" required>
+                        <input type="text" name="route" id="route" placeholder="route" value="" class="form-control" >
+                    </div>
+                </div>
+               
+                <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Url</label>
+                      <div class="col-sm-9">
+                        <input type="text" name="url" id="url" placeholder="url" value="" class="form-control" >
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Icon</label>
                       <div class="col-sm-9">
-                        <input type="text" name="icon" id="icon" placeholder="icon" value="" class="form-control" required>
+                        <input type="text" name="icon" id="icon" placeholder="icon" value="" class="form-control" >
                     </div>
                 </div>
 
