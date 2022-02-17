@@ -11,7 +11,7 @@
 <script src="{{asset('assets/js/jquery.formtowizard.js')}}"></script>
 
 @if (request()->path() != 'real-estate-agencies' &&  Route::current()->getName() != 'agency_detail' )
-    <script src="{{asset('assets/js/preloadinator.js')}}"></script>;
+    <script src="{{asset('assets/js/preloadinator.js')}}"></script>
 @endif
 
 <script src="{{asset('assets/js/dropzone.js')}}"></script>

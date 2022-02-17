@@ -109,6 +109,7 @@
                     <div class="col-sm-4">
                         <select name="usertype" id="basic" class="selectpicker show-tick form-control" data-live-search="true" onchange="toggleAgency(this.value);">
                             <option value="Agents" @if($user->usertype=='Agents') selected @endif>{{trans('words.agent')}}</option>
+                            <option value="Agency" @if($user->usertype=='Agency') selected @endif>{{trans('words.agency')}}</option>
                             <option value="User" @if($user->usertype=='User') selected @endif>{{trans('words.user')}}</option>
 						</select>
                     </div>

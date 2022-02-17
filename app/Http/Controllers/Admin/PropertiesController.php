@@ -9,27 +9,30 @@ use App\Enquire;
 use App\CityGuide;
 use Carbon\Carbon;
 use App\Properties;
+use App\Permissions;
 use App\Http\Requests;
-use App\PropertyAmenity;
-use App\PropertyGallery;
+use App\PropertyAreas;
 
+use App\PropertyTowns;
+use App\PropertyCities;
+use App\PropertyAmenity;
+
+use App\PropertyGallery;
 use App\PropertyPurpose;
 use App\PropertyDocument;
 use App\PropertyFloorPlan;
-
+use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\PropertyNeighborhood;
 use App\Exports\PropertiesExport;
-use App\PropertyAreas;
-use App\PropertyCities;
-use App\PropertySubCities;
-use App\PropertyTowns;
+use CKSource\CKFinder\Acl\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
-
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -190,7 +193,13 @@ class PropertiesController extends MainAdminController
 
     public function create()
     {
-
+        if($permission = Permissions::where('title', 'property_create')->first()){
+            if (!Gate::allows('isAllowedToThis', $permission->id)) {
+                \Session::flash('flash_message', "You Are Not Authorized.");
+                return redirect()->back();
+            }
+        }
+        
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
@@ -370,6 +379,13 @@ class PropertiesController extends MainAdminController
 
     public function edit(Request $request, $id)
     {
+        $permission = Permissions::where('title', 'property_edit')->first();
+        if (!Gate::allows('isAllowedToThis', $permission->id)) {
+            \Session::flash('flash_message', "You Are Not Authorized.");
+            return redirect()->back();
+        }
+        
+
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
