@@ -137,13 +137,14 @@ class PropertiesController extends Controller
             ->when(request()->get('furnishings'), function ($query) {
                 $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
             })
-            ->when(request()->get('keywordextra'), function($query){
-                foreach(explode(', ',  request('keywordextra')) as $extra){
-                    $featureIds = PropertyAmenity::where(ucfirst('name'), 'like', ucfirst('%'. $extra . '%'))->value('id');
-                    if(isset($featureIds)){
-                        $query = $query->where('property_features', 'like', '%'.$featureIds.'%');
-                    }
+            ->when(request('ameneties'), function($query){
+                // $ameneties = explode('', request('ameneties'));
+                dd((request('ameneties')));
+                foreach(request('ameneties') as $single){
+                        $query = $query->where('property_features', 'like', '%'.$single.'%');
+                        // dd($query->get());
                 }
+                dd($query->get());
             })
             ->when($min_area != 0 && $max_area != 0, function ($query) {
                 $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);

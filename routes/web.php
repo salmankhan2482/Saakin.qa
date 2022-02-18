@@ -35,13 +35,6 @@ use App\Http\Controllers\Admin\PropertiesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/saakin', function(){
-    
-Mail::to('test@gmail.com')->send(new TestMail());
-
-});
-
 Route::get('clear', function(){
     Artisan::call('storage:link');
     Artisan::call('config:cache');
@@ -317,8 +310,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 });
 
-Route::get('autocomplete/agencies', 'AgenciesController@livesearch');
 Route::get('/', 'IndexController@index')->name('home');
+Route::get('autocomplete/agencies', 'AgenciesController@livesearch');
 Route::get('livesearch','IndexController@livesearch');
 // Route::get('{slug}', 'PagesController@get_page');
 
