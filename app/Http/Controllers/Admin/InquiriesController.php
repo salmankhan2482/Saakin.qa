@@ -45,6 +45,13 @@ class InquiriesController extends MainAdminController
         return view('admin.pages.inquiries',compact('inquirieslist'));
     }
 
+    public function create_inquiry()
+    {
+        // $inquiry_types = Enquire::select('type')->groupBy('type')->get()->toArray() ;
+       
+        return view('admin.pages.create_inquiry');
+    }
+
     public function property_inquiries()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){

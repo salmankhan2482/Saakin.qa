@@ -35,6 +35,7 @@ class AdminController extends MainAdminController
 
     public function updateProfile(Request $request)
     {
+        
     	$user = User::findOrFail(Auth::user()->id);
 	    $data =  \Request::except(array('_token')) ;
         $oldemail = $request->oldemail;
@@ -52,14 +53,26 @@ class AdminController extends MainAdminController
 	   	$validator = \Validator::make($data,$rule);
         if ($validator->fails())
         {
+            
                 return redirect()->back()->withErrors($validator->messages());
         }
-
+        
 	    $inputs = $request->all();
 		$user->name = $inputs['name'];
 		$user->email = $inputs['email'];
 		$user->phone = $inputs['phone'];
         $user->whatsapp = $inputs['whatsapp'];
+        if($request->hasFile('user_icon')) {
+                $image_icon = $request->file('user_icon');
+                if ($image_icon) {
+                    $image_icon_name = $image_icon->getClientOriginalName();
+                    $image_icon_name = explode(".", $image_icon_name);
+                    $tmpFilePath = public_path('upload/agencies/');
+                    $imageName = time() . '.' . $image_icon->extension();
+                    $image_icon->move($tmpFilePath, $imageName);
+                    $user->image_icon = $imageName;
+                }
+            }
   		$user->about = $inputs['about'];
 		$user->facebook = $inputs['facebook'];
 		$user->twitter = $inputs['twitter'];

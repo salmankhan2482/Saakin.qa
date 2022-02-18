@@ -35,7 +35,7 @@
                 <div class="media-left">
                     <div class="panel-body">
                         <div class="width-100">
-                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.properties')}}</h5>
+                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.all_properties')}}</h5>
 
                             <h2 class="margin-none" id="graphWeek-a">
                                 {{$properties_count}}
@@ -59,7 +59,7 @@
                 <div class="media-left">
                     <div class="panel-body">
                         <div class="width-100">
-                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.pending')}}</h5>
+                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.pending_properties')}}</h5>
 
                             <h2 class="margin-none" id="graphWeek-a">
                                 {{$pending_properties_count}}
@@ -83,7 +83,7 @@
                 <div class="media-left">
                     <div class="panel-body">
                         <div class="width-100">
-                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.featured')}}</h5>
+                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.featured_properties')}}</h5>
 
                             <h2 class="margin-none" id="graphWeek-a">
                                 {{$featured_properties}}
@@ -146,7 +146,7 @@
                 <div class="media-left">
                     <div class="panel-body">
                         <div class="width-100">
-                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.properties')}}</h5>
+                            <h5 class="margin-none" id="graphWeek-y">{{trans('words.all_properties')}}</h5>
 
                             <h2 class="margin-none" id="graphWeek-a">
                                 {{count($properties)}}
@@ -170,7 +170,7 @@
                         <div class="media-left">
                             <div class="panel-body">
                                 <div class="width-100">
-                                    <h5 class="margin-none" id="graphWeek-y">{{trans('words.pending')}}</h5>
+                                    <h5 class="margin-none" id="graphWeek-y">{{trans('words.pending_properties')}}</h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">
                                         {{count($inactive)}}
@@ -195,7 +195,7 @@
                         <div class="media-left">
                             <div class="panel-body">
                                 <div class="width-100">
-                                    <h5 class="margin-none" id="graphWeek-y">{{trans('words.featured')}}</h5>
+                                    <h5 class="margin-none" id="graphWeek-y">{{trans('words.featured_properties')}}</h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">
                                         {{count($featured_properties)}}
@@ -249,7 +249,7 @@
                             <div class="panel-body">
                                 <div style="width: 20rem ;">
                                     <h5 class="margin-none" id="graphWeek-y">
-                                        Traffic / Month    
+                                        Property Visits   
                                     </h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">
@@ -356,7 +356,7 @@
         </a>
 
         {{-- Total Leads --}}
-        <a href="{{ route('total_leads') }}" style="text-decoration: none;">
+        {{-- <a href="{{ route('total_leads') }}" style="text-decoration: none;">
             <div class="col-sm-6 col-md-4">
                 <div class="panel panel-primary panel-shadow" style="background-color: #343a40 !important;border-color:#343a40;">
                     <div class="media">
@@ -381,7 +381,7 @@
                     </div>
                 </div>
             </div>
-        </a>
+        </a> --}}
 
 
         {{-- Number of users --}}
@@ -393,7 +393,7 @@
                             <div class="panel-body">
                                 <div style="width: 20rem ;">
                                     <h5 class="margin-none" id="graphWeek-y">
-                                        No of Visitors / Month   
+                                        Users  
                                     </h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">

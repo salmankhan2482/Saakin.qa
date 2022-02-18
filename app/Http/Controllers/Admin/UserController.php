@@ -129,6 +129,7 @@ class UserController extends Controller
 
      public function profile_update(Request $request)
     {
+        
     	$user_id=Auth::user()->id;
 
         $user = User::findOrFail($user_id);

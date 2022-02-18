@@ -42,7 +42,7 @@
                 {{-- <td>{{ $inquiries->message }}</td> --}}
                 <td class="text-center">
                     <a 
-                                    href="{{ url('admin/inquiry_view', $inquiries->id ) }}" 
+                                    href="{{ url('admin/view_inquiry', $inquiries->id ) }}" 
                                     class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" 
                                     title="{{trans('words.view')}}" target="_blank"
                                 > 
