@@ -4,7 +4,7 @@
 <div id="main">
 	<div class="page-header">
 		 
-		<h2>{{trans('words.inquiries')}}</h2>
+		<h2>{{trans('words.agency_inquiries')}}</h2>
 	</div>
 	@if(Session::has('flash_message'))
 				    <div class="alert alert-success">
@@ -20,12 +20,12 @@
         <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
             <thead>
 	            <tr>
-	                <th>{{trans('words.property_id')}}</th>
 	                <th>{{trans('words.name')}}</th>
+	                <th>{{trans('words.subject')}}</th>
 	                <th>{{trans('words.email')}}</th>
 	                <th>{{trans('words.phone')}}</th>
 	                <th>{{trans('words.agency')}}</th>
-	                {{-- <th>{{trans('words.message')}}</th> --}}
+	               
 	                <th class="text-center width-100">{{trans('words.action')}}</th>
 	            </tr>
             </thead>
@@ -34,17 +34,17 @@
             @foreach($inquirieslist as $i => $inquiries)
          	   <tr>
             	
-                <td>{{ $inquiries->property_id }}</td>
                 <td>{{ $inquiries->name }}</td>
+                <td>{{ $inquiries->subject }}</td>
                 <td>{{ $inquiries->email }}</td>
                 <td>{{ $inquiries->phone }}</td>
                 <td>{{ $inquiries->Agencies->name ??''}} </td>
-                {{-- <td>{{ $inquiries->message }}</td> --}}
+                
                 <td class="text-center">
                     <a 
-                                    href="{{ url('admin/inquiry_view', $inquiries->id ) }}" 
+                                    href="{{ url('admin/view_agency_inquiry', $inquiries->id ) }}" 
                                     class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" 
-                                    title="{{trans('words.view')}}" target="_blank"
+                                    title="{{trans('words.view')}}"
                                 > 
                                     <i class="fa fa-eye"></i> </a>
                                 
