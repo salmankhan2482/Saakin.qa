@@ -1,9 +1,9 @@
 @extends("front.layouts.main")
-@if ($page_info !=null)
 
+@if ($page_info !=null)
 @section('title',$page_info . ' | '.' Saakin.qa')
-@section('description',$page_info)
-@section('keyword',$page_info)
+@section('description', $meta_description ?? $page_info.' the best place for rent and seling properties')
+@section('keyword',$page_info )
 @section('type','property')
 @section('url',url()->current())
 

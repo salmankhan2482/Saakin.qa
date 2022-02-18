@@ -2,7 +2,7 @@
 @if ($page_info !=null)
 
 @section('title',$page_info . ' | '.' Saakin.qa')
-@section('description',$page_info)
+@section('description', $meta_description ?? $page_info.' Your partner to find you the best property in qatar')
 @section('keyword',$page_info)
 @section('type','property')
 @section('url',url()->current())

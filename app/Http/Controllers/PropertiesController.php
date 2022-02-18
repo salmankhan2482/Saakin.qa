@@ -97,7 +97,9 @@ class PropertiesController extends Controller
         $max_price =  (int)$request->max_price;
         $min_area = (int)$request->min_area;
         $max_area = (int)$request->max_area;
-      
+        
+        
+
         $properties = Properties::where('status', 1)
             ->when(request()->property_purpose, function ($query) {
                 $query->where('property_purpose', request()->property_purpose);
@@ -137,14 +139,13 @@ class PropertiesController extends Controller
             ->when(request()->get('furnishings'), function ($query) {
                 $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
             })
-            ->when(request('ameneties'), function($query){
-                // $ameneties = explode('', request('ameneties'));
-                dd((request('ameneties')));
-                foreach(request('ameneties') as $single){
-                        $query = $query->where('property_features', 'like', '%'.$single.'%');
-                        // dd($query->get());
+            ->when(request()->get('amenities'), function($query){
+                foreach (request('amenities') as  $value) {
+                    $query->where('property_features', 'like', '%'.$value.'%');
+                    // echo $query->count().'--';
                 }
-                dd($query->get());
+                // dd();
+
             })
             ->when($min_area != 0 && $max_area != 0, function ($query) {
                 $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
@@ -974,12 +975,18 @@ class PropertiesController extends Controller
             ->groupBy("property_towns.id")
             ->orderBy("pcount", "desc")
             ->get();
-
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->types.' for '.$property_purpose.' in '.$city->slug;
+            
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$subcity->name;
 
-            return view('front.pages.properties.subcity-property-type-for-purpose',
-            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'towns', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
+            if($properties->total() > 0){
+                $meta_description = $properties->random()->property_name. ' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ '.$page_info;
+            }else{
+                $meta_description = 'Search '.$page_info.' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ ';
+            }
+            
+            return view('front.pages.properties.subcity-property-type-for-purpose', 
+            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'towns', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
             
         }elseif(count($town_props) > 0){
             //town if
@@ -1037,10 +1044,18 @@ class PropertiesController extends Controller
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->types.' for '.$property_purpose.' in '.$city->slug;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$town->name;
 
+            if($properties->total() > 0){
+                $meta_description = 
+                $properties->random()->property_name. ' Largest Real-estate Developments in the Middle East Long Term Rentals✓ Long Term Sale✓ '.$page_info;
+            }else{
+                $meta_description = 
+                'Search '.$page_info.' Largest Real-estate Developments in the Middle East Long Term Rentals✓ Long Term Sale✓ ';
+            }
+            
             return view('front.pages.properties.town-property-type-for-purpose',
-            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'town', 'areas', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
+            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'town', 'areas', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
             
         
         }elseif(count($area_props) > 0){
@@ -1088,10 +1103,18 @@ class PropertiesController extends Controller
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->types.' for '.$property_purpose.' in '.$city->slug;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$area->name;
+
+            if($properties->total() > 0){
+                $meta_description = 
+                $properties->random()->property_name. ' The Real Property Directory Where You Can Meet Properties of your choice  '.$page_info;
+            }else{
+                $meta_description = 
+                'Search '.$page_info.' The Real Property Directory Where You Can Meet Properties of your choice  ';
+            }
 
             return view('front.pages.properties.area-property-type-for-purpose',
-            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'town', 'area', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
+            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'town', 'area', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info'));
 
         }
 
@@ -1145,7 +1168,7 @@ class PropertiesController extends Controller
 
         $propertyPurposes = PropertyPurpose::all();
         
-    
+        
         if($buyOrRent == 'buy'){
             $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',$type->id)->where('property_cities_id',$city->id)->first();
             
