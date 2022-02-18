@@ -3,6 +3,9 @@
 @section("content")
 <div id="main">
 	<div class="page-header">
+        <div class="pull-right">
+			<a href="{{URL::to('admin/inquiry/create')}}" class="btn btn-primary">{{trans('words.add').' '.trans('words.inquiry')}} <i class="fa fa-plus"></i></a>
+		</div>
 		 
 		<h2>{{trans('words.property_inquiries')}}</h2>
 	</div>

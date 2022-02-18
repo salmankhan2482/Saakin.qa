@@ -14,7 +14,7 @@
                 @else
                     @php
                         if (!empty(Auth::user()->image_icon)) {
-                            $image_icon = URL::asset('upload/members/' . Auth::user()->image_icon . '-s.jpg');
+                            $image_icon = URL::asset('upload/agencies/' . Auth::user()->image_icon);
                         }else{
                             $image_icon = URL::asset('admin_assets/images/guy.jpg');
                         }

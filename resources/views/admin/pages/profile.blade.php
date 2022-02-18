@@ -66,7 +66,7 @@
                                     <div class="media-left">
                                         @if (Auth::user()->image_icon)
 
-                                            <img src="{{ URL::asset('upload/members/' . Auth::user()->image_icon . '-s.jpg') }}"
+                                            <img src="{{ URL::asset('upload/agencies/' . Auth::user()->image_icon ) }}"
                                                 width="80" alt="person">
                                         @endif
 

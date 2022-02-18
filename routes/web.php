@@ -181,10 +181,18 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('partners/delete/{id}', 'PartnersController@delete');
 
 	Route::get('inquiries', 'InquiriesController@inquirieslist');
-	Route::get('property_inquiries', 'InquiriesController@property_inquiries');
+
+    Route::get('property_inquiries', 'InquiriesController@property_inquiries');
+    Route::get('inquiry/create', 'InquiriesController@create_inquiry');
+    Route::post('property_inquiry/create', 'InquiriesController@store_property_inquiry');
+    Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
+    Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
+
+	
 	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries');
 	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries');
     
+    Route::get('view_inquiry/{id}', 'InquiriesController@view_inquiry');
     Route::get('view_property_inquiry/{id}', 'InquiriesController@view_property_inquiry');
     Route::get('view_agency_inquiry/{id}', 'InquiriesController@view_agency_inquiry');
     Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry');   
