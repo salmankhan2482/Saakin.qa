@@ -191,7 +191,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('property_inquiries', 'InquiriesController@property_inquiries');
 	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries');
 	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries');
-    Route::get('inquiry_view/{id}', 'InquiriesController@view_inquiry');
+    
+    Route::get('view_property_inquiry/{id}', 'InquiriesController@view_property_inquiry');
+    Route::get('view_agency_inquiry/{id}', 'InquiriesController@view_agency_inquiry');
+    Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry');   
+
 	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
 
 	Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');

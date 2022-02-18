@@ -4,7 +4,7 @@
 <div id="main">
 	<div class="page-header">
 		 
-		<h2>{{trans('words.inquiries')}}</h2>
+		<h2>{{trans('words.property_inquiries')}}</h2>
 	</div>
 	@if(Session::has('flash_message'))
 				    <div class="alert alert-success">
@@ -42,9 +42,9 @@
                 {{-- <td>{{ $inquiries->message }}</td> --}}
                 <td class="text-center">
                     <a 
-                                    href="{{ url('admin/inquiry_view', $inquiries->id ) }}" 
+                                    href="{{ url('admin/view_property_inquiry', $inquiries->id ) }}" 
                                     class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" 
-                                    title="{{trans('words.view')}}" target="_blank"
+                                    title="{{trans('words.view')}}" 
                                 > 
                                     <i class="fa fa-eye"></i> </a>
                                 

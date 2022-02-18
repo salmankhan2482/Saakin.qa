@@ -3,23 +3,16 @@
 @section('content')
 
     <div id="main">
+        <div class="page-header">
+            <a href="{{ URL::to('admin/property_inquiries') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i> {{trans('words.back')}}</a>
+        </div>
         <div class="panel panel-default panel-shadow">
             <div class="panel-body">
 
                 <table id="data-table" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
                         <tr>
-                            <th>Enquiry ID</th>
+                            <th>Inquiry ID</th>
                             <td>{{ $inquire->id }}</td>
-                        </tr>
-                        <tr>
-                            <th>Property ID</th>
-                            <td>
-                            @isset($property)
-                                <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
-                                    {{ $property->property_name }}
-                                </a>
-                            @endisset    
-                            </td>
                         </tr>
                         <tr>
                             <th>Name</th>
@@ -34,16 +27,16 @@
                             <td>{{ $inquire->phone }}</td>
                         </tr>
                         <tr>
-                            <th>Agency Name</th>
-                            <td>{{ $inquire->Agencies->name ?? '' }}</td>
-                        </tr>
-                        <tr>
                             <th>Subject</th>
                             <td>{{ $inquire->subject }}</td>
                         </tr>
                         <tr> 
                                 <th>Message</th>
                                 <td>{{ $inquire->message }}</td>
+                            </tr>
+                            <tr> 
+                                <th>Sending Date</th>
+                                <td>{{ date('d-m-Y', strtotime($inquire->created_at)) ??'' }}</td>
                             </tr>
                     
                     </tbody>

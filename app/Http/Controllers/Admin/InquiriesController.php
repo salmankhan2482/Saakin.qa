@@ -124,7 +124,7 @@ class InquiriesController extends MainAdminController
     {
         $inquire = Enquire::where('id', $id)->first();
         if($inquire->property_id != ''){
-            dd('aa');
+            
             $property = Properties::find($inquire->property_id);
             return view('admin.pages.view_inquiry',compact('inquire', 'property'));
         }
@@ -132,5 +132,30 @@ class InquiriesController extends MainAdminController
 
     }
 
+    public function view_property_inquiry($id)
+    {
+        $inquire = Enquire::where('id', $id)->first();
+        if($inquire->property_id != ''){
+            
+            $property = Properties::find($inquire->property_id);
+            return view('admin.pages.view_property_inquiry',compact('inquire', 'property'));
+        }
+        return view('admin.pages.view_property_inquiry',compact('inquire'));
+
+    }
+    public function view_agency_inquiry($id)
+    {
+        $inquire = Enquire::where('id', $id)->first();
+        
+        return view('admin.pages.view_agency_inquiry',compact('inquire'));
+
+    }
+    public function view_contact_inquiry($id)
+    {
+        $inquire = Enquire::where('id', $id)->first();
+       
+        return view('admin.pages.view_contact_inquiry',compact('inquire'));
+
+    }
 
 }
