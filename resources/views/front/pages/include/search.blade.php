@@ -239,7 +239,7 @@
                         </div>
                         <div class="explore__form-checkbox-list full-filter" style="display: none;">
                             <div class="row">
-                                <div class="col-md-2 col-12 all-furnishings">
+                                <div class="col-md-4 col-12 all-furnishings">
                                     <select name="furnishings" class="hero__form-input  form-control custom-select">
                                         <option value="">All furnishings</option>
                                         <option value="109">Furnished</option>
@@ -247,7 +247,7 @@
                                         <option value="101">Partly furnished</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 col-12 area-2">
+                                <div class="col-md-4 col-12 area-2">
                                     <div class="dropdown js-dropdown">
                                         <div class="btn dropdown-toggle btn-select  minMaxArea" style="height: 44px;" type="button"
                                             id="dropdownMenuButton">
@@ -313,11 +313,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-7 col-12">
+                                <div class="col-md-4 col-12">
                                     <div class="input-search">
-                                        <input type="text" name="keywordextra" id="keywordextra"
-                                            placeholder="View of Water, Gym, or Security" autocomplete="off"
-                                            value="{{ Request::get('keyword') }}">
+                                        <select name="ameneties[]" id="ameneties" 
+                                            class="hero__form-input form-control custom-select" multiple>
+                                            @foreach ($amenities as $amenity)
+                                                <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        
                                     </div>
                                 </div>
                                 <div class="col-12 position-relative">

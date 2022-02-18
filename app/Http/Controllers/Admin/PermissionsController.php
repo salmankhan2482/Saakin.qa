@@ -65,7 +65,7 @@ class PermissionsController extends Controller
     public function edit($id)
     {
         $permission = Permissions::find($id);
-        return view('admin.pages.user-management.menu-options.edit', compact('permission'));
+        return view('admin.pages.user-management.permissions.edit', compact('permission'));
     }
 
     /**

@@ -207,6 +207,7 @@
                                 </a>
                             </li>
                         </ul>
+
                     </li>
 
                     <li class="submenu {{ classActivePath('blogs') }} {{ classActivePath('blog-category/list') }}">
@@ -640,8 +641,6 @@
 
 
             </ul>
-
-
         </div>
     </div>
 </div>
