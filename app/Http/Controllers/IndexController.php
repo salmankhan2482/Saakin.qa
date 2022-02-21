@@ -55,8 +55,8 @@ class IndexController extends Controller
         
         $propertyPurposes = PropertyPurpose::all();
         $agents = User::where('usertype', 'Agency')->get();
-        $amenities = PropertyAmenity::all();
-
+        $amenities = PropertyAmenity::all()->sortBy('name');
+        
         $featured_properties = Properties::where('status','1')->where('featured_property','1')->inRandomOrder()->take(6)->get();
 		$partners = Partners::orderBy('id', 'desc')->get();
         $cityGuides = City::where('status','1')->orderBy('id', 'asc')->take(4)->get();

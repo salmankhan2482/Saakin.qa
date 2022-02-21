@@ -8,6 +8,7 @@ use App\User;
 use App\Pages;
 use App\Types;
 use App\Agency;
+use App\AmenityProduct;
 use App\Vistor;
 use App\Enquire;
 use App\Visitor;
@@ -49,7 +50,8 @@ class PropertiesController extends Controller
     }
 
     public function getPropertyListing(Request $request)
-    {
+    {   
+
         if(request()->property_purpose != ''){
             $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
@@ -97,8 +99,6 @@ class PropertiesController extends Controller
         $max_price =  (int)$request->max_price;
         $min_area = (int)$request->min_area;
         $max_area = (int)$request->max_area;
-        
-        
 
         $properties = Properties::where('status', 1)
             ->when(request()->property_purpose, function ($query) {
@@ -139,13 +139,13 @@ class PropertiesController extends Controller
             ->when(request()->get('furnishings'), function ($query) {
                 $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
             })
-            ->when(request()->get('amenities'), function($query){
-                foreach (request('amenities') as  $value) {
-                    $query->where('property_features', 'like', '%'.$value.'%');
-                    // echo $query->count().'--';
+            ->when(request()->get('amenities'), function ($query) {
+                $amenityIds = array();
+                foreach (request()->get('amenities') as $value) {
+                    $amenityIds[] = AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
                 }
-                // dd();
 
+                dd($amenityIds);
             })
             ->when($min_area != 0 && $max_area != 0, function ($query) {
                 $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
@@ -922,6 +922,7 @@ class PropertiesController extends Controller
         $subcitie_props = Properties::where('sub_city_slug',$property_type_purpose)->get();
         $town_props = Properties::where('town_slug', $property_type_purpose)->get();
         $area_props = Properties::where('area_slug', $property_type_purpose)->get();
+        
         //subcity if
         if(count($subcitie_props) > 0){
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
@@ -977,7 +978,7 @@ class PropertiesController extends Controller
             ->get();
             $propertyPurposes = PropertyPurpose::all();
             
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$subcity->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city->name.', '.$subcity->name;
 
             if($properties->total() > 0){
                 $meta_description = $properties->random()->property_name. ' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ '.$page_info;
@@ -1044,7 +1045,7 @@ class PropertiesController extends Controller
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$town->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city->name.', '.$subcity->name.', '.$town->name;
 
             if($properties->total() > 0){
                 $meta_description = 
@@ -1103,7 +1104,7 @@ class PropertiesController extends Controller
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$area->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city->name.', '.$subcity->name.', '.$town->name.', '.$area->name;
 
             if($properties->total() > 0){
                 $meta_description = 

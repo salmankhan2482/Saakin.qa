@@ -60,29 +60,21 @@ class Properties extends Model
                     ->orWhere("address", 'like', '%' .$keyword. '%')
                     ->orWhere("property_name", 'like', '%' .$keyword. '%');
                 });
-            }
-            elseif ($purpose!='' and $type!='')
-            {
+            } elseif ($purpose!='' and $type!='') {
                         $query->where(function ($query) use ($keyword,$purpose,$type) {
                         $query->where("status", "1")
                             ->where("property_purpose", "$purpose")
                             ->where("property_type", "$type");
                         });
-            }
-            elseif ($purpose!='')
-            {
+            } elseif ($purpose!='') {
                         $query->where(function ($query) use ($keyword,$purpose,$type) {
                         $query->where("status", "1")->where("property_purpose", "$purpose");
                         });
-            }
-            elseif ($type!='')
-            {
+            } elseif ($type!=''){
                         $query->where(function ($query) use ($keyword,$purpose,$type) {
                         $query->where("status", "1")->where("property_type", "$type");
                         });
-            }
-            else
-            {
+            } else {
                 $query->where(function ($query) use ($keyword,$purpose,$type) {
                 $query->where("status", "1")
                     ->where("address", 'like', '%' .$keyword. '%')
@@ -116,23 +108,12 @@ class Properties extends Model
         if(!empty($property->whatsapp))
         {
             return $property->whatsapp;
-        }
-        else
-        {
-            if(!empty($property))
-            {
+        } else {
+            if(!empty($property)) {
                 $agency = Agency::where("id",$property->agency_id)->first();
                 if(!empty($agency))
-                {
-                    return $agency->whatsapp;
-                }
-                else
-                {
-                    return '#';
-                }
-            }
-            else
-            {
+                { return $agency->whatsapp; } else { return '#'; }
+            } else {
                 return '#';
             }
         }
@@ -141,26 +122,16 @@ class Properties extends Model
     public static function getPhoneNumber($propertyid)
     {
         $property = Properties::where("id",$propertyid)->first();
-        if(empty($property))
-        {
+        if(empty($property)) {
             return '#';
-        }
-        else
-        {
-            if(!empty($property))
-            {
+        } else {
+            if(!empty($property)){
+
                 $agency = Agency::where("id",$property->agency_id)->first();
-                if(!empty($agency))
-                {
-                    return $agency->phone;
-                }
-                else
-                {
-                    return '#';
-                }
-            }
-            else
-            {
+                if(!empty($agency)) { return $agency->phone; }
+                else { return '#'; }
+
+            } else {
                 return '#';
             }
         }
@@ -169,12 +140,10 @@ class Properties extends Model
     {
         $prop = array('4','7','13','15','16','17','23','27','34','35');
         if(in_array($this->attributes['property_type'], $prop))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
+        { 
+            return false; 
+        } else {
+             return true; 
         }
     } 
 
@@ -211,5 +180,10 @@ class Properties extends Model
     public function propertyCounter()
     {
         return $this->belongsTo(PropertyCounter::class,'property_id');
+    }
+
+    public function amenities()
+    {
+        return $this->belongsToMany(PropertyAmenity::class, 'amenity_property', 'property_id', 'amenity_id');
     }
 }

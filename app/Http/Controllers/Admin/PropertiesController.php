@@ -193,12 +193,12 @@ class PropertiesController extends MainAdminController
 
     public function create()
     {
-        if($permission = Permissions::where('title', 'property_create')->first()){
-            if (!Gate::allows('isAllowedToThis', $permission->id)) {
-                \Session::flash('flash_message', "You Are Not Authorized.");
-                return redirect()->back();
-            }
-        }
+        // if($permission = Permissions::where('title', 'property_create')->first()){
+        //     if (!Gate::allows('isAllowedToThis', $permission->id)) {
+        //         \Session::flash('flash_message', "You Are Not Authorized.");
+        //         return redirect()->back();
+        //     }
+        // }
         
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
@@ -379,11 +379,11 @@ class PropertiesController extends MainAdminController
 
     public function edit(Request $request, $id)
     {
-        $permission = Permissions::where('title', 'property_edit')->first();
-        if (!Gate::allows('isAllowedToThis', $permission->id)) {
-            \Session::flash('flash_message', "You Are Not Authorized.");
-            return redirect()->back();
-        }
+        // $permission = Permissions::where('title', 'property_edit')->first();
+        // if (!Gate::allows('isAllowedToThis', $permission->id)) {
+        //     \Session::flash('flash_message', "You Are Not Authorized.");
+        //     return redirect()->back();
+        // }
         
 
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
