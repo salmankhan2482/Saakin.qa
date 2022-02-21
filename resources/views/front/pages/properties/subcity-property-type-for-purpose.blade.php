@@ -54,7 +54,7 @@
                 <div class="col-md-8 offset-md-2 text-center">
                     <div class="breadcrumb-menu">
                         <h1>
-                            {{$type->plural_name}} for {{ucfirst($property_purpose) }} in {{$subcity->name}}
+                            {{ $page_info }}
                         </h1>
                         <span>
                             <a  href="{{ route('cpt-purpose', [$buyOrRent, $city->slug, Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}">
