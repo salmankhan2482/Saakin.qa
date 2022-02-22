@@ -86,7 +86,7 @@
                                             <img 
                                                 class="img-fluid" 
                                                 src="{{ asset('upload/blogs/' . $blog->image) }}"
-                                                alt="{{ $blog->name }}"
+                                                alt="{{ $blog->title }}"
                                                 >
 
                                                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5375398163072819"
@@ -184,7 +184,7 @@
                                             <div class="col-lg-5 col-4">
                                                 <div class="entry-img">
                                                     <img src="{{ asset('upload/blogs/thumbnail/' . $blog->image) }}"
-                                                        alt="{{ $blog->name }}">
+                                                        alt="{{ $blog->title }}">
                                                 </div>
                                             </div>
                                             <div class="col-lg-7 col-8 no-pad-left">

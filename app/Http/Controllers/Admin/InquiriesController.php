@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 
+use function Ramsey\Uuid\v1;
+
 class InquiriesController extends MainAdminController
 {
 	public function __construct()
@@ -45,14 +47,60 @@ class InquiriesController extends MainAdminController
         return view('admin.pages.inquiries',compact('inquirieslist'));
     }
 
-    public function create_inquiry()
+    public function create_inquiry(Request $request)
     {
-        // $inquiry_types = Enquire::distinct()->get(['type']);
-        // // $inquiry_types = Enquire::select('type')->groupBy('type')->get()->toArray() ;  
-        // // $inquiry_types = array('inquiry_types' => json_decode($inquiry_types)); 
-        // dd($inquiry_types);
-       
-        return view('admin.pages.create_inquiry');
+        if(Auth::User()->usertype!="Admin"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('admin/dashboard');
+        }
+        $keyword = request()->get('keyword');
+        $agencies = Agency::all();
+        $properties = Properties::select('property_name','agency_id','id')->get();
+        // ->where('property_name', 'like', '%'.request()->get('keyword').'%');
+   
+        
+        return view('admin.pages.create_inquiry',compact('agencies','properties'));
+    }
+
+    public function store_property_inquiry(Request $request)
+    {
+        
+
+        $data =  \Request::except(array('_token')) ;
+
+        $inputs = $request->all();
+
+        $rule=array(
+            'type' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+            'message' => 'required',
+            
+        );
+
+        $validator = \Validator::make($data,$rule);
+
+        if ($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->messages());
+        }
+
+        $inquiry = new Enquire();
+
+        $inquiry->agency_id = $inputs['agency_name'];
+        $inquiry->property_id = $inputs['property_title'];
+        $inquiry->name = $inputs['name'];
+        $inquiry->email = $inputs['email'];
+        $inquiry->phone = $inputs['phone'];
+        $inquiry->type = $inputs['type'];
+        $inquiry->subject =$inputs['subject'];
+        $inquiry->message = $inputs['message'];
+        $inquiry->movein_date = $inputs['movein_date'];
+        $inquiry->save();
+
+        \Session::flash('flash_message', trans('words.added'));
+        return \Redirect::back();
     }
 
     public function property_inquiries()

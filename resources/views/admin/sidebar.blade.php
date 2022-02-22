@@ -283,8 +283,8 @@
                             </a>
                         </li>
 
-                    <li class="{{ classActivePath('properties_reports') }}">
-                        <a href="{{ route('properties_reports.index') }}">
+                    <li class="{{ classActivePath('property_reports') }}">
+                        <a href="{{ url('admin/property_reports') }}">
                             <i class="fa fa-tags"></i>
                             Property Reports
                         </a>
