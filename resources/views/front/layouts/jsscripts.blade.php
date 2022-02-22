@@ -14,6 +14,7 @@
     <script src="{{asset('assets/js/preloadinator.js')}}"></script>
 @endif
 
+
 <script src="{{asset('assets/js/dropzone.js')}}"></script>
 <script src="{{asset('assets/js/counting-up.js')}}"></script>
 <script src="{{asset('assets/js/appear.js')}}"></script>

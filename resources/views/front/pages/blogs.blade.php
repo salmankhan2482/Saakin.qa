@@ -34,10 +34,11 @@
                         <div class="container">
                             <div class="row">
                                 @foreach($blogs as $blog)
+                                
                                     <div class="col-md-6 col-sm-12">
                                         <div class="card single-blog-item v1 align-items-center">
                                             <a class="agency-img" href="{{url('blog/'.$blog->slug)}}"> 
-                                                <img class="img-fluid" src="{{asset('upload/blogs/thumbnail/'.$blog->image)}}" alt="{{$blog->name}}">
+                                                <img class="img-fluid" src="{{asset('upload/blogs/thumbnail/'.$blog->image)}}" alt="{{$blog->title}}">
                                             </a>
                                             <div class="card-body" style="min-height: 140px !important">                                                
                                                 <h4 class="card-title text-center" style="min-height: 112px !important">
@@ -104,7 +105,7 @@
                                         <div class="col-lg-5 col-4">
                                             <div class="entry-img">
                                                 <img src="{{asset('upload/blogs/thumbnail/'.$blog->image)}}" 
-                                                    alt="{{$blog->name}}">
+                                                    alt="{{$blog->title}}">
                                             </div>
                                         </div>
                                         <div class="col-lg-7 col-8 no-pad-left">

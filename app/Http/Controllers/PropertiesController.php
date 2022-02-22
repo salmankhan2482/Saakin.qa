@@ -509,6 +509,7 @@ class PropertiesController extends Controller
 
     public function searchProperties(Request $request)
     {
+        dd($request);
         $inputs = $request->all();
 
         $city = $inputs['city'];

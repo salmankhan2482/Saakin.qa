@@ -9,7 +9,7 @@
                     <i class="fa fa-plus"></i>
                 </a>
             </div>
-            <h2>Agencies</h2>
+            <h2>Property Reports</h2>
         </div>
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
@@ -52,11 +52,11 @@
                                 <td>{!! \Illuminate\Support\Str::limit($report->message, 40, '...') !!}</td>
                                 <td>{{ $report->status }}</td>
                                 <td class="text-center">
-                                    <a href="{{ route('properties_reports.update', $report->id) }}"
+                                    <a href="{{ url('admin/property_reports/update/'.$report->id) }}"
                                         class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5">
                                         Resolved
                                     </a>
-                                    <a href="{{ route('properties_reports.destroy', $report->id) }}"
+                                    <a href="{{ url('admin/property_reports/delete/'.$report->id) }}"
                                         class="cu_btn btn btn-icon waves-effect waves-light btn-danger m-b-5">
                                         <i class="fa fa-remove"></i>
                                     </a>

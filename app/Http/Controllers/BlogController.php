@@ -37,6 +37,8 @@ class BlogController extends Controller
                 }
         }
         $blog_categories = BlogCategory::inRandomOrder()->get();
+
+
         return view('front.pages.blogs',compact('blogs','blog_categories', 'tagsArray'));
     }
 

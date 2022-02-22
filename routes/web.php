@@ -1,7 +1,6 @@
 <?php
 
 use App\City;
-
 use App\Types;
 use App\PageVisits;
 use App\Properties;
@@ -184,7 +183,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::get('property_inquiries', 'InquiriesController@property_inquiries');
     Route::get('inquiry/create', 'InquiriesController@create_inquiry');
-    Route::post('property_inquiry/create', 'InquiriesController@store_property_inquiry');
+    Route::post('inquiry/create', 'InquiriesController@store_property_inquiry');
     Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
     Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
 
@@ -449,10 +448,12 @@ Route::get('featured-properties', 'PropertiesController@featureProperties')->nam
 
 
 //property reports
-Route::resource('properties_reports', 'PropertyReportController');
-Route::get('admin/properties_reports', 'PropertyReportController@index')->name('properties_reports.index');
-Route::get('properties_reports/{id}/update', 'PropertyReportController@update')->name('properties_reports.update');
-Route::get('properties_reports/{id}/delete', 'PropertyReportController@destroy')->name('properties_reports.destroy');
+// Route::resource('admin/properties_reports', 'PropertyReportController');
+
+Route::get('admin/property_reports', 'PropertyReportController@index');
+Route::post('admin/property_reports/store', 'PropertyReportController@store');
+Route::get('admin/property_reports/update/{id}', 'PropertyReportController@update');
+Route::get('admin/property_reports/delete/{id}', 'PropertyReportController@destroy');
 
 //live serach url on home page
 Route::get('search-desktop', 'IndexController@searchMeDesktop')->name('search-desktop');
