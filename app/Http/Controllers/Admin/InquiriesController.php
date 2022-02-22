@@ -47,7 +47,10 @@ class InquiriesController extends MainAdminController
 
     public function create_inquiry()
     {
-        // $inquiry_types = Enquire::select('type')->groupBy('type')->get()->toArray() ;
+        // $inquiry_types = Enquire::distinct()->get(['type']);
+        // // $inquiry_types = Enquire::select('type')->groupBy('type')->get()->toArray() ;  
+        // // $inquiry_types = array('inquiry_types' => json_decode($inquiry_types)); 
+        // dd($inquiry_types);
        
         return view('admin.pages.create_inquiry');
     }

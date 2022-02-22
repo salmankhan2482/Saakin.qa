@@ -24,6 +24,8 @@ return [
     'movein_date' => 'Move in Date',
     'phone_number' => 'Phone Number',
     
+
+    'create_inquiry' => 'Create Inquiry',
     'property_inquiries' => 'Property Inquiries',
     'agency_inquiries' => 'Agency Inquiries',
     'contact_inquiries' => 'Contact Inquiries',

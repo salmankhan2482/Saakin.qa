@@ -4,7 +4,7 @@
 
 <div id="main">
 	<div class="page-header">
-		<h2> {{ trans('words.create').' '.trans('words.inquiry') }}</h2>
+		<h2> {{ trans('words.add').' '.trans('words.inquiry') }}</h2>
 		<a href="{{ URL::to('admin/inquiries') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i> {{trans('words.back')}}</a>
 	</div>
 	@if (count($errors) > 0)
@@ -33,13 +33,13 @@
                     <div class="col-sm-9">
                         <select name="type" id="type" class="form-control" required>
                             <option value="">Select Inquiry Type</option>
-                            @foreach($inquiry_types as $inquiry_type)
-                                <option value="{{$inquiry_type}}">{{$inquiry_type}}</option>
-                            @endforeach
+                            <option value="property_inquiry">Property Inquiry</option>
+                            <option value="agency_inquiry">Agency Inquiry</option>
+                            <option value="contact_inquiry">Contact Inquiry</option> 
                         </select>
                     </div>
                 </div>
-                
+               
 
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{trans('words.name')}}</label>
@@ -91,10 +91,9 @@
 </div> 
 
 @endsection
-{{-- @section('scripts-custom')
-<script type="text/javascript" src="{{ asset('site_assets/ckfinder/ckfinder.js') }}"></script>
-<script>
-     var editor = CKEDITOR.replace( 'description' );
-CKFinder.setupCKEditor( editor );
-    </script>
-@endsection --}}
+<script type="text/javascript">
+    $('#agency_inquiry').on('change',function(){
+    $(".some").hide();
+    var some = $(this).find('option:selected').val();
+    $("#some_" + some).show();}); 
+</script>
