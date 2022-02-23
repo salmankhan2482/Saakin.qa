@@ -448,7 +448,7 @@ Route::get('featured-properties', 'PropertiesController@featureProperties')->nam
 
 
 //property reports
-// Route::resource('admin/properties_reports', 'PropertyReportController');
+Route::resource('admin/properties_reports', 'PropertyReportController');
 
 Route::get('admin/property_reports', 'PropertyReportController@index');
 Route::post('admin/property_reports/store', 'PropertyReportController@store');

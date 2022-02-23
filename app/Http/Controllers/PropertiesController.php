@@ -102,7 +102,6 @@ class PropertiesController extends Controller
 
         $properties = Properties::where('status', 1)
             ->when(request()->property_purpose, function ($query) {
-                echo request()->property_purpose;
                 $query->where('property_purpose', request()->property_purpose);
             })
             ->when($city, function ($query) {
@@ -141,15 +140,22 @@ class PropertiesController extends Controller
                 $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
             })
             ->when(request()->get('amenities'), function ($query) {
-                
+                $ids = array();
+
                 foreach (request()->get('amenities') as $value) {
-                    $query->where('property_features', 'like', '%110%');
-                    echo $query->count().'--';
-                    // foreach ($query->get() as $value) {
-                    //     echo $value->id.'--';
-                    // }
+
+                    $records = DB::table('properties')->where('property_purpose', request()->property_purpose)
+                    ->whereIn('property_features', $value)->select('id')->get(); 
+                    
+                    foreach ($records as $value) {
+                        array_push($ids, $value->id);
+                    }
                 }
-                dd(request()->get('amenities'));
+
+                $result = array_unique($ids);
+                $query->whereIn('id', $result);
+                dd($query->get());
+                
             })
             ->when($min_area != 0 && $max_area != 0, function ($query) {
                 $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
@@ -240,7 +246,6 @@ class PropertiesController extends Controller
     public function findKeyWord($city = null, $subcity = null, $town = null, $area = null)
     {   
         $keyword = '';
-        // dd($subcity);
         if($city != null){
             $cityResult = PropertyCities::find($city);
             $keyword = $cityResult->name;
@@ -923,11 +928,9 @@ class PropertiesController extends Controller
             if($buyOrRent == 'Rent' OR $buyOrRent == 'rent'){ $property_purpose = 'Rent'; } else{ $property_purpose = 'Sale'; }
         
         }
-
         $subcitie_props = Properties::where('sub_city_slug',$property_type_purpose)->get();
         $town_props = Properties::where('town_slug', $property_type_purpose)->get();
         $area_props = Properties::where('area_slug', $property_type_purpose)->get();
-        
         //subcity if
         if(count($subcitie_props) > 0){
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
@@ -1124,7 +1127,11 @@ class PropertiesController extends Controller
 
         }
 
+        
+        
         $type = Types::where('plural', $property_type)->firstOrFail();
+        
+        dd('subicty');
         $city = PropertyCities::where('slug', $city)->firstOrFail();
         
         $properties = Properties::where('status', 1)
