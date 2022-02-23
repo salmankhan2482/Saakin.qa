@@ -102,6 +102,7 @@ class PropertiesController extends Controller
 
         $properties = Properties::where('status', 1)
             ->when(request()->property_purpose, function ($query) {
+                echo request()->property_purpose;
                 $query->where('property_purpose', request()->property_purpose);
             })
             ->when($city, function ($query) {
@@ -140,12 +141,15 @@ class PropertiesController extends Controller
                 $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
             })
             ->when(request()->get('amenities'), function ($query) {
-                $amenityIds = array();
+                
                 foreach (request()->get('amenities') as $value) {
-                    $amenityIds[] = AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
+                    $query->where('property_features', 'like', '%110%');
+                    echo $query->count().'--';
+                    // foreach ($query->get() as $value) {
+                    //     echo $value->id.'--';
+                    // }
                 }
-
-                dd($amenityIds);
+                dd(request()->get('amenities'));
             })
             ->when($min_area != 0 && $max_area != 0, function ($query) {
                 $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
