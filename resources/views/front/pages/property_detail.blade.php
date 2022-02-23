@@ -854,13 +854,15 @@ Link:'.$propertyUrl;
                                 <div class="callgroup">
                                     @if (!empty($property->whatsapp))
                                     <a href="tel:{{ $property->whatsapp }}"
+                                        data-property_id={{ $property->id }}
                                         data-button_name='Call'
-                                        class="btn btn-danger btnCall btnCount btn-call">
+                                        class="btn btn-danger btnCall btnCount">
                                         <i class="fas fa-phone-alt"></i>
                                         Call Now
                                     </a>
                                     @else
                                     <a href="tel:{{ $agency->phone }}" 
+                                        data-property_id={{ $property->id }}
                                         data-button_name='Call'
                                         class="btn btn-danger btn-call btnCount">
                                         <i class="fas fa-phone-alt"></i>
@@ -869,10 +871,12 @@ Link:'.$propertyUrl;
                                     @endif
                                     @if (!empty($property->whatsapp))
                                         <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                            data-property_id={{ $property->id }}
                                             data-button_name='WhatsApp'
                                             class="btn btn-success btnCount"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                                     @elseif(!empty($agency->whatsapp))
                                         <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                            data-property_id={{ $property->id }}
                                             data-button_name='WhatsApp'
                                             class="btn btn-success btnCount"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                                     @endif
@@ -882,6 +886,7 @@ Link:'.$propertyUrl;
                                         data-toggle="modal"
                                         data-target="#exampleModal"
                                         id="emailBtn"
+                                        data-property_id={{ $property->id }}
                                         data-button_name='Email'    
                                         data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                         data-title="{{ $property->property_name }}"
@@ -904,10 +909,11 @@ Link:'.$propertyUrl;
 
                                 <a
                                     style="color: #ef5e4e !important;"
-                                    class="btn-email"
+                                    class="btn-email btnCount"
                                     id="emailBtn"
                                     data-toggle="modal"
                                     data-target="#exampleModal"
+                                    data-property_id={{ $property->id }}
                                     data-button_name='Email'
                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                     data-image="{{ $property->featured_image }}"

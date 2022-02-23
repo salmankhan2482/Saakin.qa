@@ -44,7 +44,7 @@
                     <a 
                                     href="{{ url('admin/view_inquiry', $inquiries->id ) }}" 
                                     class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" 
-                                    title="{{trans('words.view')}}" target="_blank"
+                                    title="{{trans('words.view')}}"
                                 > 
                                     <i class="fa fa-eye"></i> </a>
                                 
