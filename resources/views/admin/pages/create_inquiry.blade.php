@@ -35,9 +35,9 @@
                         <select name="type" id="type" class="form-control" data-live-search="true"
                             onchange="toggleAgency(this.value);" required>
                             <option value="">Select Inquiry Type</option>
-                            <option value="property_inquiry">Property Inquiry</option>
-                            <option value="agency_inquiry">Agency Inquiry</option>
-                            <option value="contact_inquiry">Contact Inquiry</option>
+                            <option value="Property-Inquiry">Property Inquiry</option>
+                            <option value="Agency-Inquiry">Agency Inquiry</option>
+                            <option value="Contact-Inquiry">Contact Inquiry</option>
                         </select>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                             class="form-control">
                     </div>
                 </div>
-            <div id="agency_inquiry">
+            <div id="Agency-Inquiry">
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{ trans('words.subject') }}</label>
                         <div class="col-sm-9">
@@ -87,7 +87,7 @@
                 </div>
             </div>
 
-            <div id="contact_inquiry">
+            <div id="Contact-Inquiry">
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{ trans('words.subject') }}</label>
                         <div class="col-sm-9">
@@ -105,7 +105,7 @@
                             class="form-control"></textarea>
                     </div>
                 </div>
-            <div id="property_inquiry">
+            <div id="Property-Inquiry">
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{ trans('words.movein_date') }}</label>
                     <div class="col-sm-9">
@@ -144,23 +144,23 @@
 <script>
     function toggleAgency(type) {
 
-        if (type == "property_inquiry") {
-            document.getElementById("property_inquiry").style.display = "block";
+        if (type == "Property-Inquiry") {
+            document.getElementById("Property-Inquiry").style.display = "block";
         } else {
-            document.getElementById("property_inquiry").style.display = "none";
+            document.getElementById("Property-Inquiry").style.display = "none";
         }
 
 
-        if (type == "agency_inquiry") {
-            document.getElementById("agency_inquiry").style.display = "block";
+        if (type == "Agency-Inquiry") {
+            document.getElementById("Agency-Inquiry").style.display = "block";
         } else {
-            document.getElementById("agency_inquiry").style.display = "none";
+            document.getElementById("Agency-Inquiry").style.display = "none";
         }
 
-        if (type == "contact_inquiry") {
-            document.getElementById("contact_inquiry").style.display = "block";
+        if (type == "Contact-Inquiry") {
+            document.getElementById("Contact-Inquiry").style.display = "block";
         } else {
-            document.getElementById("contact_inquiry").style.display = "none";
+            document.getElementById("Contact-Inquiry").style.display = "none";
         }
 
     }

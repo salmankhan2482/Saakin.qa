@@ -2,6 +2,10 @@
 
 @section('content')
     <div id="main">
+        <div class="page-header">
+            <a href="{{ URL::to('admin/click_counter') }}" class="btn btn-default-light btn-xs"><i
+                    class="md md-backspace"></i> {{ trans('words.back') }}</a>
+        </div>
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

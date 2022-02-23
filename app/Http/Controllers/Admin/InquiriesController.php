@@ -65,7 +65,6 @@ class InquiriesController extends MainAdminController
     public function store_property_inquiry(Request $request)
     {
         
-
         $data =  \Request::except(array('_token')) ;
 
         $inputs = $request->all();
@@ -88,16 +87,36 @@ class InquiriesController extends MainAdminController
 
         $inquiry = new Enquire();
 
-        $inquiry->agency_id = $inputs['agency_name'];
+        if($inputs['type']=='Property-Inquiry')
+        {
+            $inquiry->property_id = $inputs['property_title'];
+            $inquiry->agency_id = Properties::where('id',$request->property_title)->value('agency_id');
+            $inquiry->name = $inputs['name'];
+            $inquiry->email = $inputs['email'];
+            $inquiry->phone = $inputs['phone'];
+            $inquiry->type = str_replace('-', ' ', $inputs['type']);
+            $inquiry->subject =$inputs['subject'];
+            $inquiry->message = $inputs['message'];
+            $inquiry->movein_date = $inputs['movein_date'];
+            $inquiry->save();
+            
+        }else
+        {
+        
+            $inquiry->agency_id = $inputs['agency_name'];
         $inquiry->property_id = $inputs['property_title'];
         $inquiry->name = $inputs['name'];
         $inquiry->email = $inputs['email'];
         $inquiry->phone = $inputs['phone'];
-        $inquiry->type = $inputs['type'];
+        $inquiry->type = str_replace('-', ' ', $inputs['type']);
         $inquiry->subject =$inputs['subject'];
         $inquiry->message = $inputs['message'];
         $inquiry->movein_date = $inputs['movein_date'];
         $inquiry->save();
+
+        }
+
+        
 
         \Session::flash('flash_message', trans('words.added'));
         return \Redirect::back();

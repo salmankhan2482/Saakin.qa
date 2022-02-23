@@ -853,29 +853,36 @@ Link:'.$propertyUrl;
 
                                 <div class="callgroup">
                                     @if (!empty($property->whatsapp))
-                                    <a href="tel:{{ $property->whatsapp }}" class="btn btn-danger btn-call">
+                                    <a href="tel:{{ $property->whatsapp }}"
+                                        data-button_name='Call'
+                                        class="btn btn-danger btnCall btnCount btn-call">
                                         <i class="fas fa-phone-alt"></i>
                                         Call Now
                                     </a>
                                     @else
-                                    <a href="tel:{{ $agency->phone }}" class="btn btn-danger btn-call">
+                                    <a href="tel:{{ $agency->phone }}" 
+                                        data-button_name='Call'
+                                        class="btn btn-danger btn-call btnCount">
                                         <i class="fas fa-phone-alt"></i>
                                         Call Now
                                     </a>
                                     @endif
                                     @if (!empty($property->whatsapp))
                                         <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                            class="btn btn-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                                            data-button_name='WhatsApp'
+                                            class="btn btn-success btnCount"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                                     @elseif(!empty($agency->whatsapp))
                                         <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                            class="btn btn-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                                            data-button_name='WhatsApp'
+                                            class="btn btn-success btnCount"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                                     @endif
                                     <button
-                                        class="btn btn-danger"
+                                        class="btn btn-danger btnCount"
                                         type="button"
                                         data-toggle="modal"
                                         data-target="#exampleModal"
                                         id="emailBtn"
+                                        data-button_name='Email'    
                                         data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                         data-title="{{ $property->property_name }}"
                                         data-agent="{{ $property->agent_name ?? $agency->name }}"
@@ -901,6 +908,7 @@ Link:'.$propertyUrl;
                                     id="emailBtn"
                                     data-toggle="modal"
                                     data-target="#exampleModal"
+                                    data-button_name='Email'
                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                     data-image="{{ $property->featured_image }}"
                                     data-title="{{ $property->property_name }}"
@@ -1394,7 +1402,26 @@ Link:'.$propertyUrl;
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.0/dist/panzoom.umd.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0.0/dist/panzoom.controls.umd.js"></script>
 
-    <script type="text/javascript">
+<script type="text/javascript">
+
+    $('.btnCount').click(function() {
+        let id = $(this).attr('data-property_id');
+        let button_name = $(this).attr('data-button_name');
+        $.ajax({
+            type : 'GET',
+            url : '{{ route("click_count") }}',
+            data : {
+                'id': id,
+                'button_name': button_name,
+            },
+            
+            success:function(response){
+                console.log(response);
+            }
+
+
+        });
+    });
 
         function readMoreReadLess(text) {
             if(text == 'more'){
