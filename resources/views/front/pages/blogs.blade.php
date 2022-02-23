@@ -100,17 +100,17 @@
                             <div class="widget recent">
                                 <h3 class="widget-title">Recent Posts</h3>
                                 <ul class="post-list">
-                                @foreach($blogs as $blog)
+                                @foreach($recent_posts as $recent_post)
                                     <li class="row recent-list">
                                         <div class="col-lg-5 col-4">
                                             <div class="entry-img">
-                                                <img src="{{asset('upload/blogs/thumbnail/'.$blog->image)}}" 
-                                                    alt="{{$blog->title}}">
+                                                <img src="{{asset('upload/blogs/thumbnail/'.$recent_post->image)}}" 
+                                                    alt="{{$recent_post->title}}">
                                             </div>
                                         </div>
                                         <div class="col-lg-7 col-8 no-pad-left">
                                             <div class="entry-text">
-                                                <h4 class="entry-title"><a href="{{url('blog/'.$blog->slug)}}">{{$blog->title}}</a></h4>
+                                                <h4 class="entry-title"><a href="{{url('blog/'.$recent_post->slug)}}">{{$recent_post->title}}</a></h4>
                                                 <div class="property-location">
                                                 </div>
                                             </div>

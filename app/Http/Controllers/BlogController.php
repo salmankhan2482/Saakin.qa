@@ -27,7 +27,9 @@ class BlogController extends Controller
     public function index()
     {
 		$blogs = Blog::where('status',1)->orderBy('id', 'desc')->paginate(10);
-
+        
+        $recent_posts = Blog::where('status',1)->orderBy('id','desc')->take(10)->get();
+        
         $tagsArray = [];
         foreach($blogs as $blog){
                 foreach(explode(',', $blog->tags) as $singleBlog){
@@ -39,7 +41,7 @@ class BlogController extends Controller
         $blog_categories = BlogCategory::inRandomOrder()->get();
 
 
-        return view('front.pages.blogs',compact('blogs','blog_categories', 'tagsArray'));
+        return view('front.pages.blogs',compact('blogs','blog_categories','recent_posts','tagsArray'));
     }
 
     public function blogCategories($slug)
@@ -49,8 +51,9 @@ class BlogController extends Controller
         $blog_categories = BlogCategory::inRandomOrder()->get();
 
         $blogs = Blog::where('status',1)->orderBy('id', 'desc')->where('category_id', $category->id)->paginate(getcong('pagination_limit'));
+        $recent_posts = Blog::where('status',1)->orderBy('id','desc')->where('category_id', $category->id)->take(10)->get();
 
-        return view('front.pages.blog_categories',compact('category','blogs', 'category_blogs', 'blog_categories'));
+        return view('front.pages.blog_categories',compact('category','blogs', 'category_blogs','recent_posts','blog_categories'));
     }
 
 
