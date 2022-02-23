@@ -33,6 +33,9 @@
   gtag('config', 'G-0DHP1WPHH9');
 </script>
 
+<!-- Google Adsene https://saakin.com/ -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+     crossorigin="anonymous"></script>
 
 <!-- Rich Result Test Code for https://saakin.com/ -->
 <script type="application/ld+json">
