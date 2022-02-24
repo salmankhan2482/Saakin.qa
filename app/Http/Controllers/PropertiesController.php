@@ -1122,19 +1122,16 @@ class PropertiesController extends Controller
             return view('front.pages.properties.area-property-type-for-purpose',
             compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'town', 'area', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info'));
 
-        }
-
-        
+        }        
         
         $type = Types::where('plural', $property_type)->firstOrFail();
-        
         $city = PropertyCities::where('slug', $city)->firstOrFail();
         
         $properties = Properties::where('status', 1)
         ->where('property_purpose', ucfirst($property_purpose))
         ->where('property_type', $type->id)
         ->where('city', $city->id);
-
+        
         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
             if (request()->sort_by == "newest") {
                         $properties->orderBy('id', 'desc');
@@ -1189,6 +1186,7 @@ class PropertiesController extends Controller
             $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
             }
 
+            // dd($properties);
         return view('front.pages.properties.city-property-type-for-purpose',
         compact('properties',  'propertyTypes', 'type', 'city', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content'));
     }

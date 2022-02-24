@@ -28,7 +28,6 @@
         }
     }
 </script>
-
 @endsection
 
 @if ( $property->meta_title !=null)

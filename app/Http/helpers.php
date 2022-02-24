@@ -123,7 +123,7 @@ if (!function_exists('classActiveUserMenu')) {
 if (! function_exists('getUserInfo')) {
 	function getUserInfo($id)
 	{
-		User::find($id);
+		return User::find($id);
 	}
 }
 

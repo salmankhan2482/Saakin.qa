@@ -10,8 +10,7 @@
 <script src="{{asset('assets/js/jquery.validate.js')}}"></script>
 <script src="{{asset('assets/js/jquery.formtowizard.js')}}"></script>
 
-@if (! request()->routeIs('real-estate-agencies') 
-&& ! request()->routeIs('agency_detail'))
+@if (! request()->routeIs('real-estate-agencies') && ! request()->routeIs('agency_detail'))
     <script src="{{asset('assets/js/preloadinator.js')}}"></script> 
 @endif
 
