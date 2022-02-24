@@ -312,9 +312,10 @@ class PropertiesController extends MainAdminController
         $pro->subcity = request('subcity');
         $pro->town = request('town');
         $pro->address_slug = $address_slug;
-        $pro->sub_city_slug = strtolower($type.'s-for-'.$request->property_purpose.'-'.Str::slug($subcity));
-        $pro->town_slug = strtolower($type.'s-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
-        $pro->area_slug = strtolower($type.'s-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
+
+        $pro->sub_city_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity));
+        $pro->town_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
+        $pro->area_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
         $pro->address = $address_without_slug;
         $pro->update();
         
@@ -423,13 +424,8 @@ class PropertiesController extends MainAdminController
         $address_slug = Str::slug($address_without_slug);
         $address = Str::slug($city.' '.$address_slug);
         
-        $type = Types::where('id', $request->property_type)->value('slug');
-
-        if ($type == 'duplex') {
-            $property_slug = strtolower($type.'es-for-'.$request->property_purpose.'-'.$address);
-        }else{
-            $property_slug = strtolower($type.'s-for-'.$request->property_purpose.'-'.$address);
-        }
+        $type = Types::where('id', $request->property_type)->first();
+        $property_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.$address);
 
         $request_data =  \Request::except(array('_token'));
         $rule = array(
@@ -440,11 +436,12 @@ class PropertiesController extends MainAdminController
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->messages());
         }
-        // dd(strtolower($type.'s-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town)));
+        
         $request_data['address_slug'] = $address_slug;
-        $request_data['sub_city_slug'] = strtolower($type.'s-for-'.$request->property_purpose.'-'.Str::slug($subcity));
-        $request_data['town_slug'] = strtolower($type.'s-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
-        $request_data['area_slug'] = strtolower($type.'s-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
+        $sub_city_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity));
+        $town_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
+        $area_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
+
         $request_data['address'] = $address_without_slug;
         $request_data['property_slug'] = $property_slug;
         $request_data['meta_title'] = $request->meta_title;
@@ -466,11 +463,6 @@ class PropertiesController extends MainAdminController
             $resize = $tmpFilePath . 'thumb_' . $name;
             $image_resize->save($resize);
         }
-
-
-        // if ($request->input('property_features') !== null) {
-        //     $request_data['property_features'] = implode(',', $request->input('property_features'));
-        // }
       
         $agent_picture = $request->file('agent_picture');
         if ($agent_picture) {
@@ -483,8 +475,12 @@ class PropertiesController extends MainAdminController
             $request_data['agent_picture'] = $agent_name;
         }
 
-        $property = Properties::where('id', $id)->first();
+        $property = Properties::where('id', $id)->first(); 
         $property->update($request_data);
+        $property->sub_city_slug = $sub_city_slug;
+        $property->town_slug = $town_slug;
+        $property->area_slug = $area_slug;
+        $property->update();
         $property->amenities()->sync($request->property_amenities);
         
         \Session::flash('flash_message', trans('words.updated'));

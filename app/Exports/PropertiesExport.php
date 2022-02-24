@@ -22,6 +22,7 @@ class PropertiesExport implements FromCollection, WithHeadings, ShouldAutoSize ,
 
     public function map($property): array
     {
+        // dd($property);
         return [             
             $property->id,
             getUserInfo($property->user_id)->name,

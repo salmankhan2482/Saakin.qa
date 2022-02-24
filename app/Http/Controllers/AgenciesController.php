@@ -176,8 +176,6 @@ class AgenciesController extends Controller
 
         $property_type = $request->property_type;
         $agency_id = $request->agency_id;
-//        $accesscode = $request->access_code;
-//        $groupcode = $request->group_code;
         $accesscode = '3A28C51415';
         $groupcode = 1575;
 

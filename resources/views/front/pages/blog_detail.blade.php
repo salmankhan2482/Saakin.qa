@@ -1,7 +1,6 @@
 @extends("front.layouts.main")
 
 @section('schem-markup')
-
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -28,8 +27,7 @@
       "datePublished": "{{ date('d-m-Y',strtotime($blog->created_at)) }}",
       "dateModified": "@if ($blog->updated_at) {{ date('d-m-Y',strtotime($blog->updated_at)) }}@else{{ date('d-m-Y',strtotime($blog->created_at)) }} @endif"
     }
-    </script>
-
+    </script>   
 @endsection
 
 @if ($blog->meta_title != null)

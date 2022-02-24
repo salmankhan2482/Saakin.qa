@@ -73,6 +73,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
 
+    Route::get('/our_backup_database', 'UserController@dbBackup')->name('our_backup_database');
+
     //menu options
     Route::resource('menuOptions','MenuOptionsController');
     Route::get('menuOptions/delete/{id}','MenuOptionsController@destroy')->name('menuOptions.destroy');
