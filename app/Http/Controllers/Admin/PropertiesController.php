@@ -193,19 +193,12 @@ class PropertiesController extends MainAdminController
 
     public function create()
     {
-        // if($permission = Permissions::where('title', 'property_create')->first()){
-        //     if (!Gate::allows('isAllowedToThis', $permission->id)) {
-        //         \Session::flash('flash_message', "You Are Not Authorized.");
-        //         return redirect()->back();
-        //     }
-        // }
-        
+
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
         
-
         $types = Types::orderBy('types')->get();
         $purposes = PropertyPurpose::get();
         $cityguides = CityGuide::get();
@@ -259,7 +252,6 @@ class PropertiesController extends MainAdminController
         $request_data['user_id'] = Auth::user()->id;
         $request_data['status'] = 0;
         
-
         if(Auth::user()->usertype == 'Admin'){
             $request_data['agency_id'] = $request_data['agency_id'];
         }else{
@@ -305,13 +297,17 @@ class PropertiesController extends MainAdminController
             $request_data['agent_picture'] = $agent_name;
         }
 
-        if ($request->input('property_features') !== null) {
-            $request_data['property_features'] = implode(',', $request->input('property_features'));
-        }
+        // if ($request->input('property_features') !== null) {
+        //     $request_data['property_features'] = implode(',', $request->input('property_features'));
+        // }
         
         $property = Properties::create($request_data);
         $reference = $request_data['refference_code'].$property->id;
         $pro = Properties::find($property->id);
+        if (request('property_amenities')) {
+            $pro->amenities()->attach($request->property_amenities); 
+        }
+        
         $pro->refference_code = $reference;
         $pro->subcity = request('subcity');
         $pro->town = request('town');
@@ -379,12 +375,6 @@ class PropertiesController extends MainAdminController
 
     public function edit(Request $request, $id)
     {
-        // $permission = Permissions::where('title', 'property_edit')->first();
-        // if (!Gate::allows('isAllowedToThis', $permission->id)) {
-        //     \Session::flash('flash_message', "You Are Not Authorized.");
-        //     return redirect()->back();
-        // }
-        
 
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
@@ -415,7 +405,6 @@ class PropertiesController extends MainAdminController
 
     public function update(Request $request, $id)
     {
-
         $request_data = request()->all();
 
         if( $request->city){ $city = PropertyCities::where('id', $request->city)->value('name'); }
@@ -478,31 +467,11 @@ class PropertiesController extends MainAdminController
             $image_resize->save($resize);
         }
 
-        // if ($request->hasFile('featured_image')) {
-        //     $featured_image = $request->file('featured_image');
-        //     foreach ($featured_image as $file) {
-        //         $featured_image_name = $file->getClientOriginalName();
-        //         $featured_image_name = explode(".", $featured_image_name);
-        //         $tmpFilePath = public_path('upload/properties/');
-        //         $imageName = 'property_' . time() . '.' . $featured_image->extension();
-        //         $file->move($tmpFilePath, $imageName);
-        //         $request_data['featured_image'] = $imageName;
 
-        //         $image_original_path = $tmpFilePath . $imageName;
-        //         $image_resize = Image::make($image_original_path);
-        //         $image_resize->resize(383, 251);
-        //         $resize = $tmpFilePath . 'thumb_' . $imageName;
-        //         $image_resize->save($resize);
-        //     }
+        // if ($request->input('property_features') !== null) {
+        //     $request_data['property_features'] = implode(',', $request->input('property_features'));
         // }
-
-        if ($request->input('property_features') !== null) {
-            $request_data['property_features'] = implode(',', $request->input('property_features'));
-        }
-        // unset($request_data['old']);
-        // $request_data['property_features'] = implode(',', $request->input('property_features'));
-        //dd($request_data);
-
+      
         $agent_picture = $request->file('agent_picture');
         if ($agent_picture) {
 
@@ -514,7 +483,9 @@ class PropertiesController extends MainAdminController
             $request_data['agent_picture'] = $agent_name;
         }
 
-        Properties::where('id', $id)->update($request_data);
+        $property = Properties::where('id', $id)->first();
+        $property->update($request_data);
+        $property->amenities()->sync($request->property_amenities);
         
         \Session::flash('flash_message', trans('words.updated'));
         return \Redirect::back();
@@ -558,6 +529,8 @@ class PropertiesController extends MainAdminController
             \File::delete(public_path() . '/upload/properties/' . $property->featured_image);
             \File::delete(public_path() . '/upload/floorplan/' . $property->floor_plan);
             $property->delete();
+            $property->amenities()->detach();
+
             $property_gallery_images = PropertyGallery::where('property_id', $decrypted_id)->get();
 
             foreach ($property_gallery_images as $gallery_images) {

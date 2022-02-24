@@ -241,8 +241,12 @@
                                 @if(count($amenities)>0)
                                     @foreach($amenities as $amenity)
                                         <div class="col-md-4 custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="property_features[]"
-                                                          value="{{$amenity->id}}"/><label class="custom-control-label" for="customCheck">{{$amenity->name}}</label>
+                                            <input type="checkbox" class="custom-control-input" 
+                                                name="property_amenities[]" value="{{$amenity->id}}"
+                                            >
+                                                <label class="custom-control-label" for="customCheck">
+                                                    {{$amenity->name}}
+                                                </label>
                                         </div>
                                     @endforeach
                                 @endif

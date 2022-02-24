@@ -141,20 +141,17 @@ class PropertiesController extends Controller
             })
             ->when(request()->get('amenities'), function ($query) {
                 $ids = array();
+                foreach (request()->get('amenities') as $value) {                    
+                    $records =  AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
 
-                foreach (request()->get('amenities') as $value) {
-
-                    $records = DB::table('properties')->where('property_purpose', request()->property_purpose)
-                    ->whereIn('property_features', $value)->select('id')->get(); 
-                    
                     foreach ($records as $value) {
-                        array_push($ids, $value->id);
+                        array_push($ids, $value->property_id);
                     }
+                
                 }
-
+                    
                 $result = array_unique($ids);
                 $query->whereIn('id', $result);
-                dd($query->get());
                 
             })
             ->when($min_area != 0 && $max_area != 0, function ($query) {
@@ -1131,7 +1128,6 @@ class PropertiesController extends Controller
         
         $type = Types::where('plural', $property_type)->firstOrFail();
         
-        dd('subicty');
         $city = PropertyCities::where('slug', $city)->firstOrFail();
         
         $properties = Properties::where('status', 1)
