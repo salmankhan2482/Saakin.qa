@@ -49,7 +49,7 @@ class ScrapperController extends Controller
         print_r($dump);
 
         
-        dd($response);
+        // dd($response);
 
        
         return view('admin.pages.scrapper',['response'=>$response]);
