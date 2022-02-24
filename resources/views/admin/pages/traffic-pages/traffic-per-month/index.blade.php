@@ -3,7 +3,7 @@
 @section('content')
 <div class="page-header">
     <h4 style="font-size: 20px;">
-       Traffic Per Month
+       Property Visits
     </h4>
 </div>
     <div>

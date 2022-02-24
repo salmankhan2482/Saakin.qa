@@ -6,6 +6,8 @@
             <h4 style="font-size: 20px;">
                 Total Leads
             </h4>
+            <a href="{{ URL::to('admin/dashboard') }}" class="btn btn-default-light btn-xs"><i
+                class="md md-backspace"></i> {{ trans('words.back') }}</a>
         </div>
         
         @if (Session::has('flash_message'))

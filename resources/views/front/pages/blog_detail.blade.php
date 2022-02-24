@@ -88,18 +88,19 @@
                                                 src="{{ asset('upload/blogs/' . $blog->image) }}"
                                                 alt="{{ $blog->title }}"
                                                 >
+                                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                    crossorigin="anonymous"></script>
+                               <!-- side bar -->
+                               <ins class="adsbygoogle"
+                                    style="display:block"
+                                    data-ad-client="ca-pub-2421573832685297"
+                                    data-ad-slot="6760164139"
+                                    data-ad-format="auto"
+                                    data-full-width-responsive="true"></ins>
+                               <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                               </script>
 
-                                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5375398163072819"
-                                                crossorigin="anonymous"></script>
-                                           <ins class="adsbygoogle"
-                                                style="display:block; text-align:center;"
-                                                data-ad-layout="in-article"
-                                                data-ad-format="fluid"
-                                                data-ad-client="ca-pub-5375398163072819"
-                                                data-ad-slot="1421613485"></ins>
-                                           <script>
-                                                (adsbygoogle = window.adsbygoogle || []).push({});
-                                           </script>
 
                                                 {!! $blog->description !!}
                                         </div>
