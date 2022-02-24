@@ -1,5 +1,6 @@
 <?php
 
+use App\AmenityProduct;
 use App\City;
 use App\Types;
 use App\PageVisits;
@@ -34,6 +35,20 @@ use App\Http\Controllers\Admin\PropertiesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// $props = Properties::all();
+
+// foreach($props as $prop){
+//         $ids = [];
+//         foreach(explode(',', $prop->property_features) as $singAmenity){
+//             array_push($ids, $singAmenity);
+//         }
+
+//         $prop->amenities()->attach($ids);
+// }
+// dd('aa');
+
+
 Route::get('clear', function(){
     Artisan::call('storage:link');
     Artisan::call('config:cache');

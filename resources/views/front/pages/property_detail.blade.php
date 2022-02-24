@@ -706,6 +706,23 @@ Link:'.$propertyUrl;
                                     </ul>
                                 </div>
                             </div>
+                            @else
+                            <div class="row p-2">
+                                <div class="col-md-12">
+                                    <h3 class="text-left mt-2">Amenities</h3>
+                                    <ul class="aminities">
+                                        @foreach ($property->amenities as $amenity)
+                                            <li
+                                                style="font-size: 13px !important; color: #000 !important; font-weight: bold !important; letter-spacing: 1px !important;">
+                                                <strong> <i class="fas fa-check-circle pr-1"></i> </strong>
+                                                {{ $amenity->name }}
+                                            </li>
+                                        @endforeach
+
+                                    </ul>
+                                </div>
+                            </div>
+
                         @endif
                     </div>
                     {{-- <hr> --}}
@@ -1237,6 +1254,24 @@ Link:'.$propertyUrl;
 
                             </ul>
                         </div>
+                    </div>
+                @else
+                    <div class="row p-2">
+                    <div class="col-md-12">
+                        <h3 class="text-left mt-2">Amenities</h3>
+                        <ul class="aminities">
+                            @foreach ($property->amenities as $amenity)
+                               
+                                <li
+                                    style="width:100% !important; font-size: 13px !important; color: #000 !important; font-weight: bold !important; letter-spacing: 1px !important;">
+                                    <strong> <i class="fas fa-check-circle pr-1"></i> </strong>
+                                    {{ $amenity->name }}
+                                </li>
+                            
+                            @endforeach
+
+                        </ul>
+                    </div>
                     </div>
                 @endif
             </div>

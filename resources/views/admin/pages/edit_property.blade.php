@@ -263,16 +263,18 @@
                         <label>{{trans('words.amenities')}}</label>
 
                         <div class="row">
-                            @php
-                            $HiddenProducts = explode(',',$property->property_features);
-                            @endphp
+                            
                             @if(count($amenities)>0)
 
                             @foreach($amenities as $amenity)
                             <div class="col-md-3 custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" name="property_features[]"
-                                    value="{{$amenity->id}}" @if (in_array($amenity->id, $HiddenProducts)) checked
-                                @endif/><label class="custom-control-label" for="customCheck">{{$amenity->name}}</label>
+                                <input type="checkbox" class="custom-control-input" name="property_amenities[]"
+                                    value="{{$amenity->id}}" 
+                                    {{ $property->amenities->contains($amenity->id) ? 'checked' : '' }}>
+                                    
+                                    <label class="custom-control-label" for="customCheck">
+                                        {{$amenity->name}}
+                                    </label>
                             </div>
                             @endforeach
                             @endif

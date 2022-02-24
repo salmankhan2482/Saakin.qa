@@ -159,11 +159,11 @@ class AjaxController extends Controller
         $property_id = request()->id;
         $button_name = request()->button_name;
 
-        $position = Location::get('http://'.$ip);
+        $position = Location::get('https://'.$ip);
         $data = ClickCounters::where('ip_address', $ip)
         ->where('property_id', $property_id)
         ->where('button_name', $button_name)->first();
-dd($data);
+
         if($data){
             return '';
         }else{
