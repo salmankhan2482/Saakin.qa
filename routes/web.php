@@ -57,6 +57,9 @@ Route::get('clear', function(){
     Artisan::call('optimize:clear');
 });
 
+Route::get('/cookie/set','CookieController@setCookie');
+Route::get('/cookie/get','CookieController@getCookie');
+
 
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
