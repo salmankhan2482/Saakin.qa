@@ -132,7 +132,7 @@ class AjaxController extends Controller
             ->first();
 
 
-        $store['subcities'] = DB::table('property_sub_cities')
+            $store['subcities'] = DB::table('property_sub_cities')
             ->select('latitude', 'longitude')
             ->where('id', $store['towns']->property_sub_cities_id)
             ->first();

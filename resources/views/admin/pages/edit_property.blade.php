@@ -390,7 +390,7 @@ function callSubCityTown(data) {
                     }
                     
                     assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
-                            towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                            towns[0].longitude, subcities[0].latitude, subcities[0].longitude);
 
                 }
             });
@@ -438,7 +438,7 @@ function callSubCityTown(data) {
                     }
 
                     assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
-                            towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                            towns[0].longitude, subcities[0].latitude, subcities[0].longitude);
                 }
             });
 
@@ -477,7 +477,7 @@ function callSubCityTown(data) {
                     }
 
                     assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
-                            towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                            towns[0].longitude, subcities[0].latitude, subcities[0].longitude);
 
                 }
             });
@@ -506,7 +506,7 @@ function callSubCityTown(data) {
                     $("#p-long").val('');
                     
                     assingLatLong(areas.latitude, areas.longitude, towns.latitude ?? '', 
-                            towns.longitude ?? '', subcities.longitude ?? '', subcities.longitude ?? '');
+                            towns.longitude ?? '', subcities.latitude ?? '', subcities.longitude ?? '');
 
                 }
             });

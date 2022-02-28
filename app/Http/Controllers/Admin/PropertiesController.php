@@ -238,15 +238,15 @@ class PropertiesController extends MainAdminController
         $address_without_slug = $subcity.' '.$town.' '.$area;
         $address_slug = Str::slug($address_without_slug);
         
-        $type = Types::where('id', $request->property_type)->value('slug');
+        $type = Types::where('id', $request->property_type)->first();
 
         if($subcity == $town){
             $property_slug = 
-            strtolower($type.'-for-'.$request->property_purpose.'-'.Str::slug($city.'-'.$subcity.'-'.$area));
+        strtolower($type->slug.'-for-'.$request->property_purpose.'-'.Str::slug($city.'-'.$subcity.'-'.$area));
         }
         else{
             $property_slug = 
-            strtolower($type.'-for-'.$request->property_purpose.'-'.Str::slug($city.'-'.$subcity.'-'.$town.'-'.$area));
+        strtolower($type->slug.'-for-'.$request->property_purpose.'-'.Str::slug($city.'-'.$subcity.'-'.$town.'-'.$area));
         }
 
         $request_data['user_id'] = Auth::user()->id;
@@ -296,10 +296,6 @@ class PropertiesController extends MainAdminController
             $agent_picture->move($tmpFilePath, $agent_name);
             $request_data['agent_picture'] = $agent_name;
         }
-
-        // if ($request->input('property_features') !== null) {
-        //     $request_data['property_features'] = implode(',', $request->input('property_features'));
-        // }
         
         $property = Properties::create($request_data);
         $reference = $request_data['refference_code'].$property->id;
@@ -312,10 +308,22 @@ class PropertiesController extends MainAdminController
         $pro->subcity = request('subcity');
         $pro->town = request('town');
         $pro->address_slug = $address_slug;
-
-        $pro->sub_city_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity));
-        $pro->town_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
-        $pro->area_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
+        
+        $pro->city = $request->city;
+        
+        if($request->subcity){
+            $pro->sub_city_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity));
+            $pro->subcity = $request->subcity;
+        }
+        if( $request->town){
+            $pro->town_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
+            $pro->town = $request->town;
+        }
+        if($request->area){
+            $pro->area_slug=strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
+            $pro->area = $request->area;
+        }
+        
         $pro->address = $address_without_slug;
         $pro->update();
         
@@ -407,7 +415,6 @@ class PropertiesController extends MainAdminController
     public function update(Request $request, $id)
     {
         $request_data = request()->all();
-
         if( $request->city){ $city = PropertyCities::where('id', $request->city)->value('name'); }
         else{ $city = ''; }
 
@@ -438,10 +445,7 @@ class PropertiesController extends MainAdminController
         }
         
         $request_data['address_slug'] = $address_slug;
-        $sub_city_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity));
-        $town_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
-        $area_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
-
+        
         $request_data['address'] = $address_without_slug;
         $request_data['property_slug'] = $property_slug;
         $request_data['meta_title'] = $request->meta_title;
@@ -477,9 +481,32 @@ class PropertiesController extends MainAdminController
 
         $property = Properties::where('id', $id)->first(); 
         $property->update($request_data);
-        $property->sub_city_slug = $sub_city_slug;
-        $property->town_slug = $town_slug;
-        $property->area_slug = $area_slug;
+
+        if( $request->subcity){
+            $sub_city_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity));
+            $property->sub_city_slug = $sub_city_slug;
+        }else{
+            $property->sub_city_slug = '';
+        }
+
+        if( $request->town){
+            $town_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town));
+            $property->town_slug = $town_slug;
+        }else{
+            $property->town_slug = '';
+        }
+
+        if( $request->area){
+            $area_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.Str::slug($subcity.'-'.$town.'-'.$area));
+            $property->area_slug = $area_slug;
+        }else{
+            $property->area_slug = '';
+        }
+
+        $property->city = $request->city;
+        $property->subcity = $request->subcity;
+        $property->town = $request->town;
+        $property->area = $request->area;
         $property->update();
         $property->amenities()->sync($request->property_amenities);
         

@@ -22,6 +22,8 @@ use Stevebauman\Location\Facades\Location;
 use App\Http\Controllers\ClickCountersController;
 use App\Http\Controllers\PropertyReportController;
 use App\Http\Controllers\Admin\PropertiesController;
+use App\Http\Controllers\OmahadminController;
+
 // use App\Http\Controllers\Admin\ClickCountersController;
 
 
@@ -35,19 +37,6 @@ use App\Http\Controllers\Admin\PropertiesController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// $props = Properties::all();
-
-// foreach($props as $prop){
-//         $ids = [];
-//         foreach(explode(',', $prop->property_features) as $singAmenity){
-//             array_push($ids, $singAmenity);
-//         }
-
-//         $prop->amenities()->attach($ids);
-// }
-// dd('aa');
-
 
 Route::get('clear', function(){
     Artisan::call('storage:link');
@@ -69,7 +58,7 @@ Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
-	Route::get('/', 'IndexController@index');
+    Route::get('/new', 'OmahadminController@dashboard_1');
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
 

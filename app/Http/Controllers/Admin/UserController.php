@@ -400,15 +400,15 @@ class UserController extends Controller
         $mysqlUserName      = env('DB_USERNAME');
         $mysqlPassword      = env('DB_PASSWORD');
         $DbName             = env('DB_DATABASE');
-        // $tables             = array("properties"); //here your tables...
-        $queryTables = \DB::select(\DB::raw('SHOW TABLES'));
-        foreach ( $queryTables as $table )
-        {
-            foreach ( $table as $tName)
-            {
-                $tables[]= $tName ;
-            }
-        }
+        $tables             = array("properties"); //here your tables...
+        // $queryTables = \DB::select(\DB::raw('SHOW TABLES'));
+        // foreach ( $queryTables as $table )
+        // {
+        //     foreach ( $table as $tName)
+        //     {
+        //         $tables[]= $tName ;
+        //     }
+        // }
 
         $connect = new \PDO("mysql:host=$mysqlHostName;dbname=$DbName;charset=utf8", "$mysqlUserName", "$mysqlPassword",array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
         

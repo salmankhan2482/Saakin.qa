@@ -52,7 +52,7 @@
 
 @section('content')
     <!--Breadcrumb section starts-->
-    <div class="breadcrumb-section bg-h" style="background-image:  url('../assets/images/backgrounds/bg-5.jpg')">
+    <div class="breadcrumb-section bg-h" style="background-image:  url('{{ asset('upload/blogs/' . $blog->image) }}')">
         <div class="overlay op-5"></div>
         <div class="container">
             <div class="row">
@@ -81,11 +81,11 @@
                                         <div class="post-content">
                                             <div class="post-meta text-center">
                                             </div>
-                                            <img 
+                                            {{-- <img 
                                                 class="img-fluid" 
                                                 src="{{ asset('upload/blogs/' . $blog->image) }}"
                                                 alt="{{ $blog->title }}"
-                                                >
+                                                > --}}
                                                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
                                     crossorigin="anonymous"></script>
                                <!-- side bar -->
