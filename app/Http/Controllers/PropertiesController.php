@@ -374,7 +374,7 @@ class PropertiesController extends Controller
                     ->get();
 
         
-        $property_des = Str::limit($property->description, 170, '...');
+        $property_des = Str::limit($property->property_name.'  '.$property->description, 150, '...');
 
         return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address'));
 

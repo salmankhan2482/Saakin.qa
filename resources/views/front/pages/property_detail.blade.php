@@ -18,13 +18,6 @@
         "priceValidUntil": "2022-12-31",
         "availability": "https://schema.org/InStock",
         "itemCondition": "https://schema.org/NewCondition"
-        },
-        "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.9",
-        "bestRating": "5",
-        "worstRating": "0",
-        "ratingCount": "500"
         }
     }
 </script>
