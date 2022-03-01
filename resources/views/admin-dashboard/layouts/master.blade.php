@@ -13,8 +13,8 @@
 
 
 
-	@if(!empty(config('dz.public.pagelevel.css.'.$item)))
-        @foreach(config('dz.public.pagelevel.css.'.$item) as $style)
+	@if(!empty(config('dz.public.pagelevel.css.'.$action)))
+        @foreach(config('dz.public.pagelevel.css.'.$action) as $style)
             <link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 		@endforeach
     @endif
