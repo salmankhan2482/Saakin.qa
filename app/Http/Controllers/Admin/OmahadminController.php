@@ -1,6 +1,5 @@
 <?php
-
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
@@ -10,15 +9,13 @@ class OmahadminController extends Controller
 	    // Dashboard
     public function saakin_dashborad()
     {
-
-
         $page_title = 'Dashboard';
         $page_description = 'Some description for the page';
         $logo = "images/logo.png";
         $logoText = "images/logo-text.png";
         $action = 'saakin_dashborad';
 
-        return view('dashboard.index', compact('page_title', 'page_description','action','logo','logoText'));
+        return view('admin-dashboard.index', compact('page_title', 'page_description','action','logo','logoText'));
 
     }
 
@@ -771,4 +768,5 @@ public function saakin_index()
 
         return view('form.index', compact('page_title', 'page_description','action'));
     }
+
 }
