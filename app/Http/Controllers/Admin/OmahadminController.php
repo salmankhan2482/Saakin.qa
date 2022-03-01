@@ -1,19 +1,49 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
-class OmahadminController extends MainAdminController
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
+
+class OmahadminController extends Controller
 {
 
 	    // Dashboard
-    public function dashboard_1()
+    public function saakin_dashborad()
     {
+
+
         $page_title = 'Dashboard';
         $page_description = 'Some description for the page';
         $logo = "images/logo.png";
         $logoText = "images/logo-text.png";
-        $action =  'saakin_dashboard' ;
-        return view('admin-dashboard.index', compact('page_title', 'page_description','action','logo','logoText'));
+        $action = 'saakin_dashborad';
+
+        return view('dashboard.index', compact('page_title', 'page_description','action','logo','logoText'));
+
     }
+
+public function create_saakin()
+{
+        $page_title = 'Form Element';
+        $page_description = 'Some description for the page';
+
+		$action = 'saakin_create';
+
+        return view('form.create',compact('page_title', 'page_description','action'));
+
+}
+
+
+public function saakin_index()
+{
+        $page_title = 'Form Element';
+        $page_description = 'Some description for the page';
+
+		$action = 'saakin_index';
+
+        return view('form.index',compact('page_title', 'page_description','action'));
+
+}
 
 	   // Page Analytics
     public function analytics()
@@ -115,6 +145,7 @@ class OmahadminController extends MainAdminController
         $page_title = 'Chart Chartist';
         $page_description = 'Some description for the page';
         $action = __FUNCTION__;
+
         return view('chart.chartist', compact('page_title', 'page_description','action'));
     }
 
@@ -728,6 +759,16 @@ class OmahadminController extends MainAdminController
         $page_description = 'Some description for the page';
 
 		$action = __FUNCTION__;
+
         return view('widget.widget_basic', compact('page_title', 'page_description','action'));
+    }
+    public function index_list()
+    {
+        $page_title = 'Index Page';
+        $page_description = 'Some description for the page';
+
+		$action = __FUNCTION__;
+
+        return view('form.index', compact('page_title', 'page_description','action'));
     }
 }

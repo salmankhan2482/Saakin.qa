@@ -16,7 +16,7 @@ class MenuOptionsController extends Controller
     public function index()
     {
         $menuOptions = MenuOptions::all();
-        return view('admin.pages.user-management.menu-options.index', compact('menuOptions'));
+        return view('admin-dashboard.user-management.menu-options.index', compact('menuOptions'));
     }
 
     /**
