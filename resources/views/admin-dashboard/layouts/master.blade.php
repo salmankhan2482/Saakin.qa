@@ -13,15 +13,11 @@
 
 
 
-    @foreach ($action as $item)
 	@if(!empty(config('dz.public.pagelevel.css.'.$item)))
-
         @foreach(config('dz.public.pagelevel.css.'.$item) as $style)
             <link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>
 		@endforeach
-
     @endif
-    @endforeach
 
 	{{-- Global Theme Styles (used by all pages) --}}
 	@if(!empty(config('dz.public.global.css')))
