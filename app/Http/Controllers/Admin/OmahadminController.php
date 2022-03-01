@@ -11,7 +11,7 @@ class OmahadminController extends MainAdminController
         $page_description = 'Some description for the page';
         $logo = "images/logo.png";
         $logoText = "images/logo-text.png";
-        $action = [__FUNCTION__ , 'chart_chartist', 'chart_morris'];
+        $action =  'saakin_dashboard' ;
         return view('admin-dashboard.index', compact('page_title', 'page_description','action','logo','logoText'));
     }
 
