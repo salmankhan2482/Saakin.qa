@@ -6,20 +6,21 @@ use Auth;
 use App\User;
 use App\Enquire;
 use App\Partners;
+use App\PageVisits;
 use App\Properties;
 use App\Subscriber;
 use App\Testimonials;
 use App\Transactions;
-use App\ClickCounters;
 
+use App\ClickCounters;
 use App\Http\Requests;
-use App\PageVisits;
 use App\PropertyCounter;
 use App\SubscriptionPlan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class DashboardController extends MainAdminController
 {
@@ -30,6 +31,7 @@ class DashboardController extends MainAdminController
     }
     public function index()
     {
+        
     	 	if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
 	            \Session::flash('flash_message', trans('words.access_denied'));
 	            return redirect('dashboard');

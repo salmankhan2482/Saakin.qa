@@ -432,7 +432,14 @@ class PropertiesController extends MainAdminController
         $address = Str::slug($city.' '.$address_slug);
         
         $type = Types::where('id', $request->property_type)->first();
-        $property_slug = strtolower($type->plural.'-for-'.$request->property_purpose.'-'.$address);
+        if($subcity == $town){
+            $property_slug = 
+        strtolower($type->slug.'-for-'.$request->property_purpose.'-'.Str::slug($city.'-'.$subcity.'-'.$area));
+        }
+        else{
+            $property_slug = 
+        strtolower($type->slug.'-for-'.$request->property_purpose.'-'.Str::slug($city.'-'.$subcity.'-'.$town.'-'.$area));
+        }
 
         $request_data =  \Request::except(array('_token'));
         $rule = array(
