@@ -20,8 +20,9 @@ class RolesController extends Controller
      */
     public function index()
     {
+        $action = 'saakin_index';
         $roles = Roles::all();
-        return view('admin.pages.user-management.roles.index', compact('roles'));
+        return view('admin-dashboard.user-management.roles.index', compact('roles','action'));
     }
 
     /**
@@ -31,9 +32,10 @@ class RolesController extends Controller
      */
     public function create()
     {
+        $action = 'saakin_create';
         $menuOptions = MenuOptions::where('parent_id', null)->select('id', 'title')->get();
         $permissions = Permissions::select('id', 'title')->get();
-        return view('admin.pages.user-management.roles.create', compact(['menuOptions','permissions']));
+        return view('admin-dashboard.user-management.roles.create', compact(['menuOptions','permissions','action']));
     }
 
     /**

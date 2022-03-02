@@ -15,8 +15,9 @@ class PermissionsController extends Controller
      */
     public function index()
     {
+        $action = 'saakin_index';
         $permissions = Permissions::all();
-        return view('admin.pages.user-management.permissions.index', compact('permissions'));
+        return view('admin-dashboard.user-management.permissions.index', compact('permissions','action'));
     }
 
     /**
@@ -26,7 +27,8 @@ class PermissionsController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.user-management.permissions.create');
+        $action = 'saakin_create';
+        return view('admin-dashboard.user-management.permissions.create',compact('action'));
     }
 
     /**
@@ -63,9 +65,9 @@ class PermissionsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        $permission = Permissions::find($id);
-        return view('admin.pages.user-management.permissions.edit', compact('permission'));
+{
+        $action='saakin_edit';    $permission = Permissions::find($id);
+        return view('admin-dashboard.user-management.permissions.edit', compact('permission','action'));
     }
 
     /**

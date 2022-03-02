@@ -133,6 +133,7 @@ class OmahadminController extends Controller
 
         $action = 'saakin_dashborad';
         return view('admin-dashboard.index', compact('data', 'action'));
+
     }
 
     public function create_saakin()

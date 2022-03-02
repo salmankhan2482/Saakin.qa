@@ -61,7 +61,9 @@ Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
+
     Route::get('/new', 'OmahadminController@saakin_dashborad');
+    Route::resource('menuOptions', MenuOptionsController::class);
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
 

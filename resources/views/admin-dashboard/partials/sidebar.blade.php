@@ -20,9 +20,9 @@
                         <span class="nav-text">User Management</span>
                     </a>
                     <ul aria-expanded="false">
-                        <li><a href="{!! url('/menuOptions'); !!}">Menu</a></li>
-                        <li><a href="{!! url('/table-bootstrap-basic'); !!}">Permissions</a></li>
-                        <li><a href="{!! url('/table-datatable-basic'); !!}">Roles</a></li>
+                        <li><a href="{!! url('/admin/menuOptions'); !!}">Menu</a></li>
+                        <li><a href="{!! url('/admin/permissions'); !!}">Permissions</a></li>
+                        <li><a href="{!! url('/admin/roles'); !!}">Roles</a></li>
                         <li><a href="{!! url('/table-datatable-basic'); !!}">Users</a></li>
                     </ul>
                     </li>
