@@ -15,8 +15,9 @@ class MenuOptionsController extends Controller
      */
     public function index()
     {
+        $action = 'saakin_index';
         $menuOptions = MenuOptions::all();
-        return view('admin-dashboard.user-management.menu-options.index', compact('menuOptions'));
+        return view('admin-dashboard.user-management.menu-options.index', compact('menuOptions','action'));
     }
 
     /**
@@ -26,8 +27,9 @@ class MenuOptionsController extends Controller
      */
     public function create()
     {
+        $action = 'saakin_create';
         $menuOptions = MenuOptions::all();
-        return view('admin.pages.user-management.menu-options.create', compact('menuOptions'));
+        return view('admin-dashboard.user-management.menu-options.create', compact('menuOptions','action'));
     }
 
     /**
@@ -68,9 +70,10 @@ class MenuOptionsController extends Controller
      */
     public function edit($id)
     {
+        $action = 'saakin_edit';
         $menu = MenuOptions::find($id);
         $menuOptions = MenuOptions::all();
-        return view('admin.pages.user-management.menu-options.edit', compact('menu','menuOptions'));
+        return view('admin-dashboard.user-management.menu-options.edit', compact('menu','menuOptions','action'));
     }
 
     /**
