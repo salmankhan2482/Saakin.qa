@@ -5,13 +5,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{{ config('dz.name') }} | @yield('title', $page_title ?? '')</title>
+    <title>{{ config('dz.name') }} </title>
 
-	<meta name="description" content="@yield('page_description', $page_description ?? '')"/>
-    <!-- Favicon icon -->
+	<meta name="description" content="Saakin Real Estate"/>
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/images/favicon.png') }}">
-
-
 
 	@if(!empty(config('dz.public.pagelevel.css.'.$action)))
         @foreach(config('dz.public.pagelevel.css.'.$action) as $style)
@@ -26,9 +23,7 @@
 		@endforeach
 	@endif
 
-
 </head>
-
 <body>
 
     <!--*******************
@@ -55,18 +50,9 @@
         ***********************************-->
         <div class="nav-header">
             <a href="{!! url('/index'); !!}" class="brand-logo">
-			@if(!empty($logo))
-				<img class="logo-abbr" src="{{ asset('admin/'.$logo) }}" alt="">
-			@else
                 <img class="logo-abbr" src="{{ asset('admin/images/logo.png') }}" alt="">
-			@endif
-			@if(!empty($logoText))
-                <img class="logo-compact" src="{{ asset('admin/'.$logoText) }}" alt="">
-                <img class="brand-title" src="{{ asset('admin/'.$logoText) }}" alt="">
-			@else
                 <img class="logo-compact" src="{{ asset('admin/images/logo-text.png') }}" alt="">
                 <img class="brand-title" src="{{ asset('admin/images/logo-text.png') }}" alt="">
-			@endif
             </a>
 
             <div class="nav-control">
@@ -140,5 +126,6 @@
         Scripts
     ***********************************-->
 	@include('admin-dashboard.partials.footer-scripts')
+    @yield('scripts')
 </body>
 </html>

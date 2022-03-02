@@ -347,7 +347,6 @@ class PropertiesController extends Controller
         if (!$property) {
             abort('404');
         }
-
         //$agent = User::where('usertype','Agents')->where('id',$property->agent_id)->first();
         $agency = Agency::where('id', $property->agency_id)->first();
         $neighborhoods = PropertyNeighborhood::where('property_id', $property->id)->get();

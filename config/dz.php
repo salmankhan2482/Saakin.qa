@@ -296,7 +296,6 @@ return [
 					'admin/js/dashboard/dashboard-1.js',
 					'admin/vendor/chartist/js/chartist.min.js',
 					'admin/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js',
-					'admin/js/plugins-init/chartist-init.js',
 					'admin/js/plugins-init/chartjs-init.js',
 					'admin/js/custom.min.js',
 					'admin/js/deznav-init.js',
@@ -307,8 +306,6 @@ return [
 					'admin/js/plugins-init/flot-init.js',
 					'admin/vendor/morris/raphael-min.js',
 					'admin/vendor/morris/morris.min.js',
-					'admin/js/plugins-init/morris-init.js',
-
 				],
 
 				'saakin_create' => [
