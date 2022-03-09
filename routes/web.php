@@ -112,8 +112,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
     Route::get('properties','PropertiesController');
-    
-	Route::get('properties', 'PropertiesController@propertieslist')->name('property_listview');
+
+	// Route::get('properties', 'PropertiesController@propertieslist')->name('property_listview');
 	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_property_listview');
 	Route::post('properties/featured/delete', 'PropertiesController@deleteFeaturedImage')->name('delete.featured_image');
 	// Route::get('properties/create', 'PropertiesController@create');
