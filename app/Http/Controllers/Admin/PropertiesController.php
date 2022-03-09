@@ -47,8 +47,10 @@ class PropertiesController extends MainAdminController
         parent::__construct();
     }
 
-    public function propertieslist()
+    public function index()
     {
+
+        //
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
@@ -108,8 +110,10 @@ class PropertiesController extends MainAdminController
                 ->get();
             }
         }
+
         $action = 'saakin_index';
         return view('admin-dashboard.property.index', compact('data', 'action'));
+
     }
     public function inactivepropertieslist()
     {
@@ -185,7 +189,7 @@ class PropertiesController extends MainAdminController
 
     public function create()
     {
-
+dd("AA");
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
@@ -202,7 +206,7 @@ class PropertiesController extends MainAdminController
         $towns = PropertyTowns::all();
         $areas = PropertyAreas::all();
 
-        return view('admin.pages.add_property', 
+        return view('admin-dashboard.properties.create', 
         compact('types', 'purposes', 'amenities', 'agencies', 'cityguides', 'cities','subCities' ,'towns' ,'areas'));
     }
 
