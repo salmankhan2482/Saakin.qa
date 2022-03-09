@@ -2,29 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
+use Mail;
 use App\User;
-use App\Properties;
-use App\Testimonials;
-use App\Subscriber;
 use App\Enquire;
 use App\Partners;
-use App\SubscriptionPlan;
+use App\Properties;
+use App\Subscriber;
+use App\Testimonials;
 use App\Transactions;
-
-use Mail;
-
-use Illuminate\Http\Request;
+use Razorpay\Api\Api;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Str;
-use Session;
 
-use Razorpay\Api\Api;
+use App\SubscriptionPlan;
+
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Intervention\Image\Facades\Image;
+
+use Illuminate\Support\Facades\Session;
 use Razorpay\Api\Errors\SignatureVerificationError;
 
 class UserController extends Controller
@@ -53,7 +53,6 @@ class UserController extends Controller
     {
         if (!Auth::user()) {
             \Session::flash('flash_message', trans('words.login_required'));
-
             return redirect('login');
         }
 
@@ -62,11 +61,8 @@ class UserController extends Controller
         }
 
         $user_id = Auth::user()->id;
-
         $properties_count = Properties::where(['user_id' => $user_id])->count();
-
         $pending_properties_count = Properties::where(['user_id' => $user_id, 'status' => 0])->count();
-
         $inquiries = Enquire::where(['agent_id' => $user_id])->count();
 
         return view('front.pages.dashboard', compact('properties_count', 'pending_properties_count', 'inquiries'));
@@ -77,11 +73,8 @@ class UserController extends Controller
         if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
             return redirect('admin/dashboard');
         }
-
         $user_id = Auth::user()->id;
-
         $inquiries_list = Enquire::where('agent_id', $user_id)->orderBy('id')->paginate(8);
-
         return view('front.pages.inquiries_list', compact('inquiries_list'));
     }
 
@@ -89,14 +82,9 @@ class UserController extends Controller
     public function delete($id)
     {
         $decrypted_id = Crypt::decryptString($id);
-
         $inquire = Enquire::findOrFail($decrypted_id);
-
-
         $inquire->delete();
-
         \Session::flash('flash_message', trans('words.deleted'));
-
         return redirect()->back();
     }
 
@@ -104,7 +92,6 @@ class UserController extends Controller
     {
         if (!Auth::user()) {
             \Session::flash('flash_message', trans('words.login_required'));
-
             return redirect('login');
         }
 
@@ -113,21 +100,15 @@ class UserController extends Controller
         }
 
         $user_id = Auth::user()->id;
-
         $user = User::findOrFail($user_id);
-
         return view('front.pages.profile', compact('user'));
     }
 
     public function profile_update(Request $request)
     {
         $user_id = Auth::user()->id;
-
         $user = User::findOrFail($user_id);
-
-
         $data =  \Request::except(array('_token'));
-
         $rule = array(
             'name' => 'required',
             'email' => 'required|email|max:75|unique:users,id',
@@ -135,30 +116,22 @@ class UserController extends Controller
         );
 
         $validator = \Validator::make($data, $rule);
-
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->messages());
         }
 
-
         $inputs = $request->all();
-
         $icon = $request->file('user_icon');
-
         if ($icon) {
 
             \File::delete(public_path() . '/upload/members/' . $user->image_icon . '-b.jpg');
             \File::delete(public_path() . '/upload/members/' . $user->image_icon . '-s.jpg');
 
             $tmpFilePath = public_path('upload/members/');
-
             $hardPath =  Str::slug($inputs['name'], '-') . '-' . md5(time());
-
             $img = Image::make($icon);
-
             $img->fit(450, 450)->save($tmpFilePath . $hardPath . '-b.jpg');
             $img->fit(80, 80)->save($tmpFilePath . $hardPath . '-s.jpg');
-
             $user->image_icon = $hardPath;
         }
 
@@ -172,11 +145,8 @@ class UserController extends Controller
         $user->instagram = $inputs['instagram'];
         $user->linkedin = $inputs['linkedin'];
 
-
         $user->save();
-
         Session::flash('flash_message_profile', trans('words.successfully_updated'));
-
         return redirect()->back();
     }
 
@@ -184,10 +154,8 @@ class UserController extends Controller
     {
         if (!Auth::user()) {
             \Session::flash('flash_message', trans('words.login_required'));
-
             return redirect('login');
         }
-
         if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
             return redirect('admin/profile');
         }
@@ -197,9 +165,6 @@ class UserController extends Controller
 
     public function updatePassword(Request $request)
     {
-
-        //$user = User::findOrFail(Auth::user()->id);
-
 
         $data =  \Request::except(array('_token'));
         $rule  =  array(
@@ -213,10 +178,6 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator->messages());
         }
 
-        /* $val=$this->validate($request, [
-                    'password' => 'required|confirmed',
-            ]);  */
-
         $credentials = $request->only(
             'password',
             'password_confirmation'
@@ -227,27 +188,21 @@ class UserController extends Controller
         $user->save();
 
         Session::flash('flash_message', trans('words.successfully_updated'));
-
         return redirect()->back();
     }
 
     public function plan_list($id)
     {
         if (!Auth::check()) {
-
             \Session::flash('flash_message', trans('words.access_denied'));
-
             return redirect('login');
         }
 
         $property_id = Crypt::decryptString($id);
-
         $property = Properties::findOrFail($property_id);
-
         Session::put('payment_property_name', $property->property_name);
 
         $subscription_plan = SubscriptionPlan::orderBy('id')->get();
-
         return view('pages.plan', compact('subscription_plan', 'property_id'));
     }
 

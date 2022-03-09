@@ -695,6 +695,15 @@
                                 class="form-control" value="">
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label for="" class="col-sm-3 control-label">Pinterest URL</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" name="social_pinterest" value="{{ $settings->social_pinterest }}"
+                                class="form-control" value="">
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label for="" class="col-sm-3 control-label">Instagram URL</label>

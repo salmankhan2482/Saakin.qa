@@ -165,7 +165,7 @@
                             @endif>
                             
                             <li class="{{ classActivePath('properties-page-content') }}">
-                                <a href="{{ URL::to('admin/properties-page-content') }}">
+                                <a href="{{ URL::to('admin/landing-pages/properties-page-content') }}">
                                     {{ trans('words.properties_page_content') }}
                                 </a>
                             </li>
@@ -277,7 +277,7 @@
 
 
                     <li class="{{ classActivePath('types') }}">
-                        <a href="{{ URL::to('admin/types') }}">
+                        <a href="{{ URL::to('admin/property-types') }}">
                             <i class="fa fa-tags"></i>
                                 {{ trans('words.property_type') }}
                             </a>

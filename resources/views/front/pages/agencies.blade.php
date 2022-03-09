@@ -19,7 +19,12 @@
 
 @section('content')
     <style>
-           .mobile_agent {
+        .desktop-search-li {
+            position: absolute;  
+            z-index: 10; 
+
+        }
+        .mobile_agent {
             display: none;
         }
 
@@ -615,6 +620,9 @@
                                     <div class ="input-search">
                                         <input type="text" class="typeahead" name="keyword" id="keyword"
                                             autocomplete="off" placeholder="Enter Agent or Company Name...">
+                                            
+                                            <div class="resulted-search">
+                                            </div>
                                     </div>
                                 </div>
 
@@ -624,6 +632,7 @@
                                         <button type="submit" class="btn btn-block v3">Search</button>
                                     </div>
                                 </div>
+                                
                             </div>
                         </form>
                     </div>
@@ -636,8 +645,9 @@
 
                                     <div class="input-group">
                                         <input type="text" class="typeahead" autocomplete="off" name="keyword"
-                                            id="keyword" placeholder="Search Agency"
+                                            id="keyword" placeholder="Search Agency" data-type="mbl"
                                             style="width: 90%;height: 35px;padding:0 0 0 10px">
+                                            
 
                                         <div class="input-group-append" style="width: 40px;">
                                             <button class="btn btn-secondary" type="submit" style="width: 100px;">
@@ -645,6 +655,9 @@
                                             </button>
                                         </div>
                                     </div>
+                                    <div class="resulted-search">
+                                    </div>
+                                   
                                 </div>
                             </div>
                         </form>
@@ -783,6 +796,7 @@
                 @endforeach
 
             </div>
+           
             <div class="post-nav nav-res pt-20 pb-60">
                 <div class="row">
                     <div class="col-md-8 offset-md-2  col-xs-12 ">
@@ -822,31 +836,35 @@
         document.getElementById('sortForm').submit();
     }
 
-        var path = "{{ url('autocomplete/agencies') }}";
-        $('input.typeahead').typeahead({
-            source: function(query, process) {
-                return $.get(path, {
-                    query: query
-                }, function(data) {
-                    return process(data);
-                });
+    $(".typeahead").on('keyup', function(){
+        $(".resulted-search").html('');
+        var value = $(this).val();
+        var type = $(this).attr("data-type");
+        
+        if(type == 'mbl'){
+            var path = "{{ url('mbl/autocomplete/agencies') }}";
+        }else{
+            var path = "{{ url('autocomplete/agencies') }}";
+        }
+        
+        
+        $.ajax({
+            url: path,
+            type: "GET",
+            data: {
+                'keyword': value,
             },
-            highlighter: function(item, data) {
-                var parts = item.split('#'),
-                    html = '<div class="row">';
-                html += '<div class="col-md-3 col-3 search_live">';
-                html += '<img alt="agency pic" src="{{ URL::asset('upload/agencies/') }}' + '/' + data.img +
-                    '"  width="100px;">';
-                html += '</div>';
-                html += '<div class="col-md-9 col-9 pl-0"><a href="{{ url('agency/') }}' + '/' + data.id +
-                    '">';
-                html += '<span>' + data.name + '</span>';
-
-                html += '</div>';
-                html += '</div>';
-
-                return html;
+            success: function(data) {
+                $('.resulted-search').html(data);
             }
-        });
+        }) //ajax call ends
+    })
+    
+    $(document).on('click', '.select-agency', function() {
+        var value = $(this).text();
+        $('.desktop-search-li').css('display', 'none');
+        $('.typeahead').val(value);
+    });
+
     </script>
 @endsection

@@ -534,7 +534,7 @@
                                             <div class="row">
                                                 <div class="col-md-8 offset-md-2  col-xs-12 ">
                                                     <div class="page-num text-center">
-                                                        <h1>Record Not Found!</h1>
+                                                        <h3>Record Not Found!</h3>
                                                     </div>
                                                 </div>
                                             </div>

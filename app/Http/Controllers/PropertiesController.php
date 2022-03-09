@@ -324,29 +324,36 @@ class PropertiesController extends Controller
 
     public function single_properties(Request $request, $property_purpose, $slug, $id)
     {
-        $visitor = request()->ip();
-        $traffic = PageVisits::where('ip_address', $visitor)
-        ->where('property_id', $id)
-        ->whereMonth('created_at', Carbon::now()->month)
-        ->first();
-
-        if (!$traffic) {
-            $traffic = new PageVisits();
-            $traffic->ip_address = $visitor;
-            $traffic->property_id = $id;
-            $traffic->save();
-
-            $product = PropertyCounter::updateOrCreate(
-                [ 'property_id' => $traffic->property_id ],
-                [ 'counter' => \DB::raw('counter + 1'),                ]
-            );
-
-        }
-
         $property = Properties::with('gallery')->where('property_slug', $slug)->findOrFail($id);
         if (!$property) {
             abort('404');
         }
+
+        $visitor = request()->ip();
+        $traffic = PageVisits::where('ip_address', $visitor)->where('property_id', $id)
+        ->whereMonth('created_at', Carbon::now()->month)->first();
+
+        if(auth()->check() && auth()->user()->usertype == 'Admin'){
+        
+        }else{
+            if (!$traffic) {
+                $traffic = new PageVisits();
+                $traffic->ip_address = $visitor;
+                $traffic->property_id = $id;
+                $traffic->agency_id = $property->agency_id ?? '';
+                $traffic->save();
+    
+                $product = PropertyCounter::updateOrCreate(
+                    [ 'property_id' => $traffic->property_id ],
+                    [ 'agency_id' => $property->agency_id ],
+                    [ 'counter' => \DB::raw('counter + 1'),                ]
+                );
+    
+            }
+        }
+        
+
+        
         //$agent = User::where('usertype','Agents')->where('id',$property->agent_id)->first();
         $agency = Agency::where('id', $property->agency_id)->first();
         $neighborhoods = PropertyNeighborhood::where('property_id', $property->id)->get();
@@ -393,8 +400,6 @@ class PropertiesController extends Controller
 		        'user_name' => 'required',
 				'user_email' => 'required|email',
 		        'user_message' => 'required',
-                'movein_date' => 'required'
-
 		   		 );
 
 	   	 $validator = \Validator::make($data,$rule);
@@ -459,18 +464,6 @@ class PropertiesController extends Controller
           
             
             Mail::to('hello@saakin.qa')->send(new Property_Inquiry($data_email));
-
-            // dd($data_email);
-            // return view('emails.inquiry', compact('data'));
-            // Mail::to('webmaster@saakin.qa')->send(new Property_Inquiry($data));
-                
-            // \Mail::send('emails.inquiry',$data_email, function ($message) use ($property_data,$inputs) {
-            //     $message->subject
-            //     ('Saakin Inc. | Inquiry Email');
-            //     $message->to('umar.multitasksols@gmail.com');
-            //     // $message->cc($inputs['user_email']);
-            //     // $message->bcc($property_data->Agency->email, 'Saakin');
-            // });
             
             Session::flash('message', trans('words.thanks_for_contacting_us')); 
             return redirect()->back();
@@ -514,7 +507,6 @@ class PropertiesController extends Controller
 
     public function searchProperties(Request $request)
     {
-        dd($request);
         $inputs = $request->all();
 
         $city = $inputs['city'];
@@ -720,20 +712,14 @@ class PropertiesController extends Controller
     {
         if (!Auth::user()) {
             \Session::flash('flash_message', 'Login required');
-
             return redirect('login');
         }
 
         $decrypted_id = Crypt::decryptString($id);
-
         $property_gallery_obj = PropertyGallery::findOrFail($decrypted_id);
-
         \File::delete('upload/gallery/' . $property_gallery_obj->image_name);
-
         $property_gallery_obj->delete();
-
         \Session::flash('flash_message', 'Deleted');
-
         return redirect()->back();
     }
 
@@ -741,40 +727,31 @@ class PropertiesController extends Controller
     {
         if (!Auth::user()) {
             \Session::flash('flash_message', 'Login required');
-
             return redirect('login');
         }
 
         $user_id = Auth::user()->id;
-
         $decrypted_id = Crypt::decryptString($id);
-
         $property = Properties::where('id', $decrypted_id)->where('user_id', $user_id)->first();
-
         if (!$property) {
             abort('404');
         }
 
         \File::delete(public_path() . '/upload/properties/' . $property->featured_image . '-b.jpg');
         \File::delete(public_path() . '/upload/properties/' . $property->featured_image . '-s.jpg');
-
         \File::delete(public_path() . '/upload/floorplan/' . $property->floor_plan . '-b.jpg');
         \File::delete(public_path() . '/upload/floorplan/' . $property->floor_plan . '-s.jpg');
 
         $property->delete();
-
         $property_gallery_images = PropertyGallery::where('property_id', $decrypted_id)->get();
 
         foreach ($property_gallery_images as $gallery_images) {
-
             \File::delete(public_path() . '/upload/gallery/' . $gallery_images->image_name);
-
             $property_gallery_obj = PropertyGallery::findOrFail($gallery_images->id);
             $property_gallery_obj->delete();
         }
 
         \Session::flash('flash_message', 'Property Deleted');
-
         return redirect()->back();
     }
 
@@ -785,7 +762,8 @@ class PropertiesController extends Controller
             $property_purpose = request('property_purpose');
         }
 
-        $properties = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose));
+        $properties = Properties::where('status', 1)
+        ->where('property_purpose', ucfirst($property_purpose));
 
         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
             if (request()->sort_by == "newest") {
@@ -852,7 +830,9 @@ class PropertiesController extends Controller
 
 
         $type = Types::where('plural', $property_type)->firstOrFail();
-        $properties = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose))->where('property_type', $type->id);
+        $properties = Properties::where('status', 1)
+        ->where('property_purpose', ucfirst($property_purpose))
+        ->where('property_type', $type->id);
         
 
         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
@@ -879,6 +859,7 @@ class PropertiesController extends Controller
             ->leftJoin('properties', 'property_cities.id', 'properties.city')
             ->select('property_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
             ->where('property_purpose', ucfirst($property_purpose))
+            ->where("properties.status", 1)
             ->where('property_type', $type->id)
             ->groupBy('property_cities.name')
             ->orderBy("pcount", "DESC")
@@ -924,9 +905,10 @@ class PropertiesController extends Controller
             if($buyOrRent == 'Rent' OR $buyOrRent == 'rent'){ $property_purpose = 'Rent'; } else{ $property_purpose = 'Sale'; }
         
         }
-        $subcitie_props = Properties::where('sub_city_slug',$property_type_purpose)->get();
-        $town_props = Properties::where('town_slug', $property_type_purpose)->get();
-        $area_props = Properties::where('area_slug', $property_type_purpose)->get();
+        $subcitie_props = Properties::where('sub_city_slug',$property_type_purpose)->where('status', 1)->get();
+        $town_props = Properties::where('town_slug', $property_type_purpose)->where('status', 1)->get();
+        $area_props = Properties::where('area_slug', $property_type_purpose)->where('status', 1)->get();
+
         //subcity if
         if(count($subcitie_props) > 0){
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
@@ -1021,8 +1003,8 @@ class PropertiesController extends Controller
             } else {
                 $properties->orderBy('id', 'asc');
             }
-
             $properties = $properties->paginate(getcong('pagination_limit'));
+            
             $subcity = PropertySubCities::find($properties[0]->subcity);
             $town = PropertyTowns::find($properties[0]->town);
             
@@ -1091,7 +1073,7 @@ class PropertiesController extends Controller
             } else {
                 $properties->orderBy('id', 'asc');
             }
-
+            
             $properties = $properties->paginate(getcong('pagination_limit'));
             $subcity = PropertySubCities::find($properties[0]->subcity);
             $town = PropertyTowns::find($properties[0]->town);
@@ -1185,7 +1167,6 @@ class PropertiesController extends Controller
             $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
             }
 
-            // dd($properties);
         return view('front.pages.properties.city-property-type-for-purpose',
         compact('properties',  'propertyTypes', 'type', 'city', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content'));
     }
@@ -1197,6 +1178,7 @@ class PropertiesController extends Controller
             ->join('properties', "property_types.id", "properties.property_type")
             ->select('property_types.id', 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
             ->where("properties.status", 1)
+            ->where("properties.featured_property", 1)
             ->groupBy("property_types.id")
             ->orderBy("pcount", "desc")
             ->get();

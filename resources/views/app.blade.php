@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>@yield('head_title', getcong('site_name'))</title>
+  <title>
+    @yield('head_title', getcong('site_name'))
+  </title>
+  
   <meta name="description" content="@yield('head_description', getcong('site_description'))">
     <meta property="keywords" content="@yield('head_keywords', getcong('site_keywords'))" />
 

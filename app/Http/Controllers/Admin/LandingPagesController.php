@@ -28,12 +28,9 @@ class LandingPagesController extends Controller
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
-
-        $landing_pages_content = LandingPage::paginate(10);
-        
-        
-
-        return view('admin.pages.landing_pages.index_property_content', compact('landing_pages_content'));
+        $action = 'saakin_index';
+        $data['landing_pages_content'] = LandingPage::all();
+        return view('admin-dashboard.landing-pages.index', compact('data', 'action'));
     }
     public function create()    {
 
@@ -143,12 +140,10 @@ class LandingPagesController extends Controller
     }
     public function properties_page_content()
     {
-        if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin")
-        {
+        if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin"){
             \Session::flash('flash_message', trans('words.access_denied'));
-
             return redirect('dashboard');   
-         }
+        }
 
         $page_info = LandingPage::find('53');
         $page_title=trans('words.properties_page_content');

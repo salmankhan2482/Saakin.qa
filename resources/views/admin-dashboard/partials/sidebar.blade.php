@@ -1,3 +1,18 @@
+<style>
+    .deznav{
+        display: none !important;
+    }
+    @media only screen and (max-width: 780px) {
+        .deznav{
+            display: block !important;
+        }
+        .top-menu{
+            display: none !important;
+        }
+
+    }
+</style>
+
 <div class="deznav">
             <div class="deznav-scroll">
 				<ul class="metismenu" id="menu">
@@ -5,49 +20,65 @@
 							<i class="flaticon-381-networking"></i>
 							<span class="nav-text">Dashboard</span>
 						</a>
-                        {{-- <ul aria-expanded="false">
-							<li><a href="{!! url('/index'); !!}">Dashboard</a></li>
-							<li><a href="{!! url('/analytics'); !!}">Analytics</a></li>
-							<li><a href="{!! url('/review'); !!}">Review</a></li>
-							<li><a href="{!! url('/order-list'); !!}">Order List</a></li>
-							<li><a href="{!! url('/customer-list'); !!}">Customer</a></li>
-							<li><a href="{!! url('/property-details'); !!}">Property Details</a></li>
-						</ul> --}}
                     </li>
 
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-user"></i>
-                        <span class="nav-text">User Management</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="{!! url('/admin/menuOptions'); !!}">Menu</a></li>
-                        <li><a href="{!! url('/admin/permissions'); !!}">Permissions</a></li>
-                        <li><a href="{!! url('/admin/roles'); !!}">Roles</a></li>
-                        <li><a href="{!! url('/admin/users'); !!}">Users</a></li>
-                    </ul>
+
+                    <li @if( checkMenu('admin/menuOptions*') or checkMenu('admin/permissions*') ) 
+                            class="mm-active" 
+                        @endif >
+
+                        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-381-user"></i><span class="nav-text">User Management</span>
+                        </a>
+                        
+                        <ul aria-expanded="false" >
+                            <li @if(checkMenu('admin/menuOptions*'))  class="mm-active"  @endif>
+                                <a href="{!! url('/admin/menuOptions'); !!}">Menu</a>
+                            </li>
+
+                            <li @if(checkMenu('admin/permissions*'))  class="mm-active"  @endif>
+                                <a href="{!! url('/admin/permissions'); !!}">Permissions</a>
+                            </li>
+                            
+                            <li @if(checkMenu('admin/roles*'))  class="mm-active"  @endif>
+                                <a href="{!! url('/admin/roles'); !!}">Roles</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    
+                    {{-- agency --}}
+                    <li @if( checkMenu('admin/agencies*'))  class="mm-active" @endif>
+                        <a class="has-arrow ai-icon" href="{{ route('agencies.index') }}">
+                            <i class="flaticon-381-networking"></i>
+                            <span class="nav-text">Agencies</span>
+                        </a>
+
                     </li>
 
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-381-home"></i>
-                        <span class="nav-text">Properties</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="{!! url('/table-bootstrap-basic'); !!}">Properties</a></li>
-                        <li><a href="{!! url('/table-datatable-basic'); !!}">Property Purposes</a></li>
-                        <li><a href="{!! url('/table-datatable-basic'); !!}">Property Types</a></li>
-                        <li><a href="{!! url('/table-bootstrap-basic'); !!}">Property Aminities</a></li>
-                        <li><a href="{!! url('/table-datatable-basic'); !!}">Featured Properties</a></li>
-                        <li><a href="{!! url('/table-datatable-basic'); !!}">Inactive Properties</a></li>
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Propety Locations</a>
-                            <ul aria-expanded="false">
-                                <li><a href="{!! url('/email-compose'); !!}">Cities</a></li>
-                                <li><a href="{!! url('/email-inbox'); !!}">Sub Cities</a></li>
-                                <li><a href="{!! url('/email-read'); !!}">Towns</a></li>
-                                <li><a href="{!! url('/email-read'); !!}">Areas</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="{!! url('/table-datatable-basic'); !!}">Property Reports</a></li>
-                    </ul>
+
+                    <li>
+                        <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                            <i class="flaticon-381-home"></i>
+                            <span class="nav-text">Properties</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{!! url('/table-bootstrap-basic'); !!}">Properties</a></li>
+                            <li><a href="{!! url('/table-datatable-basic'); !!}">Property Purposes</a></li>
+                            <li><a href="{!! url('/table-datatable-basic'); !!}">Property Types</a></li>
+                            <li><a href="{!! url('/table-bootstrap-basic'); !!}">Property Aminities</a></li>
+                            <li><a href="{!! url('/table-datatable-basic'); !!}">Featured Properties</a></li>
+                            <li><a href="{!! url('/table-datatable-basic'); !!}">Inactive Properties</a></li>
+                            <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">Propety Locations</a>
+                                <ul aria-expanded="false">
+                                    <li><a href="{!! url('/email-compose'); !!}">Cities</a></li>
+                                    <li><a href="{!! url('/email-inbox'); !!}">Sub Cities</a></li>
+                                    <li><a href="{!! url('/email-read'); !!}">Towns</a></li>
+                                    <li><a href="{!! url('/email-read'); !!}">Areas</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{!! url('/table-datatable-basic'); !!}">Property Reports</a></li>
+                        </ul>
                     </li>
 
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

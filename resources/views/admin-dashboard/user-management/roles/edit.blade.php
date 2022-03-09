@@ -1,7 +1,6 @@
 @extends('admin-dashboard.layouts.master')
 @section('content')
 
-
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -12,17 +11,19 @@
         </div>
     @endif
     @if (Session::has('flash_message'))
-        <button type="button" class="btn btn-dark mb-2  mr-2" data-dismiss="alert" id="toastr-success-top-full-width"><span
-                aria-hidden="true">&times;</span></button>
 
-        {{ Session::get('flash_message') }}
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ Session::get('flash_message') }}
         </div>
     @endif
-
     <div class="container-fluid">
         <div class="page-titles">
             <ol class="breadcrumb">
-                <a href="{{ route('roles.index') }}">
+                <a href="{{ route('permissions.index') }}">
+
                     <button type="button" class="btn btn-rounded btn-dark">Back</button>
                 </a>
             </ol>
@@ -36,50 +37,91 @@
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
-                            {!! Form::open(['route' => ['roles.update', $role->id], 'method' => 'PATCH', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+
+                            {!! Form::open(['route' => ['roles.update', $data['role']->id], 'method' => 'PUT', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Title</label>
-                                    <input type="text" id="title" name="title" class="form-control"
-                                        value="{{ $role->title }}">
+
+                                    <input type="text" id="title" name="title" class="form-control" value="{{ $data['role']->title }}">
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Menu Options*</label>
-                                    <select class="multi-select" name="menu_options[]" multiple="multiple">
-                                        @foreach ($menuOptions as $menuOption)
+                                
+                                <div class="form-group col-md-12">
+                                    <label>
+                                        Menu Options*
+                                        <span class="btn btn-outline-info btn-rounded btn-xs select-all">Select all</span>
+                                        <span class="btn btn-outline-info btn-rounded btn-xs deselect-all">Deselect all</span>
+                                    </label>
+                                    <select name="menu_options[]" class="select2 js-example-programmatic-multi" multiple="multiple">
+                                        @foreach ($data['menuOptions'] as $menuOption)
                                             <option value="{{ $menuOption->id }}"
-                                                {{ $role->menuoptions->contains($menuOption->id) ? 'selected' : '' }}>
+                                                {{ $data['role']->menuoptions->contains($menuOption->id) ? 'selected' : ''  }}
+                                                >
+
                                                 {{ $menuOption->title }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <label>Permissions*</label>
-                                    <select class="multi-select" name="permissions[]" multiple="multiple">
-                                        @foreach($permissions as $permission)
-                                <option value="{{$permission->id}}"
-                                    {{ $role->rolepermissions->contains($permission->id) ? 'selected' : '' }}>
-                                    {{$permission->title}}
-                                </option>
-                            @endforeach
+
+                            
+                                <div class="form-group col-md-12">
+                                    <label class="col-md-12">
+                                        Permissions*
+                                        <span class="btn btn-outline-info btn-rounded btn-xs select-all">Select all</span>
+                                        <span class="btn btn-outline-info btn-rounded btn-xs deselect-all">Deselect all</span>
+                                    </label>
+                                    <select name="permissions[]" class="select2 js-example-programmatic-multi col-12" multiple="multiple">
+                                        @foreach ($data['permissions'] as $permission)
+                                            <option value="{{ $permission->id }}" 
+                                                {{ $data['role']->rolepermissions->contains($permission->id) ? 'selected' : '' }}
+                                                >
+                                                {{ $permission->title }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label>&nbsp;</label><br>
-                                        <button type="submit" class="btn btn-primary">Update</button>
-                                    </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>&nbsp;</label><br>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
+                                
+                                {!! Form::close() !!}
                             </div>
-                            {!! Form::close() !!}
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+
+    @endsection
+    @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+    
+            $('.select-all').click(function () {
+                let $select2 = $(this).parent().siblings().find('.select2')
+                console.log($select2);
+                $select2.find('option').prop('selected', 'selected')
+                $select2.trigger('change')
+            })
+    
+            $('.deselect-all').click(function () {
+                let $select2 = $(this).parent().siblings().find('.select2')
+                $select2.find('option').prop('selected', '')
+                $select2.trigger('change')
+            })
+        })
+    
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+    </script>
+    @endsection
+    

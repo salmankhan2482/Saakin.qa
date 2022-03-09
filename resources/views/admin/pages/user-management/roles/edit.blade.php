@@ -48,9 +48,9 @@
 
                     <div class="col-sm-8">
                         <select name="menu_options[]"  class="form-control select2 js-example-basic-multiple" multiple="multiple">
-                            @foreach($menuOptions as $menuOption)
+                            @foreach($data['menuOptions'] as $menuOption)
                                 <option value="{{ $menuOption->id }}" 
-                                    {{ $role->menuoptions->contains($menuOption->id) ? 'selected' : ''  }}>
+                                    {{ $data['role']->menuoptions->contains($menuOption->id) ? 'selected' : ''  }}>
                                     {{ $menuOption->title }}
                                 </option>
                             @endforeach
@@ -66,9 +66,9 @@
                     </label>
                     <div class="col-sm-8">
                         <select name="permissions[]" class="form-control select2 js-example-basic-multiple" required multiple="multiple">
-                            @foreach($permissions as $permission)
+                            @foreach($data['permissions'] as $permission)
                                 <option value="{{$permission->id}}"
-                                    {{ $role->rolepermissions->contains($permission->id) ? 'selected' : '' }}>
+                                    {{ $data['role']->rolepermissions->contains($permission->id) ? 'selected' : '' }}>
                                     {{$permission->title}}
                                 </option>
                             @endforeach

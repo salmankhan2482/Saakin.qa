@@ -7,7 +7,7 @@
                 <p class="mb-0">Welcome to Saakin Property Admin</p>
             </div>
             <a href="javascript:void(0);" class="btn btn-primary rounded light mr-3">Refresh</a>
-            <a href="javascript:void(0);" class="btn btn-primary rounded"><i class="flaticon-381-settings-2 mr-0"></i></a>
+            <a href="{{ route('admin.settings') }}" class="btn btn-primary rounded"><i class="flaticon-381-settings-2 mr-0"></i></a>
         </div>
         <div class="row">
             <div class="col-xl-6 col-xxl-12">
@@ -175,12 +175,12 @@
                                 <div class="media align-items-center">
                                     <div class="media-body mr-3">
                                         <h2 class="fs-36 text-black font-w600">{{ $data['clicksPerMonths'] }}</h2>
-                                        <p class="fs-18 mb-0 text-black font-w500">Total Clicks</p>
+                                        <p class="fs-18 mb-0 text-black font-w500">Call to Action</p>
                                         <span class="fs-13">Target 3k/month</span>
                                     </div>
                                     <div class="d-inline-block position-relative donut-chart-sale">
                                         <span class="donut1"
-                                            data-peity='{ "fill": ["rgb(60, 76, 184)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>5/8</span>
+                                            data-peity='{ "fill": ["rgb(55, 209, 90)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>5/8</span>
                                         <small class="text-primary">71%</small>
                                         <span class="circle bgl-primary"></span>
                                     </div>
@@ -194,7 +194,7 @@
                                 <div class="media align-items-center">
                                     <div class="media-body mr-3">
                                         <h2 class="fs-36 text-black font-w600">{{ $data['numberOfUsers'] }}</h2>
-                                        <p class="fs-18 mb-0 text-black font-w500">Total Users</p>
+                                        <p class="fs-18 mb-0 text-black font-w500">Unique Users</p>
                                         <span class="fs-13">Target 3k/month</span>
                                     </div>
                                     <div class="d-inline-block position-relative donut-chart-sale">
@@ -212,14 +212,14 @@
                             <div class="card-body">
                                 <div class="media align-items-center">
                                     <div class="media-body mr-3">
-                                        <h2 class="fs-36 text-black font-w600">{{ $data['numberOfUsers'] }}</h2>
+                                        <h2 class="fs-36 text-black font-w600"></h2>
                                         <p class="fs-18 mb-0 text-black font-w500">Top 10 Properties</p>
                                         <span class="fs-13">Target 3k/month</span>
                                     </div>
                                     <div class="d-inline-block position-relative donut-chart-sale">
                                         <span class="donut1"
-                                            data-peity='{ "fill": ["rgb(55, 209, 90)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
-                                        <small class="text-success">90%</small>
+                                            data-peity='{ "fill": ["rgb(43, 152, 214)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
+                                        <small class="text-info">90%</small>
                                         <span class="circle bgl-success"></span>
                                     </div>
                                 </div>
@@ -231,14 +231,14 @@
                             <div class="card-body">
                                 <div class="media align-items-center">
                                     <div class="media-body mr-3">
-                                        <h2 class="fs-36 text-black font-w600">{{ $data['top5areas'] }}</h2>
+                                        <h2 class="fs-36 text-black font-w600"></h2>
                                         <p class="fs-18 mb-0 text-black font-w500">Top 5 Areas</p>
                                         <span class="fs-13">Target 3k/month</span>
                                     </div>
                                     <div class="d-inline-block position-relative donut-chart-sale">
                                         <span class="donut1"
-                                            data-peity='{ "fill": ["rgb(55, 209, 90)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
-                                        <small class="text-success">90%</small>
+                                            data-peity='{ "fill": ["rgb(43, 152, 214)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
+                                        <small class="text-info">90%</small>
                                         <span class="circle bgl-success"></span>
                                     </div>
                                 </div>
@@ -259,9 +259,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">
-                                    <span style="color: rgb(59, 76, 184)">Clicks </span> , 
-                                    <span style="color: #FF9F0F">Users </span> Per Month 
-
+                                    <span style="color: rgb(59, 76, 184)">Call to Action </span> , 
+                                    <span style="color: #37D159">Unique Users </span> 
+                                    Per Month 
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -420,8 +420,6 @@
 @endsection
 @section('scripts')
 <script>
-    var firstName = '<%= Session["FirstName"] ?? "salman" %>';
-    alert('aa');
     (function($) {
 
     var dzChartlist = function() {
@@ -443,7 +441,7 @@
                     offsetX: -10,
                 },
                 series: [{
-                    name: "New Clients",
+                    name: "Properties",
                     data: [
                         {{ $data['propertiesPerJan'] }},
                         {{ $data['propertiesPerFeb'] }},
@@ -629,4 +627,5 @@
 
     })(jQuery);
 </script>
+
 @endsection

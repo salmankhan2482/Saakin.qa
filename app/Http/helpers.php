@@ -5,6 +5,17 @@ use App\Properties;
 use App\Types;
 use App\Transactions;
 
+if (! function_exists('checkMenu')) {
+
+function checkMenu($data)
+{
+    if(request()->is($data)){
+        return 'mm-active'; 
+    }
+}
+
+}
+
 if (! function_exists('putPermanentEnv')) {
 
  function putPermanentEnv($key, $value)

@@ -118,7 +118,7 @@
                     </li>
 
                     <li class="{{classActivePath('types')}}">
-						<a href="{{ URL::to('admin/types') }}">
+						<a href="{{ URL::to('admin/property-types') }}">
 							<i class="fa fa-tags"></i>
 							{{trans('words.property_type')}}
 						</a>

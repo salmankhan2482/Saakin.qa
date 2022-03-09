@@ -25,7 +25,7 @@
    
     <div class="panel panel-default">
             <div class="panel-body">               
-                {!! Form::open(array('url' => array('admin/properties-page-content'),'class'=>'form-horizontal padding-15','name'=>'settings_form','id'=>'settings_form','role'=>'form','enctype' => 'multipart/form-data')) !!} 
+                {!! Form::open(array('url' => array('admin/landing-pages/properties-page-content'),'class'=>'form-horizontal padding-15','name'=>'settings_form','id'=>'settings_form','role'=>'form','enctype' => 'multipart/form-data')) !!} 
                 <input type="hidden" name="id" value="{{ isset($page_info->id) ? $page_info->id : null }}">
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{trans('words.title')}}*</label>

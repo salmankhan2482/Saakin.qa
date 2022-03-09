@@ -46,13 +46,8 @@ Route::get('clear', function(){
     Artisan::call('optimize:clear');
 });
 
-Route::get('/cookie/set','CookieController@setCookie');
-Route::get('/cookie/get','CookieController@getCookie');
-
-
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
-
 Route::get('auth/google', 'SocialController@redirectToGoogle')->name('google.login');
 Route::get('auth/facebook', 'SocialController@redirectToFacebook')->name('facebook.login');
 
@@ -62,7 +57,11 @@ Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
-    Route::get('/new', 'OmahadminController@saakin_dashborad');
+    Route::get('/dashboard/new', 'OmahadminController@saakin_dashborad');
+    Route::get('/profile/new', 'OmahadminController@profile');
+    // new routes
+    
+    
     Route::resource('menuOptions', MenuOptionsController::class);
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
@@ -87,7 +86,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::post('profile', 'AdminController@updateProfile');
 	Route::post('profile_pass', 'AdminController@updatePassword');
     Route::resource('property_type', Controller::class);
-	Route::get('settings', 'SettingsController@settings');
+	Route::get('settings', 'SettingsController@settings')->name('admin.settings');
 	Route::post('settings', 'SettingsController@settingsUpdates');
 	Route::post('smtp_email', 'SettingsController@smtp_email_update');
 	Route::post('payment_info', 'SettingsController@payment_info_update');
@@ -113,7 +112,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
 	Route::get('properties', 'PropertiesController@propertieslist')->name('property_listview');
-	Route::get('inactive_properties_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_property_listview');
+	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_property_listview');
 	Route::post('properties/featured/delete', 'PropertiesController@deleteFeaturedImage')->name('delete.featured_image');
 	Route::get('properties/create', 'PropertiesController@create');
 	Route::post('properties/create', 'PropertiesController@store');
@@ -150,20 +149,20 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('properties/floor-plan/{id}/edit/{gid}', 'PropertiesController@updateFloorPlan');
     Route::get('properties/floor-plan/{id}/delete/{gid}', 'PropertiesController@destroyFloorPlan');
 
-    Route::get('types', 'TypesController@typeslist');
+    Route::get('property-types', 'TypesController@typeslist')->name('property-types.index');
     Route::get('types/addtypes', 'TypesController@addedittypes');
     Route::post('types/addtypes', 'TypesController@addnew');
     Route::get('types/addtypes/{id}', 'TypesController@edittypes');
     Route::get('types/delete/{id}', 'TypesController@delete');
 
-    Route::get('property-purpose', 'PropertyPurposeController@index');
+    Route::get('property-purpose', 'PropertyPurposeController@index')->name('property-purpose.index');
     Route::get('property-purpose/create', 'PropertyPurposeController@create');
     Route::post('property-purpose/create', 'PropertyPurposeController@store');
     Route::get('property-purpose/edit/{id}', 'PropertyPurposeController@edit');
     Route::post('property-purpose/update/{id}', 'PropertyPurposeController@update');
     Route::get('property-purpose/delete/{id}', 'PropertyPurposeController@destroy');
 
-    Route::get('property-amenity', 'PropertyAmenityController@index');
+    Route::get('property-amenity', 'PropertyAmenityController@index')->name('property-amenity.index');
     Route::get('property-amenity/create', 'PropertyAmenityController@create');
     Route::post('property-amenity/create', 'PropertyAmenityController@store');
     Route::get('property-amenity/edit/{id}', 'PropertyAmenityController@edit');
@@ -277,29 +276,32 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::get('agencies', 'AgencyController@index')->name('agencies.index');
 
-    Route::get('agency/create', 'AgencyController@create');
-    Route::post('agency/create', 'AgencyController@store');
-    Route::get('agency/edit/{id}', 'AgencyController@edit');
-    Route::post('agency/update/{id}', 'AgencyController@update');
-    Route::get('agency/delete/{id}', 'AgencyController@destroy');
+    Route::get('agency/create', 'AgencyController@create')->name('agencies.create');
+    Route::post('agency/create', 'AgencyController@store')->name('agencies.store');
+    Route::get('agency/edit/{id}', 'AgencyController@edit')->name('agencies.edit');
+    Route::post('agency/update/{id}', 'AgencyController@update')->name('agencies.update');
+    Route::get('agency/delete/{id}', 'AgencyController@destroy')->name('agencies.destroy');
     Route::post('agency/keys', 'AgencyController@goMasterimport')->name('get.agences.keys');
     Route::get('agencies/export', 'AgencyController@agencies_export')->name('agencies.export');
     Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');
 
-    Route::get('landing-pages', 'LandingPagesController@index');
+    Route::get('landing-pages', 'LandingPagesController@index')->name('landing-pages');
     Route::get('landing-pages/create', 'LandingPagesController@create');
     Route::post('landing-pages/create', 'LandingPagesController@store');
     Route::get('landing-pages/edit/{id}', 'LandingPagesController@edit');
     Route::post('landing-pages/update/{id}', 'LandingPagesController@update');
     Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy');
 
-    Route::get('properties-page-content', 'LandingPagesController@properties_page_content');
-    Route::post('properties-page-content', 'LandingPagesController@update_properties_page_content');
+    Route::get('landing-pages/properties-page-content', 'LandingPagesController@properties_page_content')
+    ->name('property-landing-pages');
+    Route::post('landing-pages/properties-page-content', 'LandingPagesController@update_properties_page_content');
 
-    Route::get('city-guide-page-content', 'LandingPagesController@city_guide_page_content');
+    Route::get('landing-pages/city-guide-page-content', 'LandingPagesController@city_guide_page_content')
+    ->name('city-guide-landing-pages');
     Route::post('city-guide-page-content', 'LandingPagesController@update_city_guide_page_content');
 
-    Route::get('agencies-page-content', 'LandingPagesController@agencies_page_content');
+    Route::get('landing-pages/agencies-page-content', 'LandingPagesController@agencies_page_content')
+    ->name('agency-landing-pages');
     Route::post('agencies-page-content', 'LandingPagesController@update_agencies_page_content');
     
 
@@ -330,13 +332,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('top_5_areas', 'ClickCountersController@top5Areas')->name('top_5_areas');
     Route::get('top_5_areas/{id}', 'ClickCountersController@top5AreasList')->name('top_5_areas.list');
     Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
-
 });
 
 Route::get('/', 'IndexController@index')->name('home');
 Route::get('autocomplete/agencies', 'AgenciesController@livesearch');
+Route::get('mbl/autocomplete/agencies', 'AgenciesController@mbllivesearch');
 Route::get('livesearch','IndexController@livesearch');
-// Route::get('{slug}', 'PagesController@get_page');
 
 Route::get('about-us','PagesController@about_us');
 Route::get('terms-of-use','PagesController@terms_of_use');
@@ -345,14 +346,10 @@ Route::get('faqs','PagesController@faqs');
 
 Route::get('contact-us', 'IndexController@contact_us_page');
 Route::post('contact-us', 'IndexController@contact_us_sendemail');
-
 Route::post('subscribe', 'IndexController@subscribe');
 
-
-// Route::get('agencies', 'AgenciesController@index');
 Route::get('real-estate-agencies', 'AgenciesController@index')->name('real-estate-agencies');
 Route::post('real-estate-agencies', 'AgenciesController@index')->name('real-estate-agencies');
-// Route::post('agency-email','AgenciesController@agency_email');
 Route::post('agency-contact','AgenciesController@agency_email');
 
 Route::post('agencies', 'AgenciesController@searchAgencies');
@@ -364,10 +361,8 @@ Route::post('blogs', 'BlogController@searchBlogs');
 Route::get('blog-categories/{slug}', 'BlogController@blogCategories')->name('blog-categories')->where('slug', '[A-Za-z\-\_]+');
 Route::get('blog/{slug}', 'BlogController@blogDetail')->name('blog-detail');
 
-
 Route::get('{property_purpose}/{slug}/{id}', 'PropertiesController@single_properties')->where('id', '[0-9]+')->where('property_purpose', 'rent|sale')->name('property-detail');
 Route::any('send-email-agent', 'PropertiesController@property_details_sendemail');
-
 
 Route::post('properties/inquiry', 'PropertiesController@property_details_sendemail');
 Route::get('properties', 'PropertiesController@getPropertyListing');
@@ -378,10 +373,6 @@ Route::get('city-guide/{slug}', 'CityGuideController@getCityDetail')->name('city
 ->where('slug', '[A-Za-z\-\_]+');
 
 Route::get('map/{id}', 'PropertiesController@map_property_urlset');
-
-#Route::get('testimonials', 'IndexController@testimonialslist');
-
-
 Route::get('inquiries', 'UserController@inquirieslist');
 Route::get('inquiries/delete/{id}', 'UserController@delete');
 
@@ -462,7 +453,7 @@ Route::get('featured-properties', 'PropertiesController@featureProperties')->nam
 //property reports
 Route::resource('admin/properties_reports', 'PropertyReportController');
 
-Route::get('admin/property_reports', 'PropertyReportController@index');
+Route::get('admin/property_reports', 'PropertyReportController@index')->name('property-reports.index');
 Route::post('admin/property_reports/store', 'PropertyReportController@store');
 Route::get('admin/property_reports/update/{id}', 'PropertyReportController@update');
 Route::get('admin/property_reports/delete/{id}', 'PropertyReportController@destroy');
