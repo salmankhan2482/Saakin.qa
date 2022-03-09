@@ -107,14 +107,14 @@
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
                                 <ul class="timeline">
                                     <li>
-                                        <a href="{{ route('property_listview') }}" class="timeline-panel">
+                                        <a href="{{ route('property.index') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">Active Properties</h6>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('inactive_property_listview') }}" class="timeline-panel">
+                                        <a href="{{ route('inactive_property.index') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">In-Active Pages</h6>
                                             </div>

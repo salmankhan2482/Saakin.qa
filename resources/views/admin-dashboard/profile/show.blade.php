@@ -146,7 +146,7 @@
                                     </div>
                                    @endforeach
                                 </div>
-                                <a href="{{ route('property_listview') }}" class="btn btn-success">See All</a>
+                                <a href="{{ route('property.index') }}" class="btn btn-success">See All</a>
                             </div>
                         </div>
                     </div>

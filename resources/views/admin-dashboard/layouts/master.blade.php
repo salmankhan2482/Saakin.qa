@@ -23,6 +23,7 @@
 		@endforeach
 	@endif
 
+    @yield('style') 
     <style>
         .action-btn{
             margin-left: 5px;

@@ -312,7 +312,7 @@
                     </li>
                     
                     <li class="{{ classActivePath('inactive_properties_listing') }}">
-                        <a href="{{ route('inactive_property_listview') }}">
+                        <a href="{{ route('inactive_property.index') }}">
                             <i class="md md-pin-drop"></i>
                             {{ trans('words.inactive_properties') }}
                         </a>

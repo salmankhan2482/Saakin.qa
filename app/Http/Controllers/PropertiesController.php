@@ -827,9 +827,11 @@ class PropertiesController extends Controller
             $property_type = explode('-for-', $property)[0];
             $property_purpose = explode('-for-', $property)[1];
         }
-
-
-        $type = Types::where('plural', $property_type)->firstOrFail();
+        $type = Types::where('plural', $property_type)->first();
+        if(!$type){
+            $ptype = Types::where('slug', $property_type)->value('plural');
+            return redirect()->route('property-type-purpose', [$buyOrRent, $ptype.'-for-'.$property_purpose], 301);
+        }
         $properties = Properties::where('status', 1)
         ->where('property_purpose', ucfirst($property_purpose))
         ->where('property_type', $type->id);
