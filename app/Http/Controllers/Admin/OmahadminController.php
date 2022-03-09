@@ -19,8 +19,10 @@ class OmahadminController extends Controller
     public function saakin_dashborad()
     {
         $action = 'saakin_dashboard';
-        $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-
+        
+        if(auth()->user()->usertype == 'Agency'){
+            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+        };
 
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             Session::flash('flash_message', trans('words.access_denied'));

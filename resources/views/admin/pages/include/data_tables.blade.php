@@ -61,13 +61,13 @@
                         </td>
                         <td class="text-center">
                             <div class="btn-group">
-                                
+
                                 <button type="button" class="btn btn-default-dark dropdown-toggle"
                                     data-toggle="dropdown" aria-expanded="false">
-                                    {{ trans('words.action') }} 
+                                    {{ trans('words.action') }}
                                     <span class="caret"></span>
                                 </button>
-                                
+
                                 <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     @if ($pUser)
                                         @if (Auth::User()->usertype == 'Admin')
@@ -109,7 +109,7 @@
                                                 @endif
                                             </li>
                                         @endif
-                                        
+
                                         <li>
                                             @if ($property->status == 1 && Auth::User()->usertype == 'Admin')
                                                 <a
@@ -128,41 +128,39 @@
 
                                         <li>
                                             @if ($property->status == 0 && Auth::User()->usertype != 'Admin')
-                                                <a href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}">
+                                                <a
+                                                    href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}">
                                                     <i class="md md-check"></i>
                                                     {{ trans('words.publish') }}
                                                 </a>
                                             @endif
                                         </li>
-
                                     @else
                                         <li>
-                                        <a href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}">
+                                            <a
+                                                href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}">
                                                 <i class="md md-close"></i>
                                                 {{ trans('words.unpublish') }}
                                             </a>
                                         </li>
                                     @endif
-                                    @if(Auth::User()->usertype == 'Admin')
-                                    <li>
-                                        <a href="{{ url('admin/properties/delete/' . Crypt::encryptString($property->id)) }}"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
-                                            >
-                                            <i class="md md-delete"></i> 
-                                            {{ trans('words.remove') }}
-                                        </a>
-                                    </li>
+                                    @if (Auth::User()->usertype == 'Admin')
+                                        <li>
+                                            <a href="{{ url('admin/properties/delete/' . Crypt::encryptString($property->id)) }}"
+                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                <i class="md md-delete"></i>
+                                                {{ trans('words.remove') }}
+                                            </a>
+                                        </li>
                                     @elseif(Auth::User()->usertype != 'Admin' && $property->status == 1)
-                                    <li>
-                                        <a  href="#" 
-                                            class="callRemovePropertyPopup" 
-                                            data-id="{{Crypt::encryptString($property->id)}}"
-                                            data-toggle="modal" data-target="#removePropertyPopup"
-                                        >
-                                            <i class="md md-delete"></i> 
-                                            {{ trans('words.remove') }}
-                                        </a>
-                                    </li>
+                                        <li>
+                                            <a href="#" class="callRemovePropertyPopup"
+                                                data-id="{{ Crypt::encryptString($property->id) }}" data-toggle="modal"
+                                                data-target="#removePropertyPopup">
+                                                <i class="md md-delete"></i>
+                                                {{ trans('words.remove') }}
+                                            </a>
+                                        </li>
                                     @endif
                                 </ul>
                             </div>
@@ -187,53 +185,54 @@
         </tfoot>
     </table>
 
-      <!-- removePropertyPopup Modal -->
-    
-      <div class="modal fade" id="removePropertyPopup" tabindex="-1" role="dialog" aria-labelledby="removePropertyPopup" aria-hidden="true">
-        
+    <!-- removePropertyPopup Modal -->
+
+    <div class="modal fade" id="removePropertyPopup" tabindex="-1" role="dialog"
+        aria-labelledby="removePropertyPopup" aria-hidden="true">
+
         <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-        
-            <div class="modal-header" style="padding: 10px">
-            <h5 class="modal-title" id="exampleModalLongTitle">
-                Reason to Inactive Property
-            </h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -23px">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <div class="modal-content">
+
+                <div class="modal-header" style="padding: 10px">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Reason to Inactive Property
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        style="margin-top: -23px">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form method="POST" id="removePropertyPopupForm">
+                    @csrf
+                    <div class="modal-body" style="padding: 10px">
+                        <label for="reason">
+                            Select Reason
+                        </label>
+
+                        <select name="reason" id="reason" class="form-control">
+                            <option value="Rented/Sold">Rented/Sold</option>
+                            <option value="Unavailable">Unavailable</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+
+                    </div>
+                    <div class="modal-footer" style="padding: 10px">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Save changes
+                        </button>
+                    </div>
+                </form>
             </div>
-            
-            <form  method="POST" id="removePropertyPopupForm">
-                @csrf
-                {{-- admin/properties/delete/' . Crypt::encryptString($property->id)) --}}
-                <div class="modal-body" style="padding: 10px">
-                    <label for="reason" >
-                        Select Reason
-                    </label>
-                    
-                    <select name="reason" id="reason" class="form-control">
-                        <option value="Rented/Sold">Rented/Sold</option>
-                        <option value="Unavailable">Unavailable</option>
-                        <option value="Inactive">Inactive</option>
-                    </select>
-                
-                </div>
-                <div class="modal-footer" style="padding: 10px">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
-                </button>
-                <button type="submit" class="btn btn-primary">
-                    Save changes
-                </button>
-                </div>
-            </form>
-        </div>
         </div>
     </div>
 
 
     <script>
-        $(".callRemovePropertyPopup").on('click', function(e){
+        $(".callRemovePropertyPopup").on('click', function(e) {
             var id = $(this).attr('data-id');
             $("#removePropertyPopupForm").attr('action', `properties/delete/${id}`);
         });
