@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="page-titles">
             <ol class="breadcrumb">
-                <a href="{{ route('permissions.index') }}">
+                <a href="{{ route('roles.index') }}">
                     <button type="button" class="btn btn-rounded btn-dark">Back</button>
                 </a>
             </ol>
@@ -41,31 +41,43 @@
                                 <div class="form-group col-md-12">
                                     <label>Title</label>
                                     <input type="text" id="title" name="title" class="form-control"
-                                        placeholder="Enter Role Title">
+                                        placeholder="Enter Role Title" required>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-mt-4">
-                                        <label>Menu Options*</label>
-                                        <select class="js-example-programmatic-multi" multiple="multiple">
-                                            <option value="AL">Alaska</option>
-                                            <option value="HA">Hawaii</option>
-                                            <option value="CA">California</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-mt-4">
-                                        <label>Menu Options*</label>
-                                        <select class="js-example-programmatic-multi" multiple="multiple">
-                                            <option value="AL">Alaska</option>
-                                            <option value="HA">Hawaii</option>
-                                            <option value="CA">California</option>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Menu Options*</label>
+                                    <select name="menu_options[]" class="js-example-programmatic-multi" multiple="multiple">
+                                        @foreach ($menuOptions as $id => $menuOption)
+                                            <option value="{{ $menuOption->id }}">
+                                                {{ $menuOption->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
-                                {!! Form::close() !!}
+                                <div class="form-group col-md-6">
+                                    <label>Permissions*</label>
+                                    <select name="permissions[]" class="js-example-programmatic-multi" multiple="multiple"
+                                        required>
+                                        @foreach ($permissions as $permission)
+                                            <option value="{{ $permission->id }}">
+                                                {{ $permission->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>&nbsp;</label><br>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
                             </div>
                         </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
         </div>
-    @endsection
+    </div>
+@endsection

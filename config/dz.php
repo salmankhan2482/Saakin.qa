@@ -41,10 +41,7 @@ return [
 					'admin/vendor/jqvmap/css/jqvmap.min.css',
 					'admin/vendor/chartist/css/chartist.min.css',
 					'https://cdn.lineicons.com/2.0/LineIcons.css',
-					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 					'admin/vendor/owl-carousel/owl.carousel.css',
-					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
-					'admin/vendor/chartist/css/chartist.min.css',
 
 				],
 
@@ -333,6 +330,8 @@ return [
 					'admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
 					'admin/vendor/summernote/js/summernote.min.js',
 					'admin/js/plugins-init/summernote-init.js',
+					'admin/vendor/select2/js/select2.full.min.js',
+					'admin/js/plugins-init/select2-init.js',
 					'admin/js/custom.min.js',
 					'admin/js/deznav-init.js',
 

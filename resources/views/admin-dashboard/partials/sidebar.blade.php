@@ -23,7 +23,7 @@
                         <li><a href="{!! url('/admin/menuOptions'); !!}">Menu</a></li>
                         <li><a href="{!! url('/admin/permissions'); !!}">Permissions</a></li>
                         <li><a href="{!! url('/admin/roles'); !!}">Roles</a></li>
-                        <li><a href="{!! url('/table-datatable-basic'); !!}">Users</a></li>
+                        <li><a href="{!! url('/admin/users'); !!}">Users</a></li>
                     </ul>
                     </li>
 

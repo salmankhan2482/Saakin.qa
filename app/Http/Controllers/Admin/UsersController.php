@@ -33,7 +33,8 @@ class UsersController extends MainAdminController
 
     }
 
-    public function userslist()    {
+    public function index()   
+     {
 
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
 
@@ -42,6 +43,8 @@ class UsersController extends MainAdminController
             return redirect('admin/dashboard');
 
         }
+
+        $action = 'saakin_index';
 
         if(isset($_GET['keyword']))
         {
@@ -67,10 +70,13 @@ class UsersController extends MainAdminController
             }
         }
 
-        return view('admin.pages.users',compact('allusers'));
+        return view('admin-dashboard.user-management.users.index',compact('allusers','action'));
     }
 
-    public function addUser()    {
+    public function create()    
+    {
+        // $titles= Properties::where('agency_id',36)->pluck('property_name');
+        // dd($titles);
 
 
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
@@ -80,13 +86,13 @@ class UsersController extends MainAdminController
             return redirect('admin/dashboard');
 
         }
-
+        $action = 'saakin_create';
         $agencies = Agency::all();
         $roles = Roles::all();
-        return view('admin.pages.add_user', compact(['agencies','roles']));
+        return view('admin-dashboard.user-management.users.create', compact(['agencies','roles','action']));
     }
 
-    public function addnew(Request $request)
+    public function store(Request $request)
     {
     	$data =  \Request::except(array('_token')) ;
 

@@ -77,12 +77,13 @@ class RolesController extends Controller
      */
     public function edit($id)
     {
+        $action = 'saakin_edit';
         $role = Roles::find($id);
         $permissions = Permissions::select('id', 'title')->get();
         $menuOptions = MenuOptions::where('parent_id', null)->select('id', 'title')->get();
         $rights = MenuOptionsRole::where('role_id',$role->id)->get();
 
-        return view('admin.pages.user-management.roles.edit', compact('permissions', 'role','menuOptions','rights'));
+        return view('admin-dashboard.user-management.roles.edit', compact('permissions', 'role','menuOptions','rights','action'));
     }
 
     /**
