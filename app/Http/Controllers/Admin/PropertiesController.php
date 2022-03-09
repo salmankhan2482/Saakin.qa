@@ -49,6 +49,8 @@ class PropertiesController extends MainAdminController
 
     public function index()
     {
+
+        //
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
