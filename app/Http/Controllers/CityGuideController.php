@@ -40,10 +40,10 @@ class CityGuideController extends Controller
         
         
         $propertiesForRent = Properties::where('address_slug', 'like', '%'.$cityGuide->city_slug.'%')
-        ->where('property_purpose', 'Rent')->get();
+        ->where('property_purpose', 'Rent')->limit(6)->get();
         
         $propertiesForSale = Properties::where('address_slug', 'like', '%'.$cityGuide->city_slug.'%')
-        ->where('property_purpose', 'Sale')->get();
+        ->where('property_purpose', 'Sale')->limit(6)->get();
         
         $url = '';
         if($city = PropertyCities::where('name', $cityGuide->name)->value('id')){

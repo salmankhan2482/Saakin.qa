@@ -158,7 +158,6 @@ class AjaxController extends Controller
         $ip = request()->ip();
         $property_id = request()->id;
         $button_name = request()->button_name;
-
         $position = Location::get('https://'.$ip);
         $data = ClickCounters::where('ip_address', $ip)
         ->where('property_id', $property_id)
@@ -170,6 +169,7 @@ class AjaxController extends Controller
             $obj = new ClickCounters();
             $obj->ip_address = $ip;
             $obj->property_id = $property_id;
+            $obj->agency_id = request()->agency_id;
             $obj->button_name = $button_name;
             $obj->country = $position->countryName;
             $obj->city = $position->cityName;

@@ -13,7 +13,7 @@
 
 </style>
 
-<ul class="pagination">
+<ul >
     <!-- Previous Page Link -->
     @php
         $geet = $_GET;

@@ -63,6 +63,7 @@ class AgenciesController extends Controller
        
         $agencies =  DB::table('agencies')
             ->leftJoin('properties', 'agencies.id', 'properties.agency_id')
+            ->where('properties.status', 1)
             ->select('agencies.*', DB::Raw( 'COUNT(properties.agency_id) as pcount' ))
             ->groupBy('agencies.name')
             ->orderBy('pcount', 'DESC')
@@ -108,10 +109,13 @@ class AgenciesController extends Controller
         where(function ($query) use ($keyword) {
             $query->where('name', 'like', '%' . $keyword . '%')
                 ->orWhere('agency_detail', 'like', '%' . $keyword . '%');
-        })->get();
+        })->paginate(15);
 
-
-        return view('front.pages.agencies', compact('agencies'));
+        $landing_page_content= LandingPage::find('55');
+        $page_des = strip_tags($landing_page_content->page_content);
+        $page_des = Str::limit($page_des, 170, '...');
+        
+        return view('front.pages.agencies', compact('agencies','landing_page_content','page_des'));
     }
 
     public function agency_email(Request $request)
@@ -419,11 +423,46 @@ class AgenciesController extends Controller
           return response()->json($result);
 
     }
-     public function livesearch(Request $request){
+    public function livesearch(Request $request){
 
-        $term = $request->get('keyword');
-        $data = Agency::select("name as name","image as img","agency_detail as detail","id as id")->where("name","LIKE","%{$request->input('keyword')}%")->where("agency_detail","LIKE","%{$request->input('keyword')}%")->get();
+        $data = Agency::where("name","LIKE","%{$request->input('keyword')}%")
+                ->where("agency_detail","LIKE","%{$request->input('keyword')}%")
+                ->get();
 
-        return response()->json($data);
+        $output = '<ul class="list-group desktop-search-li col-12"  >';;
+        if ( count($data) > 0 ) {
+            
+            foreach ($data as $i => $row){
+                if($i <= 10){
+                $output .= '<li class="list-group-item select-agency"><input type="hidden" id="agency_id" name="agency_id" value="'.$row->id.'" ><img alt="'.$row->image.'" src="upload/agencies/'.$row->image .'" width="50px;"> '.$row->name.'</li>';
+                }
+            }
+             
+            }else {
+                $output .= '<li class="list-group-item">'.'No results'.'</li></ul>';
+            }
+            return $output;
+        // return response()->json($data);
     }
+    
+    public function mbllivesearch(Request $request){
+
+        $data = Agency::where("name","LIKE","%{$request->input('keyword')}%")
+                ->where("agency_detail","LIKE","%{$request->input('keyword')}%")
+                ->get();
+       
+        $output =  '<ul class="list-group desktop-search-li" style="position: absolute; width: 85%;">';
+        if ( count($data) > 0 ) {
+            
+            foreach ($data as $i => $row){
+                if($i <= 10){
+                $output .= '<li class="list-group-item select-agency"><input type="hidden" id="agency_id" name="agency_id" value="'.$row->id.'" ><img alt="'.$row->image.'" src="upload/agencies/'.$row->image .'" width="50px;"> '.$row->name.'</li>';
+                }
+            } 
+        }else {
+                $output .= '<li class="list-group-item">'.'No results'.'</li></ul>';
+            }
+            return $output;
+    }
+
 }

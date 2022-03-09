@@ -73,8 +73,8 @@
                 </div>
                 <div class="form-group">
                     {{-- <label for="">Message</label> --}}
-                    <textarea class="form-control" id="exampleFormControlTextarea1" name="user_message" rows="3"
-                        placeholder="Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you." required></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="user_message" rows="3" required>Hi, I found your property with ref: {{ $property->refference_code ?? ''}} On saakin.qa. Please contact me. Thank you.
+                    </textarea>
                 </div>
                 <div class="row">
                     <div class="col-12 col-md-4">
@@ -308,13 +308,13 @@
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             {{-- <label for="">* Phone Number</label> --}}
-                            <input type="tel" placeholder="4023 0023" name="telephone" class="form-control" id="telephoneInput" required>
+                            <input type="tel" placeholder="Phone Number" name="telephone" class="form-control" id="telephoneInput" required>
                         </div>
                     </div>
                     <div class="col-12 col-md-4">
                         <div class="form-group">
                             {{-- <label for="">Move-In Date </label> --}}
-                            <input type="text" placeholder="Move in Date" name="movein_date" id="datepicker" data-date-format='dd-mm-yy' class="form-control" required>
+                            <input type="text" placeholder="Move in Date" name="movein_date" id="datepicker" data-date-format='dd-mm-yy' class="form-control">
                         </div>
                     </div>
                 </div>
@@ -332,7 +332,9 @@
 
 <script src="{{asset('assets/js/Jquery.min.js')}}"></script>
 <script>
-$(function() {
-        $("#datepicker").datepicker();
+    $(function() {
+        $("#datepicker").datepicker({
+            autoclose: true,
+        });
     });
 </script>

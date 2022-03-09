@@ -62,13 +62,15 @@ class PropertiesController extends MainAdminController
 
             if (Auth::User()->usertype == "Agency") {
                 $propertieslist = Properties::where('agency_id', Auth::User()->agency_id)
-                ->where('status', 1)        
+                // ->where('status', 1)        
                 ->SearchByKeyword($keyword, $purpose, $type, $status)
                 ->paginate(15);
             } else {
                 $propertieslist = Properties::where('status', 1)  
-                ->where('status', 1)      
+                // ->where('status', 1)      
                 ->SearchByKeyword($keyword, $purpose, $type, $status)
+                ->orWhere('id', $keyword)
+                ->orWhere('property_name', 'like', '%' . $keyword . '%')
                 ->paginate(15);
             }
             $propertieslist->appends($_GET)->links();

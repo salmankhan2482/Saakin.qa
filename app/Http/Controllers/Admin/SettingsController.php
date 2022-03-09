@@ -7,7 +7,7 @@ use App\User;
 use App\Settings;
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Intervention\Image\Facades\Image; 
 use Illuminate\Support\Str;
 
@@ -21,15 +21,11 @@ class SettingsController extends MainAdminController
     public function settings()
     { 
     	if(Auth::User()->usertype!="Admin"){
-
             \Session::flash('flash_message', trans('words.access_denied'));
-
             return redirect('admin/dashboard');
-            
         }
         
         $settings = Settings::findOrFail('1');
-        
         return view('admin.pages.settings',compact('settings'));
     }	 
     
@@ -230,26 +226,18 @@ class SettingsController extends MainAdminController
 
     public function social_links_update(Request $request)
     {  
-    		 
     	$settings = Settings::findOrFail('1');
- 
-	    
-	    $data =  \Request::except(array('_token')) ;
-	    
-	     
+	    $data =  \Request::except(array('_token')) ; 
 	    $inputs = $request->all();
-		 
 		 
 		$settings->social_facebook = $inputs['social_facebook'];
 		$settings->social_twitter = $inputs['social_twitter'];
 		$settings->social_linkedin = $inputs['social_linkedin'];
 		$settings->social_instagram = $inputs['social_instagram'];
-		 		  
-		 
+		$settings->social_pinterest = $inputs['social_pinterest'];
 	    $settings->save();
 
 	    Session::flash('flash_message', trans('words.successfully_updated'));
-
         return redirect()->back();
     }
     

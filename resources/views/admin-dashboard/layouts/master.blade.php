@@ -23,12 +23,19 @@
 		@endforeach
 	@endif
 
+    <style>
+        .action-btn{
+            margin-left: 5px;
+            font-size: 1em;
+        }
+        .text-saakin{
+            color: #009fff !important;
+        }
+    </style>
+
 </head>
 <body>
 
-    <!--*******************
-        Preloader start
-    ********************-->
     <div id="preloader">
         <div class="sk-three-bounce">
             <div class="sk-child sk-bounce1"></div>
@@ -36,23 +43,12 @@
             <div class="sk-child sk-bounce3"></div>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
 
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
     <div id="main-wrapper">
 
-        <!--**********************************
-            Nav header start
-        ***********************************-->
         <div class="nav-header">
             <a href="{!! url('/index'); !!}" class="brand-logo">
-                <img class="logo-abbr" src="{{ asset('admin/images/logo.png') }}" alt="">
-                <img class="logo-compact" src="{{ asset('admin/images/logo-text.png') }}" alt="">
-                <img class="brand-title" src="{{ asset('admin/images/logo-text.png') }}" alt="">
+                <img class="brand-title" src="{{ asset('assets/images/black_logo.png') }}" alt="">
             </a>
 
             <div class="nav-control">
@@ -61,70 +57,19 @@
                 </div>
             </div>
         </div>
-        <!--**********************************
-            Nav header end
-        ***********************************-->
-
-        <!--**********************************
-            Header start
-        ***********************************-->
 
 		@include('admin-dashboard.partials.header')
 
-
-        <!--**********************************
-            Header end ti-comment-alt
-        ***********************************-->
-
-        <!--**********************************
-            Sidebar start
-        ***********************************-->
         @include('admin-dashboard.partials.sidebar')
-        <!--**********************************
-            Sidebar end
-        ***********************************-->
 
-
-
-        <!--**********************************
-            Content body start
-        ***********************************-->
         <div class="content-body">
-            <!-- row -->
             @yield('content')
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-
-
-        <!--**********************************
-            Footer start
-        ***********************************-->
 
 		@include('admin-dashboard.partials.footer')
 
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-		<!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
-
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
 	@include('admin-dashboard.partials.footer-scripts')
     @yield('scripts')
 </body>

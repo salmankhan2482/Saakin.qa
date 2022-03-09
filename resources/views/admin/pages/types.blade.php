@@ -3,18 +3,20 @@
 @section('content')
     <div id="main">
         <div class="page-header">
-
             <div class="pull-right">
-                <a href="{{ URL::to('admin/types/addtypes') }}"
-                    class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.property_type') }} <i
-                        class="fa fa-plus"></i></a>
+                <a href="{{ URL::to('admin/types/addtypes') }}" class="btn btn-primary">
+                    {{ trans('words.add') . ' ' . trans('words.property_type') }} 
+                    <i class="fa fa-plus"></i>
+                </a>
             </div>
             <h2>Property Types</h2>
         </div>
+        
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 {{ Session::get('flash_message') }}
             </div>
         @endif
@@ -37,21 +39,19 @@
                                 <td>{{ $type->types }}</td>
                                 <td> {{ App\Properties::where('property_type', $type->id)->count() }} </td>
                                 <td class="text-center">
-
                                     <a href="{{ url('admin/types/addtypes/' . $type->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"
-                                        data-toggle="tooltip" title="{{ trans('words.edit') }}"> <i
-                                            class="fa fa-edit"></i> </a>
+                                        data-toggle="tooltip" title="{{ trans('words.edit') }}"> 
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+
                                     <a href="{{ url('admin/types/delete/' . $type->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-danger m-b-5"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
-                                        data-toggle="tooltip" title="{{ trans('words.remove') }}"> <i
-                                            class="fa fa-remove"></i> </a>
-
-
-
+                                        data-toggle="tooltip" title="{{ trans('words.remove') }}">
+                                        <i class="fa fa-remove"></i>
+                                    </a>
                                 </td>
-
                             </tr>
                         @endforeach
 
@@ -60,9 +60,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-
     </div>
-
-
 
 @endsection

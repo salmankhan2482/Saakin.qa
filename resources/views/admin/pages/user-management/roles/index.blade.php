@@ -44,7 +44,7 @@
                                 <td>{{ $role->title }}</td>
                                 <td>
                                     @foreach($role->rolepermissions as $item)
-                                        <span class="badge btn-danger">
+                                        <span class="badge btn-danger mb-5">
                                             {{ $item->title }}
                                         </span>    
                                     @endforeach

@@ -16,13 +16,27 @@
                     <div class="footer-social-wrap text-white" >
                         <span>Follow us on</span>
                         <ul class="social-buttons style2">
-                            <li><a target="_blank" href="{{ getcong('social_facebook') }}">
-                                <i class="fab fa-facebook-f"></i></a>
+                            <li>
+                                <a target="_blank" href="{{ getcong('social_facebook') }}">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
                             </li>
-                            <li><a target="_blank" href="{{ getcong('social_instagram') }}">
-                                <i class="fab fa-instagram"></i></a></li>
-                            <li><a target="_blank" href="{{ getcong('social_linkedin') }}">
-                                <i class="fab fa-linkedin-in"></i></a></li>
+                            <li>
+                                <a target="_blank" href="{{ getcong('social_instagram') }}">
+                                <i class="fab fa-instagram"></i></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="{{ getcong('social_linkedin') }}">
+                                <i class="fab fa-linkedin-in"></i></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="{{ getcong('social_twitter') }}">
+                                <i class="fab fa-twitter"></i></a>
+                            </li>
+                            <li>
+                                <a target="_blank" href="{{ getcong('social_pinterest') }}">
+                                <i class="fab fa-pinterest"></i></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
