@@ -47,7 +47,7 @@ class PropertiesController extends MainAdminController
         parent::__construct();
     }
 
-    public function propertieslist()
+    public function index()
     {
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
@@ -119,7 +119,7 @@ class PropertiesController extends MainAdminController
             }
         }
 
-        return view('admin.pages.properties', compact('propertieslist', 'propertyTypes'));
+        return view('admin-dashboard.properties.index', compact('propertieslist', 'propertyTypes'));
     }
     public function inactivepropertieslist()
     {
@@ -195,7 +195,7 @@ class PropertiesController extends MainAdminController
 
     public function create()
     {
-
+dd("AA");
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
