@@ -25,10 +25,7 @@ class Properties extends Model
     {
         if($this->attributes['land_area'] > 0)
         {
-            // $sqmt = $this->attributes['land_area'] / 10.764;
-            // return number_format($sqmt,0).' sqm';
             return $this->attributes['land_area'].' sqm';
-
         }
         else
         {
@@ -147,6 +144,11 @@ class Properties extends Model
         }
     } 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    
     public function propertyCity()
     {
         return $this->belongsTo(PropertyCities::class, 'city', 'id');

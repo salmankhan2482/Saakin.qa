@@ -38,13 +38,6 @@ use App\Http\Controllers\OmahadminController;
 |
 */
 
-Route::get('clear', function(){
-    Artisan::call('storage:link');
-    Artisan::call('config:cache');
-    Artisan::call('cache:clear');
-    Artisan::call('view:clear');
-    Artisan::call('optimize:clear');
-});
 
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
@@ -111,13 +104,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('testimonials/delete/{id}', 'TestimonialsController@delete');
 
 
-	Route::get('properties', 'PropertiesController@propertieslist')->name('property_listview');
-	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_property_listview');
+	Route::get('properties', 'PropertiesController@propertieslist')->name('property.index');
+	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_property.index');
 	Route::post('properties/featured/delete', 'PropertiesController@deleteFeaturedImage')->name('delete.featured_image');
-	Route::get('properties/create', 'PropertiesController@create');
-	Route::post('properties/create', 'PropertiesController@store');
-	Route::get('properties/edit/{id}', 'PropertiesController@edit');
-    Route::post('properties/edit/{id}', 'PropertiesController@update');
+	Route::get('properties/create', 'PropertiesController@create')->name('property.create');
+	Route::post('properties/create', 'PropertiesController@store')->name('property.store');
+	Route::get('properties/edit/{id}', 'PropertiesController@edit')->name('property.edit');
+    Route::post('properties/edit/{id}', 'PropertiesController@update')->name('property.update');
 	Route::get('properties/status/{id}', 'PropertiesController@status');
 	Route::get('properties/featuredproperty/{id}', 'PropertiesController@featuredproperty');
 	Route::any('properties/delete/{id}', 'PropertiesController@delete');
