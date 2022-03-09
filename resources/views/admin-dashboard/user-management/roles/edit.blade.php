@@ -11,6 +11,7 @@
         </div>
     @endif
     @if (Session::has('flash_message'))
+
         <div class="alert alert-success">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -22,6 +23,7 @@
         <div class="page-titles">
             <ol class="breadcrumb">
                 <a href="{{ route('permissions.index') }}">
+
                     <button type="button" class="btn btn-rounded btn-dark">Back</button>
                 </a>
             </ol>
@@ -35,11 +37,14 @@
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
+
                             {!! Form::open(['route' => ['roles.update', $data['role']->id], 'method' => 'PUT', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Title</label>
+
                                     <input type="text" id="title" name="title" class="form-control" value="{{ $data['role']->title }}">
                                 </div>
                                 
@@ -54,11 +59,13 @@
                                             <option value="{{ $menuOption->id }}"
                                                 {{ $data['role']->menuoptions->contains($menuOption->id) ? 'selected' : ''  }}
                                                 >
+
                                                 {{ $menuOption->title }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
+
                             
                                 <div class="form-group col-md-12">
                                     <label class="col-md-12">
@@ -84,11 +91,13 @@
                                 
                                 {!! Form::close() !!}
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
     @endsection
     @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="page-titles">
             <ol class="breadcrumb">
-                <a href="{{ route('permissions.index') }}">
+                <a href="{{ route('roles.index') }}">
                     <button type="button" class="btn btn-rounded btn-dark">Back</button>
                 </a>
             </ol>
@@ -41,8 +41,9 @@
                                 <div class="form-group col-md-12">
                                     <label>Title</label>
                                     <input type="text" id="title" name="title" class="form-control"
-                                        placeholder="Enter Role Title">
+                                        placeholder="Enter Role Title" required>
                                 </div>
+
                                 
                                 <div class="form-group col-md-12">
                                     <label>
@@ -54,10 +55,12 @@
                                         @foreach ($data['menuOptions'] as $item)
                                             <option value="{{ $item->id }}">
                                                 {{ $item->title }}
+
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
+
                             
                                 <div class="form-group col-md-12">
                                     <label>
@@ -80,12 +83,15 @@
                                 </div>
                                 
                                 {!! Form::close() !!}
+
                             </div>
                         </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
         </div>
+
     @endsection
     @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -113,3 +119,4 @@
     </script>
     @endsection
     
+

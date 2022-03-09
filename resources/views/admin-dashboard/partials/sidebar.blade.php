@@ -22,6 +22,7 @@
 						</a>
                     </li>
 
+
                     <li @if( checkMenu('admin/menuOptions*') or checkMenu('admin/permissions*') ) 
                             class="mm-active" 
                         @endif >
@@ -52,6 +53,7 @@
                             <i class="flaticon-381-networking"></i>
                             <span class="nav-text">Agencies</span>
                         </a>
+
                     </li>
 
 
