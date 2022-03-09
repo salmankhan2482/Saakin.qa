@@ -73,7 +73,7 @@
                                     </li>
                                     <li>
                                         <a href="{{ url('real-estate-agencies') }}">
-                                            Real Estate Agencies
+                                            Real Estate Agents
                                         </a>
                                     </li>
                                     <li>

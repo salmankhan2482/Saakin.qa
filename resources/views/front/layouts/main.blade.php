@@ -3,7 +3,7 @@
 
 <head>
     
-    @yield('schem-markup')
+    @yield('schema-markup')
     @include('front.layouts.cssscripts')
     <meta name="msvalidate.01" content="BF7297537F5BAA9011B7D901DECC0066" />
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.css' />

@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
-use Session;
 use App\User;
 use App\Agency;
 use App\Properties;
 use App\Http\Requests;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends MainAdminController
 {
@@ -34,46 +35,54 @@ class AdminController extends MainAdminController
     }
 
     public function updateProfile(Request $request)
-    {
-        
+    {      
     	$user = User::findOrFail(Auth::user()->id);
 	    $data =  \Request::except(array('_token')) ;
-        $oldemail = $request->oldemail;
-        if($oldemail!=$request->email)
+        
+        if(request('email') != $user->email)
         {
             $rule = array(
 		        'name' => 'required',
-		        'email' => 'required|email|max:75|unique:users,email');
+		        'email' => 'required|email|max:75|unique:users,email'
+            );
+        }elseif(request('password') != '' ){
+            $rule = array(
+                'name' => 'required',
+                'password' => 'required|min:3|confirmed'
+            );
+        }else{   
+            $rule = array(
+                'name' => 'required'
+            );
         }
-        else
-        {   $rule = array(
-            'name' => 'required');
-        }
-
 	   	$validator = \Validator::make($data,$rule);
+        
         if ($validator->fails())
         {
-            
-                return redirect()->back()->withErrors($validator->messages());
+            return redirect()->back()->withErrors($validator->messages());
         }
-        
+
 	    $inputs = $request->all();
 		$user->name = $inputs['name'];
 		$user->email = $inputs['email'];
 		$user->phone = $inputs['phone'];
         $user->whatsapp = $inputs['whatsapp'];
+
         if($request->hasFile('user_icon')) {
-                $image_icon = $request->file('user_icon');
-                if ($image_icon) {
-                    $image_icon_name = $image_icon->getClientOriginalName();
-                    $image_icon_name = explode(".", $image_icon_name);
-                    $tmpFilePath = public_path('upload/agencies/');
-                    $imageName = time() . '.' . $image_icon->extension();
-                    $image_icon->move($tmpFilePath, $imageName);
-                    $user->image_icon = $imageName;
-                }
+            $image = $request->file('user_icon'); 
+            $imagename = time().'.'.$image->getClientOriginalExtension();
+            $destinationPath = public_path('upload/agencies/');
+            
+            if (File::exists(public_path('upload/agencies/'.$user->image_icon))) {
+                File::delete(public_path('upload/agencies/'.$user->image_icon));
             }
-  		$user->about = $inputs['about'];
+            
+            $image->move($destinationPath, $imagename);
+            $user->image_icon = $imagename;
+        }
+
+        $user->about = $inputs['about'];
+        $user->password = bcrypt(request('password'));
 		$user->facebook = $inputs['facebook'];
 		$user->twitter = $inputs['twitter'];
 		$user->instagram = $inputs['instagram'];
@@ -90,21 +99,13 @@ class AdminController extends MainAdminController
             $agency->whatsapp = $inputs['whatsapp'];
             $agency->agency_detail = $inputs['about'];
             if($request->hasFile('user_icon')) {
-                $agency_image = $request->file('user_icon');
-                if ($agency_image) {
-                    $agency_image_name = $agency_image->getClientOriginalName();
-                    $agency_image_name = explode(".", $agency_image_name);
-                    $tmpFilePath = public_path('upload/agencies/');
-                    $imageName = 'agency_'. '_' . time() . '.' . $agency_image->extension();
-                    $agency_image->move($tmpFilePath, $imageName);
-                    $agency->image = $imageName;
-                }
+                $agency->image = $user->image_icon;
             }
+
             $agency->save();
         }
 
 	    Session::flash('flash_message', trans('words.successfully_updated'));
-
         return redirect()->back();
     }
 

@@ -6,7 +6,7 @@
 	<div class="page-header">
 		<h2> {{ isset($type->types) ? trans('words.edit').': '. $type->types : trans('words.add').' '.trans('words.property_type') }}</h2>
 		
-		<a href="{{ URL::to('admin/types') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i> {{trans('words.back')}}</a>
+		<a href="{{ URL::to('admin/property-types') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i> {{trans('words.back')}}</a>
 	  
 	</div>
 	@if (count($errors) > 0)

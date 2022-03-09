@@ -19,48 +19,95 @@ class OmahadminController extends Controller
     public function saakin_dashborad()
     {
         $action = 'saakin_dashboard';
+        $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+
 
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
-
-        if (Auth::User()->usertype == "Agency") {
-
-            $agency_id = Auth::User()->agency_id;
             
-            $data['active_properties'] = Properties::where("agency_id", $agency_id)->where('status', 1)->count();
-            $data['sale_properties'] = Properties::where("agency_id", $agency_id)
-                ->where('status', 1)->where('property_purpose', 'Sale')->count();
+            $agency_id = Auth::User()->agency_id;
+            $data['active_properties'] = Properties::where('status', 1)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->count();
 
-            $data['inactive_properties'] = Properties::where("agency_id", $agency_id)->where('status', 0)->count();
-            $data['rent_properties'] = Properties::where("agency_id", $agency_id)
-                ->where('status', 1)->where('property_purpose', 'Rent')->count();
+            $data['inactive_properties'] = Properties::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->where('status', 0)
+                ->count();
 
-            $data['total_properties'] = Properties::where('agency_id', $agency_id)->count();
+            $data['sale_properties'] = Properties::where('status', 1)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->where('property_purpose', 'Sale')
+                ->count();
+
+            $data['rent_properties'] = Properties::where('status', 1)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->where('property_purpose', 'Rent')
+                ->count();
+            
+
+            $data['total_properties'] = Properties::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->count();
+            
             $data['featured_properties'] = Properties::where('featured_property', '1')
-                ->where("agency_id", $agency_id)->get()->count();
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->count();
 
-            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
 
             //Inquiries
-            $data['inquiries'] = Enquire::where('agency_id', Auth::User()->agency_id)->orderBy('id', 'desc')->get()->count();
+            $data['inquiries'] = Enquire::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->orderBy('id', 'desc')
+                ->count();
 
             // last month
-            $data['last_month_properties'] = Properties::where("agency_id", $agency_id)
-                ->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))->count();
+            $data['last_month_properties'] = Properties::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))
+                ->count();
 
             //traffic per month
             $data['trafficPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
-                ->whereIn('property_id', $property_ids)->sum('counter');
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+                    $query->whereIn('property_id', $property_ids);
+                })
+                ->sum('counter');
 
             // clicks per month
             $data['clicksPerMonths'] = ClickCounters::whereMonth('created_at', Carbon::now()->month)
-                ->whereIn('property_id', $property_ids)->count();
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+                    $query->whereIn('property_id', $property_ids);
+                })
+                ->count();
 
             // number of users
             $data['numberOfUsers'] = PageVisits::whereMonth('created_at', Carbon::now()->month)
-                ->whereIn('property_id', $property_ids)->groupBy('ip_address')->count();
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+                    $query->whereIn('property_id', $property_ids);
+                })
+                ->groupBy('ip_address')->count();
 
             $months = [
                 '1' => 'Jan', 
@@ -79,28 +126,46 @@ class OmahadminController extends Controller
 
             // properties per month
             foreach ($months as $key => $value) {
-                $data['propertiesPer'.$value] = Properties::where('agency_id', $agency_id)
-                ->whereYear('created_at', Carbon::now()->year)->whereMonth('created_at', $key)->count();
+                $data['propertiesPer'.$value] = Properties::
+                    when(auth()->user()->usertype == 'Agency', function($query){
+                        $query->where("agency_id", Auth::User()->agency_id);
+                    })
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->whereMonth('created_at', $key)
+                    ->count();
             }
 
             // clicks per month
             foreach ($months as $key => $value) {
-                $data['clicksPer'.$value] = ClickCounters::whereYear('created_at', Carbon::now()->year)
-                ->whereMonth('created_at', $key)->count(); 
+            $data['clicksPer'.$value] = ClickCounters::whereYear('created_at', Carbon::now()->year)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereMonth('created_at', $key)
+                ->count(); 
             }
-        
+            
             // traffic per month
             foreach ($months as $key => $value) {
-                $data['trafficPer'.$value] = PropertyCounter::whereIn('property_id', $property_ids)
-                ->whereYear('created_at', 2022)->whereMonth('created_at', $key)->sum('counter');
+                $data['trafficPer'.$value] = PropertyCounter::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereYear('created_at', 2022)
+                ->whereMonth('created_at', $key)
+                ->sum('counter');
             }
             
             // no of users per month
             foreach ($months as $key => $value) {
-                $data['usersPer'.$value] = PageVisits::whereIn('property_id', $property_ids)
+                $data['usersPer'.$value] = DB::table('page_visits')
+                ->distinct('ip_address')
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', $key)
-                ->groupBy('ip_address')->count();
+                ->count('ip_address');
 
             }
 
@@ -108,33 +173,37 @@ class OmahadminController extends Controller
             $data['typesBasedProperties'] = DB::table('properties')
             ->join('property_types', 'properties.property_type', 'property_types.id')
             ->select('property_types.types as label', DB::Raw('COUNT(properties.id) as value'))
-            ->whereIn('properties.id', $property_ids)
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("properties.agency_id", Auth::User()->agency_id);
+            })
             ->groupBy('label')
             ->get()
             ->toJson();
-
-            
-            //top 10 properties
-            $data['top10Proprties'] = '';
-            $data['top5areas'] = '';
-        } else {
-            $data['active_properties'] = Properties::where('status', '1')->count();
-            $data['inactive_properties'] = Properties::where('status', '0')->count();
-            $data['total_properties'] = Properties::count();
-            $data['featured_properties'] = Properties::where('featured_property', '1')->count();
-            $data['inquiries'] = Enquire::count();
-            $data['trafficPerMonth'] = '';
-            $data['clicksPerMonths'] = '';
-            $data['numberOfUsers'] = '';
-            $data['top10Proprties'] = '';
-            $data['top5areas'] = '';
-        }
 
 
         $action = 'saakin_dashborad';
         return view('admin-dashboard.index', compact('data', 'action'));
 
     }
+
+    public function profile()
+    {
+        $properies = Properties::where('status', 1);
+        $data['latestProperties'] = $properies->latest()->take(3)
+        ->when(auth()->user()->usertype == 'Agency', function($query){
+            return $query->where('agency_id', auth()->user()->agency_id);
+        })
+        ->select(['property_name', 'property_purpose','property_slug',
+        'id', 'featured_image'])
+        ->get();
+        
+        $data['user'] = auth()->user();
+        $action = 'app_profile';
+        return view('admin-dashboard.profile.show', compact('action', 'data'));
+    }
+
+
+    
 
     public function create_saakin()
     {

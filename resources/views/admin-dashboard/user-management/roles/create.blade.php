@@ -43,24 +43,42 @@
                                     <input type="text" id="title" name="title" class="form-control"
                                         placeholder="Enter Role Title">
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-mt-4">
-                                        <label>Menu Options*</label>
-                                        <select class="js-example-programmatic-multi" multiple="multiple">
-                                            <option value="AL">Alaska</option>
-                                            <option value="HA">Hawaii</option>
-                                            <option value="CA">California</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group col-mt-4">
-                                        <label>Menu Options*</label>
-                                        <select class="js-example-programmatic-multi" multiple="multiple">
-                                            <option value="AL">Alaska</option>
-                                            <option value="HA">Hawaii</option>
-                                            <option value="CA">California</option>
-                                        </select>
-                                    </div>
+                                
+                                <div class="form-group col-md-12">
+                                    <label>
+                                        Menu Options*
+                                        <span class="btn btn-outline-info btn-rounded btn-xs select-all">Select all</span>
+                                        <span class="btn btn-outline-info btn-rounded btn-xs deselect-all">Deselect all</span>
+                                    </label>
+                                    <select name="menu_options[]"  class="select2 js-example-programmatic-multi" multiple="multiple">
+                                        @foreach ($data['menuOptions'] as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                            
+                                <div class="form-group col-md-12">
+                                    <label>
+                                        Permission*
+                                        <span class="btn btn-outline-info btn-rounded btn-xs select-all">Select all</span>
+                                        <span class="btn btn-outline-info btn-rounded btn-xs deselect-all">Deselect all</span>
+                                    </label>
+                                    <select name="permissions[]" class="select2 js-example-programmatic-multi" multiple="multiple">
+                                        @foreach ($data['permissions'] as $item)
+                                            <option value="{{ $item->id }}">
+                                                {{ $item->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>&nbsp;</label><br>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                                
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -69,3 +87,29 @@
             </div>
         </div>
     @endsection
+    @section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+    
+            $('.select-all').click(function () {
+                let $select2 = $(this).parent().siblings().find('.select2')
+                console.log($select2);
+                $select2.find('option').prop('selected', 'selected')
+                $select2.trigger('change')
+            })
+    
+            $('.deselect-all').click(function () {
+                let $select2 = $(this).parent().siblings().find('.select2')
+                $select2.find('option').prop('selected', '')
+                $select2.trigger('change')
+            })
+        })
+    
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+    </script>
+    @endsection
+    

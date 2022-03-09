@@ -3,7 +3,7 @@
 
 <head>
     
-    @yield('schem-markup')
+    @yield('schema-markup')
     
 
     <meta charset="UTF-8">

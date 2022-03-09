@@ -42,6 +42,7 @@
                                     <label>Title</label>
                                     <input type="text" id="title" name="title" class="form-control" placeholder="Enter Menu Title">
                                 </div>
+                                
                                 <div class="form-group col-md-6">
                                     <label>Select Parent Menu</label>
                                     <select id="parent_id" name="parent_id" class="form-control">

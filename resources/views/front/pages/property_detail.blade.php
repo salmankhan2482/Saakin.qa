@@ -1,6 +1,6 @@
 @extends("front.layouts.main")
 
-@section('schem-markup')
+@section('schema-markup')
 <script type="application/ld+json" data-schema="2950-post-Custom">
     {
         "@context": "https://schema.org/", 
@@ -573,7 +573,7 @@ Link:'.$propertyUrl;
 
                             <div class="col-md-6">
                                 <h3>Agent</h3>
-                                @if (!empty($property->whatsapp) && !empty($property->agent_name))
+                                @if (!empty($property->agent_name))
                                     <div class="d-flex">
 
                                         <!-- agent pic on desktop -->
@@ -588,6 +588,7 @@ Link:'.$propertyUrl;
                                                 class="property-location__image rounded-circle" alt="Agent No Pic" style="width: 120px;">
                                         </a>
                                         @endif
+
                                         <div class="d-md-block">
                                             <h5 style="margin-left: 15px;">{{ $property->agent_name }}</h5>
                                             <div class="col-md-12">
@@ -606,8 +607,7 @@ Link:'.$propertyUrl;
                                                 </h5>
                                                 <h5 style="font-size: 13px; float: left; margin:0px !important">
                                                     <a  href="{{url('agency/'.Str::slug($agency->name, "-").'/'.$agency->id)}}">
-                                                        ({{ count(App\Properties::where('status', '1')->where('agency_id', $agency->id)->get()) }}
-                                                        properties)
+                                                        ({{ count($agency->properties->where('status', 1)) }} properties)
                                                     </a>
                                                 </h5>
                                             </div>
@@ -632,12 +632,11 @@ Link:'.$propertyUrl;
                                                             {{ $agency->name }}
                                                         </a>
                                                     </h5>
-                                                    <a
-                                                        style="margin-left: 15px"
-                                                        href="{{url('agency/'.Str::slug($agency->name, "-").'/'.$agency->id)}}"
-                                                    >
-                                                        ({{ count(App\Properties::where('status', '1')->where('agency_id', $agency->id)->get()) }}
-                                                        properties)</a>
+                                                    <a style="margin-left: 15px" href="{{url('agency/'.Str::slug($agency->name, "-").'/'.$agency->id)}}" >
+
+                                                        ({{ count($agency->properties->where('status', 1)) }} properties)
+                                                        
+                                                    </a>
                                                 </div>
                                             @else
                                                 Agent not found
@@ -864,6 +863,7 @@ Link:'.$propertyUrl;
                                     @if (!empty($property->whatsapp))
                                     <a href="tel:{{ $property->whatsapp }}"
                                         data-property_id={{ $property->id }}
+                                        data-agency_id={{ $property->agency_id }}
                                         data-button_name='Call'
                                         class="btn btn-danger btnCall btnCount">
                                         <i class="fas fa-phone-alt"></i>
@@ -872,6 +872,7 @@ Link:'.$propertyUrl;
                                     @else
                                     <a href="tel:{{ $agency->phone }}" 
                                         data-property_id={{ $property->id }}
+                                        data-agency_id={{ $property->agency_id }}
                                         data-button_name='Call'
                                         class="btn btn-danger btn-call btnCount">
                                         <i class="fas fa-phone-alt"></i>
@@ -881,11 +882,13 @@ Link:'.$propertyUrl;
                                     @if (!empty($property->whatsapp))
                                         <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
                                             data-property_id={{ $property->id }}
+                                            data-agency_id={{ $property->agency_id }}
                                             data-button_name='WhatsApp'
                                             class="btn btn-success btnCount"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                                     @elseif(!empty($agency->whatsapp))
                                         <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
                                             data-property_id={{ $property->id }}
+                                            data-agency_id={{ $property->agency_id }}
                                             data-button_name='WhatsApp'
                                             class="btn btn-success btnCount"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                                     @endif
@@ -896,6 +899,7 @@ Link:'.$propertyUrl;
                                         data-target="#exampleModal"
                                         id="emailBtn"
                                         data-property_id={{ $property->id }}
+                                        data-agency_id={{ $property->agency_id }}
                                         data-button_name='Email'    
                                         data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                         data-title="{{ $property->property_name }}"
@@ -923,6 +927,7 @@ Link:'.$propertyUrl;
                                     data-toggle="modal"
                                     data-target="#exampleModal"
                                     data-property_id={{ $property->id }}
+                                    data-agency_id={{ $property->agency_id }}
                                     data-button_name='Email'
                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                     data-image="{{ $property->featured_image }}"
@@ -960,8 +965,8 @@ Link:'.$propertyUrl;
                         </a>
                         @if ($message = Session::get('message'))
                         <div class="alert alert-info alert-block d-flex" >
-                            <button type="button" class="close" data-dismiss="alert">×</button>
-                            <strong>{{ $message }}</strong>
+                            <button type="button" class="close" data-dismiss="alert"> × </button>
+                            <strong>&nbsp;&nbsp;{{ $message }}</strong>
                         </div>
                         @endif
                     </div>
@@ -1194,8 +1199,7 @@ Link:'.$propertyUrl;
                                 </a>
 
                                 <a href="{{url('agency/'.Str::slug($agency->name, "-").'/'.$agency->id)}}">
-                        ({{  count(App\Properties::where('status', '1')->where('agency_id', $agency->id)->get())  }}
-                                    properties)
+                                    ( {{ count($agency->properties->where('status', 1)) }} properties)
                                 </a>
                             </div>
 
@@ -1331,8 +1335,8 @@ Link:'.$propertyUrl;
 
                     @if ($message = Session::get('message'))
                     <div class="alert alert-info alert-block" style="width: 100% !important; display: flex;">
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-                        <strong>{{ $message }}</strong>
+                        <button type="button" class="close" data-dismiss="alert"> × </button>
+                        <strong>&nbsp;&nbsp;{{ $message }}</strong>
                     </div>
                     @endif
              </div>
@@ -1439,12 +1443,14 @@ Link:'.$propertyUrl;
 
     $('.btnCount').click(function() {
         let id = $(this).attr('data-property_id');
+        let agency_id = $(this).attr('data-agency_id');
         let button_name = $(this).attr('data-button_name');
         $.ajax({
             type : 'GET',
             url : '{{ route("click_count") }}',
             data : {
                 'id': id,
+                'agency_id': agency_id,
                 'button_name': button_name,
             },
             

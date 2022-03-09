@@ -51,11 +51,9 @@
                                 <div class="media">
                                     <div class="media-left">
                                         @if ($agency->image)
-
                                             <img src="{{ URL::asset('upload/agencies/' . $agency->image) }}" width="200"
                                                 alt="person">
                                         @endif
-
                                     </div>
                                     <div class="media-body media-middle">
                                         <input type="file" name="user_icon" class="filestyle">
@@ -65,11 +63,9 @@
                                 <div class="media">
                                     <div class="media-left">
                                         @if (Auth::user()->image_icon)
-
                                             <img src="{{ URL::asset('upload/agencies/' . Auth::user()->image_icon ) }}"
                                                 width="80" alt="person">
                                         @endif
-
                                     </div>
                                     <div class="media-body media-middle">
                                         <input type="file" name="user_icon" class="filestyle">

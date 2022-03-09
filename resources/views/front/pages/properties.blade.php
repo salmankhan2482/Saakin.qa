@@ -608,6 +608,7 @@ Link:'.$propertyUrl;
                                                                     @if (!empty($property->whatsapp))
                                                                     <a href="javascript:void(0)" 
                                                                         data-property_id={{ $property->id }}
+                                                                        data-agency_id={{ $property->agency_id }}
                                                                         data-button_name='Call'
                                                                         class="btn social-btns btnCall btnCount" 
                                                                         data-telNumber="{{ $property->whatsapp }}">
@@ -618,6 +619,7 @@ Link:'.$propertyUrl;
                                                                     @else
                                                                     <a href="javascript:void(0)" 
                                                                         data-property_id={{ $property->id }}
+                                                                        data-agency_id={{ $property->agency_id }}
                                                                         data-button_name='Call'
                                                                         class="btn social-btns btnCall btnCount"
                                                                         data-telNumber="{{ $property->Agency->phone }}">
@@ -632,6 +634,7 @@ Link:'.$propertyUrl;
                                                                             href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
                                                                             class="btn social-btns btnCount"
                                                                             data-property_id={{ $property->id }}
+                                                                            data-agency_id={{ $property->agency_id }}
                                                                             data-button_name='WhatsApp'
                                                                             >
                                                                             <i class="fab fa-whatsapp"></i> 
@@ -642,6 +645,7 @@ Link:'.$propertyUrl;
                                                                             href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}" 
                                                                             class="btn social-btns btnCount"
                                                                             data-property_id={{ $property->id }}
+                                                                            data-agency_id={{ $property->agency_id }}
                                                                             data-button_name='WhatsApp'
                                                                             >
                                                                             <i class="fab fa-whatsapp"></i> 
@@ -657,6 +661,7 @@ Link:'.$propertyUrl;
                                                                         data-target="#exampleModal"
                                                                         id="emailBtn"
                                                                         data-property_id={{ $property->id }}
+                                                                        data-agency_id={{ $property->agency_id }}
                                                                         data-button_name='Email'
                                                                         data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                                         data-title="{{ $property->property_name }}"
@@ -1154,12 +1159,15 @@ Link: ' .$propertyUrl;
 
     $('.btnCount').click(function() {
         let id = $(this).attr('data-property_id');
+        let agency_id = $(this).attr('data-agency_id');
+        console.log(agency_id);
         let button_name = $(this).attr('data-button_name');
         $.ajax({
             type : 'GET',
             url : '{{ route("click_count") }}',
             data : {
                 'id': id,
+                'agency_id': agency_id,
                 'button_name': button_name,
             },
             

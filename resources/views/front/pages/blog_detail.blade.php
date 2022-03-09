@@ -1,6 +1,6 @@
 @extends("front.layouts.main")
 
-@section('schem-markup')
+@section('schema-markup')
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
