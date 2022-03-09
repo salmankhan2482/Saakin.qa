@@ -61,39 +61,29 @@ class PropertiesController extends MainAdminController
             $type = $_GET['type'];
             $keyword = $_GET['keyword'];
             $status = $_GET['status'];
-
-            if (Auth::User()->usertype == "Agency") {
-                $propertieslist = Properties::where('agency_id', Auth::User()->agency_id)
-                // ->where('status', 1)        
-                ->SearchByKeyword($keyword, $purpose, $type, $status)
-                ->paginate(15);
-            } else {
-                $propertieslist = Properties::where('status', 1)  
-                // ->where('status', 1)      
-                ->SearchByKeyword($keyword, $purpose, $type, $status)
-                ->orWhere('id', $keyword)
-                ->orWhere('property_name', 'like', '%' . $keyword . '%')
-                ->paginate(15);
-            }
-            $propertieslist->appends($_GET)->links();
+            
+            $data['propertieslist'] = Properties::when(auth()->user()->usertype == "Agency", function($query){
+                return $query->where('agency_id', auth()->user()->agency_id);
+            })
+            ->SearchByKeyword($keyword, $purpose, $type, $status)
+            ->orWhere('id', $keyword)
+            ->orWhere('property_name', 'like', '%' . $keyword . '%')
+            ->paginate(15);
+            $data['propertieslist']->appends($_GET)->links();
 
         } else {
 
-            if (Auth::User()->usertype == "Agency") {
-                $propertieslist = Properties::where('agency_id', Auth::User()->agency_id)
-                ->where('status', 1)
-                ->orderBy('id', 'desc')
-                ->paginate(15);
-            } else {
-                $propertieslist = Properties::where('status', 1)
-                ->orderBy('id', 'desc')
-                ->where('status', 1)
-                ->paginate(15);
-            }
+            $data['propertieslist'] = Properties::where('status', 1)
+            ->when(auth()->user()->usertype == "Agency", function($query){
+                return $query->where('agency_id', auth()->user()->agency_id);
+            })
+            ->orderBy('id', 'desc')
+            ->where('status', 1)
+            ->paginate(15);
         }
 
         if (Auth::User()->usertype == "Agency") {
-            $propertyTypes = Types::join("properties", "properties.property_type", "=", "property_types.id")
+            $data['propertyTypes'] = Types::join("properties", "properties.property_type", "=", "property_types.id")
             ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
             ->where('properties.agency_id', Auth::User()->agency_id)
             ->where('properties.status', 1)
@@ -103,7 +93,7 @@ class PropertiesController extends MainAdminController
         } else {
             if(request()->ajax())
             {
-                $propertyTypes = Types::join("properties", "properties.property_type", "=", "property_types.id")
+                $data['propertyTypes'] = Types::join("properties", "properties.property_type", "=", "property_types.id")
                 ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
                 ->where('properties.status', 1)
                 ->orderBy("pcount", "desc")
@@ -112,7 +102,7 @@ class PropertiesController extends MainAdminController
                 return view('admin.pages.include.data_tables', compact('propertieslist'))->render();
 
             }else{
-                $propertyTypes = Types::join("properties","properties.property_type","=","property_types.id")
+                $data['propertyTypes'] = Types::join("properties","properties.property_type","=","property_types.id")
                 ->select("property_types.id","property_types.types",DB::Raw("count(properties.id) as pcount"))
                 ->where('properties.status', 1)
                 ->orderBy("pcount","desc")
@@ -121,7 +111,9 @@ class PropertiesController extends MainAdminController
             }
         }
 
-        return view('admin-dashboard.properties.index', compact('propertieslist', 'propertyTypes'));
+        $action = 'saakin_index';
+        return view('admin-dashboard.property.index', compact('data', 'action'));
+
     }
     public function inactivepropertieslist()
     {
@@ -383,7 +375,7 @@ dd("AA");
 
 
         \Session::flash('flash_message', "Your Property has been submitted. It will be Publish soon");
-        return redirect()->route('property_listview');
+        return redirect()->route('property.index');
     }
 
     public function edit(Request $request, $id)
