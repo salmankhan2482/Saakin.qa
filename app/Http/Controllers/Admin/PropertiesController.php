@@ -212,7 +212,7 @@ class PropertiesController extends MainAdminController
         $towns = PropertyTowns::all();
         $areas = PropertyAreas::all();
 
-        return view('admin.pages.add_property', 
+        return view('admin-dashboard.properties.create', 
         compact('types', 'purposes', 'amenities', 'agencies', 'cityguides', 'cities','subCities' ,'towns' ,'areas'));
     }
 
