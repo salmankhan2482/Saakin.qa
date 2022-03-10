@@ -189,7 +189,7 @@ class PropertiesController extends MainAdminController
     public function create()
     {
 
-        if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
+         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
@@ -206,8 +206,10 @@ class PropertiesController extends MainAdminController
         $areas = PropertyAreas::all();
         $action = 'saakin_create';
 
-        return view('admin-dashboard.property.create', 
-        compact('types', 'purposes', 'amenities', 'agencies', 'cityguides', 'cities','subCities' ,'towns' ,'areas','action'));
+
+        return view('admin-dashboard.properties.create', 
+        compact('types', 'purposes', 'amenities', 'agencies', 'cityguides', 'cities','subCities' ,'towns' ,'areas', 'action'));
+
     }
 
     public function store(Request $request)
