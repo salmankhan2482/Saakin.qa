@@ -253,19 +253,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('city-detail/update/{id}', 'CityGuideController@updateCityDetail');
     Route::get('city-detail/delete/{id}', 'CityGuideController@destroyCityDetail');
 
-    Route::get('blogs', 'BlogController@index')->name('blogs.index');
-    Route::get('blog/create', 'BlogController@create');
-    Route::post('blog/create', 'BlogController@store');
-    Route::get('blog/edit/{id}', 'BlogController@edit');
-    Route::post('blog/update/{id}', 'BlogController@update');
-    Route::get('blog/delete/{id}', 'BlogController@destroy');
+    Route::resource('blogs', 'BlogController');
+    Route::get('blog/delete/{id}', 'BlogController@destroy')->name('blogs.destroy');
 
-    Route::get('blog-category/list', 'BlogController@listBlogCategory')->name('blog-category');
-    Route::get('blog-category/create', 'BlogController@createBlogCategory');
-    Route::post('blog-category/create', 'BlogController@storeBlogCategory');
-    Route::get('blog-category/edit/{id}', 'BlogController@editBlogCategory');
-    Route::post('blog-category/update/{id}', 'BlogController@updateBlogCategory');
-    Route::get('blog-category/delete/{id}', 'BlogController@destroyBlogCategory');
+    Route::get('blog-category/list', 'BlogController@listBlogCategory')->name('blog-category.index');
+    Route::get('blog-category/create', 'BlogController@createBlogCategory')->name('blog-category.create');
+    Route::post('blog-category/create', 'BlogController@storeBlogCategory')->name('blog-category.store');
+    Route::get('blog-category/edit/{id}', 'BlogController@editBlogCategory')->name('blog-category.edit');
+    Route::post('blog-category/update/{id}', 'BlogController@updateBlogCategory')->name('blog-category.update');
+    Route::get('blog-category/delete/{id}', 'BlogController@destroyBlogCategory')->name('blog-category.destroy');
 
     Route::get('agencies', 'AgencyController@index')->name('agencies.index');
 

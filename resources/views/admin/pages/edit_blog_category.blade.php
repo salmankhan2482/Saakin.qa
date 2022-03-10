@@ -5,7 +5,9 @@
 <div id="main">
 	<div class="page-header">
 		<h2> {{ trans('words.edit').' '.trans('words.blog_category') }}</h2>
-		<a href="{{ URL::to('admin/blog-category/list') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i> {{trans('words.back')}}</a>
+		<a href="{{ route('blog-category.index') }}" class="btn btn-default-light btn-xs">
+            <i class="md md-backspace"></i> {{trans('words.back')}}
+        </a>
 	</div>
 	@if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -26,7 +28,7 @@
 
    	<div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(array('url' => array('admin/blog-category/update/'.$blogCategory->id), 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                {!! Form::open(array('route' => ['blog-category.update',$blogCategory->id], 'method'=>'PUT','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{trans('words.name')}}</label>

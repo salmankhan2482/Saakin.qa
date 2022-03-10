@@ -4,9 +4,10 @@
     <div id="main">
         <div class="page-header">
             <div class="pull-right">
-                <a href="{{ URL::to('admin/blog/create') }}"
-                    class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.blog') }} <i
-                        class="fa fa-plus"></i></a>
+                <a href="{{ route('blogs.create') }}"
+                    class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.blog') }} 
+                    <i class="fa fa-plus"></i>
+                </a>
             </div>
             <h2>Blogs</h2>
         </div>
@@ -44,11 +45,11 @@
                                         width="100" />
                                 </td>
                                 <td class="text-center">
-                                    <a href="{{ url('admin/blog/edit/' . $blog->id) }}"
+                                    <a href="{{ route('blogs.edit', $blog->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"
                                         data-toggle="tooltip" title="{{ trans('words.edit') }}"> <i
                                             class="fa fa-edit"></i> </a>
-                                    <a href="{{ url('admin/blog/delete/' . $blog->id) }}"
+                                    <a href="{{ route('blogs.destroy', $blog->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-danger m-b-5"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
                                         data-toggle="tooltip" title="{{ trans('words.remove') }}"> <i
