@@ -21,6 +21,9 @@
         .property-feature .liDesk{
             margin-left: -15px;
         }
+        .property-item img{
+            min-height: 250px !important;
+        }
     }   
 </style>
 
