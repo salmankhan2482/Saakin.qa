@@ -54,6 +54,35 @@
                         </a>
                     </li>
 
+                    {{-- blogs --}}
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link {{ Request::is('url', 'admin/blog*') ? 'text-saakin' : '' }} "
+                            href="#" role="button" data-toggle="dropdown">
+                                Blogs
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                <ul class="timeline">
+                                    <li>
+                                        <a href="{{ route('blogs.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Blogs</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('blog-category.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Blog Categories</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    
                     {{-- Landing Pages --}}
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/landing-pages*') ? 'text-saakin' : '' }} "

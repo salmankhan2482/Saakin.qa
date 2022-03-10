@@ -218,13 +218,13 @@
                         <ul @if (classActivePath('blogs') or classActivePath('blog-category/list')) 
                             style="display: block" class="collapse in" @endif>
                             <li class="{{ classActivePath('blogs') }}">
-                                <a href="{{ URL::to('admin/blogs') }}">
+                                <a href="{{ route('blogs.index') }}">
                                     {{ trans('words.blogs') }}
                                 </a>
                             </li>
                             
                             <li class="{{ classActivePath('blog-category/list') }}">
-                                <a href="{{ URL::to('admin/blog-category/list') }}">
+                                <a href="{{ route('blog-category.index') }}">
                                     {{ trans('words.blog_category') }}
                                 </a>
                             </li>

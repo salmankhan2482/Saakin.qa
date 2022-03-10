@@ -25,9 +25,30 @@ class BlogController extends Controller
             return redirect('dashboard');
         }
 
-        $blogs = Blog::paginate(10);
+
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            $category = $_GET['category'];
+            
+            $data['blogs'] = Blog::
+            when($keyword, function($query){
+                return $query->where('title', 'like', '%'.request('keyword').'%');
+            })
+            ->when($category, function($query){
+                return $query->where('category_id', request('category'));
+            })
+            ->orWhere('id', $keyword)
+            ->paginate(15);
+            $data['blogs']->appends($_GET)->links();
+
+        }else{
+            $data['blogs'] = Blog::paginate();
+        }
+        
+        $data['blog-categories'] = BlogCategory::all();
         $action = 'saakin_index';
-        return view('admin-dashboard.blog.index',compact('blogs','action'));
+        return view('admin-dashboard.blogs.index',compact('data', 'action'));
+
     }
 
     public function create()    {

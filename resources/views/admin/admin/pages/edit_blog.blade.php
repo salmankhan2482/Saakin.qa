@@ -5,7 +5,7 @@
     <div id="main">
         <div class="page-header">
             <h2> {{ trans('words.edit') . ' ' . trans('words.blog') }}</h2>
-            <a href="{{ URL::to('admin/blogs') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i>
+            <a href="{{ route('blogs.index') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i>
                 {{ trans('words.back') }}</a>
         </div>
         @if (count($errors) > 0)
@@ -27,7 +27,7 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(['url' => ['admin/blog/update/' . $blog->id], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['route' => ['blogs.update' , $blog->id], 'method' => 'PUT', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{ trans('words.category') }}</label>
                     <div class="col-sm-9">

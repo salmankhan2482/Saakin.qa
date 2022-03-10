@@ -4,7 +4,7 @@
     <div id="main">
         <div class="page-header">
             <div class="pull-right">
-                <a href="{{ URL::to('admin/blog-category/create') }}"
+                <a href="{{ route('blog-category.create') }}"
                     class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.blog_category') }} <i
                         class="fa fa-plus"></i></a>
             </div>
@@ -38,11 +38,11 @@
                                 <td>{{ $blogCategory->category }}</td>
                                 <td>{{ $blogCategory->description }}</td>
                                 <td class="text-center">
-                                    <a href="{{ url('admin/blog-category/edit/' . $blogCategory->id) }}"
+                                    <a href="{{ route('blog-category.edit/', $blogCategory->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"
                                         data-toggle="tooltip" title="{{ trans('words.edit') }}"> <i
                                             class="fa fa-edit"></i> </a>
-                                    <a href="{{ url('admin/blog-category/delete/' . $blogCategory->id) }}"
+                                    <a href="{{ route('blog-category.destroy', $blogCategory->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-danger m-b-5"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
                                         data-toggle="tooltip" title="{{ trans('words.remove') }}"> <i
