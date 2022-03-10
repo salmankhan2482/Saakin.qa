@@ -103,9 +103,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('testimonials/addtestimonial/{id}', 'TestimonialsController@edittestimonial');
 	Route::get('testimonials/delete/{id}', 'TestimonialsController@delete');
 
+Route::resource('properties','PropertiesController');
 
-
-	Route::get('properties', 'PropertiesController@propertieslist')->name('property.index');
+	// Route::get('properties', 'PropertiesController@propertieslist')->name('property.index');
 	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_property.index');
 	Route::post('properties/featured/delete', 'PropertiesController@deleteFeaturedImage')->name('delete.featured_image');
 	Route::get('properties/create', 'PropertiesController@create')->name('property.create');
@@ -254,6 +254,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('city-detail/update/{id}', 'CityGuideController@updateCityDetail');
     Route::get('city-detail/delete/{id}', 'CityGuideController@destroyCityDetail');
 
+
     Route::resource('blogs', 'BlogController');
     Route::get('blog/delete/{id}', 'BlogController@destroy')->name('blogs.destroy');
 
@@ -264,13 +265,18 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('blog-category/update/{id}', 'BlogController@updateBlogCategory')->name('blog-category.update');
     Route::get('blog-category/delete/{id}', 'BlogController@destroyBlogCategory')->name('blog-category.destroy');
 
-    Route::get('agencies', 'AgencyController@index')->name('agencies.index');
 
-    Route::get('agency/create', 'AgencyController@create')->name('agencies.create');
-    Route::post('agency/create', 'AgencyController@store')->name('agencies.store');
-    Route::get('agency/edit/{id}', 'AgencyController@edit')->name('agencies.edit');
-    Route::post('agency/update/{id}', 'AgencyController@update')->name('agencies.update');
-    Route::get('agency/delete/{id}', 'AgencyController@destroy')->name('agencies.destroy');
+
+    Route::resource('agencies','AgencyController');
+
+
+    // Route::get('agencies', 'AgencyController@index')->name('agencies.index');
+
+    // Route::get('agency/create', 'AgencyController@create')->name('agencies.create');
+    // Route::post('agency/create', 'AgencyController@store')->name('agencies.store');
+    // Route::get('agency/edit/{id}', 'AgencyController@edit')->name('agencies.edit');
+    // Route::post('agency/update/{id}', 'AgencyController@update')->name('agencies.update');
+    // Route::get('agency/delete/{id}', 'AgencyController@destroy')->name('agencies.destroy');
     Route::post('agency/keys', 'AgencyController@goMasterimport')->name('get.agences.keys');
     Route::get('agencies/export', 'AgencyController@agencies_export')->name('agencies.export');
     Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');

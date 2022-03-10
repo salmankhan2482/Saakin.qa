@@ -7,8 +7,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Roles</h4>
-                    <a href="{{ route('agencies.create') }}">
+                    <h4 class="card-title">Blogs</h4>
+                    <a href="{{ route('blogs.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
@@ -20,31 +20,28 @@
                         <table id="example3" class="display min-w850">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
-                                    {{-- <th>Detail</th> --}}
-                                    {{-- <th>Head Office</th> --}}
+                                    <th>Title</th>
+                                    <th>Slug</th>
+                                    <th>Category</th>
                                     <th>Image</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data['agencies'] as $i => $agency)
-                                    <tr>
-                                        <td>{{ $agency->name }}</td>
-                                        <td>{{ $agency->phone }}</td>
-                                        <td>{{ $agency->email }}</td>
+                                @foreach($blogs as $i => $blog)
+                    <tr>
+                        <td>{{ $blog->title }}</td>
+                        <td>{{ $blog->slug }}</td>
+                        <td>{{$blog->BlogCategory->category}} </td>
+                        <td>
+                            <img src="{{asset('upload/blogs/'.$blog->image)}}" width="100" alt="{{ $blog->title.'- blog image' }}"/>
+                        </td>
                                         <td>
-                                            <img src="{{ asset('upload/agencies/' . $agency->image) }}"
-                                                alt="{{ $agency->name.'- agency image' }}" width="60" />
-                                        </td>
-                                        <td>
-                                            <a href="{{ url('admin/agencies'. $agency->id) }}"
+                                            <a href="{{ url('admin/blogs'. $blog->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ url('admin/agency/delete/' . $agency->id) }}"
+                                            <a href="{{ url('admin/blogs/delete/' . $blog->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

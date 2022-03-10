@@ -136,7 +136,7 @@
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
                                 <ul class="timeline">
                                     <li>
-                                        <a href="{{ route('property.index') }}" class="timeline-panel">
+                                        <a href="{{ url('admin/properties') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">Active Properties</h6>
                                             </div>

@@ -63,7 +63,7 @@
                             <span class="nav-text">Properties</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{!! url('/admin/properties'); !!}">Properties</a></li>
+                            <li><a href="{!! url('/table-bootstrap-basic'); !!}">Properties</a></li>
                             <li><a href="{!! url('/table-datatable-basic'); !!}">Property Purposes</a></li>
                             <li><a href="{!! url('/table-datatable-basic'); !!}">Property Types</a></li>
                             <li><a href="{!! url('/table-bootstrap-basic'); !!}">Property Aminities</a></li>

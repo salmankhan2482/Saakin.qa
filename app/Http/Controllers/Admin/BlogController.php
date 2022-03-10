@@ -25,6 +25,7 @@ class BlogController extends Controller
             return redirect('dashboard');
         }
 
+
         if (isset($_GET['keyword'])) {
             $keyword = $_GET['keyword'];
             $category = $_GET['category'];
@@ -47,6 +48,7 @@ class BlogController extends Controller
         $data['blog-categories'] = BlogCategory::all();
         $action = 'saakin_index';
         return view('admin-dashboard.blogs.index',compact('data', 'action'));
+
     }
 
     public function create()    {
@@ -57,7 +59,8 @@ class BlogController extends Controller
         }
 
         $categories = BlogCategory::all();
-        return view('admin.pages.add_blog', compact('categories'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.blog.create', compact('categories','action'));
     }
 
     public function store(Request $request)
