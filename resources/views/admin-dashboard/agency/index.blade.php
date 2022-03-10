@@ -40,7 +40,7 @@
                                                 alt="{{ $agency->name.'- agency image' }}" width="60" />
                                         </td>
                                         <td>
-                                            <a href="{{ url('admin/agency/edit/' . $agency->id) }}"
+                                            <a href="{{ url('admin/agencies'. $agency->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>

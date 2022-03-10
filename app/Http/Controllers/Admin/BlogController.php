@@ -26,7 +26,8 @@ class BlogController extends Controller
         }
 
         $blogs = Blog::paginate(10);
-        return view('admin.pages.blogs',compact('blogs'));
+        $action = 'saakin_index';
+        return view('admin-dashboard.blog.index',compact('blogs','action'));
     }
 
     public function create()    {
@@ -37,7 +38,8 @@ class BlogController extends Controller
         }
 
         $categories = BlogCategory::all();
-        return view('admin.pages.add_blog', compact('categories'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.blog.create', compact('categories','action'));
     }
 
     public function store(Request $request)

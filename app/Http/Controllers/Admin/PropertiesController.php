@@ -49,7 +49,6 @@ class PropertiesController extends MainAdminController
 
     public function index()
     {
-
         //
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
@@ -189,7 +188,7 @@ class PropertiesController extends MainAdminController
 
     public function create()
     {
-dd("AA");
+
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
@@ -205,9 +204,10 @@ dd("AA");
         $subCities = PropertySubCities::all();
         $towns = PropertyTowns::all();
         $areas = PropertyAreas::all();
+        $action = 'saakin_create';
 
-        return view('admin-dashboard.properties.create', 
-        compact('types', 'purposes', 'amenities', 'agencies', 'cityguides', 'cities','subCities' ,'towns' ,'areas'));
+        return view('admin-dashboard.property.create', 
+        compact('types', 'purposes', 'amenities', 'agencies', 'cityguides', 'cities','subCities' ,'towns' ,'areas','action'));
     }
 
     public function store(Request $request)
