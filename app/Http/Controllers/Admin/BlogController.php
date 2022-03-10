@@ -131,7 +131,8 @@ class BlogController extends Controller
 
         $categories = BlogCategory::all();
         $blog = Blog::findOrFail($id);
-        return view('admin.pages.edit_blog',compact('blog', 'categories'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.blog.edit',compact('blog', 'categories','action'));
     }
 
     public function update(Request $request, $id)
@@ -220,8 +221,9 @@ class BlogController extends Controller
         }
 
         $blogCategories = BlogCategory::paginate(10);
+        $action = 'saakin_index';
 
-        return view('admin.pages.blog_categories',compact('blogCategories'));
+        return view('admin-dashboard.blog-category.index',compact('blogCategories','action'));
     }
 
     public function createBlogCategory()    {
@@ -230,8 +232,8 @@ class BlogController extends Controller
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
-
-        return view('admin.pages.add_blog_category');
+        $action = 'saakin_create';
+        return view('admin-dashboard.blog-category.create',compact('action'));
     }
 
     public function storeBlogCategory(Request $request)
@@ -282,7 +284,8 @@ class BlogController extends Controller
         }
 
         $blogCategory = BlogCategory::findOrFail($id);
-        return view('admin.pages.edit_blog_category',compact('blogCategory'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.blog-category.edit',compact('blogCategory','action'));
     }
 
     public function updateBlogCategory(Request $request, $id)

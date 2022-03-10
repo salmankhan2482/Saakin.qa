@@ -251,11 +251,11 @@
                                             @foreach ($amenities as $amenity)
                                                 <div class="col-6 col-sm-4">
                                                     <div class="custom-control custom-checkbox mb-3">
-                                                        <input type="checkbox" class="custom-control-input"
+                                                        <input type="checkbox" class=""
                                                             name="property_amenities[]" value="{{ $amenity->id }}"
                                                         >
-                                                        <label class="custom-control-label"
-                                                            for="customCheck">{{ $amenity->name }}</label>
+                                                        <label class=""
+                                                            for="">{{ $amenity->name }}</label>
                                                     </div>
                                                 </div>
                                             @endforeach

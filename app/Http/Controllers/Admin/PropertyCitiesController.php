@@ -18,7 +18,8 @@ class PropertyCitiesController extends Controller
     public function index()
     {
         $cities = PropertyCities::all();
-        return view('admin.pages.address.cities.index', compact('cities'));
+        $action = 'saakin_index';
+        return view('admin-dashboard.adress-management.city.index', compact('cities','action'));
     }
 
     /**
@@ -28,7 +29,8 @@ class PropertyCitiesController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.address.cities.create');
+        $action = 'saakin_create';
+        return view('admin-dashboard.adress-management.city.create',compact('action'));
     }
 
     /**
@@ -47,6 +49,7 @@ class PropertyCitiesController extends Controller
             'name' => request('name'),
             'slug' => Str::slug(request('name')),
         ]);
+
 
         Session::flash('message', 'City has been added.'); 
         return redirect()->back();
@@ -72,7 +75,8 @@ class PropertyCitiesController extends Controller
     public function edit($id)
     {
         $propertyCity = PropertyCities::find($id);
-        return view('admin.pages.address.cities.edit', compact('propertyCity'));
+        $action = 'saakin_edit';
+        return view('admin-dashboard.adress-management.city.edit', compact('propertyCity','action'));
     }
 
     /**
