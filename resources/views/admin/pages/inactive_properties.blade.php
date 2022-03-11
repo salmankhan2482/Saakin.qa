@@ -31,7 +31,7 @@
         <div class="panel panel-shadow">
             <div class="panel-body">
                 <div class="col-sm-10">
-                    {!! Form::open(['url' => 'admin/properties_inactive_listing', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
+                    {!! Form::open(['route' => 'inactive_properties.index', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
                     <span class="bold text-muted">{{ trans('words.search') }}</span>
                     <div class="form-group">
                         <input type="text" class="form-control" id="" name="keyword"

@@ -33,10 +33,10 @@
                             <div class="add-list float-right ml-3">
                                 @if (Auth::user())
                                     @if (Auth::user()->usertype == 'Agency')
-                                        <a class="btn v6" href="{{ URL::to('admin/properties/create') }}">
+                                        <a class="btn v6" href="{{ route('properties.create') }}">
                                             Submit Property</a>
                                     @elseif(Auth::user()->usertype=='Admin')
-                                        <a class="btn v6" href="{{ URL::to('admin/properties/create') }}">
+                                        <a class="btn v6" href="{{ route('properties.create') }}">
                                             Submit Property
                                         </a>
                                     @else

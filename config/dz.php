@@ -313,15 +313,12 @@ return [
 				],
 
 				'saakin_create' => [
-
+					
 					'admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
-					'admin/vendor/summernote/js/summernote.min.js',
-					'admin/js/plugins-init/summernote-init.js',
 					'admin/vendor/select2/js/select2.full.min.js',
 					'admin/js/plugins-init/select2-init.js',
 					'admin/js/custom.min.js',
 					'admin/js/deznav-init.js',
-
 				],
 
 				'saakin_edit' => [

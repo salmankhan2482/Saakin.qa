@@ -41,11 +41,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Search Property</h4>
+                    <h4 class="card-title">Search Inactive Property</h4>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form action="{{ url('admin/properties') }}" method="GET">
+                        <form action="{{ route('inactive_properties.index') }}" method="GET">
                             <div class="row">
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control" name="keyword" placeholder="Search">
@@ -90,9 +90,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Properties</h4>
+                    <h4 class="card-title">Inactive Properties</h4>
                     <a href="{{ route('properties.create') }}">
-
                         <button type="button" class="btn btn-rounded btn-info">
                         <span class="btn-icon-left text-info">
                             <i class="fa fa-plus color-info"></i>
@@ -121,8 +120,7 @@
                                         <td>{{ $property->id }}</td>
                                         <td>{{ $property->Agency->name ?? $property->user->name}}</td>
                                         <td>
-                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
-
+                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank"> 
                                                 {{ $property->property_name }}
                                             </a>
                                         </td>

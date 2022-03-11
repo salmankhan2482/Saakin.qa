@@ -32,8 +32,7 @@
                         <form action="{{ route('blogs.index') }}" method="GET">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="keyword" placeholder="Search" 
-                                        style=" height: 2.4rem;">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search" >
                                 </div>
                                 <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select name="category" class="selectpicker show-tick form-control" >

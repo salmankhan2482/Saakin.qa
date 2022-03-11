@@ -45,7 +45,7 @@ class Properties extends Model
         }
     }    
 
-	public function scopeSearchByKeyword($query, $keyword,$purpose,$type)
+	public function scopeSearchByKeyword($query, $keyword, $purpose,$type)
     {
 
             if($keyword!='' and $purpose!='' and $type!='')

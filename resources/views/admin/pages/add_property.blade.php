@@ -28,7 +28,7 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(array('url' => array('admin/properties/create'), 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                {!! Form::open(array('route' => ['properties.store'], 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                 <fieldset>
                     <legend>Basic Details</legend>
@@ -212,8 +212,7 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <label>Description</label>
-                            <textarea class="form-control" rows="4" name="description" id="p-desc" required
-                                      placeholder="{{trans('words.description')}}">{{ old('description') }}</textarea>
+                            <textarea class="form-control" rows="4" name="description" id="p-desc" required >{{ old('description') }}</textarea>
                         </div>
                     </div>
                 </fieldset>
@@ -320,7 +319,7 @@
 
         function callSubCityTown(data) {
             var id = data.value;
-            
+
             $.ajax({
                 type: "GET",
                 url: "{{ route('callSubCityTown') }}",
@@ -328,47 +327,46 @@
                 data: {
                     id: id // as you are getting in request('id') 
                 },
-                success: function (response) {
+                success: function(response) {
                     var subcities = response['subcities'];
                     var towns = response['towns'];
                     var areas = response['areas'];
-                    
+
                     clearEveryThing('subcity', 'town', 'area', 'p-lat', 'p-long');
-                    
-                    if(subcities == '<option value="">No Result Found</option>'){
+
+                    if (subcities == '<option value="">No Result Found</option>') {
                         $("#subcity").append('<option value="">No Result Found</option>');
-                    }else{
-                        $.each(subcities, function(key,value){
-                            $("#subcity").append('<option value="'+value.id+'">'+value.name+'</option>');
+                    } else {
+                        $.each(subcities, function(key, value) {
+                            $("#subcity").append('<option value="' + value.id + '">' + value.name +'</option>');
                         });
                         $("#subcity").append('<option value="">Select Sub City</option>');
-                    }    
+                    }
 
 
-                    if(towns === '<option value="">No Result Found</option>'){     
+                    if (towns === '<option value="">No Result Found</option>') {
                         $("#town").append('<option value="">No Result Found</option>');
-                    }else{     
-                        $.each(towns, function(key,value){
-                            $("#town").append('<option value="'+value.id+'">'+value.name+'</option>');
+                    } else {
+                        $.each(towns, function(key, value) {
+                            $("#town").append('<option value="' + value.id + '">' + value.name +'</option>');
                         });
                         $("#town").append('<option value="">Select Town</option>');
-                        
+
                     }
-                    
-                    if(areas === '<option value="">No Result Found</option>'){
+
+                    if (areas === '<option value="">No Result Found</option>') {
                         $("#area").append('<option value="">No Result Found</option>');
-                    }
-                    else{
-                        $("#area").empty();     
-                        $.each(areas, function(key,value){
-                            $("#area").append('<option value="'+value.id+'">'+value.name+'</option>');
+                    } else {
+                        $("#area").empty();
+                        $.each(areas, function(key, value) {
+                            $("#area").append('<option value="' + value.id + '">' + value.name +'</option>');
                         });
                         $("#area").append('<option value="">Select Area</option>');
 
                     }
-                    
-                    assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
-                            towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+
+                    assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
+                        towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
 
                 }
             });
@@ -378,7 +376,7 @@
 
         function callTown(data) {
             var id = data.value;
-            
+
             $.ajax({
                 type: "GET",
                 url: "{{ route('callTown') }}",
@@ -386,77 +384,78 @@
                 data: {
                     id: id // as you are getting in request('id') 
                 },
-                success: function (response) {
+                success: function(response) {
                     var subcities = response['subcities'];
                     var towns = response['towns'];
                     var areas = response['areas'];
 
                     clearEveryThing('', 'town', 'area', 'p-lat', 'p-long');
 
-                    if(towns == '<option value="">No Result Found</option>'){
+                    if (towns == '<option value="">No Result Found</option>') {
                         $("#town").append('<option value="">No Result Found</option>');
-                    }
-                    else{
-                        $.each(towns, function(key,value){
-                        $("#town").append('<option value="'+value.id+'">'+value.name+'</option>');
+                    } else {
+                        $.each(towns, function(key, value) {
+                            $("#town").append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
                         $("#town").append('<option value="">Select Town</option>');
 
                     }
 
-                    if(areas == '<option value="">No Result Found</option>'){
+                    if (areas == '<option value="">No Result Found</option>') {
                         $("#area").append('<option value="">No Result Found</option>');
-                    }
-                    else{
-                        $.each(areas, function(key,value){
-                            $("#area").append('<option value="'+value.id+'">'+value.name+'</option>');
+                    } else {
+                        $.each(areas, function(key, value) {
+                            $("#area").append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
                         $("#area").append('<option value="">Select Area</option>');
-
                     }
 
-                    assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
-                            towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                    assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
+                        towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
                 }
             });
 
         }
-    
-    
+
+
         function callArea(data) {
             var id = data.value;
-            
+            var pre = $("#subcity").val();
+
             $.ajax({
                 type: "GET",
                 url: "{{ route('callArea') }}",
                 async: true,
                 data: {
-                    id: id // as you are getting in request('id') 
+                    id: id, // as you are getting in request('id') 
+                    pre: pre
                 },
-                success: function (response) {
+                success: function(response) {
                     var areas = response['areas'];
                     var subcities = response['subcities'];
                     var towns = response['towns'];
-
+                    console.log(subcities);
                     clearEveryThing('', '', 'area', 'p-lat', 'p-long');
 
-                    if(areas === '<option value="">No Result Found</option>'){
+                    if (areas === '<option value="">No Result Found</option>') {
                         $("#area").append('<option value="">No Result Found</option>');
 
-                    }else{
-                        $("#area").empty();     
-                        $.each(areas, function(key,value){
-                            $("#area").append('<option value="'+value.id+'">'+value.name+'</option>');
+                    } else if (areas === '<option value="">No Result Found</option>') {
+                        $("#town").append('<option value="">No Result Found</option>');
+
+                    }else {
+                        $("#area").empty();
+                        $.each(areas, function(key, value) {
+                            $("#area").append('<option value="' + value.id + '">' + value.name + '</option>');
                             $("#p-lat").val(value.latitude);
                             $("#p-long").val(value.longitude);
                         });
                         $("#area").append('<option value="">Select Area</option>');
 
                     }
-
-                    assingLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude, 
-                            towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
-
+                    
+                    assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
+                        towns[0].longitude, subcities.longitude, subcities.longitude);
                 }
             });
 
@@ -465,49 +464,48 @@
         function callLatLong(data) {
             var id = data.value;
             var pre = $("#town").val();
-            console.log(pre);
+
             $.ajax({
                 type: "GET",
                 url: "{{ route('callLatLong') }}",
                 async: true,
                 data: {
-                    id: id, 
+                    id: id,
                     pre: pre
                 },
-                success: function (response) {
-                    
+                success: function(response) {
                     var subcities = response['subcities'];
                     var towns = response['towns'];
                     var areas = response['latLong'];
                     console.log(areas);
                     $("#p-lat").val('');
                     $("#p-long").val('');
-                    
-                    assingLatLong(areas.latitude, areas.longitude, towns.latitude ?? '', 
-                            towns.longitude ?? '', subcities.longitude ?? '', subcities.longitude ?? '');
+
+                    assignLatLong(areas.latitude, areas.longitude, towns.latitude ?? '',
+                        towns.longitude ?? '', subcities.longitude ?? '', subcities.longitude ?? '');
 
                 }
             });
 
         }
 
-        function assingLatLong(alat, alon, tlat, tlon, slat, slon){
-            if(alat && alon){
+        function assignLatLong(alat, alon, tlat, tlon, slat, slon) {
+            if (alat && alon) {
                 $("#p-lat").val(alat);
                 $("#p-long").val(alon);
-            }else if(tlat && tlon){
+            } else if (tlat && tlon) {
                 $("#p-lat").val(tlat);
                 $("#p-long").val(tlon);
-            }else if(slat && slon){
+            } else if (slat && slon) {
                 $("#p-lat").val(slat);
                 $("#p-long").val(slon);
             }
         }
 
-        function clearEveryThing(subcity, town, area, p_lat, p_long ){
-            $(`#${subcity}`).empty(); 
+        function clearEveryThing(subcity, town, area, p_lat, p_long) {
+            $(`#${subcity}`).empty();
             $(`#${town}`).empty();
-            $(`#${area}`).empty();    
+            $(`#${area}`).empty();
             $(`#${p_lat}`).val('');
             $(`#${p_long}`).val('');
         }

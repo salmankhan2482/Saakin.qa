@@ -1,31 +1,6 @@
 <?php
 
-use App\AmenityProduct;
-use App\City;
-use App\Types;
-use App\PageVisits;
-use App\Properties;
-use App\Mail\TestMail;
-use App\PropertyAreas;
-use App\PropertyTowns;
-use App\PropertyCities;
-use App\Mail\MyCustomMail;
-use App\PropertySubCities;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Artisan;
-use App\Http\Controllers\BlogController;
-use Stevebauman\Location\Facades\Location;
-use App\Http\Controllers\ClickCountersController;
-use App\Http\Controllers\PropertyReportController;
-use App\Http\Controllers\Admin\PropertiesController;
-use App\Http\Controllers\OmahadminController;
-
-// use App\Http\Controllers\Admin\ClickCountersController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +12,6 @@ use App\Http\Controllers\OmahadminController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
@@ -103,18 +77,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('testimonials/addtestimonial/{id}', 'TestimonialsController@edittestimonial');
 	Route::get('testimonials/delete/{id}', 'TestimonialsController@delete');
 
-Route::resource('properties','PropertiesController');
 
-	// Route::get('properties', 'PropertiesController@propertieslist')->name('property.index');
-	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_property.index');
+	Route::resource('properties', 'PropertiesController');
+	Route::any('properties/delete/{id}', 'PropertiesController@delete')->name('properties.destroy');
+	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_properties.index');
+
 	Route::post('properties/featured/delete', 'PropertiesController@deleteFeaturedImage')->name('delete.featured_image');
-	Route::get('properties/create', 'PropertiesController@create')->name('property.create');
-	Route::post('properties/create', 'PropertiesController@store')->name('property.store');
-	Route::get('properties/edit/{id}', 'PropertiesController@edit')->name('property.edit');
-    Route::post('properties/edit/{id}', 'PropertiesController@update')->name('property.update');
-	Route::get('properties/status/{id}', 'PropertiesController@status');
+	
+    Route::get('properties/status/{id}', 'PropertiesController@status');
 	Route::get('properties/featuredproperty/{id}', 'PropertiesController@featuredproperty');
-	Route::any('properties/delete/{id}', 'PropertiesController@delete');
 	Route::get('featuredproperties', 'FeaturedPropertiesController@propertieslist');
     Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties');
 	Route::get('properties/export', 'PropertiesController@property_export');
