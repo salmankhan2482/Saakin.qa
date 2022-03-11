@@ -136,23 +136,23 @@
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
                                 <ul class="timeline">
                                     <li>
-                                        <a href="{{ route('property-landing-pages') }}" class="timeline-panel">
+                                        <a href="{{ route('properties-page-content') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6 class="mb-1">Properties Pages</h6>
+                                                <h6 class="mb-1">Properties Page Content</h6>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ route('landing-pages') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6 class="mb-1">Landing Pages</h6>
+                                                <h6 class="mb-1">Landing Page Content</h6>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="{{ route('city-guide-landing-pages') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6 class="mb-1">City Guide Pages</h6>
+                                                <h6 class="mb-1">City Guide Page Content</h6>
                                             </div>
                                         </a>
                                     </li>

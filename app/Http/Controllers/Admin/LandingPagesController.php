@@ -30,7 +30,7 @@ class LandingPagesController extends Controller
         }
         $action = 'saakin_index';
         $data['landing_pages_content'] = LandingPage::all();
-        return view('admin-dashboard.landing-pages.index', compact('data', 'action'));
+        return view('admin-dashboard.landing-pages.landing_page_content.index', compact('data', 'action'));
     }
     public function create()    {
 
@@ -43,8 +43,10 @@ class LandingPagesController extends Controller
         $property_types = Types::all();
         $cities = PropertyCities::all();
         $landing_pages_content = LandingPage::all();
+        $action = 'saakin_create';
 
-        return view('admin.pages.landing_pages.add_property_content', compact('property_purposes','property_types','landing_pages_content','cities'));
+        return view('admin-dashboard.landing-pages.landing_page_content.create', 
+        compact('property_purposes','property_types','landing_pages_content','cities','action'));
     }
     public function store(Request $request)
     {
@@ -147,8 +149,10 @@ class LandingPagesController extends Controller
 
         $page_info = LandingPage::find('53');
         $page_title=trans('words.properties_page_content');
+        $action = 'saakin_edit';
 
-        return view('admin.pages.properties_page_content', compact('page_info','page_title'));
+        return view('admin-dashboard.landing-pages.properties_page_content.properties_page_content',
+         compact('page_info','page_title','action'));
     }
     public function update_properties_page_content(Request $request)
     {

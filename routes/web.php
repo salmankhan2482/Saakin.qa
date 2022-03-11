@@ -24,7 +24,8 @@ Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
-    Route::get('/dashboard/new', 'OmahadminController@saakin_dashborad')->middleware('auth');
+    Route::get('/dashboard/new', 'OmahadminController@saakin_dashborad')->middleware('auth')
+    ->name('new_dashboard');
     Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
     // new routes
     
@@ -253,15 +254,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');
 
     Route::get('landing-pages', 'LandingPagesController@index')->name('landing-pages');
-    Route::get('landing-pages/create', 'LandingPagesController@create');
-    Route::post('landing-pages/create', 'LandingPagesController@store');
+    Route::get('landing-pages/create', 'LandingPagesController@create')->name('landing-pages-create');
+    Route::post('landing-pages/create', 'LandingPagesController@store')->name('landing-pages-store');
     Route::get('landing-pages/edit/{id}', 'LandingPagesController@edit');
     Route::post('landing-pages/update/{id}', 'LandingPagesController@update');
     Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy');
 
     Route::get('landing-pages/properties-page-content', 'LandingPagesController@properties_page_content')
-    ->name('property-landing-pages');
-    Route::post('landing-pages/properties-page-content', 'LandingPagesController@update_properties_page_content');
+    ->name('properties-page-content');
+    Route::post('landing-pages/properties-page-content', 'LandingPagesController@update_properties_page_content')
+    ->name('update-properties-page-content');
 
     Route::get('landing-pages/city-guide-page-content', 'LandingPagesController@city_guide_page_content')
     ->name('city-guide-landing-pages');
