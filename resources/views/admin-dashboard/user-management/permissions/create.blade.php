@@ -38,12 +38,12 @@
                             {!! Form::open(['route' => 'permissions.store', 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-11">
                                     <label>Title</label>
                                     <input type="text" id="title" name="title" class="form-control"
                                         placeholder="Enter Permission Title">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-1">
                                     <label>&nbsp;</label><br>
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
