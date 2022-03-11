@@ -82,6 +82,49 @@
                             </div>
                         </div>
                     </li>
+
+                    {{-- Addresses --}}
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link {{ Request::is('url', 'admin/blog*') ? 'text-saakin' : '' }} "
+                            href="#" role="button" data-toggle="dropdown">
+                                Addresses
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                <ul class="timeline">
+                                    <li>
+                                        <a href="{{ route('propertyCities.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">cities</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('propertySubCities.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Sub-Cities</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('propertyTowns.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Towns</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('propertyAreas.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Areas</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
                     
                     {{-- Landing Pages --}}
                     <li class="nav-item dropdown notification_dropdown">
