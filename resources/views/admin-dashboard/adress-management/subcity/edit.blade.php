@@ -35,7 +35,7 @@
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
-                            {!! Form::open(['route' => ['propertySubCities.update',$subCity->id], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::open(['route' => ['propertySubCities.update',$subCity->id], 'method' => 'PATCH', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
