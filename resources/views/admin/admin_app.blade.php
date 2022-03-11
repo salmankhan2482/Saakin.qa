@@ -85,7 +85,6 @@ $roles=App\RoleUser::where('user_id',\Illuminate\Support\Facades\Auth::user()->i
 
 <div class="overlay-disabled"></div>
 
-
 <!-- Plugins -->
 <script src="{{ URL::asset('assets/js/jquery.validate.js') }}"></script>
 <script src="{{ URL::asset('admin_assets/js/plugins.min.js') }}"></script>
@@ -98,7 +97,6 @@ $roles=App\RoleUser::where('user_id',\Illuminate\Support\Facades\Auth::user()->i
 <!-- App Scripts -->
 <script src="{{ URL::asset('admin_assets/js/scripts.js') }}"></script>
 <script src="https://cdn.ckeditor.com/4.13.0/full/ckeditor.js"></script>
-
 {{-- select 2 js --}}
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 

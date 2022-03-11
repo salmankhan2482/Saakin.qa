@@ -60,7 +60,6 @@
         </div>
 
 		@include('admin-dashboard.partials.header')
-
         @include('admin-dashboard.partials.sidebar')
 
         <div class="content-body">
@@ -68,7 +67,6 @@
         </div>
 
 		@include('admin-dashboard.partials.footer')
-
     </div>
 
 	@include('admin-dashboard.partials.footer-scripts')

@@ -47,88 +47,131 @@ class PropertiesController extends MainAdminController
         parent::__construct();
     }
 
-    public function index()
+    public function propertieslist()
     {
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
 
-        $data['propertieslist'] = Properties::
-        when(auth()->user()->usertype == "Agency", function($query){
-            return $query->where('agency_id', auth()->user()->agency_id);
-        })
-        ->when(request('purpose'), function($query){
-            return $query->where('property_purpose', request('purpose'));
-        })
-        ->when(request('type'), function($query){
-            return $query->where('property_type', request('type'));
-        })
-        ->when(request('keyword'), function($query){
-            return $query->where('property_name', request('keyword'));
-        })
-        ->when(request('status'), function($query){
-            return $query->where('status', request('status'));
-        })
-        ->when(request('keyword'), function($query){
-            return $query->orWhere('id', request('keyword'));
-        })
-        ->where('status', 1)
-        ->paginate(15);
-        $data['propertieslist']->appends($_GET)->links();
-        
-        $data['propertyTypes'] = Types::join("properties", "properties.property_type", "=", "property_types.id")
-        ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
-        ->when(auth()->user()->usertype == "Agency", function($query){
-            return $query->where('properties.agency_id', Auth::User()->agency_id);
-        })
-        ->where('properties.status', 1)
-        ->orderBy("pcount", "desc")
-        ->groupBy("property_types.id")
-        ->get();
-     
+        if (isset($_GET['keyword'])) {
+            $purpose = $_GET['purpose'];
+            $type = $_GET['type'];
+            $keyword = $_GET['keyword'];
+            $status = $_GET['status'];
+            
+            $propertieslist = Properties::when(auth()->user()->usertype == "Agency", function($query){
+                return $query->where('agency_id', auth()->user()->agency_id);
+            })
+            ->SearchByKeyword($keyword, $purpose, $type, $status)
+            ->orWhere('id', $keyword)
+            ->orWhere('property_name', 'like', '%' . $keyword . '%')
+            ->paginate(15);
+            $propertieslist->appends($_GET)->links();
 
-        $action = 'saakin_index';
-        return view('admin-dashboard.properties.index', compact('data', 'action'));
+        } 
+        
+        if (Auth::User()->usertype == "Agency") {
+            $propertyTypes = Types::join("properties", "properties.property_type", "=", "property_types.id")
+            ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
+            ->where('properties.agency_id', Auth::User()->agency_id)
+            ->where('properties.status', 1)
+            ->orderBy("pcount", "desc")
+            ->groupBy("property_types.id")
+            ->get();
+        } else {
+            if(request()->ajax())
+            {
+                $propertyTypes = Types::join("properties", "properties.property_type", "=", "property_types.id")
+                ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
+                ->where('properties.status', 1)
+                ->orderBy("pcount", "desc")
+                ->groupBy("property_types.id")
+                ->get();
+                return view('admin.pages.include.data_tables', compact('propertieslist'))->render();
+
+            }else{
+                $propertyTypes = Types::join("properties","properties.property_type","=","property_types.id")
+                ->select("property_types.id","property_types.types",DB::Raw("count(properties.id) as pcount"))
+                ->where('properties.status', 1)
+                ->orderBy("pcount","desc")
+                ->groupBy("property_types.id")
+                ->get();
+            }
+        }
+
+        return view('admin.pages.properties', compact('propertieslist', 'propertyTypes'));
     }
     public function inactivepropertieslist()
-    { 
-        $data['propertieslist'] = Properties::
-        when(auth()->user()->usertype == "Agency", function($query){
-            return $query->where('agency_id', auth()->user()->agency_id);
-        })
-        ->when(request('purpose'), function($query){
-            return $query->where('property_purpose', request('purpose'));
-        })
-        ->when(request('type'), function($query){
-            return $query->where('property_type', request('type'));
-        })
-        ->when(request('keyword'), function($query){
-            return $query->where('property_name', request('keyword'));
-        })
-        ->when(request('status'), function($query){
-            return $query->where('status', request('status'));
-        })
-        ->when(request('keyword'), function($query){
-            return $query->orWhere('id', request('keyword'));
-        })
-        ->where('status', 0)
-        ->paginate(15);
+    {
+        
+        if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
+        }
 
-        $data['propertieslist']->appends($_GET)->links();
-        
-        $data['propertyTypes'] = Types::join("properties", "properties.property_type", "=", "property_types.id")
-        ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
-        ->when(auth()->user()->usertype == "Agency", function($query){
-            return $query->where('properties.agency_id', Auth::User()->agency_id);
-        })
-        ->where('properties.status', 0)
-        ->orderBy("pcount", "desc")
-        ->groupBy("property_types.id")
-        ->get();
-        
-        $action = 'saakin_index';
-        return view('admin-dashboard.properties.inactive_properties_index', compact('data', 'action'));
+        if (isset($_GET['keyword'])) {
+            $purpose = $_GET['purpose'];
+            $type = $_GET['type'];
+            $keyword = $_GET['keyword'];
+            $status = $_GET['status'];
+
+            if (Auth::User()->usertype == "Agency") {
+                $propertieslist = Properties::where('agency_id', Auth::User()->agency_id)
+                ->where('status', 0)        
+                ->SearchByKeyword($keyword, $purpose, $type, $status)
+                ->paginate(15);
+            } else {
+                $propertieslist = Properties::where('status', 0)  
+                ->SearchByKeyword($keyword, $purpose, $type, $status)
+                ->paginate(15);
+            }
+            $propertieslist->appends($_GET)->links();
+
+        } else {
+
+            if (Auth::User()->usertype == "Agency") {
+                $propertieslist = Properties::where('agency_id', Auth::User()->agency_id)
+                ->where('status', 0)
+                ->orderBy('id', 'desc')
+                ->paginate(15);
+            } else {
+                $propertieslist = Properties::where('status', 0)
+                ->orderBy('id', 'desc')
+                ->paginate(15);
+            }
+        }
+
+        if (Auth::User()->usertype == "Agency") {
+            $propertyTypes = Types::join("properties", "properties.property_type", "=", "property_types.id")
+            ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
+            ->where('properties.agency_id', Auth::User()->agency_id)
+            ->where('properties.status', 0)
+            ->orderBy("pcount", "desc")
+            ->groupBy("property_types.id")
+            ->get();
+        } else {
+            if(request()->ajax())
+            {
+                $propertyTypes = Types::join("properties", "properties.property_type", "=", "property_types.id")
+                ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
+                ->where('properties.status', 0)
+                ->orderBy("pcount", "desc")
+                ->groupBy("property_types.id")
+                ->get();
+                return view('admin.pages.include.data_tables', compact('propertieslist'))->render();
+
+            }else{
+                $propertyTypes = Types::join("properties","properties.property_type","=","property_types.id")
+                ->select("property_types.id","property_types.types",DB::Raw("count(properties.id) as pcount"))
+                ->where('properties.status', 0)
+                ->orderBy("pcount","desc")
+                ->groupBy("property_types.id")
+                ->get();
+            }
+        }
+
+        return view('admin.pages.inactive_properties', compact('propertieslist', 'propertyTypes'));
     }
 
     public function create()
@@ -139,19 +182,19 @@ class PropertiesController extends MainAdminController
             return redirect('admin/dashboard');
         }
         
-        $data['types'] = Types::orderBy('types')->get();
-        $data['purposes'] = PropertyPurpose::get();
-        $data['cityguides'] = CityGuide::get();
-        $data['amenities'] = PropertyAmenity::orderBy("name", "asc")->get();
-        $data['agencies'] = Agency::where('status', 1)->get();
+        $types = Types::orderBy('types')->get();
+        $purposes = PropertyPurpose::get();
+        $cityguides = CityGuide::get();
+        $amenities = PropertyAmenity::orderBy("name", "asc")->get();
+        $agencies = Agency::where('status', 1)->get();
 
-        $data['cities'] = PropertyCities::all();
-        $data['subCities'] = PropertySubCities::all();
-        $data['towns'] = PropertyTowns::all();
-        $data['areas'] = PropertyAreas::all();
+        $cities = PropertyCities::all();
+        $subCities = PropertySubCities::all();
+        $towns = PropertyTowns::all();
+        $areas = PropertyAreas::all();
 
-        $action = 'saakin_create';
-        return view('admin-dashboard.properties.create',  compact('data', 'action'));
+        return view('admin.pages.add_property', 
+        compact('types', 'purposes', 'amenities', 'agencies', 'cityguides', 'cities','subCities' ,'towns' ,'areas'));
     }
 
     public function store(Request $request)
@@ -319,7 +362,7 @@ class PropertiesController extends MainAdminController
 
 
         \Session::flash('flash_message', "Your Property has been submitted. It will be Publish soon");
-        return redirect()->route('properties.index');
+        return redirect()->route('property_listview');
     }
 
     public function edit(Request $request, $id)

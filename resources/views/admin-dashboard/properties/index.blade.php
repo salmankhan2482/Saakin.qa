@@ -91,7 +91,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Properties</h4>
-                    <a href="{{ route('property.create') }}">
+                    <a href="{{ route('properties.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                         <span class="btn-icon-left text-info">
                             <i class="fa fa-plus color-info"></i>
@@ -118,9 +118,9 @@
                                 @foreach ($data['propertieslist'] as $i => $property)
                                     <tr>
                                         <td>{{ $property->id }}</td>
-                                        <td>{{ $property->user->name ?? ''}}</td>
+                                        <td>{{ $property->Agency->name ?? $property->user->name}}</td>
                                         <td>
-                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
+                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
                                                 {{ $property->property_name }}
                                             </a>
                                         </td>

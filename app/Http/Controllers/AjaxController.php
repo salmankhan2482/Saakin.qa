@@ -81,25 +81,39 @@ class AjaxController extends Controller
 
     public function callArea()
     {
-        $store['areas'] = DB::table('property_areas')
+        if(request('id') == null){
+            
+            $store['subcities'] = DB::table('property_sub_cities')
+            ->select('property_cities_id', 'latitude', 'longitude')
+            ->where('id', request()->pre)
+            ->first();
+
+            $store['areas'] ='<option value="">No Result Found</option>';
+            $store['towns'] ='<option value="">No Result Found</option>';
+            return $store;
+
+        }else{
+            $store['areas'] = DB::table('property_areas')
                 ->select('id','name', 'latitude', 'longitude')
                 ->where('property_towns_id', request()->id)->get();
         
-        if ($store['areas']->isEmpty()) {
-            $store['areas'] = '<option value="">No Result Found</option>';
+            if ($store['areas']->isEmpty()) {
+                $store['areas'] = '<option value="">No Result Found</option>';
+            }
+
+            $store['towns'] = DB::table('property_towns')
+                ->select('id','name', 'property_sub_cities_id', 'latitude', 'longitude')
+                ->where('id', request()->id)->get();
+
+
+            $store['subcities'] = DB::table('property_sub_cities')
+                ->select('id','name', 'latitude', 'longitude')
+                ->where('id',$store['towns'][0]->property_sub_cities_id)
+                ->get();
+
+            return $store;
         }
-
-        $store['towns'] = DB::table('property_towns')
-            ->select('id','name', 'property_sub_cities_id', 'latitude', 'longitude')
-            ->where('id', request()->id)->get();
-
-
-        $store['subcities'] = DB::table('property_sub_cities')
-            ->select('id','name', 'latitude', 'longitude')
-            ->where('id',$store['towns'][0]->property_sub_cities_id)
-            ->get();
-
-        return $store;
+        
     }
 
     public function callLatLong()
@@ -110,15 +124,9 @@ class AjaxController extends Controller
             ->where('id', request()->pre)
             ->first();
 
-            $store['towns'] = DB::table('property_towns')
-            ->select('property_sub_cities_id', 'latitude', 'longitude')
-            ->where('id', request()->pre)
-            ->first();
-
-            $store['subcities'] = DB::table('property_sub_cities')
-            ->select('latitude', 'longitude')
-            ->where('id', $store['towns']->property_sub_cities_id)
-            ->first();
+            $store['towns'] = '<option value="">No Result Found</option>';
+            $store['subcities'] = '<option value="">No Result Found</option>';
+            
             return $store;
 
         }else{

@@ -143,7 +143,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('inactive_property.index') }}" class="timeline-panel">
+                                        <a href="{{ route('inactive_properties.index') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">In-Active Pages</h6>
                                             </div>

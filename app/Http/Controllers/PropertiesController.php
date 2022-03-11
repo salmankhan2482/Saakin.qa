@@ -49,7 +49,7 @@ class PropertiesController extends Controller
         //  check_property_exp();
     }
 
-    public function getPropertyListing(Request $request)
+    public function index(Request $request)
     {   
 
         if(request()->property_purpose != ''){
