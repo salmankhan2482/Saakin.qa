@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
 Route::get('auth/google', 'SocialController@redirectToGoogle')->name('google.login');
@@ -70,24 +69,20 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('slider/addslide/{id}', 'SliderController@editSlide');
 	Route::get('slider/delete/{id}', 'SliderController@delete');
 
-
 	Route::get('testimonials', 'TestimonialsController@testimonialslist');
 	Route::get('testimonials/addtestimonial', 'TestimonialsController@addeditestimonials');
 	Route::post('testimonials/addtestimonial', 'TestimonialsController@addnew');
 	Route::get('testimonials/addtestimonial/{id}', 'TestimonialsController@edittestimonial');
 	Route::get('testimonials/delete/{id}', 'TestimonialsController@delete');
 
-
 	Route::resource('properties', 'PropertiesController');
 	Route::any('properties/delete/{id}', 'PropertiesController@delete')->name('properties.destroy');
 	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_properties.index');
 
-	Route::post('properties/featured/delete', 'PropertiesController@deleteFeaturedImage')->name('delete.featured_image');
-	
-    Route::get('properties/status/{id}', 'PropertiesController@status');
+    Route::get('properties/status/{id}', 'PropertiesController@status')->name('properties.status');
 	Route::get('properties/featuredproperty/{id}', 'PropertiesController@featuredproperty');
-	Route::get('featuredproperties', 'FeaturedPropertiesController@propertieslist');
-    Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties');
+	Route::get('featuredproperties', 'FeaturedPropertiesController@propertieslist')->name('featuredproperties.index');
+    Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties')->name('featuredproperties.pending');
 	Route::get('properties/export', 'PropertiesController@property_export');
 	Route::post('properties/plan_update', 'PropertiesController@plan_update');
 
@@ -114,25 +109,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('properties/floor-plan/{id}/edit/{gid}', 'PropertiesController@updateFloorPlan');
     Route::get('properties/floor-plan/{id}/delete/{gid}', 'PropertiesController@destroyFloorPlan');
 
-    Route::get('property-types', 'TypesController@typeslist')->name('property-types.index');
-    Route::get('types/addtypes', 'TypesController@addedittypes');
-    Route::post('types/addtypes', 'TypesController@addnew');
-    Route::get('types/addtypes/{id}', 'TypesController@edittypes');
-    Route::get('types/delete/{id}', 'TypesController@delete');
+    Route::resource('property-types', 'TypesController');
+    Route::get('types/delete/{id}', 'TypesController@delete')->name('property-types.destroy');
 
-    Route::get('property-purpose', 'PropertyPurposeController@index')->name('property-purpose.index');
-    Route::get('property-purpose/create', 'PropertyPurposeController@create');
-    Route::post('property-purpose/create', 'PropertyPurposeController@store');
-    Route::get('property-purpose/edit/{id}', 'PropertyPurposeController@edit');
-    Route::post('property-purpose/update/{id}', 'PropertyPurposeController@update');
-    Route::get('property-purpose/delete/{id}', 'PropertyPurposeController@destroy');
+    Route::resource('property-purpose', 'PropertyPurposeController');
+    Route::get('property-purpose/delete/{id}', 'PropertyPurposeController@destroy')->name('property-purpose.destroy');
 
-    Route::get('property-amenity', 'PropertyAmenityController@index')->name('property-amenity.index');
-    Route::get('property-amenity/create', 'PropertyAmenityController@create');
-    Route::post('property-amenity/create', 'PropertyAmenityController@store');
-    Route::get('property-amenity/edit/{id}', 'PropertyAmenityController@edit');
-    Route::post('property-amenity/update/{id}', 'PropertyAmenityController@update');
-    Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy');
+    Route::resource('property-amenity', 'PropertyAmenityController');
+    Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy')->name('property-amenity.destroy');
 
     Route::resource('users', 'UsersController');
 	// Route::get('users', 'UsersController@userslist')->name('users.index');
@@ -418,12 +402,8 @@ Route::get('featured-properties', 'PropertiesController@featureProperties')->nam
 
 
 //property reports
-Route::resource('admin/properties_reports', 'PropertyReportController');
-
-Route::get('admin/property_reports', 'PropertyReportController@index')->name('property-reports.index');
-Route::post('admin/property_reports/store', 'PropertyReportController@store');
-Route::get('admin/property_reports/update/{id}', 'PropertyReportController@update');
-Route::get('admin/property_reports/delete/{id}', 'PropertyReportController@destroy');
+Route::resource('property-reports', 'PropertyReportController');
+Route::get('admin/property_reports/delete/{id}', 'PropertyReportController@destroy')->name('property-reports.destroy');
 
 //live serach url on home page
 Route::get('search-desktop', 'IndexController@searchMeDesktop')->name('search-desktop');

@@ -27,8 +27,9 @@ class PropertyAmenityController extends Controller
             return redirect('dashboard');
         }
 
-        $propertyAmenities = PropertyAmenity::orderBy('id')->get();
-        return view('admin.pages.property_amenities',compact('propertyAmenities'));
+        $data['propertyAmenities'] = PropertyAmenity::orderBy('id')->get();
+        $action  = 'saakin_index';
+        return view('admin-dashboard.property-amenities.index',compact('data','action'));
     }
 
     public function create()    {
@@ -38,36 +39,27 @@ class PropertyAmenityController extends Controller
             return redirect('admin/dashboard');
         }
 
-        return view('admin.pages.add_property_amenity');
+        $action = 'saakin_create';
+        return view('admin-dashboard.property-amenities.create', compact('action'));
     }
 
     public function store(Request $request)
     {
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         $rule=array(
             'name' => 'required',
             'status' => 'required'
         );
-
         $validator = \Validator::make($data,$rule);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
             return redirect()->back()->withErrors($validator->messages());
         }
 
         $propertyAmenity = new PropertyAmenity();
-
-        //$slug  = Str::slug($inputs['property_type'], "-");
-
         $propertyAmenity->name = $inputs['name'];
         $propertyAmenity->status = $inputs['status'];
-
-        //$propertyAmenity->slug = $slug;
-
         $propertyAmenity->save();
 
         \Session::flash('flash_message', trans('words.added'));
@@ -81,25 +73,21 @@ class PropertyAmenityController extends Controller
             return redirect('admin/dashboard');
         }
 
-        $propertyAmenity = PropertyAmenity::findOrFail($id);
-        return view('admin.pages.edit_property_amenity',compact('propertyAmenity'));
+        $data['propertyAmenity'] = PropertyAmenity::findOrFail($id);
+        $action = 'saakin_create';
+        return view('admin-dashboard.property-amenities.edit',compact('data', 'action'));
     }
 
     public function update(Request $request, $id)
     {
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         $rule=array(
             'name' => 'required',
             'status' => 'required'
         );
-
         $validator = \Validator::make($data,$rule);
-
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
             return redirect()->back()->withErrors($validator->messages());
         }
 
@@ -120,11 +108,8 @@ class PropertyAmenityController extends Controller
         }
 
         $propertyAmenity = PropertyAmenity::findOrFail($id);
-
         $propertyAmenity->delete();
-
         \Session::flash('flash_message', trans('words.deleted'));
-
         return redirect()->back();
     }
 }

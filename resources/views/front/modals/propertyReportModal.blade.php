@@ -10,7 +10,7 @@ role="dialog">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form method="POST" action="{{ url('admin/property_reports/store')}}">
+        <form method="POST" action="{{ route('property-reports.store')}}">
             @csrf
             <input type="hidden" name="property_id" value=" {{$property->id ?? ''}} ">
             <div class="form-group">
@@ -22,7 +22,7 @@ role="dialog">
                     name="message"
                     required
                     placeholder="Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you."
-                ></textarea>
+                >Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you.</textarea>
             </div>
             
             <div class="row">

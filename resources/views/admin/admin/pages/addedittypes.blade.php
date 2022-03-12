@@ -7,8 +7,10 @@
             <h2> {{ isset($type->types) ? trans('words.edit') . ': ' . $type->types : trans('words.add') . ' ' . trans('words.property_type') }}
             </h2>
 
-            <a href="{{ URL::to('admin/property-types') }}" class="btn btn-default-light btn-xs"><i class="md md-backspace"></i>
-                {{ trans('words.back') }}</a>
+            <a href="{{ route('property-types.index') }}" class="btn btn-default-light btn-xs">
+                <i class="md md-backspace"></i>
+                {{ trans('words.back') }}
+            </a>
 
         </div>
         @if (count($errors) > 0)
@@ -30,7 +32,7 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(['url' => ['admin/types/addtypes'], 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['route' => ['property-types.store'], 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
                 <input type="hidden" name="id" value="{{ isset($type->id) ? $type->id : null }}">
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{ trans('words.property_type') }}</label>

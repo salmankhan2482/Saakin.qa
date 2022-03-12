@@ -96,7 +96,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label>Number of Beds</label>
                                             <select id="bedrooms" name="bedrooms"
                                                 class="listing-input hero__form-input  form-control custom-select">
@@ -124,7 +124,7 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label>Number of Baths</label>
                                             <select name="bathrooms" id="bathrooms"
                                                 class="listing-input hero__form-input  form-control custom-select">
@@ -152,13 +152,17 @@
                                             </select>
                                         </div>
 
-                                        <div class="col-4">
+                                        <div class="col-3">
                                             <label>Property Price</label>
                                             <input type="number" name="price" class="form-control" id="p-price" min="0"
                                                 placeholder="{{ trans('words.price') }}" value="{{ old('price') }}"
                                                 required>
                                         </div>
-
+                                        <div class="col-3">
+                                            <label>Property Size</label>
+                                            <input type="number" name="land_area" class="form-control" id="p-land_area" min="0"
+                                            placeholder="{{trans('words.land_area')}} sq.ft"  value="{{ old('land_area') }}" required>
+                                        </div>
 
                                     </div>
                                 </fieldset>
@@ -305,59 +309,43 @@
 
 
                                 <fieldset>
-                                    <legend>Property Documents</legend>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <div class="custom-file">
-                                                <input type="file" name="property_document" class="custom-file-input"
-                                                    multiple="" id="property_document" aria-describedby="property_document"
-                                                    style="color: green;border: 1px dashed #123456;background-color: #f9ffe5;">
-                                                <label class="custom-file-label" for="property_document">
-                                                    Choose Document ONLY (584px × 515px)
-                                                </label>
-                                            </div>
+                                    <legend>Property Documents & Meta</legend>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label>
+                                                Choose Document ONLY (584px × 515px)
+                                            </label>
+                                            <input type="file" name="property_document"  multiple="" class="form-control">
                                         </div>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <div class="col-md-12">
+                                        <div class="col-6">
                                             <label>{{ trans('words.meta_title') }}</label>
-                                            <input class="form-control" rows="4" name="meta_title" id="p-desc" value=""
+                                            <input class="form-control" rows="4" name="meta_title" id="p-desc"
                                                 placeholder="{{ trans('words.meta_title') }}">
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-6">
                                             <label>{{ trans('words.meta_description') }}</label>
                                             <textarea class="form-control" rows="4" name="meta_description"
                                                 id="meta_description"
                                                 placeholder="{{ trans('words.meta_description') }}"></textarea>
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-12">
+    
+                                        <div class="col-6">
                                             <label>{{ trans('words.meta_keyword') }}</label>
                                             <textarea class="form-control" rows="4" name="meta_keyword" id="meta_keyword"
                                                 placeholder="{{ trans('words.meta_keyword') }}"></textarea>
                                         </div>
                                     </div>
 
-
-
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <button id="SaveProperty" type="submit" class="btn btn-primary">Save
-                                                Property</button>
-                                        </div>
-
-                                        <div class="col-md-6">
-
-                                        </div>
-                                    </div>
                                 </fieldset>
 
+                                <div class="m-4">
+                                    <button id="SaveProperty" type="submit" class="btn btn-primary">Save
+                                        Property</button>
+                                </div>
                                 {!! Form::close() !!}
                             </div>
                         </div>

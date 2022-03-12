@@ -153,7 +153,7 @@
                                                         </a>
                                                     @endif
 
-                                                    <a href="{{ url('admin/properties/edit/' . $property->id) }}" class="dropdown-item">
+                                                    <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
                                                         <i class="fa fa-edit"></i> {{ trans('words.edit') }}
                                                     </a>
 
@@ -176,33 +176,31 @@
                                                     @endif
                                                     
                                                     @if ($property->status == 1 && Auth::User()->usertype == 'Admin')
-                                                    <a href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"
-                                                        class="dropdown-item">
+                                                    <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
                                                         <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
                                                     </a>
                                                     @elseif($property->status == 0 && Auth::User()->usertype == 'Admin')
-                                                        <a href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"
-                                                            class="dropdown-item">
-                                                            <i class="fa fa-check"></i> {{ trans('words.publish') }}
+                                                        <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
+                                                            <i class="fa fa-check"></i> 
+                                                            {{ trans('words.publish') }}
                                                         </a>
                                                     @endif
 
                                                     @if ($property->status == 0 && Auth::User()->usertype != 'Admin')
-                                                        <a href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"
-                                                            class="dropdown-item">
-                                                            <i class="fa fa-check"></i> {{ trans('words.publish') }}
+                                                        <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
+                                                            <i class="fa fa-check"></i> 
+                                                            {{ trans('words.publish') }}
                                                         </a>
                                                     @endif
                                                     
                                                 @else
-                                                    <a href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"
-                                                        class="dropdown-item">
+                                                    <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}" class="dropdown-item">
                                                         <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
                                                     </a>
                                                 @endif
 
                                                 @if(Auth::User()->usertype == 'Admin')
-                                                    <a href="{{ url('admin/properties/delete/' . Crypt::encryptString($property->id)) }}"
+                                                    <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
                                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')" class="dropdown-item">
                                                         <i class="fa fa-trash"></i> 
                                                         {{ trans('words.remove') }}

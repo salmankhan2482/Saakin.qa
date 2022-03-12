@@ -54,7 +54,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ URL::to('admin/pendingproperties') }}" style="text-decoration: none;">
+                <a href="{{ route('featuredproperties.pending') }}" style="text-decoration: none;">
                     <div class="col-sm-6 col-md-4">
                         <div class="panel panel-grey panel-shadow" style="background-color: #71b6f9 !important">
                             <div class="media">
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ URL::to('admin/featuredproperties') }}" style="text-decoration: none;">
+                <a href="{{ route('featuredproperties.index') }}" style="text-decoration: none;">
                     <div class="col-sm-6 col-md-4">
                         <div class="panel panel-green panel-shadow" style="background-color: #ff5b5b !important">
                             <div class="media">
@@ -173,7 +173,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ URL::to('admin/pendingproperties') }}" style="text-decoration: none;">
+                <a href="{{ route('featuredproperties.pending') }}" style="text-decoration: none;">
                     <div class="col-sm-6 col-md-4">
                         <div class="panel panel-grey panel-shadow" style="background-color: #71b6f9 !important">
                             <div class="media">
@@ -197,7 +197,7 @@
                         </div>
                     </div>
                 </a>
-                <a href="{{ URL::to('admin/featuredproperties') }}" style="text-decoration: none;">
+                <a href="{{ route('featuredproperties.index') }}" style="text-decoration: none;">
                     <div class="col-sm-6 col-md-4">
                         <div class="panel panel-green panel-shadow" style="background-color: #ff5b5b !important">
                             <div class="media">

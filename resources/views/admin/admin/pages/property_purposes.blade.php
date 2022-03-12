@@ -4,7 +4,10 @@
 <div id="main">
 	<div class="page-header">
 		<div class="pull-right">
-			<a href="{{URL::to('admin/property-purpose/create')}}" class="btn btn-primary">{{trans('words.add').' '.trans('words.property_purpose')}} <i class="fa fa-plus"></i></a>
+			<a href="{{ route('property-purpose.create')}}" class="btn btn-primary">
+                {{trans('words.add').' '.trans('words.property_purpose')}} 
+                <i class="fa fa-plus"></i>
+            </a>
 		</div>
 		<h2>Property Purposes</h2>
 	</div>
@@ -33,8 +36,19 @@
                     <tr>
                         <td>{{ $propertyPurpose->name }}</td>
                         <td class="text-center">
-                            <a href="{{ url('admin/property-purpose/edit/'.$propertyPurpose->id) }}" class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" title="{{trans('words.edit')}}"> <i class="fa fa-edit"></i> </a>
-                            <a href="{{ url('admin/property-purpose/delete/'.$propertyPurpose->id) }}" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return confirm('{{trans('words.dlt_warning_text')}}')" data-toggle="tooltip" title="{{trans('words.remove')}}"> <i class="fa fa-remove"></i> </a>
+                            <a href="{{ route('property-purpose.store',$propertyPurpose->id) }}" 
+                                class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" 
+                                data-toggle="tooltip" 
+                                title="{{trans('words.edit')}}">
+                                <i class="fa fa-edit"></i> 
+                            </a>
+                            <a href="{{ route('property-purpose.destroy',$propertyPurpose->id) }}" 
+                                class="btn btn-icon waves-effect waves-light btn-danger m-b-5" 
+                                onclick="return confirm('{{trans('words.dlt_warning_text')}}')" 
+                                data-toggle="tooltip" 
+                                title="{{trans('words.remove')}}"> 
+                                <i class="fa fa-remove"></i> 
+                            </a>
                         </td>
                     </tr>
                @endforeach

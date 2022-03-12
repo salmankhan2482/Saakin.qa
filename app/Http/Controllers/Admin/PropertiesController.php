@@ -55,10 +55,7 @@ class PropertiesController extends MainAdminController
         }
 
         $data['propertieslist'] = Properties::
-        when(auth()->user()->usertype == "Agency", function($query){
-            return $query->where('agency_id', auth()->user()->agency_id);
-        })
-        ->when(request('purpose'), function($query){
+        when(request('purpose'), function($query){
             return $query->where('property_purpose', request('purpose'));
         })
         ->when(request('type'), function($query){
@@ -73,10 +70,13 @@ class PropertiesController extends MainAdminController
         ->when(request('keyword'), function($query){
             return $query->orWhere('id', request('keyword'));
         })
+        ->when(auth()->user()->usertype == "Agency", function($query){
+            return $query->where('agency_id', auth()->user()->agency_id);
+        })
         ->where('status', 1)
         ->paginate(15);
         $data['propertieslist']->appends($_GET)->links();
-        
+
         $data['propertyTypes'] = Types::join("properties", "properties.property_type", "=", "property_types.id")
         ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
         ->when(auth()->user()->usertype == "Agency", function($query){
@@ -94,10 +94,7 @@ class PropertiesController extends MainAdminController
     public function inactivepropertieslist()
     { 
         $data['propertieslist'] = Properties::
-        when(auth()->user()->usertype == "Agency", function($query){
-            return $query->where('agency_id', auth()->user()->agency_id);
-        })
-        ->when(request('purpose'), function($query){
+        when(request('purpose'), function($query){
             return $query->where('property_purpose', request('purpose'));
         })
         ->when(request('type'), function($query){
@@ -111,6 +108,9 @@ class PropertiesController extends MainAdminController
         })
         ->when(request('keyword'), function($query){
             return $query->orWhere('id', request('keyword'));
+        })
+        ->when(auth()->user()->usertype == "Agency", function($query){
+            return $query->where('agency_id', auth()->user()->agency_id);
         })
         ->where('status', 0)
         ->paginate(15);
@@ -156,8 +156,7 @@ class PropertiesController extends MainAdminController
 
     public function store(Request $request)
     {
-        if(Properties::where('property_name', request('property_name'))->first())
-        {
+        if(Properties::where('property_name', request('property_name'))->first()){
             return redirect()->back()->withErrors(['msg' => 'Duplicate Record Cannot be Inserted.']);
         }
         $property_cities = New PropertyCities();
@@ -324,32 +323,31 @@ class PropertiesController extends MainAdminController
 
     public function edit(Request $request, $id)
     {
-
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
 
-        $property = Properties::findOrFail($id);
+        $data['property'] = Properties::findOrFail($id);
 
-        if (!$property) {
+        if (!$data['property']) {
             abort('404');
         }
-        $cityguides = CityGuide::get();
-        $types = Types::orderBy('types')->get();
-        $purposes = PropertyPurpose::get();
-        $amenities = PropertyAmenity::orderBy("name", "asc")->get();
-        //$agents = User::where('usertype','Agents')->get();
-        $agencies = Agency::where('status', 1)->get();
+        $data['cityguides'] = CityGuide::get();
+        $data['types'] = Types::orderBy('types')->get();
+        $data['purposes'] = PropertyPurpose::get();
+        $data['amenities'] = PropertyAmenity::orderBy("name", "asc")->get();
+        $data['agencies'] = Agency::where('status', 1)->get();
 
-        $property_gallery_images = PropertyGallery::where('property_id', $property->id)->orderBy('image_name')->get();
-        $cities = PropertyCities::all();
-        $subCities = PropertySubCities::all();
-        $towns = PropertyTowns::all();
-        $areas = PropertyAreas::all();
+        $data['property_gallery_images'] = PropertyGallery::where('property_id', $data['property']->id)
+        ->orderBy('image_name')->get();
+        $data['cities'] = PropertyCities::all();
+        $data['subCities'] = PropertySubCities::all();
+        $data['towns'] = PropertyTowns::all();
+        $data['areas'] = PropertyAreas::all();
+        $action = 'saakin_create';
 
-        return view('admin.pages.edit_property', 
-        compact('property', 'types', 'cities', 'subCities', 'towns' ,'areas', 'purposes', 'amenities', 'agencies', 'property_gallery_images', 'cityguides'));
+        return view('admin-dashboard.properties.edit', compact('data','action'));
     }
 
     public function update(Request $request, $id)
