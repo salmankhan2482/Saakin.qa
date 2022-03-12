@@ -26,11 +26,11 @@
 
    	<div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(array('url' => array('admin/property-purpose/update/'.$propertyPurpose->id), 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                {!! Form::open(array('route' => ['property-purpose.update' , $data['propertyPurpose']->id], 'method'=>'PUT','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{trans('words.name')}}</label>
                       <div class="col-sm-9">
-                        <input type="text" name="name" id="name"  value="{{ $propertyPurpose->name }}" class="form-control">
+                        <input type="text" name="name" id="name"  value="{{ $data['propertyPurpose']->name }}" class="form-control">
                     </div>
                 </div>
 
@@ -39,9 +39,9 @@
                     <div class="col-sm-9">
                         <select name="status" id="status" class="form-control">
                             <option value="" selected>Select Status</option>
-                            <option value="Pending" @if($propertyPurpose->status=='Pending') {{'selected'}} @endif>Pending</option>
-                            <option value="Confirmed" @if($propertyPurpose->status=='Confirmed') {{'selected'}} @endif>Confirmed</option>
-                            <option value="Cancelled" @if($propertyPurpose->status=='Cancelled') {{'selected'}} @endif>Cancelled</option>
+                            <option value="Pending" @if($data['propertyPurpose']->status=='Pending') {{'selected'}} @endif>Pending</option>
+                            <option value="Confirmed" @if($data['propertyPurpose']->status=='Confirmed') {{'selected'}} @endif>Confirmed</option>
+                            <option value="Cancelled" @if($data['propertyPurpose']->status=='Cancelled') {{'selected'}} @endif>Cancelled</option>
                         </select>
                     </div>
                 </div>

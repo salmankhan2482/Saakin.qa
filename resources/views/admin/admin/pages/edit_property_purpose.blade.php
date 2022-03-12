@@ -27,7 +27,7 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(['url' => ['admin/property-purpose/update/' . $propertyPurpose->id], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['route' => ['property-purpose.update' , $propertyPurpose->id], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{ trans('words.name') }}</label>
                     <div class="col-sm-9">

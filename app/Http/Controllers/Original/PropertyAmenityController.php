@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Properties;
 use App\PropertyGallery;
-use App\PropertyPurpose;
+use App\PropertyAmenity;
 use Carbon\Carbon;
 use App\Http\Requests;
 use Session;
 use Illuminate\Support\Str;
 
-class PropertyPurposeController extends Controller
+class PropertyAmenityController extends Controller
 {
     public function __construct()
     {
@@ -27,9 +27,8 @@ class PropertyPurposeController extends Controller
             return redirect('dashboard');
         }
 
-        $data['propertyPurposes'] = PropertyPurpose::orderBy('id')->get();
-        $action = 'saakin_index';
-        return view('admin-dashboard.property-purpose.index',compact('data','action'));
+        $propertyAmenities = PropertyAmenity::orderBy('id')->get();
+        return view('admin.pages.property_amenities',compact('propertyAmenities'));
     }
 
     public function create()    {
@@ -39,27 +38,38 @@ class PropertyPurposeController extends Controller
             return redirect('admin/dashboard');
         }
 
-        $action = 'saakin_create';
-        return view('admin-dashboard.property-purpose.create',compact('action'));
+        return view('admin.pages.add_property_amenity');
     }
 
     public function store(Request $request)
     {
         $data =  \Request::except(array('_token')) ;
+
         $inputs = $request->all();
+
         $rule=array(
             'name' => 'required',
             'status' => 'required'
         );
+
         $validator = \Validator::make($data,$rule);
+
         if ($validator->fails())
         {
             return redirect()->back()->withErrors($validator->messages());
         }
-        $propertyPurpose = new PropertyPurpose();
-        $propertyPurpose->name = $inputs['name'];
-        $propertyPurpose->status = $inputs['status'];
-        $propertyPurpose->save();
+
+        $propertyAmenity = new PropertyAmenity();
+
+        //$slug  = Str::slug($inputs['property_type'], "-");
+
+        $propertyAmenity->name = $inputs['name'];
+        $propertyAmenity->status = $inputs['status'];
+
+        //$propertyAmenity->slug = $slug;
+
+        $propertyAmenity->save();
+
         \Session::flash('flash_message', trans('words.added'));
         return \Redirect::back();
     }
@@ -71,9 +81,8 @@ class PropertyPurposeController extends Controller
             return redirect('admin/dashboard');
         }
 
-        $data['propertyPurpose'] = PropertyPurpose::findOrFail($id);
-        $action = 'saakin_create';
-        return view('admin-dashboard.property-purpose.edit',compact('data', 'action'));
+        $propertyAmenity = PropertyAmenity::findOrFail($id);
+        return view('admin.pages.edit_property_amenity',compact('propertyAmenity'));
     }
 
     public function update(Request $request, $id)
@@ -94,11 +103,11 @@ class PropertyPurposeController extends Controller
             return redirect()->back()->withErrors($validator->messages());
         }
 
-        $propertyPurpose = PropertyPurpose::findOrFail($id);
-        $propertyPurpose->name = $inputs['name'];
-        $propertyPurpose->status = $inputs['status'];
+        $propertyAmenity = PropertyAmenity::findOrFail($id);
+        $propertyAmenity->name = $inputs['name'];
+        $propertyAmenity->status = $inputs['status'];
 
-        $propertyPurpose->save();
+        $propertyAmenity->save();
         \Session::flash('flash_message', trans('words.updated'));
         return \Redirect::back();
     }
@@ -110,9 +119,9 @@ class PropertyPurposeController extends Controller
             return redirect('admin/dashboard');
         }
 
-        $propertyPurpose = PropertyPurpose::findOrFail($id);
+        $propertyAmenity = PropertyAmenity::findOrFail($id);
 
-        $propertyPurpose->delete();
+        $propertyAmenity->delete();
 
         \Session::flash('flash_message', trans('words.deleted'));
 

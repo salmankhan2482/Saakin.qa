@@ -92,20 +92,26 @@
                                                 <li>
                                                     @if ($property->status == 1)
                                                         <a
-                                                            href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"><i
-                                                                class="md md-close"></i>
-                                                            {{ trans('words.unpublish') }}</a>
+                                                            href="{{ route('properties.status' , Crypt::encryptString($property->id)) }}">
+                                                            <i class="md md-close"></i>
+                                                            {{ trans('words.unpublish') }}
+                                                        </a>
                                                     @else
                                                         <a
-                                                            href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"><i
-                                                                class="md md-check"></i>
-                                                            {{ trans('words.publish') }}</a>
+                                                            href="{{ route('properties.status' , Crypt::encryptString($property->id)) }}">
+                                                            <i class="md md-check"></i>
+                                                            {{ trans('words.publish') }}
+                                                        </a>
                                                     @endif
                                                 </li>
                                             @endif
-                                            <li><a href="{{ url('admin/properties/delete/' . Crypt::encryptString($property->id)) }}"
-                                                    onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"><i
-                                                        class="md md-delete"></i> {{ trans('words.remove') }}</a></li>
+                                            <li>
+                                                <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
+                                                    onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                    <i class="md md-delete"></i> 
+                                                    {{ trans('words.remove') }}
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
 

@@ -118,7 +118,7 @@
                     </li>
 
                     <li class="{{classActivePath('types')}}">
-						<a href="{{ URL::to('admin/property-types') }}">
+						<a href="{{ route('property-types.index') }}">
 							<i class="fa fa-tags"></i>
 							{{trans('words.property_type')}}
 						</a>
@@ -132,7 +132,7 @@
 					</li>
 
                     <li class="{{classActivePath('propertyamenity')}}">
-						<a href="{{ URL::to('admin/property-amenity') }}">
+						<a href="{{ route('property-amenity.index') }}">
 							<i class="fa fa-tags"></i>
 							{{trans('words.property_amenity')}}
 						</a>
@@ -146,7 +146,7 @@
 					</li>
 
 					<li class="{{classActivePath('featuredproperties')}}">
-						<a href="{{ URL::to('admin/featuredproperties') }}">
+						<a href="{{ route('featuredproperties.index') }}">
 							<i class="md md-star"></i>{{trans('words.featured')}}</a></li>
 
 					<li class="{{classActivePath('inquiries')}}">

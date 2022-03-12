@@ -5,7 +5,7 @@
 	<div class="page-header">
 		
 		<div class="pull-right">
-			<a href="{{URL::to('admin/types/addtypes')}}" class="btn btn-primary">
+			<a href="{{route('property-types.create')}}" class="btn btn-primary">
 				{{trans('words.add').' '.trans('words.property_type')}} 
 				<i class="fa fa-plus"></i>
 			</a>
@@ -36,11 +36,11 @@
          	   <tr>
 					<td>{{ $type->types }}</td>
 					<td class="text-center">
-						<a href="{{ url('admin/types/addtypes/'.$type->id) }}" class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" title="{{trans('words.edit')}}"> 
+						<a href="{{ route('property-types.edit',$type->id) }}" class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5" data-toggle="tooltip" title="{{trans('words.edit')}}"> 
 							<i class="fa fa-edit"></i>
 						</a>
 						
-						<a href="{{ url('admin/types/delete/'.$type->id) }}" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return confirm('{{trans('words.dlt_warning_text')}}')" data-toggle="tooltip" title="{{trans('words.remove')}}"> 
+						<a href="{{ route('property-types.destroy',$type->id) }}" class="btn btn-icon waves-effect waves-light btn-danger m-b-5" onclick="return confirm('{{trans('words.dlt_warning_text')}}')" data-toggle="tooltip" title="{{trans('words.remove')}}"> 
 							<i class="fa fa-remove"></i> 
 						</a>
 					</td>

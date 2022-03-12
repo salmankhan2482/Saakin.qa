@@ -27,9 +27,8 @@ class PropertyPurposeController extends Controller
             return redirect('dashboard');
         }
 
-        $data['propertyPurposes'] = PropertyPurpose::orderBy('id')->get();
-        $action = 'saakin_index';
-        return view('admin-dashboard.property-purpose.index',compact('data','action'));
+        $propertyPurposes = PropertyPurpose::orderBy('id')->get();
+        return view('admin.pages.property_purposes',compact('propertyPurposes'));
     }
 
     public function create()    {
@@ -39,8 +38,7 @@ class PropertyPurposeController extends Controller
             return redirect('admin/dashboard');
         }
 
-        $action = 'saakin_create';
-        return view('admin-dashboard.property-purpose.create',compact('action'));
+        return view('admin.pages.add_property_purpose');
     }
 
     public function store(Request $request)
@@ -71,9 +69,8 @@ class PropertyPurposeController extends Controller
             return redirect('admin/dashboard');
         }
 
-        $data['propertyPurpose'] = PropertyPurpose::findOrFail($id);
-        $action = 'saakin_create';
-        return view('admin-dashboard.property-purpose.edit',compact('data', 'action'));
+        $propertyPurpose = PropertyPurpose::findOrFail($id);
+        return view('admin.pages.edit_property_purpose',compact('propertyPurpose'));
     }
 
     public function update(Request $request, $id)

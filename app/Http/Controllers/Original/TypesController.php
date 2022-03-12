@@ -30,9 +30,8 @@ class TypesController extends MainAdminController
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
-        $data['alltypes'] = Types::orderBy('id')->get();
-        $action = 'saakin_index';
-        return view('admin-dashboard.property-types.index', compact('data', 'action'));
+        $alltypes = Types::orderBy('id')->get();
+        return view('admin.pages.types', compact('alltypes'));
     }
 
     public function create()
@@ -41,8 +40,7 @@ class TypesController extends MainAdminController
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
-        $action = 'saakin_create';
-        return view('admin-dashboard.property-types.create', compact('action'));
+        return view('admin.pages.addedittypes');
     }
 
     public function store(Request $request)
@@ -82,10 +80,8 @@ class TypesController extends MainAdminController
             return redirect('admin/dashboard');
         }
 
-        $data['type'] = Types::findOrFail($id);
-        $action = 'saakin_create';
-
-        return view('admin-dashboard.property-types.create', compact('data', 'action'));
+        $type = Types::findOrFail($id);
+        return view('admin.pages.addedittypes', compact('type'));
     }
 
     public function delete($id)

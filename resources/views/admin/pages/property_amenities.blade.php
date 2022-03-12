@@ -4,9 +4,10 @@
     <div id="main">
         <div class="page-header">
             <div class="pull-right">
-                <a href="{{ URL::to('admin/property-amenity/create') }}"
-                    class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.property_amenity') }} <i
-                        class="fa fa-plus"></i></a>
+                <a href="{{ route('property-amenity.create') }}"
+                    class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.property_amenity') }} 
+                    <i class="fa fa-plus"></i>
+                </a>
             </div>
             <h2>Property Amenities</h2>
         </div>
@@ -37,15 +38,17 @@
                                 <td>{{ $propertyAmenity->name }}</td>
                                 <td>{{ $propertyAmenity->status }}</td>
                                 <td class="text-center">
-                                    <a href="{{ url('admin/property-amenity/edit/' . $propertyAmenity->id) }}"
+                                    <a href="{{ route('property-amenity.edit', $propertyAmenity->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"
-                                        data-toggle="tooltip" title="{{ trans('words.edit') }}"> <i
-                                            class="fa fa-edit"></i> </a>
-                                    <a href="{{ url('admin/property-amenity/delete/' . $propertyAmenity->id) }}"
+                                        data-toggle="tooltip" title="{{ trans('words.edit') }}"> 
+                                        <i class="fa fa-edit"></i> 
+                                    </a>
+                                    <a href="{{ route('property-amenity.destroy', $propertyAmenity->id) }}"
                                         class="btn btn-icon waves-effect waves-light btn-danger m-b-5"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
-                                        data-toggle="tooltip" title="{{ trans('words.remove') }}"> <i
-                                            class="fa fa-remove"></i> </a>
+                                        data-toggle="tooltip" title="{{ trans('words.remove') }}"> 
+                                        <i class="fa fa-remove"></i> 
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
@@ -56,7 +59,4 @@
         </div>
 
     </div>
-
-
-
 @endsection

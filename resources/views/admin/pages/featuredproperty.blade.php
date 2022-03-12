@@ -103,14 +103,14 @@
                                                 <li>
                                                     @if ($property->status == 1)
                                                         {{-- <a
-                                                            href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"><i
-                                                                class="md md-close"></i>
+                                                            href="{{ route('properties.status',Crypt::encryptString($property->id)) }}">
+                                                            <i class="md md-close"></i>
                                                             {{ trans('words.unpublish') }}
 														</a> --}}
                                                     @else
                                                         {{-- <a
-                                                            href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"><i
-                                                                class="md md-check"></i>
+                                                            href="{{ route('properties.status',Crypt::encryptString($property->id)) }}">
+                                                            <i class="md md-check"></i>
                                                             {{ trans('words.publish') }}
 														</a> --}}
                                                     @endif

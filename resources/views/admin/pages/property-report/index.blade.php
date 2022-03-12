@@ -32,7 +32,7 @@
                             <th>Property Title</th>
                             <th>Message</th>
                             <th>Status</th>
-                            <th class="text-center width-100">{{ trans('words.action') }}</th>
+                            <th>{{ trans('words.action') }}</th>
                         </tr>
                     </thead>
 
@@ -44,20 +44,26 @@
                                 <td>{{ $report->user->email }}</td>
                                 <td>
                                     <a class="property-img"
-                                        href="{{ url(strtolower($report->property->property_purpose) . '/' . $report->property->property_slug . '/' . $report->property->id) }}"
+                                        href="{{ url(strtolower($report->property->property_purpose) .'/' .$report->property->property_slug .'/' .$report->property->id) }}"
                                         target="_blank">
-                                        {!! \Illuminate\Support\Str::limit($report->property->property_name, 40, '...') !!}
+                                        {!! Str::limit($report->property->property_name, 30, '...') !!}
                                     </a>
                                 </td>
-                                <td>{!! \Illuminate\Support\Str::limit($report->message, 40, '...') !!}</td>
+                                <td>{!! Str::limit($report->message, 30, '...') !!}</td>
                                 <td>{{ $report->status }}</td>
-                                <td class="text-center">
-                                    <a href="{{ url('admin/property_reports/update/'.$report->id) }}"
-                                        class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5">
-                                        Resolved
-                                    </a>
-                                    <a href="{{ url('admin/property_reports/delete/'.$report->id) }}"
-                                        class="cu_btn btn btn-icon waves-effect waves-light btn-danger m-b-5">
+                                <td style="display: flex; margin: 2px">
+                                    @if ($report->status != 'Resolved')
+                                    <form action="{{ route('property-reports.update', $report->id) }}" style="margin-right: 5px" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-icon waves-effect btn-success m-b-5 m-r-5">
+                                            Resolved
+                                        </button>
+                                    </form>
+                                    @endif
+
+                                    <a href="{{ route('property-reports.destroy', $report->id) }}"
+                                        class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
                                         <i class="fa fa-remove"></i>
                                     </a>
                                 </td>
@@ -66,7 +72,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="text-center">
+                            <td colspan="7" class="text-center">
                                 {{-- @include('admin.pagination', ['paginator' => $reports]) --}}
                             </td>
                         </tr>
@@ -77,61 +83,5 @@
         </div>
 
     </div>
-    <div class="modal fade" id="import" tabindex="-1" role="dialog" aria-labelledby="importModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="importModalLabel">Import Agency</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('agencies.import') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="file" name="file" class="form-control">
-                        <br>
-                        <button class="btn btn-success">Import Agnecies Data</button>
-
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="importAgencies" tabindex="-1" role="dialog" aria-labelledby="importAgenciesLabel"
-        aria-hidden="true">
-
-    </div>
-
-
-@endsection
-@section('scripts-custom')
-    <script>
-        function importAgencies(id) {
-            $('#importAgencies').modal({
-                backdrop: 'static',
-                keyboard: true,
-                show: true
-            });
-            $.ajax({
-                url: '{{ route('get.agences.keys') }}',
-                type: "post",
-                dataType: 'json',
-                data: {
-                    '_token': '{{ @csrf_token() }}',
-                    id: id,
-                },
-                success: function(data) {
-                    if (data.status == 'success') {
-                        $('#importAgencies').html(data.html);
-                    }
-                },
-
-            });
-        }
-    </script>
+   
 @endsection

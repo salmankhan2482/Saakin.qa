@@ -113,14 +113,14 @@
                                         <li>
                                             @if ($property->status == 1 && Auth::User()->usertype == 'Admin')
                                                 <a
-                                                    href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}">
+                                                    href="{{ route('properties.status',Crypt::encryptString($property->id)) }}">
                                                     <i class="md md-close"></i>
                                                     {{ trans('words.unpublish') }}
                                                 </a>
                                             @elseif($property->status == 0 && Auth::User()->usertype == 'Admin')
                                                 <a
-                                                    href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}"><i
-                                                        class="md md-check"></i>
+                                                    href="{{ route('properties.status',Crypt::encryptString($property->id)) }}">
+                                                    <i class="md md-check"></i>
                                                     {{ trans('words.publish') }}
                                                 </a>
                                             @endif
@@ -129,7 +129,7 @@
                                         <li>
                                             @if ($property->status == 0 && Auth::User()->usertype != 'Admin')
                                                 <a
-                                                    href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}">
+                                                    href="{{ route('properties.status',Crypt::encryptString($property->id)) }}">
                                                     <i class="md md-check"></i>
                                                     {{ trans('words.publish') }}
                                                 </a>
@@ -138,7 +138,7 @@
                                     @else
                                         <li>
                                             <a
-                                                href="{{ url('admin/properties/status/' . Crypt::encryptString($property->id)) }}">
+                                                href="{{ route('properties.status', Crypt::encryptString($property->id)) }}">
                                                 <i class="md md-close"></i>
                                                 {{ trans('words.unpublish') }}
                                             </a>
@@ -146,7 +146,7 @@
                                     @endif
                                     @if (Auth::User()->usertype == 'Admin')
                                         <li>
-                                            <a href="{{ url('admin/properties/delete/' . Crypt::encryptString($property->id)) }}"
+                                            <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="md md-delete"></i>
                                                 {{ trans('words.remove') }}
