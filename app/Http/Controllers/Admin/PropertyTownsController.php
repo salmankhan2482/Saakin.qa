@@ -20,7 +20,8 @@ class PropertyTownsController extends Controller
     public function index()
     {
         $towns = PropertyTowns::with(['city', 'subcity'])->get();
-        return view('admin.pages.address.towns.index', compact('towns'));
+        $action = 'saakin_index';
+        return view('admin-dashboard.adress-management.town.index', compact('towns','action'));
     }
 
     /**
@@ -32,7 +33,8 @@ class PropertyTownsController extends Controller
     {
         $cities = PropertyCities::all();
         $subCities = PropertySubCities::all();
-        return view('admin.pages.address.towns.create', compact('cities','subCities'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.adress-management.town.create', compact('cities','subCities','action'));
     }
 
     /**
@@ -94,8 +96,8 @@ class PropertyTownsController extends Controller
         $subCities = PropertySubCities::all();
         $cities = PropertyCities::all();
         $town = PropertyTowns::find($id);
-
-        return view('admin.pages.address.towns.edit', compact('subCities','cities','town'));
+        $action = 'saakin_edit';
+        return view('admin-dashboard.adress-management.town.edit', compact('subCities','cities','town','action'));
     }
 
     /**

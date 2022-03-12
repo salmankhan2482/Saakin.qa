@@ -2,6 +2,7 @@
 @section('style')
     <link href="{{ asset('admin/css/image-uploader.css') }}" type="text/css" rel="stylesheet" />
 @endsection
+
 @section('content')
 
     @if (count($errors) > 0)
@@ -38,6 +39,7 @@
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
+
                             <div class="panel-body">
                                 {!! Form::open(['route' => ['properties.store'], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
 
@@ -593,4 +595,5 @@
         });
         CKEDITOR.replace('description');
     </script>
+
 @endsection

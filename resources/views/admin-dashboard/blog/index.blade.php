@@ -37,11 +37,11 @@
                             <img src="{{asset('upload/blogs/'.$blog->image)}}" width="100" alt="{{ $blog->title.'- blog image' }}"/>
                         </td>
                                         <td>
-                                            <a href="{{ url('admin/blogs'. $blog->id) }}"
+                                            <a href="{{ route('blogs.edit', $blog->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ url('admin/blogs/delete/' . $blog->id) }}"
+                                            <a href="{{ route('blogs.delete' , $blog->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>
