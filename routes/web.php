@@ -224,42 +224,31 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
     Route::resource('agencies','AgencyController');
-
-
-    // Route::get('agencies', 'AgencyController@index')->name('agencies.index');
-
-    // Route::get('agency/create', 'AgencyController@create')->name('agencies.create');
-    // Route::post('agency/create', 'AgencyController@store')->name('agencies.store');
-    // Route::get('agency/edit/{id}', 'AgencyController@edit')->name('agencies.edit');
-    // Route::post('agency/update/{id}', 'AgencyController@update')->name('agencies.update');
-    // Route::get('agency/delete/{id}', 'AgencyController@destroy')->name('agencies.destroy');
     Route::post('agency/keys', 'AgencyController@goMasterimport')->name('get.agences.keys');
     Route::get('agencies/export', 'AgencyController@agencies_export')->name('agencies.export');
     Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');
 
-    Route::get('landing-pages', 'LandingPagesController@index')->name('landing-pages');
-    Route::get('landing-pages/create', 'LandingPagesController@create')->name('landing-pages-create');
-    Route::post('landing-pages/create', 'LandingPagesController@store')->name('landing-pages-store');
-    Route::get('landing-pages/edit/{id}', 'LandingPagesController@edit');
-    Route::post('landing-pages/update/{id}', 'LandingPagesController@update');
-    Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy');
+    //landing pages
+    Route::resource('landing-pages', 'LandingPagesController');
+    Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy')->name('landing-pages.destroy');
 
-    Route::get('landing-pages/properties-page-content', 'LandingPagesController@properties_page_content')
-    ->name('properties-page-content');
-    Route::post('landing-pages/properties-page-content', 'LandingPagesController@update_properties_page_content')
-    ->name('update-properties-page-content');
+    Route::get('landing-pages/properties-page/content', 'LandingPagesController@properties_page_content')
+        ->name('properties-page-content');
+    Route::post('landing-pages/properties-page/content', 'LandingPagesController@update_properties_page_content')
+        ->name('update-properties-page-content');
+    
+    Route::get('landing-pages/city-guide-page/content', 'LandingPagesController@city_guide_page_content')
+    ->name('city-guide-landing-pages.index');
+    Route::put('update/city-guide-page/content', 'LandingPagesController@update_city_guide_page_content')
+    ->name('city-guide-landing-pages.update');
 
-    Route::get('landing-pages/city-guide-page-content', 'LandingPagesController@city_guide_page_content')
-    ->name('city-guide-landing-pages');
-    Route::post('city-guide-page-content', 'LandingPagesController@update_city_guide_page_content');
-
-    Route::get('landing-pages/agencies-page-content', 'LandingPagesController@agencies_page_content')
-    ->name('agency-landing-pages');
-    Route::post('agencies-page-content', 'LandingPagesController@update_agencies_page_content');
+    Route::get('landing-pages/agencies-page/content', 'LandingPagesController@agencies_page_content')
+    ->name('agency-landing-pages.index');
+    Route::put('agencies-page/content', 'LandingPagesController@update_agencies_page_content')
+    ->name('agency-landing-pages.update');
     
 
     // multi task
-    
     //property cities routes
     Route::resource('propertyCities', 'PropertyCitiesController');
     Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
@@ -274,10 +263,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
 
     //property click counter or traffic route
-    Route::resource('click_counter', 'ClickCountersController');
-    Route::get('agencyTotalClicksList/{id}', 'ClickCountersController@agencyTotalClicksList')->name('agencyTotalClicksList');
-    Route::get('traffic_per_month', 'ClickCountersController@trafficPerMonth')->name('traffic_per_month');
-    Route::get('agencyTrafficList/{id}', 'ClickCountersController@agencyTrafficList')->name('agencyTrafficList');
+    Route::prefix('traffic')->group(function () {
+        Route::resource('callToAction', 'ClickCountersController');
+    });
+    Route::get('agencyCallToActionList/{id}', 'ClickCountersController@agencyCallToActionList')->name('agencyCallToActionList');
+    Route::get('propertyVisits_per_month', 'ClickCountersController@pageVisitsPerMonth')->name('propertyVisits_per_month');
+    Route::get('agencyPropertiesVisitsList/{id}', 'ClickCountersController@agencyPropertiesVisitsList')
+    ->name('agencyPropertiesVisitsList');
     Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
     Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
     Route::get('top_Ten_Properties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');

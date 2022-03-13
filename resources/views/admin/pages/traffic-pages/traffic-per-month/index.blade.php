@@ -11,7 +11,7 @@
             <div class="panel-body">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-10">
-                    {!! Form::open(['route' => 'traffic_per_month', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
+                    {!! Form::open(['route' => 'propertyVisits_per_month', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
                     
                     <div class="form-group">
                         <label for="">From</label>
@@ -55,13 +55,13 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($trafficPerMonth as $i => $traffic)
+                        @foreach ($data['pageVisitsPerMonth'] as $i => $traffic)
                             <tr>
                                 <td>{{ $traffic->aid }}</td>
                                 <td>{{ $traffic->aname }}</td>
                                 <td>{{ $traffic->totalTraffic }}</td>
                                 <td>
-                                    <a class="btn btn-default-dark" href="{{ route('agencyTrafficList', $traffic->aid) }}">
+                                    <a class="btn btn-default-dark" href="{{ route('agencyPropertiesVisitsList', $traffic->aid) }}">
                                         Show Properties
                                     </a>
                                 </td>

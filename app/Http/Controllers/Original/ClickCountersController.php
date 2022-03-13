@@ -26,7 +26,7 @@ class ClickCountersController extends Controller
 
     public function index()
     {
-        $data['clickCounters'] = DB::table('click_counters')
+        $clickCounters = DB::table('click_counters')
         ->leftJoin('properties', 'click_counters.property_id', 'properties.id')
         ->rightJoin('agencies', 'properties.agency_id', 'agencies.id')
         ->select('agencies.name as agency_name','agencies.*','click_counters.created_at as created_at',
@@ -46,15 +46,14 @@ class ClickCountersController extends Controller
             request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
             request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
         })
-        ->groupBy('agency_name')->get();
-
-        $action = 'saakin_index';
-        return view('admin-dashboard.traffic-pages.call-to-action.index',compact('data','action'));
+        ->groupBy('agency_name')
+        ->get();
+        return view('admin.pages.traffic-pages.total-clicks.index',compact('clickCounters'));
     }
 
     public function agencyCallToActionList($id)
     {
-        $data['clickCounters'] = DB::table('click_counters')
+        $clickCounters = DB::table('click_counters')
         ->leftJoin('properties', 'click_counters.property_id', 'properties.id')
         ->select('click_counters.button_name as cbutton_name',
         DB::raw('count(IF(button_name = "Call",1,NULL)) totalCall'),
@@ -63,11 +62,10 @@ class ClickCountersController extends Controller
         'properties.id as pid', 'properties.property_name as pname', 
         'properties.property_purpose as ppurpose', 'properties.property_slug as pslug')
         ->where('properties.agency_id', $id)
-        ->groupBy('pname')->get();
+        ->groupBy('pname')
+        ->get();
 
-        $action = 'saakin_index';
-        return view('admin-dashboard.traffic-pages.call-to-action.list',compact('data','action'));
-
+        return view('admin.pages.traffic-pages.total-clicks.show-list', compact('clickCounters'));
     }
 
     public function show($property_id)
@@ -76,13 +74,14 @@ class ClickCountersController extends Controller
         return view('admin.pages.traffic-pages.show', compact('clickCounters'));
     }
 
-    public function pageVisitsPerMonth($id = null)
+    public function trafficPerMonth()
     {
-        $action = 'saakin_index';
-        if (auth()->user()->usertype == 'Agency') {
 
-            $data['pageVisitsPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
-            ->where('agency_id', auth()->user()->agency_id)
+        if (auth()->user()->usertype == 'Agency') {
+            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+
+            $trafficPerMonth = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
+            ->whereIn('property_id', $property_ids)
             ->when(request('from') , function ($query) {
                 $query->where('property_counters.created_at', '>=', request('from').' 00:00:01');
             })
@@ -96,12 +95,13 @@ class ClickCountersController extends Controller
                 $query->whereMonth('property_counters.created_at', Carbon::now()->month);
                 request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
                 request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
-            })->get();
-            
-            return view('admin-dashboard.traffic-pages.propertyVisits-per-month.agency-index', compact('data', 'action'));
+            })
+            ->get();
+
+            return view('admin.pages.traffic-pages.traffic-per-month.agency-index', compact('trafficPerMonth'));
 
         }else{
-            $data['pageVisitsPerMonth'] = DB::table('property_counters')
+            $trafficPerMonth = DB::table('property_counters')
             ->leftJoin('properties', 'property_counters.property_id', 'properties.id')
             ->join('agencies', 'properties.agency_id', 'agencies.id')
             ->select('agencies.id as aid', 'agencies.name as aname', DB::raw(' SUM(property_counters.counter) as totalTraffic '))
@@ -120,15 +120,15 @@ class ClickCountersController extends Controller
                 request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
                 request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
             })
-            ->groupBy('agencies.name')->get();
-            return view('admin-dashboard.traffic-pages.propertyVisits-per-month.index', compact('data', 'action'));
+            ->groupBy('agencies.name')
+            ->get();
+            return view('admin.pages.traffic-pages.traffic-per-month.index', compact('trafficPerMonth'));
         }
     }
 
     public function agencyPropertiesVisitsList($id)
     {
-        $action = 'saakin_index';
-        $data['PropertiesVisits'] = DB::table('property_counters')
+        $totalTraffic = DB::table('property_counters')
         ->join('properties', 'property_counters.property_id', 'properties.id')
         ->select('properties.id as pid', 'properties.property_name as pname', 
         'properties.property_purpose as ppurpose', 'properties.property_slug as pslug',
@@ -136,9 +136,8 @@ class ClickCountersController extends Controller
         ->where('properties.agency_id', $id)
         ->orderBy('count', 'desc')
         ->get();
-        
-        return view('admin-dashboard.traffic-pages.propertyVisits-per-month.listing', compact('data','action'));
-        
+
+        return view('admin.pages.traffic-pages.traffic-per-month.show-list', compact('totalTraffic'));
     }
 
     public function trafficUsers()
@@ -302,8 +301,7 @@ class ClickCountersController extends Controller
 
     public function totalLeads()
     {
-        $action = 'saakin_index';
-        return view('admin-dashboard.traffic-pages.leads.index', compact('action'));
+        return view('admin.pages.traffic-pages.totalLeads');
     }
 
     

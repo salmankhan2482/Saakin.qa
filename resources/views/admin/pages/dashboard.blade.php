@@ -241,7 +241,7 @@
         </a>
 
         {{-- Traffic Per Month --}}
-        <a href="{{ route('traffic_per_month') }}" style="text-decoration: none;">
+        <a href="{{ route('propertyVisits_per_month') }}" style="text-decoration: none;">
             <div class="col-sm-6 col-md-4">
                 <div class="panel panel-primary panel-shadow" style="background-color: #0ba19a !important;border-color:#0ba19a;">
                     <div class="media">

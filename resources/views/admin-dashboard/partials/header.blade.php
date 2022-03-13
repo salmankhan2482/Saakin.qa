@@ -143,21 +143,21 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('landing-pages') }}" class="timeline-panel">
+                                        <a href="{{ route('landing-pages.index') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">Landing Page Content</h6>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('city-guide-landing-pages') }}" class="timeline-panel">
+                                        <a href="{{ route('city-guide-landing-pages.index') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">City Guide Page Content</h6>
                                             </div>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('agency-landing-pages') }}" class="timeline-panel">
+                                        <a href="{{ route('agency-landing-pages.index') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">Agencies Pages</h6>
                                             </div>
@@ -220,6 +220,66 @@
                                             </div>
                                         </a>
                                     </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    {{-- Traffic  --}}
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }} 
+                            href="#" role="button" data-toggle="dropdown">
+                                Traffic
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                <ul class="timeline">
+                                    <li>
+                                        <a href="{{ route('total_leads') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Total Leads</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('propertyVisits_per_month') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Property Visits</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('callToAction.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Call to Action</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    
+                                    <li>
+                                        <a href="{{ route('trafficUsers') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Unique Users</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('top_Ten_Properties') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Top 10 Properties</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('top_5_areas') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Top 5 Areas</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    
                                 </ul>
                             </div>
                         </div>

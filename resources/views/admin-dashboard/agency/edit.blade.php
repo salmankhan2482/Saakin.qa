@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(array('route' => ['agencies.update', $data['agency']->id], 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'add_agency','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                        {!! Form::open(array('route' => ['agencies.update', $data['agency']->id], 'method'=>'PUT','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'add_agency','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">

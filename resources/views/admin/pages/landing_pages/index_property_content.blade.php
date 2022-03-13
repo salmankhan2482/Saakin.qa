@@ -4,9 +4,10 @@
     <div id="main">
         <div class="page-header">
             <div class="pull-right">
-                <a href="{{ URL::to('admin/landing-pages/create') }}"
-                    class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.page_content') }} <i
-                        class="fa fa-plus"></i></a>
+                <a href="{{ route('landing-pages.create') }}"
+                    class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.page_content') }} 
+                    <i class="fa fa-plus"></i>
+                </a>
 
             </div>
             <h2>Landing Pages Content</h2>
@@ -45,13 +46,13 @@
                                 <td>{{ $landing_page_content->PropertyCities->name ?? 'Not Available' }}</td>
                                 <td>{!! \Illuminate\Support\Str::limit($landing_page_content->page_content, 250, '...')  !!}</td>
                                 <td class="text-center">
-                                    <a href="{{ url('admin/landing-pages/edit/' . $landing_page_content->id) }}"
+                                    <a href="{{ route('landing-pages.edit', $landing_page_content->id) }}"
                                         class="cu_btn btn btn-icon waves-effect waves-light btn-success m-b-5 m-r-5"
                                         data-toggle="tooltip" title="{{ trans('words.edit') }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 
-                                    <a href="{{ url('admin/landing-pages/delete/' . $landing_page_content->id) }}"
+                                    <a href="{{ route('landing-pages.destroy', $landing_page_content->id) }}"
                                         class="cu_btn btn btn-icon waves-effect waves-light btn-danger m-b-5"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
                                         data-toggle="tooltip" title="{{ trans('words.remove') }}">
