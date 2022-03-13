@@ -285,6 +285,74 @@
                         </div>
                     </li>
 
+                    {{-- Inquiries  --}}
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }} 
+                            href="#" role="button" data-toggle="dropdown">
+                                Inquiries
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                <ul class="timeline">
+                                    <li>
+                                        <a href="{{ route('property_inquiries') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Property Inquiries</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('agency_inquiries') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Agency Inquiries</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('contact_inquiries') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Contact Inquiries</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+                    {{-- City Guide  --}}
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }} 
+                            href="#" role="button" data-toggle="dropdown">
+                                City Guides
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                <ul class="timeline">
+                                    <li>
+                                        <a href="{{ route('cities.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Cities</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('agency_inquiries') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">City Details</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
                 </ul>
                 <ul class="navbar-nav header-right ml-5">
                     <li class="nav-item dropdown header-profile">

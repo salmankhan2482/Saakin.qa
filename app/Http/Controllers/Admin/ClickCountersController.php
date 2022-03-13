@@ -166,8 +166,10 @@ class ClickCountersController extends Controller
             ->orderBy('totalUsers', 'DESC')
             ->groupBy('aname')
             ->get();
+            
+            $action = 'saakin_index';
 
-            return view('admin.pages.traffic-pages.users.index', compact('users'));
+            return view('admin-dashboard.traffic-pages.users.index', compact('users','action'));
         }elseif(auth()->user()->usertype == 'Agency'){
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
 
@@ -188,7 +190,9 @@ class ClickCountersController extends Controller
                     request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
                 })->get();
                 
-            return view('admin.pages.traffic-pages.users.agency-index', compact('users'));
+                $action = 'saakin_index';
+                
+            return view('admin-dashboard.traffic-pages.users.agency_index', compact('users','action'));
         }
     }
 

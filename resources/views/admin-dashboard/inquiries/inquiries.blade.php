@@ -7,8 +7,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Blogs</h4>
-                    <a href="{{ route('cities.create') }}">
+                    <h4 class="card-title">Areas</h4>
+                    <a href="{{ route('propertyAreas.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
@@ -20,26 +20,29 @@
                         <table id="example3" class="display min-w850">
                             <thead>
                                 <tr>
+                                    <th>Property ID</th>
                                     <th>Name</th>
-                                    <th>Image</th>
-                                    <th>Attributes</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Agency</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cities as $i => $city)
-                    <tr>
-                        <td>{{ $city->name }}</td>
-                        <td>
-                            <img src="{{asset('upload/cities/'.$city->city_image)}}" width="100" alt="{{ $city->name.'- city image' }}"/>
-                        </td>
-                        <td>{{ $city->attributes }}</td>
-                                        <td>
-                                            <a href="{{ route('cities.edit', $city->id) }}"
+                                @foreach($inquirieslist as $i => $inquiries)
+                                <tr>
+                                
+                                <td>{{ $inquiries->property_id }}</td>
+                                <td>{{ $inquiries->name }}</td>
+                                <td>{{ $inquiries->email }}</td>
+                                <td>{{ $inquiries->phone }}</td>
+                                <td>{{ $inquiries->Agencies->name ??''}} </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('property_inquiries.edit', $inquiries->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ url('admin/city/delete/', $city->id) }}"
+                                            <a href="{{ route('property_inquiries.destroy', $inquiries->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

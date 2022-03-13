@@ -26,7 +26,10 @@ class CityGuideController extends Controller
         }
 
         $cities = City::paginate(10);
-        return view('admin.pages.cities',compact('cities'));
+        
+        $action = 'saakin_index';
+
+        return view('admin-dashboard.city-guide.index',compact('cities','action'));
     }
 
     public function create()    {
@@ -35,8 +38,9 @@ class CityGuideController extends Controller
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
+        $action = 'saakin_create';
 
-        return view('admin.pages.add_city');
+        return view('admin-dashboard.city-guide.create',compact('action'));
     }
   public function show($id)    {
 
@@ -103,7 +107,9 @@ class CityGuideController extends Controller
         }
 
         $city = City::findOrFail($id);
-        return view('admin.pages.edit_city',compact('city'));
+        $action = 'saakin_edit';
+
+        return view('admin-dashboard.city-guide.edit',compact('city','action'));
     }
 
     public function update(Request $request, $id)
