@@ -43,8 +43,9 @@ class InquiriesController extends MainAdminController
         }
         // $agency_name = Agency::where('id',$inquirieslist->agency_id)->paginate(10);
         // dd($agency_name);
+        $action = 'saakin_index';
 
-        return view('admin.pages.inquiries',compact('inquirieslist'));
+        return view('admin-dashboard.inquiries.inquiries',compact('inquirieslist','action'));
     }
 
     public function create_inquiry(Request $request)
@@ -57,9 +58,10 @@ class InquiriesController extends MainAdminController
         $agencies = Agency::all();
         $properties = Properties::select('property_name','agency_id','id')->get();
         // ->where('property_name', 'like', '%'.request()->get('keyword').'%');
-   
+        $action = 'saakin_index';
         
-        return view('admin.pages.create_inquiry',compact('agencies','properties'));
+        return view('admin-dashboard.inquiries.property_inquires.create',
+        compact('agencies','properties','action'));
     }
 
     public function store_property_inquiry(Request $request)
@@ -139,7 +141,9 @@ class InquiriesController extends MainAdminController
         
         }
 
-    return view('admin.pages.property_inquiries',compact('inquirieslist'));
+        $action = 'saakin_index';
+    return view('admin-dashboard.inquiries.property_inquires.property_inquiries',
+    compact('inquirieslist','action'));
     }
 
     public function agency_inquiries()
@@ -158,8 +162,9 @@ class InquiriesController extends MainAdminController
         $inquirieslist = Enquire::where('type','Agency Inquiry')->orderBy('id', 'desc')->paginate(10);
         
         }
-
-    return view('admin.pages.agency_inquiries',compact('inquirieslist'));
+        $action = 'saakin_index';
+    return view('admin-dashboard.inquiries.agency_inquires.agency_inquiries',
+    compact('inquirieslist','action'));
     }
 
     public function contact_inquiries()
@@ -178,8 +183,9 @@ class InquiriesController extends MainAdminController
         $inquirieslist = Enquire::where('type','Contact Inquiry')->orderBy('id', 'desc')->paginate(10);
         
         }
+        $action = 'saakin_index';
 
-    return view('admin.pages.contact_inquiries',compact('inquirieslist'));
+    return view('admin-dashboard.inquiries.contact_inquires.contact_inquiries',compact('inquirieslist','action'));
     }
 
     public function delete($id)
@@ -203,9 +209,14 @@ class InquiriesController extends MainAdminController
         if($inquire->property_id != ''){
             
             $property = Properties::find($inquire->property_id);
-            return view('admin.pages.view_inquiry',compact('inquire', 'property'));
+
+            $action = 'saakin_create';
+            return view('admin-dashboard.inquiries.property_inquires.view_property_inquiry',
+            compact('inquire', 'property','action'));
         }
-        return view('admin.pages.view_inquiry',compact('inquire'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.inquiries.property_inquires.view_property_inquiry',
+        compact('inquire','action'));
 
     }
 
@@ -215,23 +226,28 @@ class InquiriesController extends MainAdminController
         if($inquire->property_id != ''){
             
             $property = Properties::find($inquire->property_id);
-            return view('admin.pages.view_property_inquiry',compact('inquire', 'property'));
+
+            $action = 'saakin_create';
+
+            return view('admin-dashboard.inquiries.property_inquires.view_property_inquiry',
+            compact('inquire', 'property','action'));
         }
-        return view('admin.pages.view_property_inquiry',compact('inquire'));
+        return view('admin-dashboard.inquiries.property_inquires.view_property_inquiry',
+        compact('inquire','action'));
 
     }
     public function view_agency_inquiry($id)
     {
         $inquire = Enquire::where('id', $id)->first();
-        
-        return view('admin.pages.view_agency_inquiry',compact('inquire'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.inquiries.agency_inquires.view_agency_inquiry',compact('inquire','action'));
 
     }
     public function view_contact_inquiry($id)
     {
         $inquire = Enquire::where('id', $id)->first();
-       
-        return view('admin.pages.view_contact_inquiry',compact('inquire'));
+        $action = 'saakin_create';
+        return view('admin-dashboard.inquiries.contact_inquires.view_contact_inquiry',compact('inquire','action'));
 
     }
 

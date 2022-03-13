@@ -140,22 +140,22 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('partners/addpartners/{id}', 'PartnersController@editpartners');
 	Route::get('partners/delete/{id}', 'PartnersController@delete');
 
-	Route::get('inquiries', 'InquiriesController@inquirieslist');
+	Route::get('inquiries', 'InquiriesController@inquirieslist')->name('inquiries');
 
-    Route::get('property_inquiries', 'InquiriesController@property_inquiries');
-    Route::get('inquiry/create', 'InquiriesController@create_inquiry');
-    Route::post('inquiry/create', 'InquiriesController@store_property_inquiry');
+    Route::get('property_inquiries', 'InquiriesController@property_inquiries')->name('property_inquiries');
+    Route::get('inquiry/create', 'InquiriesController@create_inquiry')->name('create_inquiry');
+    Route::post('inquiry/create', 'InquiriesController@store_property_inquiry')->name('store_proprty_inquiry');
     Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
     Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
 
 	
-	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries');
-	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries');
+	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
+	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
     
-    Route::get('view_inquiry/{id}', 'InquiriesController@view_inquiry');
+    Route::get('view_inquiry/{id}', 'InquiriesController@view_inquiry')->name('view_inquiry');
     Route::get('view_property_inquiry/{id}', 'InquiriesController@view_property_inquiry');
-    Route::get('view_agency_inquiry/{id}', 'InquiriesController@view_agency_inquiry');
-    Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry');   
+    Route::get('view_agency_inquiry/{id}', 'InquiriesController@view_agency_inquiry')->name('view_agency_inquiry');
+    Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry')->name('view_contact_inquiry');   
 
 	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
 
@@ -195,12 +195,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     /////////////////////////// jaleel //////////////////////////////
 
-    Route::get('cities', 'CityGuideController@index');
-    Route::get('city/create', 'CityGuideController@create');
-    Route::post('city/create', 'CityGuideController@store');
-     Route::get('city/show/{id}', 'CityGuideController@show');
-    Route::get('city/edit/{id}', 'CityGuideController@edit');
-    Route::post('city/update/{id}', 'CityGuideController@update');
+Route::resource('cities','CityGuideController');
+
+    // Route::get('cities', 'CityGuideController@index');
+    // Route::get('city/create', 'CityGuideController@create');
+    // Route::post('city/create', 'CityGuideController@store');
+    Route::get('city/show/{id}', 'CityGuideController@show');
+    // Route::get('city/edit/{id}', 'CityGuideController@edit');
+    // Route::post('city/update/{id}', 'CityGuideController@update');
     Route::get('city/delete/{id}', 'CityGuideController@destroy');
 
     Route::get('city-detail/list', 'CityGuideController@listCityDetail');
