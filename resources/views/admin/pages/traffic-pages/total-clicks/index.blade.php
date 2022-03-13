@@ -6,7 +6,7 @@
             <div class="panel-body">
                 <div class="col-sm-2"></div>
                 <div class="col-sm-10">
-                    {!! Form::open(['route' => 'click_counter.index', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
+                    {!! Form::open(['route' => 'callToAction.index', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
                     
                     <div class="form-group">
                         <label for="">From</label>
@@ -56,7 +56,7 @@
                                 <td>{{ $click->agency_name }}</td>
                                 <td>{{ $click->totalCall }}</td>
                                 <td>
-                                    <a class="btn btn-default-dark" href="{{ route('agencyTotalClicksList', $click->agency_id) }}">
+                                    <a class="btn btn-default-dark" href="{{ route('agencyCallToActionList', $click->agency_id) }}">
                                         Show Properties
                                     </a>
                                 </td>

@@ -49,7 +49,7 @@ class PropertiesController extends Controller
         //  check_property_exp();
     }
 
-    public function index(Request $request)
+    public function getPropertyListing(Request $request)
     {   
 
         if(request()->property_purpose != ''){
@@ -342,12 +342,19 @@ class PropertiesController extends Controller
                 $traffic->property_id = $id;
                 $traffic->agency_id = $property->agency_id ?? '';
                 $traffic->save();
-    
-                $product = PropertyCounter::updateOrCreate(
-                    [ 'property_id' => $traffic->property_id ],
-                    [ 'agency_id' => $property->agency_id ],
-                    [ 'counter' => \DB::raw('counter + 1'),                ]
-                );
+
+                
+                if($counter = PropertyCounter::where('property_id', $id)->first()){
+                    $counter->counter = $counter->counter + 1;
+                    $counter->update();
+                }else{
+                    $counter = new PropertyCounter();
+                    $counter->property_id = $id;
+                    $counter->agency_id = $property->agency_id;
+                    $counter->save();
+                    
+                }
+               
     
             }
         }

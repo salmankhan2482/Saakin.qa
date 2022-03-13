@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <div class="col-sm-2"></div>
                     <div class="col-sm-10">
-                        {!! Form::open(['route' => 'traffic_per_month', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
+                        {!! Form::open(['route' => 'propertyVisits_per_month', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
                         
                         <div class="form-group">
                             <label for="">From</label>
@@ -53,7 +53,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($trafficPerMonth as $i => $click)
+                        @foreach ($totalTraffic as $i => $click)
                             <tr>
                                 <td>{{ $click->id }}</td>
                                 <td>

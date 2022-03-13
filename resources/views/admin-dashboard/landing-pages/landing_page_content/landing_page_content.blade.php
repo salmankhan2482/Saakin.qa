@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(array('url' => array('admin/landing-pages/properties-page-content'),'class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                        {!! Form::open(array('url' => ['update-properties-page-content'],'class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
                         
                         <input type="hidden" name="id" value="{{ isset($page_info->id) ? $page_info->id : null }}">
 

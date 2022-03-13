@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Landing Pages</h4>
-                    <a href="{{ route('landing-pages-create') }}">
+                    <a href="{{ route('landing-pages.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
@@ -39,11 +39,11 @@
                                         <td>{{ $item->PropertyCities->name ?? 'Not Available' }}</td>
                                         <td>{{ $item->meta_title ?? 'Not Available' }}</td>
                                         <td>
-                                            <a href="{{ url('admin/landing-pages/edit/'.$item->id) }}"
+                                            <a href="{{ route('landing-pages.edit',$item->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ url('admin/landing-pages/delete/'.$item->id) }}"
+                                            <a href="{{ route('landing-pages.destroy',$item->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

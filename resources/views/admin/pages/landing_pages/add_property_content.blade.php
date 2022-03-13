@@ -5,8 +5,8 @@
     <div id="main">
         <div class="page-header">
             <h2> {{ trans('words.add') . ' ' . trans('words.page_content') }}</h2>
-            <a href="{{ URL::to('admin/landing-pages') }}" class="btn btn-default-light btn-xs"><i
-                    class="md md-backspace"></i> {{ trans('words.back') }}</a>
+            <a href="{{ route('landing-pages.index') }}" class="btn btn-default-light btn-xs">
+                <i class="md md-backspace"></i> {{ trans('words.back') }}</a>
         </div>
 
         @if (count($errors) > 0)
@@ -29,7 +29,7 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(['url' => ['admin/landing-pages/create'], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'add_property_content', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                {!! Form::open(['route' => ['landing-pages.store'], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'add_property_content', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
                 {{-- @csrf_field
             {{ method_field('PUT') }} --}}
                 <div class="form-group">

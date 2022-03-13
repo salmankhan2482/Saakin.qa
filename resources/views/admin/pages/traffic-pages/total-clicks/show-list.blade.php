@@ -3,8 +3,10 @@
 @section('content')
     <div id="main">
         <div class="page-header">
-            <a href="{{ URL::to('admin/click_counter') }}" class="btn btn-default-light btn-xs"><i
-                    class="md md-backspace"></i> {{ trans('words.back') }}</a>
+            <a href="{{ route('callToAction.index') }}" class="btn btn-default-light btn-xs">
+                <i class="md md-backspace"></i> 
+                {{ trans('words.back') }}
+            </a>
         </div>
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
@@ -34,10 +36,9 @@
                             <tr>
                                 <td>{{ $click->pid }}</td>
                                 <td>
-                                    <a class="property-img"
-                                        href="{{ url(strtolower($click->ppurpose) . '/' . $click->pslug . '/' . $click->pid) }}"
-                                        target="_blank">
-                                        {!! \Illuminate\Support\Str::limit($click->pname, 40, '...') !!}
+                                    <a class="property-img" target="_blank"
+                                        href="{{ url(strtolower($click->ppurpose) . '/' . $click->pslug . '/' . $click->pid) }}">
+                                        {!! Str::limit($click->pname, 40, '...') !!}
                                     </a>
                                 </td>
                                 <td>

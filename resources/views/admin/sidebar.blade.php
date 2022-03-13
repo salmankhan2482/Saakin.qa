@@ -165,12 +165,12 @@
                             @endif>
                             
                             <li class="{{ classActivePath('properties-page-content') }}">
-                                <a href="{{ URL::to('admin/landing-pages/properties-page-content') }}">
+                                <a href="{{ route('properties-page-content') }}">
                                     {{ trans('words.properties_page_content') }}
                                 </a>
                             </li>
                             <li class="{{ classActivePath('landing-pages') }}">
-                                <a href="{{ URL::to('admin/landing-pages') }}">
+                                <a href="{{ route('landing-pages.index') }}">
                                     {{ trans('words.landing_pages_content') }}
                                 </a>
                             </li>
@@ -320,14 +320,14 @@
 
 
                     <li class="submenu  
-                    {{ classActivePath('click_counter') }} {{ classActivePath('traffic_per_month') }}
+                    {{ classActivePath('callToAction') }} {{ classActivePath('propertyVisits_per_month') }}
                     {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }}
                     {{ classActivePath('top_5_areas') }} {{ classActivePath('total_leads') }}
                     {{ classActivePath('trafficUsers') }}
                     "> 
                     
                         <a href="#" 
-                        @if ( classActivePath('click_counter') or classActivePath('traffic_per_month') or 
+                        @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or 
                         classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or 
                         classActivePath('top_5_areas') or classActivePath('total_leads') or 
                         classActivePath('trafficUsers') ) class="open" @endif>
@@ -336,7 +336,7 @@
                             Traffic
                         </a>
                         <ul 
-                            @if (   classActivePath('click_counter') or classActivePath('traffic_per_month') or 
+                            @if (   classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or 
                                     classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or 
                                     classActivePath('top_5_areas') or classActivePath('total_leads') or 
                                     classActivePath('trafficUsers')   ) 
@@ -344,14 +344,14 @@
                             @endif
                         >
 
-                            <li class="{{ classActivePath('click_counter') }}">
-                                <a href="{{ route('click_counter.index') }}">
+                            <li class="{{ classActivePath('callToAction') }}">
+                                <a href="{{ route('callToAction.index') }}">
                                     Clicks
                                 </a>
                             </li>
 
-                            <li class="{{ classActivePath('traffic_per_month') }}">
-                                <a href="{{ route('traffic_per_month') }}">
+                            <li class="{{ classActivePath('propertyVisits_per_month') }}">
+                                <a href="{{ route('propertyVisits_per_month') }}">
                                     Traffic
                                 </a>
                             </li>
@@ -567,20 +567,20 @@
 
                     {{-- traffic counter click routes --}}
                     <li class="submenu 
-                    {{ classActivePath('click_counter') }} {{ classActivePath('traffic_per_month') }} {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }} {{ classActivePath('top_5_areas') }} {{ classActivePath('total_leads') }} ">
+                    {{ classActivePath('callToAction') }} {{ classActivePath('propertyVisits_per_month') }} {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }} {{ classActivePath('top_5_areas') }} {{ classActivePath('total_leads') }} ">
                     
-                        <a href="#" @if ( classActivePath('click_counter') or classActivePath('traffic_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads') ) class="open" @endif>
+                        <a href="#" @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads') ) class="open" @endif>
                         <i class="fa fa-send"></i>
                             Traffic
                         </a>
                         <ul 
-                            @if ( classActivePath('click_counter') or classActivePath('traffic_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads')  ) 
+                            @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads')  ) 
                             style="display: block" class="collapse in" 
                             @endif
                         >
 
-                            <li class="{{ classActivePath('traffic_per_month') }}">
-                                <a href="{{ route('traffic_per_month') }}">
+                            <li class="{{ classActivePath('propertyVisits_per_month') }}">
+                                <a href="{{ route('propertyVisits_per_month') }}">
                                     Traffic / Month
                                 </a>
                             </li>

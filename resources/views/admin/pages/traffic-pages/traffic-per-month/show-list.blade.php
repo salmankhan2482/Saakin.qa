@@ -3,8 +3,8 @@
 @section('content')
     <div id="main">
         <div class="page-header">
-            <a href="{{ URL::to('admin/traffic_per_month') }}" class="btn btn-default-light btn-xs"><i
-                    class="md md-backspace"></i> {{ trans('words.back') }}</a>
+            <a href="{{ route('propertyVisits_per_month') }}" class="btn btn-default-light btn-xs">
+                <i class="md md-backspace"></i> {{ trans('words.back') }}</a>
         </div>
         @if (Session::has('flash_message'))
             <div class="alert alert-success">
@@ -28,7 +28,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($totalTraffic as $i => $traffic)
+                        @foreach ($data['PropertiesVisits'] as $i => $traffic)
                             <tr>
                                 <td>{{ $traffic->pid }}</td>
                                 <td>
