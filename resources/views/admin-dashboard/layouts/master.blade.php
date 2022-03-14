@@ -23,6 +23,7 @@
 		@endforeach
 	@endif
 
+
     @yield('style') 
     <style>
         .action-btn{
@@ -70,6 +71,8 @@
     </div>
 
 	@include('admin-dashboard.partials.footer-scripts')
+    <script src="https://cdn.ckeditor.com/4.13.0/full/ckeditor.js"></script>
     @yield('scripts')
+
 </body>
 </html>
