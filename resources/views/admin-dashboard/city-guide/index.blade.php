@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Blogs</h4>
+                    <h4 class="card-title">Cities</h4>
                     <a href="{{ route('cities.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
@@ -39,7 +39,11 @@
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ url('admin/city/delete/', $city->id) }}"
+                                            <a href="{{ route('cities.show', $city->id) }}"
+                                                class="btn btn-info rounded btn-xs action-btn">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a href="{{ route('cities.destroy', $city->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

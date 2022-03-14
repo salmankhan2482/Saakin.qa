@@ -341,7 +341,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{ route('agency_inquiries') }}" class="timeline-panel">
+                                        <a href="{{ route('city-details') }}" class="timeline-panel">
                                             <div class="media-body">
                                                 <h6 class="mb-1">City Details</h6>
                                             </div>
