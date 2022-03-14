@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<?php
-$roles=App\RoleUser::where('user_id',\Illuminate\Support\Facades\Auth::user()->id)->get();
-?>
-
-
 <html lang="en">
 <head>
     <meta charset="utf-8">

@@ -33,7 +33,7 @@
                                 <td>{{ $subCity->id }}</td>
                                 <td>{{ $subCity->name }}</td>
                                 <td>{{ $subCity->slug }}</td>
-                                <td>{{ $subCity->city->name }}</td>
+                                <td>{{ $subCity->city->name ?? '' }}</td>
                                         <td class="text-center">
                                             <a href="{{ route('propertySubCities.edit', $subCity->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">

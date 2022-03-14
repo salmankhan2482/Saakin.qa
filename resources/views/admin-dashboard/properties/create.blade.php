@@ -45,25 +45,24 @@
 
                                 <fieldset>
                                     <legend>Basic Details</legend>
+                                    <div class="row">
+
                                     @if (Auth::User()->usertype == 'Admin')
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <label>Property Agency *</label>
-                                                <select class="form-control" name="agency_id" required>
-                                                    <option value="">Select an Agency</option>
-                                                    @foreach (\App\Agency::orderBy('name', 'asc')->get() as $agency)
-                                                        <option value="{{ $agency->id }}">{{ $agency->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <div class="col-6">
-                                                <label>Property Title *</label>
-                                                <input type="text" class="form-control"
-                                                    placeholder="{{ trans('words.property_name') }}" name="property_name"
-                                                    id="p-title" value="{{ old('property_name') }}" required />
-                                            </div>
+                                        <div class="col-6">
+                                            <label>Property Agency *</label>
+                                            <select class="form-control" name="agency_id" required>
+                                                <option value="">Select an Agency</option>
+                                                @foreach (\App\Agency::orderBy('name', 'asc')->get() as $agency)
+                                                    <option value="{{ $agency->id }}">{{ $agency->name }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     @endif
+                                    <div class="col-6">
+                                        <label>Property Title *</label>
+                                        <input type="text" class="form-control" placeholder="{{ trans('words.property_name') }}" name="property_name" id="p-title" value="{{ old('property_name') }}" required />
+                                    </div>
+                                    </div>
 
                                 </fieldset>
                                 <fieldset>
@@ -416,7 +415,7 @@
                     }
 
                     assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
-                        towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                        towns[0].longitude, subcities[0].latitude, subcities[0].longitude);
 
                 }
             });
@@ -462,7 +461,7 @@
                     }
 
                     assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
-                        towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                        towns[0].longitude, subcities[0].latitude, subcities[0].longitude);
                 }
             });
 
@@ -506,7 +505,7 @@
                     }
 
                     assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
-                        towns[0].longitude, subcities.longitude, subcities.longitude);
+                        towns[0].longitude, subcities.latitude, subcities.longitude);
                 }
             });
 
@@ -533,7 +532,7 @@
                     $("#p-long").val('');
 
                     assignLatLong(areas.latitude, areas.longitude, towns.latitude ?? '',
-                        towns.longitude ?? '', subcities.longitude ?? '', subcities.longitude ?? '');
+                        towns.longitude ?? '', subcities.latitude ?? '', subcities.longitude ?? '');
 
                 }
             });

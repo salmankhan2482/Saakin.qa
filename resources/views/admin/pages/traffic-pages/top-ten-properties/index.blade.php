@@ -33,7 +33,7 @@
                     <tbody>
                         @foreach ($top10Proprties as $i => $click)
                             <tr>
-                                <td>{{ $click->id }}</td>
+                                <td>{{ $click->aid }}</td>
                                 <td>
                                     <a href="{{ route('top_Ten_Properties.list', $click->aid) }}">
                                         {{ $click->aname }}

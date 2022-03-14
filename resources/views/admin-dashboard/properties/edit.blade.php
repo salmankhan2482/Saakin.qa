@@ -56,12 +56,12 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-6">
-                                                <label>Property Title *</label>
-                                                <input type="text" class="form-control" name="property_name" id="p-title" value="{{stripslashes($data['property']->property_name)}}" required />
-                                            </div>
                                         </div>
                                     @endif
+                                    <div class="col-6">
+                                        <label>Property Title *</label>
+                                        <input type="text" class="form-control" name="property_name" id="p-title" value="{{stripslashes($data['property']->property_name)}}" required />
+                                    </div>
 
                                 </fieldset>
                                 <fieldset>
@@ -233,7 +233,7 @@
                                             <input type="file" name="agent_picture" id="agent_picture" class="form-control">
                                             @if(!empty($data['property']->agent_picture))
                                             <img src="{{ URL::asset('upload/properties/'.$data['property']->agent_picture) }}" 
-                                                alt="{{ $data['property']->property_name.'- agent picture' }}">
+                                                alt="{{ $data['property']->property_name.'- agent picture' }}" class="mt-1" width="200">
                                             @endif
                                         </div>
                                         
@@ -257,10 +257,9 @@
                                         </div>
                                         <div class="col-6">
                                             <label>Featured Image</label>
-                                            <input type="file" name="featured_image" class="form-control" required>
+                                            <input type="file" name="featured_image" class="form-control" >
                                             @if(!empty($data['property']->featured_image))
-                                            <img src="{{ URL::asset('upload/properties/thumb_'.$data['property']->featured_image) }}"   
-                                                alt="{{ $data['property']->property_name.'- featured image' }}" class="mt-1">
+                                        <img src="{{ URL::asset('upload/properties/thumb_'.$data['property']->featured_image) }}"  alt="{{ $data['property']->property_name.'- featured image' }}" class="mt-1">
                                             @endif
                                         </div>
                                     </div>
@@ -393,7 +392,7 @@
                     }
 
                     assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
-                        towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                        towns[0].longitude, subcities[0].latitude, subcities[0].longitude);
 
                 }
             });
@@ -439,7 +438,7 @@
                     }
 
                     assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
-                        towns[0].longitude, subcities[0].longitude, subcities[0].longitude);
+                        towns[0].longitude, subcities[0].latitude, subcities[0].longitude);
                 }
             });
 
@@ -483,7 +482,7 @@
                     }
 
                     assignLatLong(areas[0].latitude, areas[0].longitude, towns[0].latitude,
-                        towns[0].longitude, subcities.longitude, subcities.longitude);
+                        towns[0].longitude, subcities.latitude, subcities.longitude);
                 }
             });
 
@@ -510,7 +509,7 @@
                     $("#p-long").val('');
 
                     assignLatLong(areas.latitude, areas.longitude, towns.latitude ?? '',
-                        towns.longitude ?? '', subcities.longitude ?? '', subcities.longitude ?? '');
+                        towns.longitude ?? '', subcities.latitude ?? '', subcities.longitude ?? '');
 
                 }
             });

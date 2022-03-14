@@ -76,12 +76,12 @@ class ClickCountersController extends Controller
         return view('admin.pages.traffic-pages.show', compact('clickCounters'));
     }
 
-    public function pageVisitsPerMonth($id = null)
+    public function propertyVisitsPerMonth($id = null)
     {
         $action = 'saakin_index';
         if (auth()->user()->usertype == 'Agency') {
 
-            $data['pageVisitsPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
+            $data['propertyVisitsPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
             ->where('agency_id', auth()->user()->agency_id)
             ->when(request('from') , function ($query) {
                 $query->where('property_counters.created_at', '>=', request('from').' 00:00:01');
@@ -101,9 +101,9 @@ class ClickCountersController extends Controller
             return view('admin-dashboard.traffic-pages.propertyVisits-per-month.agency-index', compact('data', 'action'));
 
         }else{
-            $data['pageVisitsPerMonth'] = DB::table('property_counters')
-            ->leftJoin('properties', 'property_counters.property_id', 'properties.id')
-            ->join('agencies', 'properties.agency_id', 'agencies.id')
+            $data['propertyVisitsPerMonth'] = DB::table('property_counters')
+            ->join('properties', 'property_counters.property_id', 'properties.id')
+            ->leftJoin('agencies', 'properties.agency_id', 'agencies.id')
             ->select('agencies.id as aid', 'agencies.name as aname', DB::raw(' SUM(property_counters.counter) as totalTraffic '))
             ->orderBy('totalTraffic', 'desc')
             ->when(request('from') , function ($query) {
@@ -231,13 +231,13 @@ class ClickCountersController extends Controller
         }else{
             $top10Proprties = DB::table('property_counters')
             ->leftJoin('properties', 'property_counters.property_id','properties.id')
-            ->join('agencies', 'properties.agency_id', 'agencies.id')
-            ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 
-            'properties.property_slug', DB::raw(' SUM(property_counters.counter) as counter '), 
+            ->rightJoin('agencies', 'properties.agency_id', 'agencies.id')
+            ->select(DB::raw(' SUM(property_counters.counter) as counter '), 
             'agencies.name as aname', 'agencies.id as aid')
             ->orderBy('counter', 'DESC')
             ->groupBy('aname')
             ->get();
+
             return view('admin.pages.traffic-pages.top-ten-properties.index', compact('top10Proprties'));
         }
 
@@ -265,10 +265,10 @@ class ClickCountersController extends Controller
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
             $top5Properties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
-            ->select('properties.id', 'properties.address as paddress', 'property_counters.counter')
+            ->select('properties.id', 'properties.address as paddress', 'property_counters.counter as ')
             ->whereIn('properties.id', $property_ids)
             ->groupBy('properties.id')
-            ->orderByDesc('property_counters.counter')
+            ->orderByDesc('counter')
             ->limit('5')
             ->get();
             

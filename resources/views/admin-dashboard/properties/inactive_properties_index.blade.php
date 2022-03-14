@@ -205,8 +205,8 @@
                                                         <i class="fa fa-trash"></i> 
                                                         {{ trans('words.remove') }}
                                                     </a>
-                                                @elseif(Auth::User()->usertype != 'Admin' && $property->status == 1)
-                                                    <a  href="#" class="callRemovePropertyPopup" class="dropdown-item"
+                                                @elseif(Auth::User()->usertype != 'Admin')
+                                                    <a  href="#" class="callRemovePropertyPopup dropdown-item"
                                                         data-id="{{Crypt::encryptString($property->id)}}"
                                                         data-toggle="modal" data-target="#removePropertyPopup"
                                                     >
@@ -280,7 +280,9 @@
 <script>
     $(".callRemovePropertyPopup").on('click', function(e) {
         var id = $(this).attr('data-id');
-        $("#removePropertyPopupForm").attr('action', `properties/delete/${id}`);
+        let url = "{{ route('properties.destroy', ':id') }}";
+        url = url.replace(':id', id);
+        $("#removePropertyPopupForm").attr('action', url);
     });
 </script>
 @endsection

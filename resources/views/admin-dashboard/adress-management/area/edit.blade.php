@@ -79,20 +79,20 @@
                                 <div class="form-group col-md-6">
                                     <label>Name</label>
                                     <input type="text" id="name" name="name" class="form-control"
-                                        placeholder="Enter a Location" value="{{ $town->name }}">
+                                        placeholder="Enter a Location" value="{{ $area->name }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Latitude</label>
                                     <input type="text" id="latitude" name="latitude" class="form-control"
-                                        placeholder="25.2773946" value="{{ $town->latitude }}">
+                                        placeholder="25.2773946" value="{{ $area->latitude }}">
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label>Longitude</label>
                                     <input type="text" id="longitude" name="longitude" class="form-control"
-                                        placeholder="51.4985448" value="{{ $town->longitude }}">
+                                        placeholder="51.4985448" value="{{ $area->longitude }}">
                                 </div>
                             </div>
                             <div class="form-row">
@@ -110,7 +110,17 @@
         </div>
     </div>
 @endsection
-@section('scripts-custom')
+@section('scripts')
+<script src="{{ URL::asset('admin/js/jquery.js') }}"></script>
+
+    @php
+    $settings = App\Settings::where('id', 1)
+        ->get()
+        ->first();
+    @endphp
+    <script
+        src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key={{ $settings->google_map_key }}&callback=initMap&region=qa"
+        type="text/javascript"></script>
     <script>
         function initialize() {
             var input = document.getElementById('name');
@@ -123,7 +133,6 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-        google.maps.event.addDomListener(window, 'load', initializex);
 
         function callSubCityTown(data) {
             var id = data.value;
