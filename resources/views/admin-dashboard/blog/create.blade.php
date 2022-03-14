@@ -57,9 +57,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Description</label>
-                                    <div class="card-body">
-                                        <textarea name="description" rows="5" class="summernote"></textarea>
-                                    </div>
+                                    <textarea type="text" rows="5" id="description" name="description" class="form-control" placeholder="Blog Description"></textarea>
                                 </div>
                             </div>
 
@@ -95,6 +93,7 @@
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
+
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -102,4 +101,10 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    var editor = CKEDITOR.replace( 'description' );
+CKFinder.setupCKEditor( editor );
+</script>
 @endsection

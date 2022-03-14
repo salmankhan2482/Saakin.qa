@@ -47,7 +47,7 @@ class BlogController extends Controller
         
         $data['blog-categories'] = BlogCategory::all();
         $action = 'saakin_index';
-        return view('admin-dashboard.blogs.index',compact('data', 'action'));
+        return view('admin-dashboard.blog.index',compact('data', 'action'));
 
     }
 

@@ -85,9 +85,9 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Description</label>
-                                    <div class="card-body">
-                                        <textarea id="page_content" name="page_content" rows="5" class="summernote">{{ isset($data['landing_page_content']->page_content) ? stripslashes($data['landing_page_content']->page_content) : null }}</textarea>
-                                    </div>
+                                    
+                                        <textarea type="text" id="page_content" name="page_content" class="form-control" placeholder="Page Content">{{ isset($data['landing_page_content']->page_content) ? stripslashes($data['landing_page_content']->page_content) : null }}</textarea>
+                                    
                                 </div>
                             </div>
 
@@ -121,4 +121,10 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+    var editor = CKEDITOR.replace( 'page_content' );
+CKFinder.setupCKEditor( editor );
+</script>
 @endsection
