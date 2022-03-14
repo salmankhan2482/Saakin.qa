@@ -64,7 +64,8 @@ class UsersController extends MainAdminController
             }
         }
 
-        return view('admin-dashboard.user-management.users.index',compact('allusers','action'));
+        return view('admin.pages.users',compact('allusers'));
+
     }
 
     public function create()    

@@ -103,8 +103,7 @@
 </div>
 @endsection
 @section('scripts')
-<script>
-    var editor = CKEDITOR.replace( 'description' );
-CKFinder.setupCKEditor( editor );
-</script>
+    <script>
+        CKEDITOR.replace( 'description' );
+    </script>
 @endsection
