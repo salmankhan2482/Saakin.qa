@@ -60,15 +60,12 @@ class AgenciesController extends Controller
         if($request->get('sortSelect') == 'sortByName'){
             $agencies = Agency::where('status', 1)->orderBy('name', 'asc')->paginate(12);
         }else{
-       
         $agencies =  DB::table('agencies')
             ->leftJoin('properties', 'agencies.id', 'properties.agency_id')
-            ->where('properties.status', 1)
             ->select('agencies.*', DB::Raw( 'COUNT(properties.agency_id) as pcount' ))
             ->groupBy('agencies.name')
             ->orderBy('pcount', 'DESC')
             ->paginate(12);
-            
         }
 
         $landing_page_content= LandingPage::find('55');
@@ -426,7 +423,7 @@ class AgenciesController extends Controller
     public function livesearch(Request $request){
 
         $data = Agency::where("name","LIKE","%{$request->input('keyword')}%")
-                ->where("agency_detail","LIKE","%{$request->input('keyword')}%")
+                ->orWhere("agency_detail","LIKE","%{$request->input('keyword')}%")
                 ->get();
 
         $output = '<ul class="list-group desktop-search-li col-12"  >';;

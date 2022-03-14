@@ -61,7 +61,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data['pageVisitsPerMonth'] as $i => $traffic)
+                                @foreach ($data['propertyVisitsPerMonth'] as $i => $traffic)
                                     <tr>
                                         <td>{{ $traffic->aid }}</td>
                                         <td>{{ $traffic->aname }}</td>

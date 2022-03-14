@@ -5,27 +5,17 @@ namespace App\Http\Controllers\Admin;
 use Auth;
 use App\User;
 use App\Properties;
-use App\Testimonials;
-use App\Subscriber;
 use App\Enquire;
-use App\Partners;
 use App\SubscriptionPlan;
 use App\Transactions;
-
 use Mail;
-
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Session;
-
 use Razorpay\Api\Api;
-use Razorpay\Api\Errors\SignatureVerificationError;
 
 class UserController extends Controller
 {

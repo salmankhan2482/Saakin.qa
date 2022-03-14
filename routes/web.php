@@ -28,25 +28,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
     // new routes
     
-    
-    Route::resource('menuOptions', MenuOptionsController::class);
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
-
     Route::get('/our_backup_database', 'UserController@dbBackup')->name('our_backup_database');
-
-    //menu options
-    Route::resource('menuOptions','MenuOptionsController');
-    Route::get('menuOptions/delete/{id}','MenuOptionsController@destroy')->name('menuOptions.destroy');
-
-    //permissions
-    Route::resource('permissions','PermissionsController');
-    Route::get('permissions/delete/{id}','PermissionsController@destroy')->name('permissions.destroy');
-    
-    //permissions
-    Route::resource('roles','RolesController');
-    Route::get('roles/delete/{id}','RolesController@destroy')->name('roles.destroy');
-
 
 	Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
 	Route::get('profile', 'AdminController@profile');
@@ -120,6 +104,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy')->name('property-amenity.destroy');
 
     Route::resource('users', 'UsersController');
+    Route::group(['middleware' => ['auth']], function() {
+        Route::resource('roles', RoleController::class);
+    });
 	// Route::get('users', 'UsersController@userslist')->name('users.index');
 	// Route::get('users/adduser', 'UsersController@addUser');
 	// Route::post('users/adduser', 'UsersController@addnew');
@@ -269,7 +256,7 @@ Route::resource('cities','CityGuideController');
         Route::resource('callToAction', 'ClickCountersController');
     });
     Route::get('agencyCallToActionList/{id}', 'ClickCountersController@agencyCallToActionList')->name('agencyCallToActionList');
-    Route::get('propertyVisits_per_month', 'ClickCountersController@pageVisitsPerMonth')->name('propertyVisits_per_month');
+    Route::get('propertyVisits_per_month', 'ClickCountersController@propertyVisitsPerMonth')->name('propertyVisits_per_month');
     Route::get('agencyPropertiesVisitsList/{id}', 'ClickCountersController@agencyPropertiesVisitsList')
     ->name('agencyPropertiesVisitsList');
     Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');

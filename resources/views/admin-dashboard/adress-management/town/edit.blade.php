@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Sub-Cities</label>
-                                    <select id="subCity" name="subCity" class="form-control" onchange="callSubCities(this);">
+                                    <select id="subCity" name="subCity" class="form-control">
                                         <option selected>Select Sub-City</option>
                                         @foreach ($subCities as $subCity)
                                             <option value="{{ $subCity->id }}"
@@ -94,9 +94,13 @@
             </div>
         </div>
     @endsection
-    @section('scripts-custom')
+    @section('scripts')
+    <script src="{{ URL::asset('admin/js/jquery.js') }}"></script>
+    
+    @php $settings = App\Settings::where("id",1)->get()->first(); @endphp
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key={{$settings->google_map_key}}&callback=initMap&region=qa" type="text/javascript"></script>
+    
     <script>
-
         function initialize() {
             var input = document.getElementById('name');
             var autocomplete = new google.maps.places.Autocomplete(input);

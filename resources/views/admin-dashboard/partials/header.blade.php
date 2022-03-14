@@ -11,40 +11,6 @@
                         </a>
                     </li>
 
-                    {{-- user management --}}
-                    {{-- <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link " href="#" role="button" data-toggle="dropdown">
-                                User Management
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                                <ul class="timeline">
-                                    <li>
-                                        <a href="{!! url('/admin/menuOptions'); !!}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Menu</h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{!! url('/admin/permissions'); !!}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Permissions</h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{!! url('/admin/roles'); !!}">
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Roles</h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li> --}}
-
                     {{-- agency --}}
                     <li class="nav-item dropdown notification_dropdown">
 
@@ -85,7 +51,7 @@
 
                     {{-- Addresses --}}
                     <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link {{ Request::is('url', 'admin/blog*') ? 'text-saakin' : '' }} "
+                        <a class="nav-link"
                             href="#" role="button" data-toggle="dropdown">
                                 Addresses
                         </a>

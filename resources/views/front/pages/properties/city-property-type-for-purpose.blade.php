@@ -1,53 +1,53 @@
 @extends("front.layouts.main")
 
-@if ($landing_page_content !=null)
-
-@section('title',$landing_page_content->meta_title . ' | '.' Saakin.qa')
-@section('description',$landing_page_content->meta_description)
-@section('keyword',$landing_page_content->meta_keyword)
-@section('type','property')
-@section('url',url()->current())
-
+@if ($landing_page_content != null)
+    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
+    @section('description', $landing_page_content->meta_description)
+    @section('keyword', $landing_page_content->meta_keyword)
+    @section('type', 'property')
+    @section('url', url()->current())
 @else
-
-@section('title',$page_info. ' | '.' Saakin.qa')
-@section('description', $page_info)
-@section('type','property')
-@section('url',url()->current())
-
+    @section('title', $page_info . ' | ' . ' Saakin.qa')
+    @section('description', $page_info)
+    @section('type', 'property')
+    @section('url', url()->current())
 @endif
 @section('content')
-<style>
-    .listing-features li i {
-        display: block;
-        position: initial;
-    }
-
-    @media (min-width: 800px) {
-        .liDeskAreaSpan{
-            float: left;
-            margin-left: 15px;
-        }
-    
-        .list-group{
-            margin-left: -14px !important;
-        }
-    }
-
-    @media (max-width: 800px){
-        .list-group{
-            width: 72vw !important;
-            margin-top: -20px !important;
-            margin-left: 0px !important;
+    <style>
+        .listing-features li i {
+            display: block;
+            position: initial;
         }
 
-        .mbl-search-li{
-            width: 100% !important;
-            margin-left: 0px !important;
+        .moreLess {
+            display: none;
         }
-    }
 
-</style>
+        @media (min-width: 800px) {
+            .liDeskAreaSpan {
+                float: left;
+                margin-left: 15px;
+            }
+
+            .list-group {
+                margin-left: -14px !important;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .list-group {
+                width: 72vw !important;
+                margin-top: -20px !important;
+                margin-left: 0px !important;
+            }
+
+            .mbl-search-li {
+                width: 100% !important;
+                margin-left: 0px !important;
+            }
+        }
+
+    </style>
     <div class="breadcrumb-section bg-xs" style="background-image: url('/assets/images/backgrounds/bg-8.jpg')">
         <div class="overlay op-5"></div>
         <div class="container">
@@ -55,14 +55,14 @@
                 <div class="col-md-8 offset-md-2 text-center">
                     <div class="breadcrumb-menu">
                         <h1>
-                            {{$type->plural_name}} for {{ucfirst($property_purpose) }} in {{$city->name}}
+                            {{ $type->plural_name }} for {{ ucfirst($property_purpose) }} in {{ $city->name }}
                         </h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="filter-wrapper style1">
         <div class="container">
             <div class="row pro_desk" style="padding-top: 10px;">
@@ -70,29 +70,25 @@
                     <div class="property-filter d-sm-flex mt-10 col-12">
                         <div class="row d-flex property-filter d-sm-flex col-12">
                             @foreach ($subcities as $item)
-                                <div class="col-3 {{ $loop->index > 7 ? 'moreLess' : ''}}" >
-                                    <a 
-                                    href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose).'-'.$item->slug ]) }}"
-                                    class="ty-compact-list"
-                                    >
+                                <div class="col-3 {{ $loop->index > 7 ? 'moreLess' : '' }}">
+                                    <a href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose) . '-' . $item->slug]) }}"
+                                        class="ty-compact-list">
                                         <span style="color: #009FFF">
-                                            {{ \Illuminate\Support\Str::limit($item->name,25) }}
+                                            {{ \Illuminate\Support\Str::limit($item->name, 25) }}
                                         </span>
-    
+
                                         ({{ $item->pcount }})
-                                    
                                     </a>
                                 </div>
-                                
                             @endforeach
-                            
-                            @if($subcities->count() > 7)
-                            <div class="col-12">
-                                <button onclick="showLessOrMore()" id="myBtn" class="btn btn-info btn-sm mt-2" 
+
+                            @if ($subcities->count() > 7)
+                                <div class="col-12">
+                                    <button onclick="showLessOrMore()" id="myBtn" class="btn btn-info btn-sm mt-2"
                                         style="float:right !important">
-                                    Show more
-                                </button>
-                            </div>
+                                        Show more
+                                    </button>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -117,13 +113,12 @@
                                     <div class="row">
                                         <div class="col-12 mb-3">
                                             <select name="property_purpose" id="property_purpose"
-                                                class="hero__form-input  form-control custom-select" onchange="setPropertyPurpose(value)">
+                                                class="hero__form-input  form-control custom-select"
+                                                onchange="setPropertyPurpose(value)">
                                                 <option value="" selected>Property Purpose</option>
                                                 @foreach ($propertyPurposes as $propertyPurpose)
-                                                    <option 
-                                                        value="{{ $propertyPurpose->name }}"
-                                                        {{ Str::ucfirst($property_purpose) == $propertyPurpose->name ? 'selected' : '' }}
-                                                    >
+                                                    <option value="{{ $propertyPurpose->name }}"
+                                                        {{ Str::ucfirst($property_purpose) == $propertyPurpose->name ? 'selected' : '' }}>
                                                         {{ $propertyPurpose->name }}
                                                     </option>
                                                 @endforeach
@@ -131,7 +126,8 @@
                                         </div>
                                         <div class="col-12 mb-3">
                                             <select name="property_type" id="property_type"
-                                                class="hero__form-input form-control custom-select" onchange="setPropertyType(this)">
+                                                class="hero__form-input form-control custom-select"
+                                                onchange="setPropertyType(this)">
                                                 <option value="" selected>All Type</option>
                                                 @foreach ($propertyTypes as $propertyType)
                                                     <option value="{{ $propertyType->id }}"
@@ -262,31 +258,34 @@
                                         <div class="col-xl-12 col-12 mb-3">
                                             <select name="furnishings" class="hero__form-input  form-control custom-select">
                                                 <option value="">All furnishings</option>
-                                                <option value="109" {{Request::get('furnishings') == 109 ? 'selected' : ''}}>
+                                                <option value="109"
+                                                    {{ Request::get('furnishings') == 109 ? 'selected' : '' }}>
                                                     Furnished
                                                 </option>
-                                                <option value="120" {{Request::get('furnishings') == 120 ? 'selected' : ''}}>
+                                                <option value="120"
+                                                    {{ Request::get('furnishings') == 120 ? 'selected' : '' }}>
                                                     Unfurnished
                                                 </option>
-                                                <option value="101" {{Request::get('furnishings') == 101 ? 'selected' : ''}}>
+                                                <option value="101"
+                                                    {{ Request::get('furnishings') == 101 ? 'selected' : '' }}>
                                                     Partly furnished
                                                 </option>
                                             </select>
                                         </div>
                                         <div class="col-12 mb-3">
                                             <div class="input-search">
-                                                <input type="text" class="typeahead" name="keywordextra"  
+                                                <input type="text" class="typeahead" name="keywordextra"
                                                     placeholder="View of Water, Gym, or Security" autocomplete="off"
                                                     value="{{ Request::get('keywordextra') }}">
                                             </div>
                                         </div>
                                         <div class="col-12 mb-3">
                                             <div class="input-search">
-                                                <input type="text" class="typeahead" name="keyword" id="country" 
+                                                <input type="text" class="typeahead" name="keyword" id="country"
                                                     placeholder="Search Location" autocomplete="off"
                                                     value="{{ Request::get('keyword') }}">
                                             </div>
-                                            <div id="country_list" class="col-md-12 col-12" ></div> 
+                                            <div id="country_list" class="col-md-12 col-12"></div>
                                             <div id="extra_keywords" style="display: none;"></div>
 
                                         </div>
@@ -310,17 +309,14 @@
                             <div class="sidebar-left">
                                 <div class="sidebar-ad">
                                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
-                                    crossorigin="anonymous"></script>
-                               <!-- side bar -->
-                               <ins class="adsbygoogle"
-                                    style="display:block"
-                                    data-ad-client="ca-pub-2421573832685297"
-                                    data-ad-slot="6760164139"
-                                    data-ad-format="auto"
-                                    data-full-width-responsive="true"></ins>
-                               <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                               </script>
+                                                                        crossorigin="anonymous"></script>
+                                    <!-- side bar -->
+                                    <ins class="adsbygoogle" style="display:block"
+                                        data-ad-client="ca-pub-2421573832685297" data-ad-slot="6760164139"
+                                        data-ad-format="auto" data-full-width-responsive="true"></ins>
+                                    <script>
+                                        (adsbygoogle = window.adsbygoogle || []).push({});
+                                    </script>
                                 </div>
 
                             </div>
@@ -342,37 +338,41 @@
                                 <div class="property-filter d-sm-flex mt-10">
                                     <ul class="property-short list-unstyled d-sm-flex mb-0">
                                         <li>
-                                            <form 
-                                                action="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}" 
-                                                name="frmSortBy" id="frmSortBy"
-                                                class="form-inline form-1" 
-                                                method="get"
-                                            >
-                                                <input type="hidden" value="{{Request::segment(1)}}" name="buyOrRent">
-                                                <input type="hidden" value="{{Request::segment(2)}}" name="city" />
-                                                <input type="hidden" value="{{Request::segment(3)}}" name="property_type_purpose" />
+                                            <form
+                                                action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}"
+                                                name="frmSortBy" id="frmSortBy" class="form-inline form-1" method="get">
+                                                <input type="hidden" value="{{ Request::segment(1) }}" name="buyOrRent">
+                                                <input type="hidden" value="{{ Request::segment(2) }}" name="city" />
+                                                <input type="hidden" value="{{ Request::segment(3) }}"
+                                                    name="property_type_purpose" />
                                                 <div class="form-group d-lg-flex d-block">
                                                     <label class="justify-content-start">Sort by:</label>
                                                     <div class="short-by">
                                                         <select name="sort_by" id="sort_by"
                                                             class="hero__form-input form-control custom-select"
                                                             onchange="document.getElementById('frmSortBy').submit();">
-                                                            <option value="featured" {{ request('sort_by') == 'featured' ? 'selected' : '' }}>
+                                                            <option value="featured"
+                                                                {{ request('sort_by') == 'featured' ? 'selected' : '' }}>
                                                                 Featured
                                                             </option>
-                                                            <option value="newest" {{ request('sort_by') == 'newest' ? 'selected' : '' }}>
+                                                            <option value="newest"
+                                                                {{ request('sort_by') == 'newest' ? 'selected' : '' }}>
                                                                 Newest
                                                             </option>
-                                                            <option value="low_price" {{ request('sort_by') == 'low_price' ? 'selected' : '' }}>
+                                                            <option value="low_price"
+                                                                {{ request('sort_by') == 'low_price' ? 'selected' : '' }}>
                                                                 Price (Low)
                                                             </option>
-                                                            <option value="high_price" {{ request('sort_by') == 'high_price' ? 'selected' : '' }}>
+                                                            <option value="high_price"
+                                                                {{ request('sort_by') == 'high_price' ? 'selected' : '' }}>
                                                                 Price (High)
                                                             </option>
-                                                            <option value="beds_least" {{ request('sort_by') == 'beds_least' ? 'selected' : '' }}>
+                                                            <option value="beds_least"
+                                                                {{ request('sort_by') == 'beds_least' ? 'selected' : '' }}>
                                                                 Beds (Least)
                                                             </option>
-                                                            <option value="beds_most" {{ request('sort_by') == 'beds_most' ? 'selected' : '' }}>
+                                                            <option value="beds_most"
+                                                                {{ request('sort_by') == 'beds_most' ? 'selected' : '' }}>
                                                                 Beds (Most)
                                                             </option>
                                                         </select>
@@ -403,7 +403,9 @@
                                             <div class="row row-10-padding">
                                                 @foreach ($properties as $property)
                                                     <div class="col-md-6 col-lg-4 col-sm-12">
-                                                        @include('front.pages.include.property_box')
+                                                        @include(
+                                                            'front.pages.include.property_box'
+                                                        )
 
                                                     </div>
                                                 @endforeach
@@ -419,15 +421,13 @@
                                                         <div class="col-md-6 col-sm-12 col-4 pr-0">
                                                             <div class="property-item">
                                                                 <a class="property-img"
-                                                                    href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}"
-                                                                    
-                                                                    >
+                                                                    href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}">
                                                                     @if ($property->featured_image)
                                                                         <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                                            alt="{{$property->property_name}}">
+                                                                            alt="{{ $property->property_name }}">
                                                                     @else
                                                                         <img src="{{ asset('assets/images/no-img.png') }}"
-                                                                            alt="{{$property->property_name}}">
+                                                                            alt="{{ $property->property_name }}">
                                                                     @endif
                                                                 </a>
                                                                 <ul class="feature_text">
@@ -441,8 +441,7 @@
                                                                     @elseif($property->property_purpose == 2)
                                                                         <li class="feature_or"><span> For Sale</span>
                                                                         </li>
-                                                                    @elseif($property->property_purpose != ''||
-                                                                        $property->property_purpose != null)
+                                                                    @elseif($property->property_purpose != '' || $property->property_purpose != null)
                                                                         <li class="feature_or">
                                                                             <span>
                                                                                 {{ $property->property_purpose }}</span>
@@ -455,16 +454,16 @@
                                                         <div class="col-md-6 col-sm-12 col-8 pl-0">
                                                             <div class="property-title-box">
                                                                 <h4>
-                                                                    <a 
-                                                                    href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}"
-                                                                    >
+                                                                    <a
+                                                                        href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}">
                                                                         {{ $property->property_name }}
                                                                     </a>
                                                                 </h4>
                                                                 <div class="property-location">
                                                                     <i class="fa fa-map-marker-alt"></i>
                                                                     <p>
-                                                                        {{ $property->address }}, {{ $property->city }}
+                                                                        {{ $property->address }},
+                                                                        {{ $property->city }}
                                                                     </p>
                                                                 </div>
                                                                 <ul class="property-feature">
@@ -515,9 +514,9 @@
                                             <div class="row">
                                                 <div class="col-md-12  col-xs-12 ">
                                                     <div class="page-num text-center">
-                                                    @if($properties->total() > getcong('pagination_limit'))
-                                                        {{ $properties->links('front.pages.include.pagination') }}
-                                                    @endif
+                                                        @if ($properties->total() > getcong('pagination_limit'))
+                                                            {{ $properties->links('front.pages.include.pagination') }}
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -525,8 +524,6 @@
                                         <!--pagination ends-->
                                     </div>
                                 </div>
-
-
                             @else
                                 <div class="item-wrapper pt-20">
                                     <div class="tab-content" id="myTabContent">
@@ -552,7 +549,7 @@
                     @foreach ($subcities as $item)
                         <div>
                             <a class="px-3"
-                            href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->plural) . '-for-' . strtolower($property_purpose).'-'.$item->slug ]) }}">
+                                href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose) . '-' . $item->slug]) }}">
 
                                 <span style="color: #009FFF">
                                     {{ $item->name }}
@@ -566,26 +563,26 @@
                 <div class="col-12 bg-white d-flex pb-2 filter-btns">
                     <button class="openbtn btn btn-outline-info" style="width: 50%" onclick="openNav()"><i
                             class="fas fa-sort-amount-down"></i> Filters</button>
-                            <select name="sort_by" id="sort_by" class="ml-2 mob_sort" onchange="FormSubmit(this);">
-                                <option value="featured" {{ request('sort_by') == 'featured' ? 'selected' : '' }}>
-                                    Featured
-                                </option>
-                                <option value="newest" {{ request('sort_by') == 'newest' ? 'selected' : '' }}>
-                                    Newest
-                                </option>
-                                <option value="low_price" {{ request('sort_by') == 'low_price' ? 'selected' : '' }}>
-                                    Price (Low)
-                                </option>
-                                <option value="high_price" {{ request('sort_by') == 'high_price' ? 'selected' : '' }}>
-                                    Price (High)
-                                </option>
-                                <option value="beds_least" {{ request('sort_by') == 'beds_least' ? 'selected' : '' }}>
-                                    Beds (Least)
-                                </option>
-                                <option value="beds_most" {{ request('sort_by') == 'beds_most' ? 'selected' : '' }}>
-                                    Beds (Most)
-                                </option>
-                            </select>
+                    <select name="sort_by" id="sort_by" class="ml-2 mob_sort" onchange="FormSubmit(this);">
+                        <option value="featured" {{ request('sort_by') == 'featured' ? 'selected' : '' }}>
+                            Featured
+                        </option>
+                        <option value="newest" {{ request('sort_by') == 'newest' ? 'selected' : '' }}>
+                            Newest
+                        </option>
+                        <option value="low_price" {{ request('sort_by') == 'low_price' ? 'selected' : '' }}>
+                            Price (Low)
+                        </option>
+                        <option value="high_price" {{ request('sort_by') == 'high_price' ? 'selected' : '' }}>
+                            Price (High)
+                        </option>
+                        <option value="beds_least" {{ request('sort_by') == 'beds_least' ? 'selected' : '' }}>
+                            Beds (Least)
+                        </option>
+                        <option value="beds_most" {{ request('sort_by') == 'beds_most' ? 'selected' : '' }}>
+                            Beds (Most)
+                        </option>
+                    </select>
                 </div>
                 <div id="mySidebar" class="searchbar">
                     <a href="#" class="pl-20">
@@ -596,7 +593,8 @@
                             <input type="hidden" name="featured" id="featured" value="{{ request()->get('featured') }}">
                             <div class="row pt-2">
                                 <div class="col-md-12">
-                                    <select name="property_purpose" id="property_purpose"  onchange="setPropertyPurpose(value)" class="hero__form-input  form-control mb-20">
+                                    <select name="property_purpose" id="property_purpose"
+                                        onchange="setPropertyPurpose(value)" class="hero__form-input  form-control mb-20">
                                         <option value="" selected>Property Purpose</option>
                                         @foreach ($propertyPurposes as $propertyPurpose)
                                             <option value="{{ $propertyPurpose->name }}"
@@ -606,7 +604,8 @@
                                     </select>
                                 </div>
                                 <div class="col-md-12">
-                                    <select name="property_type" class="hero__form-input  form-control mb-20" onchange="setPropertyType(this)">
+                                    <select name="property_type" class="hero__form-input  form-control mb-20"
+                                        onchange="setPropertyType(this)">
                                         <option value="" selected>Property Type</option>
                                         {{ $type }}
 
@@ -771,35 +770,34 @@
                                 <div class="col-lg-6 col-md-12 col-12">
                                     <select name="furnishings" class="hero__form-input  form-control mb-20">
                                         <option value="">All furnishings</option>
-                                        <option value="109" {{Request::get('furnishings') == 109 ? 'selected' : ''}}>
+                                        <option value="109" {{ Request::get('furnishings') == 109 ? 'selected' : '' }}>
                                             Furnished
                                         </option>
-                                        <option value="120" {{Request::get('furnishings') == 120 ? 'selected' : ''}}>
+                                        <option value="120" {{ Request::get('furnishings') == 120 ? 'selected' : '' }}>
                                             Unfurnished
                                         </option>
-                                        <option value="101" {{Request::get('furnishings') == 101 ? 'selected' : ''}}>
+                                        <option value="101" {{ Request::get('furnishings') == 101 ? 'selected' : '' }}>
                                             Partly furnished
                                         </option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="col-md-12 mb-20">
                                     <div class="input-search">
                                         <input type="text" class="" name="keywordextra" id="keywordextra"
-                                        placeholder="View of Water, Gym, or Security"
-                                        value="{{ Request::get('keywordMbl') ?? Request::get('keywordextra') }}">
+                                            placeholder="View of Water, Gym, or Security"
+                                            value="{{ Request::get('keywordMbl') ?? Request::get('keywordextra') }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12 mb-20">
                                     <div class="input-search">
                                         <input type="text" class="typeahead countryMbl" name="keywordMbl" id="keywordMbl"
-                                        placeholder="Search Location"
-                                        value="{{ Request::get('keywordMbl') }}">
+                                            placeholder="Search Location" value="{{ Request::get('keywordMbl') }}">
                                     </div>
                                 </div>
-                                <div id="country_list_mbl" class="col-md-12 col-12" ></div>
+                                <div id="country_list_mbl" class="col-md-12 col-12"></div>
                                 <div class="extra_keywords" style="display: none;"></div>
-                                
+
                                 <div class="col-12 mb-20 position-relative">
                                     <div class="commercial-checkbox">
                                         <input type="checkbox" name="commercial" value="1" id="commercial2">
@@ -825,18 +823,17 @@
                                                 <div class="swiper-container">
                                                     <div class="swiper-wrapper">
                                                         <div class="swiper-slide">
-                                                            <img
-                                                                src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                                alt="{{$property->property_name}}">
+                                                            <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                                alt="{{ $property->property_name }}">
                                                         </div>
                                                         @if (count($property->gallery) > 0)
                                                             @foreach ($property->gallery as $gallery)
-                                                            @if($loop->index < 5)
-                                                            <div class="swiper-slide">
-                                                                <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}" 
-                                                                alt="{{$property->property_name}}">
-                                                            </div>
-                                                            @endif
+                                                                @if ($loop->index < 5)
+                                                                    <div class="swiper-slide">
+                                                                        <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                                            alt="{{ $property->property_name }}">
+                                                                    </div>
+                                                                @endif
                                                             @endforeach
                                                         @endif
                                                     </div>
@@ -845,22 +842,32 @@
                                                 </div>
                                             </div>
 
-@php
-$phone = \App\Properties::getPhoneNumber($property->id);
-$whatsapp = \App\Properties::getWhatsapp($property->id);
-$agency = \App\Agency::where("id",$property->agency_id)->first();
-$propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
-$whatsapText = 'Hello,
-I would like to inquire about this property posted on
-saakin.qa
-
-Reference: '.$property->refference_code.'
-Price: QR '.$property->getPrice().'/month
-Type: '.$property->propertiesTypes->types.'
-Location: '.$property->address.'
-
-Link:'.$propertyUrl;
-@endphp
+                                            @php
+                                                $phone = \App\Properties::getPhoneNumber($property->id);
+                                                $whatsapp = \App\Properties::getWhatsapp($property->id);
+                                                $agency = \App\Agency::where('id', $property->agency_id)->first();
+                                                $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
+                                                $whatsapText =
+                                                    'Hello,
+                                                I would like to inquire about this property posted on
+                                                saakin.qa
+                                                
+                                                Reference: ' .
+                                                    $property->refference_code .
+                                                    '
+                                                Price: QR ' .
+                                                    $property->getPrice() .
+                                                    '/month
+                                                Type: ' .
+                                                    $property->propertiesTypes->types .
+                                                    '
+                                                Location: ' .
+                                                    $property->address .
+                                                    '
+                                                
+                                                Link:' .
+                                                    $propertyUrl;
+                                            @endphp
                                             <div class="property-card__content">
                                                 <div class="property-card__info-area">
                                                     <div class="property-card__title ">
@@ -878,7 +885,7 @@ Link:'.$propertyUrl;
                                                     </h2>
                                                     <div class="property-card__location">
                                                         {{ $property->propertiesTypes->types }}
-                                                            <br>
+                                                        <br>
                                                         {{ \Illuminate\Support\Str::limit($property->address, 30) }}
                                                     </div>
                                                     <div class="property-card__info ">
@@ -908,17 +915,17 @@ Link:'.$propertyUrl;
                                                         </a>
                                                     @else
                                                         <a class="btn btn-outline-success call_btn" id="emailBtn"
-                                                        href="mailto:{{ $agency->email }}" data-toggle="modal"
-                                                        data-target="#exampleModal"
-                                                        data-image="{{asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                        data-title="{{ $property->property_name }}"
-                                                        data-agent="{{ $property->agent_name ?? $agency->name }}"
-                                                        data-broker="{{ $agency->name ?? '' }}"
-                                                        data-bedroom="{{ $property->bedrooms ?? '' }}"
-                                                        data-bathroom="{{ $property->bathrooms ?? '' }}"
-                                                        data-area="{{ $property->getSqm() ?? '' }}">
-                                                        <i class="fas fa-envelope"></i> Email
-                                                    </a>
+                                                            href="mailto:{{ $agency->email }}" data-toggle="modal"
+                                                            data-target="#exampleModal"
+                                                            data-image="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                            data-title="{{ $property->property_name }}"
+                                                            data-agent="{{ $property->agent_name ?? $agency->name }}"
+                                                            data-broker="{{ $agency->name ?? '' }}"
+                                                            data-bedroom="{{ $property->bedrooms ?? '' }}"
+                                                            data-bathroom="{{ $property->bathrooms ?? '' }}"
+                                                            data-area="{{ $property->getSqm() ?? '' }}">
+                                                            <i class="fas fa-envelope"></i> Email
+                                                        </a>
                                                     @endif
                                                 </div>
                                             </div>
@@ -931,8 +938,8 @@ Link:'.$propertyUrl;
                                 <div class="row">
                                     <div class="col-md-8 offset-md-2  col-xs-12 ">
                                         <div class="page-num text-center">
-                                            @if($properties->total() > getcong('pagination_limit'))
-                                            {{ $properties->links('front.pages.include.pagination') }}
+                                            @if ($properties->total() > getcong('pagination_limit'))
+                                                {{ $properties->links('front.pages.include.pagination') }}
                                             @endif
                                         </div>
                                     </div>
@@ -946,79 +953,95 @@ Link:'.$propertyUrl;
         </div>
     </div>
     @if ($properties->onFirstPage())
-    <div class="filter-wrapper style1">
-        <div class="container">
-            <div class="meta-paragraph-container">
-                {!! $landing_page_content->page_content ?? '' !!}
+        <div class="filter-wrapper style1">
+            <div class="container">
+                <div class="meta-paragraph-container">
+                    {!! $landing_page_content->page_content ?? '' !!}
+                </div>
             </div>
         </div>
-    </div>
     @endif
 
 @endsection
 
 @section('scripts-custom')
     <script>
+        function showLessOrMore() {
+            var btnText = document.getElementById("myBtn");
+            var elems = document.getElementsByClassName('moreLess');
 
-    function openNav() {
+
+            if(btnText.innerHTML == 'Show Less'){
+                btnText.innerHTML = "Show More"
+                for (var i=0;i<elems.length;i+=1){
+                    elems[i].style.display = 'none';
+                }
+            }else{
+                btnText.innerHTML = "Show Less"
+                for (var i=0;i<elems.length;i+=1){
+                    elems[i].style.display = 'inline';
+                }
+            }
+        }
+
+        function openNav() {
             document.getElementById("mySidebar").style.width = "80%";
         }
 
-    function closeNav() {
-        document.getElementById("mySidebar").style.width = "0";
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
 
-    }
-    
-    function FormSubmit(coming) {
-        var value = coming.value;
-        $("#sort_by").val(value);
-        document.getElementById('frmSortBy').submit();
-    }
+        }
 
-    //DOTS SLIDER
-    var newswiper = new Swiper('.related-homes-slider', {
-        slidesPerView: 3,
-        spaceBetween: 26,
+        function FormSubmit(coming) {
+            var value = coming.value;
+            $("#sort_by").val(value);
+            document.getElementById('frmSortBy').submit();
+        }
 
-        dots: true,
-        slidesPerColumn: 2,
-        grid: {
-            rows: 2,
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        breakpoints: {
-            767: {
-                slidesPerView: 1,
+        //DOTS SLIDER
+        var newswiper = new Swiper('.related-homes-slider', {
+            slidesPerView: 3,
+            spaceBetween: 26,
 
+            dots: true,
+            slidesPerColumn: 2,
+            grid: {
+                rows: 2,
             },
-            991: {
-                slidesPerView: 2,
-                spaceBetween: 20,
-            }
-        }
-    });
-    
-    //DOTS SLIDER
-    $(document).ready(function() {
-        var width = $(window).width();
-        console.log(width)
-        if (width < 768) {
-            var swiper = new Swiper('.swiper-container', {
-                loop: true,
-                dots: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                767: {
+                    slidesPerView: 1,
 
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                    dynamicBullets: true,
-                    dynamicMainBullets: 1,
                 },
-            });
-        }
-    });
-    
+                991: {
+                    slidesPerView: 2,
+                    spaceBetween: 20,
+                }
+            }
+        });
+
+        //DOTS SLIDER
+        $(document).ready(function() {
+            var width = $(window).width();
+            console.log(width)
+            if (width < 768) {
+                var swiper = new Swiper('.swiper-container', {
+                    loop: true,
+                    dots: true,
+
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                        dynamicBullets: true,
+                        dynamicMainBullets: 1,
+                    },
+                });
+            }
+        });
     </script>
 @endsection

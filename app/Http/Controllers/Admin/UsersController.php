@@ -27,9 +27,7 @@ class UsersController extends MainAdminController
 	public function __construct()
     {
 		 $this->middleware('auth');
-
 		 parent::__construct();
-         
 
     }
 
@@ -37,15 +35,11 @@ class UsersController extends MainAdminController
      {
 
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-
             \Session::flash('flash_message', trans('words.access_denied'));
-
             return redirect('admin/dashboard');
-
         }
 
         $action = 'saakin_index';
-
         if(isset($_GET['keyword']))
         {
 
