@@ -105,6 +105,6 @@
 @section('scripts')
 <script>
     var editor = CKEDITOR.replace( 'description' );
-CKFinder.setupCKEditor( editor );
+    CKFinder.setupCKEditor( editor );
 </script>
 @endsection
