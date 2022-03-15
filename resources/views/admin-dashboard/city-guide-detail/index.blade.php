@@ -33,7 +33,7 @@
                                     <td>
                                         <img src="{{asset('upload/cities/'.$cityDetail->Cities->city_image)}}" width="100" alt="{{ $cityDetail->Cities->name.'- city image' }}"/>
                                     </td>
-                                    <td>{{ $cityDetail->attributes }}</td>
+                                    <td>{{ strip_tags(Str::limit($cityDetail->attributes, 60, '...') )  }}</td>
                                         <td class="text-center width-100">
                                             <a href="{{ route('city_detail_edit', $cityDetail->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">

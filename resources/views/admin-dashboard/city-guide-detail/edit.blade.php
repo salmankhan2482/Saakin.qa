@@ -21,7 +21,7 @@
 <div class="container-fluid">
     <div class="page-titles">
         <ol class="breadcrumb">
-            <a href="{{route('cities.index')}}">
+            <a href="{{route('city-details')}}">
                 <button type="button" class="btn btn-rounded btn-dark">Back</button>
             </a>
         </ol>
@@ -35,7 +35,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(array('route' => 'cities.store', 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                        {!! Form::open(array('route' => ['city_detail_update', $cityDetail->id] , 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                             <div class="form-row">
                                 <div class="col-12">
@@ -73,20 +73,20 @@
                                 <div class="form-group col-md-12">
                                     <label>Things to Consider</label>
                                     <textarea type="text" rows="5" id="things_to_consider" name="things_to_consider" class="ckeditor"
-                                     placeholder="Things to Consider"></textarea>
+                                     placeholder="Things to Consider">{{ $cityDetail->things_to_consider ??'' }}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Locations</label>
                                     <textarea type="text" rows="5" id="locations" name="locations" class="ckeditor"
-                                     placeholder="Locations"></textarea>
+                                     placeholder="Locations">{{ $cityDetail->locations ??'' }}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Attributes</label>
-                                    <textarea type="text" rows="5" id="attributes" name="attributes" class="ckeditor" placeholder="City Attributes"></textarea>
+                                    <textarea type="text" rows="5" id="attributes" name="attributes" class="ckeditor" placeholder="City Attributes">{{ $cityDetail->attributes ??'' }}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">

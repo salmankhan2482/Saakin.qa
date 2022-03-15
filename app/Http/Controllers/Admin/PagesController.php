@@ -209,8 +209,10 @@ class PagesController extends MainAdminController
         $page_info = Pages::findOrFail('1');
 
         $page_title=trans('words.about_us');
+        $action = 'saakin_edit';
           
-        return view('admin.pages.about_page',compact('page_title','page_info'));
+        return view('admin-dashboard.landing-pages.about_page_content.about_page_content',
+        compact('page_title','page_info','action'));
     }	 
     
     public function update_about_page(Request $request)
@@ -267,8 +269,10 @@ class PagesController extends MainAdminController
         $page_info = Pages::findOrFail('2');
 
         $page_title=trans('words.terms_of_us');
+        $action = 'saakin_edit';
          
-        return view('admin.pages.terms_page',compact('page_title','page_info'));
+        return view('admin-dashboard.landing-pages.terms_of_use_page_content.terms_of_use_page_content',
+        compact('page_title','page_info','action'));
     }    
     
     public function update_terms_page(Request $request)
@@ -325,8 +329,10 @@ class PagesController extends MainAdminController
         $page_info = Pages::findOrFail('3');
 
         $page_title=trans('words.privacy_policy');
+        $action = 'saakin_edit';
          
-        return view('admin.pages.privacy_policy_page',compact('page_title','page_info'));
+        return view('admin-dashboard.landing-pages.privacy_policy_page_content.privacy_policy_page_content',
+        compact('page_title','page_info','action'));
     }    
     
     public function update_privacy_policy_page(Request $request)
@@ -383,8 +389,10 @@ class PagesController extends MainAdminController
         $page_info = Pages::findOrFail('4');
 
         $page_title=trans('words.faq');
+        $action = 'saakin_edit';
          
-        return view('admin.pages.faq_page',compact('page_title','page_info'));
+        return view('admin-dashboard.landing-pages.faqs_page_content.faqs_page_content',
+        compact('page_title','page_info','action'));
     }    
     
     public function update_faq_page(Request $request)

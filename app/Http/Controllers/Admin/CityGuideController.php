@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests;
-
 use Auth;
-use App\City;
-use App\CityDetail;
 use Session;
+use App\City;
+
+use App\CityDetail;
+use App\Http\Requests;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CityGuideController extends Controller
 {
@@ -211,10 +212,6 @@ class CityGuideController extends Controller
 
         $rule=array(
             'city' => 'required',
-            'name' => 'required',
-            'short_description' => 'required',
-            'long_description' => 'required',
-            'city_image1' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
@@ -226,82 +223,13 @@ class CityGuideController extends Controller
 
         $cityDetail = new CityDetail();
         $cityDetail->city_id = $inputs['city'];
-        $cityDetail->title = $inputs['name'];
-        $cityDetail->short_description = $inputs['short_description'];
-        $cityDetail->long_description = $inputs['long_description'];
         $cityDetail->property_trends = $inputs['property_trends'];
         $cityDetail->neighborhood = $inputs['neighborhood'];
         $cityDetail->lifestyle = $inputs['lifestyle'];
         $cityDetail->things_to_consider = $inputs['things_to_consider'];
         $cityDetail->locations = $inputs['locations'];
         $cityDetail->attributes = $inputs['attributes'];
-        
-
-        $city_image = $request->file('city_image1');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-            $city_image_new_name1 = $imageName;
-            $cityDetail->image1 = $city_image_new_name1;
-        }
-
-        $city_image = $request->file('city_image2');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-            $city_image_new_name2 = $imageName;
-            $cityDetail->image2 = $city_image_new_name2;
-        }
-
-        $city_image = $request->file('city_image3');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-            $city_image_new_name3 = $imageName;
-            $cityDetail->image3 = $city_image_new_name3;
-        }
-
-        $city_image = $request->file('city_image4');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-            $city_image_new_name4 = $imageName;
-            $cityDetail->image4 = $city_image_new_name4;
-        }
-
-        $city_image = $request->file('city_image5');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-            $city_image_new_name5 = $imageName;
-            $cityDetail->image5 = $city_image_new_name5;
-        }
-
-        $city_image = $request->file('city_image6');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-            $city_image_new_name6 = $imageName;
-            $cityDetail->image6 = $city_image_new_name6;
-        }
+    
 
         $cityDetail->save();
 
@@ -332,9 +260,6 @@ class CityGuideController extends Controller
 
         $rule=array(
             'city' => 'required',
-            'name' => 'required',
-            'short_description' => 'required',
-            'long_description' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
@@ -346,81 +271,12 @@ class CityGuideController extends Controller
 
         $cityDetail = CityDetail::findOrFail($id);
         $cityDetail->city_id = $inputs['city'];
-        $cityDetail->title = $inputs['name'];
-        $cityDetail->short_description = $inputs['short_description'];
-        $cityDetail->long_description = $inputs['long_description'];
         $cityDetail->property_trends = $inputs['property_trends'];
         $cityDetail->neighborhood = $inputs['neighborhood'];
         $cityDetail->lifestyle = $inputs['lifestyle'];
         $cityDetail->things_to_consider = $inputs['things_to_consider'];
         $cityDetail->locations = $inputs['locations'];
         $cityDetail->attributes = $inputs['attributes'];
-
-        $city_image = $request->file('city_image1');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-//            \File::delete(public_path() .'/upload/cities/'.$cityDetail->image1);
-            $cityDetail->image1 = $imageName;
-        }
-
-        $city_image = $request->file('city_image2');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-//            \File::delete(public_path() .'/upload/cities/'.$cityDetail->image2);
-            $cityDetail->image2 = $imageName;
-        }
-
-        $city_image = $request->file('city_image3');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-//            \File::delete(public_path() .'/upload/cities/'.$cityDetail->image3);
-            $cityDetail->image3 = $imageName;
-        }
-
-        $city_image = $request->file('city_image4');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-//            \File::delete(public_path() .'/upload/cities/'.$cityDetail->image4);
-            $cityDetail->image4 = $imageName;
-        }
-
-        $city_image = $request->file('city_image5');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-//            \File::delete(public_path() .'/upload/cities/'.$cityDetail->image5);
-            $cityDetail->image5 = $imageName;
-        }
-
-        $city_image = $request->file('city_image6');
-        if($city_image) {
-            $city_image_name = $city_image->getClientOriginalName();
-            $city_image_name = explode(".",$city_image_name);
-            $tmpFilePath = public_path('upload/cities/');
-            $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
-            $city_image->move($tmpFilePath, $imageName);
-//            \File::delete(public_path() .'/upload/cities/'.$cityDetail->image6);
-            $cityDetail->image6 = $imageName;
-        }
 
 
         $cityDetail->save();

@@ -164,6 +164,37 @@
                                             </div>
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('about_page') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">About Us</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('terms_page') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Terms of Use</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('privacy_page') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Privacy Policy</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="{{ route('faq_page') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">FAQ's</h6>
+                                            </div>
+                                        </a>
+                                    </li>
                                     
                                 </ul>
                             </div>
@@ -354,6 +385,7 @@
                         </div>
                     </li>
 
+                    
                 </ul>
                 <ul class="navbar-nav header-right ml-5">
                     <li class="nav-item dropdown header-profile">
