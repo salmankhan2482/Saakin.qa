@@ -7,8 +7,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">City Details</h4>
-                    <a href="{{ route('city_detail_create') }}">
+                    <h4 class="card-title">Cities</h4>
+                    <a href="{{ route('cities.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
@@ -27,6 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                 @foreach($cityDetails as $i => $cityDetail)
                                 <tr>
                                     <td>{{ $cityDetail->Cities->name }}</td>
@@ -36,10 +37,11 @@
                                     <td>{{ strip_tags(Str::limit($cityDetail->attributes, 60, '...') )  }}</td>
                                         <td class="text-center width-100">
                                             <a href="{{ route('city_detail_edit', $cityDetail->id) }}"
+
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ route('city_detail_destroy', $cityDetail->id) }}"
+                                            <a href="{{ route('cities.destroy', $city->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

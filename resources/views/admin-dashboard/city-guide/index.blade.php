@@ -22,7 +22,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Image</th>
-                                    <th>Short Description</th>
+                                    <th>Attributes</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
@@ -33,16 +33,16 @@
                         <td>
                             <img src="{{asset('upload/cities/'.$city->city_image)}}" width="100" alt="{{ $city->name.'- city image' }}"/>
                         </td>
-                        <td>{{ Str::limit($city->short_description, 100, '...')  }}</td>
+                        <td>{{ $city->attributes }}</td>
                                         <td>
                                             <a href="{{ route('cities.edit', $city->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            {{-- <a href="{{ route('cities.show', $city->id) }}"
+                                            <a href="{{ route('cities.show', $city->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
-                                            </a> --}}
+                                            </a>
                                             <a href="{{ route('cities.destroy', $city->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">

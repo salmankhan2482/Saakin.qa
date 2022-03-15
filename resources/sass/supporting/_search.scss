@@ -1,0 +1,87 @@
+.choose-type-btns {
+  margin-bottom: 0.5rem;
+
+  .btn-monochrome {
+    --btn-bg-color: #f1efef;
+    --btn-border-color: #f1efef;
+    --btn-text-color: #3a4957;
+    --btn-hover-bg-color: rgba(var(--bs-primary-rgb), 0.1);
+    --btn-hover-border-color: var(--bs-primary);
+    --btn-hover-text-color: var(--bs-primary);
+
+    padding: 0.5rem 0.75rem;
+    line-height: 1.125;
+  }
+}
+
+.custom-dropdown {
+  .item-in-line {
+    display: inline;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    padding: 8px 15px 8px 15px;
+  }
+}
+
+.site-banner {
+  --banner-height: auto;
+
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+  display: grid;
+  align-items: center;
+  position: relative;
+  min-height: var(--banner-height);
+  background: center/cover no-repeat;
+
+  &::before {
+    content: "";
+    display: block;
+    background-color: rgb(0 0 0 / 51%);
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0.6;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-banner {
+    @include media-breakpoint-up(md) {
+      --banner-height: 30.875rem;
+    }
+
+    @include media-breakpoint-up(lg) {
+      --banner-height: 40.875rem;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    --banner-height: 15rem;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--bs-white);
+    font-weight: 500;
+  }
+}
+
+.price-dropdown {
+  min-width: 25.5rem;
+  padding: 0.5rem;
+}
+
+.advanced-search-option {
+  font-size: 0.875rem;
+
+  a {
+    text-decoration: none;
+  }
+}
