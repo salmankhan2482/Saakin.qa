@@ -7,8 +7,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">City Details</h4>
-                    <a href="{{ route('city_detail_create') }}">
+                    <h4 class="card-title">Cities</h4>
+                    <a href="{{ route('cities.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
@@ -27,19 +27,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cityDetails as $i => $cityDetail)
-                                <tr>
-                                    <td>{{ $cityDetail->Cities->name }}</td>
-                                    <td>
-                                        <img src="{{asset('upload/cities/'.$cityDetail->Cities->city_image)}}" width="100" alt="{{ $cityDetail->Cities->name.'- city image' }}"/>
-                                    </td>
-                                    <td>{{ $cityDetail->attributes }}</td>
-                                        <td class="text-center width-100">
-                                            <a href="{{ route('city_detail_edit', $cityDetail->id) }}"
+                                @foreach($cities as $i => $city)
+                    <tr>
+                        <td>{{ $city->name }}</td>
+                        <td>
+                            <img src="{{asset('upload/cities/'.$city->city_image)}}" width="100" alt="{{ $city->name.'- city image' }}"/>
+                        </td>
+                        <td>{{ $city->attributes }}</td>
+                                        <td>
+                                            <a href="{{ route('cities.edit', $city->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ route('city_detail_destroy', $cityDetail->id) }}"
+                                            <a href="{{ route('cities.destroy', $city->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

@@ -1,1 +1,28 @@
-//
+// Fonts
+// @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap");
+// @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "~bootstrap/scss/bootstrap";
+
+// utils
+@import "utils";
+
+//Supporting Files
+@import "supporting/site-header";
+@import "supporting/site-footer";
+@import "supporting/global";
+@import "supporting/input-group";
+@import "supporting/search";
+@import "supporting/property-box";
+@import "supporting/city-guide";
+@import "supporting/properties-listing";
+@import "supporting/property-details";
+
+// @import "supporting/dashboard";
+// @import "supporting/input-group";
+// @import "supporting/login";
+// @import "supporting/my-account";
