@@ -64,7 +64,6 @@ class CityGuideController extends Controller
             'short_description' => 'required',
             'long_description' => 'required',
             'city_image' => 'required',
-            'attributes' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
@@ -78,7 +77,7 @@ class CityGuideController extends Controller
         $city->name = $inputs['name'];
         $city->short_description = $inputs['short_description'];
         $city->long_description = $inputs['long_description'];
-        $city->attributes = $inputs['attributes'];
+        
         $city_slug = $inputs['name'];
         $city->city_slug = (str_replace(' ', '-', strtolower($city_slug))); 
         $city_image = $request->file('city_image');
@@ -93,6 +92,10 @@ class CityGuideController extends Controller
         }
         $city->city_image = $city_image_new_name;
 
+        $city->meta_title = $inputs['meta_title'];
+        $city->meta_description = $inputs['meta_description'];
+        $city->meta_keyword = $inputs['meta_keyword'];
+        
         $city->save();
 
         \Session::flash('flash_message', trans('words.added'));
@@ -122,7 +125,6 @@ class CityGuideController extends Controller
             'name' => 'required',
             'short_description' => 'required',
             'long_description' => 'required',
-            'attributes' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
@@ -136,7 +138,6 @@ class CityGuideController extends Controller
         $city->name = $inputs['name'];
         $city->short_description = $inputs['short_description'];
         $city->long_description = $inputs['long_description'];
-        $city->attributes = $inputs['attributes'];
 
         $city_image = $request->file('city_image');
         if($city_image) {
@@ -148,6 +149,10 @@ class CityGuideController extends Controller
             \File::delete(public_path() .'/upload/cities/'.$city->city_image);
             $city->city_image = $imageName;
         }
+
+        $city->meta_title = $inputs['meta_title'];
+        $city->meta_description = $inputs['meta_description'];
+        $city->meta_keyword = $inputs['meta_keyword'];
 
         $city->save();
         \Session::flash('flash_message', trans('words.updated'));
@@ -181,8 +186,9 @@ class CityGuideController extends Controller
         }
 
         $cityDetails = CityDetail::paginate(10);
+        $action = 'saakin_index';
 
-        return view('admin.pages.city_details',compact('cityDetails'));
+        return view('admin-dashboard.city-guide-detail.index',compact('cityDetails','action'));
     }
 
     public function createCityDetail()    {
@@ -192,8 +198,9 @@ class CityGuideController extends Controller
             return redirect('admin/dashboard');
         }
         $cities = City::all();
+        $action = 'saakin_create';
 
-        return view('admin.pages.add_city_detail', compact('cities'));
+        return view('admin-dashboard.city-guide-detail.create', compact('cities','action'));
     }
 
     public function storeCityDetail(Request $request)
@@ -311,7 +318,9 @@ class CityGuideController extends Controller
 
         $cities = City::all();
         $cityDetail = CityDetail::findOrFail($id);
-        return view('admin.pages.edit_city_detail',compact('cities','cityDetail'));
+        $action = 'saakin_edit';
+
+        return view('admin-dashboard.city-guide-detail.edit',compact('cities','cityDetail','action'));
     }
 
     public function updateCityDetail(Request $request, $id)

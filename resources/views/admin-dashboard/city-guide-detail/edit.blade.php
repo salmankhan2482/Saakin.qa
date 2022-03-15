@@ -31,67 +31,64 @@
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Edit City</h4>
+                    <h4 class="card-title">Edit City Detail</h4>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(array('route' => ['cities.update', $city->id], 'method'=>'PATCH','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                        {!! Form::open(array('route' => 'cities.store', 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                             <div class="form-row">
+                                <div class="col-12">
+                                    <label>City</label>
+                                    <select class="form-control" name="city" required>
+                                        <option value="">Select City</option>
+                                        @foreach($cities as $city)
+                                <option value="{{$city->id}}" @if($cityDetail->city_id == $city->id) selected @endif>{{$city->name}}</option>
+                            @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label>Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="City Name" value="{{ $city->name }}" required>
+                                    <label>Property Trends</label>
+                                    <textarea type="text" rows="5" id="property_trends" name="property_trends" class="ckeditor"
+                                     placeholder="Property Trends">{{ $cityDetail->property_trends ??'' }}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Short Description</label>
-                                    <textarea type="text" rows="5" id="short_description" name="short_description" class="form-control"
-                                     placeholder="Short Description" required>{{ $city->short_description }}</textarea>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Long Description</label>
-                                    <textarea type="text" rows="5" id="long_description" name="long_description" class="form-control"
-                                     placeholder="Long Description" required>{{ $city->long_description }}</textarea>
+                                <div class="form-group col-md-12">
+                                    <label>Neighborhood</label>
+                                    <textarea type="text" rows="5" id="neighborhood" name="neighborhood" class="ckeditor"
+                                     placeholder="Neighborhood">{{ $cityDetail->neighborhood ??'' }}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-12">
+                                    <label>Lifestyle</label>
+                                    <textarea type="text" rows="5" id="lifestyle" name="lifestyle" class="ckeditor"
+                                     placeholder="Lifestyle">{{ $cityDetail->lifestyle ??'' }}</textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Things to Consider</label>
+                                    <textarea type="text" rows="5" id="things_to_consider" name="things_to_consider" class="ckeditor"
+                                     placeholder="Things to Consider"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Locations</label>
+                                    <textarea type="text" rows="5" id="locations" name="locations" class="ckeditor"
+                                     placeholder="Locations"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
                                     <label>Attributes</label>
-                                    <textarea type="text" id="attributes" name="attributes" class="form-control"
-                                     placeholder="City Name" required>{{ $city->attributes }}</textarea>
-                                </div>
-
-                                <div class="form-group col-md-5">
-                                    <label>Featured Image (Choose Image 584px × 515px)</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="city_image" id="city_image" class="custom-file-input">
-                                            <label class="custom-file-label">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-1">
-                                    <img src="{{asset('upload/cities/'.$city->city_image)}}" alt="{{$city->name}}" width="80" />
+                                    <textarea type="text" rows="5" id="attributes" name="attributes" class="ckeditor" placeholder="City Attributes"></textarea>
                                 </div>
                             </div>
-
-                                {{-- <div class="form-group col-md-6">
-                                    <label>Meta Title</label>
-                                    <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Meta Description</label>
-                                    <textarea type="text" id="meta_description" rows="5" name="meta_description" class="form-control" placeholder="Meta Description"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Meta Keywords</label>
-                                    <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords">
-                                </div> --}}
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
@@ -105,4 +102,11 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
+    <script>
+        var editor = CKEDITOR.replace( 'ckeditor' );
+        CKFinder.setupCKEditor( editor );
+    </script>
 @endsection

@@ -56,13 +56,7 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Attributes</label>
-                                    <textarea type="text" id="attributes" name="attributes" class="form-control"
-                                     placeholder="City Name" required>{{ $city->attributes }}</textarea>
-                                </div>
-
-                                <div class="form-group col-md-5">
+                                <div class="form-group col-md-4">
                                     <label>Featured Image (Choose Image 584px × 515px)</label>
                                     <div class="input-group">
                                         <div class="custom-file">
@@ -71,30 +65,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group col-md-1">
-                                    <img src="{{asset('upload/cities/'.$city->city_image)}}" alt="{{$city->name}}" width="80" />
+                                <div class="form-group col-md-2">
+                                    <img src="{{asset('upload/cities/'.$city->city_image)}}" alt="{{$city->name}}" width="130"  />
                                 </div>
-                            </div>
 
-                                {{-- <div class="form-group col-md-6">
+                                <div class="form-group col-md-6">
                                     <label>Meta Title</label>
-                                    <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title">
+                                    <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title" value="{{ $city->meta_title }}">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label>Meta Description</label>
-                                    <textarea type="text" id="meta_description" rows="5" name="meta_description" class="form-control" placeholder="Meta Description"></textarea>
+                                    <textarea type="text" id="meta_description" rows="5" name="meta_description" class="form-control" placeholder="Meta Description">{{ $city->meta_description }}</textarea>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Meta Keywords</label>
-                                    <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords">
-                                </div> --}}
+                                    <textarea type="text" id="meta_keyword" rows="5" name="meta_keyword" class="form-control" placeholder="Meta Keywords">{{ $city->meta_keyword }}</textarea>
+                                </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label>&nbsp;</label><br>
                                     <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
