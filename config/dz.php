@@ -325,8 +325,6 @@ return [
 				'saakin_edit' => [
 
 					'admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
-					'admin/vendor/ckeditor/ckeditor.js',
-					'admin/vendor/ckfinder/ckfinder.js',
 					'admin/vendor/summernote/js/summernote.min.js',
 					'admin/js/plugins-init/summernote-init.js',
 					'admin/vendor/select2/js/select2.full.min.js',

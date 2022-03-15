@@ -196,9 +196,9 @@ Route::get('city/show/{id}', 'CityGuideController@show')->name('cities.show');
     Route::get('city-detail/list', 'CityGuideController@listCityDetail')->name('city-details');
     Route::get('city-detail/create', 'CityGuideController@createCityDetail')->name('city_detail_create');
     Route::post('city-detail/create', 'CityGuideController@storeCityDetail')->name('city_detail_store');
-    Route::get('city-detail/edit/{id}', 'CityGuideController@editCityDetail');
-    Route::post('city-detail/update/{id}', 'CityGuideController@updateCityDetail');
-    Route::get('city-detail/delete/{id}', 'CityGuideController@destroyCityDetail');
+    Route::get('city-detail/edit/{id}', 'CityGuideController@editCityDetail')->name('city_detail_edit');
+    Route::post('city-detail/update/{id}', 'CityGuideController@updateCityDetail')->name('city_detail_update');
+    Route::get('city-detail/delete/{id}', 'CityGuideController@destroyCityDetail')->name('city_detail_destroy');
 
 
     Route::resource('blogs', 'BlogController');
