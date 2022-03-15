@@ -23,6 +23,7 @@
 		@endforeach
 	@endif
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     @yield('style') 
     <style>
@@ -32,6 +33,23 @@
         }
         .text-saakin{
             color: #009fff !important;
+        }
+        .deznav {
+        display: none !important;
+        }
+
+        /* @media only screen and (max-width: 780px) {
+            .deznav {
+                display: block !important;
+            }
+
+            .top-menu {
+                display: none !important;
+            }
+
+        } */
+        .select2-container .select2-selection--multiple{
+            height: 40px;
         }
     </style>
 
@@ -49,10 +67,6 @@
     <div id="main-wrapper">
 
         <div class="nav-header">
-            <a href="{!! url('/index'); !!}" class="brand-logo">
-                <img class="brand-title" src="{{ asset('assets/images/black_logo.png') }}" alt="">
-            </a>
-
             <div class="nav-control">
                 <div class="hamburger">
                     <span class="line"></span><span class="line"></span><span class="line"></span>
@@ -73,6 +87,11 @@
 	@include('admin-dashboard.partials.footer-scripts')
     <script src="https://cdn.ckeditor.com/4.13.0/full/ckeditor.js"></script>
     @yield('scripts')
-
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.js-example-basic-multiple').select2();
+        });
+    </script>
 </body>
 </html>

@@ -103,20 +103,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('property-amenity', 'PropertyAmenityController');
     Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy')->name('property-amenity.destroy');
 
-    Route::resource('users', 'UsersController');
     Route::group(['middleware' => ['auth']], function() {
-        Route::resource('roles', RoleController::class);
+        Route::resource('roles','RoleController');
+        Route::resource('users','UsersController');
+        Route::get('users/delete/{id}','UsersController@destroy')->name('users.destroy');
+        Route::resource('permissions','PermissionController');
     });
-	// Route::get('users', 'UsersController@userslist')->name('users.index');
-	// Route::get('users/adduser', 'UsersController@addUser');
-	// Route::post('users/adduser', 'UsersController@addnew');
-	// Route::get('users/edituser/{id}', 'UsersController@editUser');
-    // Route::post('users/edituser/{id}', 'UsersController@updateUser');
-    // Route::get('users/view_user/{id}', 'UsersController@view_user');
-	// Route::get('users/delete/{id}', 'UsersController@delete');
-	// Route::get('users/export', 'UsersController@user_export');
-
-
+	
 	Route::get('subscriber', 'SubscriberController@subscriberlist');
 	Route::get('subscriber/delete/{id}', 'SubscriberController@delete');
 
