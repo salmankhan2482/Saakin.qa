@@ -35,6 +35,24 @@
                             <i class="md-person-outline"></i>
                         </a>
                     </li>
+                    @can('users-management')
+                <li class="{{ classActivePath('users') }}">
+                    <a href="{{ URL::to('admin/users') }}">
+                        <i class="fa fa-users"></i>
+                        {{ trans('words.users') }}
+                    </a>
+                </li>
+                @endcan
+                
+                @can('roles-management')
+                    
+                <li class="{{ classActivePath('roles') }}">
+                    <a href="{{ route('roles.index') }}">
+                        <i class="fa fa-users"></i>
+                        Roles
+                    </a>
+                </li>
+                @endcan
                     @if (Auth::User()->usertype == 'Admin')
                         <li>
                             <a href="{{ URL::to('admin/settings') }}">
@@ -391,6 +409,13 @@
                         </a>
                     </li>
 
+                    <li class="{{ classActivePath('roles') }}">
+                        <a href="{{ route('permissions.index') }}">
+                            <i class="fa fa-users"></i>
+                            Permissions
+                        </a>
+                    </li>
+
 
                     <li class="{{ classActivePath('testimonials') }}">
                         <a href="{{ URL::to('admin/testimonials') }}">
@@ -500,6 +525,7 @@
 
                     {{-- agency dashboard rouetes --}}
                 @else
+                
                     <li class="{{ classActivePath('dashboard') }}">
                         <a href="{{ URL::to('admin/dashboard') }}">
                             <i class="fa fa-dashboard"></i> 

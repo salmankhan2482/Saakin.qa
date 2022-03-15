@@ -6,8 +6,8 @@
 
                     {{-- dashboard --}}
                     <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link {{ Request::is('url', 'admin/dashboard*') ? 'text-saakin' : '' }}" href="{{ url('/admin/dashboard/new') }}"  >
-                                Dashboard
+                        <a href="{!! url('/index'); !!}" class="brand-logo">
+                            <img class="brand-title" src="{{ asset('assets/images/black_logo.png') }}" alt="" width="30">
                         </a>
                     </li>
 
@@ -87,6 +87,41 @@
                                         </a>
                                     </li>
                                     
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    
+                    {{-- User Management --}}
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link"
+                            href="#" role="button" data-toggle="dropdown">
+                                User Management
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                <ul class="timeline">
+                                    <li>
+                                        <a href="{{ route('users.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Users</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('permissions.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Permissions</h6>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('roles.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Roles</h6>
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

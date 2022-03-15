@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
+use Hash;
 use Session;
-use App\Role;
 use App\User;
-use App\Roles;
 use App\Agency;
 use App\Enquire;
 use Carbon\Carbon;
@@ -17,6 +15,8 @@ use Illuminate\Support\Str;
 use App\Exports\UsersExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
@@ -65,7 +65,8 @@ class UsersController extends MainAdminController
             }
         }
 
-        return view('admin.pages.users',compact('allusers'));
+        $action = 'saakin_index';
+        return view('admin-dashboard.user-management.users.index',compact('allusers', 'action'));
 
     }
 
@@ -80,7 +81,7 @@ class UsersController extends MainAdminController
         $action = 'saakin_create';
         $agencies = Agency::all();
         $roles = Role::pluck('name','name')->all();
-        return view('admin.pages.add_user', compact(['agencies','roles','action']));
+        return view('admin-dashboard.user-management.users.create', compact(['agencies','roles','action']));
     }
 
     public function store(Request $request)
@@ -190,7 +191,7 @@ class UsersController extends MainAdminController
         return \Redirect::back();
     }
 
-    public function editUser($id)
+    public function edit($id)
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
             \Session::flash('flash_message', trans('words.access_denied'));
@@ -202,16 +203,15 @@ class UsersController extends MainAdminController
         $user = User::findOrFail($decrypted_id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
+        $action = 'saakin_create';
 
-        return view('admin.pages.edit_user',compact('user','agencies', 'roles', 'userRole'));
+        return view('admin-dashboard.user-management.users.edit',compact('user','agencies', 'roles', 'userRole','action'));
     }
 
-    public function updateUser(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         if($inputs['usertype']=="Agents") {
             $rule=array(
                 'name' => 'required',
@@ -293,11 +293,12 @@ class UsersController extends MainAdminController
 
         $decrypted_id = Crypt::decryptString($id);
         $user = User::findOrFail($decrypted_id);
+        $action = 'saakin_index';
         
-        return view('admin.pages.view_user', compact('user','agencies'));
+        return view('admin-dashboard.user-management.users.show', compact('user','agencies', 'action'));
     }
     
-    public function delete($id)
+    public function destroy($id)
     {
     	if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
             \Session::flash('flash_message', trans('words.access_denied'));
@@ -308,33 +309,8 @@ class UsersController extends MainAdminController
 
         if($decrypted_id!=1)
         {
-            /*$property_list = Properties::where('user_id',$decrypted_id)->get();
-
-            foreach ($property_list as $property_data)
-            {
-                $property_gallery_images = PropertyGallery::where('property_id',$property_data->id)->get();
-
-                foreach ($property_gallery_images as $gallery_images) {
-
-                    \File::delete(public_path() .'/upload/gallery/'.$gallery_images->image_name);
-
-                    $property_gallery_obj = PropertyGallery::findOrFail($gallery_images->id);
-                    $property_gallery_obj->delete();
-                }
-
-                $property = Properties::findOrFail($property_data->id);
-
-                \File::delete(public_path() .'/upload/properties/'.$property->featured_image);
-
-                \File::delete(public_path() .'/upload/floorplan/'.$property->floor_plan);
-
-                $property->delete();
-            }*/
-
             $user = User::findOrFail($decrypted_id);
-
             \File::delete(public_path() .'/upload/members/'.$user->image_icon);
-
             if($user->delete())
             {
                 $user->roles()->detach();

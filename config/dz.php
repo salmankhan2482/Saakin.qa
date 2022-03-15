@@ -45,11 +45,9 @@ return [
 				],
 
 				'saakin_create' => [
-
 					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 					'admin/vendor/summernote/summernote.css',
 					'admin/vendor/select2/css/select2.min.css',
-					'admin/vendor/ckfinder/ckfinder.js'
 				],
 
 				'saakin_edit' => [

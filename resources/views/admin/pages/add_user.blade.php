@@ -36,7 +36,7 @@
 
    	<div class="panel panel-default">
             <div class="panel-body">
-                {!! Form::open(array('url' => array('admin/users/adduser'),'class'=>'form-horizontal padding-15','name'=>'user_form','id'=>'user_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                {!! Form::open(array('route' => 'users.store', 'method'=> 'POST', 'class'=>'form-horizontal padding-15','name'=>'user_form','id'=>'user_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">{{trans('words.name')}} *</label>
