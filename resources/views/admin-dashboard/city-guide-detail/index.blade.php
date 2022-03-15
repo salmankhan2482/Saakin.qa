@@ -27,15 +27,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cities as $i => $city)
-                    <tr>
-                        <td>{{ $city->name }}</td>
-                        <td>
-                            <img src="{{asset('upload/cities/'.$city->city_image)}}" width="100" alt="{{ $city->name.'- city image' }}"/>
-                        </td>
-                        <td>{{ $city->attributes }}</td>
-                                        <td>
-                                            <a href="{{ route('cities.edit', $city->id) }}"
+
+                                @foreach($cityDetails as $i => $cityDetail)
+                                <tr>
+                                    <td>{{ $cityDetail->Cities->name }}</td>
+                                    <td>
+                                        <img src="{{asset('upload/cities/'.$cityDetail->Cities->city_image)}}" width="100" alt="{{ $cityDetail->Cities->name.'- city image' }}"/>
+                                    </td>
+                                    <td>{{ strip_tags(Str::limit($cityDetail->attributes, 60, '...') )  }}</td>
+                                        <td class="text-center width-100">
+                                            <a href="{{ route('city_detail_edit', $cityDetail->id) }}"
+
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>

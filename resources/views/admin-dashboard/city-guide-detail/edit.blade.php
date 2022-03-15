@@ -21,7 +21,7 @@
 <div class="container-fluid">
     <div class="page-titles">
         <ol class="breadcrumb">
-            <a href="{{route('cities.index')}}">
+            <a href="{{route('city-details')}}">
                 <button type="button" class="btn btn-rounded btn-dark">Back</button>
             </a>
         </ol>
@@ -35,7 +35,9 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(array('route' => ['cities.update', $city->id], 'method'=>'PATCH','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+
+                        {!! Form::open(array('route' => ['city_detail_update', $cityDetail->id] , 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
@@ -56,35 +58,27 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Attributes</label>
-                                    <textarea type="text" id="attributes" name="attributes" class="form-control"
-                                     placeholder="City Name" required>{{ $city->attributes }}</textarea>
-                                </div>
 
-                                <div class="form-group col-md-5">
-                                    <label>Featured Image (Choose Image 584px × 515px)</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="city_image" id="city_image" class="custom-file-input">
-                                            <label class="custom-file-label">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-1">
-                                    <img src="{{asset('upload/cities/'.$city->city_image)}}" alt="{{$city->name}}" width="80" />
-                                </div>
-                            </div>
-
-                                {{-- <div class="form-group col-md-6">
-                                    <label>Meta Title</label>
-                                    <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title">
+                                <div class="form-group col-md-12">
+                                    <label>Things to Consider</label>
+                                    <textarea type="text" rows="5" id="things_to_consider" name="things_to_consider" class="ckeditor"
+                                     placeholder="Things to Consider">{{ $cityDetail->things_to_consider ??'' }}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label>Meta Description</label>
-                                    <textarea type="text" id="meta_description" rows="5" name="meta_description" class="form-control" placeholder="Meta Description"></textarea>
+                                    <label>Locations</label>
+                                    <textarea type="text" rows="5" id="locations" name="locations" class="ckeditor"
+                                     placeholder="Locations">{{ $cityDetail->locations ??'' }}</textarea>
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+
+                                    <label>Attributes</label>
+                                    <textarea type="text" rows="5" id="attributes" name="attributes" class="ckeditor" placeholder="City Attributes">{{ $cityDetail->attributes ??'' }}</textarea>
+
                                 </div>
                             </div>
                             <div class="form-row">

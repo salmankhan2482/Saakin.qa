@@ -150,14 +150,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('transactions/export', 'TransactionsController@transactions_export');
 	Route::get('transactions/user_invoice/{id}', 'TransactionsController@user_invoice');
 
-	Route::get('about_page', 'PagesController@about_page');
-	Route::post('about_page', 'PagesController@update_about_page');
-	Route::get('terms_page', 'PagesController@terms_page');
-	Route::post('terms_page', 'PagesController@update_terms_page');
-	Route::get('privacy_policy_page', 'PagesController@privacy_policy_page');
-	Route::post('privacy_policy_page', 'PagesController@update_privacy_policy_page');
-	Route::get('faq_page', 'PagesController@faq_page');
-	Route::post('faq_page', 'PagesController@update_faq_page');
+	Route::get('about_page', 'PagesController@about_page')->name('about_page');
+	Route::post('about_page', 'PagesController@update_about_page')->name('update_about_page');
+	Route::get('terms_page', 'PagesController@terms_page')->name('terms_page');
+	Route::post('terms_page', 'PagesController@update_terms_page')->name('update_terms_page');
+	Route::get('privacy_policy_page', 'PagesController@privacy_policy_page')->name('privacy_page');
+	Route::post('privacy_policy_page', 'PagesController@update_privacy_policy_page')->name('update_privacy_page');
+	Route::get('faq_page', 'PagesController@faq_page')->name('faq_page');
+	Route::post('faq_page', 'PagesController@update_faq_page')->name('update_faq_page');
 
     Route::get('properties_for_purpose_page', 'PagesController@properties_for_purpose_page');
     Route::post('properties_for_purpose_page', 'PagesController@update_properties_for_purpose_page');
@@ -269,9 +269,9 @@ Route::get('mbl/autocomplete/agencies', 'AgenciesController@mbllivesearch');
 Route::get('livesearch','IndexController@livesearch');
 
 Route::get('about-us','PagesController@about_us');
-Route::get('terms-of-use','PagesController@terms_of_use');
-Route::get('privacy-policy','PagesController@privacy_policy');
-Route::get('faqs','PagesController@faqs');
+Route::get('terms-of-use','PagesController@terms_of_use')->name('terms_of_use');
+Route::get('privacy-policy','PagesController@privacy_policy')->name('privacy_policy');
+Route::get('faqs','PagesController@faqs')->name('faqs');
 
 Route::get('contact-us', 'IndexController@contact_us_page');
 Route::post('contact-us', 'IndexController@contact_us_sendemail');
