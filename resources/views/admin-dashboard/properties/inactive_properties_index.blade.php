@@ -176,18 +176,18 @@
                                                     @endif
                                                     
                                                     @if ($property->status == 1 && Auth::User()->usertype == 'Admin')
-                                                    <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}" class="dropdown-item">
+                                                    <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}" class="dropdown-item">
                                                         <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
                                                     </a>
                                                     @elseif($property->status == 0 && Auth::User()->usertype == 'Admin')
-                                                        <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
+                                                        <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}"
                                                             class="dropdown-item">
                                                             <i class="fa fa-check"></i> {{ trans('words.publish') }}
                                                         </a>
                                                     @endif
 
                                                     @if ($property->status == 0 && Auth::User()->usertype != 'Admin')
-                                                        <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
+                                                        <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}"
                                                             class="dropdown-item">
                                                             <i class="fa fa-check"></i> {{ trans('words.publish') }}
                                                         </a>

@@ -311,7 +311,7 @@
                                     Users
                                 </a>
                             </li>
-
+                            
                             
                             <li class="{{ classActivePath('top_Ten_Properties') }}">
                                 <a href="{{ route('top_Ten_Properties') }}">
@@ -380,9 +380,16 @@
                     <li class="{{ classActivePath('users') }}">
                         <a href="{{ URL::to('admin/users') }}">
                             <i class="fa fa-users"></i>
-                                {{ trans('words.users') }}
-                            </a>
-                        </li>
+                            {{ trans('words.users') }}
+                        </a>
+                    </li>
+                    
+                    <li class="{{ classActivePath('roles') }}">
+                        <a href="{{ route('roles.index') }}">
+                            <i class="fa fa-users"></i>
+                            Roles
+                        </a>
+                    </li>
 
 
                     <li class="{{ classActivePath('testimonials') }}">

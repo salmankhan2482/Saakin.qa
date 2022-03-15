@@ -498,11 +498,21 @@ class PropertiesController extends MainAdminController
                 Session::flash('flash_message', trans('words.access_denied'));
                 return redirect('admin/dashboard');
             }
+            
+            if ($property->status == 1) {
                 $property->status = '0';
                 $property->remove_reason = request('reason');
                 $property->save();
                 Session::flash('flash_message', "Property Removed .");
                 return redirect()->back();
+
+            } else {
+                $property->status = '1';
+                $property->remove_reason = '';
+                $property->save();
+                Session::flash('flash_message', "Property Published .");
+                return redirect()->back();
+            }
         }
     }
 
