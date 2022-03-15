@@ -1,84 +1,62 @@
 @extends("admin.admin_app")
 
-@section('content')
-   
-    <div id="main">
-        <div class="page-header">
+@section("content")
+
+<div id="main">
+	@extends("admin.admin_app")
+
+@section("content")
+
+<div id="main">
+	<div class="row">
+        <div class="col-lg-12 margin-tb">
+            <div class="pull-left">
+                <h2>Role Management</h2>
+            </div>
             <div class="pull-right">
-                <a href="{{route('roles.create')}}" class="btn btn-primary">
-                    Add Roles
-                    <i class="fa fa-plus"></i>
-                </a>
+            @can('role-create')
+                <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
+                @endcan
             </div>
-            <h2>Roles</h2>
         </div>
-
-        @if (Session::has('flash_message'))
-            <div class="alert alert-success">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ Session::get('flash_message') }}
-            </div>
-        @endif
-            
-        <div class="panel panel-default panel-shadow">
-       
-            <div class="panel-body">
-                
-                <table id="data-table" class="table table-striped table-hover dt-responsive" data-order="[]" cellspacing="0" width="100%">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Permissions</th>
-                            <th>Menu Options</th>
-                            <th class="text-center width-100">{{ trans('words.action') }}</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        @foreach ($roles as $i => $role)
-                            <tr>
-                                <td>{{ $role->id }}</td>
-                                <td>{{ $role->title }}</td>
-                                <td>
-                                    @foreach($role->rolepermissions as $item)
-                                        <span class="badge btn-danger mb-5">
-                                            {{ $item->title }}
-                                        </span>    
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @foreach($role->menuoptions as $item)
-                                        <span class="badge btn-info">
-                                            {{ $item->title }}
-                                        </span>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <a class="btn btn-default-dark" href="{{ route('roles.edit', $role->id) }}">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <a class="btn btn-danger" href="{{ route('roles.destroy', $role->id) }}">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5" class="text-center">
-                                {{-- @include('admin.pagination', ['paginator' => $roles]) --}}
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            <div class="clearfix"></div>
-        </div>
-
     </div>
-  
+    
+    
+    @if ($message = Session::get('success'))
+        <div class="alert alert-success">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+    
+    
+    <table class="table table-bordered">
+      <tr>
+         <th>No</th>
+         <th>Name</th>
+         <th width="280px">Action</th>
+      </tr>
+        @foreach ($roles as $key => $role)
+        <tr>
+            <td>{{ ++$i }}</td>
+            <td>{{ $role->name }}</td>
+            <td>
+                <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
+                @can('role-edit')
+                    <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                @endcan
+                @can('role-delete')
+                    {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                    {!! Form::close() !!}
+                @endcan
+            </td>
+        </tr>
+        @endforeach
+    </table>
+    
+    
+    {!! $roles->render() !!}
+
+</div>
+
 @endsection

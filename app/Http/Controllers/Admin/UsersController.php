@@ -3,33 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use Auth;
+use Session;
+use App\Role;
 use App\User;
-use App\Properties;
-use App\PropertyGallery;
+use App\Roles;
 use App\Agency;
 use App\Enquire;
-use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\Properties;
 use App\Http\Requests;
-use Illuminate\Http\Request;
-use Session;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Crypt;
+use App\PropertyGallery;
 use Illuminate\Support\Str;
-
 use App\Exports\UsersExport;
-use App\Roles;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Crypt;
+use Intervention\Image\Facades\Image;
 
 class UsersController extends MainAdminController
 {
 	public function __construct()
     {
 		 $this->middleware('auth');
-
 		 parent::__construct();
-         
 
     }
 
@@ -37,15 +36,11 @@ class UsersController extends MainAdminController
      {
 
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-
             \Session::flash('flash_message', trans('words.access_denied'));
-
             return redirect('admin/dashboard');
-
         }
 
         $action = 'saakin_index';
-
         if(isset($_GET['keyword']))
         {
 
@@ -70,26 +65,22 @@ class UsersController extends MainAdminController
             }
         }
 
-        return view('admin-dashboard.user-management.users.index',compact('allusers','action'));
+        return view('admin.pages.users',compact('allusers'));
+
     }
 
     public function create()    
     {
-        // $titles= Properties::where('agency_id',36)->pluck('property_name');
-        // dd($titles);
-
 
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-
             \Session::flash('flash_message', trans('words.access_denied'));
-
             return redirect('admin/dashboard');
-
         }
+
         $action = 'saakin_create';
         $agencies = Agency::all();
-        $roles = Roles::all();
-        return view('admin-dashboard.user-management.users.create', compact(['agencies','roles','action']));
+        $roles = Role::pluck('name','name')->all();
+        return view('admin.pages.add_user', compact(['agencies','roles','action']));
     }
 
     public function store(Request $request)
@@ -163,7 +154,7 @@ class UsersController extends MainAdminController
 	    
         if($user->save())
         {
-            $user->roles()->attach($request->roles); 
+            $user->assignRole($request->input('roles'));
         }
         //Sending Emails        
         $userEmail = $inputs["email"];
@@ -209,9 +200,10 @@ class UsersController extends MainAdminController
         $agencies = Agency::all();
         $decrypted_id = Crypt::decryptString($id);
         $user = User::findOrFail($decrypted_id);
-        $roles = Roles::all();
+        $roles = Role::pluck('name','name')->all();
+        $userRole = $user->roles->pluck('name','name')->all();
 
-        return view('admin.pages.edit_user',compact('user','agencies', 'roles'));
+        return view('admin.pages.edit_user',compact('user','agencies', 'roles', 'userRole'));
     }
 
     public function updateUser(Request $request, $id)
@@ -282,15 +274,16 @@ class UsersController extends MainAdminController
         }
 
         if($user->save()){
-            $user->roles()->sync($request->roles);
+            DB::table('model_has_roles')->where('model_id',$id)->delete();
+            $user->assignRole($request->input('roles'));
         }
 
         \Session::flash('flash_message', trans('words.successfully_updated'));
         return \Redirect::back();
     }
 
-    public function view_user($id)
-    {
+    public function show($id)
+    {   
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');

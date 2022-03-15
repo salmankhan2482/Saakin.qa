@@ -176,18 +176,18 @@
                                                     @endif
                                                     
                                                     @if ($property->status == 1 && Auth::User()->usertype == 'Admin')
-                                                    <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}" class="dropdown-item">
+                                                    <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}" class="dropdown-item">
                                                         <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
                                                     </a>
                                                     @elseif($property->status == 0 && Auth::User()->usertype == 'Admin')
-                                                        <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
+                                                        <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}"
                                                             class="dropdown-item">
                                                             <i class="fa fa-check"></i> {{ trans('words.publish') }}
                                                         </a>
                                                     @endif
 
                                                     @if ($property->status == 0 && Auth::User()->usertype != 'Admin')
-                                                        <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
+                                                        <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}"
                                                             class="dropdown-item">
                                                             <i class="fa fa-check"></i> {{ trans('words.publish') }}
                                                         </a>
@@ -205,8 +205,8 @@
                                                         <i class="fa fa-trash"></i> 
                                                         {{ trans('words.remove') }}
                                                     </a>
-                                                @elseif(Auth::User()->usertype != 'Admin' && $property->status == 1)
-                                                    <a  href="#" class="callRemovePropertyPopup" class="dropdown-item"
+                                                @elseif(Auth::User()->usertype != 'Admin')
+                                                    <a  href="#" class="callRemovePropertyPopup dropdown-item"
                                                         data-id="{{Crypt::encryptString($property->id)}}"
                                                         data-toggle="modal" data-target="#removePropertyPopup"
                                                     >
@@ -280,7 +280,9 @@
 <script>
     $(".callRemovePropertyPopup").on('click', function(e) {
         var id = $(this).attr('data-id');
-        $("#removePropertyPopupForm").attr('action', `properties/delete/${id}`);
+        let url = "{{ route('properties.destroy', ':id') }}";
+        url = url.replace(':id', id);
+        $("#removePropertyPopupForm").attr('action', url);
     });
 </script>
 @endsection

@@ -105,13 +105,6 @@ class PropertyAreasController extends Controller
             'name' => 'required',
             'town' => 'required',
         ]);
-
-        // if(PropertyAreas::where('name', request('name'))
-        //     ->where('property_towns_id', request('town') )
-        //     ->first())
-        // {
-        //     return redirect()->back()->withErrors(['msg' => 'Duplicate Record Cannot be Inserted.']);
-        // }
         
         $area  = PropertyAreas::find($id);
         $area->name = request('name');
@@ -122,7 +115,6 @@ class PropertyAreasController extends Controller
         $area->latitude = request('latitude');
         $area->longitude = request('longitude');
         $area->update(); 
-
         Session::flash('message', 'Area has been Updated.'); 
         return redirect()->back();
     }

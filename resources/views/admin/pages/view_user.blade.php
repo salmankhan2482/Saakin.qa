@@ -51,6 +51,18 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="" class="col-sm-3 control-label">Roles</label>
+                    @if(!empty($user->getRoleNames()))
+                        @forelse($user->getRoleNames() as $v)
+                            <label class="control-label">{{ $v }}</label>
+                        @empty
+                        <label class="control-label">No Roles</label>
+                        @endforelse
+                    @else
+                        <label class="control-label">No Roles</label>
+                    @endif
+                </div>
+                <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Whatsapp Number</label>
                     <div class="col-sm-9">
                         <input type="text" name="whatsapp" value="{{ $user->whatsapp }}" placeholder="Whatsapp Number" class="form-control">

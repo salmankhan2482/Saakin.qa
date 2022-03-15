@@ -78,3 +78,22 @@
             </div>
         </div>
     @endsection
+    @section('scripts')
+    @php $settings = App\Settings::where("id",1)->get()->first(); @endphp
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key={{$settings->google_map_key}}&callback=initMap&region=qa" type="text/javascript"></script>
+    
+    <script>
+        function initialize() {
+            var input = document.getElementById('name');
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                var place = autocomplete.getPlace();
+                document.getElementById('longitude').value = place.geometry.location.lat();
+                document.getElementById('latitude').value = place.geometry.location.lng();
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+        
+    </script>
+    @endsection

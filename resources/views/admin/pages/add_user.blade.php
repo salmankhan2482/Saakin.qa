@@ -107,11 +107,12 @@
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Assign Role *</label>
                     <div class="col-sm-4">
-                        <select name="roles[]"  class="form-control select2 js-example-basic-multiple" multiple="multiple">
+                        {{-- <select name="roles[]"  class="form-control select2 js-example-basic-multiple" multiple="multiple">
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}">{{ $role->title }}</option>
                             @endforeach
-						</select>
+						</select> --}}
+                        {!! Form::select('roles[]', $roles,[], array('class' => ['form-control', 'select2', 'js-example-basic-multiple'],'multiple')) !!}
                     </div>
                 </div>
 

@@ -2,17 +2,19 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Auth\Notifications\ResetPassword;
 
+
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-     use Notifiable;
+     use Notifiable, Notifiable, HasRoles;
 
     /**
      * The database table used by the model.
@@ -57,10 +59,6 @@ class User extends Authenticatable
         return $this->hasMany('App\PropertyReport');
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Roles::class, 'role_user','user_id', 'role_id');
-    }
 
     public function scopeSearchUserByKeyword($query, $keyword,$type)
     {

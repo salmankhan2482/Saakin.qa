@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
 use App\Types;
 use App\Agency;
-use App\Enquire;
 use App\CityGuide;
-use Carbon\Carbon;
 use App\Properties;
-use App\Permissions;
-use App\Http\Requests;
 use App\PropertyAreas;
 
 use App\PropertyTowns;
@@ -26,10 +21,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\PropertyNeighborhood;
 use App\Exports\PropertiesExport;
-use CKSource\CKFinder\Acl\Permission;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;

@@ -118,13 +118,14 @@
                 <div class="form-group">
                     <label for="" class="col-sm-3 control-label">Assign Role *</label>
                     <div class="col-sm-4">
-                        <select name="roles[]"  class="form-control select2 js-example-basic-multiple" multiple="multiple">
+                        {{-- <select name="roles[]"  class="form-control select2 js-example-basic-multiple" multiple="multiple">
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}" {{ $user->roles->contains($role->id) ? 'selected' : ''}}>
                                     {{ $role->title }}
                                 </option>
                             @endforeach
-						</select>
+						</select> --}}
+                        {!! Form::select('roles[]', $roles,$userRole, array('class' => ['form-control', 'select2', 'js-example-basic-multiple'],'multiple')) !!}
                     </div>
                 </div>
 

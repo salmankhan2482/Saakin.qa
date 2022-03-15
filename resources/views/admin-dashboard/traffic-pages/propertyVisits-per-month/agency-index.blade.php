@@ -60,7 +60,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data['pageVisitsPerMonth'] as $i => $click)
+                                @foreach ($data['propertyVisitsPerMonth'] as $i => $click)
                                 <tr>
                                     <td>{{ $click->id }}</td>
                                     <td>
