@@ -59,10 +59,6 @@ class User extends Authenticatable
         return $this->hasMany('App\PropertyReport');
     }
 
-    public function roles()
-    {
-        return $this->belongsToMany(Roles::class, 'role_user','user_id', 'role_id');
-    }
 
     public function scopeSearchUserByKeyword($query, $keyword,$type)
     {

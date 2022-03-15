@@ -5,7 +5,7 @@
         <div class="page-header">
 
             <div class="pull-right">
-                <a href="{{ URL::to('admin/users/adduser') }}"
+                <a href="{{ route('users.create') }}"
                     class="btn btn-primary">{{ trans('words.add') . ' ' . trans('words.user') }} <i
                         class="fa fa-plus"></i></a>
             </div>
@@ -61,6 +61,7 @@
                             <th>{{ trans('words.image') }}</th>
                             <th>{{ trans('words.name') }}</th>
                             <th>{{ trans('words.email') }}</th>
+                            <th>Roles </th>
                             <th>{{ trans('words.phone') }}</th>
                             <th class="text-center width-100">{{ trans('words.action') }}</th>
                         </tr>
@@ -72,16 +73,26 @@
                                 <td>{{ $users->usertype }}</td>
                                 <td>
                                     @if ($users->image_icon)
-
                                         <img src="{{ URL::asset('upload/members/' . $users->image_icon . '-b.jpg') }}"
                                             width="80" alt="person">
                                     @endif
                                 </td>
                                 <td>{{ $users->name }}</td>
                                 <td>{{ $users->email }}</td>
+                                <td>
+                                @if(!empty($users->getRoleNames()))
+                                    @forelse($users->getRoleNames() as $v)
+                                        <label class="">{{ $v }}</label>
+                                    @empty
+                                    No Roles Assigned
+                                    @endforelse
+                                @else
+                                    No Roles
+                                @endif
+                                </td>
                                 <td>{{ $users->phone }}</td>
                                 <td class="text-center p-20" style="display: flex;">
-                                    <a  href="{{ url('admin/users/view_user/' . Crypt::encryptString($users->id)) }}" 
+                                    <a  href="{{ route('users.show', Crypt::encryptString($users->id)) }}" 
                                         class="cu_btn btn btn-icon waves-effect waves-light btn-success" 
                                         data-toggle="tooltip" 
                                         title="{{trans('words.view')}}"
@@ -90,7 +101,7 @@
                                         <i class="fa fa-eye"></i>
                                     </a>
 
-                                    <a  href="{{ url('admin/users/edituser/' . Crypt::encryptString($users->id)) }}"
+                                    <a  href="{{ route('users.edit' , Crypt::encryptString($users->id)) }}"
                                         class="btn btn-icon waves-effect waves-light btn-success"
                                         data-toggle="tooltip" 
                                         title="{{ trans('words.edit') }}"
@@ -98,7 +109,7 @@
                                         >
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a  href="{{ url('admin/users/delete/' . Crypt::encryptString($users->id)) }}"
+                                    <a  href="{{ route('users.destroy' , Crypt::encryptString($users->id)) }}"
                                         class="btn btn-icon waves-effect waves-light btn-danger m-b-5"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
                                         data-toggle="tooltip" 
