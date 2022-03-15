@@ -1,0 +1,135 @@
+.filter-wrap {
+  border-bottom: 1px solid $border-color;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 120;
+  background-color: var(--bs-white);
+}
+
+.search-filter {
+  display: flex;
+  flex-wrap: wrap;
+
+  .input-search-wrap {
+    flex-grow: 1;
+    max-height: calc(100% - 100px);
+  }
+}
+
+.inner-content {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  font-size: 15px;
+}
+
+.location-wrap {
+  display: flex;
+  overflow: auto;
+  white-space: nowrap;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+
+  .location-item {
+    width: auto;
+    margin-bottom: 0.5rem;
+    margin-right: 0.5rem;
+
+    a {
+      text-decoration: none;
+
+      span {
+        color: var(--bs-gray-700);
+      }
+    }
+
+    &:last-of-type {
+      font-weight: 600;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    flex-wrap: wrap;
+    border: 1px solid $border-color;
+    border-radius: 0.25rem;
+    background-color: var(--bs-gray-100);
+
+    padding: 1rem 1rem 0.5rem;
+
+    .location-item {
+      width: 33.3334%;
+      margin-right: 0;
+
+      &:last-of-type {
+        text-align: right;
+        margin-left: auto;
+        margin-right: 0;
+      }
+    }
+
+    .moreLess {
+      display: none;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    .location-item {
+      width: 25%;
+    }
+  }
+}
+
+.pagination {
+  .page-item {
+    margin: 0 0.25rem;
+
+    .page-link {
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.list-sidebar {
+  border: 1px solid #dadada;
+  font-size: 0.875rem;
+  position: sticky;
+  top: 90px;
+
+  ul {
+    padding-left: 1.25rem;
+    margin-bottom: 0;
+  }
+
+  li + li {
+    margin-top: 0.25rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+
+    @media (hover: hover) {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .sidebar-links + .sidebar-links {
+    border-top: 1px solid #dadada;
+  }
+}
+
+.mSearchFilter {
+  font-size: 0.875rem;
+
+  .btn-monochrome {
+    --btn-bg-color: #f7f5f5;
+    --btn-border-color: #f7f5f5;
+    --btn-text-color: #403b45;
+    --btn-hover-bg-color: rgba(var(--bs-primary-rgb), 0.15);
+    --btn-hover-border-color: var(--bs-primary);
+    --btn-hover-text-color: var(--bs-primary);
+  }
+}

@@ -60,7 +60,7 @@ class IndexController extends Controller
         $partners = Partners::orderBy('id', 'desc')->get();
         $cityGuides = City::where('status', '1')->orderBy('id', 'asc')->take(4)->get();
 
-        return view('front.pages.index', compact('featured_properties', 'partners', 'cityGuides', 'cities', 'propertyTypes', 'propertyPurposes', 'agents', 'amenities'));
+        return view('front-view.pages.index', compact('featured_properties', 'partners', 'cityGuides', 'cities', 'propertyTypes', 'propertyPurposes', 'agents', 'amenities'));
     }
     public function livesearch(Request $request)
     {
@@ -79,7 +79,7 @@ class IndexController extends Controller
                 ->inRandomOrder()->take(6)
                 ->where('property_purpose', $purpose)
                 ->get();
-            return view('front.pages.include.featured_properties', compact('featured_properties'))->render();
+            return view('front-view.pages.include.featured_properties', compact('featured_properties'))->render();
         }
     }
 

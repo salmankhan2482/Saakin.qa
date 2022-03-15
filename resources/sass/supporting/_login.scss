@@ -1,0 +1,22 @@
+.login-box {
+  &-wrap {
+    min-height: 100vh;
+    place-content: center;
+    background-color: #fff;
+  }
+
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+
+  &-from {
+    box-shadow: $box-shadow;
+    padding: 2.5rem;
+    margin-block: 2.5rem;
+
+    @include media-breakpoint-up(md) {
+      padding: 5rem;
+      margin-block: 5rem;
+    }
+  }
+}
