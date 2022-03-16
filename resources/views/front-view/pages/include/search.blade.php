@@ -22,13 +22,13 @@
                   <div class="flex-grow-1">
                     <div class="input-group-overlay input-search">
                       <div class="input-group-prepend-overlay">
-                        <span class="input-group-text" id="country"><i class="fa fa-search"></i></span>
                       </div>
-
-                      <input type="text" name="keyword" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off"
-                        aria-label="Enter Place Name" aria-describedby="country">
+                        <div class="input-search">
+                          <input type="text" name="keyword" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control" autocomplete="off">
+                        </div>
+                        <div id="country_list" class="col-md-12 col-12" ></div> 
+                        <div id="extra_keywords" style="display: none;"></div>
                     </div>
-                    <div id="country_list" class="col-md-12 col-12"></div>
                   </div>
 
                   @if ((new \Jenssegers\Agent\Agent())->isDesktop())

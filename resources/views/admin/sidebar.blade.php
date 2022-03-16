@@ -35,24 +35,24 @@
                             <i class="md-person-outline"></i>
                         </a>
                     </li>
-                    @can('users-management')
-                <li class="{{ classActivePath('users') }}">
-                    <a href="{{ URL::to('admin/users') }}">
-                        <i class="fa fa-users"></i>
-                        {{ trans('words.users') }}
-                    </a>
-                </li>
-                @endcan
+                    {{-- @can('users-management') --}}
+                    <li class="{{ classActivePath('users') }}">
+                        <a href="{{ URL::to('admin/users') }}">
+                            <i class="fa fa-users"></i>
+                            {{ trans('words.users') }}
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
                 
-                @can('roles-management')
-                    
-                <li class="{{ classActivePath('roles') }}">
-                    <a href="{{ route('roles.index') }}">
-                        <i class="fa fa-users"></i>
-                        Roles
-                    </a>
-                </li>
-                @endcan
+                    {{-- @can('roles-management') --}}
+                        
+                    <li class="{{ classActivePath('roles') }}">
+                        <a href="{{ route('roles.index') }}">
+                            <i class="fa fa-users"></i>
+                            Roles
+                        </a>
+                    </li>
+                    {{-- @endcan --}}
                     @if (Auth::User()->usertype == 'Admin')
                         <li>
                             <a href="{{ URL::to('admin/settings') }}">

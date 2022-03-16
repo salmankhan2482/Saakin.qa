@@ -51,11 +51,11 @@ class PropertiesController extends Controller
 
     public function getPropertyListing(Request $request)
     {   
-
         if(request()->property_purpose != ''){
             $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
-            ->select('property_types.id', 'property_types.types', DB::Raw('COUNT(properties.id) as pcount'))
+            ->select('property_types.id', 'property_types.types','property_types.plural', 
+            DB::Raw('COUNT(properties.id) as pcount'))
             ->where("properties.status", 1)
             ->where("properties.property_purpose", request()->property_purpose)
             ->groupBy("property_types.id")
@@ -99,7 +99,6 @@ class PropertiesController extends Controller
         $max_price =  (int)$request->max_price;
         $min_area = (int)$request->min_area;
         $max_area = (int)$request->max_area;
-
         $properties = Properties::where('status', 1)
             ->when(request()->property_purpose, function ($query) {
                 $query->where('property_purpose', request()->property_purpose);
@@ -108,10 +107,13 @@ class PropertiesController extends Controller
                 // city
                 $query->where('city', request()->city);
             })
+            ->when($city, function ($query) {
+                // city
+                $query->where('city', request()->city);
+            })
             ->when($subcity, function ($query) {
                 // sub city
                 $query->where('subcity', request()->subcity);
-
             })
             ->when($town, function ($query) {
                 // town
@@ -143,13 +145,10 @@ class PropertiesController extends Controller
                 $ids = array();
                 foreach (request()->get('amenities') as $value) {                    
                     $records =  AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
-
                     foreach ($records as $value) {
                         array_push($ids, $value->property_id);
                     }
-                
                 }
-                    
                 $result = array_unique($ids);
                 $query->whereIn('id', $result);
                 
@@ -166,6 +165,7 @@ class PropertiesController extends Controller
             })
             ->when($min_area == 0 && $max_area == 0, function ($query) {
             });
+            
         if (isset($request->commercial)) {
             $ids = array();
             /*
@@ -236,8 +236,21 @@ class PropertiesController extends Controller
         }
         $request['keyword'] = $this->findKeyWord($city, $subcity, $town, $area);
         $request['keywordMbl'] = $request['keyword'];
-        return view('front.pages.properties', 
-        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'amenities', 'agencies', 'request','landing_page_content','page_des'));
+        
+        $heading_info = '';
+        $furnishing = '';
+        if(request()->get('furnishings')){
+            $furnishing = PropertyAmenity::where('id', request()->get('furnishings'))->value('name');
+        }   
+        if(request('property_type')){
+            $type = Types::where('id', request('property_type'))->value('types'); 
+            $heading_info = $furnishing.' '.$type.' for '.request()->property_purpose.' in Qatar';
+        }else{
+            $heading_info = $furnishing.' Properties for '.request()->property_purpose.' in Qatar';
+        }
+        
+        return view('front-view.pages.properties', 
+        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'amenities', 'agencies', 'request','landing_page_content','page_des', 'heading_info'));
     }
 
     public function findKeyWord($city = null, $subcity = null, $town = null, $area = null)
@@ -343,7 +356,6 @@ class PropertiesController extends Controller
                 $traffic->agency_id = $property->agency_id ?? '';
                 $traffic->save();
 
-                
                 if($counter = PropertyCounter::where('property_id', $id)->first()){
                     $counter->counter = $counter->counter + 1;
                     $counter->update();
@@ -354,12 +366,9 @@ class PropertiesController extends Controller
                     $counter->save();
                     
                 }
-               
-    
             }
         }
         
-
         
         //$agent = User::where('usertype','Agents')->where('id',$property->agent_id)->first();
         $agency = Agency::where('id', $property->agency_id)->first();
@@ -389,7 +398,7 @@ class PropertiesController extends Controller
         
         $property_des = Str::limit($property->property_name.'  '.$property->description, 150, '...');
 
-        return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address'));
+        return view('front-view.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address'));
 
     }
 

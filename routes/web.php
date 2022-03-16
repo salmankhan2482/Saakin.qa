@@ -385,7 +385,7 @@ Route::get('admin/property_reports/delete/{id}', 'PropertyReportController@destr
 
 //live serach url on home page
 Route::get('search-desktop', 'IndexController@searchMeDesktop')->name('search-desktop');
-Route::get('search-mobile', 'IndexController@searchMeMobile')->name('search-mobile');
+Route::get('search-mobile', 'IndexController@searchMeDesktop')->name('search-mobile');
 
 
 //ajax sub cities and town and area call

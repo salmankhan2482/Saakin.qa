@@ -1,4 +1,4 @@
-@extends("front.layouts.main")
+@extends("front-view.layouts.main")
 
 @if ($property->meta_title != null)
   @section('title', $property->meta_title . ' | ' . 'Saakin.com')
@@ -23,7 +23,7 @@
   $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
   $whatsapText =
       'Hello,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             I would like to inquire about this property posted on saakin.com Reference: ' .
+      I would like to inquire about this property posted on saakin.com Reference: ' .
       $property->refference_code .
       'Price: QR ' .
       $property->getPrice() .
