@@ -7,7 +7,7 @@
                     {{-- dashboard --}}
                     <li class="nav-item dropdown notification_dropdown">
                         <a href="{!! url('/index'); !!}" class="brand-logo">
-                            <img class="brand-title" src="{{ asset('assets/images/black_logo.png') }}" alt="" width="30">
+                            <img class="brand-title" style="float: right" src="{{ asset('assets/images/black_logo.png') }}" alt="" width="100%">
                         </a>
                     </li>
 
@@ -412,6 +412,12 @@
                                 <i class="fa fa-eye"></i> 
                                 <span class="ml-2">
                                     {{trans('words.view_site')}}
+                                </span>
+                            </a>
+                            <a href="{!! route('admin.settings'); !!}" class="dropdown-item ai-icon">
+                                <i class="fa fa-gear"></i> 
+                                <span class="ml-2">
+                                    {{trans('words.settings')}}
                                 </span>
                             </a>
                             <a href="{!! url('logout'); !!}" class="dropdown-item ai-icon">

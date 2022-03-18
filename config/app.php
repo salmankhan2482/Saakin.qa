@@ -163,6 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
 
 
@@ -252,6 +253,7 @@ return [
         'Paystack' => Unicodeveloper\Paystack\Facades\Paystack::class,
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'Location' => 'Stevebauman\Location\Facades\Location',
 
     ],

@@ -26,7 +26,10 @@ class SettingsController extends MainAdminController
         }
         
         $settings = Settings::findOrFail('1');
-        return view('admin.pages.settings',compact('settings'));
+		$action = 'app_profile';
+
+
+        return view('admin-dashboard.settings.settings',compact('settings','action'));
     }	 
     
     public function settingsUpdates(Request $request)
