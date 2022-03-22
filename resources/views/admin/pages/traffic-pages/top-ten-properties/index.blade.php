@@ -24,7 +24,6 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            {{-- <th>Property Title</th> --}}
                             <th>Agency</th>
                             <th>Count</th>
                         </tr>
@@ -33,14 +32,13 @@
                     <tbody>
                         @foreach ($top10Proprties as $i => $click)
                             <tr>
-                                <td>{{ $click->aid }}</td>
+                                <td>{{ $click->id }}</td>
                                 <td>
-                                    <a href="{{ route('top_Ten_Properties.list', $click->aid) }}">
-                                        {{ $click->aname }}
+                                    <a href="{{ url(strtolower($click->property_purpose) . '/' . $click->property_slug . '/' . $click->id) }}">
+                                        {{ $click->property_name }}
                                     </a>
                                 </td>
                                 <td>{{ $click->counter }}</td>
-                                
                             </tr>
                         @endforeach
                     </tbody>

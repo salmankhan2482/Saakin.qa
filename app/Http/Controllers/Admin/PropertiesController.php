@@ -138,6 +138,7 @@ class PropertiesController extends MainAdminController
 
     public function store(Request $request)
     {
+        
         if(Properties::where('property_name', request('property_name'))->first()){
             return redirect()->back()->withErrors(['msg' => 'Duplicate Record Cannot be Inserted.']);
         }
@@ -175,13 +176,16 @@ class PropertiesController extends MainAdminController
         
         if(Auth::user()->usertype == 'Admin'){
             $request_data['agency_id'] = $request_data['agency_id'];
+            
         }else{
             $request_data['agency_id'] = Auth::user()->agency_id;
+            
         }
 
         $agencyName = Agency::where('id', $request_data['agency_id'])->value('name');
         $agencyNameExplode = explode(' ', $agencyName);
-        $request_data['refference_code'] = $agencyNameExplode[0].$agencyNameExplode[1];
+        
+        $request_data['refference_code'] = $agencyNameExplode[0].$agencyNameExplode[0];
         $request_data['property_slug'] = $property_slug;
         $request_data['rooms'] = request()->rooms;
         $request_data['sub_city'] = $request_data['subcity'];

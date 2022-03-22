@@ -25,6 +25,7 @@ class FeaturedPropertiesController extends MainAdminController
     }
     public function propertieslist()
     {
+
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
                 \Session::flash('flash_message', trans('words.access_denied'));
                 return redirect('dashboard');
@@ -35,8 +36,10 @@ class FeaturedPropertiesController extends MainAdminController
         else{
     	    $propertieslist = Properties::where('featured_property','1')->orderBy('id')->get();
         }
+        
+        $action = 'saakin_index';
 
-        return view('admin.pages.featuredproperty',compact('propertieslist'));
+        return view('admin-dashboard.featured-properties.index',compact('propertieslist','action'));
     }
 
     public function pendingproperties()

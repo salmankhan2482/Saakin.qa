@@ -65,15 +65,17 @@
     </div>
 
     <div id="main-wrapper">
-
         <div class="nav-header">
-            <div class="nav-control">
+            <a href="{!! route('new_dashboard'); !!}" class="brand-logo">
+                <img class="brand-title" style="float: right" src="{{ asset('assets/images/black_logo.png') }}" alt="" width="100%">
+            </a>
+             <div class="nav-control">
                 <div class="hamburger">
                     <span class="line"></span><span class="line"></span><span class="line"></span>
                 </div>
             </div>
-        </div>
-
+        </div> 
+		@include('admin-dashboard.partials.topbar')
 		@include('admin-dashboard.partials.header')
         @include('admin-dashboard.partials.sidebar')
 

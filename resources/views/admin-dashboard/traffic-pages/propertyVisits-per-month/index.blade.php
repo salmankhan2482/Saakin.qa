@@ -39,15 +39,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Page Visits</h4>
-                    <a href="#">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>
-                            Add
-                        </button>
-                    </a>
+                    <h4 class="card-title">Property Visits</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -56,18 +48,20 @@
                                 <tr>
                                     <th>Agency ID</th>
                                     <th>Agency Name</th>
-                                    <th>Total Traffic</th>
+                                    <th>Property Visits</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                  
                                 @foreach ($data['propertyVisitsPerMonth'] as $i => $traffic)
                                     <tr>
                                         <td>{{ $traffic->aid }}</td>
                                         <td>{{ $traffic->aname }}</td>
                                         <td>{{ $traffic->totalTraffic }}</td>
                                         <td>
-                                            <a class="btn btn-outline-dark" href="{{ route('agencyPropertiesVisitsList', $traffic->aid) }}">
+                                            <a class="btn btn-primary rounded btn-xs action-btn"
+                                             href="{{ route('agencyPropertiesVisitsList', $traffic->aid) }}">
                                                 Show Properties
                                             </a>
                                         </td>

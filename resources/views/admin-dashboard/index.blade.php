@@ -1,18 +1,18 @@
 @extends('admin-dashboard.layouts.master')
 @section('content')
     <div class="container-fluid">
-        <div class="form-head d-md-flex mb-sm-4 mb-3 align-items-start">
+        {{-- <div class="form-head d-md-flex mb-sm-4 mb-3 align-items-start">
             <div class="mr-auto  d-lg-block">
                 <h2 class="text-black font-w600">Dashboard</h2>
                 <p class="mb-0">Welcome to Saakin Property Admin</p>
             </div>
             <a href="javascript:void(0);" class="btn btn-primary rounded light mr-3">Refresh</a>
             <a href="{{ route('admin.settings') }}" class="btn btn-primary rounded"><i class="flaticon-381-settings-2 mr-0"></i></a>
-        </div>
+        </div> --}}
         <div class="row">
             <div class="col-xl-6 col-xxl-12">
                 <div class="row">
-                    <div class="col-xl-12">
+                    <div class="col-xl-6">
                         <div class="card bg-danger property-bx text-white">
                             <div class="card-body">
                                 <div class="media d-sm-flex d-block align-items-center">
@@ -47,11 +47,30 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-sm-6">
+						<div class="widget-stat card bg-success ">
+							<div class="card-body p-4">
+								<div class="media">
+									<span class="mr-3">
+										<i class="la la-star"></i>
+									</span>
+									<div class="media-body text-white">
+										<p class="mb-1">Featured Properties</p>
+										<h3 class="text-white">{{$data['featured_properties']}}</h3>
+										<div class="progress mb-2 bg-secondary">
+                                            <div class="progress-bar progress-animated bg-light" style="width: {{ ($data['featured_properties'] / $data['total_properties']) * 100 }}%"></div>
+                                        </div>
+										{{-- <small>30% Increase in 30 Days</small> --}}
+									</div>
+								</div>
+							</div>
+						</div>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-sm-6">
                         <div class="widget-stat card bg-primary">
                             <div class="card-body  p-4">
                                 <div class="media">
                                     <span class="mr-3">
-                                        <i class="la la-users"></i>
+                                        <i class="la la-building"></i>
                                     </span>
                                     <div class="media-body text-white">
                                         <p class="mb-1">Properties for Sale</p>
@@ -69,11 +88,11 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <div class="widget-stat card bg-warning">
+                        <div class="widget-stat card bg-info">
                             <div class="card-body p-4">
                                 <div class="media">
                                     <span class="mr-3">
-                                        <i class="la la-user"></i>
+                                        <i class="la la-home"></i>
                                     </span>
                                     <div class="media-body text-white">
                                         <p class="mb-1">Properties for Rent</p>
@@ -90,14 +109,15 @@
                         </div>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-sm-6">
+                        <a href="{{route('properties.index')}}">
                         <div class="widget-stat card bg-secondary">
                             <div class="card-body p-4">
                                 <div class="media">
                                     <span class="mr-3">
-                                        <i class="la la-graduation-cap"></i>
+                                        <i class="la la-building"></i>
                                     </span>
                                     <div class="media-body text-white">
-                                        <p class="mb-1">Active <br> Properties</p>
+                                        <p class="mb-1">Active Properties</p>
                                         <h3 class="text-white">{{ $data['active_properties'] }}</h3>
                                         <div class="progress mb-2 bg-primary">
                                             <div class="progress-bar progress-animated bg-light"
@@ -109,9 +129,11 @@
                                 </div>
                             </div>
                         </div>
+                      </a>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <div class="widget-stat card bg-primary">
+                        <a href="{{route('inactive_properties.index')}}">
+                        <div class="widget-stat card bg-warning">
                             <div class="card-body  p-4">
                                 <div class="media">
                                     <span class="mr-3">
@@ -130,8 +152,33 @@
                                 </div>
                             </div>
                         </div>
+                      </a>
+                    </div>
+                    <div class="col-xl-3 col-lg-6 col-sm-6">
+                        <a href="{{route('inactive_properties.index')}}">
+                        <div class="widget-stat card bg-danger">
+                            <div class="card-body  p-4">
+                                <div class="media">
+                                    <span class="mr-3">
+                                        <i class="la la-users"></i>
+                                    </span>
+                                    <div class="media-body text-white">
+                                        <p class="mb-1">Report Properties</p>
+                                        <h3 class="text-white">{{ $data['reports'] }}</h3>
+                                        <div class="progress mb-2 bg-secondary">
+                                            <div class="progress-bar progress-animated bg-light"
+                                                style="width: {{ ($data['reports'] / $data['total_properties']) * 100 }}%">
+                                            </div>
+                                        </div>
+                                        {{-- <small>80% Increase in 20 Days</small> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      </a>
                     </div>
                     <div class="col-sm-12 col-md-6">
+                        <a href="{{route('property_inquiries')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="media align-items-center">
@@ -149,8 +196,10 @@
                                 </div>
                             </div>
                         </div>
+                      </a>
                     </div>
                     <div class="col-sm-12 col-md-6">
+                        <a href="{{route('propertyVisits_per_month')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="media align-items-center">
@@ -168,6 +217,7 @@
                                 </div>
                             </div>
                         </div>
+                     </a>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="card">
@@ -189,6 +239,7 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-6">
+                        <a href="{{route('trafficUsers')}}">
                         <div class="card">
                             <div class="card-body">
                                 <div class="media align-items-center">
@@ -206,6 +257,7 @@
                                 </div>
                             </div>
                         </div>
+                      </a>
                     </div>
                     <div class="col-sm-12 col-md-6">
                         <div class="card">
@@ -274,7 +326,7 @@
             <div class="col-xl-6 col-xxl-12">
                 <div class="card">
                     <div class="card-header border-0 pb-0">
-                        <h3 class="fs-20 text-black">Monthly Properties</h3>
+                        <h3 class="fs-20 text-black">New Listing / Month</h3>
                         <div class="dropdown ml-auto">
                             <div class="btn-link" data-toggle="dropdown">
                                 <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -330,7 +382,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header border-0 pb-0">
-                                <h3 class="fs-20 text-black">Properties Map Location</h3>
+                                <h3 class="fs-20 text-black">Properties Map</h3>
                                 <div class="dropdown ml-auto">
                                     <div class="btn-link" data-toggle="dropdown">
                                         <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -351,60 +403,18 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-3">
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Europe
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
+                                        @foreach ($data['propertyCities'] as $propertyCity)
+                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">{{ $propertyCity->name }}
+                                            <span class="pull-right text-dark fs-14 ml-2">{{ $propertyCity->pcount }} Properties</span>
                                         </p>
                                         <div class="progress mb-4" style="height:10px">
                                             <div class="progress-bar bg-primary progress-animated"
-                                                style="width:75%; height:10px;" role="progressbar">
-                                                <span class="sr-only">75% Complete</span>
+                                            style="width: {{ ($propertyCity->pcount / $data['total_properties']) * 100 }}%">
+                                                <span class="sr-only">{{ ($propertyCity->pcount / $data['total_properties']) * 100 }}</span>
                                             </div>
                                         </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Asia
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:100%; height:10px;" role="progressbar">
-                                                <span class="sr-only">100% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Africa
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:75%; height:10px;" role="progressbar">
-                                                <span class="sr-only">75% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Australia
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:50%; height:10px;" role="progressbar">
-                                                <span class="sr-only">50% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">America
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:70%; height:10px;" role="progressbar">
-                                                <span class="sr-only">70% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">USA
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:40%; height:10px;" role="progressbar">
-                                                <span class="sr-only">40% Complete</span>
-                                            </div>
-                                        </div>
+                                        @endforeach
+                                        
                                     </div>
                                     <div class="col-lg-9">
                                         <div id="world-map"></div>
@@ -419,7 +429,7 @@
     </div>
 @endsection
 @section('scripts')
-<script>
+{{-- <script>
     (function($) {
 
     var dzChartlist = function() {
@@ -626,6 +636,6 @@
     });
 
     })(jQuery);
-</script>
+</script> --}}
 
 @endsection

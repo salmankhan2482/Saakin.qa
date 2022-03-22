@@ -1,3 +1,9 @@
+
+
+
+
+
+
 <div class="header">
         <nav class="navbar navbar-expand top-menu">
             <div class="collapse navbar-collapse justify-content-between">
@@ -5,18 +11,18 @@
                 <ul class="navbar-nav header-right">
 
                     {{-- dashboard --}}
-                    <li class="nav-item dropdown notification_dropdown">
+                    {{-- <li class="nav-item dropdown notification_dropdown">
                         <a href="{!! url('/index'); !!}" class="brand-logo">
                             <img class="brand-title" style="float: right" src="{{ asset('assets/images/black_logo.png') }}" alt="" width="100%">
                         </a>
-                    </li>
+                    </li> --}}
 
                     {{-- agency --}}
                     <li class="nav-item dropdown notification_dropdown">
 
                         <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}" 
                             href="{{ route('agencies.index') }}">
-                                Agencies
+                                Agents
                         </a>
                     </li>
 
@@ -24,7 +30,7 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/blog*') ? 'text-saakin' : '' }} "
                             href="#" role="button" data-toggle="dropdown">
-                                Blogs
+                                Blog
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
@@ -53,7 +59,7 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link"
                             href="#" role="button" data-toggle="dropdown">
-                                Addresses
+                                Location
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
@@ -96,7 +102,7 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link"
                             href="#" role="button" data-toggle="dropdown">
-                                User Management
+                                User
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
@@ -131,7 +137,7 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/landing-pages*') ? 'text-saakin' : '' }} "
                             href="#" role="button" data-toggle="dropdown">
-                                Landing Pages
+                                Pages
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
@@ -205,11 +211,18 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }} 
                             href="#" role="button" data-toggle="dropdown">
-                                Properties
+                                Listing
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
                                 <ul class="timeline">
+                                    <li>
+                                        <a href="{{ route('featuredproperties.index') }}" class="timeline-panel">
+                                            <div class="media-body">
+                                                <h6 class="mb-1">Featured Properties</h6>
+                                            </div>
+                                        </a>
+                                    </li>
                                     <li>
                                         <a href="{{ url('admin/properties') }}" class="timeline-panel">
                                             <div class="media-body">
@@ -261,18 +274,11 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }} 
                             href="#" role="button" data-toggle="dropdown">
-                                Traffic
+                                Analytics
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
                                 <ul class="timeline">
-                                    <li>
-                                        <a href="{{ route('total_leads') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6 class="mb-1">Total Leads</h6>
-                                            </div>
-                                        </a>
-                                    </li>
 
                                     <li>
                                         <a href="{{ route('propertyVisits_per_month') }}" class="timeline-panel">
@@ -285,7 +291,7 @@
                                     <li>
                                         <a href="{{ route('callToAction.index') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6 class="mb-1">Call to Action</h6>
+                                                <h6 class="mb-1">Click to Action</h6>
                                             </div>
                                         </a>
                                     </li>
@@ -321,7 +327,7 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }} 
                             href="#" role="button" data-toggle="dropdown">
-                                Inquiries
+                                Leads
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
@@ -345,7 +351,7 @@
                                     <li>
                                         <a href="{{ route('contact_inquiries') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6 class="mb-1">Contact Inquiries</h6>
+                                                <h6 class="mb-1">Contact Us</h6>
                                             </div>
                                         </a>
                                     </li>
@@ -359,7 +365,7 @@
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }} 
                             href="#" role="button" data-toggle="dropdown">
-                                City Guides
+                                Guide
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
@@ -389,7 +395,7 @@
                 </ul>
                 <ul class="navbar-nav header-right ml-5">
                     <li class="nav-item dropdown header-profile">
-                        <a class="nav-link" href="#" role="button" data-toggle="dropdown" style="padding: 0 16px 0 20px;">
+                        <a class="nav-link" href="#" role="button" data-toggle="dropdown" style="padding: 0 50px 0 0px;">
                             <div class="header-info">
                                 <span class="text-black">{{ auth()->user()->name }}</span>
                                 <p class="fs-12 mb-0">{{ auth()->user()->usertype }}</p>
@@ -433,4 +439,4 @@
                 </ul>
             </div>
         </nav>
-</div>
+ </div>

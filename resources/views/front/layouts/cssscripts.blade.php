@@ -53,7 +53,6 @@
     })(window, document, "clarity", "script", "9cpbk955xj");
 </script>
 
-
 <!-- Fav and touch icons -->
 <link href="{{ URL::asset('upload/' . getcong('site_favicon')) }}" rel="shortcut icon" type="image/x-icon" />
 <link rel="stylesheet" href="{{ URL::asset('site_assets/css/gallery_style.css') }}">
