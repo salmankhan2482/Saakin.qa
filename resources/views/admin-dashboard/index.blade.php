@@ -413,60 +413,18 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-lg-3">
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Europe
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
+                                        @foreach ($data['propertyCities'] as $propertyCity)
+                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">{{ $propertyCity->name }}
+                                            <span class="pull-right text-dark fs-14 ml-2">{{ $propertyCity->pcount }} Properties</span>
                                         </p>
                                         <div class="progress mb-4" style="height:10px">
                                             <div class="progress-bar bg-primary progress-animated"
-                                                style="width:75%; height:10px;" role="progressbar">
-                                                <span class="sr-only">75% Complete</span>
+                                            style="width: {{ ($propertyCity->pcount / $data['total_properties']) * 100 }}%">
+                                                <span class="sr-only">{{ ($propertyCity->pcount / $data['total_properties']) * 100 }}</span>
                                             </div>
                                         </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Asia
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:100%; height:10px;" role="progressbar">
-                                                <span class="sr-only">100% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Africa
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:75%; height:10px;" role="progressbar">
-                                                <span class="sr-only">75% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">Australia
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:50%; height:10px;" role="progressbar">
-                                                <span class="sr-only">50% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">America
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:70%; height:10px;" role="progressbar">
-                                                <span class="sr-only">70% Complete</span>
-                                            </div>
-                                        </div>
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">USA
-                                            <span class="pull-right text-dark fs-14 ml-2">653 Unit</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                                style="width:40%; height:10px;" role="progressbar">
-                                                <span class="sr-only">40% Complete</span>
-                                            </div>
-                                        </div>
+                                        @endforeach
+                                        
                                     </div>
                                     <div class="col-lg-9">
                                         <div id="world-map"></div>
