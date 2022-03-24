@@ -212,10 +212,11 @@ class ClickCountersController extends Controller
     
     public function topTenProperties()
     {
+        $action = 'saakin_index';
+
         if (auth()->user()->usertype == 'Agency') {
            
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-            
             $top10Proprties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
             ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 
@@ -226,7 +227,7 @@ class ClickCountersController extends Controller
             ->limit('10')
             ->get();
 
-            return view('admin.pages.traffic-pages.top-ten-properties.agency-index', compact('top10Proprties'));
+            return view('admin-dashboard.traffic-pages.top-ten-properties.index', compact('top10Proprties','action'));
 
         }else{
             $top10Proprties = DB::table('property_counters')
@@ -238,7 +239,7 @@ class ClickCountersController extends Controller
             ->groupBy('aname')
             ->get();
 
-            return view('admin.pages.traffic-pages.top-ten-properties.index', compact('top10Proprties'));
+            return view('admin-dashboard.traffic-pages.top-ten-properties.index', compact('top10Proprties','action'));
         }
 
     }
@@ -255,11 +256,16 @@ class ClickCountersController extends Controller
         ->limit('10')
         ->get();
 
-        return view('admin.pages.traffic-pages.top-ten-properties.agency-index', compact('top10Proprties'));
+        $action = 'saakin_index';
+
+        return view('admin-dashboard.traffic-pages.top-ten-properties.agency_index', compact('top10Proprties','action'));
     }
 
     public function top5Areas()
     {
+
+        $action = 'saakin_index';
+
         if (auth()->user()->usertype == 'Agency') {
 
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
@@ -272,7 +278,7 @@ class ClickCountersController extends Controller
             ->limit('5')
             ->get();
             
-            return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top5Properties'));
+            return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top5Properties','action'));
 
         }else{
 
@@ -284,7 +290,7 @@ class ClickCountersController extends Controller
             ->orderByDesc('property_counters.counter')
             ->limit('5')
             ->get();
-            return view('admin.pages.traffic-pages.top-five-areas.index', compact('top5Properties'));
+            return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top5Properties','action'));
 
         }
     }
@@ -299,8 +305,9 @@ class ClickCountersController extends Controller
         ->orderByDesc('property_counters.counter')
         ->limit('5')
         ->get();
+        $action = 'saakin_index';
 
-        return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top5Properties'));
+        return view('admin-dashboard.traffic-pages.top-five-areas.agency_index', compact('top5Properties','action'));
 
     }
 

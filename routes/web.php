@@ -34,7 +34,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('/our_backup_database', 'UserController@dbBackup')->name('our_backup_database');
 
 	Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
-	Route::get('profile', 'AdminController@profile');
+	Route::get('profile', 'AdminController@profile')->name('profile');
 	Route::post('profile', 'AdminController@updateProfile');
 	Route::post('profile_pass', 'AdminController@updatePassword');
     Route::resource('property_type', Controller::class);

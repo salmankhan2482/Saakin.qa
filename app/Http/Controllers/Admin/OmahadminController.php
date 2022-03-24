@@ -6,11 +6,13 @@ use App\Enquire;
 use App\PageVisits;
 use App\Properties;
 use App\ClickCounters;
+use App\PropertyReport;
 use App\PropertyCounter;
 use Illuminate\Support\Carbon;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\PropertyCities;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class OmahadminController extends Controller
@@ -18,10 +20,12 @@ class OmahadminController extends Controller
 
     public function saakin_dashborad()
     {
+        
         $action = 'saakin_dashboard';
         
         if(auth()->user()->usertype == 'Agency'){
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+            
         };
 
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
@@ -43,19 +47,21 @@ class OmahadminController extends Controller
                 ->where('status', 0)
                 ->count();
 
-            $data['sale_properties'] = Properties::where('status', 1)
+            $data['sale_properties'] = Properties::where('status',1)
                 ->when(auth()->user()->usertype == 'Agency', function($query){
                     $query->where("agency_id", Auth::User()->agency_id);
                 })
-                ->where('property_purpose', 'Sale')
+                ->where('property_purpose','Sale')
                 ->count();
-
-            $data['rent_properties'] = Properties::where('status', 1)
+                
+            $data['rent_properties'] = Properties::where('status',1)
                 ->when(auth()->user()->usertype == 'Agency', function($query){
                     $query->where("agency_id", Auth::User()->agency_id);
                 })
-                ->where('property_purpose', 'Rent')
+                ->where('property_purpose','Rent')
                 ->count();
+                
+                
             
 
             $data['total_properties'] = Properties::
@@ -63,12 +69,21 @@ class OmahadminController extends Controller
                     $query->where("agency_id", Auth::User()->agency_id);
                 })
                 ->count();
+                
+
             
             $data['featured_properties'] = Properties::where('featured_property', '1')
                 ->when(auth()->user()->usertype == 'Agency', function($query){
                     $query->where("agency_id", Auth::User()->agency_id);
                 })
                 ->count();
+
+            
+                $data['reports'] = PropertyReport::all()
+                  ->count();
+                
+                
+                
 
 
             //Inquiries
@@ -78,6 +93,7 @@ class OmahadminController extends Controller
                 })
                 ->orderBy('id', 'desc')
                 ->count();
+                
 
             // last month
             $data['last_month_properties'] = Properties::
@@ -86,6 +102,7 @@ class OmahadminController extends Controller
                 })
                 ->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))
                 ->count();
+                
 
             //traffic per month
             $data['trafficPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
@@ -94,6 +111,7 @@ class OmahadminController extends Controller
                     $query->whereIn('property_id', $property_ids);
                 })
                 ->sum('counter');
+               
 
             // clicks per month
             $data['clicksPerMonths'] = ClickCounters::whereMonth('created_at', Carbon::now()->month)
@@ -102,6 +120,7 @@ class OmahadminController extends Controller
                     $query->whereIn('property_id', $property_ids);
                 })
                 ->count();
+                
 
             // number of users
             $data['numberOfUsers'] = PageVisits::whereMonth('created_at', Carbon::now()->month)
@@ -126,6 +145,7 @@ class OmahadminController extends Controller
                 '12' => 'Dec'
             ];
 
+            
             // properties per month
             foreach ($months as $key => $value) {
                 $data['propertiesPer'.$value] = Properties::
@@ -135,6 +155,8 @@ class OmahadminController extends Controller
                     ->whereYear('created_at', Carbon::now()->year)
                     ->whereMonth('created_at', $key)
                     ->count();
+                    
+                
             }
 
             // clicks per month
@@ -181,6 +203,12 @@ class OmahadminController extends Controller
             ->groupBy('label')
             ->get()
             ->toJson();
+
+            $data['propertyCities'] = PropertyCities::join("properties", "properties.city", "=", "property_cities.id")
+        ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))
+        ->where('properties.status', 1)->orderBy("pcount", "desc")->groupBy("property_cities.id")->get();
+        
+            
 
 
         $action = 'saakin_dashborad';

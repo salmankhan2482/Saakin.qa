@@ -104,12 +104,13 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Agency Name</th>
-                                    <th>Property Name</th>
+                                    <th>Agency</th>
+                                    <th>Property Title</th>
                                     <th>Type</th>
                                     <th>Purpose</th>
                                     <th>Views</th>
-                                    <th>Create Date</th>
+                                    <th>Created</th>
+                                    <th>Health</th>
                                     <th>Status</th>
                                     <th>{{ trans('words.action') }}</th>
                                 </tr>
@@ -132,6 +133,7 @@
                                                 {{ date('d-m-Y', strtotime($property->created_at)) }}
                                              @endif
                                         </td>
+                                        <td>90%</td>
                                         <td class="text-center">
                                             @if ($property->status == 1)
                                                 <i class="fa fa-circle text-success mr-1"></i>

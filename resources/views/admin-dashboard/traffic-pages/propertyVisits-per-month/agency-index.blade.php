@@ -39,7 +39,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Page Visits</h4>
+                    <h4 class="card-title">Property Visits</h4>
                     <a href="#">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
@@ -56,7 +56,7 @@
                                 <tr>
                                     <th>Agency ID</th>
                                     <th>Agency Name</th>
-                                    <th>Total Traffic</th>
+                                    <th>Property Visits</th>
                                 </tr>
                             </thead>
                             <tbody>

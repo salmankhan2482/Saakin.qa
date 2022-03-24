@@ -63,6 +63,9 @@ return [
 					'admin/vendor/nestable2/css/jquery.nestable.min.css',
 					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 					'admin/vendor/datatables/css/jquery.dataTables.min.css',
+					'admin/vendor/bootstrap-daterangepicker/daterangepicker.css',
+					'admin/vendor/pickadate/themes/default.css',
+					'admin/vendor/pickadate/themes/default.date.css',
 
 
 				],
@@ -309,6 +312,8 @@ return [
 					'admin/js/plugins-init/flot-init.js',
 					'admin/vendor/morris/raphael-min.js',
 					'admin/vendor/morris/morris.min.js',
+					// 'admin/vendor/global/global.min.js',
+					
 				],
 
 				'saakin_create' => [
@@ -341,6 +346,12 @@ return [
 					'admin/js/deznav-init.js',
 					'admin/vendor/nestable2/js/jquery.nestable.min.js',
 					'admin/js/plugins-init/nestable-init.js',
+					'admin/vendor/bootstrap-daterangepicker/daterangepicker.js',
+					'admin/vendor/pickadate/picker.js',
+					'admin/vendor/pickadate/picker.date.js',
+					'admin/js/plugins-init/bs-daterange-picker-init.js',
+					'admin/js/plugins-init/material-date-picker-init.js',
+					'admin/js/plugins-init/pickadate-init.js',
 
 				],
 

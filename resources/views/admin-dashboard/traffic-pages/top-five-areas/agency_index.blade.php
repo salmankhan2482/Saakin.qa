@@ -5,6 +5,15 @@
 @section('content')
     <div class="container-fluid">
         <div class="col-12">
+            <div class="page-titles">
+                <ol class="breadcrumb">
+                    <a href="{{route('top_5_areas')}}">
+                        <button type="button" class="btn btn-rounded btn-dark fa fa-arrow-left"> Back
+                        
+                        </button>
+                    </a>
+                </ol>
+            </div>
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Top 5 Areas</h4>
@@ -15,23 +24,16 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Agency Name</th>
-                                    <th>Action</th>
+                                    <th>Area Name</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($top5Properties as $i => $click)
-                                <tr>
-                                    <td>{{ $click->id }}</td>
-                                    <td>{{ $click->aname ?? '' }}</td>
-                                    <td>
-                                        <a href="{{ route('top_5_areas.list', $click->aid) }}"
-                                            class="btn btn-primary rounded btn-xs action-btn">
-                                            Show List
-                                        </a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <tr>
+                                <td>{{ $i+1 }}</td>
+                                <td>{{ $click->paddress }}</td>
+                            </tr>
+                                @endforeach
                                
                             </tbody>
                         </table>

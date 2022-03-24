@@ -335,7 +335,7 @@ class IndexController extends Controller
     }
     public function contact_us_sendemail(Request $request)
     {
-
+dd($request);
         $data =  \Request::except(array('_token'));
 
         $inputs = $request->all();
@@ -343,7 +343,7 @@ class IndexController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'your_message' => 'required',
-            'g-recaptcha-response' => 'required|captcha'
+            // 'g-recaptcha-response' => 'required|captcha'
 
         );
 

@@ -5,17 +5,18 @@
 @section('content')
     <div class="container-fluid">
         <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Page Visits</h4>
-                    <a href="#">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>
-                            Add
+            <div class="page-titles">
+                <ol class="breadcrumb">
+                    <a href="{{route('propertyVisits_per_month')}}">
+                        <button type="button" class="btn btn-rounded btn-dark fa fa-arrow-left"> Back
+                        
                         </button>
                     </a>
+                </ol>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Property Visits</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -24,7 +25,7 @@
                                 <tr>
                                     <th>Property ID</th>
                                     <th>Property Title</th>
-                                    <th>Total Traffic</th>
+                                    <th>Property Visits</th>
                                 </tr>
                             </thead>
                             <tbody>

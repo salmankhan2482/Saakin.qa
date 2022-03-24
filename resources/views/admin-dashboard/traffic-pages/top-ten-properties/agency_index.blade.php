@@ -5,9 +5,18 @@
 @section('content')
     <div class="container-fluid">
         <div class="col-12">
+            <div class="page-titles">
+                <ol class="breadcrumb">
+                    <a href="{{route('top_Ten_Properties')}}">
+                        <button type="button" class="btn btn-rounded btn-dark fa fa-arrow-left"> Back
+                        
+                        </button>
+                    </a>
+                </ol>
+            </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Top 10 Properties</h4>
+                    <h4 class="card-title">Top 10 Properties List</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -15,21 +24,20 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Agency Name</th>
+                                    <th>Property Title</th>
                                     <th>Property Visits</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($top10Proprties as $i => $click)
                             <tr>
-                                <td>{{ $click->aid }}</td>
+                                <td>{{ $click->id }}</td>
                                 <td>
-                                    <a href="{{ route('top_Ten_Properties.list', $click->aid) }}">
-                                        {{ $click->aname }}
+                                    <a href="{{ url(strtolower($click->property_purpose) . '/' . $click->property_slug . '/' . $click->id) }}">
+                                        {{ $click->property_name }}
                                     </a>
                                 </td>
                                 <td>{{ $click->counter }}</td>
-                                
                             </tr>
                         @endforeach
                                

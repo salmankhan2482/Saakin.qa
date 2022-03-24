@@ -23,7 +23,9 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        
         $permissions = Permission::orderBy('id','DESC')->paginate();
+        
         $action = 'saakin_index';
         return view('admin-dashboard.user-management.permissions.index',compact('permissions','action'));
     }
@@ -52,8 +54,8 @@ class PermissionController extends Controller
         ]);
     
         $permission = new Permission();
-        $permission->name = request('name');
-        $permission->guard_name = 'web';
+        $permission->title = request('name');
+        // $permission->guard_name = 'web';
         $permission->save();
     
         return redirect()->route('permissions.index')
@@ -99,7 +101,7 @@ class PermissionController extends Controller
         ]);
     
         $permission = Permission::find($id);
-        $permission->name = $request->input('name');
+        $permission->title = $request->input('name');
         $permission->save();
     
         $permission->syncPermissions($request->input('permission'));
