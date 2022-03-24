@@ -54,12 +54,13 @@ class OmahadminController extends Controller
                 ->where('property_purpose','Sale')
                 ->count();
                 
-            $data['rent_properties'] = Properties::where('status',0)
+            $data['rent_properties'] = Properties::where('status',1)
                 ->when(auth()->user()->usertype == 'Agency', function($query){
-                    $query->where("agency_id",Auth::User()->agency_id);
+                    $query->where("agency_id", Auth::User()->agency_id);
                 })
                 ->where('property_purpose','Rent')
                 ->count();
+                
                 
             
 
@@ -146,62 +147,62 @@ class OmahadminController extends Controller
 
             
             // properties per month
-            // foreach ($months as $key => $value) {
-            //     $data['propertiesPer'.$value] = Properties::
-            //         when(auth()->user()->usertype == 'Agency', function($query){
-            //             $query->where("agency_id", Auth::User()->agency_id);
-            //         })
-            //         ->whereYear('created_at', Carbon::now()->year)
-            //         ->whereMonth('created_at', $key)
-            //         ->count();
+            foreach ($months as $key => $value) {
+                $data['propertiesPer'.$value] = Properties::
+                    when(auth()->user()->usertype == 'Agency', function($query){
+                        $query->where("agency_id", Auth::User()->agency_id);
+                    })
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->whereMonth('created_at', $key)
+                    ->count();
                     
                 
-            // }
+            }
 
             // clicks per month
-            // foreach ($months as $key => $value) {
-            // $data['clicksPer'.$value] = ClickCounters::whereYear('created_at', Carbon::now()->year)
-            //     ->when(auth()->user()->usertype == 'Agency', function($query){
-            //         $query->where("agency_id", Auth::User()->agency_id);
-            //     })
-            //     ->whereMonth('created_at', $key)
-            //     ->count(); 
-            // }
+            foreach ($months as $key => $value) {
+            $data['clicksPer'.$value] = ClickCounters::whereYear('created_at', Carbon::now()->year)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereMonth('created_at', $key)
+                ->count(); 
+            }
             
             // traffic per month
-            // foreach ($months as $key => $value) {
-            //     $data['trafficPer'.$value] = PropertyCounter::
-            //     when(auth()->user()->usertype == 'Agency', function($query){
-            //         $query->where("agency_id", Auth::User()->agency_id);
-            //     })
-            //     ->whereYear('created_at', 2022)
-            //     ->whereMonth('created_at', $key)
-            //     ->sum('counter');
-            // }
+            foreach ($months as $key => $value) {
+                $data['trafficPer'.$value] = PropertyCounter::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereYear('created_at', 2022)
+                ->whereMonth('created_at', $key)
+                ->sum('counter');
+            }
             
             // no of users per month
-            // foreach ($months as $key => $value) {
-            //     $data['usersPer'.$value] = DB::table('page_visits')
-            //     ->distinct('ip_address')
-            //     ->when(auth()->user()->usertype == 'Agency', function($query){
-            //         $query->where("agency_id", Auth::User()->agency_id);
-            //     })
-            //     ->whereYear('created_at', Carbon::now()->year)
-            //     ->whereMonth('created_at', $key)
-            //     ->count('ip_address');
+            foreach ($months as $key => $value) {
+                $data['usersPer'.$value] = DB::table('page_visits')
+                ->distinct('ip_address')
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', $key)
+                ->count('ip_address');
 
-            // }
+            }
 
             //fetching properties on basis of property types
-            // $data['typesBasedProperties'] = DB::table('properties')
-            // ->join('property_types', 'properties.property_type', 'property_types.id')
-            // ->select('property_types.types as label', DB::Raw('COUNT(properties.id) as value'))
-            // ->when(auth()->user()->usertype == 'Agency', function($query){
-            //     $query->where("properties.agency_id", Auth::User()->agency_id);
-            // })
-            // ->groupBy('label')
-            // ->get()
-            // ->toJson();
+            $data['typesBasedProperties'] = DB::table('properties')
+            ->join('property_types', 'properties.property_type', 'property_types.id')
+            ->select('property_types.types as label', DB::Raw('COUNT(properties.id) as value'))
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("properties.agency_id", Auth::User()->agency_id);
+            })
+            ->groupBy('label')
+            ->get()
+            ->toJson();
 
             $data['propertyCities'] = PropertyCities::join("properties", "properties.city", "=", "property_cities.id")
         ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))

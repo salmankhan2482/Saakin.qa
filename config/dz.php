@@ -312,7 +312,7 @@ return [
 					'admin/js/plugins-init/flot-init.js',
 					'admin/vendor/morris/raphael-min.js',
 					'admin/vendor/morris/morris.min.js',
-					'admin/vendor/global/global.min.js',
+					// 'admin/vendor/global/global.min.js',
 					
 				],
 
