@@ -49,7 +49,7 @@
                                 <div class="form-group col-md-12">
                                     <label>Description</label>
                                     <div class="card-body">
-                                        <textarea id="page_content" name="page_content" rows="5" class="summernote">{{ isset($page_info->page_content) ? stripslashes($page_info->page_content) : null }}</textarea>
+                                        <textarea id="page_content" name="page_content" rows="5" class="ckeditor">{{ isset($page_info->page_content) ? stripslashes($page_info->page_content) : null }}</textarea>
                                     </div>
                                 </div>
                             </div>

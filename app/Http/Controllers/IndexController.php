@@ -335,7 +335,7 @@ class IndexController extends Controller
     }
     public function contact_us_sendemail(Request $request)
     {
-dd($request);
+
         $data =  \Request::except(array('_token'));
 
         $inputs = $request->all();
@@ -343,7 +343,7 @@ dd($request);
             'name' => 'required',
             'email' => 'required|email',
             'your_message' => 'required',
-            // 'g-recaptcha-response' => 'required|captcha'
+            'g-recaptcha-response' => 'required|captcha'
 
         );
 
@@ -353,6 +353,7 @@ dd($request);
         }
 
         $enquire = new Enquire();
+        $enquire->enquire_id = 2;
         $enquire->name = $request->name;
         $enquire->email = $request->email;
         $enquire->phone = $request->phone;

@@ -15,7 +15,13 @@ class Enquire extends Model
 
      public function Agencies()
      {
-        return $this->belongsTo('App\Agency','agency_id','id');
+        return $this->belongsTo('App\Agency','agency_id');
      }
+
+     public function EnquireStatus()
+     {
+        return $this->belongsTo('App\EnquireStatus','enquire_id');
+     }
+    
     
 }

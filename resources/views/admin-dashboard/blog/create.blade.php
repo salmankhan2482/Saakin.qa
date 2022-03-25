@@ -103,7 +103,9 @@
 </div>
 @endsection
 @section('scripts')
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
     <script>
-        CKEDITOR.replace( 'description' );
+        var editor = CKEDITOR.replace( 'description' );
+        CKFinder.setupCKEditor( editor );
     </script>
 @endsection

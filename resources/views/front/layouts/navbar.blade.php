@@ -68,7 +68,7 @@
                                     </li>
                                     <li>
                                         <a href="{{ url('city-guide') }}">
-                                            City Guide
+                                        Guide
                                         </a>
                                     </li>
                                     <li>
