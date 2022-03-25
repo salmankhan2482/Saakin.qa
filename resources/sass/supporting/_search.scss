@@ -52,13 +52,34 @@
     z-index: 1;
   }
 
-  .home-banner {
+  &.home-banner {
     @include media-breakpoint-up(md) {
       --banner-height: 30.875rem;
     }
 
     @include media-breakpoint-up(lg) {
       --banner-height: 40.875rem;
+    }
+
+    @include media-breakpoint-down(md) {
+      .card {
+        background-color: transparent;
+        border: none;
+
+        .card-body {
+          padding: 0;
+
+          .choose-type-btns {
+            .btn-monochrome {
+              --btn-hover-bg-color: #c6e9ff;
+            }
+          }
+
+          .commercial-checkbox {
+            color: #fff;
+          }
+        }
+      }
     }
   }
 
@@ -67,7 +88,6 @@
   }
 
   h1 {
-    text-align: center;
     color: var(--bs-white);
     font-weight: 500;
   }

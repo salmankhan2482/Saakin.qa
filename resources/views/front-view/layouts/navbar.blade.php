@@ -89,26 +89,24 @@
         </div>
       </div>
     </div>
-  </div>--}}
-
+  </div> --}}
 
   <nav class="navbar navbar-expand-md navbar-dark">
     <div class="container-fluid">
 
       <div class="navbar-brand py-0 ">
-        <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas"
-          data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+        <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
 
         @if (Request::is('property/*'))
-        <a href="{{ URL::to('/') }}">
-          <img src="{{ URL::asset('assets/images/Whitelogo.png') }}" alt="Saakin" height="32">
-        </a>
+          <a href="{{ URL::to('/') }}">
+            <img src="{{ URL::asset('assets/images/Whitelogo.png') }}" alt="Saakin" height="32">
+          </a>
         @else
-        <a href="{{ URL::to('/') }}">
-          <img src="{{ URL::asset('upload/logo.png') }}" alt="Saakin" height="32">
-        </a>
+          <a href="{{ URL::to('/') }}">
+            <img src="{{ URL::asset('upload/logo.png') }}" alt="Saakin" height="32">
+          </a>
         @endif
       </div>
 
@@ -150,13 +148,38 @@
             </li>
           </ul>
           <ul class="navbar-nav pe-3 align-items-center d-none d-md-flex">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Login</a>
-            </li>
-            <li class="nav-item">
-              <a class="btn btn-primary btn-sm" href="#" data-bs-toggle="modal"
-                data-bs-target="#user-login-popup">Submit Property</a>
-            </li>
+            @if (!Auth::user())
+              <li class="nav-item"><a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#user-login-popup">Login</a></li>
+            @else
+              <li class="nav-item"><a href="{{ url('logout') }}" class="nav-link">Logout</a></li>
+            @endif
+
+            @if (Auth::user())
+              @if (Auth::user()->usertype == 'Agency')
+                <li class="nav-item">
+                  <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/properties/create') }}">
+                    Submit Property</a>
+                </li>
+              @elseif(Auth::user()->usertype == 'Admin')
+                <li class="nav-item">
+                  <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/properties/create') }}">
+                    Submit Property
+                  </a>
+                </li>
+              @else
+                <li class="nav-item">
+                  <a class="btn btn-primary btn-sm" href="{{ url('submit-property') }}">Submit
+                    Property</a>
+                </li>
+              @endif
+            @else
+              <li class="nav-item">
+                <a data-bs-toggle="modal" data-bs-target="{{ '#user-login-popup' }}" class="btn btn-primary btn-sm" href="#">
+                  Submit Property
+                </a>
+              </li>
+            @endif
+
           </ul>
         </div>
       </div>

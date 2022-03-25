@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\City;
-use App\Lead;
-use App\User;
 use App\Pages;
 use App\Types;
 use App\Agency;
 use App\AmenityProduct;
-use App\Vistor;
 use App\Enquire;
-use App\Visitor;
 use App\PageVisits;
 use App\Properties;
 use App\LandingPage;
@@ -23,24 +18,19 @@ use App\PropertyCounter;
 use App\PropertyGallery;
 use App\PropertyPurpose;
 use App\PropertyDocument;
-use App\Mail\MyCustomMail;
 use App\PropertyFloorPlan;
 use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\PropertyNeighborhood;
-
 use App\Mail\Property_Inquiry;
-
 use Illuminate\Support\Carbon;
-
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
-use Intervention\Image\ImageManagerStatic as Image;
 
 class PropertiesController extends Controller
 {
@@ -64,7 +54,8 @@ class PropertiesController extends Controller
         }else{
             $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
-            ->select('property_types.id', 'property_types.types', DB::Raw('COUNT(properties.id) as pcount'))
+            ->select('property_types.id', 'property_types.types', 'property_types.plural',
+            DB::Raw('COUNT(properties.id) as pcount'))
             ->where("properties.status", 1)
             ->groupBy("property_types.id")
             ->orderBy("pcount", "desc")
@@ -234,8 +225,9 @@ class PropertiesController extends Controller
         }else{
             $request['type'] = '';
         }
-        $request['keyword'] = $this->findKeyWord($city, $subcity, $town, $area);
-        $request['keywordMbl'] = $request['keyword'];
+
+        // $request['keyword'] = $this->findKeyWord($city, $subcity, $town, $area);
+        // $request['keywordMbl'] = $request['keyword'];
         
         $heading_info = '';
         $furnishing = '';
@@ -248,7 +240,6 @@ class PropertiesController extends Controller
         }else{
             $heading_info = $furnishing.' Properties for '.request()->property_purpose.' in Qatar';
         }
-        
         return view('front-view.pages.properties', 
         compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'amenities', 'agencies', 'request','landing_page_content','page_des', 'heading_info'));
     }
@@ -819,14 +810,15 @@ class PropertiesController extends Controller
         $propertyPurposes = PropertyPurpose::all();
 
 
-       if($buyOrRent == 'buy'){
-        $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',null )->first();
-       }else{
-        $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',null )->first();
-       }
-
+        if($buyOrRent == 'buy'){
+            $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',null )->first();
+        }else{
+            $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',null )->first();
+        }
+        
+        $request = request();
         return view('front.pages.properties.properties-for-purpose',
-        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'buyOrRent', 'property_purpose','landing_page_content'));
+        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'buyOrRent', 'property_purpose','landing_page_content', 'request'));
     }
 
     public function propertyTypeForPurpose($buyOrRent, $property)
@@ -903,9 +895,10 @@ class PropertiesController extends Controller
         $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',$type->id )->first();
         $page_info = $type->plural.' for '.$property_purpose;
         }
-
+        
+        $request = request();
         return view('front.pages.properties.property-type-for-purpose',
-        compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 'propertyPurposes','landing_page_content','page_info'));
+        compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 'propertyPurposes','landing_page_content','page_info', 'request'));
     }
 
     public function cityPropertyTypeForPurpose($buyOrRent, $city, $property_type_purpose)

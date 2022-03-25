@@ -7,6 +7,12 @@
   .border-bottom {
     border-color: rgba(255, 255, 255, 0.15) !important;
   }
+
+  h5[aria-expanded="true"] {
+    .fa-caret-down {
+      transform: scaleY(-1);
+    }
+  }
 }
 
 .sm-icon {
@@ -75,5 +81,11 @@
     li {
       padding-bottom: 0;
     }
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .value-input-wrap {
+    width: 380px;
   }
 }

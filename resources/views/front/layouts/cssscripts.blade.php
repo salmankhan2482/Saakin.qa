@@ -93,18 +93,25 @@
 <style>
     /* mobile screen pagination styles */
     @media screen and ( max-width: 700px ){        
-    .page-num li {
-        display: none;
+     .prevDesktop {
+        display: none !important;
     }
-
+     .nextDesktop {
+        display: none !important;
+    }
+    .ul-pagination{
+        padding-right: -10px !important;
+    }
+    /*
     .page-num li:first-child,
     .page-num li:nth-child( 2 ),
     .page-num li:nth-last-child( 2 ),
     .page-num li:last-child,
     .page-num li.active,
-    .page-num li.disabled {
+    .page-num li.disabled
+    .active-pagination {
         display: inline-block;
-    }
+    } */
 
     }
 
