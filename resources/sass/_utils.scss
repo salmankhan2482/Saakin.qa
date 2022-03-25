@@ -27,3 +27,14 @@
 }
 
 //
+
+.can-scroll-x {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-padding-right: 16px;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}

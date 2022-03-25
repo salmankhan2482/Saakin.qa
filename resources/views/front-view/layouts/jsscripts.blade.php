@@ -4,7 +4,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
 </script>
 {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-<script src="{{ asset('assets/js/jquery.validate.js') }}" defer></script>
+{{-- <script src="{{ asset('assets/js/jquery.validate.js') }}" defer></script> --}}
 {{-- <script src="{{asset('assets/js/bootstrap-select.min.js')}}"></script> --}}
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script> --}}
 <script src="{{ asset('assets/js/sticky-sidebar.js') }}"></script>
@@ -156,9 +156,6 @@
   @endif
 
   <script type="text/javascript">
-  //desktop search
-  
-
     function initialize() {
       var myLatLng = new google.maps.LatLng('{{ $map_latitude }}', '{{ $map_longitude }}');
       var mapOptions = {
@@ -465,41 +462,99 @@
   });
 
 
- //desktop search
- $('#country').on('keyup', function() {
-        var query = $(this).val();
-        var purpose = $("#globalPropertyPurposeValue").val();
-        var type = $("#globalPropertyTypeValue").val();
+  //desktop search
+  $('#country').on('keyup', function() {
+    var query = $(this).val();
+    var purpose = $("#globalPropertyPurposeValue").val();
+    var type = $("#globalPropertyTypeValue").val();
 
-        if (query != '') {
-            $.ajax({
-                url: "{{ route('search-desktop') }}",
-                type: "GET",
-                data: {
-                    'country': query,
-                    'purpose': purpose,
-                    'type': type
-                },
-                success: function(data) {
-                    $('#country_list').show();
-                    $('#country_list').html(data);
-                }
-            }) //ajax call ends
+    console.log(purpose);
 
-        } else {
-            $('#country_list').hide();
-        } //if else ends
-    });
+    if (query != '') {
+      $.ajax({
+        url: "{{ route('search-desktop') }}",
+        type: "GET",
+        data: {
+          'country': query,
+          'purpose': purpose,
+          'type': type
+        },
+        success: function(data) {
+          $('#country_list').show();
+          $('#country_list').html(data);
+        }
+      }) //ajax call ends
+
+    } else {
+      $('#country_list').hide();
+    } //if else ends
+  });
 
 
-    $(document).on('click', '.live-search-li', function() {
-        var query = 'Stop';
+  $(document).on('click', '.live-search-li', function() {
+    var query = 'Stop';
 
-        var value = $(this).text();
-        $('#country').val(value);
-        $('#extra_keywords').html($(this).html());
-        $('#country_list').html("");
-    });
+    //when item is clicked call ajax but dont make changes
+    $.ajax({
+      url: "{{ route('search-desktop') }}",
+      type: "GET",
+      data: {
+        'country': query
+      },
+      success: function(data) {}
+    })
+
+    var value = $(this).text();
+    $('#country').val(value);
+    $('#country_list').html("");
+  });
+
+
+  //mobile serach 
+  $('.countryMbl').on('keyup', function() {
+    var query = $(this).val();
+    var purpose = $("#globalPropertyPurposeValue").val();
+    var type = $("#globalPropertyTypeValue").val();
+    console.log(purpose);
+    if (query != '') {
+      $.ajax({
+        url: "{{ route('search-mobile') }}",
+        type: "GET",
+        data: {
+          'country': query,
+          'purpose': purpose,
+          'type': type
+        },
+        success: function(data) {
+          $('#country_list_mbl').show();
+          $('#country_list_mbl').html(data);
+        }
+      }) //ajax call ends
+
+    } else {
+      $('#country_list_mbl').hide();
+    } //if else ends
+  });
+
+
+  $(document).on('click', '.live-search-li', function() {
+    var query = 'Stop';
+
+    //when item is clicked call ajax but dont make changes
+    $.ajax({
+      url: "{{ route('search-mobile') }}",
+      type: "GET",
+      data: {
+        'country': query
+      },
+      success: function(data) {}
+    })
+
+    var value = $(this).text();
+    $('.countryMbl').val(value);
+    $('#country_list_mbl').html("");
+  }); //mbl search
+
 
 
   $('.property_purpose').click(function() {

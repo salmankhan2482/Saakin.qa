@@ -18,16 +18,15 @@ use Illuminate\Support\Facades\Session;
 class OmahadminController extends Controller
 {
 
+
     public function ckeditor()
     {
         $action = 'saakin_create';
         return view('admin-dashboard.ckeditor',compact('action'));
     }
+
     public function saakin_dashboard()
     {
-        
-        $action = 'saakin_dashboard';
-        
         if(auth()->user()->usertype == 'Agency'){
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
             
@@ -84,12 +83,9 @@ class OmahadminController extends Controller
                 ->count();
 
             
-                $data['reports'] = PropertyReport::all()
+            $data['reports'] = PropertyReport::all()
                   ->count();
                 
-                
-                
-
 
             //Inquiries
             $data['inquiries'] = Enquire::
@@ -160,8 +156,6 @@ class OmahadminController extends Controller
                     ->whereYear('created_at', Carbon::now()->year)
                     ->whereMonth('created_at', $key)
                     ->count();
-                    
-                
             }
 
             // clicks per month
@@ -195,7 +189,6 @@ class OmahadminController extends Controller
                 ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', $key)
                 ->count('ip_address');
-
             }
 
             //fetching properties on basis of property types
@@ -210,14 +203,14 @@ class OmahadminController extends Controller
             ->toJson();
 
             $data['propertyCities'] = PropertyCities::join("properties", "properties.city", "=", "property_cities.id")
-        ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))
-        ->where('properties.status', 1)->orderBy("pcount", "desc")->groupBy("property_cities.id")->get();
+            ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))
+            ->where('properties.status', 1)->orderBy("pcount", "desc")->groupBy("property_cities.id")->get();
         
             
 
+            $action = 'saakin_dashboard';
+            return view('admin-dashboard.index', compact('data', 'action'));
 
-        $action = 'saakin_dashboard';
-        return view('admin-dashboard.index', compact('data', 'action'));
 
     }
 

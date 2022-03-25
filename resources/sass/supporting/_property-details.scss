@@ -111,35 +111,71 @@
 //
 
 .single-gallery {
-  --template: repeat(3, 1fr);
   --gap: 0.5rem;
 
-  .gallery-item {
-    position: relative;
+  .slick-dots {
+    bottom: 10px;
+  }
 
-    &:first-of-type {
-      grid-column: 1 / span 2;
-      grid-row: 1 / span 2;
-    }
+  .slick-prev,
+  .slick-next {
+    z-index: 11;
+  }
 
-    &:nth-of-type(n + 4) {
-      display: none;
-    }
+  .slick-prev {
+    left: 0.5rem;
+  }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+  .slick-next {
+    right: 0.5rem;
+  }
+
+  &.slick-dotted.slick-slider {
+    margin-bottom: 0;
+  }
+
+  @include media-breakpoint-up(sm) {
+    --template: repeat(3, 1fr);
+
+    .gallery-item {
+      position: relative;
+
+      &:first-of-type {
+        grid-column: 1 / span 2;
+        grid-row: 1 / span 2;
+      }
+
+      &:nth-of-type(n + 4) {
+        display: none;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
   }
 }
 
+.details-content {
+  @include media-breakpoint-up(lg) {
+    --template: auto 427px;
+    --gap: 0.5rem;
+  }
+}
+
 .prop-type-info {
-  --template: repeat(4, 1fr);
+  --template: repeat(2, 1fr);
   --gap: 1rem;
 
   i {
     min-width: 1.5em;
+  }
+
+  @include media-breakpoint-up(md) {
+    --template: repeat(4, 1fr);
+    --gap: 1rem;
   }
 }
 
@@ -191,6 +227,15 @@
   }
 }
 
+.amenities-grid {
+  --template: 1fr;
+  --gap: 0.5rem;
+
+  @include media-breakpoint-up(md) {
+    --template: 1fr 1fr;
+  }
+}
+
 .pro-same-slider {
   .single-property-box {
     margin: 0 0.5rem;
@@ -205,5 +250,167 @@
         object-fit: cover;
       }
     }
+  }
+}
+
+.pro-same-m {
+  .single-property-box {
+    min-width: 200px;
+  }
+}
+
+.share-btns {
+  .btn-monochrome {
+    --btn-bg-color: #fff;
+    --btn-border-color: #e8e1e0;
+    --btn-text-color: #2d383f;
+    --btn-hover-bg-color: #f7f5f5;
+    --btn-hover-border-color: #e8e1e0;
+    --btn-hover-text-color: #403b45;
+  }
+}
+
+
+.modal {
+  .email-content {
+    // padding: 25px;
+    border: none;
+
+    .close {
+      position: absolute;
+      top: 7px;
+      right: 10px;
+      outline: 0;
+      box-shadow: none;
+    }
+
+    .title {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .property-detail-block {
+      display: flex;
+      flex-flow: row nowrap;
+      margin-bottom: 30px;
+
+      .img-holder {
+        width: 35%;
+        flex-shrink: 0;
+        margin-right: 20px;
+
+        img {
+          display: block;
+          width: 100%;
+        }
+      }
+
+      .detail-holder {
+        flex-grow: 1;
+      }
+    }
+
+    h3 {
+      font-size: 16px;
+      line-height: 20px;
+      margin: 0;
+    }
+
+    .price {
+      display: block;
+      margin: 0 0 15px;
+      color: #009fff;
+      font-size: 16px;
+      line-height: 20px;
+      font-weight: 400;
+    }
+
+    .agent-detail, .broker-detail {
+      display: block;
+      font-size: 14px;
+      line-height: 18px;
+      margin: 0;
+    }
+
+    .property-feature {
+      padding: 0;
+
+      li {
+        width: auto;
+        padding-right: 20px;
+        font-size: 13px;
+
+        i {
+          margin-right: 5px;
+          font-size: 16px;
+        }
+      }
+    }
+
+    form {
+      .form-group {
+        margin-bottom: 7px;
+      }
+
+      .form-check-label, .form-control {
+        font-size: 14px;
+        line-height: 18px;
+      }
+
+      textarea {
+        resize: none;
+      }
+
+      .row {
+        margin-left: -5px;
+        margin-right: -5px;
+
+        .col-12 {
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    }
+
+    .modal-footer {
+      padding: 0;
+      margin-top: 20px;
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      justify-content: space-between;
+      border: none;
+
+      // .btn {
+      //   background: #009fff;
+      //   border-color: #009fff;
+      // }
+
+      .form-group {
+        margin-bottom: 0;
+
+        input {
+          margin-top: 6px;
+        }
+      }
+    }
+  }
+}
+
+.user-login-section .nav-tabs {
+  border-bottom: none;
+
+  .nav-link {
+    &.active {
+      color: $primary;
+      background-color: transparent;
+    }
+
+    border: none;
+    font-size: 18px;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 8px 16px 8px 0;
   }
 }

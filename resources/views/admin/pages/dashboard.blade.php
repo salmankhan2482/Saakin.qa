@@ -24,8 +24,6 @@
 	</div>
 
 
-
-
   	@if(Auth::user()->usertype=='Admin')
     <div class="row">
     	<a href="{{ URL::to('admin/properties') }}" style="text-decoration: none;">

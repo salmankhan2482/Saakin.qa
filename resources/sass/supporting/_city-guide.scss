@@ -1,4 +1,6 @@
 .single-place-wrap {
+  --box-height: 270px;
+
   position: relative;
   border-radius: 5px;
   display: block;
@@ -6,7 +8,7 @@
 
   .single-place-image {
     position: relative;
-    height: 270px;
+    height: var(--box-height);
     overflow: hidden;
 
     img {
@@ -29,6 +31,8 @@
     display: grid;
     place-content: center;
     z-index: 1;
+    padding: 1rem;
+    text-align: center;
 
     &::before {
       position: absolute;
@@ -63,6 +67,17 @@
       &::before {
         opacity: 0;
       }
+    }
+  }
+}
+
+.cityGideNav {
+  .nav-link {
+    color: $body-color;
+    font-weight: 500;
+
+    &.active {
+      color: $primary;
     }
   }
 }
