@@ -262,3 +262,27 @@ img {
     border: 1px solid var(--bs-gray-300);
   }
 }
+
+//
+
+.breadcrumb {
+  --bs-breadcrumb-divider: "\f054";
+
+  .breadcrumb-item {
+    display: inline-flex;
+    align-items: center;
+
+    &::before {
+      font-family: "Font Awesome 5 Free";
+      font-weight: bold;
+      font-size: 0.75rem;
+      color: $primary;
+    }
+  }
+}
+
+//
+
+#user-login-popup .modal-dialog {
+  max-width: 390px;
+}

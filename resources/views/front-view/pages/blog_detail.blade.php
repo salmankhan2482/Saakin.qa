@@ -68,7 +68,7 @@
                                 style="border: none !important; background-color: white !important;">
                                 <div class="col-12">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLongTitle">Share This Blog</h5>
+                                        <h5 class="modal-title" id="emailAgentModalLongTitle">Share This Blog</h5>
                                     </div>
                                     <div class="modal-body">
                                         <div class="list-details-wrap text-center">

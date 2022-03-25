@@ -24,7 +24,7 @@ Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
-    Route::get('/dashboard/new', 'OmahadminController@saakin_dashborad')->middleware('auth')
+    Route::get('/dashboard/new', 'OmahadminController@saakin_dashboard')->middleware('auth')
     ->name('new_dashboard');
     Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
     // new routes

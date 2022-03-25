@@ -35,7 +35,7 @@ return [
 		],
 		'pagelevel' => [
 			'css' => [
-				'saakin_dashborad' => [
+				'saakin_dashboard' => [
 					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 					'admin/vendor/jqvmap/css/jqvmap.min.css',
 					'admin/vendor/chartist/css/chartist.min.css',
@@ -290,7 +290,7 @@ return [
 			],
 			'js' => [
 
-				'saakin_dashborad' => [
+				'saakin_dashboard' => [
 
 					'admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
 					'admin/vendor/chart.js/Chart.bundle.min.js',

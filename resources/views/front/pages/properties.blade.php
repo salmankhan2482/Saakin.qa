@@ -141,11 +141,10 @@
 
                                         <div class="col-xl-6 col-12 mb-3">
                                             <select name="min_price" class="hero__form-input  form-control custom-select">
-                                                <option {{ $request->min_price == '' ? 'selected' : '' }} value="">Min
-                                                    Price</option>
-                                                <option {{ $request->min_price == '5000' ? 'selected' : '' }}
-                                                    value="5000">
-                                                    QAR 5,000</option>
+                                                <option {{ $request->min_price == '' ? 'selected' : '' }} 
+                                                    value=""> Min Price</option>
+                                                <option {{ $request->min_price == '5000' ? 'selected' : '' }} 
+                                                    value="5000"> QAR 5,000</option>
                                                 <option {{ $request->min_price == '10000' ? 'selected' : '' }}
                                                     value="10000">QAR 10,000</option>
                                                 <option {{ $request->min_price == '15000' ? 'selected' : '' }}
@@ -219,52 +218,148 @@
                                         </div>
                                         <div class="col-xl-6 col-12 mb-3">
                                             <select name="min_area" class="hero__form-input  form-control custom-select">
-                                                <option @if ($request->min_area == '') selected @endif value="">Min Area</option>
-                                                <option @if ($request->min_area == '500') selected @endif value="500">500 sqm</option>
-                                                <option @if ($request->min_area == '600') selected @endif value="600">600 sqm</option>
-                                                <option @if ($request->min_area == '700') selected @endif value="700">700 sqm</option>
-                                                <option @if ($request->min_area == '800') selected @endif value="800">800 sqm</option>
-                                                <option @if ($request->min_area == '900') selected @endif value="900">900 sqm</option>
-                                                <option @if ($request->min_area == '1000') selected @endif value="1000">1000 sqm</option>
-                                                <option @if ($request->min_area == '1100') selected @endif value="1100">1100 sqm</option>
-                                                <option @if ($request->min_area == '1200') selected @endif value="1200">1200 sqm</option>
-                                                <option @if ($request->min_area == '1300') selected @endif value="1300">1300 sqm</option>
-                                                <option @if ($request->min_area == '1400') selected @endif value="1400">1400 sqm</option>
-                                                <option @if ($request->min_area == '1500') selected @endif value="1500">1500 sqm</option>
-                                                <option @if ($request->min_area == '1600') selected @endif value="1600">1600 sqm</option>
-                                                <option @if ($request->min_area == '1700') selected @endif value="1700">1700 sqm</option>
-                                                <option @if ($request->min_area == '1800') selected @endif value="1800">1800 sqm</option>
-                                                <option @if ($request->min_area == '1900') selected @endif value="1900">1900 sqm</option>
-                                                <option @if ($request->min_area == '2000') selected @endif value="2000">2000 sqm</option>
-                                                <option @if ($request->min_area == '2500') selected @endif value="2500">2500 sqm</option>
-                                                <option @if ($request->min_area == '3000') selected @endif value="3000">3000 sqm</option>
-                                                <option @if ($request->min_area == '4000') selected @endif value="4000">4000 sqm</option>
-                                                <option @if ($request->min_area == '5000') selected @endif value="5000">5000 sqm</option>
+                                                <option @if ($request->min_area == '') selected @endif value="">
+                                                    Min Area
+                                                </option>
+                                                <option @if ($request->min_area == '100') selected @endif value="100">
+                                                    100 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '200') selected @endif value="200">
+                                                    200 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '500') selected @endif value="500">
+                                                    500 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '600') selected @endif value="600">
+                                                    600 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '700') selected @endif value="700">
+                                                    700 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '800') selected @endif value="800">
+                                                    800 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '900') selected @endif value="900">
+                                                    900 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1000') selected @endif value="1000">
+                                                    1000 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1100') selected @endif value="1100">
+                                                    1100 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1200') selected @endif value="1200">
+                                                    1200 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1300') selected @endif value="1300">
+                                                    1300 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1400') selected @endif value="1400">
+                                                    1400 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1500') selected @endif value="1500">
+                                                    1500 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1600') selected @endif value="1600">
+                                                    1600 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1700') selected @endif value="1700">
+                                                    1700 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1800') selected @endif value="1800">
+                                                    1800 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '1900') selected @endif value="1900">
+                                                    1900 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '2000') selected @endif value="2000">
+                                                    2000 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '2500') selected @endif value="2500">
+                                                    2500 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '3000') selected @endif value="3000">
+                                                    3000 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '4000') selected @endif value="4000">
+                                                    4000 sqm
+                                                </option>
+                                                <option @if ($request->min_area == '5000') selected @endif value="5000">
+                                                    5000 sqm
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-xl-6 col-12 mb-3">
                                             <select name="max_area" class="hero__form-input  form-control custom-select">
-                                                <option @if ($request->max_area == '') selected @endif value="">Max Area</option>
-                                                <option @if ($request->max_area == '500') selected @endif value="500">500 sqm</option>
-                                                <option @if ($request->max_area == '600') selected @endif value="600">600 sqm</option>
-                                                <option @if ($request->max_area == '700') selected @endif value="700">700 sqm</option>
-                                                <option @if ($request->max_area == '800') selected @endif value="800">800 sqm</option>
-                                                <option @if ($request->max_area == '900') selected @endif value="900">900 sqm</option>
-                                                <option @if ($request->max_area == '1000') selected @endif value="1000">1000 sqm</option>
-                                                <option @if ($request->max_area == '1100') selected @endif value="1100">1100 sqm</option>
-                                                <option @if ($request->max_area == '1200') selected @endif value="1200">1200 sqm</option>
-                                                <option @if ($request->max_area == '1300') selected @endif value="1300">1300 sqm</option>
-                                                <option @if ($request->max_area == '1400') selected @endif value="1400">1400 sqm</option>
-                                                <option @if ($request->max_area == '1500') selected @endif value="1500">1500 sqm</option>
-                                                <option @if ($request->max_area == '1600') selected @endif value="1600">1600 sqm</option>
-                                                <option @if ($request->max_area == '1700') selected @endif value="1700">1700 sqm</option>
-                                                <option @if ($request->max_area == '1800') selected @endif value="1800">1800 sqm</option>
-                                                <option @if ($request->max_area == '1900') selected @endif value="1900">1900 sqm</option>
-                                                <option @if ($request->max_area == '2000') selected @endif value="2000">2000 sqm</option>
-                                                <option @if ($request->max_area == '2500') selected @endif value="2500">2500 sqm</option>
-                                                <option @if ($request->max_area == '3000') selected @endif value="3000">3000 sqm</option>
-                                                <option @if ($request->max_area == '4000') selected @endif value="4000">4000 sqm</option>
-                                                <option @if ($request->max_area == '5000') selected @endif value="5000">5000 sqm</option>
+                                                <option @if ($request->max_area == '') selected @endif value="">
+                                                    Max Area
+                                                </option>
+                                                <option @if ($request->max_area == '100') selected @endif value="100">
+                                                    100 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '200') selected @endif value="200">
+                                                    200 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '500') selected @endif value="500">
+                                                    500 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '600') selected @endif value="600">
+                                                    600 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '700') selected @endif value="700">
+                                                    700 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '800') selected @endif value="800">
+                                                    800 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '900') selected @endif value="900">
+                                                    900 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1000') selected @endif value="1000">
+                                                    1000 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1100') selected @endif value="1100">
+                                                    1100 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1200') selected @endif value="1200">
+                                                    1200 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1300') selected @endif value="1300">
+                                                    1300 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1400') selected @endif value="1400">
+                                                    1400 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1500') selected @endif value="1500">
+                                                    1500 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1600') selected @endif value="1600">
+                                                    1600 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1700') selected @endif value="1700">
+                                                    1700 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1800') selected @endif value="1800">
+                                                    1800 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '1900') selected @endif value="1900">
+                                                    1900 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '2000') selected @endif value="2000">
+                                                    2000 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '2500') selected @endif value="2500">
+                                                    2500 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '3000') selected @endif value="3000">
+                                                    3000 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '4000') selected @endif value="4000">
+                                                    4000 sqm
+                                                </option>
+                                                <option @if ($request->max_area == '5000') selected @endif value="5000">
+                                                    5000 sqm
+                                                </option>
                                             </select>
                                         </div>
                                         <div class="col-xl-6 col-12 mb-3">
@@ -926,52 +1021,148 @@ Link:'.$propertyUrl;
                                 </div>
                                 <div class="col-lg-3 col-md-6 col-6">
                                     <select name="min_area" class="hero__form-input  form-control  mb-20">
-                                        <option @if ($request->min_area == '') selected @endif value="">Min Area</option>
-                                        <option @if ($request->min_area == '500') selected @endif value="500">500 sqm</option>
-                                        <option @if ($request->min_area == '600') selected @endif value="600">600 sqm</option>
-                                        <option @if ($request->min_area == '700') selected @endif value="700">700 sqm</option>
-                                        <option @if ($request->min_area == '800') selected @endif value="800">800 sqm</option>
-                                        <option @if ($request->min_area == '900') selected @endif value="900">900 sqm</option>
-                                        <option @if ($request->min_area == '1000') selected @endif value="1000">1000 sqm</option>
-                                        <option @if ($request->min_area == '1100') selected @endif value="1100">1100 sqm</option>
-                                        <option @if ($request->min_area == '1200') selected @endif value="1200">1200 sqm</option>
-                                        <option @if ($request->min_area == '1300') selected @endif value="1300">1300 sqm</option>
-                                        <option @if ($request->min_area == '1400') selected @endif value="1400">1400 sqm</option>
-                                        <option @if ($request->min_area == '1500') selected @endif value="1500">1500 sqm</option>
-                                        <option @if ($request->min_area == '1600') selected @endif value="1600">1600 sqm</option>
-                                        <option @if ($request->min_area == '1700') selected @endif value="1700">1700 sqm</option>
-                                        <option @if ($request->min_area == '1800') selected @endif value="1800">1800 sqm</option>
-                                        <option @if ($request->min_area == '1900') selected @endif value="1900">1900 sqm</option>
-                                        <option @if ($request->min_area == '2000') selected @endif value="2000">2000 sqm</option>
-                                        <option @if ($request->min_area == '2500') selected @endif value="2500">2500 sqm</option>
-                                        <option @if ($request->min_area == '3000') selected @endif value="3000">3000 sqm</option>
-                                        <option @if ($request->min_area == '4000') selected @endif value="4000">4000 sqm</option>
-                                        <option @if ($request->min_area == '5000') selected @endif value="5000">5000 sqm</option>
+                                        <option @if ($request->min_area == '') selected @endif value="">
+                                            Min Area
+                                        </option>
+                                        <option @if ($request->min_area == '100') selected @endif value="100">
+                                            100 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '200') selected @endif value="200">
+                                            200 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '500') selected @endif value="500">
+                                            500 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '600') selected @endif value="600">
+                                            600 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '700') selected @endif value="700">
+                                            700 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '800') selected @endif value="800">
+                                            800 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '900') selected @endif value="900">
+                                            900 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1000') selected @endif value="1000">
+                                            1000 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1100') selected @endif value="1100">
+                                            1100 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1200') selected @endif value="1200">
+                                            1200 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1300') selected @endif value="1300">
+                                            1300 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1400') selected @endif value="1400">
+                                            1400 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1500') selected @endif value="1500">
+                                            1500 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1600') selected @endif value="1600">
+                                            1600 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1700') selected @endif value="1700">
+                                            1700 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1800') selected @endif value="1800">
+                                            1800 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '1900') selected @endif value="1900">
+                                            1900 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '2000') selected @endif value="2000">
+                                            2000 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '2500') selected @endif value="2500">
+                                            2500 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '3000') selected @endif value="3000">
+                                            3000 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '4000') selected @endif value="4000">
+                                            4000 sqm
+                                        </option>
+                                        <option @if ($request->min_area == '5000') selected @endif value="5000">
+                                            5000 sqm
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-lg-3 col-md-6 col-6">
                                     <select name="max_area" class="hero__form-input  form-control mb-20">
-                                        <option @if ($request->max_area == '') selected @endif value="">Max Area</option>
-                                        <option @if ($request->max_area == '500') selected @endif value="500">500 sqm</option>
-                                        <option @if ($request->max_area == '600') selected @endif value="600">600 sqm</option>
-                                        <option @if ($request->max_area == '700') selected @endif value="700">700 sqm</option>
-                                        <option @if ($request->max_area == '800') selected @endif value="800">800 sqm</option>
-                                        <option @if ($request->max_area == '900') selected @endif value="900">900 sqm</option>
-                                        <option @if ($request->max_area == '1000') selected @endif value="1000">1000 sqm</option>
-                                        <option @if ($request->max_area == '1100') selected @endif value="1100">1100 sqm</option>
-                                        <option @if ($request->max_area == '1200') selected @endif value="1200">1200 sqm</option>
-                                        <option @if ($request->max_area == '1300') selected @endif value="1300">1300 sqm</option>
-                                        <option @if ($request->max_area == '1400') selected @endif value="1400">1400 sqm</option>
-                                        <option @if ($request->max_area == '1500') selected @endif value="1500">1500 sqm</option>
-                                        <option @if ($request->max_area == '1600') selected @endif value="1600">1600 sqm</option>
-                                        <option @if ($request->max_area == '1700') selected @endif value="1700">1700 sqm</option>
-                                        <option @if ($request->max_area == '1800') selected @endif value="1800">1800 sqm</option>
-                                        <option @if ($request->max_area == '1900') selected @endif value="1900">1900 sqm</option>
-                                        <option @if ($request->max_area == '2000') selected @endif value="2000">2000 sqm</option>
-                                        <option @if ($request->max_area == '2500') selected @endif value="2500">2500 sqm</option>
-                                        <option @if ($request->max_area == '3000') selected @endif value="3000">3000 sqm</option>
-                                        <option @if ($request->max_area == '4000') selected @endif value="4000">4000 sqm</option>
-                                        <option @if ($request->max_area == '5000') selected @endif value="5000">5000 sqm</option>
+                                        <option @if ($request->max_area == '') selected @endif value="">
+                                            Max Area
+                                        </option>
+                                        <option @if ($request->max_area == '100') selected @endif value="100">
+                                            100 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '200') selected @endif value="200">
+                                            200 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '500') selected @endif value="500">
+                                            500 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '600') selected @endif value="600">
+                                            600 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '700') selected @endif value="700">
+                                            700 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '800') selected @endif value="800">
+                                            800 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '900') selected @endif value="900">
+                                            900 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1000') selected @endif value="1000">
+                                            1000 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1100') selected @endif value="1100">
+                                            1100 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1200') selected @endif value="1200">
+                                            1200 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1300') selected @endif value="1300">
+                                            1300 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1400') selected @endif value="1400">
+                                            1400 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1500') selected @endif value="1500">
+                                            1500 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1600') selected @endif value="1600">
+                                            1600 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1700') selected @endif value="1700">
+                                            1700 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1800') selected @endif value="1800">
+                                            1800 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '1900') selected @endif value="1900">
+                                            1900 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '2000') selected @endif value="2000">
+                                            2000 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '2500') selected @endif value="2500">
+                                            2500 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '3000') selected @endif value="3000">
+                                            3000 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '4000') selected @endif value="4000">
+                                            4000 sqm
+                                        </option>
+                                        <option @if ($request->max_area == '5000') selected @endif value="5000">
+                                            5000 sqm
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-12">
@@ -1178,31 +1369,7 @@ Link: ' .$propertyUrl;
 
         });
     });
-    
-    // let click = 0;
-    // var elements = document.getElementsByClassName("btnCall");
-
-    // var myFunction = function() {
-    //     var attribute = this.getAttribute("data-telNumber");
-    //     this.innerText = attribute;
-
-    //     // this.href = "tel:"+attribute;
-    //     if(click == 0){
-    //         this.href = "#";
-    //         click++;
-            
-    //     }else{
-    //         this.href = "tel:"+attribute;
-    //         click = 0;
-
-    //     }   
-    // };
-
-    // for (var i = 0; i < elements.length; i++) {
-    //     elements[i].addEventListener('click', myFunction, false);
-    // }
-
-    
+  
 
     function FormSubmit(coming) {
         var value = coming.value;

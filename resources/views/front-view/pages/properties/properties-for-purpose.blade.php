@@ -195,6 +195,8 @@
                                     <div class="col-xl-6 col-12 mb-3">
                                         <select name="min_area" class="hero__form-input  form-control custom-select">
                                             <option value="">Min Area</option>
+                                            <option value="100">100 sqm</option>
+                                            <option value="200">200 sqm</option>
                                             <option value="500">500 sqm</option>
                                             <option value="600">600 sqm</option>
                                             <option value="700">700 sqm</option>
@@ -220,6 +222,8 @@
                                     <div class="col-xl-6 col-12 mb-3">
                                         <select name="max_area" class="hero__form-input  form-control custom-select">
                                             <option value="">Max Area</option>
+                                            <option value="100">100 sqm</option>
+                                            <option value="200">200 sqm</option>
                                             <option value="500">500 sqm</option>
                                             <option value="600">600 sqm</option>
                                             <option value="700">700 sqm</option>
@@ -760,6 +764,8 @@
                             <div class="col-lg-3 col-md-6 col-6">
                                 <select name="min_area" class="hero__form-input  form-control  mb-20">
                                     <option value="">Min Area</option>
+                                    <option value="100">100 sqm</option>
+                                    <option value="200">200 sqm</option>
                                     <option value="500">500 sqm</option>
                                     <option value="600">600 sqm</option>
                                     <option value="700">700 sqm</option>
@@ -785,6 +791,8 @@
                             <div class="col-lg-3 col-md-6 col-6">
                                 <select name="max_area" class="hero__form-input  form-control mb-20">
                                     <option value="">Max Area</option>
+                                    <option value="100">100 sqm</option>
+                                    <option value="200">200 sqm</option>
                                     <option value="500">500 sqm</option>
                                     <option value="600">600 sqm</option>
                                     <option value="700">700 sqm</option>
@@ -944,8 +952,8 @@
                                     </a>
                                     @else
                                     <a class="btn btn-outline-success call_btn" id="emailBtn"
-                                        href="mailto:{{ $agency->email }}" data-toggle="modal"
-                                        data-target="#exampleModal"
+                                        href="mailto:{{ $agency->email }}" data-bs-toggle="modal"
+                                        data-bs-target="#emailAgentModal"
                                         data-image="{{asset('upload/properties/thumb_' . $property->featured_image) }}"
                                         data-title="{{ $property->property_name }}"
                                         data-agent="{{ $property->agent_name ?? $agency->name }}"
