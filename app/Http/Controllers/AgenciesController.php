@@ -135,6 +135,7 @@ class AgenciesController extends Controller
     
         $enquire = new Enquire();
         $enquire->agency_id = $inputs['agency_id'];
+        $enquire->enquire_id = 2;
         $enquire->type = $inputs['type'];
         $enquire->name = $inputs['name'];
         $enquire->email = $inputs['email'];

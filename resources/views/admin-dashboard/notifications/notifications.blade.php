@@ -7,18 +7,19 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Agency Inquiries</h4>
+                    <h4 class="card-title">Notifications</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="example3" class="display min-w850">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
+                                    <th>Type</th>
                                     <th>Name</th>
-                                    <th>Subject</th>
                                     <th>Email</th>
-                                    <th>Phone</th>
                                     <th>Agency</th>
+                                    <th>Status</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
@@ -26,14 +27,19 @@
                                 @foreach($inquirieslist as $i => $inquiries)
                                 <tr>
                                 
+                                <td>{{ $inquiries->id }}</td>
+                                <td>{{ $inquiries->type }}</td>
                                 <td>{{ $inquiries->name }}</td>
-                                <td>{{ $inquiries->subject }}</td>
                                 <td>{{ $inquiries->email }}</td>
-                                <td>{{ $inquiries->phone }}</td>
                                 <td>{{ $inquiries->Agencies->name ??''}} </td>
 
-                                        <td class="text-center">
-                                            <a href="{{ url('admin/view_agency_inquiry', $inquiries->id ) }}" 
+                                @if ($inquiries->enquire_id == 1)
+                                <td> <i class="badge badge-rounded badge-success">{{ $inquiries->EnquireStatus->status ??''}}</i> </td>
+                                @else
+                                <td> <i class="badge badge-rounded badge-danger">{{ $inquiries->EnquireStatus->status ??''}}</i> </td>
+                                @endif    
+                                <td class="text-center">
+                                            <a href="{{ route('view_notification', $inquiries->id ) }}" 
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>

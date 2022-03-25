@@ -30,8 +30,11 @@ class AdminController extends MainAdminController
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
-        $agency = Agency::where("id",Auth::User()->agency_id)->first();
-        return view('admin.pages.profile',['agency'=>$agency]);
+        $data['agency'] = Agency::where("id",Auth::User()->agency_id)->first();
+        $data['user'] = auth()->user();
+        $action = 'app_profile';
+
+        return view('admin-dashboard.profile.show',compact('data','action'));
     }
 
     public function updateProfile(Request $request)

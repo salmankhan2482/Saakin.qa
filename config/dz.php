@@ -35,7 +35,7 @@ return [
 		],
 		'pagelevel' => [
 			'css' => [
-				'saakin_dashborad' => [
+				'saakin_dashboard' => [
 					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 					'admin/vendor/jqvmap/css/jqvmap.min.css',
 					'admin/vendor/chartist/css/chartist.min.css',
@@ -61,9 +61,12 @@ return [
 
 					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 					'admin/vendor/nestable2/css/jquery.nestable.min.css',
+					'https://cdn.lineicons.com/2.0/LineIcons.css',
 					'admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css',
 					'admin/vendor/datatables/css/jquery.dataTables.min.css',
 					'admin/vendor/bootstrap-daterangepicker/daterangepicker.css',
+					'admin/vendor/owl-carousel/owl.carousel.css',
+					'admin/vendor/chartist/css/chartist.min.css',
 					'admin/vendor/pickadate/themes/default.css',
 					'admin/vendor/pickadate/themes/default.date.css',
 
@@ -290,7 +293,7 @@ return [
 			],
 			'js' => [
 
-				'saakin_dashborad' => [
+				'saakin_dashboard' => [
 
 					'admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
 					'admin/vendor/chart.js/Chart.bundle.min.js',
@@ -312,7 +315,6 @@ return [
 					'admin/js/plugins-init/flot-init.js',
 					'admin/vendor/morris/raphael-min.js',
 					'admin/vendor/morris/morris.min.js',
-					// 'admin/vendor/global/global.min.js',
 					
 				],
 

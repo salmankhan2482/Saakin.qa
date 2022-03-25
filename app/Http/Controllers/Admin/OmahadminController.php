@@ -18,7 +18,12 @@ use Illuminate\Support\Facades\Session;
 class OmahadminController extends Controller
 {
 
-    public function saakin_dashborad()
+    public function ckeditor()
+    {
+        $action = 'saakin_create';
+        return view('admin-dashboard.ckeditor',compact('action'));
+    }
+    public function saakin_dashboard()
     {
         
         $action = 'saakin_dashboard';
@@ -93,7 +98,7 @@ class OmahadminController extends Controller
                 })
                 ->orderBy('id', 'desc')
                 ->count();
-                
+                // dd($data['inquiries']);
 
             // last month
             $data['last_month_properties'] = Properties::
@@ -211,9 +216,16 @@ class OmahadminController extends Controller
             
 
 
-        $action = 'saakin_dashborad';
+        $action = 'saakin_dashboard';
         return view('admin-dashboard.index', compact('data', 'action'));
 
+    }
+
+    public function notification()
+    {
+        
+
+        return view('admin-dashboard.partials.header',compact('data','action'));
     }
 
     public function profile()
@@ -231,10 +243,6 @@ class OmahadminController extends Controller
         $action = 'app_profile';
         return view('admin-dashboard.profile.show', compact('action', 'data'));
     }
-
-
-    
-
     public function create_saakin()
     {
         $page_title = 'Form Element';

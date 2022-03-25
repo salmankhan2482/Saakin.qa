@@ -254,6 +254,7 @@ return [
         'XmlParser' => Orchestra\Parser\Xml\Facade::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
+        'WhatsappBtn' => \Eyuva\WhatsappBtn\WhatsappBtnFacade::class,
         'Location' => 'Stevebauman\Location\Facades\Location',
 
     ],

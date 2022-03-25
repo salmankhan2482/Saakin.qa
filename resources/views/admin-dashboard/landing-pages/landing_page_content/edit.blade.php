@@ -123,6 +123,7 @@
 </div>
 @endsection
 @section('scripts')
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
 <script>
     var editor = CKEDITOR.replace( 'page_content' );
 CKFinder.setupCKEditor( editor );

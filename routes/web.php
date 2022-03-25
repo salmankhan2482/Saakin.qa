@@ -24,8 +24,9 @@ Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 
-    Route::get('/dashboard/new', 'OmahadminController@saakin_dashborad')->middleware('auth')
+    Route::get('/dashboard/new', 'OmahadminController@saakin_dashboard')->middleware('auth')
     ->name('new_dashboard');
+    Route::get('/ckeditor','OmahadminController@ckeditor')->name('ckeditor');
     Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
     // new routes
     
@@ -139,6 +140,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry')->name('view_contact_inquiry');   
 
 	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
+
+
+	Route::get('notifications', 'InquiriesController@notifications')->name('notifications');   
+    Route::get('view_notification/{id}', 'InquiriesController@view_notification')->name('view_notification');
 
 	Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');
 	Route::get('subscription_plan/add_plan', 'SubscriptionPlanController@addSubscriptionPlan');

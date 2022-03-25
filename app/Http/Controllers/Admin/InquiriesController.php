@@ -93,6 +93,7 @@ class InquiriesController extends MainAdminController
         {
             $inquiry->property_id = $inputs['property_title'];
             $inquiry->agency_id = Properties::where('id',$request->property_title)->value('agency_id');
+            $inquiry->enquire_id = 2;
             $inquiry->name = $inputs['name'];
             $inquiry->email = $inputs['email'];
             $inquiry->phone = $inputs['phone'];
@@ -105,7 +106,8 @@ class InquiriesController extends MainAdminController
         }else
         {
         
-            $inquiry->agency_id = $inputs['agency_name'];
+        $inquiry->agency_id = $inputs['agency_name'];
+        $inquiry->enquire_id = 2;
         $inquiry->property_id = $inputs['property_title'];
         $inquiry->name = $inputs['name'];
         $inquiry->email = $inputs['email'];
@@ -223,10 +225,13 @@ class InquiriesController extends MainAdminController
     public function view_property_inquiry($id)
     {
         $inquire = Enquire::where('id', $id)->first();
-        if($inquire->property_id != ''){
-            
-            $property = Properties::find($inquire->property_id);
+        $inquire->enquire_id = 1;
+        $inquire->update();
 
+
+        if($inquire->property_id != ''){
+            $property = Properties::find($inquire->property_id);
+            
             $action = 'saakin_create';
 
             return view('admin-dashboard.inquiries.property_inquires.view_property_inquiry',
@@ -239,6 +244,9 @@ class InquiriesController extends MainAdminController
     public function view_agency_inquiry($id)
     {
         $inquire = Enquire::where('id', $id)->first();
+        $inquire->enquire_id = 1;
+        $inquire->update();
+
         $action = 'saakin_create';
         return view('admin-dashboard.inquiries.agency_inquires.view_agency_inquiry',compact('inquire','action'));
 
@@ -246,8 +254,40 @@ class InquiriesController extends MainAdminController
     public function view_contact_inquiry($id)
     {
         $inquire = Enquire::where('id', $id)->first();
+        $inquire->enquire_id = 1;
+        $inquire->update();
+
         $action = 'saakin_create';
         return view('admin-dashboard.inquiries.contact_inquires.view_contact_inquiry',compact('inquire','action'));
+
+    }
+
+    public function notifications()
+    {
+        $inquirieslist = Enquire::orderBy('id', 'ASC')->get();
+        $action = 'saakin_index';
+
+
+        return view('admin-dashboard.notifications.notifications',compact('inquirieslist','action'));
+
+    }
+    public function view_notification($id)
+    {
+        $inquire = Enquire::where('id', $id)->first();
+        $inquire->enquire_id = 1;
+        $inquire->update();
+
+        if($inquire->property_id != ''){
+            $property = Properties::find($inquire->property_id);
+            
+            $action = 'saakin_create';
+
+            return view('admin-dashboard.notifications.view_notification',
+            compact('inquire', 'property','action'));
+        }
+
+        $action = 'saakin_create';
+        return view('admin-dashboard.notifications.view_notification',compact('inquire','action'));
 
     }
 
