@@ -181,6 +181,8 @@
                                             <select name="min_area"
                                                 class="hero__form-input  form-control custom-select">
                                                 <option value="">Min Area</option>
+                                                <option value="100">100 sqm</option>
+                                                <option value="200">200 sqm</option>
                                                 <option value="500">500 sqm</option>
                                                 <option value="600">600 sqm</option>
                                                 <option value="700">700 sqm</option>
@@ -208,6 +210,8 @@
                                             <select name="max_area"
                                                 class="hero__form-input  form-control custom-select">
                                                 <option value="">Max Area</option>
+                                                <option value="100">100 sqm</option>
+                                                <option value="200">200 sqm</option>
                                                 <option value="500">500 sqm</option>
                                                 <option value="600">600 sqm</option>
                                                 <option value="700">700 sqm</option>
@@ -260,6 +264,8 @@
                                                     <select name="min_area" onchange="minAreaFunction(this);"
                                                         class="hero__form-input  form-control custom-select">
                                                         <option value="">Min Area</option>
+                                                        <option value="100">100 sqm</option>
+                                                        <option value="200">200 sqm</option>
                                                         <option value="500">500 sqm</option>
                                                         <option value="600">600 sqm</option>
                                                         <option value="700">700 sqm</option>
@@ -287,6 +293,8 @@
                                                     <select name="max_area"  onchange="maxAreaFunction(this);"
                                                         class="hero__form-input  form-control custom-select">
                                                         <option value="">Max Area</option>
+                                                        <option value="100">100 sqm</option>
+                                                        <option value="200">200 sqm</option>
                                                         <option value="500">500 sqm</option>
                                                         <option value="600">600 sqm</option>
                                                         <option value="700">700 sqm</option>
@@ -315,8 +323,8 @@
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="input-search">
-                                    
-                                            <select name="amenities[]" id="amenities" multiple class="hero__form-input  form-control custom-select">
+                                            <select name="amenities[]" id="amenities" multiple class="hero__form-input form-control custom-select">
+                                                <option value="">Select Extra</option>
                                                 @foreach ($amenities as $amenity)
                                                     <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
                                                 @endforeach

@@ -23,8 +23,7 @@
 <meta property="og:description" content="@yield('description',  getcong('site_description'))" />
 <meta property="og:image" content="@yield('image',  url('/upload/favicon1.png'))" />
 
-{{--
-<!-- Global site tag (gtag.js) - Google Analytics -->
+{{-- <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JHDF71ZW6S"></script>
 <script>
     window.dataLayer = window.dataLayer || [];
@@ -60,29 +59,20 @@
 <link href="{{ URL::asset('upload/' . getcong('site_favicon')) }}" rel="shortcut icon" type="image/x-icon" />
 
 <link href="{{ asset('assets/css/fontawesome.css') }}" rel="stylesheet" />
-{{--
-<link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet" /> --}}
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css"
-    rel="stylesheet" />
+{{-- <link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet" /> --}}
+{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/css/bootstrap-select.min.css" rel="stylesheet" /> --}}
 
-{{--
-<link rel="stylesheet" href="{{ URL::asset('site_assets/css/gallery_style.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ URL::asset('site_assets/css/gallery_style.css') }}"> --}}
 
-{{--
-<link href="{{asset('assets/css/plugin.css')}}" rel="stylesheet" /> --}}
+{{-- <link href="{{asset('assets/css/plugin.css')}}" rel="stylesheet" /> --}}
 
-{{--
-<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" /> --}}
-{{--
-<link rel="stylesheet"
+{{-- <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" /> --}}
+{{-- <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/validationEngine.jquery.min.css" />
 <link href="{{ asset('assets/css/dropzone.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/jquery-ui.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" />
 <link href="{{ asset('site_assets/css/bootstrap-tagsinput.css') }}" rel="stylesheet" />
-
-
-
 
 <link href="{{ asset('assets/css/ionicons.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/linear-icon.min.css') }}" rel="stylesheet" />
@@ -93,13 +83,9 @@
 <link href="{{ asset('assets/css/leaflet.css') }}" rel="stylesheet" />
 <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" /> --}}
 
-{{--
-<link href="{{ asset('assets/css/plugin.css') }}" rel="stylesheet" />
-
+{{-- <link href="{{ asset('assets/css/plugin.css') }}" rel="stylesheet" />
 
 <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" /> --}}
-
-
 
 {{-- MY
 <link href="{{ asset('assets/css/image-uploader.css') }}" type="text/css" rel="stylesheet" />
@@ -111,17 +97,13 @@
 
 <link href="{{ asset('assets/css/new_custom.css') }}" rel="stylesheet" type="text/css" /> --}}
 
-@stack('styles')
-
 @yield('style')
 
 <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
 
+@stack('styles')
 
-
-
-{{--
-<style>
+{{-- <style>
     /* mobile screen pagination styles */
     @media screen and (max-width: 700px) {
         .page-num li {

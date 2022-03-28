@@ -51,7 +51,7 @@
 				<div class="row gy-4 mt-1">
 					@foreach ($featured_properties as $property)
 					<div class="col-md-6">
-						@include('front.pages.include.property_box')
+						@include('front-view.pages.include.property_box')
 					</div>
 					@endforeach
 				</div>
@@ -157,8 +157,8 @@
 									WhatsApp
 								</a>
 								@else
-								<a class="btn btn-outline-success call_btn" id="emailBtn" data-toggle="modal"
-									data-target="#exampleModal"
+								<a class="btn btn-outline-success call_btn" id="emailBtn" data-bs-toggle="modal"
+									data-target="#emailAgentModal"
 									data-image="{{asset('upload/properties/thumb_' . $property->featured_image) }}"
 									data-title="{{ $property->property_name }}" data-agent="{{ $property->agent_name ?? $agency->name }}"
 									data-broker="{{ $agency->name ?? '' }}" data-bedroom="{{ $property->bedrooms ?? '' }}"

@@ -1,8 +1,8 @@
-<div class="modal fade" id="reportModalMbl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" role="dialog">
+<div class="modal fade" id="reportModalMbl" tabindex="-1" aria-labelledby="emailAgentModalLabel" aria-hidden="true" role="dialog">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content email-content" style="padding: 15px; margin-top:15px !important;">
       <div class="modal-header" style="padding: 10px !important; border-bottom:0px;">
-        <h5 class="modal-title" id="exampleModalLongTitle">
+        <h5 class="modal-title" id="emailAgentModalLongTitle">
           Report this Property
         </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
