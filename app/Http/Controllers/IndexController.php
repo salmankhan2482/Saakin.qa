@@ -48,7 +48,7 @@ class IndexController extends Controller
         if (!$this->alreadyInstalled()) {
             return redirect('public/install');
         }
-
+         
         $propertyTypes = Types::all();
         $cities = Properties::select('address')->distinct()->groupBy('address')->get();
 
@@ -60,7 +60,8 @@ class IndexController extends Controller
         $partners = Partners::orderBy('id', 'desc')->get();
         $cityGuides = City::where('status', '1')->orderBy('id', 'asc')->take(4)->get();
 
-        return view('front-view.pages.index', compact('featured_properties', 'partners', 'cityGuides', 'cities', 'propertyTypes', 'propertyPurposes', 'agents', 'amenities'));
+        return view('front-view.pages.index', compact('featured_properties', 'partners',
+         'cityGuides', 'cities', 'propertyTypes', 'propertyPurposes', 'agents', 'amenities'));
     }
     public function livesearch(Request $request)
     {

@@ -41,11 +41,12 @@
       @endforeach
 
     </div>
+		</div>
 
-    <div class="row justify-content-center mt-3 mt-md-5">
-      <div class="col-md-3">
-        <a href="{{ url('city-guide') }}" class="btn btn-primary w-100">See All Our City</a>
-      </div>
-    </div>
-  </div>
+		<div class="row justify-content-center mt-3 mt-md-5">
+			<div class="col-md-3">
+				<a href="{{url('city-guide')}}" class="btn btn-primary w-100">See All Our City</a>
+			</div>
+		</div>
+	</div>
 </div>
