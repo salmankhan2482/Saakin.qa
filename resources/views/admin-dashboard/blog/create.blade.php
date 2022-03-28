@@ -103,9 +103,23 @@
 </div>
 @endsection
 @section('scripts')
+{{-- <script type="text/javascript" src="{{ asset('site_assets/ckeditor5/ckeditor.js') }}"></script> --}}
+
 <script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
+{{-- <script>
+    ClassicEditor
+        .create( document.querySelector( '#description' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script> --}}
     <script>
         var editor = CKEDITOR.replace( 'description' );
         CKFinder.setupCKEditor( editor );
+        CKEDITOR.config.extraPlugins = 'contextmenu';
+        CKEDITOR.config.extraPlugins = 'dialog';
+        CKEDITOR.config.extraPlugins = 'liststyle';
+        CKEDITOR.config.extraPlugins = 'dialogui';
+        CKEDITOR.config.extraPlugins = 'menu';
     </script>
 @endsection
