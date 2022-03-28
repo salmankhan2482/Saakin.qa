@@ -768,10 +768,9 @@ class PropertiesController extends Controller
             $buyOrRent = request('buyOrRent');
             $property_purpose = request('property_purpose');
         }
-
+        // dd(request()->all());
         $properties = Properties::where('status', 1)
         ->where('property_purpose', ucfirst($property_purpose));
-
         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
             if (request()->sort_by == "newest") {
                         $properties->orderBy('id', 'desc');
@@ -815,10 +814,22 @@ class PropertiesController extends Controller
         }else{
             $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',null )->first();
         }
+
+        $heading_info = '';
+        $furnishing = '';
+        if(request()->get('furnishings')){
+            $furnishing = PropertyAmenity::where('id', request()->get('furnishings'))->value('name');
+        }   
+        if(request('property_type')){
+            $type = Types::where('id', request('property_type'))->value('types'); 
+            $heading_info = $furnishing.' '.$type.' for '.request()->property_purpose.' in Qatar';
+        }else{
+            $heading_info = $furnishing.' Properties for '.request()->property_purpose.' in Qatar';
+        }
         
         $request = request();
         return view('front.pages.properties.properties-for-purpose',
-        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'buyOrRent', 'property_purpose','landing_page_content', 'request'));
+        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'heading_info', 'buyOrRent', 'property_purpose','landing_page_content', 'request'));
     }
 
     public function propertyTypeForPurpose($buyOrRent, $property)
@@ -896,9 +907,20 @@ class PropertiesController extends Controller
         $page_info = $type->plural.' for '.$property_purpose;
         }
         
+        $heading_info = '';
+        $furnishing = '';
+        if(request()->get('furnishings')){
+            $furnishing = PropertyAmenity::where('id', request()->get('furnishings'))->value('name');
+        }   
+        if($type){
+            $heading_info = $furnishing.' '.$type->plural_name.' for '.$property_purpose.' in Qatar';
+        }else{
+            $heading_info = $furnishing.' Properties for '.$property_purpose.' in Qatar';
+        }
+
         $request = request();
         return view('front.pages.properties.property-type-for-purpose',
-        compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 'propertyPurposes','landing_page_content','page_info', 'request'));
+        compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 'propertyPurposes','landing_page_content','page_info', 'request', 'heading_info'));
     }
 
     public function cityPropertyTypeForPurpose($buyOrRent, $city, $property_type_purpose)
@@ -1168,18 +1190,21 @@ class PropertiesController extends Controller
         
         
         if($buyOrRent == 'buy'){
-            $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',$type->id)->where('property_cities_id',$city->id)->first();
+            $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',$type->id)
+            ->where('property_cities_id',$city->id)->first();
             
             $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
            }
            else{
-            $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',$type->id )->where('property_cities_id',$city->id)->first();
+            $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',$type->id )
+            ->where('property_cities_id',$city->id)->first();
             
             $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
             }
 
+        $request = request();
         return view('front.pages.properties.city-property-type-for-purpose',
-        compact('properties',  'propertyTypes', 'type', 'city', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content'));
+        compact('properties',  'propertyTypes', 'type', 'city', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content', 'request'));
     }
 
 

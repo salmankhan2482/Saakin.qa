@@ -1,7 +1,7 @@
 <div class="site-banner home-banner" style="background-image: url('{{ 'assets/images/backgrounds/bg-7.jpg' }}')">
   <!--Listing filter starts-->
   <div class="container">
-    <h1 class="text-sm-center">Find your Property</h1>
+    <h1 class="text-sm-center text-bold">Find Your Property</h1>
     <div class="row justify-content-center">
       <div class="col-lg-10 mt-3 mt-lg-5">
         <div class="card">
