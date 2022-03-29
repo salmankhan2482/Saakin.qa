@@ -272,6 +272,7 @@ class SettingsController extends MainAdminController
 		$settings->contact_us_email = $inputs['contact_us_email'];
 		$settings->contact_us_fax = $inputs['contact_us_fax'];
 		$settings->contact_us_phone = $inputs['contact_us_phone'];
+		$settings->contact_us_mobile = $inputs['contact_us_mobile'];
 		$settings->contact_us_address = $inputs['contact_us_address'];		 		  
 		 
 	    $settings->save();
