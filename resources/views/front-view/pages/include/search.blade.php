@@ -29,6 +29,8 @@
                       aria-label="Enter Place Name" aria-describedby="country">
                   </div>
                   <div id="country_list" class="col-md-12 col-12"></div>
+                  <div id="extra_keywords" style="display: none;"></div>
+
                 </div>
 
                 @if ((new \Jenssegers\Agent\Agent())->isDesktop())

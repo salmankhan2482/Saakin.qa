@@ -41,127 +41,86 @@ class PropertiesController extends Controller
 
     public function getPropertyListing(Request $request)
     {   
-        if(request()->property_purpose != ''){
-            $propertyTypes =  DB::table('property_types')
-            ->join('properties', "property_types.id", "properties.property_type")
-            ->select('property_types.id', 'property_types.types','property_types.plural', 
-            DB::Raw('COUNT(properties.id) as pcount'))
-            ->where("properties.status", 1)
-            ->where("properties.property_purpose", request()->property_purpose)
-            ->groupBy("property_types.id")
-            ->orderBy("pcount", "desc")
-            ->get();
-        }else{
-            $propertyTypes =  DB::table('property_types')
-            ->join('properties', "property_types.id", "properties.property_type")
-            ->select('property_types.id', 'property_types.types', 'property_types.plural',
-            DB::Raw('COUNT(properties.id) as pcount'))
-            ->where("properties.status", 1)
-            ->groupBy("property_types.id")
-            ->orderBy("pcount", "desc")
-            ->get();
-
-        }
+        $propertyTypes =  DB::table('property_types')
+        ->join('properties', "property_types.id", "properties.property_type")
+        ->select('property_types.id', 'property_types.types','property_types.plural', 
+        DB::Raw('COUNT(properties.id) as pcount'))
+        ->where("properties.status", 1)
+        ->when(request()->property_purpose != '', function($query){
+            $query->where("properties.property_purpose", request()->property_purpose);
+        })
+        ->groupBy("property_types.id")
+        ->orderBy("pcount", "desc")
+        ->get();
         
-
-        $cities = Properties::select("city")
-            ->where('status', 1)
-            ->where('city', '!=', '')
-            ->groupBy('city')->orderBy("city", "asc")->get();
-            
         $propertyPurposes = PropertyPurpose::all();
-
-        $agencies =  DB::table('agencies')
-            ->join('properties', "agencies.id", "properties.agency_id")
-            ->select('agencies.id', 'agencies.name', DB::Raw('COUNT(properties.id) as pcount'))
-            ->where("properties.status", 1)
-            ->groupBy("agencies.id")
-            ->orderBy("pcount", "desc")
-            ->get();
-
         $amenities = PropertyAmenity::all();
 
-        $keyword = request()->get('keyword');
-        $city = request()->get('city');
-        $subcity = request()->get('subcity');
-        $town = request()->get('town');
-        $area = request()->get('area');
-        $min_price =  (int)$request->min_price;
-        $max_price =  (int)$request->max_price;
-        $min_area = (int)$request->min_area;
-        $max_area = (int)$request->max_area;
         $properties = Properties::where('status', 1)
-            ->when(request()->property_purpose, function ($query) {
-                $query->where('property_purpose', request()->property_purpose);
-            })
-            ->when($city, function ($query) {
-                // city
-                $query->where('city', request()->city);
-            })
-            ->when($city, function ($query) {
-                // city
-                $query->where('city', request()->city);
-            })
-            ->when($subcity, function ($query) {
-                // sub city
-                $query->where('subcity', request()->subcity);
-            })
-            ->when($town, function ($query) {
-                // town
-                $query->where('town', request()->town);
-            })
-            ->when($area, function ($query) {
-                // area
-                $query->where('area', request()->area);
-            })
-            ->when(request('property_type'), function ($query) {
-                $query->where('property_type', request('property_type'));
-            })
-            ->when($min_price != 0 && $max_price != 0, function ($query) {
-                $query->whereBetween('price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
-            })
-            ->when($min_price != 0 && $max_price == 0, function ($query) {
-                $query->where('price', '>=', [(int)request()->get('min_price')]);
-            })
-            ->when($min_price == 0 && $max_price != 0, function ($query) {
-                $query->where('price', '<=', [(int)request()->get('max_price')]);
-            })
-            ->when($min_price == 0 && $max_price == 0, function ($query) {
-                //no condition to run
-            })
-            ->when(request()->get('furnishings'), function ($query) {
-                $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
-            })
-            ->when(request()->get('amenities'), function ($query) {
-                $ids = array();
-                foreach (request()->get('amenities') as $value) {                    
-                    $records =  AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
-                    foreach ($records as $value) {
-                        array_push($ids, $value->property_id);
-                    }
+        ->when(request()->property_purpose, function ($query) {
+            $query->where('property_purpose', request()->property_purpose);
+        })
+        ->when(request()->city, function ($query) {
+            // city
+            $query->where('city', request()->city);
+        })
+        ->when(request()->subcity, function ($query) {
+            // sub city
+            $query->where('subcity', request()->subcity);
+        })
+        ->when(request()->town, function ($query) {
+            // town
+            $query->where('town', request()->town);
+        })
+        ->when(request()->area, function ($query) {
+            // area
+            $query->where('area', request()->area);
+        })
+        ->when(request('property_type'), function ($query) {
+            $query->where('property_type', request('property_type'));
+        })
+        ->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
+            $query->whereBetween('price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
+        })
+        ->when(request('min_price') != 0 && request('max_price') == 0, function ($query) {
+            $query->where('price', '>=', [(int)request()->get('min_price')]);
+        })
+        ->when(request('min_price') == 0 && request('max_price') != 0, function ($query) {
+            $query->where('price', '<=', [(int)request()->get('max_price')]);
+        })
+        ->when(request('min_price') == 0 && request('max_price') == 0, function ($query) {
+            //no condition to run
+        })
+        ->when(request()->get('furnishings'), function ($query) {
+            $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
+        })
+        ->when(request()->get('amenities'), function ($query) {
+            $ids = array();
+            foreach (request()->get('amenities') as $value) {                    
+                $records =  AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
+                foreach ($records as $value) {
+                    array_push($ids, $value->property_id);
                 }
-                $result = array_unique($ids);
-                $query->whereIn('id', $result);
-                
-            })
-            ->when($min_area != 0 && $max_area != 0, function ($query) {
-                $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
-            })
-            ->when($min_area != 0 && $max_area == 0, function ($query) {
-
-                $query->where('land_area', '>=', [(int)request()->get('min_area')]);
-            })
-            ->when($min_area == 0 && $max_area != 0, function ($query) {
-                $query->where('land_area', '<=', [(int)request()->get('max_area')]);
-            })
-            ->when($min_area == 0 && $max_area == 0, function ($query) {
-            });
+            }
+            $result = array_unique($ids);
+            $query->whereIn('id', $result);
+            
+        })
+        ->when(request('min_area') != 0 && request('max_area') != 0, function ($query) {
+            $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
+        })
+        ->when(request('min_area') != 0 && request('max_area') == 0, function ($query) {
+            $query->where('land_area', '>=', [(int)request()->get('min_area')]);
+        })
+        ->when(request('min_area') == 0 && request('max_area') != 0, function ($query) {
+            $query->where('land_area', '<=', [(int)request()->get('max_area')]);
+        })
+        ->when(request('min_area') == 0 && request('max_area') == 0, function ($query) {
+        });
             
         if (isset($request->commercial)) {
             $ids = array();
-            /*
-            manually adding the ids of commercial property like ware-house,  shop, office, retail, whole-building, show-room, store
-            */
+            /* manually adding the ids of commercial property like ware-house,  shop, office, retail, whole-building, show-room, store */
             array_push($ids, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
             $properties->whereIn('property_type', $ids);
         }
@@ -182,16 +141,6 @@ class PropertiesController extends Controller
             }
         }
 
-        if (isset($request->agent) && !empty($request->agent)) {
-            $properties->where('agency_id', $request->agent);
-        }
-        if (isset($request->check) && !empty($request->check)) {
-            $amenities = $request->check;
-            foreach ($amenities as $amenity) {
-                $properties->orWhere('property_features', 'LIKE', '%' . $amenity . '%');
-            }
-        }
-
         if (isset($request->sort_by) && !empty($request->sort_by)) {
             if ($request->sort_by == "newest") {
                 $properties->orderBy('id', 'desc');
@@ -209,8 +158,8 @@ class PropertiesController extends Controller
         } else {
             $properties->orderBy('featured_property', 'desc');
         }
-        $featured = request()->get('featured');
-        if ($featured == 1) {
+        
+        if (request('featured') == 1) {
             $properties = $properties->where("featured_property", "1")->paginate(getcong('pagination_limit'));
         } else {
             $properties = $properties->paginate(getcong('pagination_limit'));
@@ -226,22 +175,20 @@ class PropertiesController extends Controller
             $request['type'] = '';
         }
 
-        // $request['keyword'] = $this->findKeyWord($city, $subcity, $town, $area);
-        // $request['keywordMbl'] = $request['keyword'];
-        
-        $heading_info = '';
-        $furnishing = '';
+        $heading_info = ''; $furnishing = '';
         if(request()->get('furnishings')){
-            $furnishing = PropertyAmenity::where('id', request()->get('furnishings'))->value('name');
+            $furnishing = PropertyAmenity::where('id', request('furnishings'))->value('name');
         }   
-        if(request('property_type')){
-            $type = Types::where('id', request('property_type'))->value('types'); 
-            $heading_info = $furnishing.' '.$type.' for '.request()->property_purpose.' in Qatar';
+        if(request()->property_type){
+            $heading_info = $furnishing.' '.$request['type']->types.' for '.request()->property_purpose;
         }else{
-            $heading_info = $furnishing.' Properties for '.request()->property_purpose.' in Qatar';
+            $heading_info = $furnishing.' Properties for '.request()->property_purpose;
         }
-        return view('front-view.pages.properties', 
-        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'amenities', 'agencies', 'request','landing_page_content','page_des', 'heading_info'));
+
+        $heading_info = $heading_info.' in '. (request('keyword') != '' ? request('keyword') : 'Qatar');
+        
+        return view('front.pages.properties', 
+        compact('properties', 'propertyTypes', 'propertyPurposes', 'amenities', 'request','landing_page_content', 'page_des', 'heading_info'));
     }
 
     public function findKeyWord($city = null, $subcity = null, $town = null, $area = null)
@@ -764,11 +711,11 @@ class PropertiesController extends Controller
 
     public function propertiesForPurpose($buyOrRent, $property_purpose)
     {
-        if(request()->filled('buyOrRent') && request()->filled('property_purpose')){
+            if(request()->filled('buyOrRent') && request()->filled('property_purpose')){
             $buyOrRent = request('buyOrRent');
             $property_purpose = request('property_purpose');
         }
-        // dd(request()->all());
+
         $properties = Properties::where('status', 1)
         ->where('property_purpose', ucfirst($property_purpose));
         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
@@ -923,7 +870,7 @@ class PropertiesController extends Controller
         compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 'propertyPurposes','landing_page_content','page_info', 'request', 'heading_info'));
     }
 
-    public function cityPropertyTypeForPurpose($buyOrRent, $city, $property_type_purpose)
+    public function cityPropertyTypeForPurpose($buyOrRent, $city_slug, $property_type_purpose)
     {
         if(request()->filled('buyOrRent') && request()->filled('property_type_purpose')){
             $buyOrRent = request('buyOrRent');
@@ -945,13 +892,13 @@ class PropertiesController extends Controller
         //subcity if
         if(count($subcitie_props) > 0){
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
-            $city = PropertyCities::where('slug', $city)->firstOrFail();
+            $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
             
             $properties = Properties::where('status', 1)
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('property_type', $type->id)
             ->where('sub_city_slug', $property_type_purpose)
-            ->where('city', $city->id);
+            ->where('city', $city_keyword->id);
 
             if (isset(request()->sort_by) && !empty(request()->sort_by)) {
                 if (request()->sort_by == "newest") {
@@ -972,14 +919,14 @@ class PropertiesController extends Controller
             }
 
             $properties = $properties->paginate(getcong('pagination_limit'));
-            $subcity = PropertySubCities::find($properties[0]->subcity);
+            $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
 
             $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
             ->select( 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
             ->where("properties.status", 1)
             ->where('property_purpose', ucfirst($property_purpose))
-            ->where('city', $city->id)
+            ->where('city', $city_keyword->id)
             ->groupBy("property_types.id")
             ->orderBy("pcount", "desc")
             ->get();
@@ -987,7 +934,7 @@ class PropertiesController extends Controller
             $towns = DB::table('property_towns')
             ->leftJoin('properties', 'property_towns.id', 'properties.town')
             ->select('property_towns.*', DB::Raw(' COUNT(properties.id) as pcount '))
-            ->where('property_towns.property_sub_cities_id', $subcity->id)
+            ->where('property_towns.property_sub_cities_id', $subcity_keyword->id)
             ->where("properties.status", 1)
             ->where('sub_city_slug', $property_type_purpose)
             ->where('property_purpose', ucfirst($property_purpose))
@@ -995,29 +942,30 @@ class PropertiesController extends Controller
             ->groupBy("property_towns.id")
             ->orderBy("pcount", "desc")
             ->get();
+            
             $propertyPurposes = PropertyPurpose::all();
             
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city->name.', '.$subcity->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city_keyword->name.', '.$subcity_keyword->name;
 
             if($properties->total() > 0){
                 $meta_description = $properties->random()->property_name. ' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ '.$page_info;
             }else{
                 $meta_description = 'Search '.$page_info.' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ ';
             }
-            
+                 
             return view('front.pages.properties.subcity-property-type-for-purpose', 
-            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'towns', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
+            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'towns', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
             
         }elseif(count($town_props) > 0){
             //town if
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
-            $city = PropertyCities::where('slug', $city)->firstOrFail();
+            $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
             
             $properties = Properties::where('status', 1)
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('property_type', $type->id)
             ->where('town_slug', $property_type_purpose)
-            ->where('city', $city->id);
+            ->where('city', $city_keyword->id);
             
             if (isset(request()->sort_by) && !empty(request()->sort_by)) {
                 if (request()->sort_by == "newest") {
@@ -1038,15 +986,15 @@ class PropertiesController extends Controller
             }
             $properties = $properties->paginate(getcong('pagination_limit'));
             
-            $subcity = PropertySubCities::find($properties[0]->subcity);
-            $town = PropertyTowns::find($properties[0]->town);
+            $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
+            $town_keyword = PropertyTowns::find($properties[0]->town);
             
             $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
             ->select( 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
             ->where("properties.status", 1)
             ->where('property_purpose', ucfirst($property_purpose))
-            ->where('city', $city->id)
+            ->where('city', $city_keyword->id)
             ->groupBy("property_types.id")
             ->orderBy("pcount", "desc")
             ->get();
@@ -1054,7 +1002,7 @@ class PropertiesController extends Controller
             $areas = DB::table('property_areas')
             ->leftJoin('properties', 'property_areas.id', 'properties.area')
             ->select('property_areas.*', DB::Raw(' COUNT(properties.id) as pcount '))
-            ->where('property_areas.property_cities_id', $city->id)
+            ->where('property_areas.property_cities_id', $city_keyword->id)
             ->where("properties.status", 1)
             ->where('town_slug', $property_type_purpose)
             ->where('property_purpose', ucfirst($property_purpose))
@@ -1064,7 +1012,7 @@ class PropertiesController extends Controller
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city->name.', '.$subcity->name.', '.$town->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city_keyword->name.', '.$subcity_keyword->name.', '.$town_keyword->name;
 
             if($properties->total() > 0){
                 $meta_description = 
@@ -1075,19 +1023,19 @@ class PropertiesController extends Controller
             }
             
             return view('front.pages.properties.town-property-type-for-purpose',
-            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'town', 'areas', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
+            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'areas', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info'));
             
         
         }elseif(count($area_props) > 0){
         //areas if   
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
-            $city = PropertyCities::where('slug', $city)->firstOrFail();
+            $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
             
             $properties = Properties::where('status', 1)
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('property_type', $type->id)
             ->where('area_slug', $property_type_purpose)
-            ->where('city', $city->id);
+            ->where('city', $city_keyword->id);
             
             if (isset(request()->sort_by) && !empty(request()->sort_by)) {
                 if (request()->sort_by == "newest") {
@@ -1108,22 +1056,22 @@ class PropertiesController extends Controller
             }
             
             $properties = $properties->paginate(getcong('pagination_limit'));
-            $subcity = PropertySubCities::find($properties[0]->subcity);
-            $town = PropertyTowns::find($properties[0]->town);
-            $area = PropertyAreas::find($properties[0]->area);
+            $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
+            $town_keyword = PropertyTowns::find($properties[0]->town);
+            $area_keyword = PropertyAreas::find($properties[0]->area);
             
             $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
             ->select( 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
             ->where("properties.status", 1)
             ->where('property_purpose', ucfirst($property_purpose))
-            ->where('city', $city->id)
+            ->where('city', $city_keyword->id)
             ->groupBy("property_types.id")
             ->orderBy("pcount", "desc")
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city->name.', '.$subcity->name.', '.$town->name.', '.$area->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city_keyword->name.', '.$subcity_keyword->name.', '.$town_keyword->name.', '.$area_keyword->name;
 
             if($properties->total() > 0){
                 $meta_description = 
@@ -1134,17 +1082,17 @@ class PropertiesController extends Controller
             }
 
             return view('front.pages.properties.area-property-type-for-purpose',
-            compact('properties',  'propertyTypes', 'type', 'city', 'subcity', 'town', 'area', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info'));
+            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'area_keyword', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info'));
 
         }        
         
         $type = Types::where('plural', $property_type)->firstOrFail();
-        $city = PropertyCities::where('slug', $city)->firstOrFail();
+        $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
         
         $properties = Properties::where('status', 1)
         ->where('property_purpose', ucfirst($property_purpose))
         ->where('property_type', $type->id)
-        ->where('city', $city->id);
+        ->where('city', $city_keyword->id);
         
         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
             if (request()->sort_by == "newest") {
@@ -1170,7 +1118,7 @@ class PropertiesController extends Controller
         ->select( 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
         ->where("properties.status", 1)
         ->where('property_purpose', ucfirst($property_purpose))
-        ->where('city', $city->id)
+        ->where('city', $city_keyword->id)
         ->groupBy("property_types.id")
         ->orderBy("pcount", "desc")
         ->get();
@@ -1178,7 +1126,7 @@ class PropertiesController extends Controller
         $subcities = DB::table('property_sub_cities')
         ->leftJoin('properties', 'property_sub_cities.id', 'properties.subcity')
         ->select('property_sub_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
-        ->where('property_sub_cities.property_cities_id', $city->id)
+        ->where('property_sub_cities.property_cities_id', $city_keyword->id)
         ->where("properties.status", 1)
         ->where('property_purpose', ucfirst($property_purpose))
         ->where('properties.property_type', $type->id)
@@ -1191,20 +1139,20 @@ class PropertiesController extends Controller
         
         if($buyOrRent == 'buy'){
             $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',$type->id)
-            ->where('property_cities_id',$city->id)->first();
+            ->where('property_cities_id',$city_keyword->id)->first();
             
-            $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
+            $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city_keyword->slug);
            }
            else{
             $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',$type->id )
-            ->where('property_cities_id',$city->id)->first();
+            ->where('property_cities_id',$city_keyword->id)->first();
             
-            $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city->slug);
+            $page_info = ucfirst($type->plural.' for '.$property_purpose.' in '.$city_keyword->slug);
             }
 
         $request = request();
         return view('front.pages.properties.city-property-type-for-purpose',
-        compact('properties',  'propertyTypes', 'type', 'city', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content', 'request'));
+        compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content', 'request'));
     }
 
 
@@ -1249,62 +1197,6 @@ class PropertiesController extends Controller
         compact('properties',  'propertyTypes', 'city', 'propertyPurposes','page_info'));
     }
 
-    public function buyRentDoha($buyOrRent_doha)
-    {
-        if(request()->filled('buyOrRent') && request()->filled('doha')){
-            $buyOrRent = ucfirst(request('buyOrRent'));
-            $doha = ucfirst(request('doha'));
-        }else{
-            $buyOrRent = ucfirst(explode('/', $buyOrRent_doha)[0]);
-            $doha = ucfirst(explode('/', $buyOrRent_doha)[1]);
-        }
-
-        if($buyOrRent == 'Buy'){
-            $buyOrRent = 'Sale';
-            $property_purpose = 'buy';
-        }else{
-            $buyOrRent = $property_purpose = 'Rent';
-        }
-
-        $properties = Properties::where('status', 1)
-        ->where('address', 'like', '%'.$doha.'%')
-        ->where('property_purpose', $buyOrRent);
-
-        if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-            if (request()->sort_by == "newest") {
-                        $properties->orderBy('id', 'desc');
-            } else if (request()->sort_by == "featured") {
-                        $properties->orderBy('featured_property', 'desc');
-            } else if (request()->sort_by == "low_price") {
-                        $properties->orderBy('price', 'asc');
-            } else if (request()->sort_by == "high_price") {
-                        $properties->orderBy('price', 'desc');
-            } else if (request()->sort_by == "beds_least") {
-                        $properties->orderBy('bedrooms', 'asc');
-            } else if (request()->sort_by == "beds_most") {
-                        $properties->orderBy('bedrooms', 'desc');
-            }
-        } else {
-            $properties->orderBy('id', 'asc');
-        }
-
-        $properties = $properties->paginate(getcong('pagination_limit'));
-        $city = $doha;
-
-        $propertyTypes =  DB::table('property_types')
-            ->join('properties', "property_types.id", "properties.property_type")
-            ->select('property_types.id', 'property_types.types', 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
-            ->where("properties.status", 1)
-            ->where('address', 'like', '%'.$doha.'%')
-            ->where('property_purpose', $buyOrRent)
-            ->groupBy("property_types.id")
-            ->orderBy("pcount", "desc")
-            ->get();
-
-        $propertyPurposes = PropertyPurpose::all();
-
-        return view('front.pages.properties.buy-rent-doha', compact('properties', 'propertyTypes', 'city', 'property_purpose', 'buyOrRent', 'propertyPurposes'));
-    }
 
 
 }

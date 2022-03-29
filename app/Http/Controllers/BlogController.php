@@ -32,11 +32,11 @@ class BlogController extends Controller
         
         $tagsArray = [];
         foreach($blogs as $blog){
-                foreach(explode(',', $blog->tags) as $singleBlog){
-                    if(count($tagsArray) <= 6){
-                    array_push($tagsArray, $singleBlog);
-                    }
+            foreach(explode(',', $blog->tags) as $singleBlog){
+                if(count($tagsArray) <= 6){
+                array_push($tagsArray, $singleBlog);
                 }
+            }
         }
         $blog_categories = BlogCategory::inRandomOrder()->get();
 

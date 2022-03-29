@@ -85,7 +85,7 @@
                                     <tr>
                                         <td>{{ Str::limit($blog->title, '25', '...') }}</td>
                                         <td>{{ Str::limit($blog->slug, '25', '...') }}</td>
-                                        <td>{{$blog->BlogCategory->category}} </td>
+                                        <td>{{$blog->BlogCategory->category ?? ''}} </td>
                                         <td>
                                             <img src="{{asset('upload/blogs/'.$blog->image)}}" width="100" 
                                                 alt="{{ $blog->id.'- blog image' }}"/>

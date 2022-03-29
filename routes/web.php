@@ -376,7 +376,7 @@ Route::get('{type}/{property}', 'PropertiesController@propertyTypeForPurpose')
 ->where(['type' => 'buy|rent'])->name('property-type-purpose');
 
 // thirdl url
-Route::get('{type}/{city}/{property_type_purpose}', 'PropertiesController@cityPropertyTypeForPurpose')
+Route::get('{type}/{city_slug}/{property_type_purpose}', 'PropertiesController@cityPropertyTypeForPurpose')
 ->where(['type' => 'buy|rent'])->name('cpt-purpose');
 
 
