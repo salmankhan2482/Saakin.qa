@@ -712,13 +712,18 @@
                                                      class="form-control">
                                                 </div>
                                                 <div class="form-group col-6">
-                                                    <label>Contact Fax</label>
-                                                    <input type="text" name="contact_us_fax" value="{{ $settings->contact_us_fax }}"
+                                                    <label>Contact Mobile</label>
+                                                    <input type="text" name="contact_us_mobile" value="{{ $settings->contact_us_mobile }}"
                                                         class="form-control">
                                                 </div>
                                             </div>
                                             <div class="form-row">
-                                                <div class="form-group col-md-12">
+                                                <div class="form-group col-6">
+                                                    <label>Contact Fax</label>
+                                                    <input type="text" name="contact_us_fax" value="{{ $settings->contact_us_fax }}"
+                                                        class="form-control">
+                                                </div>
+                                                <div class="form-group col-md-6">
                                                     <label>Address</label>
                                                     <input type="text" name="contact_us_address" value="{{ $settings->contact_us_address }}"
                                                      class="form-control">

@@ -46,7 +46,8 @@
                             </div>
                             <div class="ml-3">
                                 <h6>Phone Number</h6>
-                                <p>{{getcong('contact_us_phone')}}</p>
+                                <p><a href="callto:{{getcong('contact_us_phone')}}"> {{getcong('contact_us_phone')}} </a></p>
+                                <p><a href="callto:{{getcong('contact_us_mobile')}}"> {{getcong('contact_us_mobile')}} </a></p>
                             </div>
                         </div>
                         <div class="d-flex mb-4">
@@ -55,7 +56,7 @@
                             </div>
                             <div class="ml-3">
                                 <h6>Fax</h6>
-                                <p>{{getcong('contact_us_fax')}}</p>
+                                <p><a href="fax:0097470125000">{{getcong('contact_us_fax')}}</a></p>
                             </div>
                         </div>
                         <div class="social-icon-02">

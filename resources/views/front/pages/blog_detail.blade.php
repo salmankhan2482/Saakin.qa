@@ -1,5 +1,12 @@
 @extends("front.layouts.main")
 
+<style>
+    li{
+        line-height: 30px;
+        list-style: disc inside !important; 
+    }
+</style>
+
 @section('schema-markup')
 <script type="application/ld+json">
     {
@@ -71,12 +78,13 @@
     <div class="blog-area">
         <div class="container">
             <div class="row">
+                
                 <!--Blog post starts-->
                 <div class="col-xl-8 order-xl-12 order-xl-2 order-1 py-100">
                     <div class="container">
                         <div class="row">
                             <div class="col-md-12">
-                                <article class="post-single">
+                                <article class="post-single" >
                                     <div class="post-content-wrap">
                                         <div class="post-content">
                                             <div class="post-meta text-center">
@@ -87,17 +95,17 @@
                                                 alt="{{ $blog->title }}"
                                                 > --}}
                                                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
-                                    crossorigin="anonymous"></script>
-                               <!-- side bar -->
-                               <ins class="adsbygoogle"
-                                    style="display:block"
-                                    data-ad-client="ca-pub-2421573832685297"
-                                    data-ad-slot="6760164139"
-                                    data-ad-format="auto"
-                                    data-full-width-responsive="true"></ins>
-                               <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                               </script>
+                                                crossorigin="anonymous"></script>
+                                           <!-- side bar -->
+                                           <ins class="adsbygoogle"
+                                                style="display:block"
+                                                data-ad-client="ca-pub-2421573832685297"
+                                                data-ad-slot="6760164139"
+                                                data-ad-format="auto"
+                                                data-full-width-responsive="true"></ins>
+                                           <script>
+                                                (adsbygoogle = window.adsbygoogle || []).push({});
+                                           </script>
 
 
                                                 {!! $blog->description !!}

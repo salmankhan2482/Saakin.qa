@@ -1249,62 +1249,7 @@ class PropertiesController extends Controller
         compact('properties',  'propertyTypes', 'city', 'propertyPurposes','page_info'));
     }
 
-    public function buyRentDoha($buyOrRent_doha)
-    {
-        if(request()->filled('buyOrRent') && request()->filled('doha')){
-            $buyOrRent = ucfirst(request('buyOrRent'));
-            $doha = ucfirst(request('doha'));
-        }else{
-            $buyOrRent = ucfirst(explode('/', $buyOrRent_doha)[0]);
-            $doha = ucfirst(explode('/', $buyOrRent_doha)[1]);
-        }
 
-        if($buyOrRent == 'Buy'){
-            $buyOrRent = 'Sale';
-            $property_purpose = 'buy';
-        }else{
-            $buyOrRent = $property_purpose = 'Rent';
-        }
-
-        $properties = Properties::where('status', 1)
-        ->where('address', 'like', '%'.$doha.'%')
-        ->where('property_purpose', $buyOrRent);
-
-        if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-            if (request()->sort_by == "newest") {
-                        $properties->orderBy('id', 'desc');
-            } else if (request()->sort_by == "featured") {
-                        $properties->orderBy('featured_property', 'desc');
-            } else if (request()->sort_by == "low_price") {
-                        $properties->orderBy('price', 'asc');
-            } else if (request()->sort_by == "high_price") {
-                        $properties->orderBy('price', 'desc');
-            } else if (request()->sort_by == "beds_least") {
-                        $properties->orderBy('bedrooms', 'asc');
-            } else if (request()->sort_by == "beds_most") {
-                        $properties->orderBy('bedrooms', 'desc');
-            }
-        } else {
-            $properties->orderBy('id', 'asc');
-        }
-
-        $properties = $properties->paginate(getcong('pagination_limit'));
-        $city = $doha;
-
-        $propertyTypes =  DB::table('property_types')
-            ->join('properties', "property_types.id", "properties.property_type")
-            ->select('property_types.id', 'property_types.types', 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
-            ->where("properties.status", 1)
-            ->where('address', 'like', '%'.$doha.'%')
-            ->where('property_purpose', $buyOrRent)
-            ->groupBy("property_types.id")
-            ->orderBy("pcount", "desc")
-            ->get();
-
-        $propertyPurposes = PropertyPurpose::all();
-
-        return view('front.pages.properties.buy-rent-doha', compact('properties', 'propertyTypes', 'city', 'property_purpose', 'buyOrRent', 'propertyPurposes'));
-    }
 
 
 }

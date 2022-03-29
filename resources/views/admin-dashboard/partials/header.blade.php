@@ -447,9 +447,9 @@
             <ul class="navbar-nav header-right ml-5">
                 <li class="nav-item dropdown header-profile">
                     <a class="nav-link" href="#" role="button" data-toggle="dropdown"
-                        style="padding: 0 50px 0 0px;">
+                        style="padding: 0 30px 0 0px;">
                         <div class="header-info">
-                            <span class="text-black">{{ auth()->user()->name }}</span>
+                            <span style="line-height: 22px;">{{ Str::limit(auth()->user()->name,20, '')  }}</span>
                             <p class="fs-12 mb-0">{{ auth()->user()->usertype }}</p>
                         </div>
                         @if (auth()->user()->usertype == 'Agency' && auth()->user()->agency->image)
