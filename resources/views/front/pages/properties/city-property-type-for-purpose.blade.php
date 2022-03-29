@@ -38,6 +38,12 @@
                                 id="country" placeholder="Search Location" autocomplete="off" value="">
                         </div>
                         <div id="country_list" class="col-md-12 col-12"></div>
+                        <div id="extra_keywords" style="display: none;">
+                            <input type="hidden" id="city_id" name="city" value="{{ request('city') }}">
+                            <input type="hidden" id="sub_city_id" name="subcity" value="{{ request('subcity') }}">
+                            <input type="hidden" id="town_id" name="town" value="{{ request('town') }}">
+                            <input type="hidden" id="area_id" name="area" value="{{ request('area') }}">
+                        </div>
                     </div>
 
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
@@ -488,7 +494,7 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <form action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
+                                <form action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
 
                                     <div class="d-flex align-items-center justify-content-between">
                                         
@@ -917,7 +923,7 @@
 
                     <div class="mb-3">
                         <h1 class="h6">                            
-                            {{ $type->plural_name }} for {{ ucfirst($property_purpose) }} in {{ $city->name }}
+                            {{ $type->plural_name }} for {{ ucfirst($property_purpose) }} in {{ $city_keyword->name }}
                             <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                         </h1>
                     </div>
@@ -925,7 +931,7 @@
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                         <div>
                         
-                            <form action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
+                            <form action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
 
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="">
@@ -980,7 +986,7 @@
                     @foreach ($subcities as $item)
                         <div class="location-item {{ $loop->index > 7 ? 'moreLess' : '' }}">
                             
-                            <a  href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose) . '-' . $item->slug]) }}" >
+                            <a  href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose) . '-' . $item->slug]) }}" >
                                 {{ Str::limit($item->name,25) }} <span> ({{ $item->pcount }}) </span>
                             </a>
 

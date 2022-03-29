@@ -42,6 +42,12 @@
                                 id="country" placeholder="Search Location" autocomplete="off" value="">
                         </div>
                         <div id="country_list" class="col-md-12 col-12"></div>
+                        <div id="extra_keywords" style="display: none;">
+                            <input type="hidden" id="city_id" name="city" value="{{ request('city') }}">
+                            <input type="hidden" id="sub_city_id" name="subcity" value="{{ request('subcity') }}">
+                            <input type="hidden" id="town_id" name="town" value="{{ request('town') }}">
+                            <input type="hidden" id="area_id" name="area" value="{{ request('area') }}">
+                        </div>
                     </div>
 
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
@@ -492,7 +498,7 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <form action="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->types) . 's-for-' . strtolower($property_purpose).'-'.$subcity->slug.'-'.$town->slug.'-'.$area->slug ]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
+                                <form action="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city_keyword->slug), Str::slug($type->types) . 's-for-' . strtolower($property_purpose).'-'.$subcity_keyword->slug.'-'.$town_keyword->slug.'-'.$area_keyword->slug ]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
     
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div>
@@ -928,7 +934,7 @@
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                         <div>
                         
-                            <form action="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city->slug), Str::slug($type->types) . 's-for-' . strtolower($property_purpose).'-'.$subcity->slug.'-'.$town->slug.'-'.$area->slug ]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
+                            <form action="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city_keyword->slug), Str::slug($type->types) . 's-for-' . strtolower($property_purpose).'-'.$subcity_keyword->slug.'-'.$town_keyword->slug.'-'.$area_keyword->slug ]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
 
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="">

@@ -462,98 +462,47 @@
   });
 
 
-  //desktop search
-  $('#country').on('keyup', function() {
-    var query = $(this).val();
-    var purpose = $("#globalPropertyPurposeValue").val();
-    var type = $("#globalPropertyTypeValue").val();
+    //desktop search
+    $('#country').on('keyup', function() {
+        var query = $(this).val();
+        var purpose = $("#globalPropertyPurposeValue").val();
+        var type = $("#globalPropertyTypeValue").val();
 
-    console.log(purpose);
+        if (query != '') {
+            $.ajax({
+                url: "{{ route('search-desktop') }}",
+                type: "GET",
+                data: {
+                    'country': query,
+                    'purpose': purpose,
+                    'type': type
+                },
+                success: function(data) {
+                    $('#country_list').show();
+                    $('#country_list').html(data);
+                }
+            }) //ajax call ends
 
-    if (query != '') {
-      $.ajax({
-        url: "{{ route('search-desktop') }}",
-        type: "GET",
-        data: {
-          'country': query,
-          'purpose': purpose,
-          'type': type
-        },
-        success: function(data) {
-          $('#country_list').show();
-          $('#country_list').html(data);
-        }
-      }) //ajax call ends
+        } else {
+            $('#country_list').hide();
+            $('#city_id').val('');
+            $('#sub_city_id').val('');
+            $('#town_id').val('');
+            $('#area_id').val('');
 
-    } else {
-      $('#country_list').hide();
-    } //if else ends
-  });
-
-
-  $(document).on('click', '.live-search-li', function() {
-    var query = 'Stop';
-
-    //when item is clicked call ajax but dont make changes
-    $.ajax({
-      url: "{{ route('search-desktop') }}",
-      type: "GET",
-      data: {
-        'country': query
-      },
-      success: function(data) {}
-    })
-
-    var value = $(this).text();
-    $('#country').val(value);
-    $('#country_list').html("");
-  });
+        } //if else ends
+    });
 
 
-  //mobile serach 
-  $('.countryMbl').on('keyup', function() {
-    var query = $(this).val();
-    var purpose = $("#globalPropertyPurposeValue").val();
-    var type = $("#globalPropertyTypeValue").val();
-    console.log(purpose);
-    if (query != '') {
-      $.ajax({
-        url: "{{ route('search-mobile') }}",
-        type: "GET",
-        data: {
-          'country': query,
-          'purpose': purpose,
-          'type': type
-        },
-        success: function(data) {
-          $('#country_list_mbl').show();
-          $('#country_list_mbl').html(data);
-        }
-      }) //ajax call ends
+    $(document).on('click', '.live-search-li', function() {
+        var query = 'Stop';
 
-    } else {
-      $('#country_list_mbl').hide();
-    } //if else ends
-  });
+        var value = $(this).text();
+        $('#country').val(value);
+        $('#extra_keywords').html($(this).html());
+        $('#country_list').html("");
+    });
 
-
-  $(document).on('click', '.live-search-li', function() {
-    var query = 'Stop';
-
-    //when item is clicked call ajax but dont make changes
-    $.ajax({
-      url: "{{ route('search-mobile') }}",
-      type: "GET",
-      data: {
-        'country': query
-      },
-      success: function(data) {}
-    })
-
-    var value = $(this).text();
-    $('.countryMbl').val(value);
-    $('#country_list_mbl').html("");
-  }); //mbl search
 
 
 

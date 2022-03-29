@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form action="{{ route('callToAction.index') }}" method="GET">
+                        <form action="{{ route('trafficUsers') }}" method="GET">
                             <div class="row justify-content-center">
                                 <div class="col-sm-2">
                                     <label for="">From</label>
