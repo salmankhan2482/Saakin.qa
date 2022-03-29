@@ -65,15 +65,12 @@ class OmahadminController extends Controller
                 ->where('property_purpose','Rent')
                 ->count();
                 
-                
-            
 
             $data['total_properties'] = Properties::
                 when(auth()->user()->usertype == 'Agency', function($query){
                     $query->where("agency_id", Auth::User()->agency_id);
                 })
                 ->count();
-                
 
             
             $data['featured_properties'] = Properties::where('featured_property', '1')
@@ -129,7 +126,7 @@ class OmahadminController extends Controller
                     $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
                     $query->whereIn('property_id', $property_ids);
                 })
-                ->groupBy('ip_address')->count();
+                ->distinct('ip_address')->count();
 
             $months = [
                 '1' => 'Jan', 
