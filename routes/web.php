@@ -113,7 +113,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     });
 	
 	Route::get('subscriber', 'SubscriberController@subscriberlist');
-	Route::get('subscriber/delete/{id}', 'SubscriberController@delete');
+	Route::get('subscriber/delete/{id}', 'SubscriberController@delete')->name('subscriber.destroy');
 
 
 	Route::get('partners', 'PartnersController@partnerslist');

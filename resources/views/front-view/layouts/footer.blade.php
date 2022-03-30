@@ -1,3 +1,4 @@
+
 {{-- input to store the value and then using for search purpose --}}
 <input type="hidden" id="globalPropertyPurposeValue" value="{{ $request->property_purpose ?? 'Rent' }}">
 <input type="hidden" id="globalPropertyTypeValue" value="{{ $type->id ?? '' }}">

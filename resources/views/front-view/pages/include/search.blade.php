@@ -27,7 +27,9 @@
 
                     <input type="text" name="keyword" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off" aria-label="Enter Place Name" aria-describedby="country">
                   </div>
+
                   <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
+
                   <div id="extra_keywords" style="display: none;"></div>
 
                 </div>
