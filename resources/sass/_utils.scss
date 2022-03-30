@@ -29,12 +29,13 @@
 //
 
 .can-scroll-x {
+  scroll-behavior: smooth;
   overflow-x: auto;
-  scrollbar-width: none;
+  scrollbar-width: none !important;
   -ms-overflow-style: none;
-  scroll-padding-right: 16px;
 
   &::-webkit-scrollbar {
     width: 0;
+    display: none;
   }
 }

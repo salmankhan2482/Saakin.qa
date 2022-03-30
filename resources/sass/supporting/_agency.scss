@@ -1,0 +1,35 @@
+.agency-tile {
+  .btn-monochrome {
+    --btn-bg-color: #fff;
+    --btn-border-color: #e8e1e0;
+    --btn-text-color: #2d383f;
+    --btn-hover-bg-color: #f7f5f5;
+    --btn-hover-border-color: #e8e1e0;
+    --btn-hover-text-color: #403b45;
+
+    i {
+      color: var(--bs-primary);
+    }
+  }
+
+  .agency-tile-img {
+    display: block;
+    height: 200px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .agency-tile-info {
+    padding: 1rem;
+  }
+
+  .agency-tile-title {
+    color: var(--bs-body-color);
+    text-decoration: none;
+    display: block;
+  }
+}

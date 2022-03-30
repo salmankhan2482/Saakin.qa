@@ -41,18 +41,133 @@ class PropertiesController extends Controller
 
     public function getPropertyListing(Request $request)
     {   
+        if( request()->property_type ){
+            $request['type'] = Types::findOrFail(request()->property_type);
+        }
+
         $propertyTypes =  DB::table('property_types')
         ->join('properties', "property_types.id", "properties.property_type")
-        ->select('property_types.id', 'property_types.types','property_types.plural', 
-        DB::Raw('COUNT(properties.id) as pcount'))
-        ->where("properties.status", 1)
+        ->select('property_types.id', 'property_types.types','property_types.plural',  DB::Raw('COUNT(properties.id) as pcount'))
         ->when(request()->property_purpose != '', function($query){
             $query->where("properties.property_purpose", request()->property_purpose);
         })
+        ->where("properties.status", 1)
         ->groupBy("property_types.id")
-        ->orderBy("pcount", "desc")
-        ->get();
+        ->orderBy("pcount", "desc")->get();
         
+        // breadcrumbs
+        $data['result'] = DB::table('properties')->where('id', -1);
+
+        if(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && request('area')){
+            $data['result'] = DB::table('properties')->where('id', -1);
+            
+        }elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town')){
+
+            $data['subcity'] = PropertySubCities::find(request('subcity'));
+            $data['town'] = PropertyTowns::find(request('town'));
+            
+            $property_type_purpose = 
+            Str::slug($request['type']->plural.'-for-'.request('property_purpose').'-'.$data['subcity']->name.'-'.$data['town']->name);
+
+            $data['result'] = DB::table('property_areas')
+            ->leftJoin('properties', 'property_areas.id', 'properties.area')
+            ->select('property_areas.*', DB::Raw(' COUNT(properties.id) as pcount '))
+            ->where('property_areas.property_cities_id', request('city'))
+            
+            ->where('town_slug', $property_type_purpose)
+            ->where('property_purpose', ucfirst(request('property_purpose')))
+            ->where('properties.property_type', request('property_type'))
+            ->groupBy("property_areas.id")
+            ->orderBy("pcount", "desc")
+            ->where("status", 1);
+            
+        }elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity')){
+            
+            $data['subcity'] = PropertySubCities::find(request('subcity'));
+            $property_type_purpose = Str::slug($request['type']->plural.'-for-'.request('property_purpose').'-'.$data['subcity']->name);
+            
+            $data['result'] = DB::table('property_towns')
+            ->leftJoin('properties', 'property_towns.id', 'properties.town')
+            ->select('property_towns.*', DB::Raw(' COUNT(properties.id) as pcount '))
+            ->where('property_towns.property_sub_cities_id', request('subcity'))
+            
+            ->where('sub_city_slug', $property_type_purpose)
+            ->where('property_purpose', ucfirst(request('property_purpose')))
+            ->where('properties.property_type', request('property_type'))
+            ->groupBy("property_towns.id")
+            ->orderBy("pcount", "desc")
+            ->where("status", 1);
+
+        }elseif(request('property_purpose') && request('property_type') && request('city')){
+
+            $data['result'] = DB::table('property_sub_cities')
+            ->leftJoin('properties', 'property_sub_cities.id', 'properties.subcity')
+            ->select('property_sub_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
+            ->where('property_sub_cities.property_cities_id', request('city'))
+            
+            ->where('property_purpose', ucfirst(request('property_purpose')))
+            ->where('properties.property_type', request('property_type'))
+            ->groupBy("property_sub_cities.id")
+            ->orderBy("pcount", "desc")
+            ->where("status", 1);
+
+
+        }elseif(request('property_purpose') && request('property_type')){
+            
+            $data['result'] = DB::table('property_cities')
+            ->leftJoin('properties', 'property_cities.id', 'properties.city')
+            ->select('property_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
+            ->where('property_purpose', ucfirst(request('property_purpose')))
+            
+            ->where('property_type', request('property_type'))
+            ->groupBy('property_cities.name')
+            ->orderBy("pcount", "DESC")
+            ->where("status", 1);
+
+        }
+
+        $data['result'] = $data['result']->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
+            $query->whereBetween('properties.price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
+        })
+        ->when(request('min_price') != 0 && request('max_price') == 0, function ($query) {
+            $query->where('properties.price', '>=', [(int)request()->get('min_price')]);
+        })
+        ->when(request('min_price') == 0 && request('max_price') != 0, function ($query) {
+            $query->where('properties.price', '<=', [(int)request()->get('max_price')]);
+        })
+        ->when(request('min_price') == 0 && request('max_price') == 0, function ($query) {
+            //no condition to run
+        })
+        ->when(request('min_area') != 0 && request('max_area') != 0, function ($query) {
+            $query->whereBetween('properties.land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
+        })
+        ->when(request('min_area') != 0 && request('max_area') == 0, function ($query) {
+            $query->where('properties.land_area', '>=', [(int)request()->get('min_area')]);
+        })
+        ->when(request('min_area') == 0 && request('max_area') != 0, function ($query) {
+            $query->where('properties.land_area', '<=', [(int)request()->get('max_area')]);
+        })
+        ->when(request('min_area') == 0 && request('max_area') == 0, function ($query) {
+        })
+        ->when(isset($request->bedrooms) && !empty($request->bedrooms), function ($query) {
+            if (request('bedrooms') == "6+") {
+                $query->where('properties.bedrooms', '>=', 6);
+            } else {
+                $query->where('properties.bedrooms', request('bedrooms'));
+            }
+        })
+        ->when(isset($request->bathrooms) && !empty($request->bathrooms), function ($query) {
+            if (request('bathrooms') == "6+") {
+                $query->where('properties.bathrooms', '>=', 6);
+            } else {
+                $query->where('properties.bathrooms', request('bathrooms'));
+            }
+        })
+        ->when(request('furnishings'), function ($query) {
+            $query->where('properties.property_features', 'like', '%'.request()->get('furnishings').'%');
+        })->get();
+        
+        //==================================================================
         $propertyPurposes = PropertyPurpose::all();
         $amenities = PropertyAmenity::all();
 
@@ -116,30 +231,25 @@ class PropertiesController extends Controller
             $query->where('land_area', '<=', [(int)request()->get('max_area')]);
         })
         ->when(request('min_area') == 0 && request('max_area') == 0, function ($query) {
+        })
+        ->when(isset($request->commercial), function ($query) {
+            $ids = array(); array_push($ids, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
+            $query->whereIn('property_type', $ids);
+        })
+        ->when(isset($request->bedrooms) && !empty($request->bedrooms), function ($query) {
+            if (request('bedrooms') == "6+") {
+                $query->where('properties.bedrooms', '>=', 6);
+            } else {
+                $query->where('properties.bedrooms', request('bedrooms'));
+            }
+        })
+        ->when(isset($request->bathrooms) && !empty($request->bathrooms), function ($query) {
+            if (request('bathrooms') == "6+") {
+                $query->where('properties.bathrooms', '>=', 6);
+            } else {
+                $query->where('properties.bathrooms', request('bathrooms'));
+            }
         });
-            
-        if (isset($request->commercial)) {
-            $ids = array();
-            /* manually adding the ids of commercial property like ware-house,  shop, office, retail, whole-building, show-room, store */
-            array_push($ids, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
-            $properties->whereIn('property_type', $ids);
-        }
-        if (isset($request->bedrooms) && !empty($request->bedrooms)) {
-
-            if ($request->bedrooms == "6+") {
-                $properties->where('bedrooms', '>=', 6);
-            } else {
-                $properties->where('bedrooms', $request->bedrooms);
-            }
-        }
-        if (isset($request->bathrooms) && !empty($request->bathrooms)) {
-
-            if ($request->bathrooms == "6+") {
-                $properties->where('bathrooms', '>=', 6);
-            } else {
-                $properties->where('bathrooms', $request->bathrooms);
-            }
-        }
 
         if (isset($request->sort_by) && !empty($request->sort_by)) {
             if ($request->sort_by == "newest") {
@@ -169,45 +279,41 @@ class PropertiesController extends Controller
         $page_des = $landing_page_content->page_content;
         $page_des = Str::limit($page_des, 170, '...');
 
-        if( request()->property_type ){
-            $request['type'] = Types::findOrFail(request()->property_type);
-        }else{
-            $request['type'] = '';
-        }
-
+        $data['keyword'] = $this->findKeyWord(request('city'), request('subcity'), request('town'), request('area'));
         $heading_info = ''; $furnishing = '';
+        
         if(request()->get('furnishings')){
             $furnishing = PropertyAmenity::where('id', request('furnishings'))->value('name');
-        }   
+        }
+         
         if(request()->property_type){
             $heading_info = $furnishing.' '.$request['type']->types.' for '.request()->property_purpose;
         }else{
             $heading_info = $furnishing.' Properties for '.request()->property_purpose;
         }
 
-        $heading_info = $heading_info.' in '. (request('keyword') != '' ? request('keyword') : 'Qatar');
-        
+        $heading_info = $heading_info.' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
         return view('front.pages.properties', 
-        compact('properties', 'propertyTypes', 'propertyPurposes', 'amenities', 'request','landing_page_content', 'page_des', 'heading_info'));
+        compact('properties', 'propertyTypes', 'data', 'propertyPurposes', 'amenities', 'request','landing_page_content', 'page_des', 'heading_info'));
     }
 
     public function findKeyWord($city = null, $subcity = null, $town = null, $area = null)
     {   
         $keyword = '';
         if($city != null){
-            $cityResult = PropertyCities::find($city);
+            $cityResult = PropertyCities::findOrFail($city);
             $keyword = $cityResult->name;
         }
         if($subcity != null){
-            $subcityResult = PropertySubCities::find($subcity);
+            $subcityResult = PropertySubCities::findOrFail($subcity);
             $keyword = $subcityResult->name.' ('.$subcityResult->city->name.')';
         }
         if($town != null){
-            $townResult = PropertyTowns::find($town);
+            $townResult = PropertyTowns::findOrFail($town);
             $keyword = $townResult->name.' ('.$townResult->city->name.' , '.$townResult->subcity->name.')';
         }
         if($area != null){
-            $areaResult = PropertyAreas::find($area);
+            $areaResult = PropertyAreas::findOrFail($area);
             $keyword = $areaResult->name.' ('.$areaResult->city->name.' , '.$areaResult->subcity->name.', '.$areaResult->town->name.')';
         }
 
@@ -1197,4 +1303,4 @@ class PropertiesController extends Controller
         compact('properties',  'propertyTypes', 'city', 'propertyPurposes','page_info'));
     }
 
-
+}

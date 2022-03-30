@@ -93,6 +93,20 @@
   }
 }
 
+.country-list-wrap {
+  position: relative;
+
+  .country-list {
+    --box-height: 250px;
+
+    position: absolute;
+    left: 0;
+    top: calc(100% + 5px);
+    width: 100%;
+    border-radius: 3px;
+  }
+}
+
 .price-dropdown {
   min-width: 25.5rem;
   padding: 0.5rem;
