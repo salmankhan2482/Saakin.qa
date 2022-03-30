@@ -26,25 +26,24 @@
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
                 <input type="hidden" name="featured" id="featured" value="{{ request()->featured }}">
                 <div class="search-filter flex-xl-nowrap">
-                    <div class="input-search-wrap me-2">
+                    
+                    <div class="flex-grow-1 country-list-wrap me-2">
                         <div class="input-group-overlay input-search">
                             <div class="input-group-prepend-overlay">
-                                <span class="input-group-text">
-                                    <i class="fa fa-search"></i>
-                                </span>
+                            <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                             </div>
-
-                            <input type="text" class="typeahead form-control prepended-form-control" name="keyword" id="country" placeholder="Search Location" autocomplete="off" value="{{ Request::get('keyword') }}">
+        
+                            <input type="text" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off" aria-label="Enter Place Name" aria-describedby="country" value="{{ $data['keyword'] ?? '' }}">
                         </div>
-                        <div id="country_list" class="col-md-12 col-12"></div>
+                        <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
                         <div id="extra_keywords" style="display: none;">
                             <input type="hidden" id="city_id" name="city" value="{{ request('city') }}">
                             <input type="hidden" id="sub_city_id" name="subcity" value="{{ request('subcity') }}">
                             <input type="hidden" id="town_id" name="town" value="{{ request('town') }}">
                             <input type="hidden" id="area_id" name="area" value="{{ request('area') }}">
                         </div>
-
                     </div>
+
 
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                         <div class="d-flex spbwx8 order-3 order-xl-2 mt-2 mt-xl-0 me-xl-2">
@@ -898,23 +897,7 @@
                         <div>
                             <form action="{{ url('properties') }}" name="frmSortBy" id="frmSortBy"
                                 class="form-inline form-1" method="get">
-                                <input type="hidden" name="featured" id="featured"
-                                    value="{{ request()->get('featured') }}">
-                                <input type="hidden" name="property_type" value="{{ request()->property_type }}">
-                                <input type="hidden" name="property_purpose"
-                                    value="{{ request()->property_purpose }}" />
-                                <input type="hidden" name="bedrooms" value="{{ request()->bedrooms }}" />
-                                <input type="hidden" name="bathrooms" value="{{ request()->bathrooms }}" />
-                                <input type="hidden" name="min_price" value="{{ request()->min_price }}" />
-                                <input type="hidden" name="max_price" value="{{ request()->max_price }}" />
-                                <input type="hidden" name="min_area" value="{{ request()->min_area }}" />
-                                <input type="hidden" name="max_area" value="{{ request()->max_area }}" />
-                                <input type="hidden" name="furnishings" value="{{ request()->furnishings }}" />
-                                <input type="hidden" name="keywordextra" value="{{ request()->keywordextra }}" />
-                                <input type="hidden" name="keyword" value="{{ request()->keyword }}" />
-                                <input type="hidden" name="keywordMbl" value="{{ request()->keywordMbl }}" />
-                                <input type="hidden" name="commercial" value="{{ request()->commercial }}" />
-
+                                
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="">
                                         <input type="checkbox" class="btn-check" id="save-search" autocomplete="off">
@@ -964,21 +947,20 @@
                         </div>
                     @endif
                 </div>
-
+                @if(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && request('area'))
+                    {{-- nothing to show --}}
+                @elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && $data['result']->count() > 0)
                 <div class="location-wrap">
-                    @foreach ($propertyTypes as $propertyType)
-                        <div class="location-item {{ $loop->index > 7 ? 'moreLess' : '' }}">
-                            @if (ucfirst(request()->property_purpose) == 'Sale')
-                                <a
-                                    href="{{ route('property-type-purpose', ['buy',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
-                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
-                                </a>
-                            @else
-                                <a
-                                    href="{{ route('property-type-purpose', ['rent',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
-                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
-                                </a>
-                            @endif
+                    @foreach ($data['result'] as $area)
+                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+                            
+                            <a href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$area->id&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                {{ $area->name }} 
+                                <span>({{ $area->pcount }})</span>
+                            
+                            </a>
+                        
                         </div>
                     @endforeach
                     <div class="location-item">
@@ -987,6 +969,93 @@
                         </a>
                     </div>
                 </div>
+                
+                @elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && $data['result']->count() > 0)
+                
+                <div class="location-wrap">
+                    @foreach ($data['result'] as $town)
+                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+                            
+                            <a href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$town->id&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                {{ $town->name }} 
+                                <span>({{ $town->pcount }})</span>
+                            
+                            </a>
+                        
+                        </div>
+                    @endforeach
+                    <div class="location-item">
+                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                            Show more <i class="fas fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                @elseif(request('property_purpose') && request('property_type') && request('city') && $data['result']->count() > 0)
+                <div class="location-wrap">
+                    @foreach ($data['result'] as $subcity)
+                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+                            
+                            <a href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$subcity->id&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                {{ $subcity->name }} 
+                                <span>({{ $subcity->pcount }})</span>
+                            
+                            </a>
+                        
+                        </div>
+                    @endforeach
+                    <div class="location-item">
+                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                            Show more <i class="fas fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                @elseif(request('property_purpose') && request('property_type') && $data['result']->count() > 0)
+                <div class="location-wrap">
+                    @foreach ($data['result'] as $city)
+                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+                            
+                            <a href="{{ url("properties?featured=&city=$city->id&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                {{ $city->name }} 
+                                <span>({{ $city->pcount }})</span>
+                            
+                            </a>
+                        
+                        </div>
+                    @endforeach
+                    <div class="location-item">
+                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                            Show more <i class="fas fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
+                
+                <div class="location-wrap">
+                        @foreach ($propertyTypes as $propertyType)
+                            <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+                                
+                                <a href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                    {{ $propertyType->types }} 
+                                    <span>({{ $propertyType->pcount }})</span>
+                                
+                                </a>
+                            
+                            </div>
+                        @endforeach
+                        <div class="location-item">
+                            <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                Show more <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </div>
+                </div>
+                @endif
 
                 {{-- list view --}}
                 <div class="row gx-3">

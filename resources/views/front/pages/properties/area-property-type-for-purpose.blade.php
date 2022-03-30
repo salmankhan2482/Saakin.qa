@@ -30,18 +30,15 @@
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
                 <input type="hidden" name="featured" id="featured" value="{{ request()->featured }}">
                 <div class="search-filter flex-xl-nowrap">
-                    <div class="input-search-wrap me-2">
+                    <div class="flex-grow-1 country-list-wrap me-2">
                         <div class="input-group-overlay input-search">
                             <div class="input-group-prepend-overlay">
-                                <span class="input-group-text">
-                                    <i class="fa fa-search"></i>
-                                </span>
+                            <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                             </div>
-
-                            <input type="text" class="typeahead form-control prepended-form-control" name="keyword"
-                                id="country" placeholder="Search Location" autocomplete="off" value="">
+        
+                            <input type="text" name="keyword" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off" aria-label="Enter Place Name" aria-describedby="country">
                         </div>
-                        <div id="country_list" class="col-md-12 col-12"></div>
+                        <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
                         <div id="extra_keywords" style="display: none;">
                             <input type="hidden" id="city_id" name="city" value="{{ request('city') }}">
                             <input type="hidden" id="sub_city_id" name="subcity" value="{{ request('subcity') }}">
