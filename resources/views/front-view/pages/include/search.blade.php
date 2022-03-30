@@ -19,7 +19,7 @@
 
               <div class="d-flex spbwx8 mb-2">
                 {{-- Place Name --}}
-                <div class="flex-grow-1">
+                <div class="flex-grow-1 country-list-wrap">
                   <div class="input-group-overlay input-search">
                     <div class="input-group-prepend-overlay">
                       <span class="input-group-text"><i class="fa fa-search"></i></span>
@@ -28,7 +28,7 @@
                     <input type="text" name="keyword" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off"
                       aria-label="Enter Place Name" aria-describedby="country">
                   </div>
-                  <div id="country_list" class="col-md-12 col-12"></div>
+                  <div id="country_list" class=" country-list scroll-y col-md-12 col-12"></div>
                   <div id="extra_keywords" style="display: none;"></div>
 
                 </div>

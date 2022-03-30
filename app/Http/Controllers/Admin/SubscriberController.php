@@ -37,8 +37,9 @@ class SubscriberController extends MainAdminController
             }
         
     	$subscriberlist = Subscriber::orderBy('id','desc')->paginate(10);
+        $action = 'saakin_index';
 		  
-        return view('admin.pages.subscriber',compact('subscriberlist'));
+        return view('admin-dashboard.subsribers.index',compact('subscriberlist','action'));
     } 
 	 
     
@@ -52,10 +53,8 @@ class SubscriberController extends MainAdminController
             return redirect('admin/dashboard');
             
         }
-    	
-        $decrypted_id = Crypt::decryptString($id); 
 
-        $subscriber = Subscriber::findOrFail($decrypted_id);
+        $subscriber = Subscriber::findOrFail($id);
          
 		 
 		$subscriber->delete();
