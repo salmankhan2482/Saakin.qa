@@ -1220,11 +1220,13 @@
                             <div class="sidebar-links p-3">
                                 <h6>What is Lorem Ipsum?</h6>
                                 <ul>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
+                                    @foreach ($data['popularSearchesLinks'] as $item)
+                                        <li>
+                                            <a href="{{ $item->link }}">
+                                                {{ $item->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="sidebar-links p-3">

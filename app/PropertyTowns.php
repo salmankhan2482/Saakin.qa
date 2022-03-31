@@ -28,4 +28,5 @@ class PropertyTowns extends Model
     {
         return $this->hasMany(Properties::class);
     }
+    
 }

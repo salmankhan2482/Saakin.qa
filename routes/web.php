@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PopularSearchesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,6 @@ Route::get('auth/google/callback', 'SocialController@handleGoogleCallback');
 Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
-
 
     Route::get('/dashboard/new', 'OmahadminController@saakin_dashboard')->middleware('auth')
     ->name('new_dashboard');
@@ -129,7 +129,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('inquiry/create', 'InquiriesController@store_property_inquiry')->name('store_proprty_inquiry');
     Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
     Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
-
 	
 	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
 	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
@@ -140,8 +139,6 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry')->name('view_contact_inquiry');   
 
 	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
-
-
 	Route::get('notifications', 'InquiriesController@notifications')->name('notifications');   
     Route::get('view_notification/{id}', 'InquiriesController@view_notification')->name('view_notification');
 
@@ -179,26 +176,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('api-data', 'ApiController@index');
     Route::post('api-category', 'ApiController@getCategory');
 
-    /////////////////////////// jaleel //////////////////////////////
-
-Route::resource('cities','CityGuideController');
-Route::get('city/delete/{id}', 'CityGuideController@destroy')->name('cities.destroy');
-Route::get('city/show/{id}', 'CityGuideController@show')->name('cities.show');
-
-    // Route::get('cities', 'CityGuideController@index');
-    // Route::get('city/create', 'CityGuideController@create');
-    // Route::post('city/create', 'CityGuideController@store');
+    Route::resource('cities','CityGuideController');
+    Route::get('city/delete/{id}', 'CityGuideController@destroy')->name('cities.destroy');
+    Route::get('city/show/{id}', 'CityGuideController@show')->name('cities.show');
     
-    // Route::get('city/edit/{id}', 'CityGuideController@edit');
-    // Route::post('city/update/{id}', 'CityGuideController@update');
-
     Route::get('city-detail/list', 'CityGuideController@listCityDetail')->name('city-details');
     Route::get('city-detail/create', 'CityGuideController@createCityDetail')->name('city_detail_create');
     Route::post('city-detail/create', 'CityGuideController@storeCityDetail')->name('city_detail_store');
     Route::get('city-detail/edit/{id}', 'CityGuideController@editCityDetail')->name('city_detail_edit');
     Route::post('city-detail/update/{id}', 'CityGuideController@updateCityDetail')->name('city_detail_update');
     Route::get('city-detail/delete/{id}', 'CityGuideController@destroyCityDetail')->name('city_detail_destroy');
-
 
     Route::resource('blogs', 'BlogController');
     Route::get('blog/delete/{id}', 'BlogController@destroy')->name('blogs.destroy');
@@ -209,8 +196,6 @@ Route::get('city/show/{id}', 'CityGuideController@show')->name('cities.show');
     Route::get('blog-category/edit/{id}', 'BlogController@editBlogCategory')->name('blog-category.edit');
     Route::post('blog-category/update/{id}', 'BlogController@updateBlogCategory')->name('blog-category.update');
     Route::get('blog-category/delete/{id}', 'BlogController@destroyBlogCategory')->name('blog-category.destroy');
-
-
 
     Route::resource('agencies','AgencyController');
     Route::post('agency/keys', 'AgencyController@goMasterimport')->name('get.agences.keys');
@@ -238,6 +223,8 @@ Route::get('city/show/{id}', 'CityGuideController@show')->name('cities.show');
     
 
     // multi task
+    Route::resource('popularSearches', 'PopularSearchesController');
+    Route::get('popularSearches/delete/{id}', 'PopularSearchesController@destroy')->name('popularSearches.destroy');
     //property cities routes
     Route::resource('propertyCities', 'PropertyCitiesController');
     Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
@@ -290,8 +277,9 @@ Route::post('agencies', 'AgenciesController@searchAgencies');
 Route::get('agency/{name}/{id}', 'AgenciesController@agencyDetail')->name('agency_detail');
 Route::post('agency/email', 'AgenciesController@agencyDetail')->name('email_inquiry');
 
-Route::get('blogs', 'BlogController@index');
-Route::post('blogs', 'BlogController@searchBlogs');
+
+Route::get('blog', 'BlogController@index');
+Route::post('blog', 'BlogController@searchBlogs');
 Route::get('blog-categories/{slug}', 'BlogController@blogCategories')->name('blog-categories')->where('slug', '[A-Za-z\-\_]+');
 Route::get('blog/{slug}', 'BlogController@blogDetail')->name('blog-detail');
 

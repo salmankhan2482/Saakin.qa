@@ -1,7 +1,7 @@
 <div class="site-banner home-banner" style="background-image: url('{{ 'assets/images/backgrounds/bg-7.jpg' }}')">
   <!--Listing filter starts-->
   <div class="container">
-    <h1 class="text-sm-center text-bold">Find Your Property</h1>
+    <h1 class="text-sm-center font-weight-bold">Find Your Property</h1>
     <div class="row justify-content-center">
       <div class="col-lg-10 mt-3 mt-lg-5">
         <div class="card">
@@ -25,7 +25,7 @@
                       <span class="input-group-text"><i class="fa fa-search"></i></span>
                     </div>
 
-                    <input type="text" name="keyword" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off" aria-label="Enter Place Name" aria-describedby="country">
+                    <input type="text" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off" aria-label="Enter Place Name" aria-describedby="country">
                   </div>
 
                   <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>

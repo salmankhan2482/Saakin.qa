@@ -121,6 +121,7 @@
                 <ul aria-expanded="false">
                     <li><a href="{{ route('properties-page-content') }}">Properties Page Content</a></li>
                     <li><a href="{{ route('landing-pages.index') }}">Landing pages Content</a></li>
+                    <li><a href="{{ route('popularSearches.index') }}">Popular Searches</a></li>
                     <li><a href="{{ route('city-guide-landing-pages.index') }}">City Guide Page Content</a></li>
                     <li><a href="{{ route('agency-landing-pages.index') }}">Agencies Page Content </a></li>
                     <li><a href="{{ route('about_page') }}">About Us</a></li>
