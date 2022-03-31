@@ -1,5 +1,5 @@
 @extends("front.layouts.main")
-@section('title', $category->category. ' Blogs | '.' Saakin.qa' )
+@section('title', $category->category. ' Blog | '.' Saakin.qa' )
 @section('description', Illuminate\Support\Str::limit($category->description, 100, ' (...)') )
 @section('keyword','Blog Keyword')
 @section('type','article')

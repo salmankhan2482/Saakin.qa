@@ -27,6 +27,7 @@ use App\Mail\Property_Inquiry;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\PopularSearches;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
@@ -291,8 +292,37 @@ class PropertiesController extends Controller
         }else{
             $heading_info = $furnishing.' Properties for '.request()->property_purpose;
         }
-
+        
         $heading_info = $heading_info.' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
+        if(count($properties) > 0){
+            
+            $name = request('bedrooms') ? request('bedrooms').' bedroom ' : '';
+            if($request['type']){
+                $name = $name.$request['type']->plural.' for '.strtolower(request('property_purpose'));
+            }else{
+                $name = $name.' properties '.'for '.strtolower(request('property_purpose'));
+            }
+
+            $popularSearches = PopularSearches::updateOrCreate(
+                [
+                    'property_purpose' => request('property_purpose'),
+                    'type_id' => request('property_type'),
+                    'city_id' => request('city'),
+                    'name' => $name,
+                    'subcity_id' => request('subcity'),
+                    'town_id' => request('town'),
+                    'area_id' => request('area'),
+                    'bedrooms' => request('bedrooms'),
+                    'link' => $request->fullUrl(),
+                ],
+                [
+                    'count' => DB::raw('count + 1'),
+                ]
+            );
+            
+            
+        }
+        
         return view('front.pages.properties', 
         compact('properties', 'propertyTypes', 'data', 'propertyPurposes', 'amenities', 'request','landing_page_content', 'page_des', 'heading_info'));
     }
@@ -817,7 +847,7 @@ class PropertiesController extends Controller
 
     public function propertiesForPurpose($buyOrRent, $property_purpose)
     {
-            if(request()->filled('buyOrRent') && request()->filled('property_purpose')){
+        if(request()->filled('buyOrRent') && request()->filled('property_purpose')){
             $buyOrRent = request('buyOrRent');
             $property_purpose = request('property_purpose');
         }
@@ -880,9 +910,17 @@ class PropertiesController extends Controller
             $heading_info = $furnishing.' Properties for '.request()->property_purpose.' in Qatar';
         }
         
+        $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst(request('property_purpose')))
+        ->where('type_id', null)->where('city_id', null)->where('subcity_id', null)
+        ->where('town_id', null)->where('area_id', null)
+        ->orderBy('count', 'DESC')->limit(15)->get();
+        
+        $data['nearByAreasLinks'] = '';
+        $data['propertiesForPurposeLinks'] = '';
+        
         $request = request();
         return view('front.pages.properties.properties-for-purpose',
-        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'heading_info', 'buyOrRent', 'property_purpose','landing_page_content', 'request'));
+        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'data', 'heading_info', 'buyOrRent', 'property_purpose','landing_page_content', 'request'));
     }
 
     public function propertyTypeForPurpose($buyOrRent, $property)

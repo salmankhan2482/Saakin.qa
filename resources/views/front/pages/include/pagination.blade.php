@@ -1,5 +1,5 @@
-<style>
-    .active-pagination {
+<style>    
+.active-pagination {
     color: #fff;
     background-color: #009fff !important;
     border-radius: 0.3rem;

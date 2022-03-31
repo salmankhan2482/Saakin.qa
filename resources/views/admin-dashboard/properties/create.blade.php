@@ -173,8 +173,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <label>City</label>
-                                            <select name="city" id="city" class="form-control"
-                                                onchange="callSubCityTown(this);">
+                                            <select name="city" id="city" class="form-control"onchange="callSubCityTown(this);">
                                                 <option value="">Select City</option>
                                                 @foreach ($data['cities'] as $city)
                                                     <option value="{{ $city->id }}"
@@ -187,8 +186,7 @@
 
                                         <div class="col-6">
                                             <label>Sub City</label>
-                                            <select name="subcity" id="subcity" class="form-control"
-                                                onchange="callTown(this);">
+                                            <select name="subcity" id="subcity" class="form-control" onchange="callTown(this);">
                                                 <option value="">Select Sub City</option>
                                                 @foreach ($data['subCities'] as $subCity)
                                                     <option value="{{ $subCity->id }}"

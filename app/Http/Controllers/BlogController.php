@@ -39,8 +39,6 @@ class BlogController extends Controller
             }
         }
         $blog_categories = BlogCategory::inRandomOrder()->get();
-
-
         return view('front.pages.blogs',compact('blogs','blog_categories','recent_posts','tagsArray'));
     }
 
@@ -74,7 +72,6 @@ class BlogController extends Controller
 
     public function searchBlogs(Request $request)
     {
-
         $inputs = $request->all();
         $keyword = $inputs['keyword'];
 
@@ -85,9 +82,9 @@ class BlogController extends Controller
             $query->where('title', 'like', '%'.$keyword.'%')
             ->orWhere('description', 'like', '%'.$keyword.'%');
         })->paginate(getcong('pagination_limit'));
+        $recent_posts = Blog::where('status',1)->orderBy('id','desc')->take(10)->get();
 
-
-        return view('front.pages.blogs',compact('blogs','blog_categories'));
+        return view('front.pages.blogs',compact('blogs','blog_categories','recent_posts'));
     }
     public function searchBlogCategories(Request $request, $id)
     {   

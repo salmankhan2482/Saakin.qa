@@ -77,8 +77,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('blogs') }}">
-                                            Blogs
+                                        <a href="{{ url('blog') }}">
+                                            Blog
                                         </a>
                                     </li>
                                 </ul>

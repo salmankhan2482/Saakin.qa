@@ -7,20 +7,11 @@
         ->where('enquire_id',2)
         ->orderBy('id', 'desc')
         ->get();
-        // $action = 'saakin_dashboard';
-        // dd($data['inquiries']);
 ?>
 <div class="header">
     <nav class="navbar navbar-expand top-menu">
         <div class="collapse navbar-collapse justify-content-between">
             <ul class="navbar-nav header-right">
-
-                {{-- dashboard --}}
-                {{-- <li class="nav-item dropdown notification_dropdown">
-                        <a href="{!! url('/index'); !!}" class="brand-logo">
-                            <img class="brand-title" style="float: right" src="{{ asset('assets/images/black_logo.png') }}" alt="" width="100%">
-                        </a>
-                    </li> --}}
 
                 {{-- agency --}}
                 <li class="nav-item dropdown notification_dropdown">
@@ -156,6 +147,13 @@
                                     <a href="{{ route('landing-pages.index') }}" class="timeline-panel">
                                         <div class="media-body">
                                             <h6 class="mb-1">Landing Page Content</h6>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('popularSearches.index') }}" class="timeline-panel">
+                                        <div class="media-body">
+                                            <h6 class="mb-1">Popular Searches</h6>
                                         </div>
                                     </a>
                                 </li>

@@ -28,4 +28,5 @@ class PropertyCities extends Model
     {
         return $this->hasMany(Properties::class,'id', 'city');
     }
+
 }

@@ -1,5 +1,5 @@
 @extends("front.layouts.main")
-@section('title','Saakin.qa Blogs  |  Qatar #1 Property Blog')
+@section('title','Saakin.qa Blog  |  Qatar #1 Property Blog')
 @section('description','Blog Description')
 @section('keyword','Blog Keyword')
 @section('type','article')
@@ -12,9 +12,9 @@
             <div class="row">
                 <div class="col-md-8 offset-md-2 text-center">
                     <div class="breadcrumb-menu">
-                        <h1>Blogs</h1>
+                        <h1>Blog</h1>
                         <span><a href="{{url('/')}}">Home</a></span>
-                        <span>Blogs</span>
+                        <span>Blog</span>
                     </div>
                 </div>
             </div>
@@ -78,10 +78,12 @@
                     <div class="sidebar">
                         <div class="sidebar-right">
                             <div class="widget search">
-                                <form action="{{url('blogs')}}" method="post">
+                                <form action="{{url('blog')}}" method="post">
                                     @csrf
-                                    <input type="text" name="keyword" id="keyword" class="form-control" placeholder="Search">
-                                    <button type="submit" class="search-button"><i class="lnr lnr-magnifier"></i></button>
+                                    <input type="text" name="keyword" id="keyword" class="form-control" placeholder="Search" value="{{ request('keyword') }}">
+                                    <button type="submit" class="search-button">
+                                        <i class="lnr lnr-magnifier"></i>
+                                    </button>
                                 </form>
                             </div>
                             <div class="widget">
