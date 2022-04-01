@@ -131,6 +131,18 @@
                                     <option value="6+" {{ $data['search']->bedrooms == "6+" ? 'selected' : '' }}>6+ Bedrooms</option>
                                 </select>
                             </div>
+
+                            <div class="form-group col-md-6">
+                                <label>Furnishings</label>
+                                <select name="furnishings" class="form-control">
+                                    <select name="furnishings" class="hero__form-input form-select custom-select">
+                                        <option value="">All furnishings</option>
+                                        <option value="109" {{ $data['search']->furnishings  == 109 ? 'selected' : '' }}>Furnished</option>
+                                        <option value="120" {{ $data['search']->furnishings  == 120 ? 'selected' : '' }}>Unfurnished</option>
+                                        <option value="101" {{ $data['search']->furnishings  == 101 ? 'selected' : '' }}>Partly furnished</option>
+                                    </select>
+                                </select>
+                            </div>
                             
                             <div class="form-group col-md-6">
                                 <label>Count</label>

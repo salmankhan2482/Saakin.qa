@@ -101,6 +101,7 @@ class PopularSearchesController extends Controller
         $search->town_id =  request('town');
         $search->area_id =  request('area');
         $search->bedrooms =  request('bedrooms');
+        $search->furnishings =  request('furnishings');
         $search->count =  request('count');
         $search->link =  request('link');
         $search->update();
