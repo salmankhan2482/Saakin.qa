@@ -45,7 +45,8 @@ class PropertiesController extends Controller
         if( request()->property_type ){
             $request['type'] = Types::findOrFail(request()->property_type);
         }
-
+        
+        
         $propertyTypes =  DB::table('property_types')
         ->join('properties', "property_types.id", "properties.property_type")
         ->select('property_types.id', 'property_types.types','property_types.plural',  DB::Raw('COUNT(properties.id) as pcount'))
@@ -276,50 +277,64 @@ class PropertiesController extends Controller
             $properties = $properties->paginate(getcong('pagination_limit'));
         }
 
-        $landing_page_content= LandingPage::find('53');
-        $page_des = $landing_page_content->page_content;
-        $page_des = Str::limit($page_des, 170, '...');
+        $landing_page_content = LandingPage::find('53');
+        $page_des = Str::limit($landing_page_content->page_content, 170, '...');
 
         $data['keyword'] = $this->findKeyWord(request('city'), request('subcity'), request('town'), request('area'));
-        $heading_info = ''; $furnishing = '';
+        $furnishing = ''; $name = ''; $link = '';
         
-        if(request()->get('furnishings')){
-            $furnishing = PropertyAmenity::where('id', request('furnishings'))->value('name');
+        if(request('bedrooms')){
+            $name = $name.(request('bedrooms') ? request('bedrooms').' bedroom ' : '');
         }
-         
-        if(request()->property_type){
-            $heading_info = $furnishing.' '.$request['type']->types.' for '.request()->property_purpose;
+        if(request('furnishings')){
+            $furnishing = PropertyAmenity::where('id', request('furnishings'))->value('name').' ';
+            $name = $name.strtolower($furnishing);
+        }
+        
+        if($request['type']){
+            $name = $name.strtolower($request['type']->types).' for '. strtolower(request('property_purpose'));  
         }else{
-            $heading_info = $furnishing.' Properties for '.request()->property_purpose;
+            $name = $name. 'properties for '.strtolower(request('property_purpose'));  
+        }
+                
+        if(request('city') && request('subcity') && request('town') && request('area')){
+            $area = PropertyAreas::where('id', request('area'))->value('name');
+            $name = $name.' in '.$area;
+        }elseif(request('city') && request('subcity') && request('town')){
+            $town = PropertyTowns::where('id', request('town'))->value('name');
+            $name = $name.' in '.$town;
+        }elseif(request('city') && request('subcity')){
+            $subcity = PropertySubCities::where('id', request('subcity'))->value('name');
+            $name = $name.' in '.$subcity;
+        }elseif(request('city')){
+            $city = PropertyCities::where('id', request('city'))->value('name');
+            $name = $name.' in '.$city;
+        }else{
+            $name = $name.' in Qatar';
         }
         
-        $heading_info = $heading_info.' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
-        if(count($properties) > 0){
-            
-            $name = request('bedrooms') ? request('bedrooms').' bedroom ' : '';
-            if($request['type']){
-                $name = $name.$request['type']->plural.' for '.strtolower(request('property_purpose'));
-            }else{
-                $name = $name.' properties '.'for '.strtolower(request('property_purpose'));
-            }
+        $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
+        $heading_info = $furnishing.' '.($request['type']->types ?? ' properties').' for '. strtolower(request()->property_purpose) .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
+        
+        if(count($properties) > 0){
             $popularSearches = PopularSearches::updateOrCreate(
                 [
                     'property_purpose' => request('property_purpose'),
                     'type_id' => request('property_type'),
-                    'city_id' => request('city'),
                     'name' => $name,
+                    'city_id' => request('city'),
                     'subcity_id' => request('subcity'),
                     'town_id' => request('town'),
                     'area_id' => request('area'),
+                    'furnishings' => request('furnishings'),
                     'bedrooms' => request('bedrooms'),
-                    'link' => $request->fullUrl(),
                 ],
                 [
                     'count' => DB::raw('count + 1'),
+                    'link' => $link,
                 ]
             );
-            
             
         }
         

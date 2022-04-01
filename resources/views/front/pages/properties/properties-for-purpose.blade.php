@@ -1222,7 +1222,7 @@
                                 <ul>
                                     @foreach ($data['popularSearchesLinks'] as $item)
                                         <li>
-                                            <a href="{{ $item->link }}">
+                                            <a href="{{ url($item->link) }}">
                                                 {{ $item->name }}
                                             </a>
                                         </li>
