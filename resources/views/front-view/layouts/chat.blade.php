@@ -1,4 +1,4 @@
-<style>
+{{-- <style>
     #sy-whatshelp {
     right: 25px;
     bottom: 25px;
@@ -211,4 +211,31 @@
                   <i class="fa fa-comments"></i>
       <i class="fa fa-times"></i>
     </a>
-  </div>
+  </div> --}}
+
+
+<style>
+  .float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:40px;
+    right:40px;
+    background-color:#25d366;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    box-shadow: 1px 1px 1px rgb(80, 80, 80);
+    z-index:100;
+  }
+  
+  .my-float{
+    margin-top:16px;
+  }
+</style>
+<div class="fixed-bottom">
+<a href="https://api.whatsapp.com/send?phone=97470125000&text=Hi%21%20," class="float" target="_blank">
+<i class="fab fa-whatsapp my-float"></i>
+</a>
+</div>
