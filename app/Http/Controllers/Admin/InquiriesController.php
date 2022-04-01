@@ -45,7 +45,7 @@ class InquiriesController extends MainAdminController
         // dd($agency_name);
         $action = 'saakin_index';
 
-        return view('admin-dashboard.inquiries.inquiries',compact('inquirieslist','action'));
+        return view('admin-dashboard.inquiries.index',compact('inquirieslist','action'));
     }
 
     public function create_inquiry(Request $request)

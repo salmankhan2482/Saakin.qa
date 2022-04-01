@@ -32,7 +32,7 @@ class AgencyController extends Controller
             return redirect('dashboard');
         }
 
-        $data['agencies'] = Agency::all();
+        $data['agencies'] = Agency::paginate(10);
         return view('admin-dashboard.agency.index',compact('data','action'));
     }
 

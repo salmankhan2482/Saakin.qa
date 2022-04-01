@@ -38,27 +38,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <a href="{{ route('featuredproperties.index') }}">
-                         <div class="widget-stat card bg-success ">
-                             <div class="card-body p-4">
-                                 <div class="media">
-                                     <span class="mr-3">
-                                         <i class="la la-star"></i>
-                                     </span>
-                                     <div class="media-body text-white">
-                                         <p class="mb-1">Featured Properties</p>
-                                         <h3 class="text-white">{{$data['featured_properties']}}</h3>
-                                         <div class="progress mb-2 bg-secondary">
-                                             <div class="progress-bar progress-animated bg-light" style="width: {{ ($data['featured_properties'] / $data['total_properties']) * 100 }}%"></div>
-                                         </div>
-                                         {{-- <small>30% Increase in 30 Days</small> --}}
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                       </a>
-                     </div>
                      <div class="col-xl-3 col-lg-6 col-sm-6">
                       <a href="{{route('properties.index')}}">
                          <div class="widget-stat card bg-primary">
@@ -71,9 +50,11 @@
                                          <p class="mb-1">Properties for Sale</p>
                                          <h3 class="text-white">{{ $data['sale_properties'] }}</h3>
                                          <div class="progress mb-2 bg-secondary">
+                                             @if ($data['total_properties'] > 0)        
                                              <div class="progress-bar progress-animated bg-light"
-                                                 style="width: {{ ($data['sale_properties'] / $data['total_properties']) * 100 }}%">
+                                                 style="width: {{ $data['total_properties'] > 1 ? (($data['sale_properties'] / $data['total_properties']) * 100) : '' }}%">
                                              </div>
+                                             @endif
                                          </div>
                                          {{-- <small>80% Increase in 20 Days</small> --}}
                                      </div>
@@ -96,10 +77,32 @@
                                          <h3 class="text-white">{{ $data['rent_properties'] }}</h3>
                                          <div class="progress mb-2 bg-primary">
                                              <div class="progress-bar progress-animated bg-light"
-                                                 style="width: {{ ($data['rent_properties'] / $data['total_properties']) * 100 }}%">
+                    style="width: {{ $data['total_properties'] > 1 ? (($data['rent_properties'] / $data['total_properties']) * 100) : '' }}%">
                                              </div>
                                          </div>
                                          {{-- <small>50% Increase in 25 Days</small> --}}
+                                     </div>
+                                 </div>
+                             </div>
+                         </div>
+                       </a>
+                     </div>
+                     <div class="col-xl-3 col-lg-6 col-sm-6">
+                        <a href="{{ route('featuredproperties.index') }}">
+                         <div class="widget-stat card bg-success ">
+                             <div class="card-body p-4">
+                                 <div class="media">
+                                     <span class="mr-3">
+                                         <i class="la la-star"></i>
+                                     </span>
+                                     <div class="media-body text-white">
+                                         <p class="mb-1">Featured Properties</p>
+                                         <h3 class="text-white">{{$data['featured_properties']}}</h3>
+                                         <div class="progress mb-2 bg-secondary">
+                                             <div class="progress-bar progress-animated bg-light" 
+                                             style="width: {{ $data['total_properties'] > 1 ? (($data['featured_properties'] / $data['total_properties']) * 100) : '' }}%"></div>
+                                         </div>
+                                         {{-- <small>30% Increase in 30 Days</small> --}}
                                      </div>
                                  </div>
                              </div>
@@ -119,7 +122,7 @@
                                          <h3 class="text-white">{{ $data['active_properties'] }}</h3>
                                          <div class="progress mb-2 bg-primary">
                                              <div class="progress-bar progress-animated bg-light"
-                                                 style="width: {{ ($data['active_properties'] / $data['total_properties']) * 100 }}%">
+                                    style="width:{{ $data['total_properties'] > 1 ? (($data['active_properties'] / $data['total_properties']) * 100) : '' }}%">
                                              </div>
                                          </div>
                                          {{-- <small>76% Increase in 20 Days</small> --}}
@@ -142,7 +145,7 @@
                                          <h3 class="text-white">{{ $data['inactive_properties'] }}</h3>
                                          <div class="progress mb-2 bg-secondary">
                                              <div class="progress-bar progress-animated bg-light"
-                                                 style="width: {{ ($data['inactive_properties'] / $data['total_properties']) * 100 }}%">
+                                                 style="width: {{ $data['total_properties'] > 1 ? (($data['inactive_properties'] / $data['total_properties']) * 100) : '' }}%">
                                              </div>
                                          </div>
                                          {{-- <small>80% Increase in 20 Days</small> --}}
@@ -165,7 +168,7 @@
                                          <h3 class="text-white">{{ $data['reports'] }}</h3>
                                          <div class="progress mb-2 bg-secondary">
                                              <div class="progress-bar progress-animated bg-light"
-                                                 style="width: {{ ($data['reports'] / $data['total_properties']) * 100 }}%">
+                                    style="width: {{ $data['total_properties'] > 1 ? (($data['reports'] / $data['total_properties']) * 100) : '' }}%">
                                              </div>
                                          </div>
                                          {{-- <small>80% Increase in 20 Days</small> --}}
@@ -411,8 +414,8 @@
                                         </p>
                                         <div class="progress mb-4" style="height:10px">
                                             <div class="progress-bar bg-primary progress-animated"
-                                            style="width: {{ ($propertyCity->pcount / $data['total_properties']) * 100 }}%">
-                                                <span class="sr-only">{{ ($propertyCity->pcount / $data['total_properties']) * 100 }}</span>
+                                            style="width: {{ $data['total_properties'] > 1 ? (($propertyCity->pcount / $data['total_properties']) * 100) : '' }}%%">
+                                                <span class="sr-only">{{ $data['total_properties'] > 1 ? (($propertyCity->pcount / $data['total_properties']) * 100) : '' }}%</span>
                                             </div>
                                         </div>
                                         @endforeach
