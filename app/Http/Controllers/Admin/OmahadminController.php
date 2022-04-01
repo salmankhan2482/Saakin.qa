@@ -79,9 +79,13 @@ class OmahadminController extends Controller
                 })
                 ->count();
 
+            //Property Reports
             
-            $data['reports'] = PropertyReport::all()
-                  ->count();
+            $data['reports'] = PropertyReport::
+            when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })                  
+            ->count();
                 
 
             //Inquiries

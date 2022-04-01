@@ -518,7 +518,8 @@ class PropertiesController extends Controller
             $enquire->agent_id = 0;
         }       
 
-        $enquire->type = $request->type;
+        $enquire->type = 'Property Inquiry';
+        $enquire->enquire_id = 2;
         $enquire->name = $request->user_name;
         $enquire->email = $request->user_email;
         $enquire->phone = $request->telephone;

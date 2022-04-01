@@ -422,8 +422,10 @@
                                                     <small class="d-block">{{ date('d-m-Y', strtotime($inquiry->created_at)) }}</small>
                                                 </a>
                                             @else
+                                            <a href="{{ url('admin/view_property_inquiry', $inquiry->id )}}">
                                             <h6 class="mb-1">{{$inquiry->type}} to {{$inquiry->Agencies->name ??''}}</h6>
                                             <small class="d-block">{{ date('d-m-Y', strtotime($inquiry->created_at)) }}</small>
+                                            </a>
                                             @endif
                                         </div>
                                     </div>

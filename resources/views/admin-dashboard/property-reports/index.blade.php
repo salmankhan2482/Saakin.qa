@@ -8,14 +8,6 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Reports</h4>
-                    <a href="#">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>
-                            Add
-                        </button>
-                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -56,11 +48,13 @@
                                             </button>
                                         </form>
                                         @endif
+                                        @if(Auth::User()->usertype=="Admin"){
 
                                         <a href="{{ route('property-reports.destroy', $report->id) }}"
                                             class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
                                             <i class="fa fa-remove"></i>
                                         </a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

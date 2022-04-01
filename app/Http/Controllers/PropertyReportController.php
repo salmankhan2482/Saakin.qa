@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
+use App\Properties;
 use App\PropertyReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -15,7 +16,19 @@ class PropertyReportController extends Controller
      */
     public function index()
     {
-        $data['reports'] = PropertyReport::all();
+        if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
+        }
+
+        if(Auth::User()->usertype=="Agency"){
+            $data['reports'] = PropertyReport::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(10);
+            
+        } else {
+            $data['reports'] = PropertyReport::paginate(10);
+            
+        }
+        
         $action = 'saakin_index';
         return view('admin-dashboard.property-reports.index', compact('data','action'));
     }
@@ -38,11 +51,14 @@ class PropertyReportController extends Controller
      */
     public function store(Request $request)
     {
+        
         PropertyReport::create([
             'message' => request('message'),
             'users_id' => auth()->user()->id,
             'properties_id' => request('property_id'),
+            'agency_id' => Properties::where('id',request('property_id'))->value('agency_id'),
         ]);
+        
         
         Session::flash('message', 'Report has been submitted.'); 
         return redirect()->back();
