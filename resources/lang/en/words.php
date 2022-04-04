@@ -23,7 +23,8 @@ return [
     'inquiries' => 'Inquiries',
     'movein_date' => 'Move in Date',
     'phone_number' => 'Phone Number',
-    
+    'update' => 'Update',
+    'save' => 'Save',
 
     'create_inquiry' => 'Create Inquiry',
     'property_inquiries' => 'Property Inquiries',

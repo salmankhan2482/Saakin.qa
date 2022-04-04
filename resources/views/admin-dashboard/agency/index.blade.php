@@ -9,10 +9,9 @@
                 <div class="card-header">
                     <h4 class="card-title">Agencies</h4>
                     <a href="{{ route('agencies.create') }}">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>Add</button>
+                        <button type="button" class="btn btn-rounded btn-info"><span
+                            class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
+                        </span>Add</button>
                     </a>
                 </div>
                 <div class="card-body">
@@ -23,8 +22,6 @@
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Email</th>
-                                    {{-- <th>Detail</th> --}}
-                                    {{-- <th>Head Office</th> --}}
                                     <th>Image</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>

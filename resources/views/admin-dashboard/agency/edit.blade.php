@@ -19,19 +19,16 @@
 		</div>
 	@endif
 <div class="container-fluid">
-    <div class="page-titles">
-        <ol class="breadcrumb">
-            <a href="{{route('agencies.index')}}">
-                <button type="button" class="btn btn-rounded btn-dark">Back</button>
-            </a>
-        </ol>
-    </div>
     <!-- row -->
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
                 <div class="card-header">
+                    
                     <h4 class="card-title">Edit Agency</h4>
+                    <a href="{{route('agencies.index')}}">
+                        <button type="button" class="btn btn-rounded btn-info "><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -72,7 +69,7 @@
                                     <label >Password *</label>
                                     
                                     <span class="d-flex">
-                                        <input type="text" name="password" id="passwordgenerator" value="{{old('password')}}"   
+                                        <input type="text" name="password" id="passwordgenerator"   
                                         class="form-control" >
                                 
                                         <button type="button" class="btn btn-success btn-xs ml-1" onclick="makeid(10);">
@@ -103,9 +100,12 @@
                                     <textarea type="text" name="detail" id="detail" rows="7" class="form-control">{{$data['agency']->agency_detail}}</textarea>
                                 </div>
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-5">
                                     <label >Agency Photo</label>
-                                    <input type="file" name="image" id="image" class="form-control">
+                                    <input type="file" name="image" id="image" class="form-control" value="{{$data['agency']->name}}">
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <img src="{{asset('upload/agencies/'.$data['agency']->image)}}" alt="{{$data['agency']->name}}" width="80" />
                                 </div>
                                 
                                 <div class="form-group col-md-6">
@@ -128,8 +128,8 @@
                             <hr>
                             <div class="form-group col-md-12">
                                 <div class="col-sm-12 text-right">
-                                    <button type="submit" class="btn btn-primary" id="add_new_Agency">
-                                        {{ trans('words.submit') }}
+                                    <button type="submit" class="btn btn-rounded btn-success" id="add_new_Agency">
+                                        {{ trans('words.update') }}
                                     </button>
                                 </div>
                             </div>

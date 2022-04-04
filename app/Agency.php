@@ -35,5 +35,4 @@ class Agency extends Model
         return $this->hasMany('App\Properties');
     }
 
-
 }
