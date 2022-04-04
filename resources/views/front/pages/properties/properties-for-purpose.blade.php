@@ -1262,7 +1262,7 @@
                 </div>
             @else
                 <div class="alert alert-info" role="alert">
-                    Record Not Found!
+                    <p>Record Not Found!</p>
                 </div>
 
             @endif

@@ -12,6 +12,9 @@
     }
   }
 
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+
   .agency-tile-img {
     display: block;
     height: 200px;
@@ -23,13 +26,104 @@
     }
   }
 
-  .agency-tile-info {
-    padding: 1rem;
-  }
-
   .agency-tile-title {
     color: var(--bs-body-color);
     text-decoration: none;
     display: block;
+  }
+
+  &:hover {
+    box-shadow: $box-shadow;
+  }
+}
+
+.agency-tile-footer {
+  justify-content: space-between;
+  font-size: 14px;
+
+  a {
+    text-decoration: none;
+    color: #777;
+
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+.agent-logo {
+  max-width: 250px;
+  min-width: 250px;
+  border: 1px solid $border-color;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.agent-info {
+  border-collapse: unset;
+
+  th,
+  td {
+    padding: 0.5rem 1rem;
+  }
+
+  th {
+    background-color: rgba(0, 0, 0, 0.05);
+    vertical-align: text-top;
+  }
+
+  td {
+    background-color: rgba(0, 0, 0, 0.025);
+  }
+}
+
+.agent-social-icon {
+  a {
+    width: 35px;
+    height: 35px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+    text-decoration: none;
+    color: #444;
+    transition: color 0.3s, border-color 0.3s;
+
+    &:hover {
+      color: $primary;
+      border-color: $primary;
+    }
+  }
+}
+
+.property-type-list {
+  margin-bottom: 0;
+  padding-top: 0.25rem;
+
+  li + li {
+    border-top: 1px solid $border-color;
+    padding-top: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: #222;
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    i {
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+
+    span {
+      margin-left: auto;
+    }
+
+    &:hover {
+      color: $primary;
+    }
   }
 }

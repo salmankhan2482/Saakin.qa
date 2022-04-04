@@ -45,7 +45,7 @@
         <priority>1</priority>
     </url>
     <url>
-        <loc>{{$site_url}}/blogs</loc>
+        <loc>{{$site_url}}/blog</loc>
         <changefreq>Daily</changefreq>
         <priority>1</priority>
     </url>

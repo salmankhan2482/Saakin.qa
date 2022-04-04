@@ -84,12 +84,12 @@
   }
 
   @include media-breakpoint-up(md) {
-    --banner-height: 15rem;
+    --banner-height: 22rem;
   }
 
   h1 {
     color: var(--bs-white);
-    font-weight: 600;
+    font-weight: 500;
   }
 }
 

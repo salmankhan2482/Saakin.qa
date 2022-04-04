@@ -15,9 +15,17 @@
   .property-item {
     position: relative;
 
-    img {
-      width: 100%;
-      transition: 3s;
+    .property-img {
+      --img-container-height: 250px;
+
+      height: var(--img-container-height);
+
+      img {
+        width: 100%;
+        height: 100%;
+        transition: 3s;
+        object-fit: cover;
+      }
     }
 
     .feature_text {
@@ -104,11 +112,11 @@
       font-size: 15px;
       margin-right: 10px;
       line-height: 26px;
-      display: none;
+      // display: none;
 
-      @include media-breakpoint-up(md) {
-        display: inline-block;
-      }
+      // @include media-breakpoint-up(md) {
+      //   display: inline-block;
+      // }
     }
 
     p {
@@ -130,9 +138,9 @@
         margin-left: 0.5rem;
       }
 
-      i {
-        display: none;
-      }
+      // i {
+      //   display: none;
+      // }
 
       span {
         font-size: 13px;
