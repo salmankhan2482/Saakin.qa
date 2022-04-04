@@ -19,19 +19,15 @@
 		</div>
 	@endif
 <div class="container-fluid">
-    <div class="page-titles">
-        <ol class="breadcrumb">
-            <a href="{{route('cities.index')}}">
-                <button type="button" class="btn btn-rounded btn-dark">Back</button>
-            </a>
-        </ol>
-    </div>
     <!-- row -->
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Add City</h4>
+                    <h4 class="card-title">Add City Details</h4>
+                    <a href="{{route('city-details')}}">
+                        <button type="button"class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -39,55 +35,58 @@
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label>Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="City Name" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Short Description</label>
-                                    <textarea type="text" rows="5" id="short_description" name="short_description" class="form-control"
-                                     placeholder="Short Description" required></textarea>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <label>Long Description</label>
-                                    <textarea type="text" rows="5" id="long_description" name="long_description" class="form-control"
-                                     placeholder="Long Description" required></textarea>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Attributes</label>
-                                    <input type="text" id="attributes" name="attributes" class="form-control" placeholder="City Name" required>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label>Featured Image (Choose Image 584px × 515px)</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="city_image" id="city_image" class="custom-file-input">
-                                            <label class="custom-file-label">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                                {{-- <div class="form-group col-md-6">
-                                    <label>Meta Title</label>
-                                    <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title">
+                                    <label>Cities</label>
+                                    <select name="city" id="city" class="form-control" required>
+                                        <option value="">Select City</option>
+                                        @foreach($cities as $city)
+                                            <option value="{{$city->id}}">{{$city->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label>Meta Description</label>
-                                    <textarea type="text" id="meta_description" rows="5" name="meta_description" class="form-control" placeholder="Meta Description"></textarea>
+                                    <label>Property Trends</label>
+                                    <textarea type="text" rows="5" id="property_trends" name="property_trends" class="form-control description"
+                                     placeholder="Property Trends" required></textarea>
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label>Meta Keywords</label>
-                                    <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords">
-                                </div> --}}
+                                <div class="form-group col-md-12">
+                                    <label>Neighborhood</label>
+                                    <textarea type="text" rows="5" id="neighborhood" name="neighborhood" class="form-control"
+                                     placeholder="Neighborhood" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Lifestyle</label>
+                                    <textarea type="text" rows="5" id="lifestyle" name="lifestyle" class="form-control"
+                                     placeholder="Lifestyle" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Things to Consider</label>
+                                    <textarea type="text" rows="5" id="things_to_consider" name="things_to_consider" class="form-control"
+                                     placeholder="Things to Consider" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Locations</label>
+                                    <textarea type="text" rows="5" id="locations" name="locations" class="form-control"
+                                     placeholder="Locations" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Attributes</label>
+                                    <textarea type="text" rows="5" id="attributes" name="attributes" class="form-control"
+                                     placeholder="Attributes" required></textarea>
+                                </div>
+                            </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
@@ -101,4 +100,22 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
+    <script>
+        var editor = CKEDITOR.replace( 'property_trends' );
+        var editor = CKEDITOR.replace( 'neighborhood' );
+        var editor = CKEDITOR.replace( 'lifestyle' );
+        var editor = CKEDITOR.replace( 'things_to_consider' );
+        var editor = CKEDITOR.replace( 'locations' );
+        var editor = CKEDITOR.replace( 'attributes' );
+        CKFinder.setupCKEditor( editor );
+        CKEDITOR.config.extraPlugins = 'contextmenu';
+        CKEDITOR.config.extraPlugins = 'dialog';
+        CKEDITOR.config.extraPlugins = 'liststyle';
+        CKEDITOR.config.extraPlugins = 'dialogui';
+        CKEDITOR.config.extraPlugins = 'menu';
+    </script>
 @endsection
