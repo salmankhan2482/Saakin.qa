@@ -26,11 +26,6 @@
                                     <th>Purpose</th>
                                     <th>Name</th>
                                     <th>Type</th>
-                                    {{-- <th>City</th> --}}
-                                    {{-- <th>Sub City</th> --}}
-                                    {{-- <th>Town</th> --}}
-                                    {{-- <th>Area</th> --}}
-                                    {{-- <th>Bed</th> --}}
                                     <th>Count</th>
                                     <th>{{ trans('words.action') }}</th>
                                 </tr>
@@ -42,11 +37,6 @@
                                         <td>{{ $item->property_purpose ?? '--' }}</td>
                                         <td>{{ $item->name ?? '--' }}</td>
                                         <td>{{ $item->propertyType->types ?? '--' }}</td>
-                                        {{-- <td>{{ $item->city->name ?? '--' }}</td> --}}
-                                        {{-- <td>{{ $item->subcity->name ?? '--' }}</td> --}}
-                                        {{-- <td>{{ $item->town->name ?? '--' }}</td> --}}
-                                        {{-- <td>{{ $item->area->name ?? '--' }}</td> --}}
-                                        {{-- <td>{{ $item->bedrooms ?? '--' }}</td> --}}
                                         <td>{{ $item->count ?? '--' }}</td>
                                         <td>
                                             <a href="{{ route('popularSearches.edit',$item->id) }}"

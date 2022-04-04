@@ -1176,23 +1176,43 @@
                     <div class="col-lg-3 order-lg-2">
                         <div class="list-sidebar mt-3 mt-lg-0">
                             <div class="sidebar-links p-3">
-                                <h6>What is Lorem Ipsum?</h6>
+                                <h6>Popular Searches</h6>
                                 <ul>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
+                                    @foreach ($data['popularSearchesLinks'] as $item)
+                                        <li>
+                                            <a href="{{ url($item->link) }}">
+                                                {{ $item->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="sidebar-links p-3">
-                                <h6>What is Lorem Ipsum?</h6>
+                                <h6>Nearby Places</h6>
                                 <ul>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
+                                    @foreach ($data['nearbyAreasLinks'] as $item)
+                                    <li>
+                                        <a href="{{ url("properties?city=$item->property_cities_id&subcity=$item->id&property_purpose=$property_purpose&property_type=$type->id") }}">
+                                            {{ $type->plural_name }} for {{ $property_purpose }} in {{ $item->name }}
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="sidebar-links p-3">
+                                <h6>Properties for {{ request('property_purpose') == 'sale' ? 'Rent' : 'Sale' }}</h6>
+                                <ul>
+                                    <li>
+                                        @if (request('property_purpose') == 'sale')
+                                            <a href="{{ route('property-purpose', ['rent', 'rent']) }}">
+                                                Properties for Rent
+                                            </a>
+                                        @else
+                                            <a href="{{ route('property-purpose', ['buy', 'sale']) }}">
+                                                Properties for Sale
+                                            </a>
+                                        @endif
+                                      </li>
                                 </ul>
                             </div>
                         </div>

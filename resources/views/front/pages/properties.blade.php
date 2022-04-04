@@ -1234,7 +1234,7 @@
                         {{-- Pagination ends --}}
                     </div>
 
-                    <div class="col-lg-3 order-lg-2">
+                    {{-- <div class="col-lg-3 order-lg-2">
                         <div class="list-sidebar mt-3 mt-lg-0">
                             <div class="sidebar-links p-3">
                                 <h6>What is Lorem Ipsum?</h6>
@@ -1257,7 +1257,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             @else
                 <div class="alert alert-info" role="alert">
