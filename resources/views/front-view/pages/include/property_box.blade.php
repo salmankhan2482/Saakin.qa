@@ -1,12 +1,13 @@
 <a class="single-property-box" href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}" {{-- onclick="window.location='{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}';" --}}>
 
   <div class="property-item">
-    @if ($property->featured_image)
-      <img src="{{ URL::asset('upload/properties/thumb_' . $property->featured_image) }}" alt="Featured Image of Property">
-    @else
-      <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}" alt="Image of Property if no Featured Image found">
-    @endif
-
+    <div class="property-img">
+      @if ($property->featured_image)
+        <img src="{{ URL::asset('upload/properties/thumb_' . $property->featured_image) }}" alt="Featured Image of Property">
+      @else
+        <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}" alt="Image of Property if no Featured Image found">
+      @endif
+    </div>
 
     <ul class="feature_text">
       @if ($property->featured_property == 1)

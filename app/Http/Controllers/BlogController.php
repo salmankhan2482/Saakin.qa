@@ -26,9 +26,8 @@ class BlogController extends Controller
 
     public function index()
     {
-		$blogs = Blog::where('status',1)->orderBy('id', 'desc')->paginate(10);
-        
-        $recent_posts = Blog::where('status',1)->orderBy('id','desc')->take(10)->get();
+		$blogs = Blog::where('status',1)->orderBy('id','desc')->paginate(10);
+        $popularposts = Blog::where('status',1)->orderBy('count', 'desc')->limit(9)->get();
         
         $tagsArray = [];
         foreach($blogs as $blog){
@@ -39,7 +38,7 @@ class BlogController extends Controller
             }
         }
         $blog_categories = BlogCategory::inRandomOrder()->get();
-        return view('front.pages.blogs',compact('blogs','blog_categories','recent_posts','tagsArray'));
+        return view('front.pages.blogs',compact('blogs','blog_categories','popularposts','tagsArray'));
     }
 
     public function blogCategories($slug)
@@ -58,29 +57,28 @@ class BlogController extends Controller
     public function blogDetail($slug)
     {
         $blog = Blog::with(['user'])->where('slug',$slug)->firstOrFail();
-        $blogs = Blog::where('status',1)->orderBy('id', 'desc')->limit(9)->get();
+        $blog->increment('count');
+        $blog->update();
+        $popularposts = Blog::where('status',1)->orderBy('count', 'desc')->limit(5)->get();
+        $recentposts = Blog::where('status',1)->orderBy('id', 'desc')->limit(5)->get();
+        
         $blog_categories =  DB::table('blogs_categories')
-            ->join('blogs', "blogs_categories.id", "blogs.category_id")
-            ->select('blogs_categories.id', 'blogs_categories.*', DB::Raw('COUNT(blogs.category_id) as pcount'))
-            
-            ->groupBy("blogs_categories.id")
-            ->orderBy("pcount", "desc")
-            ->get();
-
-        return view('front.pages.blog_detail',compact('blog','blogs','slug','blog_categories'));
+        ->join('blogs', "blogs_categories.id", "blogs.category_id")
+        ->select('blogs_categories.id', 'blogs_categories.*', DB::Raw('COUNT(blogs.category_id) as pcount'))
+        ->groupBy("blogs_categories.id")
+        ->orderBy("pcount", "desc")
+        ->get();
+        return view('front.pages.blog_detail',compact('blog','popularposts', 'recentposts', 'slug','blog_categories'));
     }
 
     public function searchBlogs(Request $request)
     {
-        $inputs = $request->all();
-        $keyword = $inputs['keyword'];
-
+        $keyword = $request->keyword;
         $blog_categories = BlogCategory::get();
 
-        $blogs = Blog::where('status',1)->
-            where(function ($query) use ($keyword) {
-            $query->where('title', 'like', '%'.$keyword.'%')
-            ->orWhere('description', 'like', '%'.$keyword.'%');
+        $blogs = Blog::where('status',1)
+        ->where(function ($query) use ($keyword) {
+            $query->where('title', 'like', '%'.$keyword.'%')->orWhere('description', 'like', '%'.$keyword.'%');
         })->paginate(getcong('pagination_limit'));
         $recent_posts = Blog::where('status',1)->orderBy('id','desc')->take(10)->get();
 
