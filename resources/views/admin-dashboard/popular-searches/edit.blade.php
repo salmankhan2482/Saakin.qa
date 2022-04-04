@@ -136,10 +136,18 @@
                                 <label>Furnishings</label>
                                 <select name="furnishings" class="form-control">
                                     <select name="furnishings" class="hero__form-input form-select custom-select">
-                                        <option value="">All furnishings</option>
-                                        <option value="109" {{ $data['search']->furnishings  == 109 ? 'selected' : '' }}>Furnished</option>
-                                        <option value="120" {{ $data['search']->furnishings  == 120 ? 'selected' : '' }}>Unfurnished</option>
-                                        <option value="101" {{ $data['search']->furnishings  == 101 ? 'selected' : '' }}>Partly furnished</option>
+                                        <option value="">
+                                            All furnishings
+                                        </option>
+                                        <option value="109" {{ $data['search']->furnishings  == 109 ? 'selected' : '' }}>
+                                            Furnished
+                                        </option>
+                                        <option value="120" {{ $data['search']->furnishings  == 120 ? 'selected' : '' }}>
+                                            Unfurnished
+                                        </option>
+                                        <option value="101" {{ $data['search']->furnishings  == 101 ? 'selected' : '' }}>Partly 
+                                            furnished
+                                        </option>
                                     </select>
                                 </select>
                             </div>
