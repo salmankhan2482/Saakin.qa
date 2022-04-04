@@ -58,11 +58,12 @@
       <div class="fs-sm" data-bs-spy="scroll" data-bs-target="#cityGideNav" data-bs-offset="100" tabindex="0">
         <div id="guidePropertyTrends">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">Property Trends</h5>
-          <ul class="sub-details">
+          {!! $cityGuideContent->property_trends ??'' !!}
+          {{-- <ul class="sub-details">
             <li>Buy</li>
             <li>Rent</li>
             <li>ROI</li>
-          </ul>
+          </ul> --}}
 
         </div>
         <div id="guideNeighborHood">

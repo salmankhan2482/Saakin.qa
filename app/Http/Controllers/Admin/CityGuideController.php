@@ -206,6 +206,7 @@ class CityGuideController extends Controller
 
     public function storeCityDetail(Request $request)
     {
+        
         $data =  \Request::except(array('_token')) ;
 
         $inputs = $request->all();
