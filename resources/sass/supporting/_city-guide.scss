@@ -87,12 +87,16 @@
   }
 
   .icon-guide {
-    --icon-size: 40px;
+    --icon-size: 2.5em;
 
     width: var(--icon-size);
     height: var(--icon-size);
     display: block;
     fill: currentColor;
     margin-bottom: 0.25rem;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: 14px;
   }
 }

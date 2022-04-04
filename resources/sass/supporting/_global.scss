@@ -286,3 +286,14 @@ img {
 #user-login-popup .modal-dialog {
   max-width: 390px;
 }
+
+//
+
+.line-clamp {
+  --line-clamp: 4;
+
+  display: -webkit-box;
+  -webkit-line-clamp: var(--line-clamp);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

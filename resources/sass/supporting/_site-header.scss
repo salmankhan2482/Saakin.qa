@@ -48,6 +48,32 @@
       }
     }
   }
+
+  .mobile-navbar {
+    width: 100%;
+    margin-right: 0;
+    display: flex;
+
+    .navbar-toggler-icon {
+      width: 1em;
+      height: 1em;
+    }
+
+    img {
+      max-height: 25px;
+    }
+
+    .login-btns {
+      :not(.btn) {
+        color: var(--bs-white);
+        text-decoration: none;
+
+        &:hover {
+          color: var(--bs-primary);
+        }
+      }
+    }
+  }
 }
 
 // @include media-breakpoint-up(md) {
