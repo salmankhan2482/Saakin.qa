@@ -30,11 +30,11 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <form action="{{ route('blogs.index') }}" method="GET">
-                            <div class="row">
-                                <div class="col-sm-2">
+                            <div class="row" style="ali">
+                                <div class="col-sm-4 offset-sm-2">
                                     <input type="text" class="form-control" name="keyword" placeholder="Search" >
                                 </div>
-                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                <div class="col-sm-3 mt-2 mt-sm-0">
                                     <select name="category" class="selectpicker show-tick form-control" >
                                         <option value="">Blog Category</option>
                                             @foreach ($data['blog-categories'] as $bcategory)
@@ -44,7 +44,7 @@
                                             @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                <div class="col-sm-1 mt-sm-0">
                                     <button type="submit" class="btn btn-dark  pull-right">
                                         {{ trans('words.search') }}
                                     </button>

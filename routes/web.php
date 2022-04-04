@@ -198,6 +198,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('blog-category/delete/{id}', 'BlogController@destroyBlogCategory')->name('blog-category.destroy');
 
     Route::resource('agencies','AgencyController');
+    Route::get('agency/delete/{id}','AgencyController@delete')->name('agencies.destroy');
     Route::post('agency/keys', 'AgencyController@goMasterimport')->name('get.agences.keys');
     Route::get('agencies/export', 'AgencyController@agencies_export')->name('agencies.export');
     Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');

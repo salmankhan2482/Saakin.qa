@@ -197,7 +197,7 @@ class AgencyController extends Controller
         return redirect('admin/agencies');
     }
 
-    public function destroy($id)
+    public function delete($id)
     {
         if(Auth::User()->usertype!="Admin"){
             \Session::flash('flash_message', trans('words.access_denied'));
@@ -216,40 +216,45 @@ class AgencyController extends Controller
         return redirect()->back();
     }
 
-    public function agencies_export()
-    {
-        if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
+    // public function show()
+    // {
 
-            \Session::flash('flash_message', trans('words.access_denied'));
+    // }
 
-            return redirect('admin/dashboard');
+    // public function agencies_export()
+    // {
+    //     if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
 
-        }
+    //         \Session::flash('flash_message', trans('words.access_denied'));
+
+    //         return redirect('admin/dashboard');
+
+    //     }
 
 
-        return Excel::download(new AgenciesExport(), 'agencies.xlsx');
+    //     return Excel::download(new AgenciesExport(), 'agencies.xlsx');
 
-    }
-    public function agencies_import()
-    {
-        if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
+    // }
+    // public function agencies_import()
+    // {
+    //     if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
 
-            \Session::flash('flash_message', trans('words.access_denied'));
+    //         \Session::flash('flash_message', trans('words.access_denied'));
 
-            return redirect('admin/dashboard');
+    //         return redirect('admin/dashboard');
 
-        }
+    //     }
 
-        Excel::import(new AgenciesImport(),request()->file('file'));
+    //     Excel::import(new AgenciesImport(),request()->file('file'));
 
-        return redirect()->back();
+    //     return redirect()->back();
 
-    }
+    // }
 
-    public function goMasterimport(){
-        $id = \request()->id;
-        $agency = Agency::find($id);
-        $view =  view('admin.pages.import_agencies', compact('agency'))->render();
-        return response()->json(['status' =>'success','html'=>$view]);
-    }
+    // public function goMasterimport(){
+    //     $id = \request()->id;
+    //     $agency = Agency::find($id);
+    //     $view =  view('admin.pages.import_agencies', compact('agency'))->render();
+    //     return response()->json(['status' =>'success','html'=>$view]);
+    // }
 }
