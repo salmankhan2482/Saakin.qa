@@ -90,9 +90,7 @@ class AgenciesController extends Controller
         
         $propertyTypes = DB::select("SELECT property_types.id, COUNT(properties.id) AS property_count, property_types.types as property_type FROM properties JOIN property_types ON (properties.property_type=property_types.id) WHERE properties.status='1' AND agency_id='".$agency->id."' GROUP BY property_types.id ORDER BY property_count DESC");
 
-        $agency_des = strip_tags($agency->agency_detail);
-        $agency_des = Str::limit($agency_des, 170, '...');
-
+        $agency_des = Str::limit(strip_tags($agency->agency_detail), 170, '...');
         return view('front.pages.agency', compact('agency', 'properties', 'propertyTypes','user','agency_des'));
     }
 

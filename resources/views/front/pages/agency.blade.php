@@ -110,7 +110,37 @@
                             </div>
                         </div>
                         <div>
-                            You grid there....
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row gy-4 mt-1">
+                                        @foreach ($properties as $property)
+                                        <div class="col-md-6">
+                                            @include('front-view.pages.include.property_box')
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="text-center">
+
+                                            <div class="post-nav nav-res pt-20 pb-60">
+                                                <div class="row">
+                                                    <div class="col-md-12  col-xs-12 ">
+                                                        <div class="page-num text-center">
+
+                                                            @if($properties->total() > getcong('pagination_limit'))
+                                                                {{ $properties->links('front-view.pages.include.pagination') }}
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
