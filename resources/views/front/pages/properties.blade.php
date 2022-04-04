@@ -897,6 +897,25 @@
                         <div>
                             <form action="{{ url('properties') }}" name="frmSortBy" id="frmSortBy"
                                 class="form-inline form-1" method="get">
+                                <input type="hidden" name="featured"  value="{{ request()->featured }}" id="featured">
+                                <input type="hidden" name="property_type" value="{{ request()->property_type }}">
+                                <input type="hidden" name="property_purpose" value="{{ request()->property_purpose }}" />
+                                <input type="hidden" name="city" value="{{ request()->city }}" />
+                                <input type="hidden" name="subcity" value="{{ request()->subcity }}" />
+                                <input type="hidden" name="town" value="{{ request()->town }}" />
+                                <input type="hidden" name="area" value="{{ request()->area }}" />
+                                <input type="hidden" name="bedrooms" value="{{ request()->bedrooms }}" />
+                                <input type="hidden" name="bathrooms" value="{{ request()->bathrooms }}" />
+                                <input type="hidden" name="min_price" value="{{ request()->min_price }}" />
+                                <input type="hidden" name="max_price" value="{{ request()->max_price }}" />
+                                <input type="hidden" name="min_area" value="{{ request()->min_area }}" />
+                                <input type="hidden" name="max_area" value="{{ request()->max_area }}" />
+                                <input type="hidden" name="furnishings" value="{{ request()->furnishings }}" />
+                                <input type="hidden" name="keywordextra" value="{{ request()->keywordextra }}" />
+                                <input type="hidden" name="keyword" value="{{ request()->keyword }}" />
+                                <input type="hidden" name="keywordMbl" value="{{ request()->keywordMbl }}" />
+                                <input type="hidden" name="commercial" value="{{ request()->commercial }}" />
+
                                 
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="">
@@ -909,7 +928,7 @@
                                     {{-- Sort By --}}
                                     <div>
                                         <div class="form-group d-flex align-items-center spbwx8">
-                                            <label class="fs-sm">Short by:</label>
+                                            <label class="fs-sm">Sort by:</label>
                                             <div class="short-by">
                                                 <select name="sort_by" id="sort_by"
                                                     class="hero__form-input form-select form-select-sm custom-select"

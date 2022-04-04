@@ -7,8 +7,7 @@
 {{-- <script src="{{ asset('assets/js/jquery.validate.js') }}" defer></script> --}}
 {{-- <script src="{{asset('assets/js/bootstrap-select.min.js')}}"></script> --}}
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script> --}}
-<script src="{{ asset('assets/js/sticky-sidebar.js') }}"></script>
-
+{{-- <script src="{{ asset('assets/js/sticky-sidebar.js') }}"></script> --}}
 
 {{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
 </script>
@@ -462,47 +461,98 @@
   });
 
 
-    //desktop search
-    $('#country').on('keyup', function() {
-        var query = $(this).val();
-        var purpose = $("#globalPropertyPurposeValue").val();
-        var type = $("#globalPropertyTypeValue").val();
+  //desktop search
+  $('#country').on('keyup', function() {
+    var query = $(this).val();
+    var purpose = $("#globalPropertyPurposeValue").val();
+    var type = $("#globalPropertyTypeValue").val();
 
-        if (query != '') {
-            $.ajax({
-                url: "{{ route('search-desktop') }}",
-                type: "GET",
-                data: {
-                    'country': query,
-                    'purpose': purpose,
-                    'type': type
-                },
-                success: function(data) {
-                    $('#country_list').show();
-                    $('#country_list').html(data);
-                }
-            }) //ajax call ends
+    console.log(purpose);
 
-        } else {
-            $('#country_list').hide();
-            $('#city_id').val('');
-            $('#sub_city_id').val('');
-            $('#town_id').val('');
-            $('#area_id').val('');
+    if (query != '') {
+      $.ajax({
+        url: "{{ route('search-desktop') }}",
+        type: "GET",
+        data: {
+          'country': query,
+          'purpose': purpose,
+          'type': type
+        },
+        success: function(data) {
+          $('#country_list').show();
+          $('#country_list').html(data);
+        }
+      }) //ajax call ends
 
-        } //if else ends
-    });
+    } else {
+      $('#country_list').hide();
+    } //if else ends
+  });
 
 
-    $(document).on('click', '.live-search-li', function() {
-        var query = 'Stop';
+  $(document).on('click', '.live-search-li', function() {
+    var query = 'Stop';
 
-        var value = $(this).text();
-        $('#country').val(value);
-        $('#extra_keywords').html($(this).html());
-        $('#country_list').html("");
-    });
+    //when item is clicked call ajax but dont make changes
+    $.ajax({
+      url: "{{ route('search-desktop') }}",
+      type: "GET",
+      data: {
+        'country': query
+      },
+      success: function(data) {}
+    })
 
+    var value = $(this).text();
+    $('#country').val(value);
+    $('#country_list').html("");
+  });
+
+
+  //mobile serach 
+  $('.countryMbl').on('keyup', function() {
+    var query = $(this).val();
+    var purpose = $("#globalPropertyPurposeValue").val();
+    var type = $("#globalPropertyTypeValue").val();
+    console.log(purpose);
+    if (query != '') {
+      $.ajax({
+        url: "{{ route('search-mobile') }}",
+        type: "GET",
+        data: {
+          'country': query,
+          'purpose': purpose,
+          'type': type
+        },
+        success: function(data) {
+          $('#country_list_mbl').show();
+          $('#country_list_mbl').html(data);
+        }
+      }) //ajax call ends
+
+    } else {
+      $('#country_list_mbl').hide();
+    } //if else ends
+  });
+
+
+  $(document).on('click', '.live-search-li', function() {
+    var query = 'Stop';
+
+    //when item is clicked call ajax but dont make changes
+    $.ajax({
+      url: "{{ route('search-mobile') }}",
+      type: "GET",
+      data: {
+        'country': query
+      },
+      success: function(data) {}
+    })
+
+    var value = $(this).text();
+    $('.countryMbl').val(value);
+    $('#country_list_mbl').html("");
+  }); //mbl search
 
 
 

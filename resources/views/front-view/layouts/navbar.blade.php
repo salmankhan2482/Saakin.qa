@@ -94,7 +94,7 @@
   <nav class="navbar navbar-expand-md navbar-dark">
     <div class="container-fluid">
 
-      <div class="navbar-brand py-0 ">
+      <div class="navbar-brand py-0 @if ((new \Jenssegers\Agent\Agent())->isMobile()) mobile-navbar @endif">
         <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -108,6 +108,36 @@
             <img src="{{ URL::asset('upload/logo.png') }}" alt="Saakin" height="32">
           </a>
         @endif
+
+        {{-- for Mobile --}}
+        @if ((new \Jenssegers\Agent\Agent())->isMobile())
+          <div class="d-flex align-items-center ms-auto login-btns">
+            @if (!Auth::user())
+              <a class="fs-sm me-2" href="#" data-bs-toggle="modal" data-bs-target="#user-login-popup">Login</a>
+            @else
+              <a class="fs-sm me-2" href="{{ url('logout') }}" class="nav-link">Logout</a>
+            @endif
+
+            @if (Auth::user())
+              @if (Auth::user()->usertype == 'Agency')
+                <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/properties/create') }}">
+                  Submit Property</a>
+              @elseif(Auth::user()->usertype == 'Admin')
+                <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/properties/create') }}">
+                  Submit Property
+                </a>
+              @else
+                <a class="btn btn-primary btn-sm" href="{{ url('submit-property') }}">Submit
+                  Property</a>
+              @endif
+            @else
+              <a data-bs-toggle="modal" data-bs-target="{{ '#user-login-popup' }}" class="btn btn-primary btn-sm" href="#">
+                Submit Property
+              </a>
+            @endif
+          </div>
+        @endif
+
       </div>
 
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
@@ -142,8 +172,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url('blog') }}">
-                Blog
+              <a class="nav-link" href="{{ url('blogs') }}">
+                Blogs
               </a>
             </li>
           </ul>

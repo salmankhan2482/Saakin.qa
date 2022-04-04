@@ -280,6 +280,10 @@ Route::post('agency/email', 'AgenciesController@agencyDetail')->name('email_inqu
 
 
 Route::get('blog', 'BlogController@index');
+Route::post('blogs', 'BlogController@searchBlogs');
+Route::get('blogs', function(){ 
+    return redirect('blog', 301); 
+});
 Route::post('blog', 'BlogController@searchBlogs');
 Route::get('blog-categories/{slug}', 'BlogController@blogCategories')->name('blog-categories')->where('slug', '[A-Za-z\-\_]+');
 Route::get('blog/{slug}', 'BlogController@blogDetail')->name('blog-detail');
