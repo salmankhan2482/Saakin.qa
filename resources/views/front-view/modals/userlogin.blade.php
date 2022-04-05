@@ -211,6 +211,7 @@
   </div>
 </div>
 @push('scripts')
+
   <script src="{{ asset('assets/js/jquery.vinvalidate.js') }}"></script>
 
   <script>

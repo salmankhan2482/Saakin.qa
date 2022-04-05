@@ -53,6 +53,7 @@ class PropertiesController extends Controller
         ->when(request()->property_purpose != '', function($query){
             $query->where("properties.property_purpose", request()->property_purpose);
         })
+        
         ->where("properties.status", 1)
         ->groupBy("property_types.id")
         ->orderBy("pcount", "desc")->get();
@@ -234,10 +235,6 @@ class PropertiesController extends Controller
         })
         ->when(request('min_area') == 0 && request('max_area') == 0, function ($query) {
         })
-        ->when(isset($request->commercial), function ($query) {
-            $ids = array(); array_push($ids, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
-            $query->whereIn('property_type', $ids);
-        })
         ->when(isset($request->bedrooms) && !empty($request->bedrooms), function ($query) {
             if (request('bedrooms') == "6+") {
                 $query->where('properties.bedrooms', '>=', 6);
@@ -339,7 +336,7 @@ class PropertiesController extends Controller
         }
         
         return view('front.pages.properties', 
-        compact('properties', 'propertyTypes', 'data', 'propertyPurposes', 'amenities', 'request','landing_page_content', 'page_des', 'heading_info'));
+        compact('properties', 'propertyTypes', 'data', 'propertyPurposes', 'request','landing_page_content', 'page_des', 'heading_info'));
     }
 
     public function findKeyWord($city = null, $subcity = null, $town = null, $area = null)
@@ -929,11 +926,11 @@ class PropertiesController extends Controller
         $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst(request('property_purpose')))
         ->where('city_id', null)->where('subcity_id', null)
         ->where('town_id', null)->where('area_id', null)
-        ->orderBy('count', 'DESC')->limit(10)->get();
+        ->orderBy('count', 'DESC')->limit(6)->get();
         
         $data['nearbyAreasLinks'] = DB::table('properties')->join('property_cities','properties.city','property_cities.id')
         ->select('property_cities.id','property_cities.name')->where("properties.status", 1)
-        ->groupBy('property_cities.name')->where('property_purpose', ucfirst(request('property_purpose')))->get();
+        ->groupBy('property_cities.name')->where('property_purpose', ucfirst(request('property_purpose')))->limit(6)->get();
         
         $request = request();
         return view('front.pages.properties.properties-for-purpose',
@@ -1016,14 +1013,14 @@ class PropertiesController extends Controller
         ->where('city_id', null)
         ->where('subcity_id', null)
         ->where('town_id', null)
-        ->where('area_id', null)->limit(10)->get();
+        ->where('area_id', null)->limit(6)->get();
         
         $data['nearbyAreasLinks'] = DB::table('properties')->join('property_cities','properties.city','property_cities.id')
         ->select('property_cities.id','property_cities.name')
         ->where("properties.status", 1)
         ->where("properties.property_type", $type->id)
         ->groupBy('property_cities.name')
-        ->where('property_purpose', ucfirst($property_purpose))->get();
+        ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
 
         $request = request();
         return view('front.pages.properties.property-type-for-purpose',
@@ -1111,7 +1108,7 @@ class PropertiesController extends Controller
             ->where('type_id', $type->id)
             ->where('subcity_id', $subcity_keyword->id)
             ->where('town_id', null)
-            ->where('area_id', null)->limit(10)->get();
+            ->where('area_id', null)->limit(6)->get();
 
             $data['nearbyAreasLinks'] = DB::table('properties')
             ->join('property_sub_cities','properties.subcity','property_sub_cities.id')
@@ -1120,7 +1117,7 @@ class PropertiesController extends Controller
             ->where("properties.property_type", $type->id)
             ->where("properties.subcity", $subcity_keyword->id)
             ->groupBy('property_sub_cities.name')
-            ->where('property_purpose', ucfirst($property_purpose))->get();
+            ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
 
 
             if($properties->total() > 0){
@@ -1202,7 +1199,7 @@ class PropertiesController extends Controller
             where('property_purpose', ucfirst($property_purpose))
             ->where('type_id', $type->id)
             ->where('town_id', $town_keyword->id)
-            ->where('area_id', null)->limit(10)->get();
+            ->where('area_id', null)->limit(6)->get();
 
             $data['nearbyAreasLinks'] = DB::table('properties')
             ->join('property_towns','properties.town','property_towns.id')
@@ -1211,7 +1208,7 @@ class PropertiesController extends Controller
             ->where("properties.property_type", $type->id)
             ->where("properties.town", $town_keyword->id)
             ->groupBy('property_towns.name')
-            ->where('property_purpose', ucfirst($property_purpose))->get();
+            ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
             
             return view('front.pages.properties.town-property-type-for-purpose',
             compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'areas', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','data'));
@@ -1276,7 +1273,7 @@ class PropertiesController extends Controller
             where('property_purpose', ucfirst($property_purpose))
             ->where('type_id', $type->id)
             ->where('area_id', $area_keyword->id)
-            ->limit(10)->get();
+            ->limit(6)->get();
 
             $data['nearbyAreasLinks'] = DB::table('properties')
             ->join('property_areas','properties.area','property_areas.id')
@@ -1286,7 +1283,7 @@ class PropertiesController extends Controller
             ->where("properties.property_type", $type->id)
             ->where("properties.area", $area_keyword->id)
             ->groupBy('property_areas.name')
-            ->where('property_purpose', ucfirst($property_purpose))->get();
+            ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
 
             return view('front.pages.properties.area-property-type-for-purpose',
             compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'area_keyword', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info', 'data'));
@@ -1353,7 +1350,7 @@ class PropertiesController extends Controller
         ->where('city_id', $city_keyword->id)
         ->where('subcity_id', null)
         ->where('town_id', null)
-        ->where('area_id', null)->limit(10)->get();
+        ->where('area_id', null)->limit(6)->get();
 
         $data['nearbyAreasLinks'] = DB::table('properties')->join('property_cities','properties.city','property_cities.id')
         ->select('property_cities.id','property_cities.name')
@@ -1361,7 +1358,7 @@ class PropertiesController extends Controller
         ->where("properties.property_type", $type->id)
         ->where("properties.city", $city_keyword->id)
         ->groupBy('property_cities.name')
-        ->where('property_purpose', ucfirst($property_purpose))->get();
+        ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
 
         $request = request();
         return view('front.pages.properties.city-property-type-for-purpose',
@@ -1405,9 +1402,11 @@ class PropertiesController extends Controller
         $city = Properties::all();
 
         $page_info =Pages::findOrFail('9');
+        $request = request();
+        $heading_info = 'Featured Properties in Qatar';
 
         return view('front.pages.properties.featured-properties',
-        compact('properties',  'propertyTypes', 'city', 'propertyPurposes','page_info'));
+        compact('properties', 'request', 'propertyTypes', 'city', 'heading_info', 'propertyPurposes','page_info'));
     }
 
 }

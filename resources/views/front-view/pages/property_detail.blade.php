@@ -1,14 +1,14 @@
 @extends("front-view.layouts.main")
 
 @if ($property->meta_title != null)
-  @section('title', $property->meta_title . ' | ' . 'Saakin.com')
+  @section('title', $property->meta_title . ' | ' . 'Saakin.qa')
   @section('description', $property->meta_description ?? $property_des)
   @section('keyword', $property->meta_keyword)
   @section('type', 'property')
   @section('url', url()->current())
   @section('image', asset('upload/properties/' . $property->featured_image))
 @else
-  @section('title', $property->property_name . ' | ' . 'Saakin.com')
+  @section('title', $property->property_name . ' | ' . 'Saakin.qa')
   @section('description', $property_des)
   @section('keyword', $property->meta_keyword)
   @section('type', 'property')
@@ -22,7 +22,7 @@
   $agency = \App\Agency::where('id', $property->agency_id)->first();
   $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 
-  $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.com Reference: ' . $property->refference_code . 'Price: QR ' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . 'Location: ' . $property->address . 'Link:' . $propertyUrl;
+  $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR ' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . 'Location: ' . $property->address . 'Link:' . $propertyUrl;
 
   @endphp
 

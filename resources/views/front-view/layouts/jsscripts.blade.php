@@ -1,141 +1,12 @@
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
 </script>
-{{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
-{{-- <script src="{{ asset('assets/js/jquery.validate.js') }}" defer></script> --}}
-{{-- <script src="{{asset('assets/js/bootstrap-select.min.js')}}"></script> --}}
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta2/dist/js/bootstrap-select.min.js"></script> --}}
-{{-- <script src="{{ asset('assets/js/sticky-sidebar.js') }}"></script> --}}
 
-{{-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/jquery.validationEngine.min.js">
-</script>
-<script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/languages/jquery.validationEngine-en.min.js">
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-
-<script src="{{asset('assets/js/popper.min.js')}}"></script>
-<script src="{{asset('assets/js/Jquery.min.js')}}"></script>
-<script src="{{asset('assets/js/jquery-ui.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-<script src="{{asset('assets/js/jquery.validate.js')}}"></script>
-<script src="{{asset('assets/js/jquery.formtowizard.js')}}"></script> --}}
-
-
-{{-- <script src="{{asset('assets/js/dropzone.js')}}"></script>
-<script src="{{asset('assets/js/counting-up.js')}}"></script>
-<script src="{{asset('assets/js/appear.js')}}"></script>
-<script src="{{asset('assets/js/sticky-sidebar.js')}}"></script>
-<script src="{{asset('assets/js/bootstrap-select.js')}}"></script>
-<script src="{{asset('assets/js/swiper.js')}}"></script>
-<script src="{{asset('assets/js/jquery-mb.ytplayer.js')}}"></script>
-<script src="{{asset('assets/js/magnific.popup.js')}}"></script>
-<script src="{{asset('assets/js/datepicker.js')}}"></script> --}}
-
-
-{{-- <script src="{{asset('assets/js/wow.min.js')}}"></script>
-<script src="{{asset('assets/js/main.js')}}"></script>
-<script src="{{asset('assets/js/custom.js')}}"></script>
-<script src="//code.tidio.co/exbje56mnkrg3tdoi3kflvts6a6mnac7.js" async></script>
-<script type="text/javascript" src="{{asset('assets/js/image-uploader.js')}}"></script> --}}
-
-{{-- <script type="text/javascript">
-    $(document).ready(function() {
-        var width = $(window).width();
-        var height = $(window).height();
-       
-        setTimeout(function () {
-            if (width < 991  && height < 991) {
-                $('#colhide').trigger('click');
-                $(".property-grid-icon,.property-grid").removeClass('active')
-                $(".property-grid-icon,.property-grid").removeClass('show')
-                $(".property-list-icon,.property-list ").addClass('active')
-                $(".property-list-icon,.property-list ").addClass('show')
-            }
-        },1000)
-    });
-
-    function initMap() {
-        // The location of Uluru
-        var uluru = {lat:25.34429, lng:50.6573094};
-        // The map, centered at Uluru
-        
-        var map = new google.maps.Map(
-            document.getElementById('map'), {zoom: 4, center: uluru});
-        // The marker, positioned at Uluru
-        var marker = new google.maps.Marker({position: uluru, map: map});
-            //alert("1");
-        
-    }
-
-    var abc = 0;
-    
-    $(document).ready(function() {
-        $('#add_more').click(function() {//When Add More Files button Clicked these function Willbe Called (new file field is added dynamically)
-            $(this).before($("<div/>", {id: 'filediv'}).fadeIn('slow').append(
-                $("<input/>", {name: 'gallery_file[]', type: 'file', id: 'file'}),
-                $("")
-            ));
-        });
-
-        $('body').on('change', '#file', function(){
-            if (this.files && this.files[0]) {
-                //increment();
-                abc += 1;
-                var z = abc - 1;
-                var x = $(this).parent().find('#previewimg' + z).remove();
-                $(this).before("<div id='abcd"+ abc +"' class='abcd'><img alt='preview img' id='previewimg" + abc + "' src=''/></div>");
-                var reader = new FileReader();
-                reader.onload = imageIsLoaded;
-                reader.readAsDataURL(this.files[0]);
-                $(this).hide();
-                $("#abcd"+ abc).append($("<img/>", {id: 'img', src: '{{ URL::asset('site_assets/img/x.png') }}', alt: 'delete'}).click(function() {
-                    //$(this).parent().parent().remove();
-                    $(this).parent().remove();
-                }));
-            }
-        });
-
-        function imageIsLoaded(e) {
-            $('#previewimg' + abc).attr('src', e.target.result);
-        };
-
-        $('#upload').click(function(e) {
-            var name = $(":file").val();
-            if (!name)
-            {
-                alert("First Image Must Be Selected");
-                e.preventDefault();
-            }
-        });
-    });
-
-
-    $(document).on('change', '.custom-file-input', function() {
-        var files = [];
-        var input = $(this)[0];
-        var placeToInsertImagePreview = $(this).closest('.custom-file').next('.custom-file-gallery');
-        
-
-        if (input.files) {
-            var filesAmount = input.files.length;
-            placeToInsertImagePreview.html('');
-            for (i = 0; i < filesAmount; i++) {
-                var reader = new FileReader();
-                var name = input.files[i].name;
-                reader.onload = function(event) {
-                    $($.parseHTML('<div class="col-6"><img alt="jss scripts" class="img-fluid img-thumb" title="'+name+'" src="'+event.target.result+'"></div>')).appendTo(placeToInsertImagePreview);
-                }
-                reader.readAsDataURL(input.files[i]);
-            }
-        }
-
-    });
-</script> --}}
+<script src="{{ asset('assets/js/sticky-sidebar.js') }}"></script>
 
 @if (Route::currentRouteName() != 'real-estate-agencies')
   <script src="{{ asset('assets/js/preloadinator.js') }}"></script>
@@ -461,98 +332,47 @@
   });
 
 
-  //desktop search
-  $('#country').on('keyup', function() {
-    var query = $(this).val();
-    var purpose = $("#globalPropertyPurposeValue").val();
-    var type = $("#globalPropertyTypeValue").val();
+    //desktop search
+    $('#country').on('keyup', function() {
+        var query = $(this).val();
+        var purpose = $("#globalPropertyPurposeValue").val();
+        var type = $("#globalPropertyTypeValue").val();
 
-    console.log(purpose);
+        if (query != '') {
+            $.ajax({
+                url: "{{ route('search-desktop') }}",
+                type: "GET",
+                data: {
+                    'country': query,
+                    'purpose': purpose,
+                    'type': type
+                },
+                success: function(data) {
+                    $('#country_list').show();
+                    $('#country_list').html(data);
+                }
+            }) //ajax call ends
 
-    if (query != '') {
-      $.ajax({
-        url: "{{ route('search-desktop') }}",
-        type: "GET",
-        data: {
-          'country': query,
-          'purpose': purpose,
-          'type': type
-        },
-        success: function(data) {
-          $('#country_list').show();
-          $('#country_list').html(data);
-        }
-      }) //ajax call ends
+        } else {
+            $('#country_list').hide();
+            $('#city_id').val('');
+            $('#sub_city_id').val('');
+            $('#town_id').val('');
+            $('#area_id').val('');
 
-    } else {
-      $('#country_list').hide();
-    } //if else ends
-  });
-
-
-  $(document).on('click', '.live-search-li', function() {
-    var query = 'Stop';
-
-    //when item is clicked call ajax but dont make changes
-    $.ajax({
-      url: "{{ route('search-desktop') }}",
-      type: "GET",
-      data: {
-        'country': query
-      },
-      success: function(data) {}
-    })
-
-    var value = $(this).text();
-    $('#country').val(value);
-    $('#country_list').html("");
-  });
+        } //if else ends
+    });
 
 
-  //mobile serach 
-  $('.countryMbl').on('keyup', function() {
-    var query = $(this).val();
-    var purpose = $("#globalPropertyPurposeValue").val();
-    var type = $("#globalPropertyTypeValue").val();
-    console.log(purpose);
-    if (query != '') {
-      $.ajax({
-        url: "{{ route('search-mobile') }}",
-        type: "GET",
-        data: {
-          'country': query,
-          'purpose': purpose,
-          'type': type
-        },
-        success: function(data) {
-          $('#country_list_mbl').show();
-          $('#country_list_mbl').html(data);
-        }
-      }) //ajax call ends
+    $(document).on('click', '.live-search-li', function() {
+        var query = 'Stop';
 
-    } else {
-      $('#country_list_mbl').hide();
-    } //if else ends
-  });
+        var value = $(this).text();
+        $('#country').val(value);
+        $('#extra_keywords').html($(this).html());
+        $('#country_list').html("");
+    });
 
-
-  $(document).on('click', '.live-search-li', function() {
-    var query = 'Stop';
-
-    //when item is clicked call ajax but dont make changes
-    $.ajax({
-      url: "{{ route('search-mobile') }}",
-      type: "GET",
-      data: {
-        'country': query
-      },
-      success: function(data) {}
-    })
-
-    var value = $(this).text();
-    $('.countryMbl').val(value);
-    $('#country_list_mbl').html("");
-  }); //mbl search
 
 
 

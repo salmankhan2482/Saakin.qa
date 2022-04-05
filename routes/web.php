@@ -372,10 +372,8 @@ Route::get('{type}/{property}', 'PropertiesController@propertyTypeForPurpose')
 Route::get('{type}/{city_slug}/{property_type_purpose}', 'PropertiesController@cityPropertyTypeForPurpose')
 ->where(['type' => 'buy|rent'])->name('cpt-purpose');
 
-
 // featured/properties url
 Route::get('featured-properties', 'PropertiesController@featureProperties')->name('featured-properties');
-
 
 //property reports
 Route::resource('property-reports', 'PropertyReportController');
@@ -396,5 +394,7 @@ Route::get('callLatLong','AjaxController@callLatLong')->name('callLatLong');
 //ajax route to click count on call and whatsapp and email button 
 Route::get('click_count', 'AjaxController@clickCount')->name('click_count');
     
+// ajax route to call commerical property types
+Route::get('commercial-property_types', 'AjaxController@commercialPropertyTypes')->name('commercial-property_types');
 Route::get('site-register', 'SiteAuthController@siteRegister');
 Route::post('site-register', 'SiteAuthController@siteRegisterPost');

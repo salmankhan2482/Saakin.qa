@@ -37,7 +37,7 @@
                 @if ((new \Jenssegers\Agent\Agent())->isDesktop())
                   {{-- Property Type --}}
                   <div class="">
-                    <select name="property_type" data-style="form-select" class="hero__form-input form-select custom-select" onchange="setPropertyType(this)">
+                    <select name="property_type" data-style="form-select" class="hero__form-input form-select custom-select" onchange="setPropertyType(this)" id="propertyTypeSelect">
                       <option value="" selected>Property Type</option>
                       @foreach ($propertyTypes as $propertyType)
                         <option value="{{ $propertyType->id }}">{{ $propertyType->types }}</option>
@@ -53,7 +53,7 @@
                         Beds & Baths
                       </div>
 
-                      <div class="dropdown-menu px-2 custom-dropdown" id="beddropdownMenuButton" aria-labelledby="dropdownMenuButton">
+                      <div class="dropdown-menu px-2 custom-dropdown"  aria-labelledby="dropdownMenuButton">
                         <h6>Bedrooms</h6>
                         <div class="d-flex spbwx8 mb-3">
                           <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">Any</a>
@@ -65,9 +65,9 @@
                           <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">6+</a>
                         </div>
 
-                        <div class="mb-3">
+                        {{-- <div class="mb-3">
                           <input type="checkbox" name="exact_bedrooms" value="1"> Use exact values
-                        </div>
+                        </div> --}}
 
                         <div class="mb-3">
                           <h6>Bathrooms</h6>
@@ -81,9 +81,9 @@
                             <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">6+</a>
                           </div>
                         </div>
-                        <div class="">
+                        {{-- <div class="">
                           <input type="checkbox" name="exact_bathrooms" value="1"> Use exact values
-                        </div>
+                        </div> --}}
                       </div>
                     </div>
                   </div>
@@ -234,11 +234,12 @@
                   <div class="flex-grow-1">
 
                     <div class="input-group-overlay input-search">
-                      <div class="input-group-prepend-overlay">
-                        <span class="input-group-text" id="keywordextra"><i class="fa fa-search"></i></span>
-                      </div>
-                      <input type="text" name="keywordextra" id="keywordextra" class="form-control prepended-form-control" placeholder="View of Water, Gym, or Security" autocomplete="off"
-                        value="{{ Request::get('keyword') }}">
+                        <select name="amenities[]" id="amenities" multiple class="form-control prepended-form-control" multiple="multiple">
+                            <option value="">Select Extra</option>
+                            @foreach ($amenities as $amenity)
+                                <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
+                            @endforeach
+                        </select> 
                     </div>
                   </div>
                 </div>
@@ -280,20 +281,34 @@
 
       $("#commercial-checkbox").click(function() {
         if ($(this).is(":checked")) {
+
+          $.ajax({
+            type : "GET",
+            data:{"myData": "commercial" },
+            url : "{{ route('commercial-property_types') }}",
+            success : function(response){
+                $("#propertyTypeSelect").html('');
+                $("#propertyTypeSelect").append(response);
+            }
+          });
           $(".commercial-filter").hide();
+        
         } else {
+
+          $.ajax({
+            type : "GET",
+            url : "{{ route('commercial-property_types') }}",
+            success : function(response){
+                $("#propertyTypeSelect").html('');
+                $("#propertyTypeSelect").append(response);
+            }
+          });
           $(".commercial-filter").show();
+        
         }
       });
-    });
 
-    var deleteLink = document.getElementsByClassName("second-bath-option");
-    // document.querySelectorAll('.second-bath-option');
-    for (var i = 0; i < deleteLink.length; i++) {
-      deleteLink[i].addEventListener('click', function(event) {
-        document.getElementById("beddropdownMenuButton").style.display = "none";
-      });
-    }
+    });
 
     var bednumber = 0;
     var bathnumber = 0;

@@ -991,7 +991,7 @@
                                 $whatsapp = \App\Properties::getWhatsapp($property->id);
                                 $agency = \App\Agency::where('id', $property->agency_id)->first();
                                 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
-                                $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.com Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
+                                $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
                             <div class="single-property-box horizontal-view">
                                 {{--  --}}
@@ -1047,7 +1047,7 @@
                                     </a>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p>{{ $property->address }}, {{ $property->city }}</p>
+                                        <p>{{ $property->address }}, {{ $property->propertyCity->name }}</p>
                                     </div>
                                     <ul class="property-feature">
                                         @if ($property->getProperty_type())
@@ -1138,7 +1138,11 @@
                                 </div>
                                 @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                                     <div class="property-card-extra p-3 d-none d-md-block">
-                                        <div class="property-type">Premium</div>
+                                        <div class="property-type">
+                                            @if ($property->featured_property == 1)
+                                                Featured
+                                            @endif
+                                        </div>
                                         <div>
                                             <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}"
                                                 width="80" alt="{{ $property->property_name }}">

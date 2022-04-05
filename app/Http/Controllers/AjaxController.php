@@ -6,6 +6,7 @@ use App\ClickCounters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Types;
 use Stevebauman\Location\Facades\Location;
 
 class AjaxController extends Controller
@@ -148,8 +149,6 @@ class AjaxController extends Controller
         
         }
         
-
-        
     }
 
     public function callSubCities()
@@ -188,5 +187,27 @@ class AjaxController extends Controller
             return 'Counted';
         }
         
+    }
+
+    public function commercialPropertyTypes()
+    {
+        $result = '';
+        if(request('myData')){
+            $result = '<option value="">Commercial Property Type</option>';
+            $types = Types::whereIn('id', ['14', '17', '23', '27', '4', '13', '7', '34', '16', '35'])->select('id', 'types')->get();
+            
+            foreach($types as $type){
+                $result .= '<option value='.$type->id.'>'.$type->types.'</option>';
+            }
+        }else{
+            $result = '<option value="">Property Type</option>';
+            $types = Types::select('id', 'types')->get();
+            
+            foreach($types as $type){
+                $result .= '<option value='.$type->id.'>'.$type->types.'</option>';
+            }
+
+        }
+        return $result;
     }
 }
