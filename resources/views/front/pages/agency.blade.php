@@ -94,20 +94,22 @@
 
                         <div class="d-flex align-items-center justify-content-between mt-4">
                             <h5 class="mb-0">Our Properties</h5>
+                    
+                            <form method="GET" action="{{route('agency_detail', [Str::slug($agency->name), $agency->id])}}" id="sortForm">
                             <div class="">
-                                <select name="sortSelect" class="agency-select form-select" onchange="FormSubmit(this);"
-                                    style="width: 150px">
-                                    <option value="All Properties">
+                                <select name="sortSelect" id="sortSelect" class="agency-select form-select" style="width: 150px">
+                                    <option value="All Properties" {{ request('sortSelect') == 'All Properties' ? 'selected' : '' }}>
                                         All
                                     </option>
-                                    <option value="Rent">
+                                    <option value="Rent" {{ request('sortSelect') == 'Rent' ? 'selected' : '' }}>
                                         Rent
                                     </option>
-                                    <option value="Sale">
+                                    <option value="Sale" {{ request('sortSelect') == 'Sale' ? 'selected' : '' }}>
                                         Sale
                                     </option>
                                 </select>
                             </div>
+                            </form>
                         </div>
                         <div>
                             <div class="row">
@@ -242,6 +244,11 @@
 @section('scripts-custom')
 
     <script>
+        var form = document.getElementById("sortForm");
+        document.getElementById("sortSelect").addEventListener("change", function() {
+            form.submit();
+        });
+        
         function readMoreReadLess(text) {
             if (text == 'more') {
                 $(document).ready(function() {
