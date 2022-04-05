@@ -33,18 +33,18 @@
   gtag('config', 'G-0DHP1WPHH9');
 </script>
 
-<!-- Google Adsene https://saakin.com/ -->
+<!-- Google Adsene https://saakin.qa/ -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
      crossorigin="anonymous"></script>
 
-<!-- Rich Result Test Code for https://saakin.com/ -->
+<!-- Rich Result Test Code for https://saakin.qa/ -->
 <script type="application/ld+json">
 {"@context":"http:\/\/schema.org","@type":"Corporation","logo":"https:\/\/www.saakin.qa\/upload/logo.png","url":"https:\/\/www.saakin.qa","brand":{"@type":"Brand","name":"Saakin Inc"},"name":"Saakin Qatar","address":"Tornado Tower, Majlis Al Taawon St, Doha, Qatar","contactPoint":{"@type":"ContactPoint","telephone":"+974 7012 5000","contactType":"customer service","contactOption":"HearingImpairedSupported","areaServed":"qa","availableLanguage":"en"},"sameAs":[]}
 </script>
 
 
 
-<!-- Clarity tracking code for https://saakin.com/ -->
+<!-- Clarity tracking code for https://saakin.qa/ -->
 <script>
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

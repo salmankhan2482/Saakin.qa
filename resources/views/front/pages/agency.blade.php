@@ -1,14 +1,14 @@
 @extends("front-view.layouts.main")
 
 @if ($agency->meta_title != null)
-    @section('title', $agency->meta_title . ' | ' . 'Saakin.com')
+    @section('title', $agency->meta_title . ' | ' . 'Saakin.qa')
     @section('description', $agency->meta_description)
     @section('keyword', $agency->meta_keyword)
     @section('type', 'agency')
     @section('url', url()->current())
     @section('image', asset('upload/agencies/' . $agency->image))
 @else
-    @section('title', $agency->name . ' | ' . 'Saakin.com')
+    @section('title', $agency->name . ' | ' . 'Saakin.qa')
     @section('description', $agency_des)
     @section('type', 'agency')
     @section('url', url()->current())

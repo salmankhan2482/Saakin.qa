@@ -1,14 +1,14 @@
 @extends("front-view.layouts.main")
 
 @if ($blog->meta_title != null)
-  @section('title', $blog->meta_title . ' | ' . 'Saakin.com')
+  @section('title', $blog->meta_title . ' | ' . 'Saakin.qa')
   @section('description', $blog->meta_description)
   @section('keyword', $blog->meta_keywords)
   @section('type', 'article')
   @section('url', url()->current())
   @section('image', asset('upload/blogs/' . $blog->image))
 @else
-  @section('title', $blog->title . ' | ' . 'Saakin.com')
+  @section('title', $blog->title . ' | ' . 'Saakin.qa')
   @section('description', Illuminate\Support\Str::limit($blog->description, 170, '...') ?? '')
   @section('keyword', $blog->meta_keywords)
   @section('type', 'article')

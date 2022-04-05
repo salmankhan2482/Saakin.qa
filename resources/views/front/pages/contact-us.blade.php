@@ -1,7 +1,7 @@
 @extends("front.layouts.main")
 
 @section('title',' Contact Us | Saakin.qa')
-@section('description','For any query or getting useful information about the properties in Qatar, feel free to contact us: hello@saakin.com')
+@section('description','For any query or getting useful information about the properties in Qatar, feel free to contact us: hello@saakin.qa')
 @section('type','contact-us')
 
 @section('content')

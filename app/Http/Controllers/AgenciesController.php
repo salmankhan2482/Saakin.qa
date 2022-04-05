@@ -63,6 +63,7 @@ class AgenciesController extends Controller
         $agencies =  DB::table('agencies')
             ->leftJoin('properties', 'agencies.id', 'properties.agency_id')
             ->select('agencies.*', DB::Raw( 'COUNT(properties.agency_id) as pcount' ))
+            ->where('properties.status', 1)
             ->groupBy('agencies.name')
             ->orderBy('pcount', 'DESC')
             ->paginate(12);

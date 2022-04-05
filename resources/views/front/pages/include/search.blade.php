@@ -323,12 +323,12 @@
                                 </div>
                                 <div class="col-md-4 col-12">
                                     <div class="input-search">
-                                            <select name="amenities[]" id="amenities" multiple class="hero__form-input form-control custom-select">
-                                                <option value="">Select Extra</option>
-                                                @foreach ($amenities as $amenity)
-                                                    <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
-                                                @endforeach
-                                            </select>
+                                        <select name="amenities[]" id="amenities" multiple class="hero__form-input form-control custom-select">
+                                            <option value="">Select Extra</option>
+                                            @foreach ($amenities as $amenity)
+                                                <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12 position-relative">

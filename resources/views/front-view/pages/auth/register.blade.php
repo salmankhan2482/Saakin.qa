@@ -1,6 +1,6 @@
 @extends("front.layouts.main")
 
-@section('title', 'Register | Saakin.com')
+@section('title', 'Register | Saakin.qa')
 @section('description', 'Register your Account on Sakkin with few clicks')
 @section('type', 'saakin-register')
 @section('url', Request::url())

@@ -14,7 +14,7 @@
         <input type="hidden" name="property_id" value=" {{ $property->id ?? '' }} ">
         <div class="form-group">
           <label for="">Message</label>
-          <textarea class="form-control" rows="6" name="message" required value="Hi, I found your property with ref: On saakin.com. Please contact me. Thank you."></textarea>
+          <textarea class="form-control" rows="6" name="message" required value="Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you."></textarea>
         </div>
 
         <div class="row">
