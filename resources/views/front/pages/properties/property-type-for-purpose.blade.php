@@ -1079,14 +1079,21 @@
 
                                     <div class="social-div mt-md-2">
                                         @if (!empty($property->whatsapp))
-                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2"
-                                                data-telNumber="{{ $property->whatsapp }}">
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                                data-telNumber="{{ $property->whatsapp }}"
+                                                data-property_id={{ $property->id }} 
+                                                data-agency_id={{ $property->agency_id }} 
+                                                data-button_name='Call'>
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @else
-                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2"
-                                                data-telNumber="{{ $property->Agency->phone }}">
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                                data-telNumber="{{ $property->Agency->phone }}"
+                                                data-property_id={{ $property->id }} 
+                                                data-agency_id={{ $property->agency_id }} 
+                                                data-button_name='Call'>
+
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
@@ -1096,13 +1103,23 @@
                                             
                                             @if (!empty($property->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2">
+                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                    data-property_id={{ $property->id }} 
+                                                    data-agency_id={{ $property->agency_id }} 
+                                                    data-button_name='WhatsApp'>
+
                                                     <i class="fab fa-whatsapp text-primary"></i>
                                                     <span class=" d-md-inline-block">WhatsApp</span>
                                                 </a>
                                             @else
-                                                <button class="btn btn-monochrome btn-sm mt-2" type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#emailAgentModal" id="emailBtn"
+                                                <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
+                                                    data-button_name='Email'
+                                                    type="button" 
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#emailAgentModal" 
+                                                    id="emailBtn"
                                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                     data-title="{{ $property->property_name }}"
                                                     data-agent="{{ $property->agent_name ?? $property->Agency->name }}"
@@ -1120,20 +1137,34 @@
                                         @else
                                             @if (!empty($property->whatsapp))
                                             <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                class="btn btn-monochrome btn-sm mt-2">
+                                                class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                data-property_id={{ $property->id }} 
+                                                data-agency_id={{ $property->agency_id }} 
+                                                data-button_name='WhatsApp'>
+
                                                 <i class="fab fa-whatsapp text-primary"></i>
                                                 <span class=" d-md-inline-block">WhatsApp</span>
                                             </a>
                                             @elseif(!empty($property->Agency->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2">
+                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                    data-property_id={{ $property->id }} 
+                                                    data-agency_id={{ $property->agency_id }} 
+                                                    data-button_name='WhatsApp'>
+
                                                     <i class="fab fa-whatsapp text-primary"></i>
                                                     <span class=" d-md-inline-block">WhatsApp</span>
                                                 </a>
                                             @endif
 
-                                            <button class="btn btn-monochrome btn-sm mt-2" type="button" data-bs-toggle="modal"
-                                                data-bs-target="#emailAgentModal" id="emailBtn"
+                                            <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }}
+                                                data-button_name='Email'
+                                                type="button" 
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#emailAgentModal" 
+                                                id="emailBtn"
                                                 data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                 data-title="{{ $property->property_name }}"
                                                 data-agent="{{ $property->agent_name ?? $property->Agency->name }}"
