@@ -116,9 +116,11 @@
                                 <div class="col-lg-12">
                                     <div class="row gy-4 mt-1">
                                         @foreach ($properties as $property)
-                                        <div class="col-md-6">
-                                            @include('front-view.pages.include.property_box')
-                                        </div>
+                                            <div class="col-md-6">
+                                                @include(
+                                                    'front-view.pages.include.property_box'
+                                                )
+                                            </div>
                                         @endforeach
                                     </div>
                                     <div class="col-12">
@@ -129,7 +131,7 @@
                                                     <div class="col-md-12  col-xs-12 ">
                                                         <div class="page-num text-center">
 
-                                                            @if($properties->total() > getcong('pagination_limit'))
+                                                            @if ($properties->total() > getcong('pagination_limit'))
                                                                 {{ $properties->links('front-view.pages.include.pagination') }}
                                                             @endif
                                                         </div>
@@ -151,14 +153,40 @@
                         <div class="card">
                             <div class="card-body">
 
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <button type="button" class="btn-close" data-dismiss="alert"
+                                            aria-label="Close"></button>
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 @if (Session::has('flash_message_contact_agency'))
                                     <div class="alert alert-success">
-                                        <button type="button" class="btn-close" data-dismiss="alert"
+                                        <button type="button" class="close" data-dismiss="alert"
                                             aria-label="Close">
                                         </button>
                                         {{ Session::get('flash_message_contact_agency') }}
                                     </div>
                                 @endif
+
+                                {{-- @if (Session::has('flash_message_contact_agency'))
+                                    @if (count($errors) > 0)
+                                        <div class="alert alert-danger">
+                                            <button type="button" class="close" data-dismiss="alert"
+                                                aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
+                                @endif --}}
 
                                 <h4 class="widget-title">Contact us</h4>
                                 <form action="{{ url('agency-contact') }}" id="" method="POST">
@@ -171,33 +199,64 @@
                                     <input type="hidden" name="agency_mail" value="{{ $agency->email }}">
                                     <input type="hidden" name="type" value="Agency Inquiry">
 
-                                    <div class="mb-2">
-                                        <input class="form-control" type="text" name="name" id="name"
-                                            placeholder="Your name" required>
+                                    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                                        <div class="mb-2">
+                                            <input class="form-control" type="text" name="name" id="name"
+                                                placeholder="Your name" required>
+                                            @if ($errors->has('name'))
+                                                <span class="d-block invalid-feedback">
+                                                    {{ $errors->first('name') }}
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="mb-2">
-                                        <input class="form-control" type="text" name="phone" id="phone"
-                                            placeholder="Phone" required>
+                                    <div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+                                        <div class="mb-2">
+                                            <input class="form-control" type="text" name="phone" id="phone"
+                                                placeholder="Phone" required>
+                                            @if ($errors->has('phone'))
+                                                <span class="d-block invalid-feedback">
+                                                    {{ $errors->first('phone') }}
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="mb-2">
-                                        <input class="form-control" type="text" name="email" id="email"
-                                            placeholder="Email" required>
+                                    <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                        <div class="mb-2">
+                                            <input class="form-control" type="text" name="email" id="email"
+                                                placeholder="Email" required>
+                                            @if ($errors->has('email'))
+                                                <span class="d-block invalid-feedback">
+                                                    {{ $errors->first('email') }}
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
-                                    <div class="mb-2">
-                                        <input class="form-control" type="text" name="subject" id="subject"
-                                            placeholder="Subject" required>
+                                    <div class="form-group{{ $errors->has('subject') ? ' has-error' : '' }}">
+                                        <div class="mb-2">
+                                            <input class="form-control" type="text" name="subject" id="subject"
+                                                placeholder="Subject" required>
+                                            @if ($errors->has('subject'))
+                                                <span class="d-block invalid-feedback">
+                                                    {{ $errors->first('subject') }}
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
                                     <div class="mb-2">
                                         <textarea class="form-control" name="your_message" rows="4" placeholder="Your Message" required></textarea>
                                     </div>
-                                    <div class="mb-2">
-                                        {!! NoCaptcha::renderJs() !!}
-                                        {!! NoCaptcha::display() !!}
-                                        @if ($errors->has('g_recaptcha_confirmed'))
-                                            <span style="color:#fb0303">
-                                                {{ $errors->first('g_recaptcha_confirmed') }}
-                                            </span>
-                                        @endif
+                                    <div
+                                        class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                        <div class="mb-2">
+                                            {!! NoCaptcha::renderJs() !!}
+                                            {!! NoCaptcha::display() !!}
+                                            @if ($errors->has('g-recaptcha-response'))
+                                                <span class="help-block">
+                                                    {{ $errors->first('g-recaptcha-response') }}
+                                                </span>
+                                            @endif
+                                        </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary">
                                         Send Message
