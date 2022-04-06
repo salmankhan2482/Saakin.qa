@@ -47,7 +47,7 @@
                                 <div class="form-group col-md-4">
                                     <label>Property Purpose</label>
                                     <select id="property_purposes_id" name="property_purposes_id" class="form-control">
-                                        <option selected>Select Property Purpose</option>
+                                        <option value="">Select Property Purpose</option>
                                         @foreach ($data['property_purposes'] as $purpose)
                                         <option value="{{ $purpose->id }}">{{ $purpose->name }}</option>
                                     @endforeach
@@ -56,7 +56,7 @@
                                 <div class="form-group col-md-4">
                                     <label>Property Types</label>
                                     <select id="property_types_id" name="property_types_id" class="form-control">
-                                        <option selected>Select Property Types</option>
+                                        <option value="">Select Property Types</option>
                                         @foreach ($data['property_types'] as $type)
                                         <option value="{{ $type->id }}">{{ $type->types }}</option>
                                     @endforeach
@@ -65,7 +65,7 @@
                                 <div class="form-group col-md-4">
                                     <label>Cities</label>
                                     <select id="property_cities_id" name="property_cities_id" class="form-control">
-                                        <option selected>Select City</option>
+                                        <option value="">Select City</option>
                                         @foreach ($data['cities'] as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
