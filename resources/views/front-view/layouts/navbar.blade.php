@@ -163,7 +163,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url('city-guide') }}">
-                City Guide
+                Guide
               </a>
             </li>
             <li class="nav-item">
@@ -173,7 +173,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{ url('blogs') }}">
-                Blogs
+                Blog
               </a>
             </li>
           </ul>

@@ -106,7 +106,7 @@
         @endif
 
         <div class="text-white">
-          Copyright © 2017 - {{ now()->year }} | <a href="https://www.saakin.com" class="text-decoration-none" target="_blank">SAAKIN
+          Copyright © 2017 - {{ now()->year }} | <a href="https://www.saakin.qa" class="text-decoration-none" target="_blank">SAAKIN
             INC</a>. | All
           Rights Reserved.
         </div>

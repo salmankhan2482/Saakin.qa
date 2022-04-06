@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http;
 use App\User;
+use messages;
 use App\Types;
 use App\Agency;
 use App\Enquire;
 use http\Client;
 use App\XmlRecord;
 use App\Properties;
-use App\LandingPage;
 
+use App\LandingPage;
 use SimpleXMLElement;
 use App\Http\Requests;
 use Geocoder\Geocoder;
@@ -31,10 +32,10 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Orchestra\Parser\Xml\Facade as XmlParser;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Illuminate\Support\Facades\Validator;
 
 class AgenciesController extends Controller
 {
@@ -116,19 +117,21 @@ class AgenciesController extends Controller
     public function agency_email(Request $request)
     {
 
-      
+     
+
         $data =  \Request::except(array('_token')) ;  
               
         $inputs = $request->all();
 	    $rule=array(
             'name' => 'required',
             'email' => 'required|email',
-            'your_message' => 'required'
+            'your_message' => 'required',
+            'g-recaptcha-response' => 'required|captcha'
         );
 
 	   	$validator = Validator::make($data,$rule);
         if ($validator->fails()){
-            return redirect()->back()->withErrors($validator->messages())->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
     
         $enquire = new Enquire();
