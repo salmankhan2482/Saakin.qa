@@ -28,10 +28,7 @@
 <script src="{{asset('assets/js/wow.min.js')}}"></script>
 <script src="{{asset('assets/js/main.js')}}"></script>
 <script src="{{asset('assets/js/custom.js')}}"></script>
-{{-- <script src="//code.tidio.co/exbje56mnkrg3tdoi3kflvts6a6mnac7.js" async></script> --}}
 <script type="text/javascript" src="{{asset('assets/js/image-uploader.js')}}"></script>
-
-
 
 <script type="text/javascript">
 

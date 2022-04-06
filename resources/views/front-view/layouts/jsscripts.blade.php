@@ -282,12 +282,30 @@
 @endif
 
 <script>
+  $('.btnCount').click(function() {
+      let id = $(this).attr('data-property_id');
+      let agency_id = $(this).attr('data-agency_id');
+      let button_name = $(this).attr('data-button_name');
+      $.ajax({
+          type : 'GET',
+          url : '{{ route("click_count") }}',
+          data : {
+              'id': id,
+              'agency_id': agency_id,
+              'button_name': button_name,
+          },
+          
+          success:function(response){
+              console.log(response);
+          }
+
+
+      });
+  });
+
   $(document).ready(function() {
     var purposeValue = $("#property_purpose").val();
     $('#globalPropertyPurposeValue').val(purposeValue);
-
-    // $('select').selectpicker();
-
   });
 
   function setPropertyPurpose(pp) {

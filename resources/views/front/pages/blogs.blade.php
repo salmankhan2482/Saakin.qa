@@ -49,7 +49,6 @@
                   @if ($blogs->total() > getcong('pagination_limit'))
                     {{ $blogs->links('front-view.pages.include.pagination') }}
                   @endif
-
                 </div>
               </div>
             </div>
@@ -59,8 +58,7 @@
         <div class="col-lg-4">
           <div class="card search">
             <div class="card-body">
-              <form action="{{ url('blogs') }}" method="post">
-                @csrf
+              <form action="{{ url('blog') }}" method="GET">
                 <div class="input-group">
                   <input type="text" name="keyword" id="keyword" class="form-control" placeholder="Search" value="{{ request('keyword') }}">
                   <button type="submit" class="btn btn-primary search-button"><i class="fa fa-search"></i></button>

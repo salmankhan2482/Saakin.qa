@@ -26,29 +26,29 @@ class BlogController extends Controller
 
     public function index()
     {
-		$blogs = Blog::where('status',1)->orderBy('id','desc')->paginate(10);
+		$blogs = Blog::where('status',1)->when(request('keyword'), function($query){
+            $query->where('title', 'like', '%'.request('keyword').'%')
+            ->orWhere('description', 'like', '%'.request('keyword').'%');
+        })->orderBy('id','desc')->paginate(10);
         $popularposts = Blog::where('status',1)->orderBy('count', 'desc')->limit(9)->get();
         
-        $tagsArray = [];
-        foreach($blogs as $blog){
-            foreach(explode(',', $blog->tags) as $singleBlog){
-                if(count($tagsArray) <= 6){
-                array_push($tagsArray, $singleBlog);
-                }
-            }
-        }
         $blog_categories = BlogCategory::inRandomOrder()->get();
-        return view('front.pages.blogs',compact('blogs','blog_categories','popularposts','tagsArray'));
+        return view('front.pages.blogs',compact('blogs','blog_categories','popularposts'));
     }
 
     public function blogCategories($slug)
     {
         $category = BlogCategory::where('slug', $slug)->first();
-        $category_blogs = Blog::where('category_id', $category->id)->get();
+        $category_blogs = Blog::where('category_id', $category->id)->paginate(getcong('pagination_limit'));
         $blog_categories = BlogCategory::inRandomOrder()->get();
 
-        $blogs = Blog::where('status',1)->orderBy('id', 'desc')->where('category_id', $category->id)->paginate(getcong('pagination_limit'));
-        $recent_posts = Blog::where('status',1)->orderBy('id','desc')->where('category_id', $category->id)->take(10)->get();
+        $blogs = Blog::where('status',1)->orderBy('id', 'desc')
+        ->where('category_id', $category->id)
+        ->paginate(getcong('pagination_limit'));
+        
+        $recent_posts = Blog::where('status',1)
+        ->orderBy('id','desc')->where('category_id', $category->id)
+        ->take(10)->get();
 
         return view('front.pages.blog_categories',compact('category','blogs', 'category_blogs','recent_posts','blog_categories'));
     }
@@ -71,34 +71,22 @@ class BlogController extends Controller
         return view('front.pages.blog_detail',compact('blog','popularposts', 'recentposts', 'slug','blog_categories'));
     }
 
-    public function searchBlogs(Request $request)
-    {
-        $keyword = $request->keyword;
-        $blog_categories = BlogCategory::get();
-
-        $blogs = Blog::where('status',1)
-        ->where(function ($query) use ($keyword) {
-            $query->where('title', 'like', '%'.$keyword.'%')->orWhere('description', 'like', '%'.$keyword.'%');
-        })->paginate(getcong('pagination_limit'));
-        $recent_posts = Blog::where('status',1)->orderBy('id','desc')->take(10)->get();
-
-        return view('front.pages.blogs',compact('blogs','blog_categories','recent_posts'));
-    }
     public function searchBlogCategories(Request $request, $id)
     {   
         $inputs = $request->all();
         $keyword = $inputs['keyword'];
         $category = BlogCategory::find($id);
-        $category_blogs = Blog::where('category_id', $category->id)->
-        where('status',1)->
-        where(function ($query) use ($keyword) {
+
+        $category_blogs = Blog::where('category_id', $category->id)
+        ->where('status',1)
+        ->where(function ($query) use ($keyword) {
             $query->where('title', 'like', '%'.$keyword.'%')
             ->orWhere('description', 'like', '%'.$keyword.'%');
-        })->get();
-        $blog_categories = BlogCategory::get();
-        $blogs = Blog::where('status',1)->orderBy('id', 'desc')->where('category_id', $category->id)->paginate(getcong('pagination_limit'));
+        })->paginate(getcong('pagination_limit'));
         
-        return view('front.pages.blog_categories',compact('blogs','blog_categories','category_blogs','blogs','category'));
+
+        $blog_categories = BlogCategory::get();
+        return view('front.pages.blog_categories',compact('blogs','blog_categories','category_blogs','category'));
     }
 
 
