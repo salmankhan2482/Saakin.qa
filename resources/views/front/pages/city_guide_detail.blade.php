@@ -68,13 +68,14 @@
         </div>
         <div id="guideNeighborHood">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">NeighborHood</h5>
-          <ul class="sub-details">
+          {!! $cityGuideContent->neighborhood ??'' !!}
+          {{-- <ul class="sub-details">
             <li>Popular Communities</li>
             <li>Public Transport</li>
             <li>Clinics &amp; Hospitals</li>
             <li>Schools</li>
             <li>Super Markets</li>
-          </ul>
+          </ul> --}}
           <div class="p-2 border mb-3">
             <iframe class="d-block"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d714.7768477657363!2d74.3806660590514!3d31.549670099468507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919053f257c413f%3A0x4600666a4d2dbdf1!2sServaid%20Pharmacy!5e0!3m2!1sen!2s!4v1648668166597!5m2!1sen!2s"
@@ -150,42 +151,46 @@
         </div>
         <div id="guideLifeStyle">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">Lifestyle</h5>
-          <ul class="sub-details">
+          {!! $cityGuideContent->lifestyle ??'' !!}
+          {{-- <ul class="sub-details">
             <li>Shopping Malls</li>
             <li>Restaurants</li>
             <li>Beaches</li>
             <li>Fitness &amp; Beauty</li>
-          </ul>
+          </ul> --}}
         </div>
         <div id="guideThingsToConsider">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">Things to consider</h5>
-          <ul class="sub-details">
+          {!! $cityGuideContent->things_to_consider ??'' !!}
+          {{-- <ul class="sub-details">
             <li>Airport</li>
             <li>Metro Station</li>
             <li>Market (wholesale/food)</li>
             <li>Beach</li>
             <li>Stadiums</li>
-          </ul>
+          </ul> --}}
         </div>
         <div id="guideLocations">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">Locations</h5>
-          <ul class="sub-details">
+          {!! $cityGuideContent->locations ??'' !!}
+          {{-- <ul class="sub-details">
             <li>Airport</li>
             <li>Metro Station</li>
             <li>Market (wholesale/food)</li>
             <li>Beach</li>
             <li>Stadiums</li>
-          </ul>
+          </ul> --}}
         </div>
         <div id="guideAttributes">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">Attributes</h5>
-          <ul class="sub-details">
+          {!! $cityGuideContent->attributes ??'' !!}
+          {{-- <ul class="sub-details">
             <li>Airport</li>
             <li>Metro Station</li>
             <li>Market (wholesale/food)</li>
             <li>Beach</li>
             <li>Stadiums</li>
-          </ul>
+          </ul> --}}
         </div>
       </div>
 
