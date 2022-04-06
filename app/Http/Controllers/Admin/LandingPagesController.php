@@ -107,7 +107,6 @@ class LandingPagesController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->messages());
         }
-
         $landing_page_content = LandingPage::findOrFail($id);
 
         $landing_page_content->property_purposes_id = $inputs['property_purposes_id'];

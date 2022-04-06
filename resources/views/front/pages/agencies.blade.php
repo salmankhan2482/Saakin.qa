@@ -25,7 +25,7 @@
             <div class="input-group-prepend-overlay">
               <span class="input-group-text" id="keyword"><i class="fa fa-search"></i></span>
             </div>
-            <input class="form-control prepended-form-control" type="text" class="typeahead" name="keyword" id="keyword" autocomplete="off" placeholder="Enter Agent or Company Name...">
+            <input class="form-control prepended-form-control typeahead" type="text" name="keyword" id="keyword" autocomplete="off" placeholder="Enter Agent or Company Name...">
             <div class="resulted-search country-list scroll-y"></div>
           </div>
           <div class="">
@@ -197,14 +197,8 @@
     $(".typeahead").on('keyup', function(){
         $(".resulted-search").html('');
         var value = $(this).val();
-        var type = $(this).attr("data-type");
         
-        if(type == 'mbl'){
-            var path = "{{ url('mbl/autocomplete/agencies') }}";
-        }else{
-            var path = "{{ url('autocomplete/agencies') }}";
-        }
-        
+        var path = "{{ url('autocomplete/agencies') }}";
         
         $.ajax({
             url: path,

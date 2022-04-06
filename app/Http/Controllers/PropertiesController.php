@@ -46,14 +46,13 @@ class PropertiesController extends Controller
             $request['type'] = Types::findOrFail(request()->property_type);
         }
         
-        
         $propertyTypes =  DB::table('property_types')
         ->join('properties', "property_types.id", "properties.property_type")
-        ->select('property_types.id', 'property_types.types','property_types.plural',  DB::Raw('COUNT(properties.id) as pcount'))
+        ->select('property_types.id', 'property_types.types','property_types.plural',  
+        DB::Raw('COUNT(properties.id) as pcount'))
         ->when(request()->property_purpose != '', function($query){
             $query->where("properties.property_purpose", request()->property_purpose);
         })
-        
         ->where("properties.status", 1)
         ->groupBy("property_types.id")
         ->orderBy("pcount", "desc")->get();
@@ -248,6 +247,10 @@ class PropertiesController extends Controller
             } else {
                 $query->where('properties.bathrooms', request('bathrooms'));
             }
+        })
+        ->when(request()->agent, function ($query) {
+            // agent
+            $query->where('agency_id', request()->agent);
         });
 
         if (isset($request->sort_by) && !empty($request->sort_by)) {
@@ -312,7 +315,8 @@ class PropertiesController extends Controller
         
         $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
-        $heading_info = $furnishing.' '.($request['type']->types ?? ' properties').' for '. strtolower(request()->property_purpose) .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
+        $heading_info = $furnishing.' '.($request['type']->types ?? ' properties'). 
+        (request()->property_purpose ? strtolower(request()->property_purpose).' for ' : ' ') .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
         
         if(count($properties) > 0){
             $popularSearches = PopularSearches::updateOrCreate(
