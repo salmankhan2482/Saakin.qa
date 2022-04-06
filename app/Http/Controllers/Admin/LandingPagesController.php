@@ -98,11 +98,13 @@ class LandingPagesController extends Controller
     }
     public function update(Request $request, $id)
     {
+
+        
         $data =  \Request::except(array('_token')) ;
 
         $inputs = $request->all();
         $rule=array( 'property_purposes_id' => 'required');
-
+        
         $validator = \Validator::make($data,$rule);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->messages());
