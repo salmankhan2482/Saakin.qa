@@ -204,7 +204,10 @@
                                                 <div class="property-title-box">
                                                     <div class="property-location">
                                                         <i class="fa fa-map-marker-alt"></i>
-                                                        <p>{{ $property->address }}, {{ $property->propertyCity->name }}</p>
+                                                        
+                                                        <p class="property-card__property-title">
+                                                            {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
+                                                        </p>
 
                                                     </div>
                                                     <ul class="property-feature">
@@ -258,7 +261,9 @@
                                                     <h4><a href="{{url('property/'.$property->property_slug.'/'.$property->id)}}">{{$property->property_name}}</a></h4>
                                                     <div class="property-location">
                                                         <i class="fa fa-map-marker-alt"></i>
-                                                        <p>{{ $property->address }}, {{ $property->propertyCity->name }}</p>
+                                                        <p class="property-card__property-title">
+                                                            {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
+                                                        </p>
                                                     </div>
                                                     <ul class="property-feature">
                                                         <li> <i class="fas fa-bed"></i>

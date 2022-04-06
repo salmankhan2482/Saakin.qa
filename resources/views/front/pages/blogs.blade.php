@@ -8,7 +8,7 @@
 
   <div class="site-banner" style="background-image:  url('../assets/images/backgrounds/blogs.jpg')">
     <div class="container">
-      <h1 class="text-center">Blogs</h1>
+      <h1 class="text-center">Blog</h1>
       <div class="text-white fs-sm d-flex justify-content-center spbwx8">
         <span><a href="{{ url('/') }}" class="text-white text-decoration-none">Home</a></span>
         <span>/</span>

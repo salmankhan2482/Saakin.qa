@@ -1047,7 +1047,9 @@
                                     </a>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p>{{ $property->address }}, {{ $property->propertyCity->name }}</p>
+                                        <p class="property-card__property-title">
+                                            {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
+                                        </p>
                                     </div>
                                     <ul class="property-feature">
                                         @if ($property->getProperty_type())
