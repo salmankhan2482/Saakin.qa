@@ -92,52 +92,41 @@
 
                         <input type="hidden" name="type" value="Contact Inquiry">
                         <div class="form-control-wrap form-row">
-                            <!--<div id="message" class="alert alert-danger alert-dismissible fade"></div>-->
                             <div class="form-group col-md-6">
-                                <input type="text" class="form-control" value="{{ old('name') }}" id="name"
-                                       placeholder="{{trans('words.name')}} *"
-                                       name="name" required>
+                                <input type="text" class="form-control" value="{{ old('name') }}" id="name" placeholder="{{trans('words.name')}} *" name="name" required>
+                                
                                 @if ($errors->has('name'))
-                                    <span style="color:#fb0303">
-                                        {{ $errors->first('name') }}
-                                    </span>
+                                    <span style="color:#fb0303"> {{ $errors->first('name') }} </span>
                                 @endif
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="email" class="form-control" name="email"
-                                       placeholder="{{trans('words.email')}} *" value="{{ old('email') }}" required>
+                                <input type="email" class="form-control" name="email" placeholder="{{trans('words.email')}} *" value="{{ old('email') }}" required>
+
                                 @if ($errors->has('email'))
-                                    <span style="color:#fb0303">
-                                            {{ $errors->first('email') }}
-                                            </span>
+                                    <span style="color:#fb0303"> {{ $errors->first('email') }} </span>
                                 @endif
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="text" name="phone" class="form-control"
-                                       placeholder="{{trans('words.phone')}}" value="{{ old('phone') }}" required>
+                                <input type="text" name="phone" class="form-control" placeholder="{{trans('words.phone')}}" value="{{ old('phone') }}" required>
                             </div>
                             <div class="form-group col-md-6">
-                                <input type="text" name="subject" placeholder="{{trans('words.subject')}}"
-                                       class="form-control" value="{{ old('subject') }}" required>
+                                <input type="text" name="subject" placeholder="{{trans('words.subject')}}" class="form-control" value="{{ old('subject') }}" required>
                             </div>
                             <div class="form-group col-md-12">
-                                <textarea id="message" rows="4" name="your_message" class="form-control"
-                                          placeholder="{{trans('words.message')}} *" required>{{ old('your_message') }}</textarea>
+                                <textarea id="message" rows="4" name="your_message" class="form-control" placeholder="{{trans('words.message')}} *" required>{{ old('your_message') }}</textarea>
 
                                 @if ($errors->has('your_message'))
-                                    <span style="color:#fb0303">
-                        {{ $errors->first('your_message') }}
-                    </span>
+                                    <span style="color:#fb0303"> {{ $errors->first('your_message') }} </span>
                                 @endif
                             </div>
                             <div class="form-group col-md-3">
                                 {!! NoCaptcha::renderJs() !!}
                                 {!! NoCaptcha::display() !!}
                                 @if ($errors->has('g_recaptcha_confirmed'))
-                                <span style="color:#fb0303">
-                                    {{ $errors->first('g_recaptcha_confirmed') }}
-                                </span>
-                            @endif
+                                    <span style="color:#fb0303">
+                                        {{ $errors->first('g_recaptcha_confirmed') }}
+                                    </span>
+                                 @endif
                             </div>
 
                             <div class="form-group col-md-12 mb-0">

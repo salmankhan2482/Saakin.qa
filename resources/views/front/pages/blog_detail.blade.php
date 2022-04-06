@@ -38,10 +38,10 @@
           {{-- <img class="img-fluid" src="{{ asset('upload/blogs/' . $blog->image) }}" alt="{{ $blog->name }}"> --}}
           {!! $blog->description !!}
 
-          <div class="mt-4 d-none d-sm-block">
+          <div class="mt-4 d-sm-block">
             <h5 class="border-bottom pb-3 mb-2">Share This Property</h5>
             <div class="d-flex flex-wrap align-items-center spbwx12 spbwy8">
-              <div class="mt-2">
+              {{-- <div class="mt-2">
                 <button class="btn btn-monochrome btn-sm share-btn">
                   <svg viewBox="0 0 22 20" class="btn-icon" style="--icon-size:1em;">
                     <path
@@ -50,7 +50,7 @@
                   </svg> Save to shortlist
                 </button>
               </div>
-              <div>or share</div>
+              <div>or share</div> --}}
               <div>
                 <a href="#!" class="btn btn-monochrome btn-sm share-btn">
                   <svg viewBox="0 0 22 20" class="btn-icon" style="--icon-color: #4267b2;">
@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4 mt-2">
           <div class="card">
             <div class="card-body">
               <h4>Popular Topics</h4>

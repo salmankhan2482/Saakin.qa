@@ -154,14 +154,12 @@
                             <div class="card-body">
 
                                 @if (count($errors) > 0)
-                                    <div class="alert alert-danger">
-                                        <button type="button" class="btn-close" data-dismiss="alert"
-                                            aria-label="Close"></button>
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                        @foreach ($errors->all() as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                        </button>
                                     </div>
                                 @endif
 
@@ -173,20 +171,6 @@
                                         {{ Session::get('flash_message_contact_agency') }}
                                     </div>
                                 @endif
-
-                                {{-- @if (Session::has('flash_message_contact_agency'))
-                                    @if (count($errors) > 0)
-                                        <div class="alert alert-danger">
-                                            <button type="button" class="close" data-dismiss="alert"
-                                                aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <ul>
-                                                @foreach ($errors->all() as $error)
-                                                    <li>{{ $error }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
-                                @endif --}}
 
                                 <h4 class="widget-title">Contact us</h4>
                                 <form action="{{ url('agency-contact') }}" id="" method="POST">
@@ -246,8 +230,7 @@
                                     <div class="mb-2">
                                         <textarea class="form-control" name="your_message" rows="4" placeholder="Your Message" required></textarea>
                                     </div>
-                                    <div
-                                        class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                                    <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
                                         <div class="mb-2">
                                             {!! NoCaptcha::renderJs() !!}
                                             {!! NoCaptcha::display() !!}

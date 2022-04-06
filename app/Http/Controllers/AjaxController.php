@@ -193,7 +193,7 @@ class AjaxController extends Controller
     {
         $result = '';
         if(request('myData')){
-            $result = '<option value="">Commercial Property Type</option>';
+            $result = '<option value="">Property Type</option>';
             $types = Types::whereIn('id', ['14', '17', '23', '27', '4', '13', '7', '34', '16', '35'])->select('id', 'types')->get();
             
             foreach($types as $type){
