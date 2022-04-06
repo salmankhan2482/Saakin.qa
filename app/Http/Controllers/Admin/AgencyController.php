@@ -52,14 +52,15 @@ class AgencyController extends Controller
         $inputs = $request->all();
         $rule=array(
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|starts_with:00974,974',
+            'whatsapp' => 'required|starts_with:00974,974',
             'email' => 'required|email|max:200|unique:users,email',
             'password' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'            
         );
         $validator = \Validator::make($data,$rule);
         if ($validator->fails()){   
-            return redirect()->back()->withErrors($validator->messages());  
+            return redirect()->back()->withErrors($validator)->withInput();  
         }
         $agency = new Agency();
         $agency->name = $inputs['name'];

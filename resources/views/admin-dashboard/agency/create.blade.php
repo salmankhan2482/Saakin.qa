@@ -1,7 +1,9 @@
 @extends('admin-dashboard.layouts.master')
 @section('content')
 
-@if (count($errors) > 0)
+
+<div class="container-fluid">
+    @if (count($errors) > 0)
     <div class="alert alert-danger">
         <ul>
             @foreach ($errors->all() as $error)
@@ -18,7 +20,6 @@
 		    {{ Session::get('flash_message') }}
 		</div>
 	@endif
-<div class="container-fluid">
     <!-- row -->
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
@@ -38,22 +39,22 @@
                                     <label for="" >Agency Name:*</label>
                                     <input type="text" name="name" id="name"  value="" class="form-control" required>
                                 </div>
-                            
-                                <div class="form-group col-md-6">
+                                
+                                <div class="form-group col-md-6{{ $errors->has('phone') ? ' has-error' : '' }}">
                                     <label >Phone: * </label>
-                                    <input type="text" name="phone" id="phone" value="{{old('phone')}}" class="form-control">
+                                    <input type="number" name="phone" minlength="11" id="phone" placeholder="00 974 12345678" value="{{old('phone')}}" class="form-control">
                                 </div>
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6{{ $errors->has('whatsapp') ? ' has-error' : '' }}">
                                     <label >Whatsapp: * 
                                         <small style="font-size: 11px; color:#F00">
                                             (whatsapp number will be number only, no space, no plus sign)
                                         </small>
                                     </label>
-                                    <input type="text" name="whatsapp" id="whatsapp" value="{{old('whatsapp')}}" class="form-control">
+                                    <input type="number" name="whatsapp" minlength="11" id="whatsapp" placeholder="00 974 12345678" value="{{old('whatsapp')}}" class="form-control">
                                 </div>
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label >Email * 
                                         <small style="font-size: 11px; color:#F00">
                                             (It will be agency login id)

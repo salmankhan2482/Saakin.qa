@@ -48,7 +48,9 @@
                                 <div class="form-group col-md-4">
                                     <label>Property Purpose</label>
                                     <select id="property_purposes_id" name="property_purposes_id" class="form-control">
+
                                         <option value="">Select Property Purpose</option>
+
                                         @foreach ($data['property_purposes'] as $purpose)
                                         <option value="{{ $purpose->id }}" 
                                         {{ $data['landing_page_content']->property_purposes_id == $purpose->id ? 'selected' : '' }}>
@@ -59,8 +61,10 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Property Types</label>
+
                                     <select name="property_types_id" class="form-control">
                                         <option value="">Select Property Types</option>
+
                                         @foreach ($data['property_types'] as $type)
                                         <option value="{{ $type->id }}"
                                         {{ $data['landing_page_content']->property_types_id == $type->id ? 'selected' : '' }}>
@@ -71,8 +75,10 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Cities</label>
+
                                     <select name="property_cities_id" class="form-control">
                                         <option value="">Select City</option>
+
                                         @foreach ($data['cities'] as $city)
                                         <option value="{{ $city->id }}"
                                         {{ $data['landing_page_content']->property_cities_id == $city->id ? 'selected' : '' }}>
