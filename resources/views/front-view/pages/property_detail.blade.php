@@ -286,25 +286,57 @@
             <div class="card-body text-center shadow">
               <div class="callgroup">
                 @if (!empty($property->whatsapp))
-                  <a href="tel:{{ $property->whatsapp }}" class="btn btn-primary btn-sm btn-call">
+                  <a href="tel:{{ $property->whatsapp }}" 
+                    class="btn btn-primary btn-sm btn-call btnCount" 
+                    data-property_id={{ $property->id }} 
+                    data-agency_id={{ $property->agency_id }} 
+                    data-button_name='Call'>
                     <i class="fas fa-phone-alt"></i>
                     Call Now
                   </a>
                 @else
-                  <a href="tel:{{ $agency->phone }}" class="btn btn-primary btn-sm btn-call">
+                  <a href="tel:{{ $agency->phone }}" 
+                    class="btn btn-primary btn-sm btn-call btnCount"
+                    data-property_id={{ $property->id }} 
+                    data-agency_id={{ $property->agency_id }} 
+                    data-button_name='Call'>
                     <i class="fas fa-phone-alt"></i>
                     Call Now
                   </a>
                 @endif
                 @if (!empty($property->whatsapp))
-                  <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}" class="btn btn-sm btn-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                  <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}" 
+                    class="btn btn-sm btn-success btnCount" 
+                    data-property_id={{ $property->id }} 
+                    data-agency_id={{ $property->agency_id }} 
+                    data-button_name='WhatsApp'>
+                    <i class="fab fa-whatsapp"></i> 
+                    WhatsApp
+                  </a>
                 @elseif(!empty($agency->whatsapp))
-                  <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}" class="btn btn-sm btn-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                  <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}" 
+                    class="btn btn-sm btn-success btnCount"
+                    data-property_id={{ $property->id }} 
+                    data-agency_id={{ $property->agency_id }} 
+                    data-button_name='WhatsApp'>
+                    <i class="fab fa-whatsapp"></i> 
+                    WhatsApp
+                  </a>
                 @endif
-                <button class="btn btn-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal" id="emailBtn"
+                <button class="btn btn-danger btn-sm btnCount" 
+                  type="button" 
+                  data-property_id={{ $property->id }}
+                  data-agency_id={{ $property->agency_id }}
+                  data-button_name='Email' 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#emailAgentModal" 
+                  id="emailBtn"
                   data-image="{{ asset('upload/properties/' . $property->featured_image) }}" data-title="{{ $property->property_name }}"
-                  data-agent="{{ $property->agent_name ?? $agency->name }}" data-broker="{{ $agency->name ?? '' }}" data-bedroom="{{ $property->bedrooms ?? '' }}"
-                  data-bathroom="{{ $property->bathrooms ?? '' }}" data-area="{{ $property->getSqm() ?? '' }}">
+                  data-agent="{{ $property->agent_name ?? $agency->name }}" 
+                  data-broker="{{ $agency->name ?? '' }}" 
+                  data-bedroom="{{ $property->bedrooms ?? '' }}"
+                  data-bathroom="{{ $property->bathrooms ?? '' }}" 
+                  data-area="{{ $property->getSqm() ?? '' }}">
                   <i class="fas fa-envelope"></i>
                   Email Now
                 </button>
@@ -315,9 +347,20 @@
                     {{ $property->whatsapp ?? $agency->phone }}
                   </a>
 
-                  <a class="btn-email" id="emailBtn" data-bs-toggle="modal" data-bs-target="#emailAgentModal" data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
-                    data-image="{{ $property->featured_image }}" data-title="{{ $property->property_name }}" data-agent="{{ $property->agent_name ?? $agency->name }}"
-                    data-broker="{{ $agency->name ?? '' }}" data-bedroom="{{ $property->bedrooms ?? '' }}" data-bathroom="{{ $property->bathrooms ?? '' }}"
+                  <a class="btn-email btnCount" 
+                    id="emailBtn"
+                    data-property_id={{ $property->id }}
+                    data-agency_id={{ $property->agency_id }}
+                    data-button_name='Email' 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#emailAgentModal" 
+                    data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
+                    data-image="{{ $property->featured_image }}" 
+                    data-title="{{ $property->property_name }}" 
+                    data-agent="{{ $property->agent_name ?? $agency->name }}"
+                    data-broker="{{ $agency->name ?? '' }}" 
+                    data-bedroom="{{ $property->bedrooms ?? '' }}" 
+                    data-bathroom="{{ $property->bathrooms ?? '' }}"
                     data-area="{{ $property->getSqm() ?? '' }}">
                     <i class="fas fa-envelope"></i>
                     Email
@@ -440,24 +483,57 @@
 
               <div class="callgroup">
                 @if (!empty($property->whatsapp))
-                  <a href="tel:{{ $property->whatsapp }}" class="btn btn-primary btn-call">
+                  <a href="tel:{{ $property->whatsapp }}" 
+                    class="btn btn-primary btn-call btnCount"
+                    data-property_id={{ $property->id }} 
+                    data-agency_id={{ $property->agency_id }} 
+                    data-button_name='Call'>
                     <i class="fas fa-phone-alt"></i>
                     Call Now
                   </a>
                 @else
-                  <a href="tel:{{ $agency->phone }}" class="btn btn-primary btn-call">
+                  <a href="tel:{{ $agency->phone }}" 
+                    class="btn btn-primary btn-call btnCount"
+                    data-property_id={{ $property->id }} 
+                    data-agency_id={{ $property->agency_id }} 
+                    data-button_name='Call'>
                     <i class="fas fa-phone-alt"></i>
                     Call Now
                   </a>
                 @endif
                 @if (!empty($property->whatsapp))
-                  <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}" class="btn btn-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                  <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}" 
+                      class="btn btn-success btnCount"
+                      data-property_id={{ $property->id }} 
+                      data-agency_id={{ $property->agency_id }} 
+                      data-button_name='WhatsApp'>
+                    <i class="fab fa-whatsapp"></i> 
+                    WhatsApp
+                  </a>
                 @elseif(!empty($agency->whatsapp))
-                  <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}" class="btn btn-success"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                  <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}" 
+                    class="btn btn-success btnCount"
+                    data-property_id={{ $property->id }} 
+                    data-agency_id={{ $property->agency_id }} 
+                    data-button_name='WhatsApp'>
+                    <i class="fab fa-whatsapp"></i> 
+                    WhatsApp
+                  </a>
                 @endif
-                <button class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal" id="emailBtn" data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
-                  data-title="{{ $property->property_name }}" data-agent="{{ $property->agent_name ?? $agency->name }}" data-broker="{{ $agency->name ?? '' }}"
-                  data-bedroom="{{ $property->bedrooms ?? '' }}" data-bathroom="{{ $property->bathrooms ?? '' }}" data-area="{{ $property->getSqm() ?? '' }}">
+                <button 
+                  class="btn btn-danger btnCount" 
+                  type="button" 
+                  data-property_id={{ $property->id }}
+                  data-agency_id={{ $property->agency_id }}
+                  data-button_name='Email'
+                  data-bs-toggle="modal" 
+                  data-bs-target="#emailAgentModal" id="emailBtn" data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
+                  data-title="{{ $property->property_name }}" 
+                  data-agent="{{ $property->agent_name ?? $agency->name }}" 
+                  data-broker="{{ $agency->name ?? '' }}"
+                  data-bedroom="{{ $property->bedrooms ?? '' }}" 
+                  data-bathroom="{{ $property->bathrooms ?? '' }}" 
+                  data-area="{{ $property->getSqm() ?? '' }}">
                   <i class="fas fa-envelope"></i>
                   Email Now
                 </button>
@@ -469,9 +545,20 @@
                     {{ $property->whatsapp ?? $agency->phone }}
                   </a>
 
-                  <a class="btn-email" id="emailBtn" data-bs-toggle="modal" data-bs-target="#emailAgentModal" data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
-                    data-image="{{ $property->featured_image }}" data-title="{{ $property->property_name }}" data-agent="{{ $property->agent_name ?? $agency->name }}"
-                    data-broker="{{ $agency->name ?? '' }}" data-bedroom="{{ $property->bedrooms ?? '' }}" data-bathroom="{{ $property->bathrooms ?? '' }}"
+                  <a class="btn-email btnCount" 
+                    id="emailBtn"
+                    data-property_id={{ $property->id }}
+                    data-agency_id={{ $property->agency_id }}
+                    data-button_name='Email' 
+                    data-bs-toggle="modal" 
+                    data-bs-target="#emailAgentModal" 
+                    data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
+                    data-image="{{ $property->featured_image }}" 
+                    data-title="{{ $property->property_name }}" 
+                    data-agent="{{ $property->agent_name ?? $agency->name }}"
+                    data-broker="{{ $agency->name ?? '' }}" 
+                    data-bedroom="{{ $property->bedrooms ?? '' }}" 
+                    data-bathroom="{{ $property->bathrooms ?? '' }}"
                     data-area="{{ $property->getSqm() ?? '' }}">
                     <i class="fas fa-envelope"></i>
                     Email
