@@ -93,7 +93,7 @@
             <div class="card-body">
               <h4>Popular Topics</h4>
               <ul class="property-type-list list-unstyled">
-                @foreach ($blog_categories as $blog_category)
+                @foreach ($categories as $blog_category)
                   <li>
                     <a href="{{ route('blog-categories', $blog_category->slug) }}">
                       <i class="fas fa-chevron-right"></i> {{ $blog_category->category }} <span>({{ $blog_category->pcount }})</span>

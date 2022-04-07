@@ -2,12 +2,13 @@
 
 @section('content')
     <div id="main">
-
+        
         <div class="page-header">
             @if (isset($gid))
                 <div class="pull-right">
                     <a href="{{ URL::to('admin/properties/gallery/' . $property_id) }}" class="btn btn-primary">Add Gallery
-                        Image <i class="fa fa-plus"></i></a>
+                        Image <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             @endif
 

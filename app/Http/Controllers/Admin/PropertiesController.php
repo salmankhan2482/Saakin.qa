@@ -71,12 +71,9 @@ class PropertiesController extends MainAdminController
         $data['propertieslist']->appends($_GET)->links();
 
         $data['propertyTypes'] = Types::join("properties", "properties.property_type", "=", "property_types.id")
-        ->select("property_types.id", "property_types.types", 
-        DB::Raw("count(properties.id) as pcount"))
+        ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
         ->when(auth()->user()->usertype == "Agency", function($query){
-            
             return $query->where('properties.agency_id', Auth::User()->agency_id);
-
         })->where('properties.status', 1)
         ->orderBy("pcount", "desc")
         ->groupBy("property_types.id")->get();
@@ -454,22 +451,10 @@ class PropertiesController extends MainAdminController
 
     public function plan_update(Request $request)
     {
-        $data =  \Request::except(array('_token'));
-
-        $inputs = $request->all();
-
-        $plan_id = $inputs['plan_id'];
-        $property_id = $inputs['property_id'];
-        $property_exp_date = $inputs['property_exp_date'];
-        $property_status = $inputs['status'];
-
-
-        $property_obj = Properties::findOrFail($property_id);
-
-        $property_obj->active_plan_id = $plan_id;
-        $property_obj->property_exp_date = strtotime($property_exp_date);
-        $property_obj->status = $property_status;
-        $property_obj->save();
+        $prop = Properties::findOrFail(request('property_id'));
+        $prop->active_plan_id = request('plan_id');
+        $prop->property_exp_date = strtotime(request('property_exp_date'));
+        $prop->save();
 
         \Session::flash('flash_message', 'Plan updated successfully!');
         return redirect()->back();
@@ -597,17 +582,15 @@ class PropertiesController extends MainAdminController
 
     public function listGalleryImages($property_id)
     {
-        //dd("in listing");
         if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
 
         $property_name = Properties::where('id', $property_id)->pluck('property_name')->first();
-        //dd($property_name);
-
         $galleryImages = PropertyGallery::where('property_id', $property_id)->get();
-        return view('admin.pages.property_gallery_images', compact('property_id', 'property_name', 'galleryImages'));
+        $action = 'saakin_index';
+        return view('admin-dashboard.properties.gallery', compact('property_id', 'property_name', 'galleryImages', 'action'));
     }
 
     public function addGalleryImages($property_id)

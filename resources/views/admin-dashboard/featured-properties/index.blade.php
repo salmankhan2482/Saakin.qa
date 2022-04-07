@@ -51,14 +51,57 @@
                         <form action="{{ route('featuredproperties.index') }}" method="GET">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="keyword" placeholder="Search">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search" value="{{ request('keyword') }}">
+                                </div>
+                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                    <select name="purpose" class="form-control">
+                                        <option value="">{{ trans('words.property_purpose') }}</option>
+                                        <option value="Sale" {{ request('purpose') == 'Sale' ? 'selected' : '' }}>
+                                            Sale
+                                        </option>
+                                        <option value="Rent" {{ request('purpose') == 'Rent' ? 'selected' : '' }}>
+                                            Rent
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                    <select name="status" id="basic" class="selectpicker show-tick form-control"
+                                        data-live-search="false">
+                                        <option value="">Select Status</option>
+                                        <option value="1" {{ request('staus') == 1 ? 'selected' : '' }}>
+                                            Active
+                                        </option>
+                                        <option value="0" {{ request('staus') == 0 ? 'selected' : '' }}>
+                                            Inactive
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                    <select name="type" class="selectpicker show-tick form-control">
+                                        <option value="">{{ trans('words.property_type') }}</option>
+                                        @if (count($data['propertyTypes']) > 0)
+                                            @foreach ($data['propertyTypes'] as $type)
+                                                <option value="{{ $type->id }}" 
+                                                    {{ request('type') == $type->id ? 'selected' : '' }}>
+                                                    {{ $type->types }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                    <button type="submit" class="btn btn-dark  pull-right">
+                                        {{ trans('words.search') }}
+                                    </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            
         </div>
+        
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -93,12 +136,12 @@
                                         <td>{{ $property->Agency->name ?? $property->user->name }}</td>
 
                                         <td>
-                                            <a
-                                                href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
+                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
                                                 {{ $property->property_name }}
                                             </a>
                                         </td>
-                                        <td>{{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }}
+                                        <td>
+                                            {{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }}
                                         </td>
                                         <td>{{ $property->property_purpose }}</td>
                                         <td class="text-center">
@@ -129,7 +172,10 @@
                                                     @if (Auth::User()->usertype == 'Admin')
                                                         <a href="Javascript:void(0);" class="dropdown-item"
                                                             data-toggle="modal"
-                                                            data-target="#PropertyPlanModal{{ $property->id }}">
+                                                            data-target="#PropertyPlanModal"
+                                                            data-propertyid="{{ $property->id }}"
+                                                            id="changePlan_button"
+                                                            >
                                                             <i class="fa fa-dollar"></i>
                                                             {{ trans('words.change_plan') }}
                                                         </a>
@@ -153,59 +199,13 @@
                                                 @endif
                                             </div>
                                         </td>
-
                                     </tr>
-
-                                    <div class="modal fade" id="PropertyPlanModal{{ $property->id }}" role="dialog">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close"
-                                                        data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">{{ $property->property_name }}
-                                                        {{ trans('words.property_plan') }}</h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="panel-body">
-                                                        {!! Form::open(['url' => ['admin/properties/plan_update'], 'class' => '', 'name' => 'plan_form', 'id' => 'plan_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
-
-                                                        <input type="hidden" name="property_id" value="{{ $property->id }}">
-                                                        <div class="form-row">
-                                                            <div class="form-group col-md-6">
-                                                                <label>{{ trans('words.subscription_plan') }}</label>
-                                                                <select id="plan_id" name="plan_id" class="form-control" required>
-                                                                    <option value="1">Basic Plan</option>
-                                                                    <option value="2">Premium Plan</option>
-                                                                    <option value="3">Platinum Plan</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <div class="form-group col-md-6">
-                                                                <p class="mb-1">Expiry Date</p>
-                                                                <input name="property_exp_date"
-                                                                    value="{{ $property->property_exp_date ? date('m/d/Y', $property->property_exp_date) : null }}"
-                                                                    class="datepicker-default form-control" id="datepicker"
-                                                                    placeholder="mm/dd/yyyy">
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="submit"
-                                                                class="btn btn-primary">{{ trans('words.save_changes') }}</button>
-                                                            <button type="button" class="btn btn-default"
-                                                                data-dismiss="modal">{{ trans('words.close') }}</button>
-                                                        </div>
-                                                        {!! Form::close() !!}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
-                                        {{-- {{ $propertieslist->render() }} --}}
+                                    <td colspan="10" class="text-center">
+                                        {{ $propertieslist->render() }}
                                     </td>
                                 </tr>
                             </tfoot>
@@ -216,51 +216,55 @@
         </div>
     </div>
 
-    <div class="modal fade" id="removePropertyPopup" tabindex="-1" role="dialog" aria-labelledby="removePropertyPopup"
-        aria-hidden="true">
+<div class="modal fade" id="PropertyPlanModal" tabindex="-1" role="dialog" aria-labelledby="PropertyPlanModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
 
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
+            <div class="modal-header" style="padding: 10px">
+                <h5 class="modal-title" id="exampleModalLongTitle">
+                    Change Plan
+                </h5>
+            </div>
 
-                <div class="modal-header" style="padding: 10px">
-                    <h5 class="modal-title" id="exampleModalLongTitle">
-                        Reason to Inactive Property
-                    </h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                        style="margin-top: -23px">
-                        <span aria-hidden="true">&times;</span>
+            {!! Form::open(['url' => ['admin/properties/plan_update'], 'class' => '', 'name' => 'plan_form', 'id' => 'plan_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                <input type="hidden" id="hidden_property_id" name="property_id" value="">
+                <div class="modal-body" style="padding: 10px">
+                    <div class="row">
+                        <div class="col-6">
+                            <label>{{ trans('words.subscription_plan') }}</label>
+                            <select id="plan_id" name="plan_id" class="form-control" required>
+                                <option value="1">Basic Plan</option>
+                                <option value="2">Premium Plan</option>
+                                <option value="3">Platinum Plan</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label>Expiry Date</label>
+                            <input type="date" name="property_exp_date" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 10px">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Save changes
                     </button>
                 </div>
-
-                <form method="POST" id="removePropertyPopupForm">
-                    @csrf
-                    <div class="modal-body" style="padding: 10px">
-                        <label for="reason">
-                            Select Reason
-                        </label>
-
-                        <select name="reason" id="reason" class="form-control">
-                            <option value="Rented/Sold">Rented/Sold</option>
-                            <option value="Unavailable">Unavailable</option>
-                            <option value="Inactive">Inactive</option>
-                        </select>
-
-                    </div>
-                    <div class="modal-footer" style="padding: 10px">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            Save changes
-                        </button>
-                    </div>
-                </form>
-            </div>
+            {!! Form::close() !!}
         </div>
     </div>
+</div>
 @endsection
 @section('scripts')
     <script>
+        
+    $(document).on("click", "#changePlan_button", function() {
+        var id = $(this).attr('data-propertyId');
+        $('#hidden_property_id').val(id);
+    });
+
         $(".callRemovePropertyPopup").on('click', function(e) {
             var id = $(this).attr('data-id');
             $("#removePropertyPopupForm").attr('action', `properties/delete/${id}`);

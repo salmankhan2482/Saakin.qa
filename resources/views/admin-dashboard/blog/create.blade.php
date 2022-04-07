@@ -84,7 +84,14 @@
                                     <label>Meta Keywords</label>
                                     <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-3">
+                                    <label>Status</label>
+                                    <select type="text" name="status" class="form-control">
+                                        <option value="1">Publish</option>
+                                        <option value="0">Draft</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>&nbsp;</label><br>
                                     <button type="submit" class="btn btn-rounded btn-success">Save</button>
                                 </div>

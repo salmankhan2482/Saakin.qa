@@ -40,31 +40,22 @@ class UsersController extends MainAdminController
             return redirect('admin/dashboard');
         }
 
+        $allusers = User::when(Auth::User()->usertype == "Agency", function($query){
+            $query->where('usertype','Agents')->where('agency_id',Auth::User()->agency_id);
+        })
+        ->when(request('keyword'), function($query){
+            $query->where("name", 'like', '%' .request('keyword'). '%')
+            ->orWhere("email", 'like', '%' .request('keyword'). '%');
+        })
+        ->when(request('type'), function($query){
+            $query->where("usertype", request('type'));
+        })
+        ->when(Auth::User()->usertype == "Admin", function($query){
+            $query->where('usertype', '!=', 'Admin');
+        })
+        ->orderBy('id','desc')->paginate(25);
         $action = 'saakin_index';
-        if(isset($_GET['keyword']))
-        {
-
-            $type=$_GET['type'];
-            $keyword=$_GET['keyword'];
-
-            if(Auth::User()->usertype=="Agency"){
-                $allusers = User::where('agency_id',Auth::User()->agency_id)->SearchUserByKeyword($keyword,$type)->paginate(25);
-            } else {
-                $allusers = User::SearchUserByKeyword($keyword,$type)->paginate(25);
-            }
-
-            $allusers->appends($_GET)->links();
-        }
-        else
-        {
-            if(Auth::User()->usertype=="Agency"){
-                $allusers = User::where('usertype','Agents')->where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(25);
-
-            }else {
-                $allusers = User::where('usertype', '!=', 'Admin')->orderBy('id', 'desc')->paginate(25);
-            }
-        }
-
+        
         $action = 'saakin_index';
         return view('admin-dashboard.user-management.users.index',compact('allusers', 'action'));
 

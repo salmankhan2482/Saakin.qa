@@ -29,18 +29,23 @@ class BlogController extends Controller
 		$blogs = Blog::where('status',1)->when(request('keyword'), function($query){
             $query->where('title', 'like', '%'.request('keyword').'%')
             ->orWhere('description', 'like', '%'.request('keyword').'%');
-        })->orderBy('id','desc')->paginate(10);
+        })
+        ->where('status', 1)
+        ->orderBy('id','desc')->paginate(10);
+        
         $popularposts = Blog::where('status',1)->orderBy('count', 'desc')->limit(9)->get();
         
-        $blog_categories = BlogCategory::inRandomOrder()->get();
-        return view('front.pages.blogs',compact('blogs','blog_categories','popularposts'));
+        $categories = BlogCategory::inRandomOrder()->get();
+        return view('front.pages.blogs',compact('blogs','categories','popularposts'));
     }
 
     public function blogCategories($slug)
     {
         $category = BlogCategory::where('slug', $slug)->first();
-        $category_blogs = Blog::where('category_id', $category->id)->paginate(getcong('pagination_limit'));
-        $blog_categories = BlogCategory::inRandomOrder()->get();
+        $categories = BlogCategory::inRandomOrder()->get();
+
+        $category_blogs = Blog::where('category_id', $category->id)
+        ->where('status', 1)->paginate(getcong('pagination_limit'));
 
         $blogs = Blog::where('status',1)->orderBy('id', 'desc')
         ->where('category_id', $category->id)
@@ -50,25 +55,27 @@ class BlogController extends Controller
         ->orderBy('id','desc')->where('category_id', $category->id)
         ->take(10)->get();
 
-        return view('front.pages.blog_categories',compact('category','blogs', 'category_blogs','recent_posts','blog_categories'));
+        return view('front.pages.blog_categories',compact('category','blogs', 'category_blogs','recent_posts','categories'));
     }
 
 
     public function blogDetail($slug)
     {
-        $blog = Blog::with(['user'])->where('slug',$slug)->firstOrFail();
+        $blog = Blog::with(['user'])->where('status', 1)->where('slug',$slug)->firstOrFail();
         $blog->increment('count');
         $blog->update();
+
         $popularposts = Blog::where('status',1)->orderBy('count', 'desc')->limit(5)->get();
         $recentposts = Blog::where('status',1)->orderBy('id', 'desc')->limit(5)->get();
         
-        $blog_categories =  DB::table('blogs_categories')
+        $categories =  DB::table('blogs_categories')
         ->join('blogs', "blogs_categories.id", "blogs.category_id")
         ->select('blogs_categories.id', 'blogs_categories.*', DB::Raw('COUNT(blogs.category_id) as pcount'))
         ->groupBy("blogs_categories.id")
+        ->where('blogs.status', 1)
         ->orderBy("pcount", "desc")
         ->get();
-        return view('front.pages.blog_detail',compact('blog','popularposts', 'recentposts', 'slug','blog_categories'));
+        return view('front.pages.blog_detail',compact('blog','popularposts', 'recentposts', 'slug','categories'));
     }
 
     public function searchBlogCategories(Request $request, $id)
@@ -85,8 +92,8 @@ class BlogController extends Controller
         })->paginate(getcong('pagination_limit'));
         
 
-        $blog_categories = BlogCategory::get();
-        return view('front.pages.blog_categories',compact('blogs','blog_categories','category_blogs','category'));
+        $categories = BlogCategory::get();
+        return view('front.pages.blog_categories',compact('blogs','categories','category_blogs','category'));
     }
 
 

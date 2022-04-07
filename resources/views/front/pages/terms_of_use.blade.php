@@ -1,4 +1,4 @@
-@extends("front.layouts.main")
+@extends("front-view.layouts.main")
 
 @if ($page_info->meta_title !=null)
 
@@ -18,29 +18,32 @@
 @endif
 
 @section('content')
+{{-- Banner Start --}}
+<div class="site-banner" style="background-image: url('@if(getcong('title_bg')) {{ URL::asset('upload/'.getcong('title_bg')) }} @else {{ URL::asset('site_assets/img/breadcrumb-bg.jpg') }} @endif')">
+    <div class="container">
+        <h1 class="text-center">{{$page_info->page_title}}</h1>
+        <div class="text-white fs-sm d-flex justify-content-center spbwx8">
+            <span><a href="{{ url('/') }}" class="text-white text-decoration-none">Home</a></span>
+            <span>/</span>
+            <span>{{$page_info->page_title}}</span>
+        </div>
+    </div>
+</div>
+{{-- Banner End --}}
 
-    <div class="breadcrumb-section page-title bg-h" style="background-image: url('@if(getcong('title_bg')) {{ URL::asset('upload/'.getcong('title_bg')) }} @else {{ URL::asset('site_assets/img/breadcrumb-bg.jpg') }} @endif')">
-        <div class="overlay op-5"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 ml-auto mr-auto text-center">
-                    <div class="breadcrumb-menu">
-                        <h1>{{$page_info->page_title}}</h1>
-                    </div>
-                </div>
+<div class="inner-content">
+    <div class="container">
+        <div class="list-details-wrap mt-20">
+            <h4>Description</h4>
+            <div class="panel-wrapper">
+
+            <div class="content_description pb-3">
+                {!!stripslashes($page_info->page_content)!!}
+            </div>
+
             </div>
         </div>
     </div>
-    <!--Breadcrumb Section-->
-    <!-- begin:content -->
-    <section class="main-container container" id="video-tour-section">
-        {{-- <h2 class="hsq-heading type-1">{{$page_info->page_title}}</h2> --}}
-        <div class="content clearfix">
-            <div class="desc pt-4 pb-4" style="text-align: justify;color: #333333;">
-                {!!stripslashes($page_info->page_content)!!}
-            </div>
-        </div>
-    </section>
-    <!-- end:content -->
+</div>
 
 @endsection

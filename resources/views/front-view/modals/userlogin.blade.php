@@ -18,7 +18,12 @@
     font-size: 20px;
   }
 
+  #name-error, #email-error, #password_register-error, #password_confirmation-error, #terms-error{
+    color: #ea4335;
+  }
+
 </style>
+
 <div class="modal fade" style="padding: none !important" id="user-login-popup" tabindex="-1" aria-labelledby="user-login-popup" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -189,8 +194,11 @@
 											<div class="res-box text-left">
 												<label>
 													<input type="checkbox" name="terms">
-													I've read and accept <a href="{{ url('terms-of-use') }}"> terms
-														&amp; conditions</a></label><br />
+													I've read and accept 
+                          <a href="{{ url('terms-of-use') }}"> 
+                            terms &amp; conditions
+                          </a>
+                        </label><br>
 											</div>
 											<div class="res-box text-center mt-30">
 												<button type="submit" class="btn btn-outline-primary w-100">
@@ -210,17 +218,17 @@
     </div>
   </div>
 </div>
+
 @push('scripts')
-
-  <script src="{{ asset('assets/js/jquery.vinvalidate.js') }}"></script>
-
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
   <script>
     $.ajaxSetup({
       headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       }
     });
-    $('#registerform').vinvalidate({
+    $('#registerform').validate({
 
       rules: {
         name: {

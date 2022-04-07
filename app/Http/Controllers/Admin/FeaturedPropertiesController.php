@@ -1,64 +1,60 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
-use Auth;
-use App\User;
 use App\Properties;
-
-use Carbon\Carbon;
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use Session;
-use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use App\Types;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class FeaturedPropertiesController extends MainAdminController
 {
 	public function __construct()
     {
-		 $this->middleware('auth');
-
-		 parent::__construct();
+        $this->middleware('auth');
+        parent::__construct();
 
     }
     public function propertieslist()
     {
-
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-                \Session::flash('flash_message', trans('words.access_denied'));
-                return redirect('dashboard');
-            }
-        if(Auth::User()->usertype=="Agency"){
-            $propertieslist = Properties::where('featured_property','1')->where("user_id",Auth::User()->id)->orderBy('id')->get();
+            Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
         }
-        else{
-    	    $propertieslist = Properties::where('featured_property','1')->orderBy('id')->get();
-        }
-        
+
+        $propertieslist = Properties::where('featured_property','1')
+        ->when(Auth::User()->usertype=="Agency", function($query){
+            $query->where("user_id",Auth::User()->id);
+        })
+        ->when(request('keyword'), function($query){
+            return $query->where('property_name', 'like', '%'.request('keyword').'%');
+        })
+        ->when(request('purpose'), function($query){
+            $query->where("property_purpose", request('purpose'));
+        })
+        ->when(request('status') != '', function($query){
+            $query->where("status", request('status'));
+        })
+        ->when(request('type'), function($query){
+            $query->where("property_type", request('type'));
+        })
+        ->orderBy('id')->paginate(15);
+        $data['propertyTypes'] = Types::all();
         $action = 'saakin_index';
 
-        return view('admin-dashboard.featured-properties.index',compact('propertieslist','action'));
+        return view('admin-dashboard.featured-properties.index',compact('propertieslist', 'data', 'action'));
     }
 
     public function pendingproperties()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-
-                \Session::flash('flash_message', trans('words.access_denied'));
-
-                return redirect('dashboard');
-
-            }
-        if(Auth::User()->usertype=="Agency")
-        {
-            $propertieslist = Properties::where('status','0')->where("user_id",Auth::User()->id)->orderBy('id')->get();
+            Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
         }
-        else
-        {
-    	    $propertieslist = Properties::where('status','0')->orderBy('id')->get();
-        }
+        
+        $propertieslist = Properties::where('status','0')
+        ->when(Auth::User()->usertype=="Agency", function($query){
+            $query->where("user_id",Auth::User()->id);
+        })->orderBy('id')->get();
 
         return view('admin.pages.pendingproperties',compact('propertieslist'));
     }

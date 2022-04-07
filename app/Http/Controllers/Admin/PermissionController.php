@@ -54,12 +54,11 @@ class PermissionController extends Controller
         ]);
     
         $permission = new Permission();
-        $permission->title = request('name');
-        // $permission->guard_name = 'web';
+        $permission->name = request('name');
+        $permission->guard_name = 'web';
         $permission->save();
     
-        return redirect()->route('permissions.index')
-                        ->with('success','Permission created successfully');
+        return redirect()->route('permissions.index')->with('success','Permission created successfully');
     }
 
     /**
@@ -101,13 +100,12 @@ class PermissionController extends Controller
         ]);
     
         $permission = Permission::find($id);
-        $permission->title = $request->input('name');
+        $permission->name = $request->input('name');
         $permission->save();
     
         $permission->syncPermissions($request->input('permission'));
     
-        return redirect()->route('permissions.index')
-                        ->with('success','Permission updated successfully');
+        return redirect()->route('permissions.index')->with('success','Permission updated successfully');
     }
 
     /**
@@ -117,7 +115,6 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         DB::table("permissions")->where('id',$id)->delete();
-        return redirect()->route('permissions.index')
-                        ->with('success','Permission deleted successfully');
+        return redirect()->route('permissions.index')->with('success','Permission deleted successfully');
     }
 }

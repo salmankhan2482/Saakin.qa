@@ -10,7 +10,7 @@
         </ul>
     </div>
 	@endif
-	 @if(Session::has('flash_message'))
+    @if(Session::has('flash_message'))
         <div class="alert alert-success">
 		    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -90,7 +90,14 @@
                                     <label>Meta Keywords</label>
                                     <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords" value="{{$blog->meta_keywords}}">
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-3">
+                                    <label>Status</label>
+                                    <select type="text" name="status" class="form-control">
+                                        <option value="1" {{ $blog->status == 1 ? 'selected' : '' }} >Publish</option>
+                                        <option value="0" {{ $blog->status == 0 ? 'selected' : '' }}>Draft</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-3">
                                     <label>&nbsp;</label><br>
                                     <button type="submit" class="btn btn-rounded btn-success">Update</button>
                                 </div>

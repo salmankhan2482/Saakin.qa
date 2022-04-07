@@ -1,24 +1,6 @@
 {{-- Extends layout --}}
 @extends('admin-dashboard.layouts.master')
-@section('style')
-    <style>
-        .table thead th{
-            color: black;
-            font-size: 0.95rem;
-        }
 
-        .pagination{
-            list-style-type:none;
-            display:flex;
-            justify-content: center;
-        }
-
-        .page-item{
-            display: list-item;
-            padding: 5px 4px;
-        }
-    </style>
-@endsection
 {{-- Content --}}
 @section('content')
     <div class="container-fluid">
@@ -141,6 +123,9 @@
                                                 <i class="fa fa-circle text-success mr-1"></i>
                                             @else
                                                 <i class="fa fa-circle text-danger mr-1"></i>
+                                            @endif
+                                            @if ($property->featured_property == 1)
+                                            <i class="fa fa-star"></i>
                                             @endif
                                         </td>
                                         <td>
