@@ -43,26 +43,27 @@
 
                                 <fieldset>
                                     <legend>Basic Details</legend>
+                                    <div class="row">
+
                                     @if (Auth::User()->usertype == 'Admin')
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <label>Property Agency *</label>
-                                                <select class="form-control" name="agency_id" required>
-                                                    <option value="">Select an Agency</option>
-                                                    
-                                                    @foreach(\App\Agency::orderBy("name","asc")->get() as $agency)
-                                                    <option value="{{$agency->id}}" @if($agency->id == $data['property']->agency_id) selected
-                                                        @endif>{{$agency->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                        <div class="col-6">
+                                            <label>Property Agency *</label>
+                                            <select class="form-control" name="agency_id" required>
+                                                <option value="">Select an Agency</option>
+                                                
+                                                @foreach(\App\Agency::orderBy("name","asc")->get() as $agency)
+                                                <option value="{{$agency->id}}" @if($agency->id == $data['property']->agency_id) selected
+                                                    @endif>{{$agency->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     @endif
                                     <div class="col-6">
                                         <label>Property Title *</label>
                                         <input type="text" class="form-control" name="property_name" id="p-title" value="{{stripslashes($data['property']->property_name)}}" required />
                                     </div>
-
+                                    </div>
+                                    
                                 </fieldset>
                                 <fieldset>
                                     <legend>Property Details</legend>

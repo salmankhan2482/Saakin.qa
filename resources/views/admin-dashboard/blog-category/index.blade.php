@@ -10,9 +10,9 @@
                     <h4 class="card-title">Blog Categories</h4>
                     <a href="{{ route('blog-category.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>Add</button>
+                            <span class="btn-icon-left text-info"> <i class="fa fa-plus color-info"></i> </span>
+                            Add
+                        </button>
                     </a>
                 </div>
                 <div class="card-body">

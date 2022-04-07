@@ -70,7 +70,7 @@
             <div class="card-body">
               <h4 class="card-title">Categories </h4>
               <div class="list-tags d-flex flex-wrap spbwx8">
-                @foreach ($blog_categories as $blog_category)
+                @foreach ($categories as $blog_category)
                   <a href="{{ route('blog-categories', $blog_category->slug) }}" class="btn btn-monochrome btn-sm mt-2">
                     {{ $blog_category->category }}
                   </a>

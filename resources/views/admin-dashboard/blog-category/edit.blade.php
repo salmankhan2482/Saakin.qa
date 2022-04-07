@@ -40,13 +40,14 @@
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" value="{{$blogCategory->category}}" placeholder="Blog Category ">
+                                    <input type="text" id="name" name="name" class="form-control" 
+                                    value="{{$blogCategory->category}}" placeholder="Blog Category ">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Description</label>
-                                    <textarea type="text" id="description" rows="5" name="description" class="form-control" placeholder="Blog Category Description ">value="{{$blogCategory->description}}"</textarea>
+                                    <textarea type="text" id="description" rows="5" name="description" class="form-control" placeholder="Blog Category Description ">{{$blogCategory->description}}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">

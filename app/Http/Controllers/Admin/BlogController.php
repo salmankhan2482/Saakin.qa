@@ -91,6 +91,7 @@ class BlogController extends Controller
         $blog_slug = Str::slug($inputs['title'], "-");
         $blog->slug = $blog_slug;
         $blog->description = $inputs['description'];
+        $blog->status = $inputs['status'];
         $blog->created_at = date("Y-m-d H:i:s");
         $blog_image = $request->file('blog_image');     
 
@@ -160,6 +161,7 @@ class BlogController extends Controller
         $blog->title = $inputs['title'];
         $blog_slug = Str::slug($inputs['title'], "-");
         $blog->slug = $blog_slug;
+        $blog->status = $inputs['status'];
         $blog->description = $inputs['description'];
 
 
@@ -202,11 +204,8 @@ class BlogController extends Controller
         }
 
         $blog = Blog::findOrFail($id);
-
         $blog->delete();
-
         \File::delete(public_path() .'/upload/blogs/'.$blog->image);
-
         \Session::flash('flash_message', trans('words.deleted'));
 
         return redirect()->back();
@@ -331,5 +330,21 @@ class BlogController extends Controller
         \Session::flash('flash_message', trans('words.deleted'));
 
         return redirect()->back();
+    }
+
+    public function status($id)
+    {
+        $blog = Blog::find($id);
+        if($blog->status == 1){
+            $blog->status = 0;
+            $message = 'Blog Drafted';
+        }else{
+            $blog->status = 1;
+            $message = 'Blog Published';
+        }
+        $blog->update();
+        \Session::flash('flash_message', $message);
+        return redirect()->back();
+
     }
 }

@@ -58,12 +58,22 @@ class LandingPagesController extends Controller
         $inputs = $request->all();
         $rule=array(
             'property_purposes_id' => 'required',
+            'page_content' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
             return redirect()->back()->withErrors($validator->messages());
+        }
+
+        $checkDuplicate = LandingPage::
+        where('property_purposes_id', request('property_purposes_id'))
+        ->where('property_types_id', request('property_types_id'))
+        ->where('property_cities_id', request('property_cities_id'))
+        ->first();
+
+        if ($checkDuplicate){
+            return redirect()->back()->with('flash_message', 'Duplicate Content Found ');
         }
 
         $landing_pages_content = new LandingPage();

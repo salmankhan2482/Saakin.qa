@@ -56,7 +56,7 @@
                         </div>
                     @endif
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
+                        <table class="table table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th>{{ trans('words.user_type') }}</th>
@@ -65,7 +65,7 @@
                                     <th>{{ trans('words.email') }}</th>
                                     <th>Roles </th>
                                     <th>{{ trans('words.phone') }}</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
 
@@ -95,23 +95,17 @@
                                         <td>{{ $users->phone }}</td>
                                         <td class="text-center p-20" style="display: flex;">
                                             <a href="{{ route('users.show', Crypt::encryptString($users->id)) }}"
-                                                class="btn btn-icon waves-effect waves-light btn-success"
-                                                data-toggle="tooltip" title="{{ trans('words.view') }}"
-                                                style="margin-right:5px">
+                                                class="btn btn-success btn-sm mr-1">
                                                 <i class="fa fa-eye"></i>
                                             </a>
 
                                             <a href="{{ route('users.edit', Crypt::encryptString($users->id)) }}"
-                                                class="btn btn-icon waves-effect waves-light btn-primary"
-                                                data-toggle="tooltip" title="{{ trans('words.edit') }}"
-                                                style="margin-right:5px">
+                                                class="btn btn-primary btn-sm mr-1">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="{{ route('users.destroy', Crypt::encryptString($users->id)) }}"
-                                                class="btn btn-icon waves-effect waves-light btn-danger m-b-5"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
-                                                data-toggle="tooltip" title="{{ trans('words.remove') }}"
-                                                style="margin-right:5px">
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-remove"></i>
                                             </a>
                                         </td>
@@ -119,7 +113,13 @@
                                 @endforeach
 
                             </tbody>
-
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7" class="text-center">
+                                        {{ $allusers->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

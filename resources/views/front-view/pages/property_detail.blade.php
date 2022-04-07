@@ -597,7 +597,7 @@
         </div>
       </div>
 
-      @if (count($properties) > 0)
+        @if (count($properties) > 0)
         <div class="col-lg-8 mt-4">
           <h3 class="mb-4">{{ $properties->count() }} More Properties in the Same Area</h3>
           <div class="@if ((new \Jenssegers\Agent\Agent())->isMobile()) pro-same-m d-flex can-scroll-x spbwx16 @else pro-same-slider @endif">

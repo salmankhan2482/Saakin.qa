@@ -71,7 +71,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('featuredproperties', 'FeaturedPropertiesController@propertieslist')->name('featuredproperties.index');
     Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties')->name('featuredproperties.pending');
 	Route::get('properties/export', 'PropertiesController@property_export');
-	Route::post('properties/plan_update', 'PropertiesController@plan_update');
+	Route::post('properties/plan_update', 'PropertiesController@plan_update')->name('changePlan.update');
 
     Route::get('properties/gallery/{id}', 'PropertiesController@listGalleryImages');
     Route::get('properties/generatethumb', 'PropertiesController@generatethumb');
@@ -189,6 +189,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::resource('blogs', 'BlogController');
     Route::get('blog/delete/{id}', 'BlogController@destroy')->name('blogs.destroy');
+    Route::get('blog/status/{id}', 'BlogController@status')->name('blogs.status');
 
     Route::get('blog-category/list', 'BlogController@listBlogCategory')->name('blog-category.index');
     Route::get('blog-category/create', 'BlogController@createBlogCategory')->name('blog-category.create');

@@ -1,23 +1,7 @@
 {{-- Extends layout --}}
 @extends('admin-dashboard.layouts.master')
 @section('style')
-    <style>
-        .table thead th{
-            color: black;
-            font-size: 0.95rem;
-        }
-
-        .pagination{
-            list-style-type:none;
-            display:flex;
-            justify-content: center;
-        }
-
-        .page-item{
-            display: list-item;
-            padding: 5px 4px;
-        }
-    </style>
+    
 @endsection
 {{-- Content --}}
 @section('content')
@@ -65,10 +49,19 @@
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
-                            </span>Add</button>
+                            </span>Add
+                        </button>
                     </a>
                 </div>
                 <div class="card-body">
+                    @if(Session::has('flash_message'))
+                        <div class="alert alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ Session::get('flash_message') }}
+                        </div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table table-hover table-responsive-sm">
                             <thead>
@@ -76,30 +69,50 @@
                                     <th>Title</th>
                                     <th>Slug</th>
                                     <th>Category</th>
+                                    <th>Status</th>
                                     <th>Image</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($data['blogs'] as $i => $blog)
                                     <tr>
-                                        <td>{{ Str::limit($blog->title, '25', '...') }}</td>
+                                        <td>
+                                            <a href="{{ url('blog/' . $blog->slug) }}" target="_blank">
+                                                {{ Str::limit($blog->title, '25', '...') }}
+                                            </a>
+                                        </td>
                                         <td>{{ Str::limit($blog->slug, '25', '...') }}</td>
                                         <td>{{$blog->BlogCategory->category ?? ''}} </td>
                                         <td>
-                                            <img src="{{asset('upload/blogs/'.$blog->image)}}" width="100" 
-                                                alt="{{ $blog->id.'- blog image' }}"/>
+                                            @if ($blog->status == 0)
+                                                <strong class="border border-danger text-danger p-1">Drafted</strong>
+                                            @else
+                                                <strong class="border border-info text-info p-1">Published</strong>
+                                            @endif
                                         </td>
                                         <td>
-                                            <a  href="{{ route('blogs.edit' , $blog->id) }}"
-                                                class="btn btn-info rounded btn-xs action-btn">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a  href="{{ route('blogs.destroy' , $blog->id) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                            <img src="{{asset('upload/blogs/'.$blog->image)}}" width="100" alt="{{$blog->title}}"/>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a href="{{ route('blogs.status' , $blog->id) }}"class="dropdown-item">
+                                                    <i class="fa fa-upload"></i> 
+                                                    {{ $blog->status == 1 ? 'Draft' : 'Publish'}}
+                                                </a>
+                                                
+                                                <a href="{{ route('blogs.edit' , $blog->id) }}"class="dropdown-item">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                
+                                                <a href="{{ route('blogs.destroy' , $blog->id) }}"class="dropdown-item"
+                                                    onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

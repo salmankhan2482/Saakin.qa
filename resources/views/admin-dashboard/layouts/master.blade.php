@@ -38,18 +38,23 @@
         display: none !important;
         }
 
-        /* @media only screen and (max-width: 780px) {
-            .deznav {
-                display: block !important;
-            }
-
-            .top-menu {
-                display: none !important;
-            }
-
-        } */
         .select2-container .select2-selection--multiple{
             height: 40px;
+        }
+        .table thead th{
+            color: black;
+            font-size: 0.95rem;
+        }
+
+        .pagination{
+            list-style-type:none;
+            display:flex;
+            justify-content: center;
+        }
+
+        .page-item{
+            display: list-item;
+            padding: 5px 4px;
         }
     </style>
 
