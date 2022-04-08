@@ -2,40 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Http;
 use App\User;
-use messages;
 use App\Types;
 use App\Agency;
 use App\Enquire;
-use http\Client;
 use App\XmlRecord;
 use App\Properties;
 
 use App\LandingPage;
-use SimpleXMLElement;
-use App\Http\Requests;
-use Geocoder\Geocoder;
-use App\PropertyAmenity;
 use App\PropertyGallery;
 use App\Mail\Agent_Inquiry;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\PropertyNeighborhood;
-use App\Http\Controllers\Auth;
-use GuzzleHttp\RequestOptions;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
-use Orchestra\Parser\Xml\Facade as XmlParser;
-use Illuminate\Contracts\Encryption\DecryptException;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class AgenciesController extends Controller
 {
