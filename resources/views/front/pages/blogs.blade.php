@@ -19,6 +19,16 @@
 
   <div class="inner-content">
     <div class="container">
+      <div class="card search mb-3 mb-lg-0 d-lg-none">
+        <div class="card-body">
+          <form action="{{ url('blog') }}" method="GET">
+            <div class="input-group">
+              <input type="text" name="keyword" id="mobile-keyword" class="form-control" placeholder="Search">
+              <button type="submit" class="btn btn-primary search-button"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-8">
           <div class="row gy-4">
@@ -56,7 +66,7 @@
           <!--pagination ends-->
         </div>
         <div class="col-lg-4">
-          <div class="card search">
+          <div class="card search d-none d-lg-block">
             <div class="card-body">
               <form action="{{ url('blog') }}" method="GET">
                 <div class="input-group">

@@ -42,23 +42,23 @@
             {{ $property->property_name }}
         </h2>
 
-        <div class="property-location">
-            <p> {{ Str::limit($property->propertiesTypes->types, 36) }}</p>
-        </div>
+        {{-- <div class="property-location"> --}}
+            {{-- <p> {{ Str::limit($property->propertiesTypes->types, 36) }}</p> --}}
+        {{-- </div> --}}
 
-        <div class="property-location">
-            <i class="fa fa-map-marker-alt"></i>
-            <p> {{ Str::limit($property->address, 36) }}</p>
-        </div>
+        
         <ul class="property-feature">
+            <li class="pe-2">
+                <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
+            </li>
             @if ($property->getProperty_type())
-                <li class="liDesk">
+                <li>
                     <i class="fas fa-bed"></i>
                     <span>
                         {{ $property->bedrooms }}
                     </span>
                 </li>
-                <li class="liDesk">
+                <li>
                     <i class="fas fa-bath"></i>
                     <span>
                         {{ $property->bathrooms }}
@@ -66,8 +66,8 @@
                 </li>
             @endif
 
-            <li class="liDeskArea">
-                <span class="liDeskAreaSpan">
+            <li>
+                <span>
                     <i class="fas fa-chart-area"></i>
                     <span>
                         {{ $property->getSqm() }}
@@ -75,5 +75,10 @@
                 </span>
             </li>
         </ul>
+
+        <div class="property-location mt-2">
+            <i class="fa fa-map-marker-alt"></i>
+            <p>{{ Str::limit($property->address, 36) }}</p>
+      </div>
     </div>
 </a>

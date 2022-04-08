@@ -54,11 +54,7 @@
 
   &.home-banner {
     @include media-breakpoint-up(md) {
-      --banner-height: 30.875rem;
-    }
-
-    @include media-breakpoint-up(lg) {
-      --banner-height: 40.875rem;
+      --banner-height: 30rem;
     }
 
     @include media-breakpoint-down(md) {
@@ -84,7 +80,7 @@
   }
 
   @include media-breakpoint-up(md) {
-    --banner-height: 22rem;
+    --banner-height: 15rem;
   }
 
   h1 {

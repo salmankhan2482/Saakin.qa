@@ -73,7 +73,7 @@
       {{--  --}}
       <div class="row gy-3 gy-md-4">
         @foreach ($agencies as $agency)
-          <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="col-md-6 col-md-4 col-lg-4">
             <div class="agency-tile">
               <a class="agency-tile-img border-bottom" href="{{ url('agency/' . Str::slug($agency->name, '-') . '/' . $agency->id) }}">
                 <img src="{{ asset('/upload/agencies/' . $agency->image) }}" alt="{{ $agency->name }}">
@@ -113,12 +113,12 @@
                   {{--  --}}
                 </div>
 
-                <div class="d-flex item-separator border-top p-3">
-                  <div class="flex-grow-1 text-center">
+                <div class="d-flex item-separator border-top px-3">
+                  <div class="flex-grow-1 py-2 text-center">
                     <strong>{{ count(App\Properties::where('status', '1')->where('property_purpose', 'Rent')->where('agency_id', $agency->id)->get()) }}</strong>
                     <span class="d-block fs-sm" style="--bs-body-font-size: 10px;">For Rent</span>
                   </div>
-                  <div class="flex-grow-1 text-center">
+                  <div class="flex-grow-1 py-2 text-center">
                     <strong>{{ count(App\Properties::where('status', '1')->where('property_purpose', 'Sale')->where('agency_id', $agency->id)->get()) }}</strong>
                     <span class="d-block fs-sm" style="--bs-body-font-size: 10px;">For Sale</span>
                   </div>
