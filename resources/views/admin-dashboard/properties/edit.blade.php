@@ -24,7 +24,7 @@
     <div class="container-fluid">
         <div class="page-titles">
             <ol class="breadcrumb">
-                <a href="{{ route('agencies.index') }}">
+                <a href="{{ url()->previous() }}">
                     <button type="button" class="btn btn-rounded btn-dark" style="padding: 0.5rem !important;">Back</button>
                 </a>
             </ol>

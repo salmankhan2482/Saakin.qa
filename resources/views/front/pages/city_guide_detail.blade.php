@@ -32,7 +32,7 @@
   <div class="inner-content">
     <div class="container">
       <h3 class="mb-4 text-center">Welcome to {{ $cityGuide->name }}</h3>
-      <p class="text-center">{{ $cityGuide->short_description }}</p>
+      <p class="text-center">{!! $cityGuide->long_description !!}</p>
 
       <nav id="cityGideNav" class="cityGideNav spbwx16 can-scroll-x d-flex sticky-top bg-white justify-content-md-center py-2 mb-3 border-bottom">
         <a class="nav-link" href="#guidePropertyTrends">

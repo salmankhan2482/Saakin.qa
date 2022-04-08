@@ -39,10 +39,10 @@
                                         <td>{{ $item->propertyType->types ?? '--' }}</td>
                                         <td>{{ $item->count ?? '--' }}</td>
                                         <td>
-                                            <a href="{{ route('popularSearches.edit',$item->id) }}"
+                                            {{-- <a href="{{ route('popularSearches.edit',$item->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
-                                            </a>
+                                            </a> --}}
                                             
                                             <a href="{{ route('popularSearches.destroy',$item->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn" 

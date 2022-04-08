@@ -24,23 +24,23 @@
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Add City Details</h4>
+                    <h4 class="card-title">Edit City Details</h4>
                     <a href="{{route('city-details')}}">
                         <button type="button"class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(array('route' => 'city_detail_update', 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                        {!! Form::open(array('route' => ['city_detail_update', $cityDetail->id], 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Cities</label>
-                                    <select name="city" id="city" class="form-control" required>
-                                        <option value="">Select City</option>
+                                    <select id="city" name="city" class="form-control" required>
+                                        <option selected>Select City</option>
                                         @foreach($cities as $city)
-                                            <option value="{{$city->id}}">{{$city->name}}</option>
-                                        @endforeach
+                                <option value="{{$city->id}}" @if($cityDetail->city_id==$city->id) selected @endif>{{$city->name}}</option>
+                            @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -48,42 +48,42 @@
                                 <div class="form-group col-md-12">
                                     <label>Property Trends</label>
                                     <textarea type="text" rows="5" id="property_trends" name="property_trends" class="form-control description"
-                                     placeholder="Property Trends" required>{{}}</textarea>
+                                     placeholder="Property Trends" required>{{$cityDetail->property_trends}}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Neighborhood</label>
                                     <textarea type="text" rows="5" id="neighborhood" name="neighborhood" class="form-control"
-                                     placeholder="Neighborhood" required></textarea>
+                                     placeholder="Neighborhood" required>{{$cityDetail->neighborhood}}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Lifestyle</label>
                                     <textarea type="text" rows="5" id="lifestyle" name="lifestyle" class="form-control"
-                                     placeholder="Lifestyle" required></textarea>
+                                     placeholder="Lifestyle" required>{{$cityDetail->lifestyle}}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Things to Consider</label>
-                                    <textarea type="text" rows="5" id="things_to_consider" name="	things_to_consider" class="form-control"
-                                     placeholder="Things to Consider" required></textarea>
+                                    <textarea type="text" rows="5" id="things_to_consider" name="things_to_consider" class="form-control"
+                                     placeholder="Things to Consider" required>{{$cityDetail->things_to_consider}}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Locations</label>
                                     <textarea type="text" rows="5" id="locations" name="locations" class="form-control"
-                                     placeholder="Locations" required></textarea>
+                                     placeholder="Locations" required>{{$cityDetail->locations}}</textarea>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Attributes</label>
                                     <textarea type="text" rows="5" id="attributes" name="attributes" class="form-control"
-                                     placeholder="Attributes" required></textarea>
+                                     placeholder="Attributes" required>{{$cityDetail->attributes}}</textarea>
                                 </div>
                             </div>
 

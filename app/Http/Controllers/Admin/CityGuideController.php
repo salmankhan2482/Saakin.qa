@@ -62,7 +62,6 @@ class CityGuideController extends Controller
 
         $rule=array(
             'name' => 'required',
-            'short_description' => 'required',
             'long_description' => 'required',
             'city_image' => 'required',
         );
@@ -76,7 +75,7 @@ class CityGuideController extends Controller
 
         $city = new City();
         $city->name = $inputs['name'];
-        $city->short_description = $inputs['short_description'];
+        // $city->short_description = $inputs['short_description'];
         $city->long_description = $inputs['long_description'];
         
         $city_slug = $inputs['name'];
@@ -93,9 +92,9 @@ class CityGuideController extends Controller
         }
         $city->city_image = $city_image_new_name;
 
-        $city->meta_title = $inputs['meta_title'];
-        $city->meta_description = $inputs['meta_description'];
-        $city->meta_keyword = $inputs['meta_keyword'];
+        // $city->meta_title = $inputs['meta_title'];
+        // $city->meta_description = $inputs['meta_description'];
+        // $city->meta_keyword = $inputs['meta_keyword'];
         
         $city->save();
 
@@ -124,7 +123,6 @@ class CityGuideController extends Controller
 
         $rule=array(
             'name' => 'required',
-            'short_description' => 'required',
             'long_description' => 'required',
         );
 
@@ -137,7 +135,7 @@ class CityGuideController extends Controller
 
         $city = City::findOrFail($id);
         $city->name = $inputs['name'];
-        $city->short_description = $inputs['short_description'];
+        // $city->short_description = $inputs['short_description'];
         $city->long_description = $inputs['long_description'];
 
         $city_image = $request->file('city_image');
@@ -151,9 +149,9 @@ class CityGuideController extends Controller
             $city->city_image = $imageName;
         }
 
-        $city->meta_title = $inputs['meta_title'];
-        $city->meta_description = $inputs['meta_description'];
-        $city->meta_keyword = $inputs['meta_keyword'];
+        // $city->meta_title = $inputs['meta_title'];
+        // $city->meta_description = $inputs['meta_description'];
+        // $city->meta_keyword = $inputs['meta_keyword'];
 
         $city->save();
         \Session::flash('flash_message', trans('words.updated'));
@@ -279,8 +277,8 @@ class CityGuideController extends Controller
         $cityDetail->locations = $inputs['locations'];
         $cityDetail->attributes = $inputs['attributes'];
 
-
         $cityDetail->save();
+        
         \Session::flash('flash_message', trans('words.updated'));
         return \Redirect::back();
     }
