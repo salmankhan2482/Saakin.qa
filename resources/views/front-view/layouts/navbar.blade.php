@@ -1,95 +1,4 @@
 <header class="header">
-  {{-- <div class="top-head">
-    <div class="container-fluid">
-      <div class="row align-items-center">
-        <div class="col-lg-3">
-          <div class="d-flex justify-content-between align-items-center d-lg-block">
-            <div class="site-logo">
-              @if (Request::is('property/*'))
-              <a href="{{ URL::to('/') }}">
-                <img src="{{ URL::asset('assets/images/Whitelogo.png') }}" alt="Saakin" height="32">
-              </a>
-              @else
-              <a href="{{ URL::to('/') }}">
-                <img src="{{ URL::asset('upload/logo.png') }}" alt="Saakin" height="32">
-              </a>
-              @endif
-            </div>
-
-            <a href="javascript:{}" class="toggleBtnMenu d-lg-none"><i class="toggler-menu icon fa fa-bars fa-2x"
-                aria-hidden="true"></i></a>
-          </div>
-        </div>
-        <div class="col-lg-9">
-
-          <div class="mainMenu">
-            <div class="body-overlay"></div>
-            <nav class="maindiv">
-              <div class="menuHeader d-flex justify-content-between d-lg-none">
-                <a href="#!" rel="home" class="home-icon">
-                  <i class="fa fa-home"></i>
-                </a>
-                <a href="javascript:{}" class="closeMenu"><i class="fa fa-times"></i></a>
-              </div>
-              <ul>
-                <li class="current_page_item">
-                  <a href="{{ route('property-purpose', ['buy', 'sale']) }}">
-                    Buy
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('property-purpose', ['rent', 'rent']) }}">
-                    Rent
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('city-guide') }}">
-                    City Guide
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('real-estate-agencies') }}">
-                    Real Estate Agencies
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ url('blogs') }}">
-                    Blogs
-                  </a>
-                </li>
-
-
-                @if (!Auth::user())
-                <li><a href="#" data-bs-toggle="modal" data-bs-target="#user-login-popup">Login</a></li>
-                @else
-                <li><a href="{{ url('logout') }}">Logout</a></li>
-                @endif
-
-
-                @if (Auth::user())
-                @if (Auth::user()->usertype == 'Agency')
-                <a class="btn btn-primary" href="{{ URL::to('admin/properties/create') }}">
-                  Submit Property</a>
-                @elseif(Auth::user()->usertype=='Admin')
-                <a class="btn btn-primary" href="{{ URL::to('admin/properties/create') }}">
-                  Submit Property
-                </a>
-                @else
-                <a class="btn btn-primary" href="{{ url('submit-property') }}">Submit
-                  Property</a>
-                @endif
-                @else
-                <a data-bs-toggle="modal" data-bs-target="{{ '#user-login-popup' }}" class="btn btn-primary" href="#">
-                  Submit Property
-                </a>
-                @endif
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> --}}
 
   <nav class="navbar navbar-expand-md navbar-dark">
     <div class="container-fluid">
@@ -111,7 +20,7 @@
 
         {{-- for Mobile --}}
         @if ((new \Jenssegers\Agent\Agent())->isMobile())
-          <div class="d-flex align-items-center ms-auto login-btns">
+        <div class="d-flex d-sm-none align-items-center ms-auto login-btns">
             @if (!Auth::user())
               <a class="fs-sm me-2" href="#" data-bs-toggle="modal" data-bs-target="#user-login-popup">Login</a>
             @else

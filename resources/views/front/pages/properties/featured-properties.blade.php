@@ -1034,12 +1034,7 @@
                                             {{ $property->property_name }}
                                         </h5>
                                     </a>
-                                    <div class="property-location">
-                                        <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
-                                            {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
-                                        </p>
-                                    </div>
+                                    
                                     <ul class="property-feature">
                                         @if ($property->getProperty_type())
                                             <li><i class="fas fa-bed"></i>
@@ -1052,8 +1047,13 @@
                                         <li><i class="fas fa-chart-area"></i>
                                             <span>{{ $property->getSqm() }}</span>
                                         </li>
-
                                     </ul>
+                                    <div class="property-location">
+                                        <i class="fa fa-map-marker-alt"></i>
+                                        <p class="property-card__property-title">
+                                            {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
+                                        </p>
+                                    </div>
 
                                     <div class="social-div mt-md-2">
                                         @if (!empty($property->whatsapp))
@@ -1262,7 +1262,7 @@
             });
 
             $(".pro-slider").slick({
-                dots: false,
+                dots: true,
                 autoplay: true,
                 autoplaySpeed: 2000,
             });

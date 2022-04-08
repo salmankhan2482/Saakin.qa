@@ -3,7 +3,7 @@
   <div class="container">
     <h1 class="text-sm-center font-weight-bold">Find Your Property</h1>
     <div class="row justify-content-center">
-      <div class="col-lg-10 mt-3 mt-lg-5">
+      <div class="col-lg-10 mt-3 mt-lg-4">
         <div class="card">
           <div class="card-body">
 

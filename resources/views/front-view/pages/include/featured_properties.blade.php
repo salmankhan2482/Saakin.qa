@@ -12,7 +12,7 @@
 							The Pearl, West Bay, and properties from all over the country thourgh Qatar property
 							directory.
 						</span>
-						<a href="javascript:void(0)" onclick="myFunction()">Read more</a>
+						<a class="btn btn-primary btn-sm" href="javascript:void(0)" onclick="myFunction()">Read more</a>
 					</p>
 				</div>
 			</div>
