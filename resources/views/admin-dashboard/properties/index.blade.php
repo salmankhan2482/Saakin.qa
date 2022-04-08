@@ -30,31 +30,24 @@
                         <form action="{{ url('admin/properties') }}" method="GET">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="keyword" placeholder="Search">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search" value="{{ request('keyword') }}">
                                 </div>
                                 <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select name="purpose" class="form-control">
-                                        <option value="">{{ trans('words.property_purpose') }}</option>
-                                        <option value="{{ trans('words.purpose_sale') }}">{{ trans('words.for_sale') }}</option>
-                                        <option value="{{ trans('words.purpose_rent') }}">{{ trans('words.for_rent') }}</option>
+                                        <option value="">Property Purpose</option>
+                                        <option value="Sale" {{ request('purpose') == 'Sale' ? 'selected' : '' }}>Sale</option>
+                                        <option value="Rent" {{ request('purpose') == 'Rent' ? 'selected' : '' }}>Rent</option>
                                     </select>
                                 </div>
-                                {{-- <div class="col-sm-2 mt-2 mt-sm-0">
-                                    <select name="status" id="basic" class="selectpicker show-tick form-control"
-                                        data-live-search="false">
-                                        <option value="">Select Status</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-                                </div> --}}
+                                
                                 <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select id="proeprty-type" name="type" class="selectpicker show-tick form-control" data-live-search="false">
                                         <option value="">{{ trans('words.property_type') }}</option>
-                                        @if (count($data['propertyTypes']) > 0)
                                             @foreach ($data['propertyTypes'] as $type)
-                                                <option value="{{ $type->id }}">{{ $type->types }}</option>
+                                                <option value="{{ $type->id }}" {{ request('type') == $type->id ? 'selected' : '' }}>
+                                                    {{ $type->types }}
+                                                </option>
                                             @endforeach
-                                        @endif
                                     </select>
                                 </div>
                                 <div class="col-sm-2 mt-2 mt-sm-0">
@@ -135,11 +128,15 @@
                                             <div class="dropdown-menu">
                                                 @if ($property->user)
                                                     @if (Auth::User()->usertype == 'Admin')
-                                                        <a href="Javascript:void(0);" class="dropdown-item" data-toggle="modal"
-                                                            data-target="#PropertyPlanModal{{ $property->id }}">
-                                                            <i class="fa fa-dollar"></i>
-                                                            {{ trans('words.change_plan') }}
-                                                        </a>
+                                                    <a href="Javascript:void(0);" class="dropdown-item"
+                                                        data-toggle="modal"
+                                                        data-target="#PropertyPlanModal"
+                                                        data-propertyid="{{ $property->id }}"
+                                                        id="changePlan_button"
+                                                        >
+                                                        <i class="fa fa-dollar"></i>
+                                                        {{ trans('words.change_plan') }}
+                                                    </a>
                                                     @endif
 
                                                     <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
@@ -195,7 +192,7 @@
                                                         {{ trans('words.remove') }}
                                                     </a>
                                                 @elseif(Auth::User()->usertype != 'Admin' && $property->status == 1)
-                                                    <a  href="#" class="callRemovePropertyPopup" class="dropdown-item"
+                                                    <a  href="javascript::void()" class="callRemovePropertyPopup dropdown-item"
                                                         data-id="{{Crypt::encryptString($property->id)}}"
                                                         data-toggle="modal" data-target="#removePropertyPopup"
                                                     >
@@ -264,9 +261,56 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="PropertyPlanModal" tabindex="-1" role="dialog" aria-labelledby="PropertyPlanModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+    
+                <div class="modal-header" style="padding: 10px">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Change Plan
+                    </h5>
+                </div>
+    
+                {!! Form::open(['url' => ['admin/properties/plan_update'], 'class' => '', 'name' => 'plan_form', 'id' => 'plan_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                    <input type="hidden" id="hidden_property_id" name="property_id" value="">
+                    <div class="modal-body" style="padding: 10px">
+                        <div class="row">
+                            <div class="col-6">
+                                <label>{{ trans('words.subscription_plan') }}</label>
+                                <select id="plan_id" name="plan_id" class="form-control" required>
+                                    <option value="1">Basic Plan</option>
+                                    <option value="2">Premium Plan</option>
+                                    <option value="3">Platinum Plan</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label>Expiry Date</label>
+                                <input type="date" name="property_exp_date" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="padding: 10px">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Save changes
+                        </button>
+                    </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+
 @endsection
 @section('scripts')
 <script>
+     $(document).on("click", "#changePlan_button", function() {
+        var id = $(this).attr('data-propertyId');
+        $('#hidden_property_id').val(id);
+    });
+    
     $(".callRemovePropertyPopup").on('click', function(e) {
         var id = $(this).attr('data-id');
         $("#removePropertyPopupForm").attr('action', `properties/delete/${id}`);

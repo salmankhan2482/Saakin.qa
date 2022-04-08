@@ -20,40 +20,46 @@
                                     <th>Property Title</th>
                                     <th>Message</th>
                                     <th>Status</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
+                                    <th>Resolved</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($data['reports'] as $i => $report)
                                     <tr>
                                         <td>{{ $report->id }}</td>
-                                        <td>{{ $report->user->name }}</td>
-                                        <td>{{ $report->user->email }}</td>
+                                        <td>{{ Str::limit($report->user->name ?? '' , 20, '...') }}</td>
+                                        <td>{{ Str::limit($report->user->email ?? '', 20, '...') }}</td>
                                         <td>
-                                            <a class="property-img"
-                                                href="{{ url(strtolower($report->property->property_purpose) .'/' .$report->property->property_slug .'/' .$report->property->id) }}"
-                                                target="_blank">
-                                                {!! Str::limit($report->property->property_name, 30, '...') !!}
+                                            <a class="property-img" target="_blank"
+                                                href="{{ url(strtolower($report->property->property_purpose) .'/' .$report->property->property_slug .'/' .$report->property->id) }}">
+                                                {!! Str::limit($report->property->property_name, 15, '...') !!}
                                             </a>
                                         </td>
-                                        <td>{!! Str::limit($report->message, 30, '...') !!}</td>
+                                        <td>{!! Str::limit($report->message, 15, '...') !!}</td>
                                         <td>{{ $report->status }}</td>
-                                        <td style="display: flex; margin: 2px">
+                                        <td>
+                                            <a href="{{ route('property-reports.show', $report->id) }}" 
+                                                class="btn btn-info rounded btn-xs">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                            @if (Auth::User()->usertype == 'Admin')
+                                                <a href="{{ route('property-reports.destroy', $report->id) }}"
+                                                    class="btn btn-danger rounded btn-xs action-btn">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
                                             @if ($report->status != 'Resolved')
                                                 <form action="{{ route('property-reports.update', $report->id) }}"
                                                     style="margin-right: 5px" method="POST">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="submit" class="btn btn-success rounded btn-xs action-btn">
-                                                        Resolve
+                                                        &check;
                                                     </button>
                                                 </form>
-                                            @endif
-                                            @if (Auth::User()->usertype == 'Admin')
-                                                <a href="{{ route('property-reports.destroy', $report->id) }}"
-                                                    class="btn btn-danger rounded btn-xs action-btn">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
                                             @endif
                                         </td>
                                     </tr>
