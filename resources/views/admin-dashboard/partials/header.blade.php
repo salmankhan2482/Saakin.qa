@@ -115,6 +115,7 @@
                                         </div>
                                     </a>
                                 </li>
+                                @can('role-list')
                                 <li>
                                     <a href="{{ route('roles.index') }}" class="timeline-panel">
                                         <div class="media-body">
@@ -122,6 +123,7 @@
                                         </div>
                                     </a>
                                 </li>
+                                @endcan
                             </ul>
                         </div>
                     </div>

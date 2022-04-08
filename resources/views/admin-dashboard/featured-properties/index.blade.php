@@ -181,7 +181,7 @@
                                                         </a>
                                                     @endif
 
-                                                    @if (Auth::User()->usertype == 'Admin')
+                                                    {{-- @if (Auth::User()->usertype == 'Admin') --}}
                                                         @if ($property->featured_property == 0)
                                                             <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
                                                                 class="dropdown-item">
@@ -195,7 +195,7 @@
                                                                 {{ trans('words.unset_as_featured') }}
                                                             </a>
                                                         @endif
-                                                    @endif
+                                                    {{-- @endif --}}
                                                 @endif
                                             </div>
                                         </td>
@@ -216,58 +216,53 @@
         </div>
     </div>
 
-<div class="modal fade" id="PropertyPlanModal" tabindex="-1" role="dialog" aria-labelledby="PropertyPlanModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-
-            <div class="modal-header" style="padding: 10px">
-                <h5 class="modal-title" id="exampleModalLongTitle">
-                    Change Plan
-                </h5>
-            </div>
-
-            {!! Form::open(['url' => ['admin/properties/plan_update'], 'class' => '', 'name' => 'plan_form', 'id' => 'plan_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
-                <input type="hidden" id="hidden_property_id" name="property_id" value="">
-                <div class="modal-body" style="padding: 10px">
-                    <div class="row">
-                        <div class="col-6">
-                            <label>{{ trans('words.subscription_plan') }}</label>
-                            <select id="plan_id" name="plan_id" class="form-control" required>
-                                <option value="1">Basic Plan</option>
-                                <option value="2">Premium Plan</option>
-                                <option value="3">Platinum Plan</option>
-                            </select>
-                        </div>
-                        <div class="col-6">
-                            <label>Expiry Date</label>
-                            <input type="date" name="property_exp_date" class="form-control">
+    <div class="modal fade" id="PropertyPlanModal" tabindex="-1" role="dialog" aria-labelledby="PropertyPlanModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+    
+                <div class="modal-header" style="padding: 10px">
+                    <h5 class="modal-title" id="exampleModalLongTitle">
+                        Change Plan
+                    </h5>
+                </div>
+    
+                {!! Form::open(['url' => ['admin/properties/plan_update'], 'class' => '', 'name' => 'plan_form', 'id' => 'plan_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                    <input type="hidden" id="hidden_property_id" name="property_id" value="">
+                    <div class="modal-body" style="padding: 10px">
+                        <div class="row">
+                            <div class="col-6">
+                                <label>{{ trans('words.subscription_plan') }}</label>
+                                <select id="plan_id" name="plan_id" class="form-control" required>
+                                    <option value="1">Basic Plan</option>
+                                    <option value="2">Premium Plan</option>
+                                    <option value="3">Platinum Plan</option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label>Expiry Date</label>
+                                <input type="date" name="property_exp_date" class="form-control">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer" style="padding: 10px">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                        Close
-                    </button>
-                    <button type="submit" class="btn btn-primary">
-                        Save changes
-                    </button>
-                </div>
-            {!! Form::close() !!}
+                    <div class="modal-footer" style="padding: 10px">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Save changes
+                        </button>
+                    </div>
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
-</div>
 @endsection
 @section('scripts')
     <script>
         
-    $(document).on("click", "#changePlan_button", function() {
-        var id = $(this).attr('data-propertyId');
-        $('#hidden_property_id').val(id);
-    });
-
-        $(".callRemovePropertyPopup").on('click', function(e) {
-            var id = $(this).attr('data-id');
-            $("#removePropertyPopupForm").attr('action', `properties/delete/${id}`);
+        $(document).on("click", "#changePlan_button", function() {
+            var id = $(this).attr('data-propertyId');
+            $('#hidden_property_id').val(id);
         });
     </script>
 @endsection

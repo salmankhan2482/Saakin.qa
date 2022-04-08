@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use Auth;
 use App\Properties;
 use App\PropertyReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class PropertyReportController extends Controller
@@ -17,17 +17,15 @@ class PropertyReportController extends Controller
     public function index()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-            \Session::flash('flash_message', trans('words.access_denied'));
+            Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
-
-        if(Auth::User()->usertype=="Agency"){
-            $data['reports'] = PropertyReport::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(10);
-            
-        } else {
-            $data['reports'] = PropertyReport::paginate(10);
-            
-        }
+        
+        $data['reports'] = PropertyReport::
+        when(Auth::User()->usertype=="Agency", function($query){
+            $query->where('agency_id',Auth::User()->agency_id);
+        })
+        ->orderBy('id','desc')->paginate(10);
         
         $action = 'saakin_index';
         return view('admin-dashboard.property-reports.index', compact('data','action'));
@@ -70,9 +68,11 @@ class PropertyReportController extends Controller
      * @param  \App\PropertyReport  $propertyReport
      * @return \Illuminate\Http\Response
      */
-    public function show(PropertyReport $propertyReport)
+    public function show($id)
     {
-        dd('show');
+        $report = PropertyReport::find($id);
+        $action = 'saakin_create';
+        return view('admin-dashboard.property-reports.show', compact('action', 'report'));
     }
 
     /**
