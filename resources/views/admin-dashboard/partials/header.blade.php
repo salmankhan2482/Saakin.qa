@@ -357,6 +357,14 @@
                                     </a>
                                 </li>
 
+                                <li>
+                                    <a href="{{ route('subscriber') }}" class="timeline-panel">
+                                        <div class="media-body">
+                                            <h6 class="mb-1">Subscribers</h6>
+                                        </div>
+                                    </a>
+                                </li>
+
                             </ul>
                         </div>
                     </div>
