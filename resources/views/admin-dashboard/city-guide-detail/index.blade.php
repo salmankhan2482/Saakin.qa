@@ -41,7 +41,7 @@
                                                 class="btn btn-info rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a href="{{ route('cities.destroy', $city->id) }}"
+                                            <a href="{{ route('cities.destroy', $cityDetail->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

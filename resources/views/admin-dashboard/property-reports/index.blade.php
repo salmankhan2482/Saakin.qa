@@ -25,39 +25,39 @@
                             </thead>
                             <tbody>
                                 @foreach ($data['reports'] as $i => $report)
-                                <tr>
-                                    <td>{{ $report->id }}</td>
-                                    <td>{{ $report->user->name }}</td>
-                                    <td>{{ $report->user->email }}</td>
-                                    <td>
-                                        <a class="property-img"
-                                            href="{{ url(strtolower($report->property->property_purpose) .'/' .$report->property->property_slug .'/' .$report->property->id) }}"
-                                            target="_blank">
-                                            {!! Str::limit($report->property->property_name, 30, '...') !!}
-                                        </a>
-                                    </td>
-                                    <td>{!! Str::limit($report->message, 30, '...') !!}</td>
-                                    <td>{{ $report->status }}</td>
-                                    <td style="display: flex; margin: 2px">
-                                        @if ($report->status != 'Resolved')
-                                        <form action="{{ route('property-reports.update', $report->id) }}" style="margin-right: 5px" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit" class="btn btn-icon waves-effect btn-success m-b-5 m-r-5">
-                                                Resolved
-                                            </button>
-                                        </form>
-                                        @endif
-                                        @if(Auth::User()->usertype=="Admin"){
-
-                                        <a href="{{ route('property-reports.destroy', $report->id) }}"
-                                            class="btn btn-icon waves-effect waves-light btn-danger m-b-5">
-                                            <i class="fa fa-remove"></i>
-                                        </a>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                                    <tr>
+                                        <td>{{ $report->id }}</td>
+                                        <td>{{ $report->user->name }}</td>
+                                        <td>{{ $report->user->email }}</td>
+                                        <td>
+                                            <a class="property-img"
+                                                href="{{ url(strtolower($report->property->property_purpose) .'/' .$report->property->property_slug .'/' .$report->property->id) }}"
+                                                target="_blank">
+                                                {!! Str::limit($report->property->property_name, 30, '...') !!}
+                                            </a>
+                                        </td>
+                                        <td>{!! Str::limit($report->message, 30, '...') !!}</td>
+                                        <td>{{ $report->status }}</td>
+                                        <td style="display: flex; margin: 2px">
+                                            @if ($report->status != 'Resolved')
+                                                <form action="{{ route('property-reports.update', $report->id) }}"
+                                                    style="margin-right: 5px" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-success rounded btn-xs action-btn">
+                                                        Resolve
+                                                    </button>
+                                                </form>
+                                            @endif
+                                            @if (Auth::User()->usertype == 'Admin')
+                                                <a href="{{ route('property-reports.destroy', $report->id) }}"
+                                                    class="btn btn-danger rounded btn-xs action-btn">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

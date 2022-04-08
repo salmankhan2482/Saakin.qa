@@ -57,14 +57,14 @@
                                         <option value="{{ trans('words.purpose_rent') }}">{{ trans('words.for_rent') }}</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                {{-- <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select name="status" id="basic" class="selectpicker show-tick form-control"
                                         data-live-search="false">
                                         <option value="">Select Status</option>
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select id="proeprty-type" name="type" class="selectpicker show-tick form-control" data-live-search="false">
                                         <option value="">{{ trans('words.property_type') }}</option>

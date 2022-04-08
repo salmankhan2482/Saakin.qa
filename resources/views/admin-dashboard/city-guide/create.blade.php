@@ -44,12 +44,12 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label>Short Description</label>
                                     <textarea type="text" rows="5" id="short_description" name="short_description" class="form-control"
                                      placeholder="Short Description" required></textarea>
-                                </div>
-                                <div class="form-group col-md-6">
+                                </div> --}}
+                                <div class="form-group col-md-12">
                                     <label>Long Description</label>
                                     <textarea type="text" rows="5" id="long_description" name="long_description" class="form-control"
                                      placeholder="Long Description" required></textarea>
@@ -101,4 +101,16 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
+    <script>
+        var editor = CKEDITOR.replace( 'long_description' );
+        CKFinder.setupCKEditor( editor );
+        CKEDITOR.config.extraPlugins = 'contextmenu';
+        CKEDITOR.config.extraPlugins = 'dialog';
+        CKEDITOR.config.extraPlugins = 'liststyle';
+        CKEDITOR.config.extraPlugins = 'dialogui';
+        CKEDITOR.config.extraPlugins = 'menu';
+    </script>
 @endsection

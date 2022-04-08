@@ -319,6 +319,7 @@ class PropertiesController extends Controller
         (request()->property_purpose ? strtolower(request()->property_purpose).' for ' : ' ') .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
         
         if(count($properties) > 0){
+            if (request('property_purpose') != '') {
             $popularSearches = PopularSearches::updateOrCreate(
                 [
                     'property_purpose' => request('property_purpose'),
@@ -336,7 +337,7 @@ class PropertiesController extends Controller
                     'link' => $link,
                 ]
             );
-            
+            }
         }
         
         return view('front.pages.properties', 
