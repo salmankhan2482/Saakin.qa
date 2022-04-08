@@ -112,7 +112,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::resource('permissions','PermissionController');
     });
 	
-	Route::get('subscriber', 'SubscriberController@subscriberlist');
+	Route::get('subscriber', 'SubscriberController@subscriberlist')->name('subscriber');
 	Route::get('subscriber/delete/{id}', 'SubscriberController@delete')->name('subscriber.destroy');
 
 

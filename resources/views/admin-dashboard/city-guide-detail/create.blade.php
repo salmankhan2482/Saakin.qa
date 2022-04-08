@@ -105,12 +105,25 @@
 
 <script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
     <script>
-        var editor = CKEDITOR.replace( 'property_trends' );
-        var editor = CKEDITOR.replace( 'neighborhood' );
-        var editor = CKEDITOR.replace( 'lifestyle' );
-        var editor = CKEDITOR.replace( 'things_to_consider' );
-        var editor = CKEDITOR.replace( 'locations' );
-        var editor = CKEDITOR.replace( 'attributes' );
+        var editor1 = CKEDITOR.replace( 'property_trends');
+        var editor2 = CKEDITOR.replace( 'neighborhood' );
+        var editor3 = CKEDITOR.replace( 'lifestyle' );
+        var editor4 = CKEDITOR.replace( 'things_to_consider' );
+        var editor5 = CKEDITOR.replace( 'locations' );
+        var editor6 = CKEDITOR.replace( 'attributes' );
+        CKFinder.setupCKEditor( editor1 );
+        CKFinder.setupCKEditor( editor2 );
+        CKFinder.setupCKEditor( editor3 );
+        CKFinder.setupCKEditor( editor4 );
+        CKFinder.setupCKEditor( editor5 );
+        CKFinder.setupCKEditor( editor6 );
+    </script>
+@endsection
+
+{{-- @section('scripts')
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
+    <script>
+        var editor = CKEDITOR.replace( 'description' );
         CKFinder.setupCKEditor( editor );
         CKEDITOR.config.extraPlugins = 'contextmenu';
         CKEDITOR.config.extraPlugins = 'dialog';
@@ -118,4 +131,4 @@
         CKEDITOR.config.extraPlugins = 'dialogui';
         CKEDITOR.config.extraPlugins = 'menu';
     </script>
-@endsection
+@endsection --}}

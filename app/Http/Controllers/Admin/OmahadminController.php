@@ -215,10 +215,18 @@ class OmahadminController extends Controller
 
             $data['propertyCities'] = PropertyCities::join("properties", "properties.city", "=", "property_cities.id")
             ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))
-            ->where('properties.status', 1)->orderBy("pcount", "desc")->groupBy("property_cities.id")->get();
+
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("properties.agency_id", Auth::User()->agency_id);
+            })
+            ->where('properties.status', 1)
+            ->orderBy("pcount", "desc")
+            ->groupBy("property_cities.id")
+             ->get();
             
             $action = 'saakin_dashboard';
             return view('admin-dashboard.index', compact('data', 'action'));
+
     }
 
     public function notification()

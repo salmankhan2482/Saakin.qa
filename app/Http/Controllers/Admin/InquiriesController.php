@@ -264,9 +264,14 @@ class InquiriesController extends MainAdminController
 
     public function notifications()
     {
-        $inquirieslist = Enquire::orderBy('id', 'ASC')->get();
-        $action = 'saakin_index';
+        if(Auth::User()->usertype=="Agency"){
+            $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(10);
+        } else {
+            $inquirieslist = Enquire::orderBy('id', 'desc')->paginate(10);
+            
+        }
 
+        $action = 'saakin_index';
 
         return view('admin-dashboard.notifications.notifications',compact('inquirieslist','action'));
 
