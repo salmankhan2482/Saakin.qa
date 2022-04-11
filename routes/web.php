@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PopularSearchesController;
+use App\Properties;
+use App\PropertyCounter;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -245,9 +247,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::resource('callToAction', 'ClickCountersController');
     });
     Route::get('agencyCallToActionList/{id}', 'ClickCountersController@agencyCallToActionList')->name('agencyCallToActionList');
-    Route::get('propertyVisits_per_month', 'ClickCountersController@propertyVisitsPerMonth')->name('propertyVisits_per_month');
-    Route::get('agencyPropertiesVisitsList/{id}', 'ClickCountersController@agencyPropertiesVisitsList')
-    ->name('agencyPropertiesVisitsList');
+    Route::get('propertyVisits_per_month/{id?}', 'ClickCountersController@propertyVisitsPerMonth')->name('propertyVisits_per_month');
     Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
     Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
     Route::get('top_Ten_Properties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');

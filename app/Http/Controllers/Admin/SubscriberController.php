@@ -20,21 +20,15 @@ class SubscriberController extends MainAdminController
 	public function __construct()
     {
 		 $this->middleware('auth');	
-		
 		 parent::__construct();
-
-         
     }
     public function subscriberlist()
     {  
         
-         if(Auth::User()->usertype!="Admin"){
-
-                \Session::flash('flash_message', trans('words.access_denied'));
-
-                return redirect('dashboard');
-                
-            }
+        if(Auth::User()->usertype!="Admin"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
+        }
         
     	$subscriberlist = Subscriber::orderBy('id','desc')->paginate(10);
         $action = 'saakin_index';

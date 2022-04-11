@@ -81,7 +81,8 @@
     align-items: center;
     white-space: nowrap;
 
-    &.active {
+    &.active,
+    &:focus {
       color: $primary;
     }
   }

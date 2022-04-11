@@ -2,13 +2,7 @@
 @section('type','Real Estate Directory')
 @section('content')
     <style>
-        #more {display: none;}
-        
-        .search_live img{
-            max-width: 50px;
-            height: 50px;
-            width: 50px;
-        }
+       
            
     </style>
     @include('front.pages.include.search')

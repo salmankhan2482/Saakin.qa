@@ -24,11 +24,21 @@ class ClickCountersController extends Controller
     // '12/08/2020'
     // $date = Carbon::createFromFormat('m/d/Y', $myDate)->endOfMonth()->format('Y-m-d');
 
+    // it fetch the record between start and end of the month 
+    //->when(request('from') == '' && request('to') == '', function ($query) {
+    //     $query->whereMonth('click_counters.created_at', Carbon::now()->month);
+    //     request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
+    //     request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
+    // })
+
     public function index()
     {
+        if(auth()->user()->usertype == 'Agency'){
+            return $this->agencyCallToActionList(auth()->user()->agency_id);
+        }
+
         $data['clickCounters'] = DB::table('click_counters')
-        ->leftJoin('properties', 'click_counters.property_id', 'properties.id')
-        ->rightJoin('agencies', 'properties.agency_id', 'agencies.id')
+        ->join('agencies', 'click_counters.agency_id', 'agencies.id')
         ->select('agencies.name as agency_name','agencies.*','click_counters.created_at as created_at',
         'agencies.id as agency_id', DB::raw('COUNT(click_counters.button_name) as totalCall'))
         ->orderBy('totalCall', 'DESC')
@@ -40,11 +50,6 @@ class ClickCountersController extends Controller
         })
         ->when(request('from') && request('to'), function ($query) {
             $query->whereBetween('click_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
-        })
-        ->when(request('from') == '' && request('to') == '', function ($query) {
-            $query->whereMonth('click_counters.created_at', Carbon::now()->month);
-            request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
-            request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
         })
         ->groupBy('agency_name')->get();
 
@@ -80,9 +85,10 @@ class ClickCountersController extends Controller
     {
         $action = 'saakin_index';
         if (auth()->user()->usertype == 'Agency') {
-
-            $data['propertyVisitsPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
-            ->where('agency_id', auth()->user()->agency_id)
+            $id = auth()->user()->agency_id;
+        }
+        if ($id) {
+            $data['propertyVisitsPerMonth'] = PropertyCounter::where('agency_id', $id)
             ->when(request('from') , function ($query) {
                 $query->where('property_counters.created_at', '>=', request('from').' 00:00:01');
             })
@@ -91,19 +97,13 @@ class ClickCountersController extends Controller
             })
             ->when(request('from') && request('to'), function ($query) {
                 $query->whereBetween('property_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
-            })
-            ->when(request('from') == '' && request('to') == '', function ($query) {
-                $query->whereMonth('property_counters.created_at', Carbon::now()->month);
-                request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
-                request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
             })->get();
             
             return view('admin-dashboard.traffic-pages.propertyVisits-per-month.agency-index', compact('data', 'action'));
 
         }else{
             $data['propertyVisitsPerMonth'] = DB::table('property_counters')
-            ->join('properties', 'property_counters.property_id', 'properties.id')
-            ->leftJoin('agencies', 'properties.agency_id', 'agencies.id')
+            ->join('agencies', 'property_counters.agency_id', 'agencies.id')
             ->select('agencies.id as aid', 'agencies.name as aname', DB::raw(' SUM(property_counters.counter) as totalTraffic '))
             ->orderBy('totalTraffic', 'desc')
             ->when(request('from') , function ($query) {
@@ -114,41 +114,21 @@ class ClickCountersController extends Controller
             })
             ->when(request('from') && request('to'), function ($query) {
                 $query->whereBetween('property_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
-            })
-            ->when(request('from') == '' && request('to') == '', function ($query) {
-                $query->whereMonth('property_counters.created_at', Carbon::now()->month);
-                request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
-                request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
-            })
-            ->groupBy('agencies.name')->get();
+            })->groupBy('agencies.name')->get();
             return view('admin-dashboard.traffic-pages.propertyVisits-per-month.index', compact('data', 'action'));
         }
     }
 
-    public function agencyPropertiesVisitsList($id)
-    {
-        $action = 'saakin_index';
-        $data['PropertiesVisits'] = DB::table('property_counters')
-        ->join('properties', 'property_counters.property_id', 'properties.id')
-        ->select('properties.id as pid', 'properties.property_name as pname', 
-        'properties.property_purpose as ppurpose', 'properties.property_slug as pslug',
-        'property_counters.counter as count')
-        ->where('properties.agency_id', $id)
-        ->orderBy('count', 'desc')
-        ->get();
-        
-        return view('admin-dashboard.traffic-pages.propertyVisits-per-month.listing', compact('data','action'));
-        
-    }
 
     public function trafficUsers()
     {
+        $action = 'saakin_index';
+
         if(auth()->user()->usertype == 'Admin'){
+            
             $users =  DB::table('page_visits')
-            ->leftJoin('properties', 'page_visits.property_id', 'properties.id')
-            ->join('agencies', 'properties.agency_id', 'agencies.id')
-            ->select('agencies.name as aname', 'agencies.id as aid', 
-            DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
+            ->join('agencies', 'page_visits.agency_id', 'agencies.id')
+            ->select('agencies.*', DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
             ->when(request('from') , function ($query) {
                 $query->where('page_visits.created_at', '>=', request('from').' 00:00:01');
             })
@@ -158,23 +138,15 @@ class ClickCountersController extends Controller
             ->when(request('from') && request('to'), function ($query) {
                 $query->whereBetween('page_visits.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
             })
-            ->when(request('from') == '' && request('to') == '', function ($query) {
-                $query->whereMonth('page_visits.created_at', Carbon::now()->month);
-                request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
-                request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
-            })
             ->orderBy('totalUsers', 'DESC')
-            ->groupBy('aname')
+            ->groupBy('name')
             ->get();
             
-            $action = 'saakin_index';
-
             return view('admin-dashboard.traffic-pages.users.index', compact('users','action'));
         }elseif(auth()->user()->usertype == 'Agency'){
-            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-
-            $users = PageVisits::whereIn('property_id', $property_ids)
-                ->groupBy('ip_address')
+            
+            $users = DB::table('page_visits')->where('agency_id', auth()->user()->agency_id)
+                ->select('page_visits.*', DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
                 ->when(request('from') , function ($query) {
                     $query->where('page_visits.created_at', '>=', request('from').' 00:00:01');
                 })
@@ -183,14 +155,9 @@ class ClickCountersController extends Controller
                 })
                 ->when(request('from') && request('to'), function ($query) {
                     $query->whereBetween('page_visits.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
-                })
-                ->when(request('from') == '' && request('to') == '', function ($query) {
-                    $query->whereMonth('created_at', Carbon::now()->month);
-                    request()->merge(['from' => Carbon::now()->startOfMonth()->modify('0 month')->toDateString()]) ;
-                    request()->merge(['to' => Carbon::now()->endOfMonth()->modify('0 month')->toDateString()]) ;
-                })->get();
-                
-                $action = 'saakin_index';
+                })->orderBy('totalUsers', 'DESC')
+                ->groupBy('country')
+                ->get();
                 
             return view('admin-dashboard.traffic-pages.users.agency_index', compact('users','action'));
         }

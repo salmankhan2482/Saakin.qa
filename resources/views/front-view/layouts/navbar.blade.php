@@ -20,7 +20,7 @@
 
         {{-- for Mobile --}}
         @if ((new \Jenssegers\Agent\Agent())->isMobile())
-        <div class="d-flex d-sm-none align-items-center ms-auto login-btns">
+        <div class="d-flex d-md-none align-items-center ms-auto login-btns">
             @if (!Auth::user())
               <a class="fs-sm me-2" href="#" data-bs-toggle="modal" data-bs-target="#user-login-popup">Login</a>
             @else

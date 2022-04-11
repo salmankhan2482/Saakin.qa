@@ -46,7 +46,6 @@
                         <table id="example3" class="display min-w850">
                             <thead>
                                 <tr>
-                                    <th>Agency ID</th>
                                     <th>Agency Name</th>
                                     <th>Total Traffic</th>
                                 </tr>
@@ -54,8 +53,7 @@
                             <tbody>
                                 @foreach ($users as $i => $user)
                             <tr>
-                                <td>{{ $user->aid }}</td>
-                                <td>{{ $user->aname }}</td>
+                                <td>{{ $user->name }}</td>
                                 <td>{{ $user->totalUsers }}</td>
                             </tr>
                         @endforeach
