@@ -28,7 +28,6 @@
 <link href="{{ asset('assets/css/fontawesome.css') }}" rel="stylesheet" />
 @yield('style')
 
-<link href="{{ asset('compass-fonts/compass-fonts.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
 
 @stack('styles')

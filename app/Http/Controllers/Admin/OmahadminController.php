@@ -103,17 +103,16 @@ class OmahadminController extends Controller
                 ->count();
                 
                 
-            //traffic per month
-            $data['trafficPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
-                ->when(auth()->user()->usertype == 'Agency', function($query){
+                //traffic per month
+                // whereMonth('created_at', Carbon::now()->month)
+            $data['trafficPerMonth'] = PropertyCounter::when(auth()->user()->usertype == 'Agency', function($query){
                     $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
                     $query->whereIn('property_id', $property_ids);
                 })
                 ->sum('counter');
                
             // clicks per month
-            $data['clicksPerMonths'] = ClickCounters::whereMonth('created_at', Carbon::now()->month)
-                ->when(auth()->user()->usertype == 'Agency', function($query){
+            $data['clicksPerMonths'] = ClickCounters::when(auth()->user()->usertype == 'Agency', function($query){
                     $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
                     $query->whereIn('property_id', $property_ids);
                 })
@@ -121,10 +120,8 @@ class OmahadminController extends Controller
                 
 
             // number of users
-            $data['numberOfUsers'] = PageVisits::whereMonth('created_at', Carbon::now()->month)
-                ->when(auth()->user()->usertype == 'Agency', function($query){
-                    $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-                    $query->whereIn('property_id', $property_ids);
+            $data['numberOfUsers'] = PageVisits::when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where('agency_id', auth()->user()->agency_id);
                 })
                 ->distinct('ip_address')->count();
 
@@ -167,14 +164,15 @@ class OmahadminController extends Controller
             $data['Agency Inquiry'] = Enquire::where('type', 'Agency Inquiry')
             ->when(auth()->user()->usertype == 'Agency', function($query){
                 $query->where("agency_id", Auth::User()->agency_id);
-            })
-            ->count();
+            })->count();
 
+            // donught chart enquiries
             $data['Contact Inquiry'] = Enquire::where('type', 'Contact Inquiry')
             ->when(auth()->user()->usertype == 'Agency', function($query){
                 $query->where("agency_id", Auth::User()->agency_id);
             })->count();
             
+            // donught chart enquiries
             $data['Property Inquiry'] = Enquire::where('type', 'Property Inquiry')
             ->when(auth()->user()->usertype == 'Agency', function($query){
                 $query->where("agency_id", Auth::User()->agency_id);
@@ -186,8 +184,7 @@ class OmahadminController extends Controller
                 ->when(auth()->user()->usertype == 'Agency', function($query){
                     $query->where("agency_id", Auth::User()->agency_id);
                 })
-                ->whereMonth('created_at', $key)
-                ->count(); 
+                ->whereMonth('created_at', $key)->count(); 
             }
             
             // traffic per month
@@ -196,7 +193,7 @@ class OmahadminController extends Controller
                 when(auth()->user()->usertype == 'Agency', function($query){
                     $query->where("agency_id", Auth::User()->agency_id);
                 })
-                ->whereYear('created_at', 2022)
+                ->whereYear('created_at', Carbon::now()->year)
                 ->whereMonth('created_at', $key)
                 ->sum('counter');
             }
@@ -231,8 +228,6 @@ class OmahadminController extends Controller
 
     public function notification()
     {
-        
-
         return view('admin-dashboard.partials.header',compact('data','action'));
     }
 

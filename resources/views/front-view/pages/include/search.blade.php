@@ -25,7 +25,7 @@
                       <span class="input-group-text"><i class="fa fa-search"></i></span>
                     </div>
 
-                    <input type="text" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off" aria-label="Enter Place Name" aria-describedby="country">
+                    <input type="text" id="country" data-purpose="" placeholder="Search Location" class="form-control prepended-form-control" autocomplete="off" aria-label="Search Location" aria-describedby="country">
                   </div>
 
                   <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
@@ -172,6 +172,7 @@
                           <div class="flex-grow-1">
                             <select name="min_area" onchange="minAreaFunction(this);" class="hero__form-input  form-control custom-select">
                               <option value="">Min Area</option>
+                              <option value="50">50 sqm</option>
                               <option value="100">100 sqm</option>
                               <option value="200">200 sqm</option>
                               <option value="500">500 sqm</option>
@@ -202,6 +203,7 @@
                           <div class="flex-grow-1">
                             <select name="max_area" onchange="maxAreaFunction(this);" class="hero__form-input  form-control custom-select">
                               <option value="">Max Area</option>
+                              <option value="50">50 sqm</option>
                               <option value="100">100 sqm</option>
                               <option value="200">200 sqm</option>
                               <option value="500">500 sqm</option>

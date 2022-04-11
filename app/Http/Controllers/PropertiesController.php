@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
+use Stevebauman\Location\Facades\Location;
+
 
 class PropertiesController extends Controller
 {
@@ -315,8 +317,9 @@ class PropertiesController extends Controller
         
         $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
-        $heading_info = $furnishing.' '.($request['type']->types ?? ' properties'). 
-        (request()->property_purpose ? strtolower(request()->property_purpose).' for ' : ' ') .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
+        $heading_info = $furnishing.' '.($request['type']->types ?? ' properties for ')
+        .(request()->property_purpose ? strtolower(request()->property_purpose) : 'rent and sale ') 
+        .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
         
         if(count($properties) > 0){
             if (request('property_purpose') != '') {
@@ -436,7 +439,7 @@ class PropertiesController extends Controller
         $visitor = request()->ip();
         $traffic = PageVisits::where('ip_address', $visitor)->where('property_id', $id)
         ->whereMonth('created_at', Carbon::now()->month)->first();
-
+        
         if(auth()->check() && auth()->user()->usertype == 'Admin'){
         
         }else{
@@ -444,19 +447,21 @@ class PropertiesController extends Controller
                 $traffic = new PageVisits();
                 $traffic->ip_address = $visitor;
                 $traffic->property_id = $id;
+                $position = Location::get('https://'.$visitor);
+                $traffic->country = $position->countryName;
                 $traffic->agency_id = $property->agency_id ?? '';
                 $traffic->save();
+            }
 
-                if($counter = PropertyCounter::where('property_id', $id)->first()){
-                    $counter->counter = $counter->counter + 1;
-                    $counter->update();
-                }else{
-                    $counter = new PropertyCounter();
-                    $counter->property_id = $id;
-                    $counter->agency_id = $property->agency_id;
-                    $counter->save();
-                    
-                }
+            $counter = PropertyCounter::where('property_id', $id)->first();
+            if($counter){
+                $counter->counter = $counter->counter + 1;
+                $counter->update();
+            }else{
+                $add_counter = new PropertyCounter();
+                $add_counter->property_id = $id;
+                $add_counter->agency_id = $property->agency_id;
+                $add_counter->save();
             }
         }
         

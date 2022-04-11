@@ -1513,7 +1513,7 @@ Link:'.$propertyUrl;
                 infinite: true,
                 slidesToShow: 1,
                 dots: true,
-                speed: 300,
+                speed: 150,
                 arrows: false,
                 slidesToScroll: 1,
                 adaptiveHeight: true

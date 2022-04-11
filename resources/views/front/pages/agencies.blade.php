@@ -73,7 +73,7 @@
       {{--  --}}
       <div class="row gy-3 gy-md-4">
         @foreach ($agencies as $agency)
-          <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
             <div class="agency-tile">
               <a class="agency-tile-img border-bottom" href="{{ url('agency/' . Str::slug($agency->name, '-') . '/' . $agency->id) }}">
                 <img src="{{ asset('/upload/agencies/' . $agency->image) }}" alt="{{ $agency->name }}">

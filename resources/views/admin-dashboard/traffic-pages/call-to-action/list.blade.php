@@ -8,10 +8,10 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Call To Action</h4>
-                    <a href="#">
-                        <button type="button" class="btn btn-rounded btn-info">
+                    <a href="{{ url()->previous() }}">
+                        <button type="button" class="btn btn-rounded btn-dark">
                             <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
+                                <i class="fa fa-arrow-left color-dark"></i>
                             </span>
                             Back
                         </button>

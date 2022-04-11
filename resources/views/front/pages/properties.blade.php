@@ -33,7 +33,7 @@
                             <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                             </div>
         
-                            <input type="text" id="country" data-purpose="" placeholder="Enter Place Name" class="form-control prepended-form-control" autocomplete="off" aria-label="Enter Place Name" aria-describedby="country" value="{{ $data['keyword'] ?? '' }}">
+                            <input type="text" id="country" data-purpose="" placeholder="Search Location" class="form-control prepended-form-control" autocomplete="off" aria-label="Search Location" aria-describedby="country" value="{{ $data['keyword'] ?? '' }}">
                         </div>
                         <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
                         <div id="extra_keywords" style="display: none;">
@@ -218,6 +218,9 @@
                                                     <option @if ($request->min_area == '') selected @endif value="">
                                                         Min Area
                                                     </option>
+                                                    <option @if ($request->min_area == '50') selected @endif value="50">
+                                                        50 sqm
+                                                    </option>
                                                     <option @if ($request->min_area == '100') selected @endif value="100">
                                                         100 sqm
                                                     </option>
@@ -295,6 +298,9 @@
                                                     <option @if ($request->max_area == '') selected @endif value="">
                                                       Max Area
                                                     </option>
+                                                    <option @if ($request->max_area == '50') selected @endif value="50">
+                                                        50 sqm
+                                                      </option>
                                                     <option @if ($request->max_area == '100') selected @endif value="100">
                                                         100 sqm
                                                       </option>
@@ -702,6 +708,9 @@
                                                     <option @if ($request->min_area == '') selected @endif value="">
                                                       Min Area
                                                     </option>
+                                                    <option @if ($request->min_area == '50') selected @endif value="50">
+                                                        50 sqm
+                                                    </option>
                                                     <option @if ($request->min_area == '100') selected @endif value="100">
                                                         100 sqm
                                                     </option>
@@ -774,6 +783,9 @@
                                                 <select name="max_area" class="form-control">
                                                     <option @if ($request->max_area == '') selected @endif value="">
                                                       Max Area
+                                                    </option>
+                                                    <option @if ($request->max_area == '50') selected @endif value="50">
+                                                        50 sqm
                                                     </option>
                                                     <option @if ($request->max_area == '100') selected @endif value="100">
                                                         100 sqm
@@ -1398,8 +1410,9 @@
 
             $(".pro-slider").slick({
                 dots: true,
-                autoplay: true,
+                // autoplay: true,
                 autoplaySpeed: 2000,
+                speed: 150,
             });
         });
 

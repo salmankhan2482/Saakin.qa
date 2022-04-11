@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-md-5 col-12">
                             <div class="input-search">
-                                <input type="text"  id="country" data-purpose="" placeholder="Enter Place Name" class="form-control" autocomplete="off">
+                                <input type="text"  id="country" data-purpose="" placeholder="Search Location" class="form-control" autocomplete="off">
                             </div>
                             <div id="country_list" class="col-md-12 col-12" ></div> 
                         </div>
@@ -181,6 +181,7 @@
                                             <select name="min_area"
                                                 class="hero__form-input  form-control custom-select">
                                                 <option value="">Min Area</option>
+                                                <option value="50">50 sqm</option>
                                                 <option value="100">100 sqm</option>
                                                 <option value="200">200 sqm</option>
                                                 <option value="500">500 sqm</option>
@@ -210,6 +211,7 @@
                                             <select name="max_area"
                                                 class="hero__form-input  form-control custom-select">
                                                 <option value="">Max Area</option>
+                                                <option value="50">50 sqm</option>
                                                 <option value="100">100 sqm</option>
                                                 <option value="200">200 sqm</option>
                                                 <option value="500">500 sqm</option>
@@ -264,6 +266,7 @@
                                                     <select name="min_area" onchange="minAreaFunction(this);"
                                                         class="hero__form-input  form-control custom-select">
                                                         <option value="">Min Area</option>
+                                                        <option value="50">50 sqm</option>
                                                         <option value="100">100 sqm</option>
                                                         <option value="200">200 sqm</option>
                                                         <option value="500">500 sqm</option>
@@ -293,6 +296,7 @@
                                                     <select name="max_area"  onchange="maxAreaFunction(this);"
                                                         class="hero__form-input  form-control custom-select">
                                                         <option value="">Max Area</option>
+                                                        <option value="50">50 sqm</option>
                                                         <option value="100">100 sqm</option>
                                                         <option value="200">200 sqm</option>
                                                         <option value="500">500 sqm</option>

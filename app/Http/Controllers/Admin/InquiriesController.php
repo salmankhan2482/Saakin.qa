@@ -2,22 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
-use Session;
-use App\User;
-
 use App\Agency;
 use App\Enquire;
-use Carbon\Carbon;
-use App\Http\Requests;
-use App\Properties;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Crypt;
-use Intervention\Image\Facades\Image;
 
-use function Ramsey\Uuid\v1;
+use App\Properties;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+
+use Illuminate\Support\Facades\Session;
 
 class InquiriesController extends MainAdminController
 {
@@ -30,19 +23,14 @@ class InquiriesController extends MainAdminController
     public function inquirieslist()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-                \Session::flash('flash_message', trans('words.access_denied'));
-                return redirect('dashboard');
-            }
-
-        if(Auth::User()->usertype=="Agency"){
-            $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(10);
-            
-        } else {
-            $inquirieslist = Enquire::orderBy('id', 'desc')->paginate(10);
-            
+            Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
         }
-        // $agency_name = Agency::where('id',$inquirieslist->agency_id)->paginate(10);
-        // dd($agency_name);
+
+        $inquirieslist = Enquire::when(Auth::User()->usertype=="Agency", function($query){
+            $query->where('agency_id',Auth::User()->agency_id);
+        })->orderBy('id', 'desc')->paginate(10);
+
         $action = 'saakin_index';
 
         return view('admin-dashboard.inquiries.index',compact('inquirieslist','action'));
@@ -51,13 +39,12 @@ class InquiriesController extends MainAdminController
     public function create_inquiry(Request $request)
     {
         if(Auth::User()->usertype!="Admin"){
-            \Session::flash('flash_message', trans('words.access_denied'));
+            Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');
         }
         $keyword = request()->get('keyword');
         $agencies = Agency::all();
         $properties = Properties::select('property_name','agency_id','id')->get();
-        // ->where('property_name', 'like', '%'.request()->get('keyword').'%');
         $action = 'saakin_index';
         
         return view('admin-dashboard.inquiries.property_inquires.create',
@@ -68,16 +55,13 @@ class InquiriesController extends MainAdminController
     {
         
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         $rule=array(
             'type' => 'required',
             'name' => 'required',
             'email' => 'required',
             'phone' => 'required',
             'message' => 'required',
-            
         );
 
         $validator = \Validator::make($data,$rule);
@@ -122,48 +106,38 @@ class InquiriesController extends MainAdminController
 
         
 
-        \Session::flash('flash_message', trans('words.added'));
+        Session::flash('flash_message', trans('words.added'));
         return \Redirect::back();
     }
 
     public function property_inquiries()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-            \Session::flash('flash_message', trans('words.access_denied'));
+            Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
+        
+        $inquirieslist = Enquire::when(Auth::User()->usertype=="Agency", function($query){
+            $query->where('agency_id',Auth::User()->agency_id);
+        })
+        ->where('type','Property Inquiry')->orderBy('id', 'desc')->paginate(10);
 
-        if(Auth::User()->usertype=="Agency"){
-        $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)
-                                        ->whereIn('type','Property Inquiry')
-                                        ->orderBy('id','desc')->paginate(10);
-        
-        } else {
-        $inquirieslist = Enquire::where('type','Property Inquiry')->orderBy('id', 'desc')->paginate(10);
-        
-        }
 
         $action = 'saakin_index';
-    return view('admin-dashboard.inquiries.property_inquires.property_inquiries',
-    compact('inquirieslist','action'));
+        return view('admin-dashboard.inquiries.property_inquires.property_inquiries',compact('inquirieslist','action'));
     }
 
     public function agency_inquiries()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-            \Session::flash('flash_message', trans('words.access_denied'));
+            Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
 
-        if(Auth::User()->usertype=="Agency"){
-        $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)
-                                        ->whereIn('type','Agency Inquiry')
-                                        ->orderBy('id','desc')->paginate(10);
-        
-        } else {
-        $inquirieslist = Enquire::where('type','Agency Inquiry')->orderBy('id', 'desc')->paginate(10);
-        
-        }
+        $inquirieslist = Enquire::when(Auth::User()->usertype=="Agency", function($query){
+            $query->where('agency_id',Auth::User()->agency_id);
+        })->where('type','Agency Inquiry')->orderBy('id', 'desc')->paginate(10);
+
         $action = 'saakin_index';
     return view('admin-dashboard.inquiries.agency_inquires.agency_inquiries',
     compact('inquirieslist','action'));
@@ -172,19 +146,14 @@ class InquiriesController extends MainAdminController
     public function contact_inquiries()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-            \Session::flash('flash_message', trans('words.access_denied'));
+            Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
 
-        if(Auth::User()->usertype=="Agency"){
-        $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)
-                                        ->whereIn('type','Contact Inquiry')
-                                        ->orderBy('id','desc')->paginate(10);
+        $inquirieslist = Enquire::when(Auth::User()->usertype=="Agency", function($query){
+            $query->where('agency_id',Auth::User()->agency_id);
+        })->where('type','Contact Inquiry')->orderBy('id', 'desc')->paginate(10);
         
-        } else {
-        $inquirieslist = Enquire::where('type','Contact Inquiry')->orderBy('id', 'desc')->paginate(10);
-        
-        }
         $action = 'saakin_index';
 
     return view('admin-dashboard.inquiries.contact_inquires.contact_inquiries',compact('inquirieslist','action'));
@@ -193,14 +162,10 @@ class InquiriesController extends MainAdminController
     public function delete($id)
     {
     	$decrypted_id = Crypt::decryptString($id);
-
         $inquire = Enquire::findOrFail($decrypted_id);
-
-
 		$inquire->delete();
 
-        \Session::flash('flash_message', trans('words.deleted'));
-
+        Session::flash('flash_message', trans('words.deleted'));
         return redirect()->back();
 
     }
@@ -228,10 +193,8 @@ class InquiriesController extends MainAdminController
         $inquire->enquire_id = 1;
         $inquire->update();
 
-
         if($inquire->property_id != ''){
             $property = Properties::find($inquire->property_id);
-            
             $action = 'saakin_create';
 
             return view('admin-dashboard.inquiries.property_inquires.view_property_inquiry',
@@ -268,11 +231,9 @@ class InquiriesController extends MainAdminController
             $inquirieslist = Enquire::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->paginate(10);
         } else {
             $inquirieslist = Enquire::orderBy('id', 'desc')->paginate(10);
-            
         }
 
         $action = 'saakin_index';
-
         return view('admin-dashboard.notifications.notifications',compact('inquirieslist','action'));
 
     }
@@ -284,7 +245,6 @@ class InquiriesController extends MainAdminController
 
         if($inquire->property_id != ''){
             $property = Properties::find($inquire->property_id);
-            
             $action = 'saakin_create';
 
             return view('admin-dashboard.notifications.view_notification',

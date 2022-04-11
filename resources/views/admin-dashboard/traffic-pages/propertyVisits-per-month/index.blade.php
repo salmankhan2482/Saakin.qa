@@ -13,19 +13,18 @@
                     <div class="basic-form">
                         <form action="{{ route('propertyVisits_per_month') }}" method="GET">
                             <div class="row justify-content-center">
-                                <div class="col-sm-2">
+                                <div class="col-2">
                                     <label for="">From</label>
                                     <input type="date" id="start" name="from" value="{{ request('from') }}" >
                                 </div>
                                 
-                                <div class="col-sm-2">
+                                <div class="col-2">
                                     <label for="">To</label>
                                     <input type="date" id="start" name="to" value="{{ request('to') }}" >
                                 </div>
                                 
-                                <div class="col-sm-1">
-                                    <br>
-                                    <button type="submit" class="btn btn-dark">
+                                <div class="col-2">
+                                    <button type="submit" class="btn btn-dark p-2">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
@@ -49,7 +48,7 @@
                                     <th>Agency ID</th>
                                     <th>Agency Name</th>
                                     <th>Property Visits</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,13 +60,14 @@
                                         <td>{{ $traffic->totalTraffic }}</td>
                                         <td>
                                             <a class="btn btn-primary rounded btn-xs action-btn"
-                                             href="{{ route('agencyPropertiesVisitsList', $traffic->aid) }}">
+                                             href="{{ url('admin/propertyVisits_per_month/'.$traffic->aid.'?from='.request('from').'&to='.request('to')) }}">
                                                 Show Properties
                                             </a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
+                            
                         </table>
                     </div>
                 </div>
