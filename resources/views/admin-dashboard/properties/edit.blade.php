@@ -22,19 +22,15 @@
         </div>
     @endif
     <div class="container-fluid">
-        <div class="page-titles">
-            <ol class="breadcrumb">
-                <a href="{{ url()->previous() }}">
-                    <button type="button" class="btn btn-rounded btn-dark" style="padding: 0.5rem !important;">Back</button>
-                </a>
-            </ol>
-        </div>
         <!-- row -->
         <div class="row">
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Add Property</h4>
+                        <h4 class="card-title">Edit Property</h4>
+                        <a href="{{ url()->previous() }}">
+                            <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                        </a>
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
@@ -320,8 +316,8 @@
 
                                 </fieldset>
                                 <div class="m-4">
-                                    <button id="SaveProperty" type="submit" class="btn btn-primary">Save
-                                        Property</button>
+                                    <button id="SaveProperty" type="submit" class="btn btn-rounded btn-success">Update
+                                        </button>
                                 </div>
                                 {!! Form::close() !!}
                             </div>

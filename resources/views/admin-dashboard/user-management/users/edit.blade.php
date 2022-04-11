@@ -8,9 +8,7 @@
 @endsection
     <div class="container-fluid">
         <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    @if (count($errors) > 0)
+            @if (count($errors) > 0)
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
@@ -36,6 +34,14 @@
                             {{ Session::get('flash_error_message') }}
                         </div>
                     @endif
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Edit User</h4>
+                    <a href="{{route('users.index')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
+                </div>
+                <div class="card-body">
 
                     <div class="panel-body">
                         {!! Form::open(array('route' => ['users.update', $user->id], 'method'=> 'PUT', 'class'=>'form-horizontal padding-15','name'=>'user_form','id'=>'user_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
@@ -160,8 +166,8 @@
                         <hr>
                         <div class="col-6">
                             <br>
-                            <button type="submit" class="btn btn-primary mt-2">
-                                {{ isset($user->name) ? trans('words.save_changes') : trans('words.submit') }}
+                            <button type="submit" class="btn btn-rounded btn-success">
+                                {{ isset($user->name) ? trans('words.save') : trans('words.submit') }}
                             </button>
                         </div>
                     </div>

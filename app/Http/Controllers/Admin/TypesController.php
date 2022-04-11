@@ -30,7 +30,7 @@ class TypesController extends MainAdminController
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
-        $data['alltypes'] = Types::orderBy('id')->get();
+        $data['alltypes'] = Types::orderBy('id')->paginate(10);
         $action = 'saakin_index';
         return view('admin-dashboard.property-types.index', compact('data', 'action'));
     }
@@ -85,7 +85,37 @@ class TypesController extends MainAdminController
         $data['type'] = Types::findOrFail($id);
         $action = 'saakin_create';
 
-        return view('admin-dashboard.property-types.create', compact('data', 'action'));
+        return view('admin-dashboard.property-types.edit', compact('data', 'action'));
+    }
+
+    public function update(Request $request)
+    {
+        $data =  \Request::except(array('_token'));
+        $inputs = $request->all();
+        $rule = array( 'property_type' => 'required' );
+        $validator = \Validator::make($data, $rule);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->messages());
+        }
+
+        if (!empty($inputs['id'])) {
+            $types = Types::findOrFail($inputs['id']);
+        } else {
+            $types = new Types;
+        }
+        $slug  = Str::slug($inputs['property_type'], "-");
+        $types->types = $inputs['property_type'];
+        $types->slug = $slug;
+        $types->save();
+
+        if (!empty($inputs['id'])) {
+            \Session::flash('flash_message', trans('words.successfully_updated'));
+            return \Redirect::back();
+        } else {
+            \Session::flash('flash_message', trans('words.added'));
+            return \Redirect::back();
+        }
     }
 
     public function delete($id)

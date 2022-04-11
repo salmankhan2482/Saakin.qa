@@ -24,7 +24,7 @@ class PermissionController extends Controller
     public function index()
     {
         
-        $permissions = Permission::orderBy('id','DESC')->paginate();
+        $permissions = Permission::orderBy('id','DESC')->paginate(10);
         
         $action = 'saakin_index';
         return view('admin-dashboard.user-management.permissions.index',compact('permissions','action'));

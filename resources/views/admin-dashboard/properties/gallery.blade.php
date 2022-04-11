@@ -23,19 +23,15 @@
         </div>
     @endif
     <div class="container-fluid">
-        <div class="page-titles">
-            <ol class="breadcrumb">
-                <a href="{{ route('agencies.index') }}">
-                    <button type="button" class="btn btn-rounded btn-dark" style="padding: 0.5rem !important;">Back</button>
-                </a>
-            </ol>
-        </div>
         <!-- row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">{{ isset($gid) ? 'Edit ' : 'Add ' }} Gallery Image</h4>
+                        <a href="{{ route('properties.index') }}">
+                            <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                        </a>
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
@@ -69,7 +65,7 @@
                                         </div>
                                         
                                         <div class="col-sm-2 mt-2 mt-sm-0">
-                                            <button type="submit" class="btn btn-dark  pull-right">
+                                            <button type="submit" class="btn btn-rounded btn-success pull-right">
                                                 Submit
                                             </button>
                                         </div>
@@ -100,9 +96,9 @@
                                                     alt="{{ $galleryImage->image_name }}" width="180" />
                                             </td>
                                             <td class="text-center">
-                                                <a href="{{ url('admin/properties/gallery/' . $galleryImage->property_id . '/delete/' . $galleryImage->id) }}" class="btn btn-danger"
+                                                <a href="{{ url('admin/properties/gallery/' . $galleryImage->property_id . '/delete/' . $galleryImage->id) }}" class="btn btn-rounded btn-danger"
                                                     onclick="return confirm('{{ trans('words.dlt_warning_text') }}')" >
-                                                    Delete
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>

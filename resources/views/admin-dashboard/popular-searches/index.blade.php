@@ -7,7 +7,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">PopularSearches</h4>
+                    <h4 class="card-title">Popular Searches</h4>
+                    <a href="{{ route('new_dashboard')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 @if (Session::has('success'))
                     <div class="alert alert-success">
@@ -53,6 +56,13 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $data['popularSearches']->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

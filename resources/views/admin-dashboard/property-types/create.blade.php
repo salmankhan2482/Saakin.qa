@@ -19,19 +19,15 @@
 		</div>
 	@endif
 <div class="container-fluid">
-    <div class="page-titles">
-        <ol class="breadcrumb">
-            <a href="{{route('property-types.index')}}">
-                <button type="button" class="btn btn-rounded btn-dark">Back</button>
-            </a>
-        </ol>
-    </div>
     <!-- row -->
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Edit Property Types</h4>
+                    <h4 class="card-title">Add Property Types</h4>
+                    <a href="{{route('property-types.index')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -40,18 +36,14 @@
                         <input type="hidden" name="id" value="{{ isset($data['type']->id) ? $data['type']->id : null }}">
 
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-11">
                                     <label>Name</label>
                                     <input type="text" name="property_type"  class="form-control"
                                         value="{{ isset($data['type']->types) ? $data['type']->types : null }}" >
-                                </div>
-                              
-                            </div>
-                            <div class="form-row">
-                                
-                                <div class="form-group col-md-6">
+                                </div>     
+                                <div class="form-group col-md-1">
                                     <label>&nbsp;</label><br>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-rounded btn-success">Save</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}

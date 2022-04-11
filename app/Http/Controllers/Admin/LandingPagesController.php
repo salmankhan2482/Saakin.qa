@@ -29,7 +29,7 @@ class LandingPagesController extends Controller
             return redirect('dashboard');
         }
         $action = 'saakin_index';
-        $data['landing_pages_content'] = LandingPage::all();
+        $data['landing_pages_content'] = LandingPage::paginate(15);
         return view('admin-dashboard.landing-pages.landing_page_content.index', compact('data', 'action'));
     }
     public function create()    {

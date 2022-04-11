@@ -19,7 +19,7 @@ class PopularSearchesController extends Controller
      */
     public function index()
     {
-        $data['popularSearches'] = PopularSearches::all();
+        $data['popularSearches'] = PopularSearches::paginate(10);
         $action = 'saakin_index';
         return view('admin-dashboard.popular-searches.index', compact('data','action'));
     }

@@ -27,7 +27,7 @@ class PropertyAmenityController extends Controller
             return redirect('dashboard');
         }
 
-        $data['propertyAmenities'] = PropertyAmenity::orderBy('id')->get();
+        $data['propertyAmenities'] = PropertyAmenity::orderBy('id')->paginate(10);
         $action  = 'saakin_index';
         return view('admin-dashboard.property-amenities.index',compact('data','action'));
     }
