@@ -90,7 +90,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="submit" class="btn btn-rounded btn-success">Update</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}

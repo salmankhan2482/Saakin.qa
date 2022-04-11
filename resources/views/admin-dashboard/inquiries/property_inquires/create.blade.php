@@ -19,19 +19,15 @@
         </div>
     @endif
     <div class="container-fluid">
-        <div class="page-titles">
-            <ol class="breadcrumb">
-                <a href="{{ route('property_inquiries') }}">
-                    <button type="button" class="btn btn-rounded btn-dark">Back</button>
-                </a>
-            </ol>
-        </div>
         <!-- row -->
         <div class="row">
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Add Inquiry</h4>
+                        <a href="{{ url()->previous() }}">
+                            <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                        </a>
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
@@ -131,7 +127,7 @@
                         <div class="form-row">
                             <div class="form-group col-md-12">
                                 <label>&nbsp;</label><br>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button type="submit" class="btn btn-rounded btn-success">Save</button>
                             </div>
                         </div>
                      {!! Form::close() !!}

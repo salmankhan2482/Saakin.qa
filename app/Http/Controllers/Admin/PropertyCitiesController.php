@@ -17,7 +17,7 @@ class PropertyCitiesController extends Controller
      */
     public function index()
     {
-        $cities = PropertyCities::all();
+        $cities = PropertyCities::paginate(10);
         $action = 'saakin_index';
         return view('admin-dashboard.adress-management.city.index', compact('cities','action'));
     }

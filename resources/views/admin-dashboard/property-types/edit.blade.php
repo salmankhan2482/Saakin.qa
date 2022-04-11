@@ -19,36 +19,29 @@
 		</div>
 	@endif
 <div class="container-fluid">
-    <div class="page-titles">
-    </div>
     <!-- row -->
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Add Blog Category</h4>
-                    <a href="{{route('blog-category.index')}}">
+                    <h4 class="card-title">Edit Property Types</h4>
+                    <a href="{{route('property-types.index')}}">
                         <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(array('route' => 'blog-category.store', 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+                        {!! Form::open(array('route' => ['property-types.update',$data['type']->id], 'method'=>'POST','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
+
+                        <input type="hidden" name="id" value="{{ isset($data['type']->id) ? $data['type']->id : null }}">
 
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-11">
                                     <label>Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Blog Category ">
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Description</label>
-                                    <textarea type="text" id="description" rows="5" name="description" class="form-control" placeholder="Blog Category Description "></textarea>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
+                                    <input type="text" name="property_type"  class="form-control"
+                                        value="{{ isset($data['type']->types) ? $data['type']->types : null }}" >
+                                </div>     
+                                <div class="form-group col-md-1">
                                     <label>&nbsp;</label><br>
                                     <button type="submit" class="btn btn-rounded btn-success">Save</button>
                                 </div>

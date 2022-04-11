@@ -219,7 +219,7 @@ class BlogController extends Controller
             return redirect('dashboard');
         }
 
-        $blogCategories = BlogCategory::paginate(10);
+        $blogCategories = BlogCategory::paginate(15);
         $action = 'saakin_index';
 
         return view('admin-dashboard.blog-category.index',compact('blogCategories','action'));

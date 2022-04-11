@@ -63,7 +63,7 @@
                                     <input type="email" name="email" id="email" value="{{old('email')}}" class="form-control">
                                 </div>
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label >Password *</label>
                                     
                                     <span class="d-flex">
@@ -76,13 +76,13 @@
                                     </span>
                                 </div>
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label >Go Master Access Code</label>
                                     <input type="text" name="access_code" id="access_code"  value="{{old('access_code')}}" 
                                         class="form-control">
                                 </div>
                                 
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label >Group Code</label>
                                     <input type="text" name="group_code" id="group_code"  value="{{old('group_code')}}" 
                                         class="form-control">

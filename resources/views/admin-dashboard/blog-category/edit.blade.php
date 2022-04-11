@@ -20,11 +20,6 @@
 	@endif
 <div class="container-fluid">
     <div class="page-titles">
-        <ol class="breadcrumb">
-            <a href="{{route('blog-category.index')}}">
-                <button type="button" class="btn btn-rounded btn-dark">Back</button>
-            </a>
-        </ol>
     </div>
     <!-- row -->
     <div class="row">
@@ -32,6 +27,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Edit Blog Category</h4>
+                    <a href="{{route('blog-category.index')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -53,7 +51,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-rounded btn-success">Update</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}

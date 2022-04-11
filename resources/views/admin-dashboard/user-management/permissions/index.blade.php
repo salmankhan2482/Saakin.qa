@@ -33,19 +33,32 @@
                                        <td>{{ $permission->id }}</td>
                                        <td>{{ $permission->name }}</td>
                                        <td>
-                                        <a class="btn btn-info" href="{{ route('permissions.show',$permission->id) }}">Show</a>
+                                        <a class="btn btn-success rounded btn-xs action-btn" href="{{ route('permissions.show',$permission->id) }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
                                         @can('permission-edit')
-                                            <a class="btn btn-primary" href="{{ route('permissions.edit',$permission->id) }}">Edit</a>
+                                            <a class="btn btn-primary rounded btn-xs action-btn" href="{{ route('permissions.edit',$permission->id) }}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
                                         @endcan
                                         @can('permission-delete')
                                             {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $permission->id],'style'=>'display:inline']) !!}
-                                                {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                                <button class="btn btn-danger rounded btn-xs action-btn">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
                                             {!! Form::close() !!}
                                         @endcan
                                     </td>
                                    </tr>
                                @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $permissions->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

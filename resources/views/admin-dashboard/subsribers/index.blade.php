@@ -4,17 +4,13 @@
 {{-- Content --}}
 @section('content')
     <div class="container-fluid">
-        <div class="page-titles">
-            <ol class="breadcrumb">
-                <a href="{{ route('property_inquiries') }}">
-                    <button type="button" class="btn btn-rounded btn-dark">Back</button>
-                </a>
-            </ol>
-        </div>
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Subscribers</h4>
+                    <a href="{{ route('new_dashboard') }}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -44,6 +40,13 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $subscriberlist->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

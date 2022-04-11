@@ -8,6 +8,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Agency Inquiries</h4>
+                    <a href="{{ route('create_inquiry') }}">
+                        <button type="button" class="btn btn-rounded btn-info">
+                            <span class="btn-icon-left text-info">
+                                <i class="fa fa-plus color-info"></i>
+                            </span>Add</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -46,6 +52,13 @@
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $inquirieslist->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

@@ -6,17 +6,12 @@
 
     <div class="container-fluid">
         <div class="col-12">
-            <div class="page-titles">
-                <ol class="breadcrumb">
-                    <a href="{{route('property_inquiries')}}">
-                        <button type="button" class="btn btn-rounded btn-dark">Back</button>
-                    </a>
-                </ol>
-            </div>
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Inquiry</h4>
-                    
+                    <a href="{{ url()->previous() }}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

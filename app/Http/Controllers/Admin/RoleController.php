@@ -24,7 +24,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
+        $roles = Role::orderBy('id','DESC')->paginate(10);
         $action = 'saakin_index';
         return view('admin-dashboard.user-management.roles.index',compact('roles','action'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

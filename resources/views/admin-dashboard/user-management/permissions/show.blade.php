@@ -6,20 +6,13 @@
     <div class="container-fluid">
         <div class="col-12">
             <div class="card">
-                <div class="card-body">
-
-                    <div class="row">
-                        <div class="col-lg-12 margin-tb">
-                            <div class="pull-left">
-                                <h2> Show Permission</h2>
-                            </div>
-                            <div class="pull-right">
-                                <a class="btn btn-primary" href="{{ route('permissions.index') }}"> Back</a>
-                            </div>
-                        </div>
-                    </div>
-
-
+                <div class="card-header">
+                    <h4 class="card-title">View Permission</h4>
+                    <a href="{{ route('permissions.index') }}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
+                </div>
+                <div class="card-body">    
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
