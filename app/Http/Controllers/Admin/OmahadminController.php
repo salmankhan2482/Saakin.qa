@@ -80,13 +80,11 @@ class OmahadminController extends Controller
                 ->count();
 
             //Property Reports
-            
             $data['reports'] = PropertyReport::
             when(auth()->user()->usertype == 'Agency', function($query){
                 $query->where("agency_id", Auth::User()->agency_id);
             })                  
-            ->count();
-                
+            ->count();  
 
             //Inquiries
             $data['inquiries'] = Enquire::
@@ -95,8 +93,7 @@ class OmahadminController extends Controller
                 })
                 ->orderBy('id', 'desc')
                 ->count();
-                // dd($data['inquiries']);
-
+               
             // last month
             $data['last_month_properties'] = Properties::
                 when(auth()->user()->usertype == 'Agency', function($query){
@@ -105,7 +102,7 @@ class OmahadminController extends Controller
                 ->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))
                 ->count();
                 
-
+                
             //traffic per month
             $data['trafficPerMonth'] = PropertyCounter::whereMonth('created_at', Carbon::now()->month)
                 ->when(auth()->user()->usertype == 'Agency', function($query){
@@ -114,7 +111,6 @@ class OmahadminController extends Controller
                 })
                 ->sum('counter');
                
-
             // clicks per month
             $data['clicksPerMonths'] = ClickCounters::whereMonth('created_at', Carbon::now()->month)
                 ->when(auth()->user()->usertype == 'Agency', function($query){
@@ -159,6 +155,31 @@ class OmahadminController extends Controller
                     ->count();
             }
 
+            //properties this year
+            $data['propertiesThisYear'] = Properties::
+            when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+
+            // donught chart enquiries
+            $data['Agency Inquiry'] = Enquire::where('type', 'Agency Inquiry')
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })
+            ->count();
+
+            $data['Contact Inquiry'] = Enquire::where('type', 'Contact Inquiry')
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })->count();
+            
+            $data['Property Inquiry'] = Enquire::where('type', 'Property Inquiry')
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })->count();
+
             // clicks per month
             foreach ($months as $key => $value) {
             $data['clicksPer'.$value] = ClickCounters::whereYear('created_at', Carbon::now()->year)
@@ -192,19 +213,9 @@ class OmahadminController extends Controller
                 ->count('ip_address');
             }
 
-            //fetching properties on basis of property types
-            $data['typesBasedProperties'] = DB::table('properties')
-            ->join('property_types', 'properties.property_type', 'property_types.id')
-            ->select('property_types.types as label', DB::Raw('COUNT(properties.id) as value'))
-            ->when(auth()->user()->usertype == 'Agency', function($query){
-                $query->where("properties.agency_id", Auth::User()->agency_id);
-            })
-            ->groupBy('label')
-            ->get()
-            ->toJson();
-
             $data['propertyCities'] = PropertyCities::join("properties", "properties.city", "=", "property_cities.id")
             ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))
+
             ->when(auth()->user()->usertype == 'Agency', function($query){
                 $query->where("properties.agency_id", Auth::User()->agency_id);
             })
@@ -212,9 +223,7 @@ class OmahadminController extends Controller
             ->orderBy("pcount", "desc")
             ->groupBy("property_cities.id")
              ->get();
-        
             
-
             $action = 'saakin_dashboard';
             return view('admin-dashboard.index', compact('data', 'action'));
 
