@@ -29,7 +29,6 @@
                   </div>
 
                   <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
-
                   <div id="extra_keywords" style="display: none;"></div>
 
                 </div>
@@ -232,8 +231,22 @@
                       </div>
                     </div>
                   </div>
-
                   <div class="flex-grow-1">
+
+                    <div class="input-group-overlay input-search">
+                      <div class="input-group-prepend-overlay">
+                      </div>
+                      <div class="multi-select">
+                        <select name="amenities[]" id="amenitiesMultiselect" class="form-select" multiple="multiple">
+                          <option value="">Select Extra</option>
+                            @foreach ($amenities as $amenity)
+                                <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  {{-- <div class="flex-grow-1">
 
                     <div class="input-group-overlay input-search">
                         <select name="amenities[]" id="amenities" multiple class="form-control prepended-form-control" multiple="multiple">
@@ -243,7 +256,7 @@
                             @endforeach
                         </select> 
                     </div>
-                  </div>
+                  </div> --}}
                 </div>
               </div>
 
@@ -269,6 +282,9 @@
 
 
 @push('scripts')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
   <script>
     $(document).ready(function() {
 
@@ -308,6 +324,10 @@
           $(".commercial-filter").show();
         
         }
+      });
+
+      $('#amenitiesMultiselect').select2({
+        placeholder: "View of Water, Gym, or Security"
       });
 
     });

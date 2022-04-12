@@ -226,6 +226,30 @@
                                             </div>
                                         </div>
 
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Footer Widget 4 Title</label>
+                                                <textarea type="text" id="footer_widget4_title" rows="5" name="footer_widget4_title" class="form-control"
+                                                    placeholder="Footer Widget 4 Title">{{ stripslashes($settings->footer_widget4_title) }}</textarea>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Footer Widget 4</label>
+                                                <textarea type="text" id="footer_widget4" rows="5" name="footer_widget4" class="form-control" placeholder="Footer Widget 4">{{ stripslashes($settings->footer_widget4) }}
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label>Get In Touch</label>
+                                                <textarea type="text" id="get_in_touch_title" rows="5" name="get_in_touch_title"  class="form-control"placeholder="Get In Touch">{{ stripslashes($settings->get_in_touch_title) }}</textarea>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label>Get in Touch Details</label>
+                                                <textarea type="text" id="get_in_touch" rows="5" name="get_in_touch" class="form-control" placeholder="About Us | Contact Us | Faqs">{{ stripslashes($settings->get_in_touch) }}</textarea>
+                                            </div>
+                                        </div>
+
 
                                         <div class="form-row">
                                             <div class="form-group col-md-12">

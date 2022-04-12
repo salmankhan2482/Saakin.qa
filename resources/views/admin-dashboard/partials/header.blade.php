@@ -486,12 +486,14 @@
                                 {{ trans('words.view_site') }}
                             </span>
                         </a>
-                        <a href="{!! route('admin.settings') !!}" class="dropdown-item ai-icon">
-                            <i class="fa fa-gear"></i>
-                            <span class="ml-2">
-                                {{ trans('words.settings') }}
-                            </span>
-                        </a>
+                        @if (auth()->user()->usertype == 'Admin')
+                            <a href="{!! route('admin.settings') !!}" class="dropdown-item ai-icon">
+                                <i class="fa fa-gear"></i>
+                                <span class="ml-2">
+                                    {{ trans('words.settings') }}
+                                </span>
+                            </a>
+                        @endif
                         <a href="{!! url('logout') !!}" class="dropdown-item ai-icon">
                             <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18"
                                 height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

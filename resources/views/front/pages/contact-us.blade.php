@@ -23,7 +23,7 @@
                 <div class="contact-address-icon"><i class="flaticon-map text-primary"></i></div>
                 <div class="ms-3">
                   <h6>Address</h6>
-                  <p>{{ getcong('contact_us_address') }}</p>
+                  <p class="break-field">{{ getcong('contact_us_address') }}</p>
                 </div>
               </div>
               <div class="d-flex">
@@ -96,7 +96,7 @@
                   @endif
                 </div>
                 <div class="form-group col-md-6">
-                  <input type="text" name="phone" class="form-control" placeholder="{{ trans('words.phone') }}" value="{{ old('phone') }}" required>
+                  <input type="text" name="phone" class="form-control" placeholder="Phone" value="{{ old('phone') }}" required>
                 </div>
                 <div class="form-group col-md-6">
                   <input type="text" name="subject" placeholder="{{ trans('words.subject') }}" class="form-control" value="{{ old('subject') }}" required>
@@ -134,15 +134,43 @@
 
   <section class="py-3 py-5 bg-primary">
     <div class="container text-center">
-      <a href="{{ url('real-estate-agencies') }}" class="btn btn-outline-light py-3 px-5 text-uppercase fw-bold">
-        View All Agencies
-      </a>
+      <button class="btn btn-outline-light py-3 px-5 text-uppercase fw-bold" data-bs-toggle="modal" data-bs-target="#registrationForm">
+        Company Registration
+      </button>
     </div>
   </section>
+
+  <div class="modal fade" id="registrationForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registrationForm" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          {{-- <h5 class="modal-title" id="registrationForm">Company Registration</h5> --}}
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h6>Submit your details and we’ll get in touch</h6>
+          <p>To advertise on Property Finder you should be a real estate broker or developer and have a registered office.</p>
+          
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Understood</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 @endsection
 
 @push('styles')
   <link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" />
+@endpush
+
+@push('scripts')
+<script>
+  var ele = document.querySelector('.break-field');
+  ele.innerHTML = ele.innerHTML.replace(/Bay,/g, 'Bay,<br/>')
+</script>
 @endpush
