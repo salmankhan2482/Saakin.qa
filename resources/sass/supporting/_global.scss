@@ -14,7 +14,12 @@
 //   font-weight: bold;
 // }
 
+html {
+  min-width: 320px;
+}
+
 body {
+
   .offcanvas-start {
     width: 100%;
   }

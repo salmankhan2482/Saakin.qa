@@ -36,16 +36,11 @@
 
     </div>
 
-    <div class="property-title-box">
+    <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;">
 
         <h2 class="property-card__property-title">
             {{ $property->property_name }}
         </h2>
-
-        {{-- <div class="property-location"> --}}
-            {{-- <p> {{ Str::limit($property->propertiesTypes->types, 36) }}</p> --}}
-        {{-- </div> --}}
-
         
         <ul class="property-feature">
             <li class="pe-2">

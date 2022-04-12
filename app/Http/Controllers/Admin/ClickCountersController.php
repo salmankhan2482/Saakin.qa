@@ -183,23 +183,19 @@ class ClickCountersController extends Controller
 
         if (auth()->user()->usertype == 'Agency') {
            
-            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
             $top10Proprties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
             ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 
             'properties.property_slug', 'property_counters.counter')
             ->where('properties.agency_id', auth()->user()->agency_id)
-            ->groupBy('properties.id')
             ->orderByDesc('property_counters.counter')
-            ->limit('10')
-            ->get();
+            ->groupBy('properties.id')->limit(10)->get();
 
-            return view('admin-dashboard.traffic-pages.top-ten-properties.index', compact('top10Proprties','action'));
+            return view('admin-dashboard.traffic-pages.top-ten-properties.agency_index', compact('top10Proprties','action'));
 
         }else{
             $top10Proprties = DB::table('property_counters')
-            ->leftJoin('properties', 'property_counters.property_id','properties.id')
-            ->rightJoin('agencies', 'properties.agency_id', 'agencies.id')
+            ->join('agencies', 'property_counters.agency_id', 'agencies.id')
             ->select(DB::raw(' SUM(property_counters.counter) as counter '), 
             'agencies.name as aname', 'agencies.id as aid')
             ->orderBy('counter', 'DESC')
@@ -241,11 +237,9 @@ class ClickCountersController extends Controller
             ->select('properties.id', 'properties.address as paddress', 'property_counters.counter as ')
             ->whereIn('properties.id', $property_ids)
             ->groupBy('properties.id')
-            ->orderByDesc('counter')
-            ->limit('5')
-            ->get();
+            ->orderByDesc('counter')->limit('5')->get();
             
-            return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top5Properties','action'));
+            return view('admin-dashboard.traffic-pages.top-five-areas.agency_index', compact('top5Properties','action'));
 
         }else{
 
@@ -253,10 +247,8 @@ class ClickCountersController extends Controller
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
             ->join('agencies', 'properties.agency_id', 'agencies.id')
             ->select('properties.id', 'agencies.name as aname', 'agencies.id as aid', 'property_counters.counter')
-            ->groupBy('aname')
             ->orderByDesc('property_counters.counter')
-            ->limit('5')
-            ->get();
+            ->groupBy('aname')->get();
             return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top5Properties','action'));
 
         }

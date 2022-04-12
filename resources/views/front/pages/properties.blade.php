@@ -25,7 +25,7 @@
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
                 <input type="hidden" name="featured" id="featured" value="{{ request()->featured }}">
-                <div class="search-filter flex-xl-nowrap">
+                <div class="search-filter flex-nowrap flex-sm-wrap flex-xl-nowrap">
                     
                     <div class="flex-grow-1 country-list-wrap me-2">
                         <div class="input-group-overlay input-search">
@@ -1136,8 +1136,7 @@
                                     </ul>
                                 </div>
 
-                                {{--  --}}
-                                <div class="property-title-box">
+                                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;"> 
                                     <div class="price">
                                         {{ $property->getPrice() }}
 
@@ -1153,18 +1152,22 @@
                                     </a>
                                     
                                     <ul class="property-feature">
+                                        <li class="pe-2">
+                                            <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
+                                        </li>
                                         @if ($property->getProperty_type())
-                                            <li><i class="fas fa-bed"></i>
-                                                <span>{{ $property->bedrooms }} Bedrooms</span>
+                                            <li>
+                                                <i class="fas fa-bed"></i>
+                                                <span>{{ $property->bedrooms }} </span>
                                             </li>
-                                            <li><i class="fas fa-bath"></i>
-                                                <span>{{ $property->bathrooms }} Bath</span>
+                                            <li>
+                                                <i class="fas fa-bath"></i>
+                                                <span>{{ $property->bathrooms }} </span>
                                             </li>
                                         @endif
                                         <li><i class="fas fa-chart-area"></i>
                                             <span>{{ $property->getSqm() }}</span>
                                         </li>
-
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
@@ -1276,7 +1279,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                                @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                                     <div class="property-card-extra p-3 d-none d-md-block">
                                         <div class="property-type"> 
                                             @if ($property->featured_property == 1)
@@ -1302,31 +1305,6 @@
                         </div>
                         {{-- Pagination ends --}}
                     </div>
-
-                    {{-- <div class="col-lg-3 order-lg-2">
-                        <div class="list-sidebar mt-3 mt-lg-0">
-                            <div class="sidebar-links p-3">
-                                <h6>What is Lorem Ipsum?</h6>
-                                <ul>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                </ul>
-                            </div>
-                            <div class="sidebar-links p-3">
-                                <h6>What is Lorem Ipsum?</h6>
-                                <ul>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                    <li><a href="#!">Luxury 2 Bed Apt. For Rent in Medina</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             @else
                 <div class="alert alert-info" role="alert">

@@ -81,7 +81,6 @@ if (! function_exists('getcong')) {
     {
 
         $settings = Settings::findOrFail('1');
-
         return $settings->$key;
     }
 }
