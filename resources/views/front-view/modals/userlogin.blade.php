@@ -96,7 +96,7 @@
 											</a>
 										</div>
 										<div class="form-group">
-											<input type="email" class="form-control" tabindex="1" placeholder="{{ trans('words.email') }}" name="email" id="email" />
+											<input type="email" class="form-control" placeholder="{{ trans('words.email') }}" name="email" id="email" />
 											@if ($errors->has('email'))
 												<span class="d-block invalid-feedback">
 													{{ $errors->first('email') }}
@@ -118,7 +118,7 @@
 												<label for="check-l">Remember me</label>
 											</div>
 											<div class="res-box sm-left">
-												<a href="{{ route('password.email') }}" tabindex="5" class="forgot-password">
+												<a href="{{ route('password.email') }}" class="forgot-password">
 													{{ trans('words.forgot_password') }}
 												</a>
 											</div>

@@ -101,9 +101,6 @@ class AgenciesController extends Controller
 
     public function agency_email(Request $request)
     {
-
-     
-
         $data =  \Request::except(array('_token')) ;  
               
         $inputs = $request->all();

@@ -16,6 +16,15 @@
   <section class="inner-content">
     <div class="container">
       <div class="row">
+        @if (count($errors) > 0)
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  @foreach ($errors->all() as $error)
+                      {{ $error }}
+                  @endforeach
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                  </button>
+              </div>
+          @endif
         <div class="col-lg-5">
           <div class="card">
             <div class="card-body contact-address">
@@ -67,11 +76,11 @@
           <div class="card contact-form mt-3 mt-lg-0">
             <div class="card-body">
               @if (Session::has('flash_message_contact'))
-                <div class="alert alert-success">
-                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  </button>
-                  {{ Session::get('flash_message_contact') }}
-                </div>
+                  <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ Session::get('flash_message_contact') }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                      </button>
+                  </div>
               @endif
 
               <h4 class="mb-4 mt-2">Need assistance? Please complete the contact form</h4>
@@ -141,21 +150,89 @@
   </section>
 
   <div class="modal fade" id="registrationForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="registrationForm" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          {{-- <h5 class="modal-title" id="registrationForm">Company Registration</h5> --}}
+          <h6 class="modal-title" id="registrationForm">Company Registration</h6>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <h6>Submit your details and we’ll get in touch</h6>
           <p>To advertise on Property Finder you should be a real estate broker or developer and have a registered office.</p>
-          
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Understood</button>
+          <div class="card contact-form mt-3 mt-lg-0">
+            <div class="card-body">
+              <form action="{{ route('companyRegistration.store') }}" method="POST">
+                @csrf
+              <div class="form-control-wrap row gx-2 gy-3">
+                <div class="form-group col-md-6">
+                  <input type="text" name="first_name" placeholder="First Name *" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="text" name="last_name" placeholder="Last Name *" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="email" name="email" placeholder="Email *" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="text" name="phone" placeholder="Phone Number *" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <input type="text" name="company_name" placeholder="Company Name *" class="form-control" required>
+                </div>
+                <div class="form-group col-md-6">
+                  <select name="city" id="city" class="form-control" required>
+                    <option value="">Select City</option>
+                    <option value="1">Doha</option>
+                    <option value="2">Umm Salal Mohammad</option>
+                    <option value="3">Al Daayen</option>
+                    <option value="4">Al Khor</option>
+                    <option value="5">Al Shamal</option>
+                    <option value="6">Al Wakrah</option>
+                    <option value="7">Lusail</option>
+                    
+                  </select>
+                </div>
+                <div class="form-group col-md-6">
+                  <select name="job_title" id="job_title" class="form-control" required>
+                    <option value="">Select Job Title</option>
+                    <option value="CEO">CEO</option>
+                    <option value="CFO">CFO</option>
+                    <option value="CMO">CMO</option>
+                    <option value="CTO">CTO</option>
+                    <option value="Managing Director">Managing Director</option>
+                    <option value="Finance Director">Finance Director</option>
+                    <option value="Marketing Director">Marketing Director</option>
+                    <option value="Director">Director</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Sales Manager">Sales Manager</option>
+                    <option value="Finance Manager">Finance Manager</option>
+                    <option value="Marketing Manager">Marketing Manager</option>
+                    <option value="Finance Executive">Finance Executive</option>
+                    <option value="Marketing Exec">Marketing Exec</option>
+                    <option value="Agent/Broker">Agent/Broker</option>
+                    <option value="Admin">Admin</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-12">
+                  <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+                    <div class="mb-2">
+                        {!! NoCaptcha::renderJs() !!}
+                        {!! NoCaptcha::display() !!}
+                        @if ($errors->has('g-recaptcha-response'))
+                            <span class="help-block">
+                                {{ $errors->first('g-recaptcha-response') }}
+                            </span>
+                        @endif
+                    </div>
+                </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

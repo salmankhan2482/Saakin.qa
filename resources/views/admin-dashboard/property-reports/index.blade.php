@@ -56,7 +56,8 @@
                                                     style="margin-right: 5px" method="POST">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button type="submit" class="btn btn-success rounded btn-xs action-btn">
+                                                    <button type="submit" class="btn btn-success rounded btn-xs action-btn" 
+                                                    title="Mark as Read">
                                                         &check;
                                                     </button>
                                                 </form>

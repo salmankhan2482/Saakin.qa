@@ -139,7 +139,6 @@
             </tr>
           </table>
           <!-- /Header Left -->
-
           <!-- Intro Basic -->
           <table class="row" align="center" bgcolor="#F8F8F8" cellpadding="0" cellspacing="0" role="presentation">
             <tr>
@@ -149,7 +148,7 @@
               <th class="column" width="640" style="padding-left: 30px; padding-right: 30px; font-weight: 400; text-align: left;">
                 <div style="color: #1F2225; font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 30px;"         
                      class="serif" >
-                     Hello Saakin
+                     Hello {{ $data['request']->first_name ?? ''}} {{ $data['request']->last_name ?? '' }}
                 </div>
 
                 <div class="sans-serif" style="color: #969AA1; font-size: 18px; line-height: 28px; margin-bottom: 40px;">
@@ -158,45 +157,58 @@
                 <table class="row divider">
                     <tbody>
                         <tr>
-                            <td style="width: 7em;">
+                            <td>
                                 <strong>Name : </strong>
                             </td>
-                            <td>{{ $data['name'] ?? ''}}</td>
+                            <td>{{ $data['request']->first_name ?? ''}} {{ $data['request']->last_name ?? '' }}</td>
                         </tr>
                         <tr>
-                            <td style="width: 7em;">
+                            <td>
                                 <strong>Email : </strong>
                             </td>
-                            <td>{{ $data['email'] ?? ''}}</td>
+                            <td>{{ $data['request']->email ?? ''}}</td>
                         </tr>
                         <tr>
-                            <td style="width: 7em;">
+                            <td>
                                 <strong>Phone : </strong>
                             </td>
-                            <td>{{ $data['phone'] ?? ''}}</td>
+                            <td>{{ $data['request']->phone ?? ''}}</td>
                         </tr>
                         <tr>
-                            <td style="width: 7em;">
+                            <td>
                                 <strong>Subject : </strong>
                             </td>
-                            <td>{{ $data['subject'] ?? ''}}</td>
+                            <td>Company Registration Mail</td>
                         </tr>
                         <tr>
-                            <td style="width: 7em;">
-                                <strong>Message : </strong>
+                            <td>
+                                <strong>Company Name : </strong>
                             </td>
-                            <td>{{ $data['your_message'] ?? ''}}</td>
+                            <td>{{ $data['request']->company_name ?? ''}}</td>
                         </tr>
+                        <tr>
+                            <td>
+                                <strong>City Name : </strong>
+                            </td>
+                            <td>{{ $data['city_name'] ?? ''}}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Job Title : </strong>
+                            </td>
+                            <td>{{ $data['request']->job_title ?? ''}}</td>
+                        </tr>
+                        
                     </tbody>
                 </table>
                 <div style="font-size: 13px; margin-top: 20px;">
-                  Thanks {{ $data['name'] ?? ''}} We have Successfully Received Your Query.
+                  Thanks {{ $data['request']->name ?? ''}} We have Successfully Received Your Query.
                 </div>
                 <div style="font-size: 13px; margin-top: 20px;">
                   
                   Regards,<br />
-                  <b>Saakin Qatar</b><br>
-                  <a href="{{ getcong('site_url') }}">www.saakin.qa</a>
+                  <b>Saakin.qa</b><br>
+
                 </div>
               </th>
             </tr>

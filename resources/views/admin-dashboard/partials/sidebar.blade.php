@@ -141,6 +141,9 @@
                     <li><a href="{{ route('property_inquiries') }}">Property Inquiries</a></li>
                     <li><a href="{{ route('agency_inquiries') }}">Agency Inquiries</a></li>
                     <li><a href="{{ route('contact_inquiries') }}">Contact Us</a></li>
+                    @if (auth()->user()->usertype == 'Admin')
+                    <li> <a href="{{ route('companyRegistration.index') }}"> Company Registration</a> </li>
+                    @endif
                 </ul>
             </li>
 
