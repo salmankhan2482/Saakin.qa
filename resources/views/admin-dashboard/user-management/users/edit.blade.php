@@ -95,32 +95,30 @@
                             </div>
                         </div>
         
-                        <div class="col-6">
-                            <label for="" class="control-label">{{trans('words.user_type')}} *</label>
-                            <select name="usertype" id="basic" class="selectpicker show-tick form-control"
-                                data-live-search="true" onchange="toggleAgency(this.value);">
-                                <option value="Agents" @if ($user->usertype == 'Agents') selected @endif>
-                                    {{ trans('words.agent') }}
-                                </option>
-                                <option value="Agency" @if ($user->usertype == 'Agency') selected @endif>
-                                    {{ trans('words.agency') }}
-                                </option>
-                                <option value="User" @if ($user->usertype == 'User') selected @endif>
-                                    {{ trans('words.user') }}
-                                </option>
-                            </select>
-                        </div>
+                        @if(auth()->user()->usertype == 'Admin')
+                            <div class="col-6">
+                                <label for="" class="control-label">{{trans('words.user_type')}} *</label>
+                                <select name="usertype" id="basic" class="selectpicker show-tick form-control"
+                                    data-live-search="true" onchange="toggleAgency(this.value);">
+                                    <option value="Agents" @if ($user->usertype == 'Agents') selected @endif>
+                                        {{ trans('words.agent') }}
+                                    </option>
+                                    <option value="Agency" @if ($user->usertype == 'Agency') selected @endif>
+                                        {{ trans('words.agency') }}
+                                    </option>
+                                    <option value="User" @if ($user->usertype == 'User') selected @endif>
+                                        {{ trans('words.user') }}
+                                    </option>
+                                </select>
+                            </div>
+                        @endif
                         
-                        <div class="col-6">
-                            <label for="" class="control-label">Assign Role *</label>
-                            {!! Form::select('roles[]', $roles, $userRole, ['class' => ['form-control', 'select2', 'js-example-basic-multiple'], 'multiple']) !!}
-                        </div>
-                        @php
-                            $display = 'none';
-                            if ($user->usertype == 'Agents') {
-                                $display = 'block';
-                            }
-                        @endphp
+                        @if (auth()->user()->usertype == 'Admin')
+                            <div class="col-6">
+                                <label for="" class="control-label">Assign Role *</label>
+                                {!! Form::select('roles[]', $roles, $userRole, ['class' => ['form-control', 'select2', 'js-example-basic-multiple'], 'multiple']) !!}
+                            </div>
+                        @endif
         
                         <div id="user_agency" class="col-6">
                             <label for="" class="control-label">{{trans('words.agency')}} *</label>
@@ -129,7 +127,7 @@
                                     value="{{ Auth::user()->agency_id }}">
                                 <input type="text" name="agency_" id="agency_" class="form-control"
                                     value="{{ Auth::user()->agency->name }}" disabled>
-                            @else
+                            @elseif(Auth::user()->usertype == 'Admin')
                                 <select name="agency_id" id="agency_id" class="selectpicker show-tick form-control"
                                     data-live-search="true">
                                     <option value="" selected>Select Agency</option>

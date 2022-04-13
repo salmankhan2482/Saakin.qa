@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
-use App\User;
 use App\Settings;
-use App\Http\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Intervention\Image\Facades\Image; 
-use Illuminate\Support\Str;
 
 class SettingsController extends MainAdminController
 {
@@ -92,6 +88,12 @@ class SettingsController extends MainAdminController
 		$settings->footer_widget3_title = addslashes($inputs['footer_widget3_title']);
 		$settings->footer_widget3 = addslashes($inputs['footer_widget3']);
 		
+		$settings->footer_widget4_title = addslashes($inputs['footer_widget4_title']);
+		$settings->footer_widget4 = addslashes($inputs['footer_widget4']);
+		
+		$settings->get_in_touch_title = addslashes($inputs['get_in_touch_title']);
+		$settings->get_in_touch = addslashes($inputs['get_in_touch']);
+		
 		$settings->gdpr_cookie_title = addslashes($inputs['gdpr_cookie_title']);
         $settings->gdpr_cookie_text = addslashes($inputs['gdpr_cookie_text']); 
         $settings->gdpr_cookie_url = addslashes($inputs['gdpr_cookie_url']);   
@@ -107,21 +109,13 @@ class SettingsController extends MainAdminController
     {
 
     	$settings = Settings::findOrFail('1');
- 
-	    
 	    $data =  \Request::except(array('_token')) ;
-	    
-	     
-	    $inputs = $request->all();
-		
-	    $title_bg = $request->file('title_bg');
 
+		$inputs = $request->all();
+	    $title_bg = $request->file('title_bg');
 		if($title_bg){
-        	
         	$title_bg->move(public_path().'/upload/', 'title_bg.jpg');
-             
             $settings->title_bg = 'title_bg.jpg';
-             
         } 
 		 
 		$settings->map_latitude = $inputs['map_latitude'];
@@ -135,16 +129,12 @@ class SettingsController extends MainAdminController
 	    $settings->save();
 
 	    Session::flash('flash_message', trans('words.successfully_updated'));
-
         return redirect()->back();
     }
 
     public function smtp_email_update(Request $request)
     {
-
     	$settings = Settings::findOrFail('1');
- 
-        
         $data =  \Request::except(array('_token')) ;
         
         $rule=array(
@@ -156,9 +146,8 @@ class SettingsController extends MainAdminController
         
          $validator = \Validator::make($data,$rule);
  
-            if ($validator->fails())
-            {
-                    return redirect()->back()->withErrors($validator->messages());
+            if ($validator->fails()){
+				return redirect()->back()->withErrors($validator->messages());
             }
         
 
@@ -177,9 +166,7 @@ class SettingsController extends MainAdminController
         $settings->smtp_encryption = $inputs['smtp_encryption'];
 
         $settings->save(); 
- 
         Session::flash('flash_message', trans('words.successfully_updated'));
-
         return redirect()->back();
 
     }
@@ -188,9 +175,7 @@ class SettingsController extends MainAdminController
     {  
     		 
     	$settings = Settings::findOrFail('1'); 
-	    
 	    $data =  \Request::except(array('_token')) ;    
-	     
 	    $inputs = $request->all();
 		 
 		 

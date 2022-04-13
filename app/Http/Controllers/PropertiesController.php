@@ -215,7 +215,7 @@ class PropertiesController extends Controller
         })
         ->when(request()->get('amenities'), function ($query) {
             $ids = array();
-            foreach (request()->get('amenities') as $value) {                    
+            foreach (request()->get('amenities') as $value) { 
                 $records =  AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
                 foreach ($records as $value) {
                     array_push($ids, $value->property_id);
@@ -439,11 +439,11 @@ class PropertiesController extends Controller
         $visitor = request()->ip();
         $traffic = PageVisits::where('ip_address', $visitor)->where('property_id', $id)
         ->whereMonth('created_at', Carbon::now()->month)->first();
-        
         if(auth()->check() && auth()->user()->usertype == 'Admin'){
         
         }else{
             if (!$traffic) {
+
                 $traffic = new PageVisits();
                 $traffic->ip_address = $visitor;
                 $traffic->property_id = $id;

@@ -51,6 +51,9 @@ class PropertiesController extends MainAdminController
         when(request('purpose'), function($query){
             return $query->where('property_purpose', request('purpose'));
         })
+        ->when(auth()->user()->usertype == 'Agency', function($query){
+            $query->where('agency_id', auth()->user()->agency_id);    
+        })
         ->when(request('type'), function($query){
             return $query->where('property_type', request('type'));
         })
@@ -90,6 +93,9 @@ class PropertiesController extends MainAdminController
         })
         ->when(request('type'), function($query){
             return $query->where('property_type', request('type'));
+        })
+        ->when(auth()->user()->usertype == 'Agency', function($query){
+            $query->where('agency_id', auth()->user()->agency_id);    
         })
         ->when(request('keyword'), function($query){
             return $query->where('property_name', request('keyword'));

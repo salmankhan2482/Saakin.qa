@@ -31,12 +31,6 @@
           </ul>
         </div>
         <div class="col-md-6 col-lg-3">
-          <h5 class="title text-white">{{ getcong('footer_widget1_title') }}</h5>
-          <ul class="footer-links">
-            {!! stripslashes(getcong('footer_widget1')) !!}
-          </ul>
-        </div>
-        <div class="col-md-6 col-lg-3">
           <h5 class="title text-white">{{ getcong('footer_widget2_title') }}</h5>
           <ul class="footer-links">
             {!! stripslashes(getcong('footer_widget2')) !!}
@@ -46,6 +40,13 @@
           <h5 class="title text-white">{{ getcong('footer_widget3_title') }}</h5>
           <ul class="footer-links">
             {!! stripslashes(getcong('footer_widget3')) !!}
+          </ul>
+        </div>
+        
+        <div class="col-md-6 col-lg-3">
+          <h5 class="title text-white">{{ getcong('footer_widget4_title') }}</h5>
+          <ul class="footer-links">
+            {!! stripslashes(getcong('footer_widget4')) !!}
           </ul>
         </div>
       </div>
@@ -63,6 +64,7 @@
         </ul>
       </div>
 
+
       <h5 class="title text-white mb-0 pb-3 fw-500 d-flex align-item-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#footer_widget2" aria-expanded="false"
         aria-controls="footer_widget2">
         {{ getcong('footer_widget2_title') }} <i class="fas fa-caret-down"></i>
@@ -72,6 +74,8 @@
           {!! stripslashes(getcong('footer_widget2')) !!}
         </ul>
       </div>
+
+
       <h5 class="title text-white mb-0 pb-3 fw-500 d-flex align-item-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#footer_widget3" aria-expanded="false"
         aria-controls="footer_widget3">
         {{ getcong('footer_widget3_title') }} <i class="fas fa-caret-down"></i>
@@ -81,13 +85,15 @@
           {!! stripslashes(getcong('footer_widget3')) !!}
         </ul>
       </div>
+
+
       <h5 class="title text-white mb-0 pb-3 fw-500 d-flex align-item-center justify-content-between" data-bs-toggle="collapse" data-bs-target="#footer_widget4" aria-expanded="false"
         aria-controls="footer_widget4">
         {{ getcong('footer_widget2_title') }} <i class="fas fa-caret-down"></i>
       </h5>
       <div class="collapse" id="footer_widget4">
         <ul class="footer-links mt-0">
-          {!! stripslashes(getcong('footer_widget2')) !!}
+          {!! stripslashes(getcong('footer_widget4')) !!}
         </ul>
       </div>
     @endif
@@ -113,7 +119,7 @@
         @if ((new \Jenssegers\Agent\Agent())->isDesktop())
           <div>
             <ul class="d-flex list-unstyled spbwx8 my-0 footer-links">
-              {!! stripslashes(getcong('footer_widget3')) !!}
+              {!! stripslashes(getcong('get_in_touch')) !!}
             </ul>
           </div>
         @endif

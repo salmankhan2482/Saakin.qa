@@ -336,11 +336,14 @@
 {{-- Scripts --}}
 
 @push('scripts')
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/datepicker.css') }}" />
   <script src="{{ asset('assets/js/datepicker.js') }}"></script>
 
   <script>
     $(function() {
-      $("#datepicker").datepicker();
+      $("#datepicker").datepicker({
+        autoclose: true,
+      });
     });
   </script>
 @endpush

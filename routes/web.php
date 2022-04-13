@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\TypesController;
 use App\Http\Controllers\PopularSearchesController;
 use App\Properties;
 use App\PropertyCounter;
@@ -40,7 +41,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('profile', 'AdminController@profile')->name('profile');
 	Route::post('profile', 'AdminController@updateProfile');
 	Route::post('profile_pass', 'AdminController@updatePassword');
-    Route::resource('property_type', Controller::class);
+    Route::resource('property_type', TypesController::class);
 	Route::get('settings', 'SettingsController@settings')->name('admin.settings');
 	Route::post('settings', 'SettingsController@settingsUpdates');
 	Route::post('smtp_email', 'SettingsController@smtp_email_update');

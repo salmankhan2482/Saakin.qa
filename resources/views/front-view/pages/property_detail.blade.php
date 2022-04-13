@@ -137,19 +137,50 @@
               </div>
             </div>
 
-            <h5 class="address">
-              <a class="text-decoration-none" data-fancybox data-type="iframe" data-preload="false" data-width="640" data-height="480"
-                href="https://maps.google.com/maps?q={{ $property->address }}&output=embed" target="_blank">
-                <i class="fa fa-map-marker"></i>
-                {{ $property->address }}
+            <h6 class="text-primary">
+              <?php $buyOrRent = $property->property_purpose == 'Sale' ? 'buy' : 'rent';  ?>
+              @if(isset($property->propertyArea->name))
+                
+              <a href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($property->propertyCity->name) ,Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose) . '-' . Str::slug($property->propertySubcity->name) . '-' . Str::slug($property->propertyTown->name) .'-' .Str::slug($property->propertyArea->name)]) }}">
+              
+              {{$property->propertiesTypes->types.' for '. $property->property_purpose.' in '.$property->propertyArea->name }}
+                
               </a>
-            </h5>
+              
+              @elseif (isset($property->propertyTown->name))
+                
+              <a href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($property->propertyCity->name) ,Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose) . '-' . Str::slug($property->propertySubcity->name) . '-' . Str::slug($property->propertyTown->name)]) }}">
+
+              {{$property->propertiesTypes->types.' for '. $property->property_purpose.' in '.$property->propertyTown->name }}
+                
+              </a>              
+              @elseif (isset($property->propertySubcity->name))
+              
+              <a href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($property->propertyCity->name),Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose) . '-' . Str::slug($property->propertySubcity->name)]) }}">
+                  
+              {{$property->propertiesTypes->types.' for '. $property->property_purpose.' in '.$property->propertySubcity->name }}
+                  
+                </a>
+              @endisset
+              
+            </h6>
 
             <h1 class="h2 mt-3 mb-4">{{ $property->property_name }}</h1>
 
             <div class="grid prop-type-info">
-              <div><i class="fas fa-building pr-1"></i> Property Type :</div>
-              <div>{{ $property->propertiesTypes->types }}</div>
+              <div>
+                <i class="fas fa-building pr-1"></i> Property Type :
+              </div>
+              <div>
+                {{ $property->propertiesTypes->types }}
+              </div>
+            
+              <div>
+                <i class="fas fa-chart-area pr-1"></i> Property Size:
+              </div>
+              <div>
+                {{ $property->getSqm() }}
+              </div>
 
               @if ($property->getProperty_type())
                 @if ($property->bedrooms)
@@ -158,12 +189,12 @@
                 @endif
               @endif
 
-              <div>
-                <i class="fas fa-chart-area pr-1"></i> Property Size:
-              </div>
-              <div>
-                {{ $property->getSqm() }}
-              </div>
+              @if ($property->getProperty_type())
+                @if ($property->bathrooms)
+                  <div><i class="fas fa-bath pr-1"></i> Bathrooms:</span></div>
+                  <div>{{ $property->bathrooms }}</div>
+                @endif
+              @endif
 
               <div>
                 <i class="far fa-edit"></i> Property Purpose :
@@ -171,14 +202,13 @@
               <div>
                 {{ $property->property_purpose }}
               </div>
-              @if ($property->getProperty_type())
-                @if ($property->bathrooms)
-                  <div><i class="fas fa-bath pr-1"></i> Bathrooms:</span></div>
-                  <div>{{ $property->bathrooms }}</div>
-                @endif
-              @endif
-              <div><i class="fa fa-tasks" aria-hidden="true"></i>Completion:</div>
-              <div>Ready</div>
+
+              <div>
+                <i class="fa fa-tasks" aria-hidden="true"></i>Completion:
+              </div>
+              <div>
+                Ready
+              </div>
             </div>
 
             <hr>
@@ -284,7 +314,7 @@
 
           <div class="fixed-bottom w-100 bg-white d-sm-none" tabindex="1">
             <div class="card-body text-center shadow">
-              <div class="callgroup">
+              <div class="callgroup text-center justify-content-center">
                 @if (!empty($property->whatsapp))
                   <a href="tel:{{ $property->whatsapp }}" 
                     class="btn btn-primary btn-sm btn-call btnCount" 
@@ -412,6 +442,18 @@
 
                 </div>
               </div>
+            @else
+            <div class="aminities-wrap text-dark">
+              <h4 class="mb-3">Amenities</h4>
+              <div class="grid amenities-grid">
+                @foreach ($property->amenities as $amenity)
+                <div class="fw-bold">
+                  <i class="fas fa-check-circle"></i> {{ $amenity->name }}
+                </div>
+                @endforeach
+
+              </div>
+            </div>
             @endif
           </div>
 
@@ -473,7 +515,7 @@
                 </strong>
               </h2>
 
-              <div class="callgroup">
+              <div class="callgroup text-center justify-content-center">
                 @if (!empty($property->whatsapp))
                   <a href="tel:{{ $property->whatsapp }}" 
                     class="btn btn-primary btn-call btnCount"
@@ -625,7 +667,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="property-title-box">
+                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;">
                   <h2 class="property-card__property-title">
                     {{ \Illuminate\Support\Str::limit($property->property_name) }}
                   </h2>

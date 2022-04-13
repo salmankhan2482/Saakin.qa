@@ -1099,7 +1099,7 @@
                                 </div>
 
                                 {{--  --}}
-                                <div class="property-title-box">
+                                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;">
                                     <div class="price">
                                         {{ $property->getPrice() }}
 
@@ -1115,15 +1115,19 @@
                                     </a>
                                     
                                     <ul class="property-feature">
+                                        <li class="pe-2">
+                                            <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
+                                        </li>
                                         @if ($property->getProperty_type())
                                             <li><i class="fas fa-bed"></i>
-                                                <span>{{ $property->bedrooms }} Bedrooms</span>
+                                                <span>{{ $property->bedrooms }} </span>
                                             </li>
                                             <li><i class="fas fa-bath"></i>
-                                                <span>{{ $property->bathrooms }} Bath</span>
+                                                <span>{{ $property->bathrooms }} </span>
                                             </li>
                                         @endif
-                                        <li><i class="fas fa-chart-area"></i>
+                                        <li>
+                                            <i class="fas fa-chart-area"></i>
                                             <span>{{ $property->getSqm() }}</span>
                                         </li>
                                     </ul>
