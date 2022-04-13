@@ -13,17 +13,18 @@
                     <div class="basic-form">
                         <form action="{{ route('propertyVisits_per_month') }}" method="GET">
                             <div class="row justify-content-center">
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <label for="">From</label>
                                     <input type="date" id="start" name="from" value="{{ request('from') }}" >
                                 </div>
                                 
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <label for="">To</label>
                                     <input type="date" id="start" name="to" value="{{ request('to') }}" >
                                 </div>
                                 
-                                <div class="col-2">
+                                <div class="col-sm-2">
+                                    <br>
                                     <button type="submit" class="btn btn-dark btn-sm">
                                         {{ trans('words.search') }}
                                     </button>
@@ -39,13 +40,8 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Visits</h4>
-                    <a href="#">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>
-                            Add
-                        </button>
+                    <a href="{{ url()->previous() }}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
                 </div>
                 <div class="card-body">
@@ -62,15 +58,26 @@
                                 <tr>
                                     {{-- <td>{{ $click->id }}</td> --}}
                                     <td>
+                                        @if(isset($click->property->property_purpose))
                                         <a href="{{ url(strtolower($click->property->property_purpose) . '/' . $click->property->property_slug . '/' . $click->property->id) }}">
                                             {{ $click->property->property_name }}
                                         </a>
+                                        @else
+                                        {{$click->id}}
+                                        @endif
                                     </td>
                                     <td>{{ $click->counter }}</td>
                                    
                                 </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $data['propertyVisitsPerMonth']->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

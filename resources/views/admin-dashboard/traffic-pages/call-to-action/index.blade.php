@@ -59,14 +59,21 @@
                                         <td>{{ $click->agency_name }}</td>
                                         <td>{{ $click->totalCall }}</td>
                                         <td>
-                                        <a class="btn btn-outline-dark" 
+                                        <a class="btn btn-info rounded btn-xs action-btn" 
                                             href="{{ route('agencyCallToActionList', $click->agency_id) }}">
-                                                Show Properties
+                                            <i class="fa fa-eye"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $data['clickCounters']->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

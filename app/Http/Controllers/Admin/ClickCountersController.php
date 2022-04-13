@@ -51,7 +51,7 @@ class ClickCountersController extends Controller
         ->when(request('from') && request('to'), function ($query) {
             $query->whereBetween('click_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
         })
-        ->groupBy('agency_name')->get();
+        ->groupBy('agency_name')->paginate(10);
 
         $action = 'saakin_index';
         return view('admin-dashboard.traffic-pages.call-to-action.index',compact('data','action'));
@@ -68,7 +68,7 @@ class ClickCountersController extends Controller
         'properties.id as pid', 'properties.property_name as pname', 
         'properties.property_purpose as ppurpose', 'properties.property_slug as pslug')
         ->where('properties.agency_id', $id)
-        ->groupBy('pname')->get();
+        ->groupBy('pname')->paginate(10);
 
         $action = 'saakin_index';
         return view('admin-dashboard.traffic-pages.call-to-action.list',compact('data','action'));
@@ -97,7 +97,7 @@ class ClickCountersController extends Controller
             })
             ->when(request('from') && request('to'), function ($query) {
                 $query->whereBetween('property_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
-            })->get();
+            })->paginate(10);
             
             return view('admin-dashboard.traffic-pages.propertyVisits-per-month.agency-index', compact('data', 'action'));
 
@@ -114,7 +114,7 @@ class ClickCountersController extends Controller
             })
             ->when(request('from') && request('to'), function ($query) {
                 $query->whereBetween('property_counters.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
-            })->groupBy('agencies.name')->get();
+            })->groupBy('agencies.name')->paginate(10);
             return view('admin-dashboard.traffic-pages.propertyVisits-per-month.index', compact('data', 'action'));
         }
     }
@@ -140,7 +140,7 @@ class ClickCountersController extends Controller
             })
             ->orderBy('totalUsers', 'DESC')
             ->groupBy('name')
-            ->get();
+            ->paginate(10);
             
             return view('admin-dashboard.traffic-pages.users.index', compact('users','action'));
         }elseif(auth()->user()->usertype == 'Agency'){
@@ -157,7 +157,7 @@ class ClickCountersController extends Controller
                     $query->whereBetween('page_visits.created_at', [request('from').' 00:00:01' , request('to').' 23:59:59']);
                 })->orderBy('totalUsers', 'DESC')
                 ->groupBy('country')
-                ->get();
+                ->paginate(10);
                 
             return view('admin-dashboard.traffic-pages.users.agency_index', compact('users','action'));
         }
@@ -192,7 +192,7 @@ class ClickCountersController extends Controller
             ->groupBy('properties.id')
             ->orderByDesc('property_counters.counter')
             ->limit('10')
-            ->get();
+            ->paginate(10);
 
             return view('admin-dashboard.traffic-pages.top-ten-properties.index', compact('top10Proprties','action'));
 
@@ -204,7 +204,7 @@ class ClickCountersController extends Controller
             'agencies.name as aname', 'agencies.id as aid')
             ->orderBy('counter', 'DESC')
             ->groupBy('aname')
-            ->get();
+            ->paginate(10);
 
             return view('admin-dashboard.traffic-pages.top-ten-properties.index', compact('top10Proprties','action'));
         }
@@ -221,7 +221,7 @@ class ClickCountersController extends Controller
         ->groupBy('properties.id')
         ->orderByDesc('counter')
         ->limit('10')
-        ->get();
+        ->paginate(10);
 
         $action = 'saakin_index';
 
@@ -243,7 +243,7 @@ class ClickCountersController extends Controller
             ->groupBy('properties.id')
             ->orderByDesc('counter')
             ->limit('5')
-            ->get();
+            ->paginate(10);
             
             return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top5Properties','action'));
 
@@ -256,7 +256,7 @@ class ClickCountersController extends Controller
             ->groupBy('aname')
             ->orderByDesc('property_counters.counter')
             ->limit('5')
-            ->get();
+            ->paginate(10);
             return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top5Properties','action'));
 
         }
@@ -271,7 +271,7 @@ class ClickCountersController extends Controller
         ->groupBy('properties.id')
         ->orderByDesc('property_counters.counter')
         ->limit('5')
-        ->get();
+        ->paginate(10);
         $action = 'saakin_index';
 
         return view('admin-dashboard.traffic-pages.top-five-areas.agency_index', compact('top5Properties','action'));

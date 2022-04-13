@@ -187,7 +187,7 @@
                 <h4 class="mb-4">Location</h4>
                 <div class="d-flex align-items-center">
                   <div class="me-3 position-relative rounded-img">
-                    <img src="{{ asset('assets/images/70d76248e.JPG') }}" alt="Map" width="120">
+                    <img src="{{ asset('assets/images/new.map.svg') }}" alt="Map" width="120">
                     <div class="map_btn position-absolute bottom-0  start-50 translate-middle-x pb-2">
                       <a data-fancybox data-type="iframe" data-preload="false" data-width="640" data-height="480" href="https://maps.google.com/maps?q={{ $property->address }}&output=embed"
                         class="btn btn-sm btn-info">View</a>
