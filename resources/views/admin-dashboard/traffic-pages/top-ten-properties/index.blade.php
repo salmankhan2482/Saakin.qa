@@ -17,18 +17,21 @@
                                     <th>ID</th>
                                     <th>Agency Name</th>
                                     <th>Property Visits</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($top10Proprties as $i => $click)
                             <tr>
                                 <td>{{ $click->aid }}</td>
-                                <td>
-                                    <a href="{{ route('top_Ten_Properties.list', $click->aid) }}">
-                                        {{ $click->aname }}
-                                    </a>
-                                </td>
+                                <td> {{ $click->aname }}</td>
                                 <td>{{ $click->counter }}</td>
+                                <td>
+                                    <a class="btn btn-info rounded btn-xs action-btn"
+                                             href="{{ route('top_Ten_Properties.list', $click->aid) }}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                </td>
                                 
                             </tr>
                         @endforeach
@@ -36,11 +39,11 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="3" class="text-center">
-                                        {{-- @include('admin.pagination', ['paginator' => $top10Proprties]) --}}
+                                    <td colspan="9" class="text-center">
+                                        {{ $top10Proprties->render() }}
                                     </td>
                                 </tr>
-                            </tfoot>
+                            </tfoot> 
                         </table>
                     </div>
                     <div class="clearfix"></div>

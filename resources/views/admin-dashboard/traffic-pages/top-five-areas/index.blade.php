@@ -26,14 +26,21 @@
                                     <td>{{ $click->aname ?? '' }}</td>
                                     <td>
                                         <a href="{{ route('top_5_areas.list', $click->aid) }}"
-                                            class="btn btn-primary rounded btn-xs action-btn">
-                                            Show List
+                                            class="btn btn-info rounded btn-xs action-btn">
+                                            <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
                                 </tr>
                             @endforeach
                                
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $top5Properties->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

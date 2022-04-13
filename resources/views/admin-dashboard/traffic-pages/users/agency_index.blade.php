@@ -58,6 +58,13 @@
                             </tr>
                         @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $users->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

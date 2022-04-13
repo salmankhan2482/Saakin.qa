@@ -13,17 +13,18 @@
                     <div class="basic-form">
                         <form action="{{ route('propertyVisits_per_month') }}" method="GET">
                             <div class="row justify-content-center">
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <label for="">From</label>
                                     <input type="date" id="start" name="from" value="{{ request('from') }}" >
                                 </div>
                                 
-                                <div class="col-2">
+                                <div class="col-sm-2">
                                     <label for="">To</label>
                                     <input type="date" id="start" name="to" value="{{ request('to') }}" >
                                 </div>
                                 
-                                <div class="col-2">
+                                <div class="col-sm-2">
+                                    <br>
                                     <button type="submit" class="btn btn-dark p-2">
                                         {{ trans('words.search') }}
                                     </button>
@@ -59,15 +60,21 @@
                                         <td>{{ $traffic->aname }}</td>
                                         <td>{{ $traffic->totalTraffic }}</td>
                                         <td>
-                                            <a class="btn btn-primary rounded btn-xs action-btn"
+                                            <a class="btn btn-info rounded btn-xs action-btn"
                                              href="{{ url('admin/propertyVisits_per_month/'.$traffic->aid.'?from='.request('from').'&to='.request('to')) }}">
-                                                Show Properties
+                                                <i class="fa fa-eye"></i>
                                             </a>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
-                            
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $data['propertyVisitsPerMonth']->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

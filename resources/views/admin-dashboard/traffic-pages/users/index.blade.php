@@ -47,7 +47,7 @@
                             <thead>
                                 <tr>
                                     <th>Agency Name</th>
-                                    <th>Total Traffic</th>
+                                    <th>Total Users</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,6 +58,13 @@
                             </tr>
                         @endforeach
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="9" class="text-center">
+                                        {{ $users->render() }}
+                                    </td>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

@@ -5,18 +5,12 @@
 @section('content')
     <div class="container-fluid">
         <div class="col-12">
-            <div class="page-titles">
-                <ol class="breadcrumb">
-                    <a href="{{route('top_Ten_Properties')}}">
-                        <button type="button" class="btn btn-rounded btn-dark fa fa-arrow-left"> Back
-                        
-                        </button>
-                    </a>
-                </ol>
-            </div>
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Top 10 Properties List</h4>
+                    <a href="{{route('top_Ten_Properties')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -44,8 +38,8 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="3" class="text-center">
-                                        {{-- @include('admin.pagination', ['paginator' => $top10Proprties]) --}}
+                                    <td colspan="9" class="text-center">
+                                        {{ $top10Proprties->render() }}
                                     </td>
                                 </tr>
                             </tfoot>
