@@ -128,7 +128,7 @@
             </tr>
             <tr>
               <th class="column" width="640" style="padding-left: 30px; padding-right: 30px; text-align: center;">
-                <a href="http://example.com" style="text-decoration: none;">
+                <a href="https://saakin.qa" style="text-decoration: none;">
                   <img class="mobile-center" src="{{ URL::asset('assets/images/black_logo.png') }}" alt="Header Logo" style="height:4em">
                 </a>
               </th>

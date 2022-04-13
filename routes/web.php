@@ -135,6 +135,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	
 	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
 	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
+	Route::get('comp_reg_inquiries', 'InquiriesController@comp_reg_inquiries')->name('comp_reg_inquiries');
     
     Route::get('view_inquiry/{id}', 'InquiriesController@view_inquiry')->name('view_inquiry');
     Route::get('view_property_inquiry/{id}', 'InquiriesController@view_property_inquiry');
@@ -256,6 +257,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('top_5_areas', 'ClickCountersController@top5Areas')->name('top_5_areas');
     Route::get('top_5_areas/{id}', 'ClickCountersController@top5AreasList')->name('top_5_areas.list');
     Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
+    
+    //company registration resource controller
+    Route::resource('companyRegistration', 'CompanyRegistrationController');
+
 });
 
 Route::get('/', 'IndexController@index')->name('home');

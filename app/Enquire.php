@@ -22,6 +22,11 @@ class Enquire extends Model
      {
         return $this->belongsTo('App\EnquireStatus','enquire_id');
      }
+
+     public function companyRegistration()
+     {
+         return $this->belongsTo(CompanyRegistration::class,'company_registrations_id');
+     }
     
     
 }
