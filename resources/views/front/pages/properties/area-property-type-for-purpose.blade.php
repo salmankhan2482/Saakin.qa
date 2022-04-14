@@ -29,14 +29,15 @@
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
                 <input type="hidden" name="featured" id="featured" value="{{ request()->featured }}">
-                <div class="search-filter flex-xl-nowrap">
+                <div class="search-filter flex-nowrap flex-sm-wrap flex-xl-nowrap">
+                    
                     <div class="flex-grow-1 country-list-wrap me-2">
                         <div class="input-group-overlay input-search">
                             <div class="input-group-prepend-overlay">
                             <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                             </div>
         
-                            <input type="text" name="keyword" id="country" data-purpose="" placeholder="Search Location" class="form-control prepended-form-control" autocomplete="off" aria-label="Search Location" aria-describedby="country">
+                            <input type="text" id="country" data-purpose="" placeholder="Search Location" class="form-control prepended-form-control" autocomplete="off" aria-label="Search Location" aria-describedby="country" value="{{ $data['keyword'] ?? '' }}">
                         </div>
                         <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
                         <div id="extra_keywords" style="display: none;">
@@ -569,11 +570,13 @@
                                         <label class="form-label"><i class="fas fa-building"></i> Property type</label>
                                         <div class="filter-property-type d-flex flex-nowrap overflow-auto pb-3 spbwx8">
 
-                                            @foreach ($propertyTypes as $propertyType)
-                                                <input type="radio" class="btn-check" name="property_type" value="{{ $propertyType->id }}" id="any" autocomplete="off" {{ $type->id == $propertyType->id ? 'checked' : '' }}  >
-                                                <label class="btn btn-monochrome btn-sm" for="any">
-                                                  {{ $propertyType->types }}
-                                                </label>
+                                            @foreach ($propertyTypes as $pt)
+                                            
+                                            <input type="radio" class="btn-check" name="property_type" id="ptAny{{ $pt->id }}" value="{{ $pt->id }}" {{ $type->id == $pt->id ? 'checked' : '' }}>
+                                            <label class="btn btn-monochrome btn-sm" for="ptAny{{ $pt->id }}">
+                                                {{ $pt->types }}
+                                            </label>
+
                                             @endforeach
 
                                         </div>

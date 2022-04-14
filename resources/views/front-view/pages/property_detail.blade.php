@@ -126,7 +126,7 @@
 
               <div class="btn-group btn-group-sm d-flex share-btns" role="group" aria-label="Share Link">
                 <button type="button" class="btn btn-monochrome">
-                  <i class="far fa-heart"></i><br> Add to Shortlist
+                  <i class="far fa-heart"></i><br> Save
                 </button>
                 <button type="button" class="btn btn-monochrome" data-bs-toggle="modal" data-bs-target="#shareModal">
                   <i class="far fa-share-square"></i><br>
@@ -314,10 +314,10 @@
 
           <div class="fixed-bottom w-100 bg-white d-sm-none" tabindex="1">
             <div class="card-body text-center shadow">
-              <div class="callgroup text-center justify-content-center">
+              <div class="callgroup text-center justify-content-center d-flex">
                 @if (!empty($property->whatsapp))
                   <a href="tel:{{ $property->whatsapp }}" 
-                    class="btn btn-primary btn-sm btn-call btnCount" 
+                    class="btn btn-primary btn-sm btn-call me-1 btnCount" 
                     data-property_id={{ $property->id }} 
                     data-agency_id={{ $property->agency_id }} 
                     data-button_name='Call'>
@@ -326,7 +326,7 @@
                   </a>
                 @else
                   <a href="tel:{{ $agency->phone }}" 
-                    class="btn btn-primary btn-sm btn-call btnCount"
+                    class="btn btn-primary btn-sm btn-call me-1 btnCount"
                     data-property_id={{ $property->id }} 
                     data-agency_id={{ $property->agency_id }} 
                     data-button_name='Call'>
@@ -336,7 +336,7 @@
                 @endif
                 @if (!empty($property->whatsapp))
                   <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}" 
-                    class="btn btn-sm btn-success btnCount" 
+                    class="btn btn-sm btn-success me-1 btnCount" 
                     data-property_id={{ $property->id }} 
                     data-agency_id={{ $property->agency_id }} 
                     data-button_name='WhatsApp'>
@@ -345,7 +345,7 @@
                   </a>
                 @elseif(!empty($agency->whatsapp))
                   <a href="//api.whatsapp.com/send?phone={{ $agency->whatsapp }}&text={{ urlencode($whatsapText) }}" 
-                    class="btn btn-sm btn-success btnCount"
+                    class="btn btn-sm btn-success me-1 btnCount"
                     data-property_id={{ $property->id }} 
                     data-agency_id={{ $property->agency_id }} 
                     data-button_name='WhatsApp'>
@@ -681,17 +681,17 @@
 
                   <ul class="property-feature">
                     @if ($propx->getProperty_type())
-                      <li style="width: 30% !important;">
+                      <li class="me-1">
                         <i class="fas fa-bed fas-icon"></i>
                         <span>{{ $propx->bedrooms }} </span>
                       </li>
-                      <li style="width: 30% !important;">
+                      <li class="me-1">
                         <i class="fas fa-bath fas-icon"></i>
                         <span>{{ $propx->bathrooms }}
                         </span>
                       </li>
                     @endif
-                    <li style="width: 40% !important;">
+                    <li class="me-1">
                       <i class="fas fa-chart-area fas-icon"></i>
                       <span> {{ $propx->getSqm() }} </span>
                     </li>
@@ -784,7 +784,7 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $(".single-gallery-slider").slick({
-        dots: false,
+        dots: true,
         autoplay: true,
         autoplaySpeed: 2000,
         speed: 150,

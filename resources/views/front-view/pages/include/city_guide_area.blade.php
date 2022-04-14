@@ -41,7 +41,6 @@
       @endforeach
 
     </div>
-		</div>
 
 		<div class="row justify-content-center mt-3 mt-md-5">
 			<div class="col-md-3">

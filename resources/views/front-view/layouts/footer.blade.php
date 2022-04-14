@@ -19,6 +19,8 @@
           <a class="fab fa-facebook-f" target="_blank" href="{{ getcong('social_facebook') }}"></a>
           <a class="fab fa-instagram" target="_blank" href="{{ getcong('social_instagram') }}"></a>
           <a class="fab fa-linkedin-in" target="_blank" href="{{ getcong('social_linkedin') }}"></a>
+          <a class="fab fa-twitter" target="_blank" href="{{ getcong('social_twitter') }}"></a>
+          <a class="fab fa-pinterest" target="_blank" href="{{ getcong('social_pinterest') }}"></a>
         </div>
       </div>
     </div>

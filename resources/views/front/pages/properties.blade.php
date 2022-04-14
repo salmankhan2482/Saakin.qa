@@ -531,14 +531,16 @@
                                     </div>
 
                                     <div class="mb-3 border-bottom mt-2">
-                                        <label class="form-label"><i class="fas fa-building"></i> Property type</label>
+                                        <label class="form-label"><i class="fas fa-building"></i> Property Type</label>
                                         <div class="filter-property-type d-flex flex-nowrap overflow-auto pb-3 spbwx8">
 
-                                            @foreach ($propertyTypes as $propertyType)
-                                                <input type="radio" class="btn-check" name="property_type" value="{{ $propertyType->id }}" id="any" autocomplete="off" {{ request('property_type') == $propertyType->id ? 'checked' : '' }}  >
-                                                <label class="btn btn-monochrome btn-sm" for="any">
-                                                  {{ $propertyType->types }}
-                                                </label>
+                                            @foreach ($propertyTypes as $pt)
+
+                                            <input type="radio" class="btn-check" name="property_type" id="ptAny{{ $pt->id }}" value="{{ $pt->id }}" {{ request('property_type') == $pt->id ? 'checked' : '' }}>
+                                            <label class="btn btn-monochrome btn-sm" for="ptAny{{ $pt->id }}">
+                                                {{ $pt->types }}
+                                            </label>
+
                                             @endforeach
 
                                         </div>
@@ -1150,11 +1152,9 @@
                                             {{ $property->property_name }}
                                         </h5>
                                     </a>
-                                    
+                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
-                                        <li class="pe-2">
-                                            <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
-                                        </li>
+                                        
                                         @if ($property->getProperty_type())
                                             <li>
                                                 <i class="fas fa-bed"></i>
@@ -1165,7 +1165,8 @@
                                                 <span>{{ $property->bathrooms }} </span>
                                             </li>
                                         @endif
-                                        <li><i class="fas fa-chart-area"></i>
+                                        <li>
+                                            <i class="fas fa-chart-area"></i>
                                             <span>{{ $property->getSqm() }}</span>
                                         </li>
                                     </ul>
@@ -1175,9 +1176,9 @@
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>
-                                    <div class="social-div mt-md-2">
+                                    <div class="social-div mt-md-2 d-flex">
                                         @if (!empty($property->whatsapp))
-                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->whatsapp }}"
                                                 data-property_id={{ $property->id }} 
                                                 data-agency_id={{ $property->agency_id }} 
@@ -1187,7 +1188,7 @@
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @else
-                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->Agency->phone }}"
                                                 data-property_id={{ $property->id }} 
                                                 data-agency_id={{ $property->agency_id }} 
@@ -1202,7 +1203,7 @@
                                             
                                             @if (!empty($property->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                    class="btn btn-monochrome btn-sm mt-1 me-1 btnCount"
                                                     data-property_id={{ $property->id }} 
                                                     data-agency_id={{ $property->agency_id }} 
                                                     data-button_name='WhatsApp'>
@@ -1211,7 +1212,7 @@
                                                     <span class=" d-md-inline-block">WhatsApp</span>
                                                 </a>
                                             @else
-                                                <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
+                                                <button class="btn btn-monochrome btn-sm mt-1 btnCount" 
                                                     data-property_id={{ $property->id }}
                                                     data-agency_id={{ $property->agency_id }}
                                                     data-button_name='Email'
@@ -1236,7 +1237,7 @@
                                         @else
                                             @if (!empty($property->whatsapp))
                                             <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                class="btn btn-monochrome btn-sm mt-1 btnCount me-1"
                                                 data-property_id={{ $property->id }} 
                                                 data-agency_id={{ $property->agency_id }} 
                                                 data-button_name='WhatsApp'>
@@ -1246,7 +1247,7 @@
                                             </a>
                                             @elseif(!empty($property->Agency->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                     data-property_id={{ $property->id }} 
                                                     data-agency_id={{ $property->agency_id }} 
                                                     data-button_name='WhatsApp'>
@@ -1256,7 +1257,7 @@
                                                 </a>
                                             @endif
 
-                                            <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
+                                            <button class="btn btn-monochrome btn-sm mt-1 btnCount" 
                                                 data-property_id={{ $property->id }}
                                                 data-agency_id={{ $property->agency_id }}
                                                 data-button_name='Email'

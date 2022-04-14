@@ -29,7 +29,7 @@
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
                 <input type="hidden" name="featured" id="featured" value="{{ request()->featured }}">
-                <div class="search-filter flex-xl-nowrap">
+                <div class="search-filter flex-nowrap flex-sm-wrap flex-xl-nowrap">
                     
                     <div class="flex-grow-1 country-list-wrap me-2">
                         <div class="input-group-overlay input-search">
@@ -538,13 +538,11 @@
                                         <label class="form-label"><i class="fas fa-building"></i> Property type</label>
                                         <div class="filter-property-type d-flex flex-nowrap overflow-auto pb-3 spbwx8">
 
-                                            @foreach ($propertyTypes as $propertyType)
-                                                <input type="radio" class="btn-check" name="property_type" value="{{ $propertyType->id }}" id="any" 
-                                                    {{ request('property_type') == $propertyType->id ? 'checked' : '' }}  >
-
-                                                <label class="btn btn-monochrome btn-sm" for="any">
-                                                  {{ $propertyType->types }}
-                                                </label>
+                                            @foreach ($propertyTypes as $pt)
+                                            <input type="radio" class="btn-check" name="property_type" id="ptAny{{ $pt->id }}" value="{{ $pt->id }}" {{ request('property_type') == $pt->id ? 'checked' : '' }}>
+                                            <label class="btn btn-monochrome btn-sm" for="ptAny{{ $pt->id }}">
+                                                {{ $pt->types }}
+                                            </label>
                                             @endforeach
 
                                         </div>

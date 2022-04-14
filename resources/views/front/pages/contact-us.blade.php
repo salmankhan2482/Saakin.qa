@@ -158,7 +158,9 @@
         </div>
         <div class="modal-body">
           <h6>Submit your details and we’ll get in touch</h6>
-          <p>To advertise on Property Finder you should be a real estate broker or developer and have a registered office.</p>
+          <p>
+            To advertise with Saakin Inc. you need to be a broker or real estate company with a registered office in Doha, Qatar
+          </p>
           <div class="card contact-form mt-3 mt-lg-0">
             <div class="card-body">
               <form action="{{ route('companyRegistration.store') }}" method="POST">
@@ -237,8 +239,6 @@
       </div>
     </div>
   </div>
-
-
 @endsection
 
 @push('styles')
