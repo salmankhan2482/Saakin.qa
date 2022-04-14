@@ -1138,7 +1138,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;"> 
+                                <div class="property-title-box"> 
                                     <div class="price">
                                         {{ $property->getPrice() }}
 
@@ -1154,7 +1154,6 @@
                                     </a>
                                     <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
-                                        
                                         @if ($property->getProperty_type())
                                             <li>
                                                 <i class="fas fa-bed"></i>
@@ -1172,7 +1171,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="property-card__property-title m-auto">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>

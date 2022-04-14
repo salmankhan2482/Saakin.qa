@@ -331,7 +331,6 @@
   $(document).on("click", "#emailBtn", function() {
     var image = $(this).attr('data-image');
     $("#modalImg").attr("src", `${image}`);
-    // $("#modalImg").attr("src", `upload/properties/thumb_${image}`);
     var title = $(this).attr('data-title');
     $("#modalName").html(title);
     var agent = $(this).attr('data-agent');
@@ -340,10 +339,20 @@
     $("#modalBroker").html(broker);
 
     var bedroom = $(this).attr('data-bedroom');
-    $("#modalBedrooms").html(bedroom);
+    if(bedroom > 0){
+      $(".bedroomLi").removeClass('d-none');
+      $("#modalBedrooms").html(bedroom);
+    }else{
+      $(".bedroomLi").addClass('d-none');
+    }
 
     var bathroom = $(this).attr('data-bathroom');
-    $("#modalBathrooms").html(bathroom);
+    if (bathroom > 0) {
+      $(".bathroomLi").removeClass('d-none');
+      $("#modalBathrooms").html(bathroom);
+    } else {
+      $(".bathroomLi").addClass('d-none');
+    }
 
     var area = $(this).attr('data-area');
     $("#modalSqm").html(area);
@@ -400,35 +409,10 @@
     $(this).removeClass('btn-secondary').addClass('btn-danger');
     $('#property_purpose').val($(this).attr('data-id'));
   });
-  ///////////////////////////////////////
 
 
-  $('#submit_inquiry_form').on('submit', function(event) {
-    event.preventDefault();
-    $('#submit_inquiry_form button').prop('disabled', 'disabled');
-    var formData = $(this).serialize();
-    var form_action = $(this).attr('action');
-    $.ajax({
-      type: 'POST',
-      url: form_action,
-      dataType: 'json',
-      data: formData,
-      success: function(res) {
-        $('#submit_inquiry_form').trigger("reset");
-        $('#submit_inquiry_form button').prop('disabled', '');
-        Swal.fire({
-          position: 'top-end',
-          icon: res.icon,
-          title: res.title,
-          text: res.text,
-          showConfirmButton: false,
-          timer: 1500
-        })
 
-      }
-    });
-  });
-  /////////////////////////////////////////////
+ 
   $('#newsletter-form').on('submit', function(event) {
     event.preventDefault();
     $('#newsletter-form button').prop('disabled', 'disabled');
@@ -453,8 +437,7 @@
       }
     });
   });
-  // /////////////////////////////////
-
+ 
   function fillTelephoneInput(val) {
     store = val.value;
     $('#telephoneInput').val("+" + store);
@@ -478,8 +461,5 @@
   }
 </script>
 
-
-
 @yield('scripts-custom')
-
 @stack('scripts')
