@@ -129,17 +129,17 @@
 
                   <ul class="property-feature">
                     @if ($propx->getProperty_type())
-                      <li style="width: 30% !important;">
+                      <li class="me-1">
                         <i class="fas fa-bed fas-icon"></i>
                         <span>{{ $propx->bedrooms }} </span>
                       </li>
-                      <li style="width: 30% !important;">
+                      <li class="me-1">
                         <i class="fas fa-bath fas-icon"></i>
                         <span>{{ $propx->bathrooms }}
                         </span>
                       </li>
                     @endif
-                    <li style="width: 40% !important;">
+                    <li class="me-1">
                       <i class="fas fa-chart-area fas-icon"></i>
                       <span> {{ $propx->getSqm() }} </span>
                     </li>

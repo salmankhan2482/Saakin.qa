@@ -16,7 +16,7 @@ pipelines:
         #    - composer install
             #- php artisan optimize:clear
             - exit 0
-           # - ssh -t -t root@saakin.com 'bash -s' < execute.sh
+           # - ssh -t -t root@saakin.qa 'bash -s' < execute.sh
     # development:
     #   - step:
     #       name: development

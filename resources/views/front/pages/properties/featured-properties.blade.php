@@ -1030,7 +1030,7 @@
                                 </div>
 
                                 {{--  --}}
-                                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;"> 
+                                <div class="property-title-box" > 
                                     <div class="price">
                                         {{ $property->getPrice() }}
 
@@ -1064,7 +1064,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="property-card__property-title m-auto">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>
