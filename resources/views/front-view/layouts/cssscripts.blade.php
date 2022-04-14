@@ -31,3 +31,32 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
 
 @stack('styles')
+<style>
+    @media screen and (max-width: 455px){ 
+        #rc-imageselect, .g-recaptcha { 
+            transform:scale(0.80); 
+            -webkit-transform:scale(0.80); 
+            transform-origin:0 0; 
+            -webkit-transform-origin:0 0; 
+        }
+        
+    }
+  .float{
+    position:fixed;
+    width:60px;
+    height:60px;
+    bottom:50px;
+    right:15px;
+    background-color:#25d366;
+    color:#FFF;
+    border-radius:50px;
+    text-align:center;
+    font-size:30px;
+    box-shadow: 1px 1px 1px rgb(80, 80, 80);
+    z-index:100;
+  }
+  
+  .my-float{
+    margin-top:16px;
+  }
+</style>

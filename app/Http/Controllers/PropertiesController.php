@@ -317,9 +317,12 @@ class PropertiesController extends Controller
         
         $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
-        $heading_info = $furnishing.' '.($request['type']->types ?? ' properties for ')
-        .(request()->property_purpose ? strtolower(request()->property_purpose) : 'rent and sale ') 
-        .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
+        $heading_info = $furnishing.' '.
+        (ucfirst($request['type']->plural ?? ' properties'))
+        .' for '.
+        (request()->property_purpose ? request()->property_purpose : 'rent and sale ') 
+        .' in '. 
+        ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
         
         if(count($properties) > 0){
             if (request('property_purpose') != '') {
