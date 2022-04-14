@@ -115,7 +115,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;">
+                <div class="property-title-box" onclick="window.location='{{ url(strtolower($propx->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}';" style="cursor: pointer;">
                   <h2 class="property-card__property-title ">
                     {{ \Illuminate\Support\Str::limit($propx->property_name) }}
                   </h2>
