@@ -68,23 +68,60 @@
         }
         
     }
-  .float{
-    position:fixed;
-    width:60px;
-    height:60px;
-    bottom:50px;
-    right:15px;
-    background-color:#25d366;
-    color:#FFF;
-    border-radius:50px;
-    text-align:center;
-    font-size:30px;
-    box-shadow: 1px 1px 1px rgb(80, 80, 80);
-    z-index:100;
-  }
+    .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:50px;
+        right:15px;
+        background-color:#25d366;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        font-size:30px;
+        box-shadow: 1px 1px 1px rgb(80, 80, 80);
+        z-index:100;
+    }
   
-  .my-float{
-    margin-top:16px;
-  }
+    .my-float{
+        margin-top:16px;
+    }
+    .fa-login-google {
+        font-size: 20px;
+        background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .google-button {
+        background-color: white !important;
+        border: 1px solid #009fff !important;
+        color: black !important;
+    }
+
+    .fa-login-facebook {
+        font-size: 20px;
+    }
+
+    #name-error, #email-error, #register_email-error, #password_register-error, #password_confirmation-error, #terms-error{
+        color: #ea4335;
+    }
+
+    .active-pagination {
+      color: #fff;
+      background-color: #009fff !important;
+    }
+
+    .page-link {
+        padding: 0.225rem 0.55rem !important;
+    }
+
+    .active-search {
+        border-color: #007ea8;
+        background-color: #e8f4f6;
+    }
+
 </style>
 

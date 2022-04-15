@@ -13,13 +13,7 @@
 @endif
 
 @section('content')
-    <style>
-        .active-search {
-            border-color: #007ea8;
-            background-color: #e8f4f6;
-        }
 
-    </style>
 
     <div class="filter-wrap">
         <div class="container">
@@ -499,11 +493,46 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <input type="checkbox" class="btn-check" id="save-search" autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm w-100" for="save-search">
-                                    <i class="far fa-star"></i>
-                                    Save Search
-                                </label>
+                                <div class="col">
+                                    <form action="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
+        
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="w-100 form-group d-flex align-items-center spbwx8">
+                                                <div class="w-100 short-by">
+                                                    <select name="sort_by" id="sort_by" class="w-100 border border-primary text-primary pt-2 btn-sm"
+                                                        onchange="document.getElementById('frmSortBy').submit();">
+                                                        <option value="newest"
+                                                            @if (request()->sort_by == 'newest') selected @endif>
+                                                            Newest
+                                                        </option>
+                                                        
+                                                        <option value="featured"
+                                                            @if (request()->sort_by == 'featured') selected @endif>
+                                                            Featured
+                                                        </option>
+                                                        
+                                                        <option value="low_price"
+                                                            @if (request()->sort_by == 'low_price') selected @endif>
+                                                            Price (Low)
+                                                        </option>
+                                                        <option value="high_price"
+                                                            @if (request()->sort_by == 'high_price') selected @endif>
+                                                            Price (High)
+                                                        </option>
+                                                        <option value="beds_least"
+                                                            @if (request()->sort_by == 'beds_least') selected @endif>
+                                                            Beds (Least)
+                                                        </option>
+                                                        <option value="beds_most"
+                                                            @if (request()->sort_by == 'beds_most') selected @endif>
+                                                            Beds (Most)
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         {{-- Mobile Filters --}}
@@ -947,14 +976,16 @@
                                                 <select name="sort_by" id="sort_by"
                                                     class="hero__form-input form-select form-select-sm custom-select"
                                                     onchange="document.getElementById('frmSortBy').submit();">
-                                                    <option value="featured"
-                                                        @if ($request->sort_by == 'featured') selected @endif>
-                                                        Featured
-                                                    </option>
                                                     <option value="newest"
                                                         @if ($request->sort_by == 'newest') selected @endif>
                                                         Newest
                                                     </option>
+
+                                                    <option value="featured"
+                                                        @if ($request->sort_by == 'featured') selected @endif>
+                                                        Featured
+                                                    </option>
+                                                    
                                                     <option value="low_price"
                                                         @if ($request->sort_by == 'low_price') selected @endif>
                                                         Price (Low)
@@ -996,11 +1027,15 @@
                         
                         </div>
                     @endforeach
+                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
+                        @if (count($data['result']) > 8)
                         <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
                             Show more <i class="fas fa-chevron-down"></i>
                         </a>
-                    </div>
+                        @endif
+                    </div>  
+                    @endif
                 </div>
                 
                 @elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && $data['result']->count() > 0)
@@ -1018,11 +1053,15 @@
                         
                         </div>
                     @endforeach
+                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
+                        @if (count($data['result']) > 8)
                         <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
                             Show more <i class="fas fa-chevron-down"></i>
                         </a>
-                    </div>
+                        @endif
+                    </div>  
+                    @endif
                 </div>
                 
                 @elseif(request('property_purpose') && request('property_type') && request('city') && $data['result']->count() > 0)
@@ -1039,11 +1078,15 @@
                         
                         </div>
                     @endforeach
+                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
+                        @if (count($data['result']) > 8)
                         <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
                             Show more <i class="fas fa-chevron-down"></i>
                         </a>
-                    </div>
+                        @endif
+                    </div>  
+                    @endif
                 </div>
                 
                 @elseif(request('property_purpose') && request('property_type') && $data['result']->count() > 0)
@@ -1060,33 +1103,38 @@
                         
                         </div>
                     @endforeach
+                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
+                        @if (count($data['result']) > 8)
                         <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
                             Show more <i class="fas fa-chevron-down"></i>
                         </a>
-                    </div>
+                        @endif
+                    </div>  
+                    @endif
                 </div>
                 
                 @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
                 
                 <div class="location-wrap">
-                        @foreach ($propertyTypes as $propertyType)
-                            <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
-                                
-                                <a href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+                    @foreach ($propertyTypes as $propertyType)
+                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+                            <a href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
 
-                                    {{ $propertyType->types }} 
-                                    <span>({{ $propertyType->pcount }})</span>
-                                
-                                </a>
+                                {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
                             
-                            </div>
-                        @endforeach
-                        <div class="location-item">
-                            <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                                Show more <i class="fas fa-chevron-down"></i>
                             </a>
                         </div>
+                    @endforeach
+                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                    <div class="location-item">
+                        @if (count($data['result']) > 8)
+                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                            Show more <i class="fas fa-chevron-down"></i>
+                        </a>
+                        @endif
+                    </div>  
+                    @endif
                 </div>
                 @endif
 
@@ -1171,7 +1219,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title m-auto">
+                                        <p class="property-card__property-title">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>

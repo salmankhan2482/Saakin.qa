@@ -13,13 +13,7 @@
 @endif
 
 @section('content')
-    <style>
-        .active-search {
-            border-color: #007ea8;
-            background-color: #e8f4f6;
-        }
 
-    </style>
 
     <div class="filter-wrap">
         <div class="container">
@@ -506,14 +500,16 @@
                                             <div class="w-100 short-by">
                                                 <select name="sort_by" id="sort_by"  class="w-100 border border-primary text-primary pt-2 btn-sm" onchange="document.getElementById('frmSortBy').submit();">
                                                     
-                                                    <option value="featured"
-                                                        @if ($request->sort_by == 'featured') selected @endif>
-                                                        Featured
-                                                    </option>
                                                     <option value="newest"
                                                         @if ($request->sort_by == 'newest') selected @endif>
                                                         Newest
                                                     </option>
+                                                    
+                                                    <option value="featured"
+                                                        @if ($request->sort_by == 'featured') selected @endif>
+                                                        Featured
+                                                    </option>
+                                                    
                                                     <option value="low_price"
                                                         @if ($request->sort_by == 'low_price') selected @endif>
                                                         Price (Low)
@@ -987,14 +983,16 @@
                                             <div class="short-by">
                                                 <select name="sort_by" id="sort_by" class="form-select form-select-sm custom-select"
                                                     onchange="document.getElementById('frmSortBy').submit();">
-                                                    <option value="featured"
-                                                        @if ($request->sort_by == 'featured') selected @endif>
-                                                        Featured
-                                                    </option>
+                                                    
                                                     <option value="newest"
                                                         @if ($request->sort_by == 'newest') selected @endif>
                                                         Newest
                                                     </option>
+                                                    <option value="featured"
+                                                        @if ($request->sort_by == 'featured') selected @endif>
+                                                        Featured
+                                                    </option>
+                                                    
                                                     <option value="low_price"
                                                         @if ($request->sort_by == 'low_price') selected @endif>
                                                         Price (Low)
@@ -1129,7 +1127,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <span class="property-card__property-title m-auto">
+                                        <span class="property-card__property-title">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </span>
                                     </div>

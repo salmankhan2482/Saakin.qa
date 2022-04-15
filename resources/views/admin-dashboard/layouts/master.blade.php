@@ -26,6 +26,8 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
     @yield('style') 
+    @stack('style-stack')
+    
     <style>
         .action-btn{
             margin-left: 5px;
@@ -56,6 +58,20 @@
             display: list-item;
             padding: 5px 4px;
         }
+        .deznav {
+        display: none !important;
+    }
+
+    @media only screen and (max-width: 780px) {
+        .deznav {
+            display: block !important;
+        }
+
+        .top-menu {
+            display: none !important;
+        }
+
+    }
     </style>
 
 </head>

@@ -1,22 +1,21 @@
 
 <style>
     .fa-google {
-
-    font-size: 20px;
-    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
+        font-size: 20px;
+        background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
     }
     .google-button{
         background-color: white !important;
-       border: 1px solid #009fff !important;
-       color: black !important;
-}
-.fa-facebook {
-    font-size: 20px;
-}
+        border: 1px solid #009fff !important;
+        color: black !important;
+    }
+    .fa-facebook {
+        font-size: 20px;
+    }
 </style>
 
 <div class="modal fade" style="padding: none !important" id="user-login-popup">

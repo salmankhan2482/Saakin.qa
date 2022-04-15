@@ -48,9 +48,9 @@
                 <div class="contact-address-icon">
                   <i class="flaticon-call text-primary"></i>
                 </div>
-                <div class="ms-3">
+                <div class="ms-3 mb-3">
                   <h6>Phone Number</h6>
-                  <p>{{ getcong('contact_us_phone') }}</p>
+                  <a href="tel:{{ getcong('contact_us_phone') }}">{{ getcong('contact_us_phone') }}</a>
                 </div>
               </div>
               <div class="d-flex">
