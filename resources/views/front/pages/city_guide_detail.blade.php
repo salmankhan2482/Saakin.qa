@@ -76,9 +76,9 @@
             <li>Schools</li>
             <li>Super Markets</li>
           </ul> --}}
-          <div class="p-2 border mb-3">
+           <div class="p-2 border mb-3">
             <iframe class="d-block"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d714.7768477657363!2d74.3806660590514!3d31.549670099468507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919053f257c413f%3A0x4600666a4d2dbdf1!2sServaid%20Pharmacy!5e0!3m2!1sen!2s!4v1648668166597!5m2!1sen!2s"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1846202.3191063385!2d50.096336329365315!3d25.342347489106213!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c534ffdce87f%3A0x1cfa88cf812b4032!2sQatar!5e0!3m2!1sen!2s!4v1650010298266!5m2!1sen!2s"
               width="100%" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
 
@@ -205,9 +205,8 @@
 @endpush
 
 @push('scripts')
-  @php
-  include_once 'assets/images/svgsprite/icons.svg';
-  @endphp
+
+<?php include 'assets/images/svgsprite/icons.svg';?>
 
   <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
 
