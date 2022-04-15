@@ -26,14 +26,16 @@
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
                 <input type="hidden" name="featured" id="featured" value="{{ request()->featured }}">
                 <div class="search-filter flex-nowrap flex-sm-wrap flex-xl-nowrap">
-                    
+
                     <div class="flex-grow-1 country-list-wrap me-2">
                         <div class="input-group-overlay input-search">
                             <div class="input-group-prepend-overlay">
-                            <span class="input-group-text"> <i class="fa fa-search"></i> </span>
+                                <span class="input-group-text"> <i class="fa fa-search"></i> </span>
                             </div>
-        
-                            <input type="text" id="country" data-purpose="" placeholder="Search Location" class="form-control prepended-form-control" autocomplete="off" aria-label="Search Location" aria-describedby="country" value="{{ $data['keyword'] ?? '' }}">
+
+                            <input type="text" id="country" data-purpose="" placeholder="Search Location"
+                                class="form-control prepended-form-control" autocomplete="off" aria-label="Search Location"
+                                aria-describedby="country" value="{{ $data['keyword'] ?? '' }}">
                         </div>
                         <div id="country_list" class="country-list scroll-y col-md-12 col-12"></div>
                         <div id="extra_keywords" style="display: none;">
@@ -86,7 +88,8 @@
                                             <div class="flex-grow-1">
                                                 <select name="min_price"
                                                     class="hero__form-input form-control custom-select">
-                                                    <option {{ $request->min_price == '' ? 'selected' : '' }} value="">Min
+                                                    <option {{ $request->min_price == '' ? 'selected' : '' }} value="">
+                                                        Min
                                                         Price</option>
                                                     <option {{ $request->min_price == '5000' ? 'selected' : '' }}
                                                         value="5000">
@@ -242,49 +245,64 @@
                                                     <option @if ($request->min_area == '900') selected @endif value="900">
                                                         900 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1000') selected @endif value="1000">
+                                                    <option @if ($request->min_area == '1000') selected @endif
+                                                        value="1000">
                                                         1000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1100') selected @endif value="1100">
+                                                    <option @if ($request->min_area == '1100') selected @endif
+                                                        value="1100">
                                                         1100 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1200') selected @endif value="1200">
+                                                    <option @if ($request->min_area == '1200') selected @endif
+                                                        value="1200">
                                                         1200 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1300') selected @endif value="1300">
+                                                    <option @if ($request->min_area == '1300') selected @endif
+                                                        value="1300">
                                                         1300 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1400') selected @endif value="1400">
+                                                    <option @if ($request->min_area == '1400') selected @endif
+                                                        value="1400">
                                                         1400 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1500') selected @endif value="1500">
+                                                    <option @if ($request->min_area == '1500') selected @endif
+                                                        value="1500">
                                                         1500 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1600') selected @endif value="1600">
+                                                    <option @if ($request->min_area == '1600') selected @endif
+                                                        value="1600">
                                                         1600 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1700') selected @endif value="1700">
+                                                    <option @if ($request->min_area == '1700') selected @endif
+                                                        value="1700">
                                                         1700 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1800') selected @endif value="1800">
+                                                    <option @if ($request->min_area == '1800') selected @endif
+                                                        value="1800">
                                                         1800 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1900') selected @endif value="1900">
+                                                    <option @if ($request->min_area == '1900') selected @endif
+                                                        value="1900">
                                                         1900 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '2000') selected @endif value="2000">
+                                                    <option @if ($request->min_area == '2000') selected @endif
+                                                        value="2000">
                                                         2000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '2500') selected @endif value="2500">
+                                                    <option @if ($request->min_area == '2500') selected @endif
+                                                        value="2500">
                                                         2500 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '3000') selected @endif value="3000">
+                                                    <option @if ($request->min_area == '3000') selected @endif
+                                                        value="3000">
                                                         3000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '4000') selected @endif value="4000">
+                                                    <option @if ($request->min_area == '4000') selected @endif
+                                                        value="4000">
                                                         4000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '5000') selected @endif value="5000">
+                                                    <option @if ($request->min_area == '5000') selected @endif
+                                                        value="5000">
                                                         5000 sqm
                                                     </option>
                                                 </select>
@@ -296,77 +314,92 @@
                                                 <select name="max_area"
                                                     class="hero__form-input  form-control custom-select">
                                                     <option @if ($request->max_area == '') selected @endif value="">
-                                                      Max Area
+                                                        Max Area
                                                     </option>
                                                     <option @if ($request->max_area == '50') selected @endif value="50">
                                                         50 sqm
-                                                      </option>
+                                                    </option>
                                                     <option @if ($request->max_area == '100') selected @endif value="100">
                                                         100 sqm
-                                                      </option>
+                                                    </option>
                                                     <option @if ($request->max_area == '200') selected @endif value="200">
                                                         200 sqm
-                                                      </option>
+                                                    </option>
                                                     <option @if ($request->max_area == '500') selected @endif value="500">
                                                         500 sqm
-                                                      </option>
+                                                    </option>
                                                     <option @if ($request->max_area == '600') selected @endif value="600">
                                                         600 sqm
-                                                      </option>
+                                                    </option>
                                                     <option @if ($request->max_area == '700') selected @endif value="700">
                                                         700 sqm
-                                                      </option>
+                                                    </option>
                                                     <option @if ($request->max_area == '800') selected @endif value="800">
                                                         800 sqm
-                                                      </option>
+                                                    </option>
                                                     <option @if ($request->max_area == '900') selected @endif value="900">
                                                         900 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1000') selected @endif value="1000">
-                                                      1000 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1100') selected @endif value="1100">
-                                                      1100 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1200') selected @endif value="1200">
-                                                      1200 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1300') selected @endif value="1300">
-                                                      1300 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1400') selected @endif value="1400">
-                                                      1400 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1500') selected @endif value="1500">
-                                                      1500 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1600') selected @endif value="1600">
-                                                      1600 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1700') selected @endif value="1700">
-                                                      1700 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1800') selected @endif value="1800">
-                                                      1800 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '1900') selected @endif value="1900">
-                                                      1900 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '2000') selected @endif value="2000">
-                                                      2000 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '2500') selected @endif value="2500">
-                                                      2500 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '3000') selected @endif value="3000">
-                                                      3000 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '4000') selected @endif value="4000">
-                                                      4000 sqm
-                                                      </option>
-                                                    <option @if ($request->max_area == '5000') selected @endif value="5000">
-                                                      5000 sqm
-                                                      </option>
+                                                    </option>
+                                                    <option @if ($request->max_area == '1000') selected @endif
+                                                        value="1000">
+                                                        1000 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1100') selected @endif
+                                                        value="1100">
+                                                        1100 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1200') selected @endif
+                                                        value="1200">
+                                                        1200 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1300') selected @endif
+                                                        value="1300">
+                                                        1300 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1400') selected @endif
+                                                        value="1400">
+                                                        1400 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1500') selected @endif
+                                                        value="1500">
+                                                        1500 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1600') selected @endif
+                                                        value="1600">
+                                                        1600 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1700') selected @endif
+                                                        value="1700">
+                                                        1700 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1800') selected @endif
+                                                        value="1800">
+                                                        1800 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '1900') selected @endif
+                                                        value="1900">
+                                                        1900 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '2000') selected @endif
+                                                        value="2000">
+                                                        2000 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '2500') selected @endif
+                                                        value="2500">
+                                                        2500 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '3000') selected @endif
+                                                        value="3000">
+                                                        3000 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '4000') selected @endif
+                                                        value="4000">
+                                                        4000 sqm
+                                                    </option>
+                                                    <option @if ($request->max_area == '5000') selected @endif
+                                                        value="5000">
+                                                        5000 sqm
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -375,87 +408,91 @@
                             </div>
                             <div>
 
-                            <input type="hidden" name="bedrooms" id="bedroomInput" value="{{ request('bedrooms') ?? '' }}">
-                            <input type="hidden" name="bathrooms" id="bathroomInput" value="{{ request('bathrooms') ?? '' }}">
+                                <input type="hidden" name="bedrooms" id="bedroomInput"
+                                    value="{{ request('bedrooms') ?? '' }}">
+                                <input type="hidden" name="bathrooms" id="bathroomInput"
+                                    value="{{ request('bathrooms') ?? '' }}">
 
-                            <div class="dropdown js-dropdown">
-                              <div type="button" id="beddropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" 
-                              class="form-select dropdown-toggle bedbathdrop @if (isset($request->bedrooms) or isset($request->bathrooms)) active-search @endif">
-                                  Beds & Baths
-                              </div>
-                              <div class="dropdown-menu px-2 custom-dropdown" id="beddropdownMenuButton"
-                                  aria-labelledby="dropdownMenuButton">
-                                  <h6>Bedrooms</h6>
-                                  <div class="d-flex spbwx8 mb-3">
-                                      <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '' ? 'bg-info' : '' }}" 
-                                        onclick="bedrooms(this);" data-value=""> Any 
-                                      </li>
-                                      <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}" 
-                                        onclick="bedrooms(this);" data-value="1">1
-                                      </li>
-                                      <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}" 
-                                        onclick="bedrooms(this);" data-value="2">2
-                                      </li>
+                                <div class="dropdown js-dropdown">
+                                    <div type="button" id="beddropdownMenuButton" data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                        class="form-select dropdown-toggle bedbathdrop @if (isset($request->bedrooms) or isset($request->bathrooms)) active-search @endif">
+                                        Beds & Baths
+                                    </div>
+                                    <div class="dropdown-menu px-2 custom-dropdown" id="beddropdownMenuButton"
+                                        aria-labelledby="dropdownMenuButton">
+                                        <h6>Bedrooms</h6>
+                                        <div class="d-flex spbwx8 mb-3">
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value=""> Any
+                                            </li>
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value="1">1
+                                            </li>
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value="2">2
+                                            </li>
 
-                                      <li class="dropdown-item item-in-line bedrooms{{ request('bedrooms') == '3' ? 'bg-info' : '' }}" 
-                                        onclick="bedrooms(this);" data-value="3">3
-                                      </li>
-                                      <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}" 
-                                        onclick="bedrooms(this);" data-value="4">4
-                                      </li>
-                                      <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '5' ? 'bg-info' : '' }}" 
-                                        onclick="bedrooms(this);" data-value="5">5
-                                      </li>
-                                      <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '6+' ? 'bg-info' : '' }}" 
-                                        onclick="bedrooms(this);" data-value="6+">6+
-                                      </li>
-                                  </div>
+                                            <li class="dropdown-item item-in-line bedrooms{{ request('bedrooms') == '3' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value="3">3
+                                            </li>
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value="4">4
+                                            </li>
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '5' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value="5">5
+                                            </li>
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '6+' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value="6+">6+
+                                            </li>
+                                        </div>
 
-                                  <div class="mb-3">
-                                      <input type="checkbox" name="exact_bedrooms" value="1"> Use exact values
-                                  </div>
+                                        <div class="mb-3">
+                                            <input type="checkbox" name="exact_bedrooms" value="1"> Use exact values
+                                        </div>
 
-                                  <div class="mb-3">
-                                      <h6>Bathrooms</h6>
-                                      <div class="d-flex spbwx8">
-                                          <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '' ? 'bg-info' : '' }}" 
-                                            onclick="bathrooms(this);" data-value=""> Any
-                                          </li>
-                                          
-                                          <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '1' ? 'bg-info' : '' }}"  
-                                            onclick="bathrooms(this);" data-value="1"> 1
-                                          </li>
+                                        <div class="mb-3">
+                                            <h6>Bathrooms</h6>
+                                            <div class="d-flex spbwx8">
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '' ? 'bg-info' : '' }}"
+                                                    onclick="bathrooms(this);" data-value=""> Any
+                                                </li>
 
-                                          <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '2' ? 'bg-info' : '' }}"  
-                                            onclick="bathrooms(this);" data-value="2"> 2
-                                          </li>
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '1' ? 'bg-info' : '' }}"
+                                                    onclick="bathrooms(this);" data-value="1"> 1
+                                                </li>
 
-                                          <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '3' ? 'bg-info' : '' }}"  
-                                            onclick="bathrooms(this);" data-value="3"> 3
-                                          </li>
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '2' ? 'bg-info' : '' }}"
+                                                    onclick="bathrooms(this);" data-value="2"> 2
+                                                </li>
 
-                                          <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '4' ? 'bg-info' : '' }}" 
-                                            onclick="bathrooms(this);" data-value="4"> 4
-                                          </li>
-                                          
-                                          <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '5' ? 'bg-info' : '' }}" 
-                                            onclick="bathrooms(this);" data-value="5"> 5
-                                          </li>
-                                          
-                                          <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '6+' ? 'bg-info' : '' }}" 
-                                            onclick="bathrooms(this);" data-value="6+"> 6+
-                                          </li>
-                                      </div>
-                                  </div>
-                                  <div class="">
-                                      <input type="checkbox" name="exact_bathrooms" value="1"> Use exact values
-                                  </div>
-                              </div>
-                            </div>
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '3' ? 'bg-info' : '' }}"
+                                                    onclick="bathrooms(this);" data-value="3"> 3
+                                                </li>
+
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '4' ? 'bg-info' : '' }}"
+                                                    onclick="bathrooms(this);" data-value="4"> 4
+                                                </li>
+
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '5' ? 'bg-info' : '' }}"
+                                                    onclick="bathrooms(this);" data-value="5"> 5
+                                                </li>
+
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '6+' ? 'bg-info' : '' }}"
+                                                    onclick="bathrooms(this);" data-value="6+"> 6+
+                                                </li>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <input type="checkbox" name="exact_bathrooms" value="1"> Use exact values
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="flex-grow-1">
-                                <select name="furnishings" class="hero__form-input form-select custom-select @if (isset($request->furnishings)) active-search @endif">
+                                <select name="furnishings"
+                                    class="hero__form-input form-select custom-select @if (isset($request->furnishings)) active-search @endif">
                                     <option value="">All furnishings</option>
                                     <option value="109" {{ Request::get('furnishings') == 109 ? 'selected' : '' }}>
                                         Furnished
@@ -519,13 +556,13 @@
 
                                 <div class="offcanvas-body">
                                     <div class="btn-group btn-group-sm d-flex" role="group" aria-label="Sell type">
-                                        
+
                                         <input type="radio" class="btn-check" name="property_purpose" id="btnRent"
-                                        value="Rent" {{ request('property_purpose') == 'Rent' ? 'checked' : '' }}>
+                                            value="Rent" {{ request('property_purpose') == 'Rent' ? 'checked' : '' }}>
                                         <label class="btn btn-monochrome btn-sm" for="btnRent">Rent</label>
-                                        
+
                                         <input type="radio" class="btn-check" name="property_purpose" id="btnSale"
-                                        value="Sale" {{ request('property_purpose') == 'Sale' ? 'checked' : '' }}>
+                                            value="Sale" {{ request('property_purpose') == 'Sale' ? 'checked' : '' }}>
                                         <label class="btn btn-monochrome btn-sm" for="btnSale">Buy</label>
 
                                     </div>
@@ -535,12 +572,12 @@
                                         <div class="filter-property-type d-flex flex-nowrap overflow-auto pb-3 spbwx8">
 
                                             @foreach ($propertyTypes as $pt)
-
-                                            <input type="radio" class="btn-check" name="property_type" id="ptAny{{ $pt->id }}" value="{{ $pt->id }}" {{ request('property_type') == $pt->id ? 'checked' : '' }}>
-                                            <label class="btn btn-monochrome btn-sm" for="ptAny{{ $pt->id }}">
-                                                {{ $pt->types }}
-                                            </label>
-
+                                                <input type="radio" class="btn-check" name="property_type"
+                                                    id="ptAny{{ $pt->id }}" value="{{ $pt->id }}"
+                                                    {{ request('property_type') == $pt->id ? 'checked' : '' }}>
+                                                <label class="btn btn-monochrome btn-sm" for="ptAny{{ $pt->id }}">
+                                                    {{ $pt->types }}
+                                                </label>
                                             @endforeach
 
                                         </div>
@@ -636,8 +673,8 @@
                                         <label class="form-label"><i class="fas fa-bed"></i> Bedrooms</label>
                                         <div class="filter-property-type d-flex flex-nowrap overflow-auto pb-3 spbwx8">
 
-                                            <input type="radio" class="btn-check" name="bedrooms" id="bedAny"
-                                                value="" {{ request('bedrooms') == '' ? 'checked' : '' }}>
+                                            <input type="radio" class="btn-check" name="bedrooms" id="bedAny" value=""
+                                                {{ request('bedrooms') == '' ? 'checked' : '' }}>
                                             <label class="btn btn-monochrome btn-sm" for="bedAny">Any</label>
 
                                             <input type="radio" class="btn-check" name="bedrooms" id="bedroom1"
@@ -708,7 +745,7 @@
                                             <div class="col">
                                                 <select name="min_area" class="form-control">
                                                     <option @if ($request->min_area == '') selected @endif value="">
-                                                      Min Area
+                                                        Min Area
                                                     </option>
                                                     <option @if ($request->min_area == '50') selected @endif value="50">
                                                         50 sqm
@@ -734,57 +771,72 @@
                                                     <option @if ($request->min_area == '900') selected @endif value="900">
                                                         900 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1000') selected @endif value="1000">
-                                                      1000 sqm
+                                                    <option @if ($request->min_area == '1000') selected @endif
+                                                        value="1000">
+                                                        1000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1100') selected @endif value="1100">
-                                                      1100 sqm
+                                                    <option @if ($request->min_area == '1100') selected @endif
+                                                        value="1100">
+                                                        1100 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1200') selected @endif value="1200">
-                                                      1200 sqm
+                                                    <option @if ($request->min_area == '1200') selected @endif
+                                                        value="1200">
+                                                        1200 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1300') selected @endif value="1300">
-                                                      1300 sqm
+                                                    <option @if ($request->min_area == '1300') selected @endif
+                                                        value="1300">
+                                                        1300 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1400') selected @endif value="1400">
-                                                      1400 sqm
+                                                    <option @if ($request->min_area == '1400') selected @endif
+                                                        value="1400">
+                                                        1400 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1500') selected @endif value="1500">
-                                                      1500 sqm
+                                                    <option @if ($request->min_area == '1500') selected @endif
+                                                        value="1500">
+                                                        1500 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1600') selected @endif value="1600">
-                                                      1600 sqm
+                                                    <option @if ($request->min_area == '1600') selected @endif
+                                                        value="1600">
+                                                        1600 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1700') selected @endif value="1700">
-                                                      1700 sqm
+                                                    <option @if ($request->min_area == '1700') selected @endif
+                                                        value="1700">
+                                                        1700 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1800') selected @endif value="1800">
-                                                      1800 sqm
+                                                    <option @if ($request->min_area == '1800') selected @endif
+                                                        value="1800">
+                                                        1800 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '1900') selected @endif value="1900">
-                                                      1900 sqm
+                                                    <option @if ($request->min_area == '1900') selected @endif
+                                                        value="1900">
+                                                        1900 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '2000') selected @endif value="2000">
-                                                      2000 sqm
+                                                    <option @if ($request->min_area == '2000') selected @endif
+                                                        value="2000">
+                                                        2000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '2500') selected @endif value="2500">
-                                                      2500 sqm
+                                                    <option @if ($request->min_area == '2500') selected @endif
+                                                        value="2500">
+                                                        2500 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '3000') selected @endif value="3000">
-                                                      3000 sqm
+                                                    <option @if ($request->min_area == '3000') selected @endif
+                                                        value="3000">
+                                                        3000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '4000') selected @endif value="4000">
-                                                      4000 sqm
+                                                    <option @if ($request->min_area == '4000') selected @endif
+                                                        value="4000">
+                                                        4000 sqm
                                                     </option>
-                                                    <option @if ($request->min_area == '5000') selected @endif value="5000">
-                                                      5000 sqm
+                                                    <option @if ($request->min_area == '5000') selected @endif
+                                                        value="5000">
+                                                        5000 sqm
                                                     </option>
                                                 </select>
                                             </div>
                                             <div class="col">
                                                 <select name="max_area" class="form-control">
                                                     <option @if ($request->max_area == '') selected @endif value="">
-                                                      Max Area
+                                                        Max Area
                                                     </option>
                                                     <option @if ($request->max_area == '50') selected @endif value="50">
                                                         50 sqm
@@ -810,50 +862,65 @@
                                                     <option @if ($request->max_area == '900') selected @endif value="900">
                                                         900 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1000') selected @endif value="1000">
-                                                      1000 sqm
+                                                    <option @if ($request->max_area == '1000') selected @endif
+                                                        value="1000">
+                                                        1000 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1100') selected @endif value="1100">
-                                                      1100 sqm
+                                                    <option @if ($request->max_area == '1100') selected @endif
+                                                        value="1100">
+                                                        1100 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1200') selected @endif value="1200">
-                                                      1200 sqm
+                                                    <option @if ($request->max_area == '1200') selected @endif
+                                                        value="1200">
+                                                        1200 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1300') selected @endif value="1300">
-                                                      1300 sqm
+                                                    <option @if ($request->max_area == '1300') selected @endif
+                                                        value="1300">
+                                                        1300 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1400') selected @endif value="1400">
-                                                      1400 sqm
+                                                    <option @if ($request->max_area == '1400') selected @endif
+                                                        value="1400">
+                                                        1400 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1500') selected @endif value="1500">
-                                                      1500 sqm
+                                                    <option @if ($request->max_area == '1500') selected @endif
+                                                        value="1500">
+                                                        1500 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1600') selected @endif value="1600">
-                                                      1600 sqm
+                                                    <option @if ($request->max_area == '1600') selected @endif
+                                                        value="1600">
+                                                        1600 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1700') selected @endif value="1700">
-                                                      1700 sqm
+                                                    <option @if ($request->max_area == '1700') selected @endif
+                                                        value="1700">
+                                                        1700 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1800') selected @endif value="1800">
-                                                      1800 sqm
+                                                    <option @if ($request->max_area == '1800') selected @endif
+                                                        value="1800">
+                                                        1800 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '1900') selected @endif value="1900">
-                                                      1900 sqm
+                                                    <option @if ($request->max_area == '1900') selected @endif
+                                                        value="1900">
+                                                        1900 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '2000') selected @endif value="2000">
-                                                      2000 sqm
+                                                    <option @if ($request->max_area == '2000') selected @endif
+                                                        value="2000">
+                                                        2000 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '2500') selected @endif value="2500">
-                                                      2500 sqm
+                                                    <option @if ($request->max_area == '2500') selected @endif
+                                                        value="2500">
+                                                        2500 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '3000') selected @endif value="3000">
-                                                      3000 sqm
+                                                    <option @if ($request->max_area == '3000') selected @endif
+                                                        value="3000">
+                                                        3000 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '4000') selected @endif value="4000">
-                                                      4000 sqm
+                                                    <option @if ($request->max_area == '4000') selected @endif
+                                                        value="4000">
+                                                        4000 sqm
                                                     </option>
-                                                    <option @if ($request->max_area == '5000') selected @endif value="5000">
-                                                      5000 sqm
+                                                    <option @if ($request->max_area == '5000') selected @endif
+                                                        value="5000">
+                                                        5000 sqm
                                                     </option>
                                                 </select>
                                             </div>
@@ -864,9 +931,9 @@
                                         <label class="form-label"><i class="fas fa-couch"></i> Furnishing</label>
                                         <div class="filter-property-type d-flex flex-nowrap overflow-auto pb-3 spbwx8">
 
-                                            <input type="radio" class="btn-check" name="furnishings" id="furnished" value="109"
-                                            {{ request('furnishings') == 109 ? 'checked' : '' }}>
-                                            <label for="furnished" class="btn btn-monochrome btn-sm" >
+                                            <input type="radio" class="btn-check" name="furnishings" id="furnished"
+                                                value="109" {{ request('furnishings') == 109 ? 'checked' : '' }}>
+                                            <label for="furnished" class="btn btn-monochrome btn-sm">
                                                 Furnished
                                             </label>
 
@@ -876,8 +943,9 @@
                                                 Unfurnished
                                             </label>
 
-                                            <input type="radio" class="btn-check" name="furnishings" id="partlyFurnished" 
-                                                value="101" {{ request('furnishings') == 101 ? 'checked' : '' }}>
+                                            <input type="radio" class="btn-check" name="furnishings"
+                                                id="partlyFurnished" value="101"
+                                                {{ request('furnishings') == 101 ? 'checked' : '' }}>
                                             <label class="btn btn-monochrome btn-sm" for="partlyFurnished">
                                                 Partly furnished
                                             </label>
@@ -911,9 +979,10 @@
                         <div>
                             <form action="{{ url('properties') }}" name="frmSortBy" id="frmSortBy"
                                 class="form-inline form-1" method="get">
-                                <input type="hidden" name="featured"  value="{{ request()->featured }}" id="featured">
+                                <input type="hidden" name="featured" value="{{ request()->featured }}" id="featured">
                                 <input type="hidden" name="property_type" value="{{ request()->property_type }}">
-                                <input type="hidden" name="property_purpose" value="{{ request()->property_purpose }}" />
+                                <input type="hidden" name="property_purpose"
+                                    value="{{ request()->property_purpose }}" />
                                 <input type="hidden" name="city" value="{{ request()->city }}" />
                                 <input type="hidden" name="subcity" value="{{ request()->subcity }}" />
                                 <input type="hidden" name="town" value="{{ request()->town }}" />
@@ -930,7 +999,7 @@
                                 <input type="hidden" name="keywordMbl" value="{{ request()->keywordMbl }}" />
                                 <input type="hidden" name="commercial" value="{{ request()->commercial }}" />
 
-                                
+
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="">
                                         <input type="checkbox" class="btn-check" id="save-search" autocomplete="off">
@@ -980,106 +1049,21 @@
                         </div>
                     @endif
                 </div>
-                @if(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && request('area'))
+                @if (request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && request('area'))
                     {{-- nothing to show --}}
                 @elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && $data['result']->count() > 0)
-                <div class="location-wrap">
-                    @foreach ($data['result'] as $area)
-                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
-                            
-                            <a href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$area->id&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
-
-                                {{ $area->name }} 
-                                <span>({{ $area->pcount }})</span>
-                            
-                            </a>
-                        
-                        </div>
-                    @endforeach
-                    <div class="location-item">
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                @elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && $data['result']->count() > 0)
-                
-                <div class="location-wrap">
-                    @foreach ($data['result'] as $town)
-                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
-                            
-                            <a href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$town->id&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
-
-                                {{ $town->name }} 
-                                <span>({{ $town->pcount }})</span>
-                            
-                            </a>
-                        
-                        </div>
-                    @endforeach
-                    <div class="location-item">
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                @elseif(request('property_purpose') && request('property_type') && request('city') && $data['result']->count() > 0)
-                <div class="location-wrap">
-                    @foreach ($data['result'] as $subcity)
-                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
-                            
-                            <a href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$subcity->id&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
-
-                                {{ $subcity->name }} 
-                                <span>({{ $subcity->pcount }})</span>
-                            
-                            </a>
-                        
-                        </div>
-                    @endforeach
-                    <div class="location-item">
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                @elseif(request('property_purpose') && request('property_type') && $data['result']->count() > 0)
-                <div class="location-wrap">
-                    @foreach ($data['result'] as $city)
-                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
-                            
-                            <a href="{{ url("properties?featured=&city=$city->id&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
-
-                                {{ $city->name }} 
-                                <span>({{ $city->pcount }})</span>
-                            
-                            </a>
-                        
-                        </div>
-                    @endforeach
-                    <div class="location-item">
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
-                
-                <div class="location-wrap">
-                        @foreach ($propertyTypes as $propertyType)
+                    <div class="location-wrap">
+                        @foreach ($data['result'] as $area)
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
-                                
-                                <a href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
 
-                                    {{ $propertyType->types }} 
-                                    <span>({{ $propertyType->pcount }})</span>
-                                
+                                <a
+                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$area->id&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                    {{ $area->name }}
+                                    <span>({{ $area->pcount }})</span>
+
                                 </a>
-                            
+
                             </div>
                         @endforeach
                         <div class="location-item">
@@ -1087,7 +1071,91 @@
                                 Show more <i class="fas fa-chevron-down"></i>
                             </a>
                         </div>
-                </div>
+                    </div>
+                @elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && $data['result']->count() > 0)
+                    <div class="location-wrap">
+                        @foreach ($data['result'] as $town)
+                            <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+
+                                <a
+                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$town->id&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                    {{ $town->name }}
+                                    <span>({{ $town->pcount }})</span>
+
+                                </a>
+
+                            </div>
+                        @endforeach
+                        <div class="location-item">
+                            <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                Show more <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                @elseif(request('property_purpose') && request('property_type') && request('city') && $data['result']->count() > 0)
+                    <div class="location-wrap">
+                        @foreach ($data['result'] as $subcity)
+                            <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+
+                                <a
+                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$subcity->id&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                    {{ $subcity->name }}
+                                    <span>({{ $subcity->pcount }})</span>
+
+                                </a>
+
+                            </div>
+                        @endforeach
+                        <div class="location-item">
+                            <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                Show more <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                @elseif(request('property_purpose') && request('property_type') && $data['result']->count() > 0)
+                    <div class="location-wrap">
+                        @foreach ($data['result'] as $city)
+                            <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+
+                                <a
+                                    href="{{ url("properties?featured=&city=$city->id&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                    {{ $city->name }}
+                                    <span>({{ $city->pcount }})</span>
+
+                                </a>
+
+                            </div>
+                        @endforeach
+                        <div class="location-item">
+                            <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                Show more <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
+                @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
+                    <div class="location-wrap">
+                        @foreach ($propertyTypes as $propertyType)
+                            <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+
+                                <a
+                                    href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+
+                                    {{ $propertyType->types }}
+                                    <span>({{ $propertyType->pcount }})</span>
+
+                                </a>
+
+                            </div>
+                        @endforeach
+                        <div class="location-item">
+                            <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                Show more <i class="fas fa-chevron-down"></i>
+                            </a>
+                        </div>
+                    </div>
                 @endif
 
                 {{-- list view --}}
@@ -1138,7 +1206,9 @@
                                     </ul>
                                 </div>
 
-                                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;"> 
+                                <div class="property-title-box"
+                                    onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';"
+                                    style="cursor: pointer;">
                                     <div class="price">
                                         {{ $property->getPrice() }}
 
@@ -1154,7 +1224,7 @@
                                     </a>
                                     <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
-                                        
+
                                         @if ($property->getProperty_type())
                                             <li>
                                                 <i class="fas fa-bed"></i>
@@ -1180,9 +1250,8 @@
                                         @if (!empty($property->whatsapp))
                                             <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->whatsapp }}"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='Call'>
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Call'>
 
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
@@ -1190,35 +1259,30 @@
                                         @else
                                             <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->Agency->phone }}"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='Call'>
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Call'>
 
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @endif
-                                        
+
                                         @if ((new \Jenssegers\Agent\Agent())->isMobile())
-                                            
                                             @if (!empty($property->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
                                                     class="btn btn-monochrome btn-sm mt-1 me-1 btnCount"
-                                                    data-property_id={{ $property->id }} 
-                                                    data-agency_id={{ $property->agency_id }} 
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
 
                                                     <i class="fab fa-whatsapp text-primary"></i>
                                                     <span class=" d-md-inline-block">WhatsApp</span>
                                                 </a>
                                             @else
-                                                <button class="btn btn-monochrome btn-sm mt-1 btnCount" 
+                                                <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                     data-property_id={{ $property->id }}
-                                                    data-agency_id={{ $property->agency_id }}
-                                                    data-button_name='Email'
-                                                    type="button" 
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#emailAgentModal" 
+                                                    data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                                    type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
                                                     id="emailBtn"
                                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                     data-title="{{ $property->property_name }}"
@@ -1233,23 +1297,22 @@
                                                     </span>
                                                 </button>
                                             @endif
-
                                         @else
                                             @if (!empty($property->whatsapp))
-                                            <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                class="btn btn-monochrome btn-sm mt-1 btnCount me-1"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='WhatsApp'>
+                                                <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount me-1"
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
+                                                    data-button_name='WhatsApp'>
 
-                                                <i class="fab fa-whatsapp text-primary"></i>
-                                                <span class=" d-md-inline-block">WhatsApp</span>
-                                            </a>
+                                                    <i class="fab fa-whatsapp text-primary"></i>
+                                                    <span class=" d-md-inline-block">WhatsApp</span>
+                                                </a>
                                             @elseif(!empty($property->Agency->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
                                                     class="btn btn-monochrome btn-sm mt-1 btnCount"
-                                                    data-property_id={{ $property->id }} 
-                                                    data-agency_id={{ $property->agency_id }} 
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
 
                                                     <i class="fab fa-whatsapp text-primary"></i>
@@ -1257,13 +1320,10 @@
                                                 </a>
                                             @endif
 
-                                            <button class="btn btn-monochrome btn-sm mt-1 btnCount" 
+                                            <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                 data-property_id={{ $property->id }}
-                                                data-agency_id={{ $property->agency_id }}
-                                                data-button_name='Email'
-                                                type="button" 
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#emailAgentModal" 
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                                type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
                                                 id="emailBtn"
                                                 data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                 data-title="{{ $property->property_name }}"
@@ -1280,16 +1340,16 @@
                                         @endif
                                     </div>
                                 </div>
-                                @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                                @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                                     <div class="property-card-extra p-3 d-none d-md-block">
-                                        <div class="property-type"> 
+                                        <div class="property-type">
                                             @if ($property->featured_property == 1)
                                                 Featured
                                             @endif
                                         </div>
                                         <div>
-                                            <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}" width="80" 
-                                            alt="{{ $property->property_name }}">
+                                            <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}"
+                                                width="80" alt="{{ $property->property_name }}">
                                         </div>
                                     </div>
                                 @endif
@@ -1391,7 +1451,7 @@
                 dots: true,
                 // autoplay: true,
                 autoplaySpeed: 2000,
-                speed: 150,
+                speed: 10,
             });
         });
 

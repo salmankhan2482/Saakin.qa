@@ -273,15 +273,15 @@ class PropertiesController extends MainAdminController
                 $gallery_image_name = explode(".", $gallery_image_name);
                 $name = 'property_' . $galcount . time() . '.' . $file->extension();
 
-                /*
+                
                 $img = Image::make($file->getRealPath());
-                $img->resize(1080, 1080, function ($constraint) {
+                $img->resize(383, 215, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($gallery_image_path.'/'.$name);
-                remove the down line of move to resize the image
-                */
+                // remove the down line of move to resize the image
+                
 
-                $file->move($gallery_image_path, $name);
+                // $file->move($gallery_image_path, $name);
                 $property_gallery_obj->property_id = $property->id;
                 $property_gallery_obj->image_name = $name;
                 $property_gallery_obj->save();
