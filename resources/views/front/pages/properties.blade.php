@@ -1103,7 +1103,6 @@
                             </a>
                         </div>
 
-                    @endforeach
                     @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
                         @if (count($data['result']) > 8)
@@ -1137,7 +1136,6 @@
                             </a>
                         </div>
 
-                    @endforeach
                     @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
                         @if (count($data['result']) > 8)
@@ -1171,7 +1169,6 @@
                             </a>
                         </div>
 
-                    @endforeach
                     @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
                         @if (count($data['result']) > 8)
@@ -1205,7 +1202,6 @@
                             </a>
                         </div>
 
-                    @endforeach
                     @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                     <div class="location-item">
                         @if (count($data['result']) > 8)

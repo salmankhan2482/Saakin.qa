@@ -22,7 +22,9 @@
                 <div class="flex-grow-1 country-list-wrap">
                   <div class="input-group-overlay input-search">
                     <div class="input-group-prepend-overlay">
-                      <span class="input-group-text"><i class="fa fa-search"></i></span>
+                      <span class="input-group-text">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                      </span>
                     </div>
 
                     <input type="text" id="country" data-purpose="" placeholder="Search Location" class="form-control prepended-form-control" autocomplete="off" aria-label="Search Location" aria-describedby="country">
@@ -246,17 +248,7 @@
                       </div>
                     </div>
                   </div>
-                  {{-- <div class="flex-grow-1">
 
-                    <div class="input-group-overlay input-search">
-                        <select name="amenities[]" id="amenities" multiple class="form-control prepended-form-control" multiple="multiple">
-                            <option value="">Select Extra</option>
-                            @foreach ($amenities as $amenity)
-                                <option value="{{ $amenity->id }}">{{ $amenity->name }}</option>
-                            @endforeach
-                        </select> 
-                    </div>
-                  </div> --}}
                 </div>
               </div>
 
