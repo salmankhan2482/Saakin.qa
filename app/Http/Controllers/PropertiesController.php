@@ -270,7 +270,7 @@ class PropertiesController extends Controller
                 $properties->orderBy('bedrooms', 'desc');
             }
         } else {
-            $properties->orderBy('featured_property', 'desc');
+            $properties->orderBy('id', 'desc');
         }
         
         if (request('featured') == 1) {
@@ -895,7 +895,7 @@ class PropertiesController extends Controller
                         $properties->orderBy('bedrooms', 'desc');
             }
         } else {
-            $properties->orderBy('id', 'asc');
+            $properties->orderBy('id', 'desc');
         }
 
         $properties = $properties->paginate(getcong('pagination_limit'));
@@ -989,7 +989,7 @@ class PropertiesController extends Controller
                         $properties->orderBy('bedrooms', 'desc');
             }
         } else {
-            $properties->orderBy('id', 'asc');
+            $properties->orderBy('id', 'desc');
         }
 
         $properties = $properties->paginate(getcong('pagination_limit'));
@@ -1085,7 +1085,7 @@ class PropertiesController extends Controller
                             $properties->orderBy('bedrooms', 'desc');
                 }
             } else {
-                $properties->orderBy('id', 'asc');
+                $properties->orderBy('id', 'desc');
             }
 
             $properties = $properties->paginate(getcong('pagination_limit'));
@@ -1168,7 +1168,7 @@ class PropertiesController extends Controller
                             $properties->orderBy('bedrooms', 'desc');
                 }
             } else {
-                $properties->orderBy('id', 'asc');
+                $properties->orderBy('id', 'desc');
             }
             $properties = $properties->paginate(getcong('pagination_limit'));
             
@@ -1253,7 +1253,7 @@ class PropertiesController extends Controller
                             $properties->orderBy('bedrooms', 'desc');
                 }
             } else {
-                $properties->orderBy('id', 'asc');
+                $properties->orderBy('id', 'desc');
             }
             
             $properties = $properties->paginate(getcong('pagination_limit'));
@@ -1326,7 +1326,7 @@ class PropertiesController extends Controller
                         $properties->orderBy('bedrooms', 'desc');
             }
         } else {
-            $properties->orderBy('id', 'asc');
+            $properties->orderBy('id', 'desc');
         }
         $properties = $properties->paginate(getcong('pagination_limit'));
 
@@ -1407,7 +1407,7 @@ class PropertiesController extends Controller
                             $properties->orderBy('bedrooms', 'desc');
                 }
             } else {
-                $properties->orderBy('id', 'asc');
+                $properties->orderBy('id', 'desc');
             }
 
         $properties = $properties->where("featured_property", "1")->paginate(getcong('pagination_limit'));

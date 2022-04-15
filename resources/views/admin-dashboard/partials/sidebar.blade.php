@@ -1,21 +1,3 @@
-<style>
-    .deznav {
-        display: none !important;
-    }
-
-    @media only screen and (max-width: 780px) {
-        .deznav {
-            display: block !important;
-        }
-
-        .top-menu {
-            display: none !important;
-        }
-
-    }
-
-</style>
-
 <div class="deznav">
     <div class="deznav-scroll">
         <ul class="metismenu" id="menu">

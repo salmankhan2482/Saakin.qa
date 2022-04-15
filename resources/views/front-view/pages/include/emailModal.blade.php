@@ -21,9 +21,9 @@
             <span class="agent-detail">Broker:
               <strong id="modalBroker">{{ '' }}</strong></span>
 
-            <ul class="list-unstyled mb-0 property-feature d-flex">
-              <li><i class="fas fa-bed"></i><span id="modalBedrooms">{{ '' }}</span></li>
-              <li><i class="fas fa-bath"></i><span id="modalBathrooms">{{ '' }}</span></li>
+            <ul class="list-unstyled mb-0  d-flex">
+              <li class="bedroomLi me-2"><i class="fas fa-bed"></i><span id="modalBedrooms">{{ '' }}</span></li>
+              <li class="bathroomLi me-2"><i class="fas fa-bath"></i><span id="modalBathrooms">{{ '' }}</span></li>
               <li><i class="fas fa-chart-area"></i><span id="modalSqm">{{ '' }}</span></li>
             </ul>
           </div>
@@ -35,25 +35,21 @@
         <div class="row">
           <div class="col-12 col-md-6">
             <div class="form-group">
-              {{-- <label for="">* Name</label> --}}
               <input type="text" class="form-control" id="user_name" name="user_name" aria-describedby="name" placeholder="* Your name" required>
             </div>
           </div>
           <div class="col-12 col-md-6">
             <div class="form-group">
-              {{-- <label for="">* Email</label> --}}
               <input type="email" class="form-control" id="user_email" name="user_email" aria-describedby="email" placeholder="* Your email" required>
             </div>
           </div>
         </div>
         <div class="form-group">
-          {{-- <label for="">Message</label> --}}
           <textarea class="form-control" name="user_message" rows="3">Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you.</textarea>
         </div>
         <div class="row">
           <div class="col-12 col-md-4">
             <div class="form-group">
-              {{-- <label for="">* Country</label> --}}
               <select name="countryCode" id="countryCodeSelect" class="form-control" onchange="fillTelephoneInput(this)">
                 <option data-countryCode="QA" value="974">Qatar (+974)</option>
 
@@ -280,13 +276,11 @@
           </div>
           <div class="col-12 col-md-4">
             <div class="form-group">
-              {{-- <label for="">* Phone Number</label> --}}
               <input type="tel" placeholder="4023 0023" name="telephone" class="form-control" id="telephoneInput" required>
             </div>
           </div>
           <div class="col-12 col-md-4">
             <div class="form-group">
-              {{-- <label for="">Move-In Date </label> --}}
               <input type="text" placeholder="Move in Date" name="movein_date" id="datepicker" data-date-format='dd-mm-yy' class="form-control" required>
             </div>
           </div>

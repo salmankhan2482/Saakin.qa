@@ -1,29 +1,3 @@
-<style>
-  .fa-google {
-    font-size: 20px;
-    background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .google-button {
-    background-color: white !important;
-    border: 1px solid #009fff !important;
-    color: black !important;
-  }
-
-  .fa-facebook {
-    font-size: 20px;
-  }
-
-  #name-error, #email-error, #password_register-error, #password_confirmation-error, #terms-error{
-    color: #ea4335;
-  }
-
-</style>
-
 <div class="modal fade" style="padding: none !important" id="user-login-popup" tabindex="-1" aria-labelledby="user-login-popup" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -77,7 +51,7 @@
 
 											<a href="{{ route('facebook.login') }}" type="submit" class="btn btn-outline-primary w-100 facebook-button">
 												<span>
-													<i class="fab fa-facebook fa-2x"></i>
+													<i class="fab fa-facebook fa-2x fa-login-facebook"></i>
 												</span>
 												<span>
 													Sign in with Facebook
@@ -88,7 +62,7 @@
 
 											<a href="{{ route('google.login') }}" type="submit" class="btn w-100 google-button">
 												<span>
-													<i class="fab fa-google fa-2x"></i>
+													<i class="fab fa-google fa-2x fa-login-google"></i>
 												</span>
 												<span>
 													Sign in with Google
@@ -168,10 +142,10 @@
 												@endif
 											</div>
 											<div class="form-group">
-												<input type="email" class="form-control" placeholder="{{ trans('words.email') }}" name="email" id="email" />
-												@if ($errors->has('email'))
+												<input type="email" class="form-control" placeholder="{{ trans('words.email') }}" name="email" id="register_email" />
+												@if ($errors->has('register_email'))
 													<span class="d-block invalid-feedback">
-														{{ $errors->first('email') }}
+														{{ $errors->first('register_email') }}
 													</span>
 												@endif
 											</div>
@@ -235,6 +209,10 @@
           required: true,
         },
         email: {
+          required: true,
+          email: true,
+        },
+        register_email: {
           required: true,
           email: true,
         },

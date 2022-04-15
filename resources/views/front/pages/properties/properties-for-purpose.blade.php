@@ -13,13 +13,7 @@
 @endif
 
 @section('content')
-    <style>
-        .active-search {
-            border-color: #007ea8;
-            background-color: #e8f4f6;
-        }
 
-    </style>
 
     <div class="filter-wrap">
         <div class="container">
@@ -502,38 +496,37 @@
                                 <form action="{{ route('property-purpose', [$buyOrRent, strtolower($property_purpose)]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
 
                                     <div class="d-flex align-items-center justify-content-between">
-                                        
-                                        <div>
-                                            <div class="form-group d-flex align-items-center spbwx8">
-                                                <div class="short-by">
-                                                    <select name="sort_by" id="sort_by" class="border border-primary text-primary pt-2 btn-sm" onchange="document.getElementById('frmSortBy').submit();">
-                                                        
-                                                        <option value="featured"
-                                                            @if ($request->sort_by == 'featured') selected @endif>
-                                                            Featured
-                                                        </option>
-                                                        <option value="newest"
-                                                            @if ($request->sort_by == 'newest') selected @endif>
-                                                            Newest
-                                                        </option>
-                                                        <option value="low_price"
-                                                            @if ($request->sort_by == 'low_price') selected @endif>
-                                                            Price (Low)
-                                                        </option>
-                                                        <option value="high_price"
-                                                            @if ($request->sort_by == 'high_price') selected @endif>
-                                                            Price (High)
-                                                        </option>
-                                                        <option value="beds_least"
-                                                            @if ($request->sort_by == 'beds_least') selected @endif>
-                                                            Beds (Least)
-                                                        </option>
-                                                        <option value="beds_most"
-                                                            @if ($request->sort_by == 'beds_most') selected @endif>
-                                                            Beds (Most)
-                                                        </option>
-                                                    </select>
-                                                </div>
+                                        <div class="w-100 form-group d-flex align-items-center spbwx8">
+                                            <div class="w-100 short-by">
+                                                <select name="sort_by" id="sort_by"  class="w-100 border border-primary text-primary pt-2 btn-sm" onchange="document.getElementById('frmSortBy').submit();">
+                                                    
+                                                    <option value="newest"
+                                                        @if ($request->sort_by == 'newest') selected @endif>
+                                                        Newest
+                                                    </option>
+                                                    
+                                                    <option value="featured"
+                                                        @if ($request->sort_by == 'featured') selected @endif>
+                                                        Featured
+                                                    </option>
+                                                    
+                                                    <option value="low_price"
+                                                        @if ($request->sort_by == 'low_price') selected @endif>
+                                                        Price (Low)
+                                                    </option>
+                                                    <option value="high_price"
+                                                        @if ($request->sort_by == 'high_price') selected @endif>
+                                                        Price (High)
+                                                    </option>
+                                                    <option value="beds_least"
+                                                        @if ($request->sort_by == 'beds_least') selected @endif>
+                                                        Beds (Least)
+                                                    </option>
+                                                    <option value="beds_most"
+                                                        @if ($request->sort_by == 'beds_most') selected @endif>
+                                                        Beds (Most)
+                                                    </option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -990,14 +983,16 @@
                                             <div class="short-by">
                                                 <select name="sort_by" id="sort_by" class="form-select form-select-sm custom-select"
                                                     onchange="document.getElementById('frmSortBy').submit();">
-                                                    <option value="featured"
-                                                        @if ($request->sort_by == 'featured') selected @endif>
-                                                        Featured
-                                                    </option>
+                                                    
                                                     <option value="newest"
                                                         @if ($request->sort_by == 'newest') selected @endif>
                                                         Newest
                                                     </option>
+                                                    <option value="featured"
+                                                        @if ($request->sort_by == 'featured') selected @endif>
+                                                        Featured
+                                                    </option>
+                                                    
                                                     <option value="low_price"
                                                         @if ($request->sort_by == 'low_price') selected @endif>
                                                         Price (Low)
@@ -1100,7 +1095,7 @@
                                 </div>
 
                                 {{--  --}}
-                                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;">
+                                <div class="property-title-box" >
                                     <div class="price">
                                         {{ $property->getPrice() }}
 
@@ -1115,10 +1110,8 @@
                                         </h5>
                                     </a>
                                     
+                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
-                                        <li class="pe-2">
-                                            <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
-                                        </li>
                                         @if ($property->getProperty_type())
                                             <li><i class="fas fa-bed"></i>
                                                 <span>{{ $property->bedrooms }} </span>
@@ -1134,9 +1127,9 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <span class="property-card__property-title">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
-                                        </p>
+                                        </span>
                                     </div>
                                     <div class="social-div mt-md-2">
                                         @if (!empty($property->whatsapp))
