@@ -209,7 +209,7 @@
                                                                 <div class="form-group">
                                                                     <input type="email" class="form-control"
                                                                         placeholder="{{ trans('words.email') }}"
-                                                                        name="email" id="email"
+                                                                        name="email" id="register_email"
                                                                         style="margin-bottom: 5px;" />
                                                                     @if ($errors->has('email'))
                                                                         <span style="color:#fb0303">
@@ -301,6 +301,10 @@
                     required: true,
                     email: true,
                 },
+                register_email: {
+                    required: true,
+                    email: true,
+                },
                 password: {
                     required: true,
                     minlength: 6
@@ -326,6 +330,7 @@
                     email: "Please enter a valid email address",
 
                 },
+                
                 password: {
                     required: "Please Enter the Password",
                     minlength: "you have to enter at least 6 digits",
