@@ -1,15 +1,3 @@
-<style>
-  .active-pagination {
-      color: #fff;
-      background-color: #009fff !important;
-  }
-
-  .page-link {
-    padding: 0.225rem 0.55rem !important;
-  }
-
-
-</style>
 @if ($paginator->hasPages())
   <ul class="pagination justify-content-center mt-4">
       {{-- Previous Page Link --}}

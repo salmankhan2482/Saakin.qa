@@ -1,25 +1,5 @@
 {{-- Extends layout --}}
 @extends('admin-dashboard.layouts.master')
-@section('style')
-    <style>
-        .table thead th {
-            color: black;
-            font-size: 0.95rem;
-        }
-
-        .pagination {
-            list-style-type: none;
-            display: flex;
-            justify-content: center;
-        }
-
-        .page-item {
-            display: list-item;
-            padding: 5px 4px;
-        }
-
-    </style>
-@endsection
 
 {{-- Content --}}
 @section('content')
