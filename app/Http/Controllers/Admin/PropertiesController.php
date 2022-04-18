@@ -151,9 +151,11 @@ class PropertiesController extends MainAdminController
         if(Properties::where('property_name', request('property_name'))->first()){
             return redirect()->back()->withErrors(['msg' => 'Duplicate Record Cannot be Inserted.']);
         }
-        $property_cities = New PropertyCities();
-        $request_data = request()->all();
         
+        $request_data = request()->all();
+        if($request->city == ''){
+            return redirect()->back()->withErrors(['msg' => 'City Must be Selected.']);
+        }
         if( $request->city){ $city = PropertyCities::where('id', $request->city)->value('name'); }
         else{ $city = ''; }
 
