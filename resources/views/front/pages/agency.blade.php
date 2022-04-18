@@ -178,8 +178,7 @@
 
                                     <input type="hidden" name="subject" class="form-control" value="">
                                     <input type="hidden" name="agency_id" id="agency_id" value="{{ $agency->id }}" />
-                                    <input type="hidden" name="agency_name" id="agency_name"
-                                        value="{{ $agency->name }}" />
+                                    <input type="hidden" name="agency_name" id="agency_name" value="{{ $agency->name }}" />
                                     <input type="hidden" name="agency_mail" value="{{ $agency->email }}">
                                     <input type="hidden" name="type" value="Agency Inquiry">
 

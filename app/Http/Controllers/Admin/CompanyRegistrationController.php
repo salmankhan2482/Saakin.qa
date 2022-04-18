@@ -66,7 +66,7 @@ class CompanyRegistrationController extends MainAdminController
         $data['city_name'] = PropertyCities::where('id', Request('city'))->value('name');
         Mail::to('hello@saakin.qa')->send(new CompanyRegistrationMail($data));
 
-        return redirect()->back()->with('flash_message_contact', 'Request for company registration has been sent.');
+        return redirect()->back()->with('flash_message_company_registration', 'Request for company registration has been sent.');
     }
     
     public function show($id)
