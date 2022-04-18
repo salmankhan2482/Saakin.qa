@@ -263,7 +263,9 @@
                     <div class="rounded-img">
                       <!-- agent pic on desktop -->
                       @if (!empty($property->agent_picture))
-                        <a class="d-block" href="{{ route('agency_detail', [Str::slug($agency->name),$agency->id] ) }}">
+
+                        <a class="d-block" href="{{ 'agency/'.Str::slug($agency->name,'-').'/'.$agency->id }}">
+
                           <img src="{{ asset('upload/properties/' . $property->agent_picture) }}" alt="{{ $property->agent_name }}" width="120">
                         </a>
                       @else
@@ -278,7 +280,9 @@
                       <h5>{{ $property->agent_name }}</h5>
                       <div class="grid mt-3" style="--template: 50px auto; --gap: .5rem">
                         <div>
-                          <a href="{{ route('agency_detail', [Str::slug($agency->name),$agency->id] ) }}">
+
+                          <a href="{{ 'agency/'.Str::slug($agency->name,'-').'/'.$agency->id }}">
+
                             <img src="{{ asset('upload/agencies/' . $agency->image) }}" class="rounded-circle" alt="{{ $property->agent_name }}" width="50">
                           </a>
                         </div>
@@ -309,7 +313,7 @@
                     <div class="d-md-block">
                       @if (!empty($agency->name))
                         <h5>
-                          <a class="link-dark text-decoration-none fw-bold" href="{{ url('agency/' . Str::slug($agency->name, ' -') . '/' . $agency->id) }}">
+                          <a class="link-dark text-decoration-none fw-bold" href="{{ url('agency/' . Str::slug($agency->name, '-') . '/' . $agency->id) }}">
                             {{ $agency->name }}
                           </a>
                         </h5>
