@@ -15,6 +15,7 @@
   @section('url', url()->current())
   @section('image', asset('upload/properties/' . $property->featured_image))
 @endif
+
 @section('content')
   @php
   $phone = \App\Properties::getPhoneNumber($property->id);

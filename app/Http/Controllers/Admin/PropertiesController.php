@@ -208,7 +208,7 @@ class PropertiesController extends MainAdminController
         $featured_image = $request->file('featured_image');
 
         if ($featured_image) {
-            $tmpFilePath = public_path('upload/properties/');
+            $tmpFilePath = public_path('upload/properties1/');
             $featured_image_name = $featured_image->getClientOriginalName();
             $featured_image_name = explode(".", $featured_image_name);
             $name = 'property_' . time() . '.' . $featured_image->extension();
@@ -217,7 +217,7 @@ class PropertiesController extends MainAdminController
             //Image resizeing
             $image_original_path = $tmpFilePath . $name;
             $image_resize = Image::make($image_original_path);
-            $image_resize->resize(383, 215);
+            $image_resize->resize(275, 205);
             $resize = $tmpFilePath . 'thumb_' . $name;
             $image_resize->save($resize);
         }
@@ -265,7 +265,7 @@ class PropertiesController extends MainAdminController
         
 
         $property_gallery_files = $request->file('images');
-        $gallery_image_path = public_path('upload/gallery/');
+        $gallery_image_path = public_path('upload/gallery1/');
         $galcount = 0;
         if ($property_gallery_files) {
             foreach ($property_gallery_files as $file) {

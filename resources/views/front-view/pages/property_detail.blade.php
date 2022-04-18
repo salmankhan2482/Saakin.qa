@@ -15,6 +15,17 @@
   @section('url', url()->current())
   @section('image', asset('upload/properties/' . $property->featured_image))
 @endif
+
+{{-- @push('styles')
+<style>
+.text-primary{
+  text-align: center;
+}
+</style>
+@endpush --}}
+
+
+
 @section('content')
   @php
   $phone = \App\Properties::getPhoneNumber($property->id);
@@ -767,7 +778,7 @@
 
 @push('styles')
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-
+ 
   <!-- Add the slick-theme.css if you want default styling -->
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/slick/slick.css') }}" />
   <!-- Add the slick-theme.css if you want default styling -->
