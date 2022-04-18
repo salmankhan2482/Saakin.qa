@@ -75,12 +75,12 @@
         @foreach ($agencies as $agency)
           <div class="col-sm-6 col-lg-4 col-xxl-3">
             <div class="agency-tile">
-              <a class="agency-tile-img border-bottom" href="{{ url('agency/' . Str::slug($agency->name, '-') . '/' . $agency->id) }}">
+              <a class="agency-tile-img border-bottom" href="{{ route('agency_detail', [Str::slug($agency->name),$agency->id] ) }}">
                 <img src="{{ asset('/upload/agencies/' . $agency->image) }}" alt="{{ $agency->name }}">
               </a>
               <div class="agency-tile-info">
                 <div class="p-3">
-                  <a class="agency-tile-title" href="{{ url('agency/' . Str::slug($agency->name, '-') . '/' . $agency->id) }}">
+                  <a class="agency-tile-title" href="{{ route('agency_detail', [Str::slug($agency->name),$agency->id] ) }}">
                     <h4 class="h6 text-truncate">{{ $agency->name }}</h4>
                   </a>
                   @if (!empty($agency->whatsapp))
