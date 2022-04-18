@@ -82,7 +82,7 @@
   .property-card__property-title {
     font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 0rem;
+    margin-bottom: 0.3125rem;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -190,6 +190,10 @@
       max-width: 124px;
       width: 100%;
 
+      .property-img {
+        --img-container-height: 100%;
+      }
+
       .feature_text {
         top: 10px;
         right: 10px;
@@ -282,7 +286,7 @@
       flex: 1;
 
       .property-card__property-title {
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.5rem;
         -webkit-line-clamp: 1;
       }
     }
@@ -297,11 +301,11 @@
       }
 
       .property-title-box {
-        padding: 0.2rem;
+        padding: 0.5rem;
 
         .property-card__property-title {
           font-weight: normal;
-          margin-bottom: 0.1rem;
+          margin-bottom: 0.5rem;
           font-size: 14px;
         }
       }
