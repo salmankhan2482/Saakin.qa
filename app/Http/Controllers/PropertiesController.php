@@ -180,19 +180,15 @@ class PropertiesController extends Controller
             $query->where('property_purpose', request()->property_purpose);
         })
         ->when(request()->city, function ($query) {
-            // city
             $query->where('city', request()->city);
         })
         ->when(request()->subcity, function ($query) {
-            // sub city
             $query->where('subcity', request()->subcity);
         })
         ->when(request()->town, function ($query) {
-            // town
             $query->where('town', request()->town);
         })
         ->when(request()->area, function ($query) {
-            // area
             $query->where('area', request()->area);
         })
         ->when(request('property_type'), function ($query) {
@@ -206,9 +202,6 @@ class PropertiesController extends Controller
         })
         ->when(request('min_price') == 0 && request('max_price') != 0, function ($query) {
             $query->where('price', '<=', [(int)request()->get('max_price')]);
-        })
-        ->when(request('min_price') == 0 && request('max_price') == 0, function ($query) {
-            //no condition to run
         })
         ->when(request()->get('furnishings'), function ($query) {
             $query->where('property_features', 'like', '%'.request()->get('furnishings').'%');
@@ -234,8 +227,6 @@ class PropertiesController extends Controller
         ->when(request('min_area') == 0 && request('max_area') != 0, function ($query) {
             $query->where('land_area', '<=', [(int)request()->get('max_area')]);
         })
-        ->when(request('min_area') == 0 && request('max_area') == 0, function ($query) {
-        })
         ->when(isset($request->bedrooms) && !empty($request->bedrooms), function ($query) {
             if (request('bedrooms') == "6+") {
                 $query->where('properties.bedrooms', '>=', 6);
@@ -251,9 +242,15 @@ class PropertiesController extends Controller
             }
         })
         ->when(request()->agent, function ($query) {
-            // agent
             $query->where('agency_id', request()->agent);
         });
+        
+        $commercialIds = array(); array_push($commercialIds, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
+        if (isset($request->commercial)) {
+            $properties->whereIn('property_type', $commercialIds);
+        }else{
+            $properties->whereNotIn('property_type', $commercialIds);
+        }
 
         if (isset($request->sort_by) && !empty($request->sort_by)) {
             if ($request->sort_by == "newest") {
@@ -1354,9 +1351,12 @@ class PropertiesController extends Controller
         $propertyPurposes = PropertyPurpose::all();
         
         
-        $purp = ($buyOrRent == 'buy' ? 2 : 1);
-        $landing_page_content = LandingPage::where('property_purposes_id', $purp)->where('property_types_id',$type->id)->first();
-        $page_info = $type->plural.' for '.$property_purpose;
+    $purp = ($buyOrRent == 'buy' ? 2 : 1);
+    $landing_page_content = LandingPage::where('property_purposes_id', $purp)
+        ->where('property_types_id',$type->id)
+        ->where('property_cities_id',$city_keyword->id)
+        ->first();
+    $page_info = $type->plural.' for '.$property_purpose;
 
         $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
         ->where('type_id', $type->id)

@@ -156,6 +156,7 @@ class PropertiesController extends MainAdminController
         if($request->city == ''){
             return redirect()->back()->withErrors(['msg' => 'City Must be Selected.']);
         }
+        
         if( $request->city){ $city = PropertyCities::where('id', $request->city)->value('name'); }
         else{ $city = ''; }
 
