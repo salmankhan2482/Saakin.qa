@@ -91,8 +91,10 @@
           <a href="javascript:void(0)" data-fancybox-trigger="gallery" data-fancybox-index="0" class="btn btn-sm btn-primary">
             View Gallery
           </a>
-          <a class="googleMapPopUp btn btn-sm btn-info" rel="nofollow" data-fancybox data-type="iframe" data-preload="false" data-width="640" data-height="480"
-            href="https://maps.google.com/maps?q={{ $property->address }}&output=embed" target="_blank">View Map </a>
+          <a class="googleMapPopUp btn btn-sm btn-info" rel="nofollow" data-fancybox data-type="iframe" data-preload="false" 
+            data-width="640" data-height="480" href="https://maps.google.com/maps?q={{ $property->address }}&output=embed" target="_blank">
+            View Map
+           </a>
         </div>
         <div class="grid single-gallery @if ((new \Jenssegers\Agent\Agent())->isMobile()) single-gallery-slider @endif">
           <div class="gallery-item">
@@ -216,7 +218,7 @@
               <div class="col-md-6 col-lg-12 col-xl-6">
                 <h4 class="mb-4">Location</h4>
                 <div class="d-flex align-items-center">
-                  <div class="me-3 position-relative rounded-img">
+                  <div class="me-3 position-relative rounded-img" style="min-width: 120px;">
                     <img src="{{ asset('assets/images/new.map.svg') }}" alt="Map" width="120">
                     <div class="map_btn position-absolute bottom-0  start-50 translate-middle-x pb-2">
                       <a data-fancybox data-type="iframe" data-preload="false" data-width="640" data-height="480" href="https://maps.google.com/maps?q={{ $property->address }}&output=embed"

@@ -447,3 +447,15 @@
     padding: 8px 16px 8px 0;
   }
 }
+
+
+.single-gallery-slider {
+  height: 64.75vw;
+  overflow: hidden;
+
+  &:not(.slick-initialized) {
+    img {
+      opacity: 0;
+    }
+  }
+}
