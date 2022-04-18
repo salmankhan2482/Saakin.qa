@@ -270,7 +270,7 @@ class PropertiesController extends Controller
                 $properties->orderBy('bedrooms', 'desc');
             }
         } else {
-            $properties->orderBy('id', 'asc');
+            $properties->orderBy('id', 'desc');
         }
         
         if (request('featured') == 1) {
