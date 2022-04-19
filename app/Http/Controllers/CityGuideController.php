@@ -36,14 +36,13 @@ class CityGuideController extends Controller
     {
         
         $cityGuide = City::where('city_slug',$slug)->where('status',1)->first();
-        // $cityGuideDetails = CityDetail::where('city_id', $cityGuide->id)->where('status',1)->get();
         $cityGuideContent = CityDetail::where('city_id', $cityGuide->id)->where('status',1)->first();
         
         $propertiesForRent = Properties::where('address_slug', 'like', '%'.$cityGuide->city_slug.'%')
-        ->where('property_purpose', 'Rent')->limit(6)->get();
+        ->where('property_purpose', 'Rent')->where('status', 1)->limit(6)->get();
         
         $propertiesForSale = Properties::where('address_slug', 'like', '%'.$cityGuide->city_slug.'%')
-        ->where('property_purpose', 'Sale')->limit(6)->get();
+        ->where('property_purpose', 'Sale')->where('status', 1)->limit(6)->get();
         
         $url = '';
         if($city = PropertyCities::where('name', $cityGuide->name)->value('id')){

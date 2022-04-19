@@ -53,15 +53,19 @@
       </h5>
   
       <ul class="property-feature">
-        @if ($property->getProperty_type())
-          <li><i class="fas fa-bed"></i>
-            <span>{{ $property->bedrooms }}</span>
-          </li>
-          <li><i class="fas fa-bath"></i>
-            <span>{{ $property->bathrooms }}</span>
-          </li>
+        @if ( $property->bedrooms > 0)
+        <li> <i class="fas fa-bed"></i>
+          <span>{{ $property->bedrooms }}</span>
+        </li>
         @endif
-        <li><i class="fas fa-chart-area"></i>
+
+        @if ( $property->bathrooms > 0)
+        <li> <i class="fas fa-bath"></i>
+          <span>{{ $property->bathrooms }}</span>
+        </li>
+        @endif
+
+        <li> <i class="fas fa-chart-area"></i>
           <span>{{ $property->getSqm() }}</span>
         </li>
       </ul>
