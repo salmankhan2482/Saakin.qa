@@ -492,43 +492,12 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <form action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->plural) . '-for-' . $property_purpose]) }}" name="frmSortBy"  id="frmSortBy" class="form-inline form-1" method="get" >
-
-                                    <div class="d-flex align-items-center justify-content-between">
-                                        <div class="w-100 form-group d-flex align-items-center spbwx8">
-                                            <div class="w-100 short-by">
-                                                <select name="sort_by" id="sort_by" class="w-100 border border-primary text-primary pt-2 btn-sm" onchange="document.getElementById('frmSortBy').submit();">
-                                                    <option value="newest"
-                                                        @if ($request->sort_by == 'newest') selected @endif>
-                                                        Newest
-                                                    </option>
-                                                    
-                                                    <option value="featured"
-                                                        @if ($request->sort_by == 'featured') selected @endif>
-                                                        Featured
-                                                    </option>
-                                                    
-                                                    <option value="low_price"
-                                                        @if ($request->sort_by == 'low_price') selected @endif>
-                                                        Price (Low)
-                                                    </option>
-                                                    <option value="high_price"
-                                                        @if ($request->sort_by == 'high_price') selected @endif>
-                                                        Price (High)
-                                                    </option>
-                                                    <option value="beds_least"
-                                                        @if ($request->sort_by == 'beds_least') selected @endif>
-                                                        Beds (Least)
-                                                    </option>
-                                                    <option value="beds_most"
-                                                        @if ($request->sort_by == 'beds_most') selected @endif>
-                                                        Beds (Most)
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
+                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#mSortingModal"
+                                    aria-controls="mSearchFilter" class="btn btn-monochrome btn-sm w-100"
+                                    style="--btn-bg-color: transparent;">
+                                    <i class="fas fa-sliders-h"></i>
+                                    Sort By
+                                </button>
                             </div>
                         </div>
                         {{-- Mobile Filters --}}
@@ -921,6 +890,61 @@
 
                             </div>
                         </form>
+                        
+                        <form action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->plural) . '-for-' . $property_purpose]) }}" method="get" >
+                            <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal" aria-labelledby="mSearchFilterLabel" style="height: 60vh !important;">
+                                <div class="offcanvas-header border-bottom">
+                                    <h5 class="offcanvas-title" id="mSearchFilterLabel" data-bs-dismiss="offcanvas" aria-label="Close">
+                                        <i class="fas fa-times"></i>
+                                        Sorting
+                                    </h5>
+                                </div>
+
+                                <div class="offcanvas-body">
+                                    
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnnewest" value="newest"
+                                        @if (request()->sort_by == 'newest') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnnewest">Newest</label>
+                                    </div>
+                            
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnfeatured" value="featured"
+                                        @if (request()->sort_by == 'featured') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnfeatured">Featured</label>
+                                    </div>
+                              
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnlow_price" value="low_price"
+                                        @if (request()->sort_by == 'low_price') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnlow_price">Low Price</label>
+                                    </div>
+                                
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnhigh_price" value="high_price"
+                                        @if (request()->sort_by == 'high_price') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnhigh_price">High Price</label>
+                                    </div>
+                           
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_least" value="beds_least"
+                                        @if (request()->sort_by == 'beds_least') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnbeds_least">Beds Least</label>
+                                    </div>
+                            
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_most" value="beds_most"
+                                        @if (request()->sort_by == 'beds_most') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnbeds_most">Beds Most</label>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-white border-top sticky-bottom">
+                                    <input type="submit" class="btn btn-info form-control d-block fs-sm fw-normal mt-2" value="Sort">
+                                </div>
+
+                            </div>
+                        </form>
                     @endif
 
                     <div class="mb-3">
@@ -1013,7 +1037,7 @@
                                 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
                                 $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
-                            <div class="single-property-box horizontal-view" style="height: 32vh;">
+                            <div class="single-property-box horizontal-view" @if (!(new \Jenssegers\Agent\Agent())->isMobile())style="height: 32vh;" @endif>
                                 {{--  --}}
                                 <div class="property-item">
                                     <div class="pro-slider">

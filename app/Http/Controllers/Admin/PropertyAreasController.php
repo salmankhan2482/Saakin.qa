@@ -20,7 +20,11 @@ class PropertyAreasController extends Controller
      */
     public function index()
     {
-        $areas = PropertyAreas::with(['town'])->paginate(10);
+        $areas = PropertyAreas::with(['town'])
+        ->when(request('name'), function($query){
+            $query->where('name', 'like', '%'.request('name').'%');
+        })
+        ->paginate(10);
         $action = 'saakin_index';
         return view('admin-dashboard.adress-management.area.index', compact('areas','action'));
     }
