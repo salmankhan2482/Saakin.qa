@@ -164,6 +164,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
         Jenssegers\Agent\AgentServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
 
 
