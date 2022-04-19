@@ -19,7 +19,11 @@ class PropertyTownsController extends Controller
      */
     public function index()
     {
-        $towns = PropertyTowns::with(['city', 'subcity'])->paginate(10);
+        $towns = PropertyTowns::with(['city', 'subcity'])
+        ->when(request('name'), function($query){
+            $query->where('name', 'like', '%'.request('name').'%');
+        })
+        ->paginate(10);
         $action = 'saakin_index';
         return view('admin-dashboard.adress-management.town.index', compact('towns','action'));
     }

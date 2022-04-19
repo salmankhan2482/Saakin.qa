@@ -109,7 +109,8 @@ class PropertiesController extends MainAdminController
         })
         ->when(auth()->user()->usertype == "Agency", function($query){
             return $query->where('agency_id', auth()->user()->agency_id);
-        })->where('status', 0)->orderBy('id', 'desc')->paginate(15);
+        })
+        ->where('status', 0)->orderBy('id', 'desc')->paginate(15);
 
         $data['propertieslist']->appends($_GET)->links();
         
@@ -117,7 +118,8 @@ class PropertiesController extends MainAdminController
         ->select("property_types.id", "property_types.types", DB::Raw("count(properties.id) as pcount"))
         ->when(auth()->user()->usertype == "Agency", function($query){
             return $query->where('properties.agency_id', Auth::User()->agency_id);
-        })->where('properties.status', 0)->orderBy("pcount", "desc")->groupBy("property_types.id")->get();
+        })
+        ->where('properties.status', 0)->orderBy("pcount", "desc")->groupBy("property_types.id")->get();
         
         $action = 'saakin_index';
         return view('admin-dashboard.properties.inactive_properties_index', compact('data', 'action'));

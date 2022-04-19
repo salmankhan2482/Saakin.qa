@@ -12,39 +12,41 @@
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
-                            </span>Add</button>
+                            </span>
+                            Add
+                        </button>
                     </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example3" class="display min-w850">
+                        <table class="table table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Slug</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>Aaction</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cities as $i => $city)
-                            <tr>
-                                <td>{{ $city->id }}</td>
-                                <td>{{ $city->name }}</td>
-                                <td>{{ $city->slug }}</td>
-                                        <td class="text-center">
-                                            <a href="{{ route('propertyCities.edit', $city->id) }}"
-                                                class="btn btn-info rounded btn-xs action-btn">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="{{ route('propertyCities.destroy', $city->id) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                            @foreach ($cities as $i => $city)
+                                <tr>
+                                    <td>{{ $city->id }}</td>
+                                    <td>{{ $city->name }}</td>
+                                    <td>{{ $city->slug }}</td>
+                                    <td>
+                                        <a href="{{ route('propertyCities.edit', $city->id) }}"
+                                            class="btn btn-info rounded btn-xs action-btn">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a href="{{ route('propertyCities.destroy', $city->id) }}"
+                                            class="btn btn-danger rounded btn-xs action-btn"
+                                            onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>

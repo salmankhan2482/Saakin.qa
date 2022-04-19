@@ -62,7 +62,7 @@
                                 <li>
                                     <a href="{{ route('propertyCities.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">cities</h6>
+                                            <h6 class="mb-1">Cities</h6>
                                         </div>
                                     </a>
                                 </li>
