@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Admin\MainAdminController;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Intervention\Image\ImageManagerStatic as Image;
 
@@ -208,7 +209,11 @@ class PropertiesController extends MainAdminController
         $featured_image = $request->file('featured_image');
 
         if ($featured_image) {
-            $tmpFilePath = public_path('upload/properties1/');
+
+            // $image = $request->file('featured_image');
+            // $featured_image = \Image::make($image)->stream("webp", 100);
+
+            $tmpFilePath = public_path('upload/properties/');
             $featured_image_name = $featured_image->getClientOriginalName();
             $featured_image_name = explode(".", $featured_image_name);
             $name = 'property_' . time() . '.' . $featured_image->extension();

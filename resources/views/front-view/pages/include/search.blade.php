@@ -4,7 +4,7 @@
     <h1 class="text-sm-center font-weight-bold">Find Your Property</h1>
     <div class="row justify-content-center">
       <div class="col-lg-10 mt-3 mt-lg-4">
-        <div class="card">
+        <div class="card main-searchbar-radius">
           <div class="card-body">
 
             <form action="{{ url('properties') }}" class="hero__form v2 filter listing-filter bg-cb" method="get">
