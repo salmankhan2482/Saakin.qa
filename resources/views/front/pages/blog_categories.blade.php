@@ -84,8 +84,8 @@
 
           <div class="card mt-3">
             <div class="card-body">
-                <h4 class="card-title">Recent Posts</h4>
-                @foreach ($recent_posts as $blog)
+                <h4 class="card-title">Popular Posts</h4>
+                @foreach ($popularposts as $blog)
                     <div class="d-flex mt-3 position-relative">
                     <div class="recent-post-img">
                         <img src="{{ asset('upload/blogs/thumbnail/' . $blog->image) }}" alt="{{ $blog->name }}">

@@ -44,18 +44,13 @@ class BlogController extends Controller
         $category = BlogCategory::where('slug', $slug)->first();
         $categories = BlogCategory::inRandomOrder()->get();
 
-        $category_blogs = Blog::where('category_id', $category->id)
-        ->where('status', 1)->paginate(getcong('pagination_limit'));
-
-        $blogs = Blog::where('status',1)->orderBy('id', 'desc')
+        $category_blogs = Blog::where('status',1)->orderBy('id', 'desc')
         ->where('category_id', $category->id)
         ->paginate(getcong('pagination_limit'));
         
-        $recent_posts = Blog::where('status',1)
-        ->orderBy('id','desc')->where('category_id', $category->id)
-        ->take(10)->get();
+        $popularposts = Blog::where('status',1)->orderBy('count', 'desc')->limit(5)->get();
 
-        return view('front.pages.blog_categories',compact('category','blogs', 'category_blogs','recent_posts','categories'));
+        return view('front.pages.blog_categories',compact('category', 'category_blogs','popularposts','categories'));
     }
 
 

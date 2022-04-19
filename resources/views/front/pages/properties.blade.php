@@ -554,7 +554,7 @@
                                     <div class="btn-group btn-group-sm d-flex" role="group" aria-label="Sell type">
 
                                         <input type="radio" class="btn-check" name="property_purpose" id="btnRent"
-                                            value="Rent" {{ request('property_purpose') == 'Rent' ? 'checked' : '' }}>
+                                            value="Rent" {{ request('property_purpose') != 'Sale' ? 'checked' : '' }}>
                                         <label class="btn btn-monochrome btn-sm" for="btnRent">Rent</label>
 
                                         <input type="radio" class="btn-check" name="property_purpose" id="btnSale"
