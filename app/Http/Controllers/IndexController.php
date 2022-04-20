@@ -265,7 +265,7 @@ class IndexController extends Controller
         $enquire->phone = $request->phone;
         $enquire->subject = $request->subject;
         $enquire->message = $request->your_message;
-        $enquire->type = $request->type;
+        $enquire->type = 'Contact Inquiry';
         $enquire->created_at = date("Y-m-d H:i:s");
         $enquire->updated_at = date("Y-m-d H:i:s");
         $enquire->save();
