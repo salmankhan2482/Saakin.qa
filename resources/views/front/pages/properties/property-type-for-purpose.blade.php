@@ -1107,7 +1107,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="hideAddress">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>

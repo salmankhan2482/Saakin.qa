@@ -1351,12 +1351,13 @@ class PropertiesController extends Controller
         $propertyPurposes = PropertyPurpose::all();
         
         
-    $purp = ($buyOrRent == 'buy' ? 2 : 1);
-    $landing_page_content = LandingPage::where('property_purposes_id', $purp)
+        $purp = ($buyOrRent == 'buy' ? 2 : 1);
+        $landing_page_content = LandingPage::where('property_purposes_id', $purp)
         ->where('property_types_id',$type->id)
         ->where('property_cities_id',$city_keyword->id)
         ->first();
-    $page_info = $type->plural.' for '.$property_purpose;
+    
+        $page_info =  $type->plural_name . ' for '. ucfirst($property_purpose) .' in '. $city_keyword->name ;
 
         $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
         ->where('type_id', $type->id)

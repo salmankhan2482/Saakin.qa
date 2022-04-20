@@ -1041,15 +1041,16 @@
                                         </h5>
                                     </a>
                                     
+                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
-                                        <li class="pe-2">
-                                            <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
-                                        </li>
+
                                         @if ($property->getProperty_type())
-                                            <li><i class="fas fa-bed"></i>
+                                            <li>
+                                                <i class="fas fa-bed"></i>
                                                 <span>{{ $property->bedrooms }} </span>
                                             </li>
-                                            <li><i class="fas fa-bath"></i>
+                                            <li>
+                                                <i class="fas fa-bath"></i>
                                                 <span>{{ $property->bathrooms }} </span>
                                             </li>
                                         @endif
@@ -1060,56 +1061,47 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="hideAddress">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>
-
-                                    <div class="social-div mt-md-2">
+                                    <div class="social-div mt-md-2 d-flex">
                                         @if (!empty($property->whatsapp))
-                                            <a href="" 
-                                                class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->whatsapp }}"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='Call'>
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Call'>
 
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @else
-                                            <a href="" 
-                                                class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->Agency->phone }}"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='Call'
-                                                >
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Call'>
+
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @endif
-                                        
+
                                         @if ((new \Jenssegers\Agent\Agent())->isMobile())
-                                            
                                             @if (!empty($property->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
-                                                    data-property_id={{ $property->id }} 
-                                                    data-agency_id={{ $property->agency_id }} 
+                                                    class="btn btn-monochrome btn-sm mt-1 me-1 btnCount"
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
 
                                                     <i class="fab fa-whatsapp text-primary"></i>
                                                     <span class=" d-md-inline-block">WhatsApp</span>
                                                 </a>
                                             @else
-                                                <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
-                                                    type="button"
+                                                <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                     data-property_id={{ $property->id }}
-                                                    data-agency_id={{ $property->agency_id }}
-                                                    data-button_name='Email' 
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#emailAgentModal" 
+                                                    data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                                    type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
                                                     id="emailBtn"
                                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                     data-title="{{ $property->property_name }}"
@@ -1124,23 +1116,22 @@
                                                     </span>
                                                 </button>
                                             @endif
-
                                         @else
                                             @if (!empty($property->whatsapp))
-                                            <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                class="btn btn-monochrome btn-sm mt-2 btnCount"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='WhatsApp'>
+                                                <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount me-1"
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
+                                                    data-button_name='WhatsApp'>
 
-                                                <i class="fab fa-whatsapp text-primary"></i>
-                                                <span class=" d-md-inline-block">WhatsApp</span>
-                                            </a>
+                                                    <i class="fab fa-whatsapp text-primary"></i>
+                                                    <span class=" d-md-inline-block">WhatsApp</span>
+                                                </a>
                                             @elseif(!empty($property->Agency->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
-                                                    data-property_id={{ $property->id }} 
-                                                    data-agency_id={{ $property->agency_id }} 
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount"
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
 
                                                     <i class="fab fa-whatsapp text-primary"></i>
@@ -1148,14 +1139,11 @@
                                                 </a>
                                             @endif
 
-                                            <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
-                                                type="button" 
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#emailAgentModal" 
-                                                id="emailBtn"
+                                            <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                 data-property_id={{ $property->id }}
-                                                data-agency_id={{ $property->agency_id }}
-                                                data-button_name='Email'
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                                type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
+                                                id="emailBtn"
                                                 data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                 data-title="{{ $property->property_name }}"
                                                 data-agent="{{ $property->agent_name ?? $property->Agency->name }}"

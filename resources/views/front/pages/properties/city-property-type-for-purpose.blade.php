@@ -6,7 +6,7 @@
     @section('type', 'property')
     @section('url', url()->current())
 @else
-    @section('title', 'Properties in Qatar | Saakin.qa')
+    @section('title', $page_info .' | Saakin.qa')
     @section('description', $page_des ?? '')
     @section('type', 'property')
     @section('url', url()->current())
@@ -1108,7 +1108,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="hideAddress">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>

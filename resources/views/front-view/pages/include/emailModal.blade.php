@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="form-group">
-          <textarea class="form-control" name="user_message" rows="3">Hi, I found your property with ref: On saakin.qa. Please contact me. Thank you.</textarea>
+          <textarea class="form-control" name="user_message" rows="3">Hi, I found your property with ref: {{ $property->refference_code ?? ''}} On saakin.qa. Please contact me. Thank you.</textarea>
         </div>
         <div class="row">
           <div class="col-12 col-md-4">

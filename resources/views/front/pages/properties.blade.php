@@ -1,15 +1,19 @@
 ﻿@extends("front-view.layouts.main")
-@if ($landing_page_content->meta_title != null)
-    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
-    @section('description', $landing_page_content->meta_description)
-    @section('keyword', $landing_page_content->meta_keyword)
-    @section('type', 'property')
-    @section('url', url()->current())
+@if ($landing_page_content != null)
+
+@section('title', $landing_page_content->meta_title . ' | '.' Saakin.qa')
+@section('description', $landing_page_content->meta_description)
+@section('keyword', $landing_page_content->meta_keyword)
+@section('type','property')
+@section('url',url()->current())
+
 @else
-    @section('title', 'Properties in Qatar | Saakin.qa')
-    @section('description', $page_des)
-    @section('type', 'property')
-    @section('url', url()->current())
+
+@section('title','Properties in Qatar | Saakin.qa')
+@section('description',$page_des)
+@section('type','property')
+@section('url',url()->current())
+
 @endif
 
 @section('content')
@@ -1356,7 +1360,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="hideAddress">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>
@@ -1482,6 +1486,11 @@
                     </div>
                 </div>
             @else
+                <div class="mb-3">
+                    <h1 class="h6">{{ $heading_info ?? '' }}
+                        <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
+                    </h1>
+                </div>
                 <div class="alert alert-info" role="alert">
                     Record Not Found!
                 </div>

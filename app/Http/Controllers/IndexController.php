@@ -6,7 +6,6 @@ use Auth;
 use App\Blog;
 use App\City;
 use App\User;
-use messages;
 use App\Types;
 use App\Agency;
 use App\Enquire;
@@ -16,21 +15,15 @@ use App\Properties;
 use App\Subscriber;
 use App\BlogCategory;
 use App\Testimonials;
-use App\PropertyAreas;
-use App\PropertyTowns;
-use App\PropertyCities;
 use App\PropertyAmenity;
 use App\PropertyPurpose;
-use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\Contact_Inquiry;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\Mail\Register_Mail;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -63,10 +56,10 @@ class IndexController extends Controller
         return view('front-view.pages.index', compact('featured_properties', 'partners',
          'cityGuides', 'cities', 'propertyTypes', 'propertyPurposes', 'agents', 'amenities'));
     }
+
     public function livesearch(Request $request)
     {
 
-        $term = $request->get('keyword');
         $data = Properties::select("property_name as name", "featured_image as img", "address as address", "property_slug as slug", "id as id")->where("property_name", "LIKE", "%{$request->input('keyword')}%")->where("property_purpose", "LIKE", "%{$request->input('keyword')}%")->where("address", "LIKE", "%{$request->input('keyword')}%")->get();
 
         return $data;
@@ -87,14 +80,13 @@ class IndexController extends Controller
     public function searchMeDesktop(Request $request)
     {
         if ($request->ajax()) {
-            $purpose = $request->purpose;
             if ($request->country != 'Stop') {
 
                 $cities = DB::table('property_cities')
                     ->leftJoin('properties', 'property_cities.id', 'properties.city')
                     ->select('property_cities.*')
                     ->where('properties.status', 1)
-                    ->where('property_cities.name', 'like', '%' . $request->country . '%')
+                    ->where('property_cities.name', 'like', $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {
@@ -108,7 +100,7 @@ class IndexController extends Controller
                     ->leftJoin('property_cities', 'property_sub_cities.property_cities_id', 'property_cities.id')
                     ->select('property_sub_cities.*', 'property_cities.name as city_name', 'property_cities.id as city_id')
                     ->where('properties.status', 1)
-                    ->where('property_sub_cities.name', 'like', '%' . $request->country . '%')
+                    ->where('property_sub_cities.name', 'like', $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {
@@ -123,7 +115,7 @@ class IndexController extends Controller
                     ->leftJoin('property_sub_cities', 'property_towns.property_sub_cities_id', 'property_sub_cities.id')
                     ->select('property_towns.*', 'property_cities.name as city_name', 'property_cities.id as city_id', 'property_sub_cities.name as sub_city_name', 'property_sub_cities.id as sub_city_id')
                     ->where('properties.status', 1)
-                    ->where('property_towns.name', 'like', '%' . $request->country . '%')
+                    ->where('property_towns.name', 'like', $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {
@@ -140,7 +132,7 @@ class IndexController extends Controller
                     ->leftJoin('property_towns', 'property_areas.property_towns_id', 'property_towns.id')
                     ->select('property_areas.*', 'property_cities.name as city_name', 'property_sub_cities.name as sub_city_name', 'property_towns.name as town_name', 'property_cities.id as city_id', 'property_sub_cities.id as sub_city_id', 'property_towns.id as town_id')
                     ->where('properties.status', 1)
-                    ->where('property_areas.name', 'like', '%' . $request->country . '%')
+                    ->where('property_areas.name', 'like', $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {

@@ -59,6 +59,13 @@
 @stack('styles')
 
 <style>
+    .hideAddress{
+        display: -webkit-box; 
+        -webkit-line-clamp: 1; 
+        -webkit-box-orient: vertical; 
+        overflow: hidden;
+    }
+
     @media screen and (max-width: 455px){ 
         #rc-imageselect, .g-recaptcha { 
             transform:scale(0.80); 
