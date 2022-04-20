@@ -35,6 +35,10 @@
                 <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/properties/create') }}">
                   Submit Property
                 </a>
+                @elseif(Auth::user()->usertype == 'User')
+                <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/dashboard') }}">
+                  Profile
+                </a>
               @else
                 <a class="btn btn-primary btn-sm" href="{{ url('submit-property') }}">Submit
                   Property</a>
@@ -103,6 +107,12 @@
                 <li class="nav-item">
                   <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/properties/create') }}">
                     Submit Property
+                  </a>
+                </li>
+                @elseif(Auth::user()->usertype == 'User')
+                <li class="nav-item">
+                  <a class="btn btn-primary btn-sm" href="{{ URL::to('admin/dashboard') }}">
+                    Profile
                   </a>
                 </li>
               @else
