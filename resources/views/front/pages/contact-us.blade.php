@@ -157,11 +157,9 @@
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3606.5503310177724!2d51.525797114486814!3d25.319307732949923!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e45c50aaabc3093%3A0x4e87313ae3dc558d!2sSaakin%20Inc!5e0!3m2!1sen!2s!4v1639136940349!5m2!1sen!2s"
                     width="100%" height="300px" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-
+            </div>  
         </div>
     </section>
-
     <section class="py-3 py-5 bg-primary">
         <div class="container text-center">
             <button class="btn btn-outline-light py-3 px-5 text-uppercase fw-bold" data-bs-toggle="modal"

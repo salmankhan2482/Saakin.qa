@@ -16,5 +16,4 @@
     @include('front-view.layouts.footer')
 
 </body>
-
 </html>
