@@ -159,13 +159,13 @@
                                         </div>
                                     </a>
                                 </li>
-                                {{-- <li>
+                                <li>
                                     <a href="{{ route('city-guide-landing-pages.index') }}" class="timeline-panel">
                                         <div class="media-body">
                                             <h6 class="mb-1">City Guide Page Content</h6>
                                         </div>
                                     </a>
-                                </li> --}}
+                                </li>
                                 {{-- <li>
                                     <a href="{{ route('agency-landing-pages.index') }}" class="timeline-panel">
                                         <div class="media-body">

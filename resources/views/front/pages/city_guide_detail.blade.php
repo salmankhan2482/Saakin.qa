@@ -3,14 +3,14 @@
   @section('title', $cityGuide->meta_title . ' | ' . 'Saakin.qa')
   @section('description', $cityGuide->meta_description)
   @section('keyword', $cityGuide->meta_keyword)
-  @section('type', 'City Guide Saakin.qa')
+  @section('type', 'City Guide |  Saakin.qa')
   @section('url', url()->current())
   @section('image', asset('upload/cities/' . $cityGuide->city_image))
 @else
   @section('title', $cityGuide->name . ' | ' . 'Saakin.qa')
-  @section('description', $cityGuide->short_description)
-  @section('keyword', $cityGuide->attributes)
-  @section('type', 'City Guide Saakin.qa')
+  @section('description', $city_guide_description)
+  @section('keyword', $cityGuide->name . ' City in Qatar')
+  @section('type', 'City Guide | Saakin.qa')
   @section('url', url()->current())
   @section('image', asset('upload/cities/' . $cityGuide->city_image))
 @endif
