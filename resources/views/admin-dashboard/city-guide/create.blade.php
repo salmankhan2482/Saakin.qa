@@ -52,10 +52,10 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+                                {{-- <div class="form-group col-md-6">
                                     <label>Attributes</label>
                                     <input type="text" id="attributes" name="attributes" class="form-control" placeholder="City Name" required>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-group col-md-6">
                                     <label>Featured Image (Choose Image 584px × 515px)</label>
@@ -66,30 +66,25 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                                {{-- <div class="form-group col-md-6">
+                                <div class="form-group col-md-6">
                                     <label>Meta Title</label>
                                     <input type="text" id="meta_title" name="meta_title" class="form-control" placeholder="Meta Title">
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label>Meta Description</label>
                                     <textarea type="text" id="meta_description" rows="5" name="meta_description" class="form-control" placeholder="Meta Description"></textarea>
                                 </div>
-                            </div>
-                            <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Meta Keywords</label>
-                                    <input type="text" id="meta_keyword" name="meta_keyword" class="form-control" placeholder="Meta Keywords">
-                                </div> --}}
-                            <div class="form-row">
+                                    <textarea type="text" id="meta_keyword" rows="5" name="meta_keyword" class="form-control" placeholder="Meta Keywords"></textarea>
+                                </div>
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
                                     <button type="submit" class="btn btn-rounded btn-success">Save</button>
                                 </div>
-                            </div>
+                            
                         {!! Form::close() !!}
                     </div>
                 </div>

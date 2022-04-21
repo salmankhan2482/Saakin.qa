@@ -23,6 +23,7 @@
                                     <th>Phone</th>
                                     <th>Email</th>
                                     <th>Image</th>
+                                    <th>Created</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
@@ -36,6 +37,7 @@
                                             <img src="{{ asset('upload/agencies/' . $agency->image) }}"
                                                 alt="{{ $agency->name.'- agency image' }}" width="60" />
                                         </td>
+                                        <td>{{ date('d-m-Y', strtotime($agency->created_at)) ??''}} </td>
                                         <td>
                                             <a href="{{ route('agencies.edit', $agency->id) }}"
                                                 class="btn btn-info rounded btn-xs action-btn">

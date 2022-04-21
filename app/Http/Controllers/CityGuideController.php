@@ -36,6 +36,9 @@ class CityGuideController extends Controller
     {
         
         $cityGuide = City::where('city_slug',$slug)->where('status',1)->first();
+
+        $city_guide_description = Str::of($cityGuide->long_description)->limit(154) ;
+        
         $cityGuideContent = CityDetail::where('city_id', $cityGuide->id)->where('status',1)->first();
         
         $propertiesForRent = Properties::where('address_slug', 'like', '%'.$cityGuide->city_slug.'%')
@@ -57,7 +60,7 @@ class CityGuideController extends Controller
             $url = '?property_purpose=Rent';
         }
 
-        return view('front.pages.city_guide_detail',compact('cityGuide','propertiesForRent', 'propertiesForSale','cityGuideContent','url'));
+        return view('front.pages.city_guide_detail',compact('cityGuide','propertiesForRent','city_guide_description', 'propertiesForSale','cityGuideContent','url'));
     }
 
 }

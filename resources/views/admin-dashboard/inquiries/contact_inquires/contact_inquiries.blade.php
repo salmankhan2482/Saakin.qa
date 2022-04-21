@@ -18,6 +18,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Subject</th>
+                                    <th>Date</th>
                                     <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
@@ -30,6 +31,7 @@
                                 <td>{{ $inquiries->name }}</td>
                                 <td>{{ $inquiries->email }}</td>
                                 <td>{{ $inquiries->subject }}</td>
+                                <td>{{ date('d-m-Y', strtotime($inquiries->created_at)) ??''}} </td>
                                         <td class="text-center">
                                             <a href="{{ url('admin/view_contact_inquiry', $inquiries->id ) }}" 
                                                 class="btn btn-info rounded btn-xs action-btn">

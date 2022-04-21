@@ -167,6 +167,49 @@
     </div>
 @endsection
 @push('scripts')
+
+<script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
+
+  <script>
+    $(document).ready(function() {
+      $(document).on("scroll", onScroll);
+
+      //smoothscroll
+      $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
+
+        $(document).off("scroll");
+
+        var navHeight = jQuery('.cityGideNav').outerHeight() + 20;
+        var target = this.hash,
+          menu = target;
+        $target = $(target);
+
+        $('html, body').stop().animate({
+          scrollTop: jQuery($target).offset().top - navHeight
+        }, 500, 'swing', function() {
+          window.location.hash = target;
+          $(document).on("scroll", onScroll);
+        });
+      });
+    });
+
+    function onScroll(event) {
+      var scrollPos = $(document).scrollTop();
+      var navHeight = jQuery('.cityGideNav').outerHeight() + 20;
+      $('#cityGideNav .nav-link').each(function() {
+        var currLink = $(this);
+        var refElement = $(currLink.attr("href"));
+        // console.log(currLink);
+        if (refElement.offset().top - navHeight <= scrollPos && refElement.offset().top - navHeight + refElement.height() > scrollPos) {
+          $('#cityGideNav .nav-link').removeClass("active");
+          currLink.addClass("active");
+        } else {
+          currLink.removeClass("active");
+        }
+      });
+    }
+  </script>
 <script>
   function scrollToTop() {
     $(window).scrollTop(0);
