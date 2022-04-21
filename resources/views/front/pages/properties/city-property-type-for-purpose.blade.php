@@ -7,13 +7,12 @@
     @section('url', url()->current())
 @else
     @section('title', $page_info .' | Saakin.qa')
-    @section('description', $page_des ?? '')
+    @section('description', $data['page_des'] ?? '')
     @section('type', 'property')
     @section('url', url()->current())
 @endif
 
 @section('content')
-
 
     <div class="filter-wrap">
         <div class="container">
@@ -1074,8 +1073,7 @@
                                     </ul>
                                 </div>
 
-                                <div class="property-title-box" 
-                                    onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;">
+                                <div class="property-title-box">
                                     <div class="price">
                                         {{ $property->getPrice() }}
 

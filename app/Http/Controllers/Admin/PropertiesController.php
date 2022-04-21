@@ -249,7 +249,7 @@ class PropertiesController extends MainAdminController
         }
         
         $property = Properties::create($request_data);
-        $reference = $request_data['refference_code'].$property->id;
+        $reference = $request_data['refference_code'].'_'.$property->id;
         $pro = Properties::find($property->id);
         if (request('property_amenities')) {
             $pro->amenities()->attach($request->property_amenities); 

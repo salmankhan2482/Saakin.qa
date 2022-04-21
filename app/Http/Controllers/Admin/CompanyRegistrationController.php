@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CompanyRegistrationMail;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 
 class CompanyRegistrationController extends MainAdminController
 {
@@ -29,17 +28,16 @@ class CompanyRegistrationController extends MainAdminController
 
     public function store(Request $request)
     {
-        $validator = request()->validate([
+        $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unuque:company_registrations',
             'phone' => 'required',
             'company_name' => 'required',
             'city' => 'required',
             'job_title' => 'required',
             'email' => 'required|email',
             'g-recaptcha-response' => 'required|captcha',
-
         ]);
 
         $cr = new CompanyRegistration();
