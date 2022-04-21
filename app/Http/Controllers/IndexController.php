@@ -290,7 +290,6 @@ class IndexController extends Controller
         return view('front.pages.auth.login');
     }
 
-
     public function postLogin(Request $request)
     {
 
