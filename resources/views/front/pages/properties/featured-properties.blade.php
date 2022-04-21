@@ -1,4 +1,4 @@
-﻿@extends("front-view.layouts.main")
+﻿@extends("front.layouts.main")
 @if ($page_info->meta_title !=null)
 
 @section('title',$page_info->meta_title . ' | '.' Saakin.qa')
@@ -497,11 +497,12 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <input type="checkbox" class="btn-check" id="save-search" autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm w-100" for="save-search">
-                                    <i class="far fa-star"></i>
-                                    Save Search
-                                </label>
+                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#mSortingModal"
+                                    aria-controls="mSortingModal" class="btn btn-monochrome btn-sm w-100"
+                                    style="--btn-bg-color: transparent;">
+                                    <i class="fas fa-sliders-h"></i>
+                                    Sort By
+                                </button>
                             </div>
                         </div>
                         {{-- Mobile Filters --}}
@@ -894,6 +895,63 @@
 
                             </div>
                         </form>
+
+                        <form action="{{ route('featured-properties') }}" method="GET">
+                            
+                            <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal" aria-labelledby="mSearchFilterLabel"
+                                style="height: 60vh !important;">
+                                <div class="offcanvas-header border-bottom">
+                                    <h5 class="offcanvas-title" id="mSearchFilterLabel" data-bs-dismiss="offcanvas" aria-label="Close">
+                                        <i class="fas fa-times"></i>
+                                        Sorting
+                                    </h5>
+                                </div>
+
+                                <div class="offcanvas-body">
+                                    
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnnewest" value="newest"
+                                        @if (request()->sort_by == 'newest') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnnewest">Newest</label>
+                                    </div>
+                            
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnfeatured" value="featured"
+                                        @if (request()->sort_by == 'featured') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnfeatured">Featured</label>
+                                    </div>
+                              
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnlow_price" value="low_price"
+                                        @if (request()->sort_by == 'low_price') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnlow_price">Low Price</label>
+                                    </div>
+                                
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnhigh_price" value="high_price"
+                                        @if (request()->sort_by == 'high_price') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnhigh_price">High Price</label>
+                                    </div>
+                           
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_least" value="beds_least"
+                                        @if (request()->sort_by == 'beds_least') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnbeds_least">Beds Least</label>
+                                    </div>
+                            
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_most" value="beds_most"
+                                        @if (request()->sort_by == 'beds_most') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnbeds_most">Beds Most</label>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-white border-top sticky-bottom">
+                                    <input type="submit" class="btn btn-info form-control d-block fs-sm fw-normal mt-2" value="Sort">
+                                </div>
+
+                            </div>
+                        </form> 
                     @endif
 
                     <div class="mb-3">
@@ -994,7 +1052,7 @@
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
                                             <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                alt="{{ $property->property_name }}">
+                                                alt="property feature">
                                         </div>
 
                                         @if (count($property->gallery) > 0)
@@ -1002,7 +1060,7 @@
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
                                                         <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                            alt="{{ $property->property_name }}">
+                                                            alt="property slider">
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1037,19 +1095,20 @@
                                     <a class="text-decoration-none"
                                         href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
                                         <h5 class="property-card__property-title">
-                                            {{ $property->property_name }}
+                                            {{ $property->property_name }} 
                                         </h5>
                                     </a>
                                     
+                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
-                                        <li class="pe-2">
-                                            <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
-                                        </li>
+
                                         @if ($property->getProperty_type())
-                                            <li><i class="fas fa-bed"></i>
+                                            <li>
+                                                <i class="fas fa-bed"></i>
                                                 <span>{{ $property->bedrooms }} </span>
                                             </li>
-                                            <li><i class="fas fa-bath"></i>
+                                            <li>
+                                                <i class="fas fa-bath"></i>
                                                 <span>{{ $property->bathrooms }} </span>
                                             </li>
                                         @endif
@@ -1060,56 +1119,47 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="hideAddress">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>
-
-                                    <div class="social-div mt-md-2">
+                                    <div class="social-div mt-md-2 d-flex">
                                         @if (!empty($property->whatsapp))
-                                            <a href="" 
-                                                class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->whatsapp }}"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='Call'>
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Call'>
 
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @else
-                                            <a href="" 
-                                                class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->Agency->phone }}"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='Call'
-                                                >
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Call'>
+
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @endif
-                                        
+
                                         @if ((new \Jenssegers\Agent\Agent())->isMobile())
-                                            
                                             @if (!empty($property->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
-                                                    data-property_id={{ $property->id }} 
-                                                    data-agency_id={{ $property->agency_id }} 
+                                                    class="btn btn-monochrome btn-sm mt-1 me-1 btnCount"
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
 
                                                     <i class="fab fa-whatsapp text-primary"></i>
                                                     <span class=" d-md-inline-block">WhatsApp</span>
                                                 </a>
                                             @else
-                                                <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
-                                                    type="button"
+                                                <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                     data-property_id={{ $property->id }}
-                                                    data-agency_id={{ $property->agency_id }}
-                                                    data-button_name='Email' 
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#emailAgentModal" 
+                                                    data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                                    type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
                                                     id="emailBtn"
                                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                     data-title="{{ $property->property_name }}"
@@ -1124,23 +1174,22 @@
                                                     </span>
                                                 </button>
                                             @endif
-
                                         @else
                                             @if (!empty($property->whatsapp))
-                                            <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                class="btn btn-monochrome btn-sm mt-2 btnCount"
-                                                data-property_id={{ $property->id }} 
-                                                data-agency_id={{ $property->agency_id }} 
-                                                data-button_name='WhatsApp'>
+                                                <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount me-1"
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
+                                                    data-button_name='WhatsApp'>
 
-                                                <i class="fab fa-whatsapp text-primary"></i>
-                                                <span class=" d-md-inline-block">WhatsApp</span>
-                                            </a>
+                                                    <i class="fab fa-whatsapp text-primary"></i>
+                                                    <span class=" d-md-inline-block">WhatsApp</span>
+                                                </a>
                                             @elseif(!empty($property->Agency->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
-                                                    data-property_id={{ $property->id }} 
-                                                    data-agency_id={{ $property->agency_id }} 
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount"
+                                                    data-property_id={{ $property->id }}
+                                                    data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
 
                                                     <i class="fab fa-whatsapp text-primary"></i>
@@ -1148,14 +1197,11 @@
                                                 </a>
                                             @endif
 
-                                            <button class="btn btn-monochrome btn-sm mt-2 btnCount" 
-                                                type="button" 
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#emailAgentModal" 
-                                                id="emailBtn"
+                                            <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                 data-property_id={{ $property->id }}
-                                                data-agency_id={{ $property->agency_id }}
-                                                data-button_name='Email'
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                                type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
+                                                id="emailBtn"
                                                 data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
                                                 data-title="{{ $property->property_name }}"
                                                 data-agent="{{ $property->agent_name ?? $property->Agency->name }}"
@@ -1180,7 +1226,7 @@
                                         </div>
                                         <div>
                                             <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}"
-                                                width="80" alt="{{ $property->property_name }}">
+                                                width="80" alt="agency pic">
                                         </div>
                                     </div>
                                 @endif
@@ -1192,7 +1238,7 @@
                         {{-- Pagination starts --}}
                         <div>
                             @if ($properties->total() > getcong('pagination_limit'))
-                                {{ $properties->links('front-view.pages.include.pagination') }}
+                                {{ $properties->links('front.pages.include.pagination') }}
                             @endif
                         </div>
                         {{-- Pagination ends --}}
@@ -1200,9 +1246,14 @@
 
                 </div>
             @else
-                <div class="alert alert-info" role="alert">
-                    Record Not Found!
-                </div>
+            <div class="mb-3">
+                <h1 class="h6">{{ $heading_info ?? '' }}
+                    <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
+                </h1>
+            </div>
+            <div class="alert alert-info" role="alert">
+                Record Not Found!
+            </div>
 
             @endif
 

@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @if ($page_info->meta_title !=null)
 

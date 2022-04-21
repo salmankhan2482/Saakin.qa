@@ -12,8 +12,14 @@
         <div class="container">
             <h1 class="text-center">Login/Register</h1>
         </div>
+      </div>
     </div>
-    <section class="property-listing boxed-view clearfix">
+  </div>
+  <section class="property-listing boxed-view clearfix">
+    <div class="container">
+
+      <!--User Login section starts-->
+      <div class="user-login-section mt-30 mb-30">
         <div class="container">
             <!--User Login section starts-->
             <div class="user-login-section p-4 mt-30 mb-30">
@@ -212,11 +218,89 @@
                                     </div>
                                 </div>
                             </div>
+                          @endif
+
+                          @if (Session::has('login_error_flash_msg'))
+                            @if (count($errors) > 0)
+                              <div class="alert alert-danger">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <ul>
+                                  @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                  @endforeach
+                                </ul>
+                              </div>
+                            @endif
+                          @endif
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12">
+
+                          {!! Form::open(['url' => 'register', 'class' => 'search-form', 'id' => 'registerform', 'role' => 'form']) !!}
+                          <div class="form-group">
+                            <input type="text" class="form-control" placeholder="{{ trans('words.name') }}" name="name" id="name" style="margin-bottom: 5px;" />
+                            @if ($errors->has('name'))
+                              <span style="color:#fb0303">
+                                {{ $errors->first('name') }}
+                              </span>
+                            @endif
+                          </div>
+                          <div class="form-group">
+                            <input type="email" class="form-control" placeholder="{{ trans('words.email') }}" name="email" id="email" style="margin-bottom: 5px;" />
+                            @if ($errors->has('email'))
+                              <span style="color:#fb0303">
+                                {{ $errors->first('email') }}
+                              </span>
+                            @endif
+                          </div>
+                          <div class="form-group">
+                            <input placeholder="{{ trans('words.password') }}" class="form-control" type="password" name="password" id="password_register" style="margin-bottom: 5px;" />
+                            @if ($errors->has('password'))
+                              <span style="color:#fb0303">
+                                {{ $errors->first('password') }}
+                              </span>
+                            @endif
+                          </div>
+                          <div class="form-group">
+                            <input class="form-control" type="password" placeholder="{{ trans('words.confirm_password') }}" name="password_confirmation" id="password_confirmation"
+                              style="margin-bottom: 5px;" />
+                            @if ($errors->has('password_confirmation'))
+                              <span style="color:#fb0303">
+                                {{ $errors->first('password_confirmation') }}
+                              </span>
+                            @endif
+                          </div>
+                          <div class="res-box text-left">
+                            <label>
+                              <input type="checkbox" name="terms">
+                              I've read and accept <a href="{{ url('terms-of-use') }}"> terms
+                                &amp; conditions</a></label><br />
+                          </div>
+                          <div class="res-box text-center mt-30">
+                            <button type="submit" class="btn v8"><i class="lnr lnr-enter"></i>{{ 'Create an account' }}</button>
+                          </div>
+                          </form>
                         </div>
                         <div class="col-md-3"></div>
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+            <div class="col-md-6">
+
+              <div class="login-wrapper mt-100">
+                <div class="ui-dash tab-content">
+                  <div class="tab-pane fade show active" id="login" role="tabpanel">
+                    <div class="signup-wrapper">
+                      <img src="{{ asset('assets/images/login-1.png') }}" alt="Login-1 pic">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </section>
 
@@ -282,6 +366,6 @@
                 }
             }
 
-        });
-    </script>
+    });
+  </script>
 @endpush

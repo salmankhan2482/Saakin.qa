@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @if ($landing_page_content->meta_title != null)
   @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
@@ -113,7 +113,7 @@
                   {{--  --}}
                 </div>
 
-                <div class="d-flex item-separator border-top p-3">
+                <div class="d-flex item-separator border-top p-1">
                   <div class="flex-grow-1 text-center">
                     <strong>{{ count(App\Properties::where('status', '1')->where('property_purpose', 'Rent')->where('agency_id', $agency->id)->get()) }}</strong>
                     <span class="d-block fs-sm" style="--bs-body-font-size: 10px;">For Rent</span>
@@ -164,7 +164,7 @@
       {{--  --}}
 
       @if ($agencies->total() > getcong('pagination_limit'))
-        {{ $agencies->appends(request()->except(['page', '_token']))->links('front-view.pages.include.pagination') }}
+        {{ $agencies->appends(request()->except(['page', '_token']))->links('front.pages.include.pagination') }}
       @endif
 
       {{--  --}}

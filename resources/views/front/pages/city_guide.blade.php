@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 @if ($landing_page_content->meta_title !=null)
 
 @section('title',$landing_page_content->meta_title . ' | '.' Saakin.qa')

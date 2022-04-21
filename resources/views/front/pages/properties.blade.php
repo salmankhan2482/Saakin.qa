@@ -1,15 +1,19 @@
-﻿@extends("front-view.layouts.main")
-@if ($landing_page_content->meta_title != null)
-    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
-    @section('description', $landing_page_content->meta_description)
-    @section('keyword', $landing_page_content->meta_keyword)
-    @section('type', 'property')
-    @section('url', url()->current())
+﻿@extends("front.layouts.main")
+@if ($landing_page_content != null)
+
+@section('title', $landing_page_content->meta_title . ' | '.' Saakin.qa')
+@section('description', $landing_page_content->meta_description)
+@section('keyword', $landing_page_content->meta_keyword)
+@section('type','property')
+@section('url',url()->current())
+
 @else
-    @section('title', 'Properties in Qatar | Saakin.qa')
-    @section('description', $page_des)
-    @section('type', 'property')
-    @section('url', url()->current())
+
+@section('title','Properties in Qatar | Saakin.qa')
+@section('description',$page_des)
+@section('type','property')
+@section('url',url()->current())
+
 @endif
 
 @section('content')
@@ -554,7 +558,7 @@
                                     <div class="btn-group btn-group-sm d-flex" role="group" aria-label="Sell type">
 
                                         <input type="radio" class="btn-check" name="property_purpose" id="btnRent"
-                                            value="Rent" {{ request('property_purpose') == 'Rent' ? 'checked' : '' }}>
+                                            value="Rent" {{ request('property_purpose') != 'Sale' ? 'checked' : '' }}>
                                         <label class="btn btn-monochrome btn-sm" for="btnRent">Rent</label>
 
                                         <input type="radio" class="btn-check" name="property_purpose" id="btnSale"
@@ -1356,7 +1360,7 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="property-card__property-title">
+                                        <p class="hideAddress">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>
@@ -1475,13 +1479,18 @@
                         {{-- Pagination starts --}}
                         <div>
                             @if ($properties->total() > getcong('pagination_limit'))
-                                {{ $properties->links('front-view.pages.include.pagination') }}
+                                {{ $properties->links('front.pages.include.pagination') }}
                             @endif
                         </div>
                         {{-- Pagination ends --}}
                     </div>
                 </div>
             @else
+                <div class="mb-3">
+                    <h1 class="h6">{{ $heading_info ?? '' }}
+                        <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
+                    </h1>
+                </div>
                 <div class="alert alert-info" role="alert">
                     Record Not Found!
                 </div>
