@@ -1,14 +1,14 @@
-@extends("front-view.layouts.main")
-@section('title', 'Saakin.qa Blogs | Qatar #1 Property site')
-@section('description', 'Blog Description')
-@section('keyword', 'Blog Keyword')
-@section('type', 'article')
-@section('url', url()->current())
+@extends("front.layouts.main")
+@section('title', $category->category. ' Blogs | '.' Saakin.qa' )
+@section('description', Illuminate\Support\Str::limit($category->description, 100, ' (...)') )
+@section('keyword','Blog Keyword')
+@section('type','article')
+@section('url',url()->current())
 @section('content')
 
 <div class="site-banner" style="background-image:  url('../assets/images/backgrounds/blogs.jpg')">
     <div class="container">
-      <h1 class="text-center">Blogs</h1>
+      <h1 class="text-center text-white">{{$category->category}}</h1>
       <div class="text-white fs-sm d-flex justify-content-center spbwx8">
         <span><a href="{{ url('/') }}" class="text-white text-decoration-none">Home</a></span>
         <span>/</span>
@@ -21,6 +21,16 @@
 
 <div class="inner-content">
     <div class="container">
+      <div class="card search mb-3 mb-lg-0 d-lg-none">
+        <div class="card-body">
+          <form action="{{ url('blog') }}" method="GET">
+            <div class="input-group">
+              <input type="text" name="keyword" id="mobile-keyword" class="form-control" placeholder="Search">
+              <button type="submit" class="btn btn-primary search-button"><i class="fa fa-search"></i></button>
+            </div>
+          </form>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-8">
           <div class="row gy-4">
@@ -49,7 +59,7 @@
               <div class="col-md-8 offset-md-2  col-xs-12 ">
                 <div class="page-num text-center">
                   @if ($category_blogs->total() > getcong('pagination_limit'))
-                    {{ $category_blogs->links('front-view.pages.include.pagination') }}
+                    {{ $category_blogs->links('front.pages.include.pagination') }}
                   @endif
 
                 </div>

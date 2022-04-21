@@ -16,33 +16,32 @@
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@saakin" />
-<meta name="twitter:creator" content="@saakin" /> 
+<meta name="twitter:creator" content="@saakin" />
 
 <meta property="og:url" content="@yield('url', url('/'))" />
-<meta property="og:title" content="@yield('title',  getcong('site_name'))"  />
-<meta property="og:description" content="@yield('description',  getcong('site_description'))"  />
-<meta property="og:image" content="@yield('image',  url('/upload/favicon1.png'))"  />
+<meta property="og:title" content="@yield('title',  getcong('site_name'))" />
+<meta property="og:description" content="@yield('description',  getcong('site_description'))" />
+<meta property="og:image" content="@yield('image',  url('/upload/favicon1.png'))" />
+
+<!-- Fav and touch icons -->
+<link href="{{ URL::asset('upload/' . getcong('site_favicon')) }}" rel="shortcut icon" type="image/x-icon" />
+<link href="{{ asset('assets/css/fontawesome.css') }}" rel="stylesheet" />
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DHP1WPHH9"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-0DHP1WPHH9');
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-0DHP1WPHH9');
 </script>
-
-<!-- Google Adsene https://saakin.qa/ -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
-     crossorigin="anonymous"></script>
 
 <!-- Rich Result Test Code for https://saakin.qa/ -->
 <script type="application/ld+json">
-{"@context":"http:\/\/schema.org","@type":"Corporation","logo":"https:\/\/www.saakin.qa\/upload/logo.png","url":"https:\/\/www.saakin.qa","brand":{"@type":"Brand","name":"Saakin Inc"},"name":"Saakin Qatar","address":"Tornado Tower, Majlis Al Taawon St, Doha, Qatar","contactPoint":{"@type":"ContactPoint","telephone":"+974 7012 5000","contactType":"customer service","contactOption":"HearingImpairedSupported","areaServed":"qa","availableLanguage":"en"},"sameAs":[]}
-</script>
-
-
+    {"@context":"http:\/\/schema.org","@type":"Corporation","logo":"https:\/\/www.saakin.qa\/upload/logo.png","url":"https:\/\/www.saakin.qa","brand":{"@type":"Brand","name":"Saakin Inc"},"name":"Saakin Qatar","address":"Tornado Tower, Majlis Al Taawon St, Doha, Qatar","contactPoint":{"@type":"ContactPoint","telephone":"+974 7012 5000","contactType":"customer service","contactOption":"HearingImpairedSupported","areaServed":"qa","availableLanguage":"en"},"sameAs":[]}
+    </script>
 
 <!-- Clarity tracking code for https://saakin.qa/ -->
 <script>
@@ -53,114 +52,83 @@
     })(window, document, "clarity", "script", "9cpbk955xj");
 </script>
 
-<!-- Fav and touch icons -->
-<link href="{{ URL::asset('upload/' . getcong('site_favicon')) }}" rel="shortcut icon" type="image/x-icon" />
-<link rel="stylesheet" href="{{ URL::asset('site_assets/css/gallery_style.css') }}">
+@yield('style')
 
-{{-- <link href="{{asset('assets/css/plugin.css')}}" rel="stylesheet" /> --}}
+<link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
 
-<link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" />
-<link 
-    rel="stylesheet" 
-    href="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Validation-Engine/2.6.4/validationEngine.jquery.min.css" />
-<link href="{{ asset('assets/css/dropzone.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/jquery-ui.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet" />
-<link href="{{ asset('site_assets/css/bootstrap-tagsinput.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/bootstrap-select.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/fontawesome.css') }}" rel="stylesheet" />
+@stack('styles')
 
-
-<link href="{{ asset('assets/css/ionicons.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/linear-icon.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/swiper.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/jquery-mb.ytplayer.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/magnific-popup.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/datepicker.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/leaflet.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/flaticon.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/plugin.css') }}" rel="stylesheet" />
-
-<link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" />
-<link href="{{ asset('assets/css/image-uploader.css') }}" type="text/css" rel="stylesheet" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet" type="text/css" />
-
-<link rel="stylesheet" href="{{ asset('assets/css/opansans.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/roboto.css') }}">
-
-<link href="{{ asset('assets/css/new_custom.css') }}" rel="stylesheet" type="text/css" />
 <style>
-    /* mobile screen pagination styles */
-    @media screen and ( max-width: 700px ){        
-     .prevDesktop {
-        display: none !important;
+    .hideAddress{
+        display: -webkit-box; 
+        -webkit-line-clamp: 1; 
+        -webkit-box-orient: vertical; 
+        overflow: hidden;
     }
-     .nextDesktop {
-        display: none !important;
+
+    @media screen and (max-width: 455px){ 
+    #rc-imageselect, .g-recaptcha { 
+        transform:scale(0.80); 
+        -webkit-transform:scale(0.80); 
+        transform-origin:0 0; 
+        -webkit-transform-origin:0 0; 
     }
-    .ul-pagination{
-        padding-right: -10px !important;
+        
     }
-    /*
-    .page-num li:first-child,
-    .page-num li:nth-child( 2 ),
-    .page-num li:nth-last-child( 2 ),
-    .page-num li:last-child,
-    .page-num li.active,
-    .page-num li.disabled
+    .float{
+        position:fixed;
+        width:60px;
+        height:60px;
+        bottom:50px;
+        right:15px;
+        background-color:#25d366;
+        color:#FFF;
+        border-radius:50px;
+        text-align:center;
+        font-size:30px;
+        box-shadow: 1px 1px 1px rgb(80, 80, 80);
+        z-index:100;
+    }
+  
+    .my-float{
+        margin-top:16px;
+    }
+    .fa-login-google {
+        font-size: 20px;
+        background: conic-gradient(from -45deg, #ea4335 110deg, #4285f4 90deg 180deg, #34a853 180deg 270deg, #fbbc05 270deg) 73% 55%/150% 150% no-repeat;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .google-button {
+        background-color: white !important;
+        border: 1px solid #009fff !important;
+        color: black !important;
+    }
+
+    .fa-login-facebook {
+        font-size: 20px;
+    }
+
+    #name-error, #email-error, #register_email-error, #password_register-error, #password_confirmation-error, #terms-error{
+        color: #ea4335;
+    }
+
     .active-pagination {
-        display: inline-block;
-    } */
-
+      color: #fff;
+      background-color: #009fff !important;
     }
 
-
-    .pac-container:after {
-        background-image: none !important;
-        height: 0px;
+    .page-link {
+        padding: 0.225rem 0.55rem !important;
     }
 
-    .swiper-slide {
-        height: auto;
-    }
-
-    .hsq-heading:before,
-    .service-box-container .service-box .title:before {
-        bottom: 0;
-        width: 250px;
-        height: 1px;
-        background: #d4d4d4;
-    }
-
-    .hsq-heading:after,
-    .service-box-container .service-box .title:after {
-        bottom: -1px;
-        width: 100px;
-        height: 3px;
-        background: #50AEE6;
-    }
-
-    body.property-listing-page.row-listing .property-listing {
-        margin-top: 25px;
-    }
-
-    .pac-container:after {
-        background-image: none !important;
-        height: 0px;
-    }
-
-    .agency-select{
-        width: 100%; 
-        justify-content: space-between;
-        height: 2.2rem;
-        width: 100%;
-        color: #2d383f;
-        background-color: #fff; 
-        padding: 0.4rem 0.6rem 0.4rem 0.6rem;
-        font-size: 1rem;
-        border-radius: 0.3rem;
-        cursor: pointer;
+    .active-search {
+        border-color: #007ea8;
+        background-color: #e8f4f6;
     }
 
 </style>
+

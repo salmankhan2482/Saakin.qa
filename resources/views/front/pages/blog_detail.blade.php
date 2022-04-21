@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @if ($blog->meta_title != null)
     @section('title', $blog->meta_title . ' | ' . 'Saakin.qa')
@@ -211,34 +211,32 @@
   
 
 @section('schema-markup')
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "@id": "{{ url('blog/' . $blog->slug) }}"
-            },
-            "headline": "{{ $blog->title }}",
-            "image": "{{ asset('upload/blogs/' . $blog->image) }}",
-            "author": {
-                "@type": "Organization",
-                "name": "Admin",
-                "url": "https://www.saakin.qa/upload/logo.png"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "Saakin Inc",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": "https://www.saakin.qa/upload/logo.png"
-                }
-            },
-            "datePublished": "{{ date('d-m-Y', strtotime($blog->created_at)) }}",
-            @if ($blog->updated_at)
-                {{ date('d-m-Y', strtotime($blog->updated_at)) }}@else{{ date('d-m-Y', strtotime($blog->created_at)) }}
-            @endif"
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{url('blog/'.$blog->slug)}}"
+      },
+      "headline": "{{ $blog->title }}",
+      "image": "{{asset('upload/blogs/' . $blog->image)}}",  
+      "author": {
+        "@type": "Organization",
+        "name": "Admin",
+        "url": "https://www.saakin.qa/upload/logo.png"
+      },  
+      "publisher": {
+        "@type": "Organization",
+        "name": "Saakin Inc",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.saakin.qa/upload/logo.png"
         }
-    </script>
+      },
+      "datePublished": "{{ date('d-m-Y',strtotime($blog->created_at)) }}",
+      "dateModified": "@if ($blog->updated_at) {{ date('d-m-Y',strtotime($blog->updated_at)) }}@else{{ date('d-m-Y',strtotime($blog->created_at)) }} @endif"
+    }
+</script>  
 @endsection
 @endpush

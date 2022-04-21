@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\TypesController;
-use App\Http\Controllers\PopularSearchesController;
-use App\Properties;
-use App\PropertyCounter;
+use Intervention\Image\Image;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\TypesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+       
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
 Route::get('auth/google', 'SocialController@redirectToGoogle')->name('google.login');

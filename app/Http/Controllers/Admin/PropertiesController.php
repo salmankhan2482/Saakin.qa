@@ -200,7 +200,7 @@ class PropertiesController extends MainAdminController
         $agencyName = Agency::where('id', $request_data['agency_id'])->value('name');
         $agencyNameExplode = explode(' ', $agencyName);
         
-        $request_data['refference_code'] = $agencyNameExplode[0].$agencyNameExplode[0];
+        $request_data['refference_code'] = $agencyNameExplode[0].$agencyNameExplode[1];
         $request_data['property_slug'] = $property_slug;
         $request_data['rooms'] = request()->rooms;
         $request_data['sub_city'] = $request_data['subcity'];

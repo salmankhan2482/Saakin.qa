@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @section('title', ' Contact Us | Saakin.qa')
 @section('description', 'For any query or getting useful information about the properties in Qatar, feel free to contact
@@ -17,6 +17,13 @@
     <section class="inner-content">
         <div class="container">
             <div class="row">
+                @if (Session::has('flash_message_contact'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ Session::get('flash_message_contact') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                        </button>
+                    </div>
+                @endif
                 <div class="col-lg-5">
                     <div class="card">
                         <div class="card-body contact-address">
@@ -74,14 +81,6 @@
                                     @foreach ($errors->all() as $error)
                                         {{ $error }}
                                     @endforeach
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                    </button>
-                                </div>
-                            @endif
-
-                            @if (Session::has('flash_message_contact'))
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    {{ Session::get('flash_message_contact') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                                     </button>
                                 </div>
@@ -185,23 +184,13 @@
                         office in Doha, Qatar
                     </p>
                     <div class="card contact-form mt-3 mt-lg-0">
-                      @if (count($errors) > 0)
-                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                          @foreach ($errors->all() as $error)
-                              {{ $error }}
-                          @endforeach
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                          </button>
-                      </div>
-                  @endif
+                        @if (count($errors) > 0)
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                @foreach ($errors->all() as $error) {{ $error }} @endforeach
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
 
-                  @if (Session::has('flash_message_company_registration'))
-                      <div class="alert alert-success alert-dismissible fade show" role="alert">
-                          {{ Session::get('flash_message_contact') }}
-                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                          </button>
-                      </div>
-                  @endif
                         <div class="card-body">
                             <form action="{{ route('companyRegistration.store') }}" method="POST">
                                 @csrf
@@ -221,10 +210,6 @@
                                     <div class="form-group col-md-6">
                                         <input type="text" name="phone" placeholder="Phone Number *" class="form-control"
                                             required>
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                        <input type="text" name="company_name" placeholder="Company Name *"
-                                            class="form-control" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <select name="city" id="city" class="form-control" required>
@@ -261,6 +246,10 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-12">
+                                        <input type="text" name="company_name" placeholder="Company Name *"
+                                            class="form-control" required>
+                                    </div>
+                                    <div class="form-group col-md-12">
                                         <div
                                             class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
                                             <div class="mb-2">
@@ -274,10 +263,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="form-group col-md-6">
+                                        <button type="submit" class="col-12 btn btn-primary">Submit</button>
+                                    </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+                                
                             </form>
                         </div>
                     </div>
