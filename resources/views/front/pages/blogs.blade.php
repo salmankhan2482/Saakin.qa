@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 @section('title', 'Saakin.qa Blogs | Qatar #1 Property site')
 @section('description', 'Blog Description')
 @section('keyword', 'Blog Keyword')
@@ -57,7 +57,7 @@
               <div class="col-md-8 offset-md-2  col-xs-12 ">
                 <div class="page-num text-center">
                   @if ($blogs->total() > getcong('pagination_limit'))
-                    {{ $blogs->links('front-view.pages.include.pagination') }}
+                    {{ $blogs->links('front.pages.include.pagination') }}
                   @endif
                 </div>
               </div>

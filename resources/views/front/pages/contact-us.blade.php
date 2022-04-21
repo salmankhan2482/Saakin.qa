@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @section('title', ' Contact Us | Saakin.qa')
 @section('description', 'For any query or getting useful information about the properties in Qatar, feel free to contact

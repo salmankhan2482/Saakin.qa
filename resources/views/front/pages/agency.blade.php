@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @if ($agency->meta_title != null)
     @section('title', $agency->meta_title . ' | ' . 'Saakin.qa')
@@ -117,9 +117,7 @@
                                     <div class="row gy-4 mt-1">
                                         @foreach ($properties as $property)
                                             <div class="col-md-6">
-                                                @include(
-                                                    'front-view.pages.include.property_box'
-                                                )
+                                                @include('front.pages.include.property_box')
                                             </div>
                                         @endforeach
                                     </div>
@@ -132,7 +130,7 @@
                                                         <div class="page-num text-center">
 
                                                             @if ($properties->total() > getcong('pagination_limit'))
-                                                                {{ $properties->links('front-view.pages.include.pagination') }}
+                                                                {{ $properties->links('front.pages.include.pagination') }}
                                                             @endif
                                                         </div>
                                                     </div>

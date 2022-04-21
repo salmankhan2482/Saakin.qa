@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 @if ($cityGuide->meta_title != null)
   @section('title', $cityGuide->meta_title . ' | ' . 'Saakin.qa')
   @section('description', $cityGuide->meta_description)

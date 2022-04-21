@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 @if ($page_info != null)
     @section('title', $page_info . ' | ' . ' Saakin.qa')
     @section('description', $meta_description ?? $page_info . ' the best place for rent and seling properties')
@@ -1238,7 +1238,7 @@
                         {{-- Pagination starts --}}
                         <div>
                             @if ($properties->total() > getcong('pagination_limit'))
-                                {{ $properties->links('front-view.pages.include.pagination') }}
+                                {{ $properties->links('front.pages.include.pagination') }}
                             @endif
                         </div>
                         {{-- Pagination ends --}}
@@ -1290,9 +1290,14 @@
                     </div>
                 </div>
             @else
-                <div class="alert alert-info" role="alert">
-                    Record Not Found!
-                </div>
+            <div class="mb-3">
+                <h1 class="h6">{{ $page_info ?? '' }}
+                    <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
+                </h1>
+            </div>
+            <div class="alert alert-info" role="alert">
+                Record Not Found!
+            </div>
 
             @endif
 

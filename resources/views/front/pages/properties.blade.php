@@ -1,4 +1,4 @@
-﻿@extends("front-view.layouts.main")
+﻿@extends("front.layouts.main")
 @if ($landing_page_content != null)
 
 @section('title', $landing_page_content->meta_title . ' | '.' Saakin.qa')
@@ -1479,7 +1479,7 @@
                         {{-- Pagination starts --}}
                         <div>
                             @if ($properties->total() > getcong('pagination_limit'))
-                                {{ $properties->links('front-view.pages.include.pagination') }}
+                                {{ $properties->links('front.pages.include.pagination') }}
                             @endif
                         </div>
                         {{-- Pagination ends --}}

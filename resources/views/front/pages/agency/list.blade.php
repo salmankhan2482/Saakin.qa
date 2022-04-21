@@ -96,8 +96,8 @@ Link:'.$propertyUrl;
                                         @else
                                         <a class="btn btn-outline-success call_btn"
                                         id="emailBtn"
-                                            data-toggle="modal"
-                                            data-target="#exampleModal"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#emailAgentModal"
                                             data-image="{{asset('upload/properties/thumb_' . $property->featured_image) }}"
                                             data-title="{{ $property->property_name }}"
                                             data-agent="{{ $property->agent_name ?? $agency->name }}"

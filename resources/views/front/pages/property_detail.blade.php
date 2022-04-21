@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @if ($property->meta_title != null)
   @section('title', $property->meta_title . ' | ' . 'Saakin.qa')

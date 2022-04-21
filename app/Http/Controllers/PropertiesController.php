@@ -494,7 +494,7 @@ class PropertiesController extends Controller
         
         $property_des = Str::limit($property->property_name.'  '.$property->description, 150, '...');
 
-        return view('front-view.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address'));
+        return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address'));
 
     }
 
@@ -1349,7 +1349,6 @@ class PropertiesController extends Controller
         ->get();
 
         $propertyPurposes = PropertyPurpose::all();
-        
         
         $purp = ($buyOrRent == 'buy' ? 2 : 1);
         $landing_page_content = LandingPage::where('property_purposes_id', $purp)

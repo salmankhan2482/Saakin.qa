@@ -1,4 +1,4 @@
-﻿@extends("front-view.layouts.main")
+﻿@extends("front.layouts.main")
 @if ($page_info->meta_title !=null)
 
 @section('title',$page_info->meta_title . ' | '.' Saakin.qa')
@@ -497,11 +497,12 @@
                                 </button>
                             </div>
                             <div class="col">
-                                <input type="checkbox" class="btn-check" id="save-search" autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm w-100" for="save-search">
-                                    <i class="far fa-star"></i>
-                                    Save Search
-                                </label>
+                                <button type="button" data-bs-toggle="offcanvas" data-bs-target="#mSortingModal"
+                                    aria-controls="mSortingModal" class="btn btn-monochrome btn-sm w-100"
+                                    style="--btn-bg-color: transparent;">
+                                    <i class="fas fa-sliders-h"></i>
+                                    Sort By
+                                </button>
                             </div>
                         </div>
                         {{-- Mobile Filters --}}
@@ -894,6 +895,63 @@
 
                             </div>
                         </form>
+
+                        <form action="{{ route('featured-properties') }}" method="GET">
+                            
+                            <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal" aria-labelledby="mSearchFilterLabel"
+                                style="height: 60vh !important;">
+                                <div class="offcanvas-header border-bottom">
+                                    <h5 class="offcanvas-title" id="mSearchFilterLabel" data-bs-dismiss="offcanvas" aria-label="Close">
+                                        <i class="fas fa-times"></i>
+                                        Sorting
+                                    </h5>
+                                </div>
+
+                                <div class="offcanvas-body">
+                                    
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnnewest" value="newest"
+                                        @if (request()->sort_by == 'newest') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnnewest">Newest</label>
+                                    </div>
+                            
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnfeatured" value="featured"
+                                        @if (request()->sort_by == 'featured') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnfeatured">Featured</label>
+                                    </div>
+                              
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnlow_price" value="low_price"
+                                        @if (request()->sort_by == 'low_price') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnlow_price">Low Price</label>
+                                    </div>
+                                
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnhigh_price" value="high_price"
+                                        @if (request()->sort_by == 'high_price') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnhigh_price">High Price</label>
+                                    </div>
+                           
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_least" value="beds_least"
+                                        @if (request()->sort_by == 'beds_least') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnbeds_least">Beds Least</label>
+                                    </div>
+                            
+                                    <div class="mb-3 spbwx8">
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_most" value="beds_most"
+                                        @if (request()->sort_by == 'beds_most') checked @endif>
+                                        <label class="btn btn-monochrome btn-sm" for="btnbeds_most">Beds Most</label>
+                                    </div>
+                                </div>
+
+                                <div class="p-3 bg-white border-top sticky-bottom">
+                                    <input type="submit" class="btn btn-info form-control d-block fs-sm fw-normal mt-2" value="Sort">
+                                </div>
+
+                            </div>
+                        </form> 
                     @endif
 
                     <div class="mb-3">
@@ -994,7 +1052,7 @@
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
                                             <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                alt="{{ $property->property_name }}">
+                                                alt="property feature">
                                         </div>
 
                                         @if (count($property->gallery) > 0)
@@ -1002,7 +1060,7 @@
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
                                                         <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                            alt="{{ $property->property_name }}">
+                                                            alt="property slider">
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1037,7 +1095,7 @@
                                     <a class="text-decoration-none"
                                         href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
                                         <h5 class="property-card__property-title">
-                                            {{ $property->property_name }}
+                                            {{ $property->property_name }} 
                                         </h5>
                                     </a>
                                     
@@ -1168,7 +1226,7 @@
                                         </div>
                                         <div>
                                             <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}"
-                                                width="80" alt="{{ $property->property_name }}">
+                                                width="80" alt="agency pic">
                                         </div>
                                     </div>
                                 @endif
@@ -1180,7 +1238,7 @@
                         {{-- Pagination starts --}}
                         <div>
                             @if ($properties->total() > getcong('pagination_limit'))
-                                {{ $properties->links('front-view.pages.include.pagination') }}
+                                {{ $properties->links('front.pages.include.pagination') }}
                             @endif
                         </div>
                         {{-- Pagination ends --}}
@@ -1188,9 +1246,14 @@
 
                 </div>
             @else
-                <div class="alert alert-info" role="alert">
-                    Record Not Found!
-                </div>
+            <div class="mb-3">
+                <h1 class="h6">{{ $heading_info ?? '' }}
+                    <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
+                </h1>
+            </div>
+            <div class="alert alert-info" role="alert">
+                Record Not Found!
+            </div>
 
             @endif
 
