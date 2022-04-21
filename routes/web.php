@@ -317,6 +317,9 @@ Route::post('login', 'IndexController@postLogin');
 Route::get('register', 'IndexController@register');
 Route::post('register', 'IndexController@postRegister');
 
+Route::get('company_registration', 'CompanyRegistrationController@index');
+Route::post('company_registration', 'CompanyRegistrationController@post_registration')->name('company_registration');
+
 Route::get('logout', 'IndexController@logout');
 
 Route::get('dashboard', 'UserController@dashboard');
