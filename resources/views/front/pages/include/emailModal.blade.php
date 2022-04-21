@@ -22,9 +22,15 @@
               <strong id="modalBroker">{{ '' }}</strong></span>
 
             <ul class="list-unstyled mb-0  d-flex">
-              <li class="bedroomLi me-2"><i class="fas fa-bed"></i><span id="modalBedrooms">{{ '' }}</span></li>
-              <li class="bathroomLi me-2"><i class="fas fa-bath"></i><span id="modalBathrooms">{{ '' }}</span></li>
-              <li><i class="fas fa-chart-area"></i><span id="modalSqm">{{ '' }}</span></li>
+              <li class="bedroomLi me-2">
+                <i class="fas fa-bed"></i> <span id="modalBedrooms">{{ '' }}</span>
+              </li>
+              <li class="bathroomLi me-2">
+                <i class="fas fa-bath"></i> <span id="modalBathrooms">{{ '' }}</span>
+              </li>
+              <li>
+                <i class="fas fa-chart-area"></i> <span id="modalSqm">{{ '' }}</span>
+              </li>
             </ul>
           </div>
         </div>

@@ -181,7 +181,7 @@
                                 <div class="row row-10-padding">
 
                                     @foreach($properties as $property)
-                                        <div class="col-md-6 col-lg-4 col-sm-12" style="cursor: pointer;" onclick="window.location='{{url(strtolower($property->property_purpose).'/'.$property->property_slug.'/'.$property->id)}}';">
+                                        <div class="col-md-6 col-lg-4 col-sm-12" style="cursor: pointer;" >
                                             <div class="single-property-box">
                                                 <div class="property-item">
                                                     <a class="property-img" href="{{url(strtolower($property->property_purpose).'/'.$property->property_slug.'/'.$property->id)}}">

@@ -1305,7 +1305,7 @@
                                     @foreach ($data['nearbyAreasLinks'] as $item)
                                     <li>
                                         <a href="{{ url("properties?city=$item->id&property_purpose=".ucfirst(request('property_purpose'))) }}">
-                                            properties for {{ request('property_purpose') }} in {{ $item->name }}
+                                            Properties for {{ request('property_purpose') }} in {{ $item->name }}
                                         </a>
                                     </li>
                                     @endforeach

@@ -31,9 +31,7 @@
                                     </div>
                                 </div>
                                 <div class="property-card__content">
-                                    <div class="property-card__info-area"
-                                        onclick="window.location
-                               ='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';">
+                                    <div class="property-card__info-area">
                                         <div class="property-card__title ">
                                             <a class="property-card__title-link" href="javascript:void(0);">
                                                 {{ $property->getPrice() }} @if ($property->property_purpose == 'For Rent' || $property->property_purpose == 'Rent')
@@ -127,7 +125,7 @@ Link:'.$propertyUrl;
             @if ($property->property_purpose == 'Sale' || $property->property_purpose == 2 || $property->property_purpose == 'For Sale')
 
             <div class="related-homes-slider slider_desktop p-1">
-                <div  class="single-property-box p-1"  style="cursor: pointer;" onclick="window.location='{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}';" >
+                <div  class="single-property-box p-1"  style="cursor: pointer;" >
 
                     <div class="property-item">
                         @if ($property->featured_image)

@@ -287,13 +287,13 @@ class PropertiesController extends Controller
         }
         if(request('furnishings')){
             $furnishing = PropertyAmenity::where('id', request('furnishings'))->value('name').' ';
-            $name = $name.strtolower($furnishing);
+            $name = $name.$furnishing;
         }
         
         if($request['type']){
-            $name = $name.strtolower($request['type']->types).' for '. strtolower(request('property_purpose'));  
+            $name = $name.$request['type']->plural_name.' for '. request('property_purpose');  
         }else{
-            $name = $name. 'properties for '.strtolower(request('property_purpose'));  
+            $name = $name. 'properties for '.request('property_purpose');  
         }
                 
         if(request('city') && request('subcity') && request('town') && request('area')){
@@ -465,8 +465,6 @@ class PropertiesController extends Controller
             }
         }
         
-        
-        //$agent = User::where('usertype','Agents')->where('id',$property->agent_id)->first();
         $agency = Agency::where('id', $property->agency_id)->first();
         $neighborhoods = PropertyNeighborhood::where('property_id', $property->id)->get();
         $property_gallery_images = PropertyGallery::where('property_id', $property->id)->get();
@@ -1225,6 +1223,7 @@ class PropertiesController extends Controller
             
         
         }elseif(count($area_props) > 0){
+            
         //areas if   
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
             $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
@@ -1350,6 +1349,7 @@ class PropertiesController extends Controller
 
         $propertyPurposes = PropertyPurpose::all();
         
+        
         $purp = ($buyOrRent == 'buy' ? 2 : 1);
         $landing_page_content = LandingPage::where('property_purposes_id', $purp)
         ->where('property_types_id',$type->id)
@@ -1357,7 +1357,14 @@ class PropertiesController extends Controller
         ->first();
     
         $page_info =  $type->plural_name . ' for '. ucfirst($property_purpose) .' in '. $city_keyword->name ;
-
+        
+        $randomProp = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose))->where('property_type', $type->id)->where('city', $city_keyword->id)->select('description','bedrooms','bathrooms')->inRandomOrder()->limit(1)->first();
+        
+        $page_info =  $type->plural_name . ' for '. ucfirst($property_purpose) .' in '. $city_keyword->name ;
+        if(!isset($landing_page_content)){
+        $data['page_des'] = "Find ".$page_info." of bed $randomProp->bedrooms and bath $randomProp->bathrooms ". Str::limit($randomProp->description, 154);
+        }
+        
         $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
         ->where('type_id', $type->id)
         ->where('city_id', $city_keyword->id)

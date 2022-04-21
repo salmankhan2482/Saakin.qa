@@ -686,7 +686,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="property-title-box" onclick="window.location='{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}';" style="cursor: pointer;">
+                <div class="property-title-box" >
                   <h2 class="property-card__property-title">
                     {{ \Illuminate\Support\Str::limit($property->property_name) }}
                   </h2>
