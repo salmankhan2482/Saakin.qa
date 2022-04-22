@@ -40,7 +40,7 @@
                                 @endif    
                                 <td class="text-center">
                                             <a href="{{ route('view_notification', $inquiries->id ) }}" 
-                                                class="btn btn-info rounded btn-xs action-btn">
+                                                class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             <a href="{{ url('admin/inquiries/delete/'.Crypt::encryptString($inquiries->id)) }}"     

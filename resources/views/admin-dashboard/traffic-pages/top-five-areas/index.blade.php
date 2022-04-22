@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Top 5 Areas</h4>
+                    <h4 class="card-title">Top 10 Areas</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -20,13 +20,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($top5Properties as $i => $click)
+                                @foreach ($top10Properties as $i => $click)
                                 <tr>
                                     <td>{{ $click->id }}</td>
                                     <td>{{ $click->aname ?? '' }}</td>
                                     <td>
-                                        <a href="{{ route('top_5_areas.list', $click->aid) }}"
-                                            class="btn btn-info rounded btn-xs action-btn">
+                                        <a href="{{ route('top_10_areas.list', $click->aid) }}"
+                                            class="btn btn-success rounded btn-xs action-btn">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
@@ -37,7 +37,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="9" class="text-center">
-                                        {{ $top5Properties->render() }}
+                                        {{ $top10Properties->render() }}
                                     </td>
                                 </tr>
                             </tfoot>

@@ -1,7 +1,6 @@
 {{-- Extends layout --}}
 @extends('admin-dashboard.layouts.master')
 @section('style')
-    
 @endsection
 {{-- Content --}}
 @section('content')
@@ -14,22 +13,22 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <form action="{{ route('blogs.index') }}" method="GET">
-                            <div class="row" style="ali">
+                            <div class="row">
                                 <div class="col-sm-4 offset-sm-2">
-                                    <input type="text" class="form-control" name="keyword" placeholder="Search" >
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search">
                                 </div>
                                 <div class="col-sm-3 mt-2 mt-sm-0">
-                                    <select name="category" class="selectpicker show-tick form-control" >
+                                    <select name="category" class="selectpicker show-tick form-control">
                                         <option value="">Blog Category</option>
-                                            @foreach ($data['blog-categories'] as $bcategory)
-                                                <option value="{{ $bcategory->id }}" >
-                                                    {{ $bcategory->category }}
-                                                </option>
-                                            @endforeach
+                                        @foreach ($data['blog-categories'] as $bcategory)
+                                            <option value="{{ $bcategory->id }}">
+                                                {{ $bcategory->category }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-1 mt-sm-0">
-                                    <button type="submit" class="btn btn-dark  pull-right">
+                                <div class="col-sm-1 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm pull-right">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
@@ -38,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
         <div class="col-12">
@@ -54,7 +53,7 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    @if(Session::has('flash_message'))
+                    @if (Session::has('flash_message'))
                         <div class="alert alert-success">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -83,32 +82,35 @@
                                             </a>
                                         </td>
                                         <td>{{ Str::limit($blog->slug, '25', '...') }}</td>
-                                        <td>{{$blog->BlogCategory->category ?? ''}} </td>
+                                        <td>{{ $blog->BlogCategory->category ?? '' }} </td>
                                         <td>
                                             @if ($blog->status == 0)
-                                                <strong class="border border-danger text-danger p-1">Drafted</strong>
+                                                <strong
+                                                    class="border border-danger bg-danger text-white p-1">Drafted</strong>
                                             @else
-                                                <strong class="border border-info text-info p-1">Published</strong>
+                                                <strong class="border border-info bg-info text-white p-1">Published</strong>
                                             @endif
                                         </td>
                                         <td>
-                                            <img src="{{asset('upload/blogs/'.$blog->image)}}" width="100" alt="{{$blog->title}}"/>
+                                            <img src="{{ asset('upload/blogs/' . $blog->image) }}" width="100"
+                                                alt="{{ $blog->title }}" />
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                                            <button type="button" class="btn btn-outline-primary dropdown-toggle"
+                                                data-toggle="dropdown">
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a href="{{ route('blogs.status' , $blog->id) }}"class="dropdown-item">
-                                                    <i class="fa fa-upload"></i> 
-                                                    {{ $blog->status == 1 ? 'Draft' : 'Publish'}}
+                                                <a href="{{ route('blogs.status', $blog->id) }}" class="dropdown-item">
+                                                    <i class="fa fa-upload"></i>
+                                                    {{ $blog->status == 1 ? 'Draft' : 'Publish' }}
                                                 </a>
-                                                
-                                                <a href="{{ route('blogs.edit' , $blog->id) }}"class="dropdown-item">
+
+                                                <a href="{{ route('blogs.edit', $blog->id) }}" class="dropdown-item">
                                                     <i class="fa fa-edit"></i> Edit
                                                 </a>
-                                                
-                                                <a href="{{ route('blogs.destroy' , $blog->id) }}"class="dropdown-item"
+
+                                                <a href="{{ route('blogs.destroy', $blog->id) }}" class="dropdown-item"
                                                     onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </a>

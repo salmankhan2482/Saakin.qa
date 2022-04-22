@@ -325,8 +325,8 @@
         </a>
 
 
-        {{-- Top 5 Areas --}}
-        <a href="{{ route('top_5_areas') }}" style="text-decoration: none;">
+        {{-- Top 10 Areas --}}
+        <a href="{{ route('top_10_areas') }}" style="text-decoration: none;">
             <div class="col-sm-6 col-md-4">
                 <div class="panel panel-primary panel-shadow" style="background-color: #49c700 !important;border-color:#49c700;">
                     <div class="media">
@@ -334,11 +334,11 @@
                             <div class="panel-body">
                                 <div style="width: 20rem ;">
                                     <h5 class="margin-none" id="graphWeek-y">
-                                        Top 5 Areas    
+                                        Top 10 Areas    
                                     </h5>
 
                                     <h2 class="margin-none" id="graphWeek-a">
-                                        {{-- {{$top5Properties->count()}} --}}
+                                        {{-- {{$top10Properties->count()}} --}}
                                     </h2>
                                 </div>
                             </div>

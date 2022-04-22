@@ -81,7 +81,7 @@
                     <li><a href="{{ route('callToAction.index') }}">Click to Action</a></li>
                     <li><a href="{{ route('trafficUsers') }}">Unique Users</a></li>
                     <li><a href="{{ route('top_Ten_Properties') }}">Top 10 Properties</a></li>
-                    <li><a href="{{ route('top_5_areas') }}">Top 5 Areas</a></li>
+                    <li><a href="{{ route('top_10_areas') }}">Top 10 Areas</a></li>
                 </ul>
             </li>
 
@@ -104,7 +104,6 @@
                     <li><a href="{{ route('properties-page-content') }}">Properties Page Content</a></li>
                     <li><a href="{{ route('landing-pages.index') }}">Landing pages Content</a></li>
                     <li><a href="{{ route('popularSearches.index') }}">Popular Searches</a></li>
-                    <li><a href="{{ route('city-guide-landing-pages.index') }}">City Guide Page Content</a></li>
                     <li><a href="{{ route('agency-landing-pages.index') }}">Agencies Page Content </a></li>
                     <li><a href="{{ route('about_page') }}">About Us</a></li>
                     <li><a href="{{ route('terms_page') }}">Terms of Use</a></li>

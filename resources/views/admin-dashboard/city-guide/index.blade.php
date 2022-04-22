@@ -23,26 +23,26 @@
                                     <th>Name</th>
                                     <th>Image</th>
                                     <th>Attributes</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>Sequence</th>
+                                    <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cities as $i => $city)
-                    <tr>
-                        <td>{{ $city->name }}</td>
-                        <td>
-                            <img src="{{asset('upload/cities/'.$city->city_image)}}" width="100" alt="{{ $city->name.'- city image' }}"/>
-                        </td>
-                        <td>{{ $city->attributes }}</td>
+                                @foreach ($cities as $i => $city)
+                                    <tr>
+                                        <td>{{ $city->name }}</td>
+                                        <td>
+                                            <img src="{{ asset('upload/cities/' . $city->city_image) }}" width="100"
+                                                alt="{{ $city->name . '- city image' }}" />
+                                        </td>
+                                        <td>{{ Str::limit($city->attributes, 50) }}</td>
+                                        <td>{{ $city->sequence_id }}</td>
                                         <td>
                                             <a href="{{ route('cities.edit', $city->id) }}"
-                                                class="btn btn-info rounded btn-xs action-btn">
+                                                class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            {{-- <a href="{{ route('cities.show', $city->id) }}"
-                                                class="btn btn-info rounded btn-xs action-btn">
-                                                <i class="fa fa-eye"></i>
-                                            </a> --}}
+
                                             <a href="{{ route('cities.destroy', $city->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">

@@ -272,14 +272,14 @@
                     <li class="submenu  
                     {{ classActivePath('callToAction') }} {{ classActivePath('propertyVisits_per_month') }}
                     {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }}
-                    {{ classActivePath('top_5_areas') }} {{ classActivePath('total_leads') }}
+                    {{ classActivePath('top_10_areas') }} {{ classActivePath('total_leads') }}
                     {{ classActivePath('trafficUsers') }}
                     "> 
                     
                         <a href="#" 
                         @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or 
                         classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or 
-                        classActivePath('top_5_areas') or classActivePath('total_leads') or 
+                        classActivePath('top_10_areas') or classActivePath('total_leads') or 
                         classActivePath('trafficUsers') ) class="open" @endif>
 
                         <i class="fa fa-send"></i>
@@ -288,7 +288,7 @@
                         <ul 
                             @if (   classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or 
                                     classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or 
-                                    classActivePath('top_5_areas') or classActivePath('total_leads') or 
+                                    classActivePath('top_10_areas') or classActivePath('total_leads') or 
                                     classActivePath('trafficUsers')   ) 
                             style="display: block" class="collapse in" 
                             @endif
@@ -320,9 +320,9 @@
                                 </a>
                             </li>
                             
-                            <li class="{{ classActivePath('top_5_areas') }}">
-                                <a href="{{ route('top_5_areas') }}">
-                                    Top 5 Areas 
+                            <li class="{{ classActivePath('top_10_areas') }}">
+                                <a href="{{ route('top_10_areas') }}">
+                                    Top 10 Areas 
                                 </a>
                             </li>
                             
@@ -532,14 +532,14 @@
 
                     {{-- traffic counter click routes --}}
                     <li class="submenu 
-                    {{ classActivePath('callToAction') }} {{ classActivePath('propertyVisits_per_month') }} {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }} {{ classActivePath('top_5_areas') }} {{ classActivePath('total_leads') }} ">
+                    {{ classActivePath('callToAction') }} {{ classActivePath('propertyVisits_per_month') }} {{ classActivePath('total_clicks') }} {{ classActivePath('top_Ten_Properties') }} {{ classActivePath('top_10_areas') }} {{ classActivePath('total_leads') }} ">
                     
-                        <a href="#" @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads') ) class="open" @endif>
+                        <a href="#" @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_10_areas') or classActivePath('total_leads') ) class="open" @endif>
                         <i class="fa fa-send"></i>
                             Traffic
                         </a>
                         <ul 
-                            @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_5_areas') or classActivePath('total_leads')  ) 
+                            @if ( classActivePath('callToAction') or classActivePath('propertyVisits_per_month') or classActivePath('total_clicks') or classActivePath('top_Ten_Properties') or classActivePath('top_10_areas') or classActivePath('total_leads')  ) 
                             style="display: block" class="collapse in" 
                             @endif
                         >
@@ -568,9 +568,9 @@
                                 </a>
                             </li>
                             
-                            <li class="{{ classActivePath('top_5_areas') }}">
-                                <a href="{{ route('top_5_areas') }}">
-                                    Top 5 Areas 
+                            <li class="{{ classActivePath('top_10_areas') }}">
+                                <a href="{{ route('top_10_areas') }}">
+                                    Top 10 Areas 
                                 </a>
                             </li>
                             

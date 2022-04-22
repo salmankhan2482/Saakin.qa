@@ -24,7 +24,6 @@
                                 </div>
                                 
                                 <div class="col-sm-2">
-                                    <br>
                                     <button type="submit" class="btn btn-dark btn-sm">
                                         {{ trans('words.search') }}
                                     </button>

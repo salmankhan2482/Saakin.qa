@@ -11,21 +11,20 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(['url' => 'admin/users', 'class' => 'form-inline filter', 'id' => 'search', 'role' => 'form', 'method' => 'get']) !!}
-                        <div class="row" style="ali">
-                            <div class="col-sm-4">
-                                <input type="text" class="form-control" name="keyword"
-                                    placeholder="{{ trans('words.search_by_name_email') }}">
+                        {!! Form::open(['url' => 'admin/users',  'id' => 'search', 'method' => 'get']) !!}
+                        <div class="row">
+                            <div class="col-4 offset-2">
+                                <input type="text" class="form-control" name="keyword" placeholder="Search by name, mail">
                             </div>
-                            <div class="col-sm-3 offset-sm-1">
+                            <div class="col-3">
                                 <select name="type" id="basic" class="selectpicker show-tick form-control">
                                     <option value="">Select User Type</option>
                                     <option value="Agent">{{ trans('words.agent') }}</option>
                                     <option value="User">{{ trans('words.user') }}</option>
                                 </select>
                             </div>
-                            <div class="col-sm-2 offset-2">
-                                <button type="submit" class="btn btn-dark  pull-right">
+                            <div class="col-2 mt-2">
+                                <button type="submit" class="btn btn-dark btn-sm pull-left">
                                     {{ trans('words.search') }}
                                 </button>
                             </div>

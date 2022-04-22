@@ -36,7 +36,7 @@
                                         <td>{{ $item->status ?? 'Not Available' }}</td>
                                         <td>
                                             <a href="{{ route('property-amenity.edit',$item->id) }}"
-                                                class="btn btn-info rounded btn-xs action-btn">
+                                                class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="{{ route('property-amenity.destroy',$item->id) }}"

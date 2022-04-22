@@ -51,7 +51,7 @@ class IndexController extends Controller
 
         $featured_properties = Properties::where('status', '1')->where('featured_property', '1')->inRandomOrder()->take(6)->get();
         $partners = Partners::orderBy('id', 'desc')->get();
-        $cityGuides = City::where('status', '1')->orderBy('id', 'asc')->take(4)->get();
+        $cityGuides = City::where('status', '1')->orderBy('sequence_id', 'asc')->take(4)->get();
 
         return view('front.pages.index', compact('featured_properties', 'partners',
          'cityGuides', 'cities', 'propertyTypes', 'propertyPurposes', 'agents', 'amenities'));
@@ -86,7 +86,7 @@ class IndexController extends Controller
                     ->leftJoin('properties', 'property_cities.id', 'properties.city')
                     ->select('property_cities.*')
                     ->where('properties.status', 1)
-                    ->where('property_cities.name', 'like', $request->country . '%')
+                    ->where('property_cities.name', 'like', '%' . $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {
@@ -100,7 +100,7 @@ class IndexController extends Controller
                     ->leftJoin('property_cities', 'property_sub_cities.property_cities_id', 'property_cities.id')
                     ->select('property_sub_cities.*', 'property_cities.name as city_name', 'property_cities.id as city_id')
                     ->where('properties.status', 1)
-                    ->where('property_sub_cities.name', 'like', $request->country . '%')
+                    ->where('property_sub_cities.name', 'like', '%' . $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {
@@ -115,7 +115,7 @@ class IndexController extends Controller
                     ->leftJoin('property_sub_cities', 'property_towns.property_sub_cities_id', 'property_sub_cities.id')
                     ->select('property_towns.*', 'property_cities.name as city_name', 'property_cities.id as city_id', 'property_sub_cities.name as sub_city_name', 'property_sub_cities.id as sub_city_id')
                     ->where('properties.status', 1)
-                    ->where('property_towns.name', 'like', $request->country . '%')
+                    ->where('property_towns.name', 'like', '%' . $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {
@@ -132,7 +132,7 @@ class IndexController extends Controller
                     ->leftJoin('property_towns', 'property_areas.property_towns_id', 'property_towns.id')
                     ->select('property_areas.*', 'property_cities.name as city_name', 'property_sub_cities.name as sub_city_name', 'property_towns.name as town_name', 'property_cities.id as city_id', 'property_sub_cities.id as sub_city_id', 'property_towns.id as town_id')
                     ->where('properties.status', 1)
-                    ->where('property_areas.name', 'like', $request->country . '%')
+                    ->where('property_areas.name', 'like', '%' . $request->country . '%')
                     ->when(request()->purpose, function ($query) {
                         $query->where('property_purpose', request()->purpose);
                     })->when(request()->type, function ($query) {

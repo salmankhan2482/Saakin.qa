@@ -22,20 +22,20 @@
                             </thead>
                             <tbody>
                                 @foreach ($top10Proprties as $i => $click)
-                            <tr>
-                                <td>{{ $click->aid }}</td>
-                                <td> {{ $click->aname }}</td>
-                                <td>{{ $click->counter }}</td>
-                                <td>
-                                    <a class="btn btn-info rounded btn-xs action-btn"
-                                             href="{{ route('top_Ten_Properties.list', $click->aid) }}">
+                                    <tr>
+                                        <td>{{ $click->aid }}</td>
+                                        <td> {{ $click->aname }}</td>
+                                        <td>{{ $click->counter }}</td>
+                                        <td>
+                                            <a class="btn btn-success rounded btn-xs action-btn"
+                                                href="{{ route('top_Ten_Properties.list', $click->aid) }}">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                </td>
-                                
-                            </tr>
-                        @endforeach
-                               
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -43,7 +43,7 @@
                                         {{ $top10Proprties->render() }}
                                     </td>
                                 </tr>
-                            </tfoot> 
+                            </tfoot>
                         </table>
                     </div>
                     <div class="clearfix"></div>

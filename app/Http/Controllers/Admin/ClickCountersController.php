@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Agency;
 use App\PageVisits;
 use App\Properties;
 use App\ClickCounters;
@@ -227,15 +228,14 @@ class ClickCountersController extends Controller
         return view('admin-dashboard.traffic-pages.top-ten-properties.agency_index', compact('top10Proprties','action'));
     }
 
-    public function top5Areas()
+    public function top10Areas()
     {
-
         $action = 'saakin_index';
 
         if (auth()->user()->usertype == 'Agency') {
 
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-            $top5Properties = DB::table('properties')
+            $top10Properties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
             ->select('properties.id', 'properties.address as paddress', 'property_counters.counter as ')
             ->whereIn('properties.id', $property_ids)
@@ -246,37 +246,39 @@ class ClickCountersController extends Controller
             ->paginate(10);
 
             
-            return view('admin-dashboard.traffic-pages.top-five-areas.agency_index', compact('top5Properties','action'));
+            return view('admin-dashboard.traffic-pages.top-five-areas.agency_index', compact('top10Properties','action'));
 
         }else{
 
-            $top5Properties = DB::table('properties')
+            $top10Properties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
             ->join('agencies', 'properties.agency_id', 'agencies.id')
             ->select('properties.id', 'agencies.name as aname', 'agencies.id as aid', 'property_counters.counter')
             ->orderByDesc('property_counters.counter')
-
+            ->groupBy('agencies.name')
             ->limit('5')
             ->paginate(10);
 
-            return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top5Properties','action'));
+            return view('admin-dashboard.traffic-pages.top-five-areas.index', compact('top10Properties','action'));
 
         }
     }
 
-    public function top5AreasList($id)
+    public function top10AreasList($id)
     {
-        $top5Properties = DB::table('property_counters')
-        ->leftJoin('properties', 'property_counters.property_id', 'properties.id')
+        $top10Properties = DB::table('property_counters')
+        ->join('properties', 'property_counters.property_id', 'properties.id')
         ->select('properties.id as pid', 'property_counters.counter', 'properties.address as paddress')
         ->where('properties.agency_id', $id)
-        ->groupBy('properties.id')
+        ->groupBy('paddress')
         ->orderByDesc('property_counters.counter')
-        ->limit('5')
+        ->limit('10')
         ->paginate(10);
         $action = 'saakin_index';
-
-        return view('admin-dashboard.traffic-pages.top-five-areas.agency_index', compact('top5Properties','action'));
+        
+        $agency = Agency::where('id', $id)->value('name');
+        
+        return view('admin-dashboard.traffic-pages.top-five-areas.agency_index', compact('top10Properties','action', 'agency'));
 
     }
 

@@ -290,13 +290,13 @@
                        </a>
                      </div>
                      <div class="col-sm-12 col-md-6">
-                      <a href="{{route('top_5_areas')}}">
+                      <a href="{{route('top_10_areas')}}">
                          <div class="card">
                              <div class="card-body">
                                  <div class="media align-items-center">
                                      <div class="media-body mr-3">
                                          <h2 class="fs-36 text-black font-w600"></h2>
-                                         <p class="fs-18 mb-0 text-black font-w500">Top 5 Areas</p>
+                                         <p class="fs-18 mb-0 text-black font-w500">Top 10 Areas</p>
                                          {{-- <span class="fs-13">Target 3k/month</span> --}}
                                      </div>
                                      <div class="d-inline-block position-relative donut-chart-sale">

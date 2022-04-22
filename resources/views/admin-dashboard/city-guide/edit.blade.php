@@ -34,17 +34,16 @@
                         {!! Form::open(array('route' => ['cities.update', $city->id], 'method'=>'PATCH','class'=>'form-horizontal padding-15','name'=>'type_form','id'=>'type_form','role'=>'form','enctype' => 'multipart/form-data')) !!}
 
                             <div class="form-row">
-                                <div class="form-group col-md-12">
+                                <div class="form-group col-md-6">
                                     <label>Name</label>
                                     <input type="text" id="name" name="name" class="form-control" placeholder="City Name" value="{{ $city->name }}" required>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label>Sequence ID</label>
+                                    <input type="number" id="sequence_id" name="sequence_id" class="form-control" value="{{ $city->sequence_id }}" >
+                                </div>
                             </div>
                             <div class="form-row">
-                                {{-- <div class="form-group col-md-6">
-                                    <label>Short Description</label>
-                                    <textarea type="text" rows="5" id="short_description" name="short_description" class="form-control"
-                                     placeholder="Short Description" required>{{ $city->short_description }}</textarea>
-                                </div> --}}
                                 <div class="form-group col-md-12">
                                     <label>Long Description</label>
                                     <textarea type="text" rows="5" id="long_description" name="long_description" class="form-control"

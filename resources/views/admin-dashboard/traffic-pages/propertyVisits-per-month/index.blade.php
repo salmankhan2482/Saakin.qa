@@ -14,18 +14,17 @@
                         <form action="{{ route('propertyVisits_per_month') }}" method="GET">
                             <div class="row justify-content-center">
                                 <div class="col-sm-2">
-                                    <label for="">From</label>
+                                    <label>From</label>
                                     <input type="date" id="start" name="from" value="{{ request('from') }}" >
                                 </div>
                                 
                                 <div class="col-sm-2">
-                                    <label for="">To</label>
+                                    <label>To</label>
                                     <input type="date" id="start" name="to" value="{{ request('to') }}" >
                                 </div>
                                 
                                 <div class="col-sm-2">
-                                    <br>
-                                    <button type="submit" class="btn btn-dark p-2">
+                                    <button type="submit" class="btn btn-dark btn-sm p-2">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
@@ -60,7 +59,7 @@
                                         <td>{{ $traffic->aname }}</td>
                                         <td>{{ $traffic->totalTraffic }}</td>
                                         <td>
-                                            <a class="btn btn-info rounded btn-xs action-btn"
+                                            <a class="btn btn-success rounded btn-xs action-btn"
                                              href="{{ url('admin/propertyVisits_per_month/'.$traffic->aid.'?from='.request('from').'&to='.request('to')) }}">
                                                 <i class="fa fa-eye"></i>
                                             </a>

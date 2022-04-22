@@ -20,18 +20,17 @@
                                     <th>ID</th>
                                     <th>Email</th>
                                     <th>IP Address</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($subscriberlist as $i => $subscriber)
-                            <tr>
-                                <td>{{$i+1 }}</td>
-                                <td>{{ $subscriber->email }}</td>
-                                <td>{{ $subscriber->ip }}</td>
-                                        
+                                    <tr>
+                                        <td>{{ $i + 1 }}</td>
+                                        <td>{{ $subscriber->email }}</td>
+                                        <td>{{ $subscriber->ip }}</td>
                                         <td>
-                                            <a href="{{ route('subscriber.destroy' , $subscriber->id) }}"
+                                            <a href="{{ route('subscriber.destroy', $subscriber->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

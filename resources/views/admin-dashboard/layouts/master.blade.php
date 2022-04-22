@@ -29,6 +29,9 @@
     @stack('style-stack')
     
     <style>
+        #example3_wrapper .bootstrap-select .btn-light{
+            padding: 8px !important;
+        }
         .action-btn{
             margin-left: 5px;
             font-size: 1em;

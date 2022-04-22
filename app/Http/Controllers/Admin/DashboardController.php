@@ -63,7 +63,7 @@ class DashboardController extends MainAdminController
                 //top 10 properties
                 $top10Proprties = '';
 
-                $top5Properties = '';
+                $top10Properties = '';
 
             }
             else
@@ -75,11 +75,11 @@ class DashboardController extends MainAdminController
                 $trafficPerMonth = '';
                 $clicksPerMonths = '';
                 $top10Proprties = '';
-                $top5Properties = '';
+                $top10Properties = '';
                 $numberOfUsers = '';
             }
             return view('admin.pages.dashboard',
-            compact('properties_count','pending_properties_count', 'trafficPerMonth', 'clicksPerMonths', 'featured_properties','inquiries', 'top10Proprties', 'top5Properties', 'numberOfUsers'));
+            compact('properties_count','pending_properties_count', 'trafficPerMonth', 'clicksPerMonths', 'featured_properties','inquiries', 'top10Proprties', 'top10Properties', 'numberOfUsers'));
     }
 
 

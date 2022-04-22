@@ -24,7 +24,7 @@
                                     <th>Email</th>
                                     <th>Image</th>
                                     <th>Created</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,7 +40,7 @@
                                         <td>{{ date('d-m-Y', strtotime($agency->created_at)) ??''}} </td>
                                         <td>
                                             <a href="{{ route('agencies.edit', $agency->id) }}"
-                                                class="btn btn-info rounded btn-xs action-btn">
+                                                class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="{{ route('agencies.destroy' , $agency->id) }}"

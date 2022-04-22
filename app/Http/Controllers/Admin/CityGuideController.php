@@ -57,9 +57,7 @@ class CityGuideController extends Controller
     public function store(Request $request)
     {
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         $rule=array(
             'name' => 'required',
             'long_description' => 'required',
@@ -67,15 +65,13 @@ class CityGuideController extends Controller
         );
 
         $validator = \Validator::make($data,$rule);
-
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
             return redirect()->back()->withErrors($validator->messages());
         }
 
         $city = new City();
         $city->name = $inputs['name'];
-        // $city->short_description = $inputs['short_description'];
+        $city->sequence_id = $inputs['sequence_id'] ?? 100;
         $city->long_description = $inputs['long_description'];
         
         $city_slug = $inputs['name'];
@@ -84,14 +80,15 @@ class CityGuideController extends Controller
         $city_image_name = $city_image->getClientOriginalName();
         $city_image_name = explode(".",$city_image_name);
         $city_image_new_name = "";
+        
         if($city_image) {
             $tmpFilePath = public_path('upload/cities/');
             $imageName = $city_image_name[0].'_'.time().'.'.$city_image->extension();
             $city_image->move($tmpFilePath, $imageName);
             $city_image_new_name = $imageName;
         }
-        $city->city_image = $city_image_new_name;
 
+        $city->city_image = $city_image_new_name;
         $city->meta_title = $inputs['meta_title'];
         $city->meta_description = $inputs['meta_description'];
         $city->meta_keyword = $inputs['meta_keyword'];
@@ -118,24 +115,20 @@ class CityGuideController extends Controller
     public function update(Request $request, $id)
     {
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         $rule=array(
             'name' => 'required',
             'long_description' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
-
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
             return redirect()->back()->withErrors($validator->messages());
         }
 
         $city = City::findOrFail($id);
         $city->name = $inputs['name'];
-        // $city->short_description = $inputs['short_description'];
+        $city->sequence_id = $inputs['sequence_id'];
         $city->long_description = $inputs['long_description'];
 
         $city_image = $request->file('city_image');
@@ -166,11 +159,8 @@ class CityGuideController extends Controller
         }
 
         $city = City::findOrFail($id);
-
         $city->delete();
-
         \File::delete(public_path() .'/upload/cities/'.$city->city_image);
-
         \Session::flash('flash_message', trans('words.deleted'));
 
         return redirect()->back();
@@ -204,19 +194,15 @@ class CityGuideController extends Controller
 
     public function storeCityDetail(Request $request)
     {
-        
+        dd('aa');   
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         $rule=array(
             'city' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
-
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
             return redirect()->back()->withErrors($validator->messages());
         }
 
@@ -252,19 +238,15 @@ class CityGuideController extends Controller
 
     public function updateCityDetail(Request $request, $id)
     {
-
         $data =  \Request::except(array('_token')) ;
-
         $inputs = $request->all();
-
         $rule=array(
             'city' => 'required',
         );
 
         $validator = \Validator::make($data,$rule);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()){
             return redirect()->back()->withErrors($validator->messages());
         }
 

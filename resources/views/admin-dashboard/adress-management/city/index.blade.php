@@ -36,7 +36,7 @@
                                     <td>{{ $city->slug }}</td>
                                     <td>
                                         <a href="{{ route('propertyCities.edit', $city->id) }}"
-                                            class="btn btn-info rounded btn-xs action-btn">
+                                            class="btn btn-primary rounded btn-xs action-btn">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                         <a href="{{ route('propertyCities.destroy', $city->id) }}"
