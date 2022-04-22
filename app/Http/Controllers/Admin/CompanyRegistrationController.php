@@ -28,18 +28,17 @@ class CompanyRegistrationController extends MainAdminController
 
     public function store(Request $request)
     {
-        $request->validate([
+        $this->validate($request,[
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unuque:company_registrations',
             'phone' => 'required',
             'company_name' => 'required',
             'city' => 'required',
             'job_title' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:company_registrations,email',
             'g-recaptcha-response' => 'required|captcha',
-        ]);
-
+         ]);
+        
         $cr = new CompanyRegistration();
         $cr->first_name = request('first_name');
         $cr->last_name = request('last_name');
