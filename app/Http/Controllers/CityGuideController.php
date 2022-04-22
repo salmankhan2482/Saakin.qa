@@ -23,7 +23,7 @@ class CityGuideController extends Controller
 
     public function getCityList()
     {
-        $cityGuides = City::where('status',1)->get();
+        $cityGuides = City::where('status',1)->orderBy('sequence_id', 'asc')->get();
         
         $landing_page_content= LandingPage::find('54');
         $page_des = $landing_page_content->page_content;
