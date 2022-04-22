@@ -7,16 +7,16 @@
         <div class="col-12">
             <div class="page-titles">
                 <ol class="breadcrumb">
-                    <a href="{{route('top_5_areas')}}">
-                        <button type="button" class="btn btn-rounded btn-dark fa fa-arrow-left"> Back
-                        
+                    <a href="{{route('top_10_areas')}}">
+                        <button type="button" class="btn btn-rounded btn-dark fa fa-arrow-left"> 
+                            Back
                         </button>
                     </a>
                 </ol>
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Top 5 Areas</h4>
+                    <h4 class="card-title">Top 10 Areas of "{{ $agency }}"</h4>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -28,7 +28,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($top5Properties as $i => $click)
+                                @foreach ($top10Properties as $i => $click)
                             <tr>
                                 <td>{{ $i+1 }}</td>
                                 <td>{{ $click->paddress }}</td>

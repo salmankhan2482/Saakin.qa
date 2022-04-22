@@ -38,7 +38,7 @@
                                         <td class="text-center width-100">
                                             <a href="{{ route('city_detail_edit', $cityDetail->id) }}"
 
-                                                class="btn btn-info rounded btn-xs action-btn">
+                                                class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="{{ route('cities.destroy', $cityDetail->id) }}"

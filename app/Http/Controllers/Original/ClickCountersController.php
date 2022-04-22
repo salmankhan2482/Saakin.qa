@@ -258,7 +258,7 @@ class ClickCountersController extends Controller
         if (auth()->user()->usertype == 'Agency') {
 
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-            $top5Properties = DB::table('properties')
+            $top10Properties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
             ->select('properties.id', 'properties.address as paddress', 'property_counters.counter')
             ->whereIn('properties.id', $property_ids)
@@ -267,11 +267,11 @@ class ClickCountersController extends Controller
             ->limit('5')
             ->get();
             
-            return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top5Properties'));
+            return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top10Properties'));
 
         }else{
 
-            $top5Properties = DB::table('properties')
+            $top10Properties = DB::table('properties')
             ->join('property_counters', 'properties.id', 'property_counters.property_id')
             ->join('agencies', 'properties.agency_id', 'agencies.id')
             ->select('properties.id', 'agencies.name as aname', 'agencies.id as aid', 'property_counters.counter')
@@ -279,14 +279,14 @@ class ClickCountersController extends Controller
             ->orderByDesc('property_counters.counter')
             ->limit('5')
             ->get();
-            return view('admin.pages.traffic-pages.top-five-areas.index', compact('top5Properties'));
+            return view('admin.pages.traffic-pages.top-five-areas.index', compact('top10Properties'));
 
         }
     }
 
     public function top5AreasList($id)
     {
-        $top5Properties = DB::table('property_counters')
+        $top10Properties = DB::table('property_counters')
         ->leftJoin('properties', 'property_counters.property_id', 'properties.id')
         ->select('properties.id as pid', 'property_counters.counter', 'properties.address as paddress')
         ->where('properties.agency_id', $id)
@@ -295,7 +295,7 @@ class ClickCountersController extends Controller
         ->limit('5')
         ->get();
 
-        return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top5Properties'));
+        return view('admin.pages.traffic-pages.top-five-areas.agency-index', compact('top10Properties'));
 
     }
 

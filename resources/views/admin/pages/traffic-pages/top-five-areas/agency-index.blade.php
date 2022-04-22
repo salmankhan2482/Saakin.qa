@@ -4,7 +4,7 @@
     <div id="main">
         <div class="page-header">
             <h4 style="font-size: 20px;">
-                Top 5 Areas
+                Top 10 Areas
             </h4>
         </div>
         
@@ -29,7 +29,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($top5Properties as $i => $click)
+                        @foreach ($top10Properties as $i => $click)
                             <tr>
                                 <td>{{ $i+1 }}</td>
                                 <td>{{ $click->paddress }}</td>
@@ -39,7 +39,7 @@
                     <tfoot>
                         <tr>
                             <td colspan="2" class="text-center">
-                                {{-- @include('admin.pagination', ['paginator' => $top5Properties]) --}}
+                                {{-- @include('admin.pagination', ['paginator' => $top10Properties]) --}}
                             </td>
                         </tr>
                     </tfoot>

@@ -43,12 +43,12 @@
                                 <td class="d-flex">
 
                                     <a href="{{ route('companyRegistration.show', $registration->id ) }}"  
-                                        class="btn btn-info rounded btn-xs action-btn">
+                                        class="btn btn-success rounded btn-xs action-btn">
                                         <i class="fa fa-eye"></i>
                                     </a>
                                     <form action="{{ route('companyRegistration.destroy', $registration->id) }}" method="POST">
-                                        
-                                        @csrf @method('DELETE') <button type="submit"  class="btn btn-danger rounded btn-xs action-btn" onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                        @csrf @method('DELETE') 
+                                        <button type="submit"  class="btn btn-danger rounded btn-xs action-btn" onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>

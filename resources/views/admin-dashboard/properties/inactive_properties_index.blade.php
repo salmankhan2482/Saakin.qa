@@ -29,7 +29,7 @@
                     <div class="basic-form">
                         <form action="{{ route('inactive_properties.index') }}" method="GET">
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-sm-2 offset-2">
                                     <input type="text" class="form-control" name="keyword" placeholder="Search" value="{{ request('keyword') }}">
                                 </div>
                                 <div class="col-sm-2 mt-2 mt-sm-0">
@@ -50,8 +50,8 @@
                                             @endforeach
                                     </select>
                                 </div>
-                                <div class="col-sm-2 mt-2 mt-sm-0">
-                                    <button type="submit" class="btn btn-dark  pull-right">
+                                <div class="col-sm-2 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm pull-left">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>

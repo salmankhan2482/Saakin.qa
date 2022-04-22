@@ -40,7 +40,7 @@
                                         <td>{{ $report->status }}</td>
                                         <td>
                                             <a href="{{ route('property-reports.show', $report->id) }}" 
-                                                class="btn btn-info rounded btn-xs">
+                                                class="btn btn-primary rounded btn-xs">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                             @if (Auth::User()->usertype == 'Admin')

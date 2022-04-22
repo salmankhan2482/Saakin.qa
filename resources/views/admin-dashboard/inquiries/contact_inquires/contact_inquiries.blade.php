@@ -19,25 +19,24 @@
                                     <th>Email</th>
                                     <th>Subject</th>
                                     <th>Date</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($inquirieslist as $i => $inquiries)
+                                @foreach ($inquirieslist as $i => $inquiries)
+                                    <tr>
+                                        <td>{{ $i + 1 }}</td>
 
-                                <tr>
-                                <td>{{$i+1}}</td>
-                                
-                                <td>{{ $inquiries->name }}</td>
-                                <td>{{ $inquiries->email }}</td>
-                                <td>{{ $inquiries->subject }}</td>
-                                <td>{{ date('d-m-Y', strtotime($inquiries->created_at)) ??''}} </td>
-                                        <td class="text-center">
-                                            <a href="{{ url('admin/view_contact_inquiry', $inquiries->id ) }}" 
-                                                class="btn btn-info rounded btn-xs action-btn">
+                                        <td>{{ $inquiries->name }}</td>
+                                        <td>{{ $inquiries->email }}</td>
+                                        <td>{{ $inquiries->subject }}</td>
+                                        <td>{{ date('d-m-Y', strtotime($inquiries->created_at)) ?? '' }} </td>
+                                        <td>
+                                            <a href="{{ url('admin/view_contact_inquiry', $inquiries->id) }}"
+                                                class="btn btn-success rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ url('admin/inquiries/delete/'.Crypt::encryptString($inquiries->id)) }}"     
+                                            <a href="{{ url('admin/inquiries/delete/' . Crypt::encryptString($inquiries->id)) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

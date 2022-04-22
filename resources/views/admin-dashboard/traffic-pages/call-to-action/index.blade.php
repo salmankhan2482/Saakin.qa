@@ -24,8 +24,7 @@
                                 </div>
                                 
                                 <div class="col-sm-1">
-                                    <br>
-                                    <button type="submit" class="btn btn-dark">
+                                    <button type="submit" class="btn btn-dark btn-sm">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
@@ -59,7 +58,7 @@
                                         <td>{{ $click->agency_name }}</td>
                                         <td>{{ $click->totalCall }}</td>
                                         <td>
-                                        <a class="btn btn-info rounded btn-xs action-btn" 
+                                        <a class="btn btn-success rounded btn-xs action-btn" 
                                             href="{{ route('agencyCallToActionList', $click->agency_id) }}">
                                             <i class="fa fa-eye"></i>
                                             </a>

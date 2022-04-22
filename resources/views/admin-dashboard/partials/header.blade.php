@@ -18,7 +18,7 @@
 
                     <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}"
                         href="{{ route('agencies.index') }}">
-                        Agents
+                        Agencies
                     </a>
                 </li>
 
@@ -159,20 +159,7 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('city-guide-landing-pages.index') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6 class="mb-1">City Guide Page Content</h6>
-                                        </div>
-                                    </a>
-                                </li>
-                                {{-- <li>
-                                    <a href="{{ route('agency-landing-pages.index') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6 class="mb-1">Agencies Pages</h6>
-                                        </div>
-                                    </a>
-                                </li> --}}
+                                
                                 <li>
                                     <a href="{{ route('about_page') }}" class="timeline-panel">
                                         <div class="media-body">
@@ -314,9 +301,9 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('top_5_areas') }}" class="timeline-panel">
+                                    <a href="{{ route('top_10_areas') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Top 5 Areas</h6>
+                                            <h6 class="mb-1">Top 10 Areas</h6>
                                         </div>
                                     </a>
                                 </li>

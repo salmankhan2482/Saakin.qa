@@ -253,8 +253,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
     Route::get('top_Ten_Properties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
     Route::get('top_Ten_Properties/{id}', 'ClickCountersController@topTenPropertiesList')->name('top_Ten_Properties.list');
-    Route::get('top_5_areas', 'ClickCountersController@top5Areas')->name('top_5_areas');
-    Route::get('top_5_areas/{id}', 'ClickCountersController@top5AreasList')->name('top_5_areas.list');
+    Route::get('top_10_areas', 'ClickCountersController@top10Areas')->name('top_10_areas');
+    Route::get('top_10_areas/{id}', 'ClickCountersController@top10AreasList')->name('top_10_areas.list');
     Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
     
     //company registration resource controller

@@ -69,8 +69,8 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col-sm-2 mt-2 mt-sm-0">
-                                    <button type="submit" class="btn btn-dark  pull-right">
+                                <div class="col-sm-2 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm pull-left">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>

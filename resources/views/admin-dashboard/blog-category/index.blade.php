@@ -22,17 +22,17 @@
                                 <tr>
                                     <th>Category</th>
                                     <th>Description</th>
-                                    <th class="width-100">{{ trans('words.action') }}</th>
+                                    <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($blogCategories as $i => $blogCategory)
                             <tr>
                                 <td>{{ $blogCategory->category }}</td>
-                                <td>{{ Str::limit($blogCategory->description, 150, '...') }}</td>
+                                <td>{{ Str::limit($blogCategory->description, 100, '...') }}</td>
                                         <td>
                                             <a href="{{ route('blog-category.edit', $blogCategory->id) }}"
-                                                class="btn btn-info rounded btn-xs action-btn">
+                                                class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a href="{{ route('blog-category.destroy', $blogCategory->id) }}"

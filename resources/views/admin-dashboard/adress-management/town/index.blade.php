@@ -12,13 +12,13 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <form action="{{ route('propertyTowns.index') }}" method="GET">
-                            <div class="row" style="ali">
+                            <div class="row">
                                 <div class="col-sm-4 offset-sm-2">
                                     <input type="text" class="form-control" name="name" placeholder="Search" value="{{ request('name') }}">
                                 </div>
                                
-                                <div class="col-sm-1 mt-sm-0">
-                                    <button type="submit" class="btn btn-dark  pull-right">
+                                <div class="col-sm-1 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm pull-right">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
@@ -66,7 +66,7 @@
                                 <td>{{ $town->subcity->name }}</td>
                                 <td>
                                     <a href="{{ route('propertyTowns.edit', $town->id) }}"
-                                        class="btn btn-info rounded btn-xs action-btn">
+                                        class="btn btn-primary rounded btn-xs action-btn">
                                         <i class="fa fa-edit"></i>
                                     </a>
                                     <a href="{{ route('propertyTowns.destroy', $town->id) }}"
