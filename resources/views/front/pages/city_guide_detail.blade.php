@@ -8,7 +8,7 @@
   @section('image', asset('upload/cities/' . $cityGuide->city_image))
 @else
   @section('title', $cityGuide->name . ' | ' . 'Saakin.qa')
-  @section('description', $city_guide_description)
+  @section('description', stripslashes($city_guide_description))
   @section('keyword', $cityGuide->name . ' City in Qatar')
   @section('type', 'City Guide | Saakin.qa')
   @section('url', url()->current())
@@ -155,23 +155,23 @@
         </div>
         <div id="lifestyle">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">Lifestyle</h5>
-          <ul class="sub-details">
+          {{-- <ul class="sub-details">
             <li>Shopping Malls</li>
             <li>Restaurants</li>
             <li>Beaches</li>
             <li>Fitness &amp; Beauty</li>
-          </ul>
+          </ul> --}}
           {!! $cityGuideContent->lifestyle ??'' !!}
         </div>
         <div id="thingsToConsider">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">Things to consider</h5>
-          <ul class="sub-details">
+          {{-- <ul class="sub-details">
             <li>Airport</li>
             <li>Metro Station</li>
             <li>Market (wholesale/food)</li>
             <li>Beach</li>
             <li>Stadiums</li>
-          </ul>
+          </ul> --}}
           {!! $cityGuideContent->things_to_consider ??'' !!}
         </div>
         <div id="locations">

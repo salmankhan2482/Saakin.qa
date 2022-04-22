@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends("front.layouts.main")
 
 @section('title', 'Register | saakin.qa')
 @section('description', 'Register your Account on Sakkin with few clicks')
@@ -70,11 +70,11 @@
                                                     <input type="text" name="phone" placeholder="Phone Number *"
                                                         class="form-control" required>
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-4">
                                                     <input type="text" name="company_name" placeholder="Company Name *"
                                                         class="form-control" required>
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-4">
                                                     <select name="city" id="city" class="form-control" required>
                                                         <option value="">Select City</option>
                                                         <option value="1">Doha</option>
@@ -84,10 +84,9 @@
                                                         <option value="5">Al Shamal</option>
                                                         <option value="6">Al Wakrah</option>
                                                         <option value="7">Lusail</option>
-
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-md-6">
+                                                <div class="form-group col-md-4">
                                                     <select name="job_title" id="job_title" class="form-control" required>
                                                         <option value="">Select Job Title</option>
                                                         <option value="CEO">CEO</option>
