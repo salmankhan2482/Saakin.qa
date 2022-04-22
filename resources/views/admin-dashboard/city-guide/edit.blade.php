@@ -68,7 +68,7 @@
                                 <div class="form-group col-md-6">
                                     <label>Meta Title</label>
                                     <input type="text" id="meta_title" name="meta_title" 
-                                    value="{{ $city->meta_description }}" class="form-control" placeholder="Meta Title">
+                                    value="{{ $city->meta_title }}" class="form-control" placeholder="Meta Title">
                                 </div>
                             </div>
 
