@@ -13,12 +13,13 @@
             <img id="modalImg" src="" alt="">
           </div>
           <div class="detail-holder">
-            <h3 id="modalName">{{ 'Proprty title' }}</h3>
+            <h3 class="hideAddress" id="modalName">{{ 'Proprty title' }}</h3>
             <strong class="price">{{ '' }}</strong>
-            <span class="hideAddress ">Agent:
+
+            <span class="hideAddress">Agent:
               <strong id="modalAgent">{{ '' }}</strong></span>
 
-            <span class="hideAddress ">Broker:
+            <span class="hideAddress">Broker:
               <strong id="modalBroker">{{ '' }}</strong></span>
 
             <ul class="list-unstyled mb-0  d-flex">
