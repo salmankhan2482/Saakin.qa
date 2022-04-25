@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Subscribers</h4>
-                    <a href="{{ route('new_dashboard') }}">
+                    <a href="{{ route('dashboard.index') }}">
                         <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
                 </div>

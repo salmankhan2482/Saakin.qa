@@ -334,7 +334,3 @@
 
   </style>
 @endpush
-
-{{-- Scripts --}}
-
-

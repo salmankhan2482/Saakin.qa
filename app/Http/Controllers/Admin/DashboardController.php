@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Auth;
 use App\User;
 use App\Enquire;
 use App\Partners;
@@ -11,15 +10,18 @@ use App\Properties;
 use App\Subscriber;
 use App\Testimonials;
 use App\Transactions;
-
 use App\ClickCounters;
+
 use App\Http\Requests;
+use App\PropertyCities;
+use App\PropertyReport;
 use App\PropertyCounter;
 use App\SubscriptionPlan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class DashboardController extends MainAdminController
@@ -32,54 +34,201 @@ class DashboardController extends MainAdminController
     public function index()
     {
         
-    	 	if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
-	            \Session::flash('flash_message', trans('words.access_denied'));
-	            return redirect('dashboard');
-	        }
-            if(Auth::User()->usertype=="Agency")
-            {
-                $agency_id = Auth::User()->id;
-                $properties_count = Properties::where("agency_id",$agency_id)->get()->count();
-                $pending_properties_count = Properties::where('status', '0')->where("agency_id",$agency_id)->get()->count();
-                $featured_properties = Properties::where('featured_property', '1')->where("agency_id",$agency_id)->get()->count();
+        if(auth()->user()->usertype == 'Agency'){
+            $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+            
+        };
 
-                //Inquiries
-                $inquiries = Enquire::where('agency_id',Auth::User()->agency_id)->orderBy('id','desc')->get()->count();
+        if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
+            Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('dashboard');
+        }
+            
+            $agency_id = Auth::User()->agency_id;
+            $data['active_properties'] = Properties::where('status', 1)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->count();
+
+            $data['inactive_properties'] = Properties::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->where('status', 0)
+                ->count();
+
+            $data['sale_properties'] = Properties::where('status',1)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->where('property_purpose','Sale')
+                ->count();
                 
-                $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+            $data['rent_properties'] = Properties::where('status',1)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->where('property_purpose','Rent')
+                ->count();
+                
+
+            $data['total_properties'] = Properties::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->count();
+
+            
+            $data['featured_properties'] = Properties::where('featured_property', '1')
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->count();
+
+            //Property Reports
+            $data['reports'] = PropertyReport::
+            when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })                  
+            ->count();  
+
+            //Inquiries
+            $data['inquiries'] = Enquire::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->orderBy('id', 'desc')
+                ->count();
+               
+            // last month
+            $data['last_month_properties'] = Properties::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereMonth('created_at', Carbon::now()->subMonth()->format('m'))
+                ->count();
+                
                 
                 //traffic per month
-                $trafficPerMonth = PropertyCounter:: whereMonth('created_at', Carbon::now()->month)
-                ->whereIn('property_id', $property_ids)->sum('counter');
-
-                // clicks per month
-                $clicksPerMonths = ClickCounters:: whereMonth('created_at', Carbon::now()->month)
-                ->whereIn('property_id', $property_ids)->get();
+                // whereMonth('created_at', Carbon::now()->month)
+            $data['trafficPerMonth'] = PropertyCounter::when(auth()->user()->usertype == 'Agency', function($query){
+                    $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+                    $query->whereIn('property_id', $property_ids);
+                })
+                ->sum('counter');
                
-                // number of users
-                $numberOfUsers = PageVisits:: whereMonth('created_at', Carbon::now()->month)
-                ->whereIn('property_id', $property_ids)->groupBy('ip_address')->get();
+            // clicks per month
+            $data['clicksPerMonths'] = ClickCounters::when(auth()->user()->usertype == 'Agency', function($query){
+                    $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
+                    $query->whereIn('property_id', $property_ids);
+                })
+                ->count();
+                
 
-                //top 10 properties
-                $top10Proprties = '';
+            // number of users
+            $data['numberOfUsers'] = PageVisits::when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where('agency_id', auth()->user()->agency_id);
+                })
+                ->distinct('ip_address')->count();
 
-                $top10Properties = '';
-
+            $months = [
+                '1' => 'Jan', 
+                '2' => 'Feb', 
+                '3' => 'Mar', 
+                '4' => 'Apr', 
+                '5' => 'May', 
+                '6' => 'June', 
+                '7' => 'July', 
+                '8' => 'Aug', 
+                '9' => 'Sep', 
+                '10' => 'Oct', 
+                '11' => 'Nov', 
+                '12' => 'Dec'
+            ];
+        
+            // properties per month
+            foreach ($months as $key => $value) {
+                $data['propertiesPer'.$value] = Properties::
+                    when(auth()->user()->usertype == 'Agency', function($query){
+                        $query->where("agency_id", Auth::User()->agency_id);
+                    })
+                    ->whereYear('created_at', Carbon::now()->year)
+                    ->whereMonth('created_at', $key)
+                    ->count();
             }
-            else
-            {
-                $properties_count = Properties::count();
-                $pending_properties_count = Properties::where('status', '0')->count();
-                $featured_properties = Properties::where('featured_property', '1')->count();
-                $inquiries = Enquire::count();               
-                $trafficPerMonth = '';
-                $clicksPerMonths = '';
-                $top10Proprties = '';
-                $top10Properties = '';
-                $numberOfUsers = '';
+
+            //properties this year
+            $data['propertiesThisYear'] = Properties::
+            when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })
+            ->whereYear('created_at', Carbon::now()->year)
+            ->count();
+
+            // donught chart enquiries
+            $data['Agency Inquiry'] = Enquire::where('type', 'Agency Inquiry')
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })->count();
+
+            // donught chart enquiries
+            $data['Contact Inquiry'] = Enquire::where('type', 'Contact Inquiry')
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })->count();
+            
+            // donught chart enquiries
+            $data['Property Inquiry'] = Enquire::where('type', 'Property Inquiry')
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("agency_id", Auth::User()->agency_id);
+            })->count();
+
+            // clicks per month
+            foreach ($months as $key => $value) {
+            $data['clicksPer'.$value] = ClickCounters::whereYear('created_at', Carbon::now()->year)
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereMonth('created_at', $key)->count(); 
             }
-            return view('admin.pages.dashboard',
-            compact('properties_count','pending_properties_count', 'trafficPerMonth', 'clicksPerMonths', 'featured_properties','inquiries', 'top10Proprties', 'top10Properties', 'numberOfUsers'));
+            
+            // traffic per month
+            foreach ($months as $key => $value) {
+                $data['trafficPer'.$value] = PropertyCounter::
+                when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', $key)
+                ->sum('counter');
+            }
+            
+            // no of users per month
+            foreach ($months as $key => $value) {
+                $data['usersPer'.$value] = DB::table('page_visits')
+                ->distinct('ip_address')
+                ->when(auth()->user()->usertype == 'Agency', function($query){
+                    $query->where("agency_id", Auth::User()->agency_id);
+                })
+                ->whereYear('created_at', Carbon::now()->year)
+                ->whereMonth('created_at', $key)
+                ->count('ip_address');
+            }
+
+            $data['propertyCities'] = PropertyCities::join("properties", "properties.city", "=", "property_cities.id")
+            ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))
+            ->when(auth()->user()->usertype == 'Agency', function($query){
+                $query->where("properties.agency_id", Auth::User()->agency_id);
+            })
+            ->where('properties.status', 1)
+            ->orderBy("pcount", "desc")
+            ->groupBy("property_cities.id")
+            ->get();
+            
+            $action = 'saakin_dashboard';
+            return view('admin-dashboard.index', compact('data', 'action'));
+            
     }
 
 

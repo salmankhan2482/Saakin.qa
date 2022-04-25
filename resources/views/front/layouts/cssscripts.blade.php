@@ -62,6 +62,15 @@
 @stack('styles')
 
 <style>
+    .social-div .btn-monochrome {
+      --btn-bg-color: #fff;
+      --btn-border-color: #e8e1e0;
+      --btn-text-color: #2d383f;
+      --btn-hover-bg-color: #f7f5f5;
+      --btn-hover-border-color: #e8e1e0;
+      --btn-hover-text-color: #403b45;
+    }
+    
     .hideAddress{
         display: -webkit-box; 
         -webkit-line-clamp: 1; 

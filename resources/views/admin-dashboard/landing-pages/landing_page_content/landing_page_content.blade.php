@@ -21,7 +21,7 @@
 <div class="container-fluid">
     <div class="page-titles">
         <ol class="breadcrumb">
-            <a href="{{ route('new_dashboard')}}">
+            <a href="{{ route('dashboard.index')}}">
                 <button type="button" class="btn btn-rounded btn-dark">Back</button>
             </a>
         </ol>
