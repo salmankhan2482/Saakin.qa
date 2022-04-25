@@ -288,8 +288,7 @@
           </div>
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input placeholder="Movein Date" class="textbox-n form-control" type="text" onfocus="(this.type='date')" id="date" required>
-              {{-- <input type="date" placeholder="Move in Date" name="movein_date" data-date-format='dd-mm-yy' class="form-control" required> --}}
+              <input type="text" id="checkin" placeholder="Move in Date" name="movein_date" data-date-format='dd-mm-yy' class="form-control" required>
             </div>
           </div>
         </div>
@@ -307,30 +306,17 @@
   </div>
 </div>
 
-{{-- Css --}}
-@push('styles')
-  <style>
-    @media(min-width: 600px) {
-      .modal .modal-content .property-detail-block .detail-holder .property-feature {
-        margin-left: 0px !important;
-      }
 
-      .modal .email-content .property-detail-block {
-        margin-bottom: 15 !important;
-      }
 
-      .btn-light {
-        border-radius: 0px !important;
-        border: 1px solid #ced4da !important;
-      }
-    }
+@push('scripts')
+<link href="{{ asset('assets/css/datepicker.css') }}" rel="stylesheet" />
+<script src="{{asset('assets/js/datepicker.js')}}"></script>
 
-    @media(max-width: 600px) {
-      .detail-holder {
-        width: 50% !important;
-        word-wrap: break-word !important;
-      }
-    }
-
-  </style>
+    <script>
+      $(function () {
+        $("#checkin").datepicker({
+          autoclose : true, 
+        });
+      });
+    </script>
 @endpush
