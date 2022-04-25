@@ -3,7 +3,7 @@
         <ul class="metismenu" id="menu">
 
             {{-- Dashboard --}}
-            <li><a href="{!! Route('new_dashboard') !!}">
+            <li><a href="{!! Route('dashboard.index') !!}">
                     <i class="flaticon-381-networking"></i>
                     <span class="nav-text">Dashboard</span>
                 </a>

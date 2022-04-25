@@ -24,7 +24,7 @@
 
                 {{-- blogs --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link {{ Request::is('url', 'admin/blog*') ? 'text-saakin' : '' }} " href="#"
+                    <a class="nav-link {{ Request::is('url', 'admin/blog*') ? 'text-saakin' : '' }}" href="#"
                         role="button" data-toggle="dropdown">
                         Blog
                     </a>
@@ -34,14 +34,19 @@
                                 <li>
                                     <a href="{{ route('blogs.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Blogs</h6>
+                                            <h6 class="mb-1 {{ Request::is('url', 'admin/blogs') ? 'text-saakin' : '' }}">
+                                                Blogs
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('blog-category.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Blog Categories</h6>
+                                            <h6 class="mb-1 
+                                            {{ Request::is('url', 'admin/blog-category/list') ? 'text-saakin' : '' }}">
+                                                Blog Categories
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -53,7 +58,8 @@
 
                 {{-- Addresses --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                    <a class="nav-link {{ Request::is('url', 'admin/location/*') ? 'text-saakin' : '' }}" 
+                        href="#" role="button" data-toggle="dropdown">
                         Location
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -62,28 +68,40 @@
                                 <li>
                                     <a href="{{ route('propertyCities.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Cities</h6>
+                                            <h6 class="mb-1 
+                                            {{ Request::is('url', 'admin/location/propertyCities') ? 'text-saakin' : '' }}">
+                                                Cities
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('propertySubCities.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Sub-Cities</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/location/propertySubCities') ? 'text-saakin' : '' }}">
+                                                Sub-Cities
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('propertyTowns.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Towns</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/location/propertyTowns') ? 'text-saakin' : '' }}">
+                                                Towns
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('propertyAreas.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Areas</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/location/propertyAreas') ? 'text-saakin' : '' }}">
+                                                Areas
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -95,7 +113,7 @@
 
                 {{-- User Management --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                    <a class="nav-link {{ Request::is('url', 'admin/user-management/*') ? 'text-saakin' : '' }}" href="#" role="button" data-toggle="dropdown">
                         User
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -104,14 +122,20 @@
                                 <li>
                                     <a href="{{ route('users.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Users</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/user-management/users') ? 'text-saakin' : '' }}">
+                                                Users
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('permissions.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Permissions</h6>
+                                            <h6 class="mb-1 
+                                            {{ Request::is('url', 'admin/user-management/permissions') ? 'text-saakin' : '' }}">
+                                                Permissions
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -119,7 +143,10 @@
                                 <li>
                                     <a href="{{ route('roles.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Roles</h6>
+                                            <h6 class="mb-1 
+                                            {{ Request::is('url', 'admin/user-management/roles') ? 'text-saakin' : '' }}">
+                                                Roles
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>

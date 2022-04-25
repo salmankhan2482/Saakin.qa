@@ -1,4 +1,6 @@
+{{-- @if (Route::currentRouteName() != 'home') --}}
 <script src="{{ asset('assets/js/Jquery.min.js') }}"></script>
+{{-- @endif --}}
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
 </script>
@@ -317,6 +319,14 @@
       url: "select/buyRent/for/search/" + pp,
       success: function(data) {
         $('.ajaxChange').html(data);
+        $(document).ready(function() {
+          $(".pro-slider").slick({
+            dots: true,
+            autoplay: false,
+            autoplaySpeed: 2000,
+            speed: 150,
+          });
+        });
       }
     });
 

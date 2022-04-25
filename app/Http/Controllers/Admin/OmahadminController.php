@@ -139,8 +139,7 @@ class OmahadminController extends Controller
                 '11' => 'Nov', 
                 '12' => 'Dec'
             ];
-
-            
+        
             // properties per month
             foreach ($months as $key => $value) {
                 $data['propertiesPer'.$value] = Properties::
@@ -212,14 +211,13 @@ class OmahadminController extends Controller
 
             $data['propertyCities'] = PropertyCities::join("properties", "properties.city", "=", "property_cities.id")
             ->select("property_cities.id", "property_cities.name", DB::Raw("count(properties.id) as pcount"))
-
             ->when(auth()->user()->usertype == 'Agency', function($query){
                 $query->where("properties.agency_id", Auth::User()->agency_id);
             })
             ->where('properties.status', 1)
             ->orderBy("pcount", "desc")
             ->groupBy("property_cities.id")
-             ->get();
+            ->get();
             
             $action = 'saakin_dashboard';
             return view('admin-dashboard.index', compact('data', 'action'));

@@ -246,9 +246,10 @@ class PropertiesController extends Controller
         });
         
         $commercialIds = array(); array_push($commercialIds, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
+        
         if (isset($request->commercial)) {
             $properties->whereIn('property_type', $commercialIds);
-        }else{
+        }elseif(!in_array(request('property_type'), $commercialIds)){
             $properties->whereNotIn('property_type', $commercialIds);
         }
 
