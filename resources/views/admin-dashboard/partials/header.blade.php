@@ -158,8 +158,14 @@
 
                 {{-- Landing Pages --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link {{ Request::is('url', 'admin/landing-pages*') ? 'text-saakin' : '' }} "
-                        href="#" role="button" data-toggle="dropdown">
+                    <a  class="nav-link 
+                    {{ Request::is('url', 'admin/landing-pages*') ? 'text-saakin' : '' }} 
+                    {{ Request::is('url', 'admin/popularSearches') ? 'text-saakin' : '' }}
+                    {{ Request::is('url', 'admin/about_page') ? 'text-saakin' : '' }}
+                    {{ Request::is('url', 'admin/terms_page') ? 'text-saakin' : '' }}
+                    {{ Request::is('url', 'admin/privacy_policy_page') ? 'text-saakin' : '' }}
+                    {{ Request::is('url', 'admin/faq_page') ? 'text-saakin' : '' }}
+                    " href="#" role="button" data-toggle="dropdown">
                         Pages
                     </a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -168,21 +174,30 @@
                                 <li>
                                     <a href="{{ route('properties-page-content') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Properties Page Content</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/landing-pages/properties-page/content') ? 'text-saakin' : '' }}">
+                                                Properties Page Content
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('landing-pages.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Landing Page Content</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/landing-pages') ? 'text-saakin' : '' }}">
+                                                Landing Page Content
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('popularSearches.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Popular Searches</h6>
+                                            <h6 class="mb-1 
+                                                {{ Request::is('url', 'admin/popularSearches') ? 'text-saakin' : '' }}">
+                                                Popular Searches
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -190,7 +205,10 @@
                                 <li>
                                     <a href="{{ route('about_page') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">About Us</h6>
+                                            <h6 class="mb-1 
+                                                {{ Request::is('url', 'admin/about_page') ? 'text-saakin' : '' }}">
+                                                About Us
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -198,7 +216,10 @@
                                 <li>
                                     <a href="{{ route('terms_page') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Terms of Use</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/terms_page') ? 'text-saakin' : '' }}">
+                                                Terms of Use
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -206,7 +227,10 @@
                                 <li>
                                     <a href="{{ route('privacy_page') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Privacy Policy</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/privacy_policy_page') ? 'text-saakin' : '' }}">
+                                                Privacy Policy
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -214,7 +238,10 @@
                                 <li>
                                     <a href="{{ route('faq_page') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">FAQ's</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/faq_page') ? 'text-saakin' : '' }}">
+                                                FAQ's
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -226,7 +253,7 @@
 
                 {{-- Property types purpose report active inactive amenity management --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}
+                    <a class="nav-link  {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}"
                         href="#" role="button" data-toggle="dropdown">
                         Listing
                     </a>
@@ -236,49 +263,70 @@
                                 <li>
                                     <a href="{{ route('featuredproperties.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Featured Properties</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/properties_featured') ? 'text-saakin' : '' }}">
+                                                Featured Properties
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ url('admin/properties') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Active Properties</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/properties') ? 'text-saakin' : '' }}">
+                                                Active Properties
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('inactive_properties.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">In-Active Properties</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/properties_inactive_listing') ? 'text-saakin' : '' }}">
+                                                In-Active Properties
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('property-types.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Property Types</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/property-types') ? 'text-saakin' : '' }}">
+                                                Property Types
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('property-purpose.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Property Purposes</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/property-purpose') ? 'text-saakin' : '' }}">
+                                                Property Purposes
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('property-amenity.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Property Amenity</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/property-amenity') ? 'text-saakin' : '' }}">
+                                                Property Amenity
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('property-reports.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Property Reports</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/property-reports') ? 'text-saakin' : '' }}">
+                                                Property Reports
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -289,7 +337,7 @@
 
                 {{-- Traffic --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}
+                    <a class="nav-link  {{ Request::is('url', 'admin/traff*') ? 'text-saakin' : '' }}"
                         href="#" role="button" data-toggle="dropdown">
                         Analytics
                     </a>
@@ -300,7 +348,10 @@
                                 <li>
                                     <a href="{{ route('propertyVisits_per_month') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Property Visits</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/traffic/visits_per_month') ? 'text-saakin' : '' }}">
+                                                Property Visits
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -308,7 +359,10 @@
                                 <li>
                                     <a href="{{ route('callToAction.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Click to Action</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/traffic/callToAction') ? 'text-saakin' : '' }}">
+                                                Click to Action
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -316,21 +370,30 @@
                                 <li>
                                     <a href="{{ route('trafficUsers') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Unique Users</h6>
+                                            <h6 class="mb-1
+                                                {{ Request::is('url', 'admin/traffic/trafficUsers') ? 'text-saakin' : '' }}">
+                                                Unique Users
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('top_Ten_Properties') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Top 10 Properties</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/traffic/topTenProperties') ? 'text-saakin' : '' }}">
+                                                Top 10 Properties
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('top_10_areas') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Top 10 Areas</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/traffic/top10areas') ? 'text-saakin' : '' }}">
+                                                Top 10 Areas
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -342,7 +405,9 @@
 
                 {{-- Inquiries --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}
+                    <a class="nav-link 
+                    {{ Request::is('url', 'admin/leads*') ? 'text-saakin' : '' }} 
+                    {{ Request::is('url', 'admin/companyRegistration') ? 'text-saakin' : '' }}"
                         href="#" role="button" data-toggle="dropdown">
                         Leads
                     </a>
@@ -352,7 +417,10 @@
                                 <li>
                                     <a href="{{ route('property_inquiries') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Property Inquiries</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/leads/property_inquiries') ? 'text-saakin' : '' }}">
+                                                Property Inquiries
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -360,7 +428,10 @@
                                 <li>
                                     <a href="{{ route('agency_inquiries') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Agency Inquiries</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/leads/agency_inquiries') ? 'text-saakin' : '' }}">
+                                                Agency Inquiries
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -368,7 +439,10 @@
                                 <li>
                                     <a href="{{ route('contact_inquiries') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Contact Us</h6>
+                                            <h6 class="mb-1 
+                                            {{ Request::is('url', 'admin/leads/contact_inquiries') ? 'text-saakin' : '' }}">
+                                                Contact Us
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -377,7 +451,10 @@
                                 <li>
                                     <a href="{{ route('companyRegistration.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Company Registration</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/companyRegistration') ? 'text-saakin' : '' }}">
+                                                Company Registration
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -386,7 +463,10 @@
                                 <li>
                                     <a href="{{ route('subscriber') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Subscribers</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/leads/subscriber') ? 'text-saakin' : '' }}">
+                                                Subscribers
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -398,7 +478,9 @@
 
                 {{-- City Guide --}}
                 <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link " {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}
+                    <a class="nav-link 
+                        {{ Request::is('url', 'admin/cities') ? 'text-saakin' : '' }}
+                        {{ Request::is('url', 'admin/city-detail/list') ? 'text-saakin' : '' }}"
                         href="#" role="button" data-toggle="dropdown">
                         Guide
                     </a>
@@ -408,7 +490,10 @@
                                 <li>
                                     <a href="{{ route('cities.index') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">Cities</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/cities') ? 'text-saakin' : '' }}">
+                                                Cities
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
@@ -416,7 +501,10 @@
                                 <li>
                                     <a href="{{ route('city-details') }}" class="timeline-panel">
                                         <div class="media-body">
-                                            <h6 class="mb-1">City Details</h6>
+                                            <h6 class="mb-1
+                                            {{ Request::is('url', 'admin/city-detail/list') ? 'text-saakin' : '' }}">
+                                                City Details
+                                            </h6>
                                         </div>
                                     </a>
                                 </li>
