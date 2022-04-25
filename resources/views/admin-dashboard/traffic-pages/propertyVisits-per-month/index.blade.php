@@ -60,7 +60,7 @@
                                         <td>{{ $traffic->totalTraffic }}</td>
                                         <td>
                                             <a class="btn btn-success rounded btn-xs action-btn"
-                                             href="{{ url('admin/propertyVisits_per_month/'.$traffic->aid.'?from='.request('from').'&to='.request('to')) }}">
+                                             href="{{ url('admin/traffic/visits_per_month/'.$traffic->aid.'?from='.request('from').'&to='.request('to')) }}">
                                                 <i class="fa fa-eye"></i>
                                             </a>
                                         </td>
