@@ -9,7 +9,7 @@ vendor_old/
 .htaccess
 .idea/
 
-resources/views/front/layouts/header.blade.php
+resources/views/front/layouts
 
 public/site_assets/*
 /public/site_assets/*

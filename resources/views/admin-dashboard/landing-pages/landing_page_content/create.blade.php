@@ -40,7 +40,7 @@
                         <input type="hidden" name="id" value="{{ isset($page_info->id) ? $page_info->id : null }}">
 
                             <div class="form-row">
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label>Property Purpose</label>
                                     <select id="property_purposes_id" name="property_purposes_id" class="form-control">
                                         <option value="">Select Property Purpose</option>
@@ -49,8 +49,8 @@
                                     @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Property Types</label>
+                                <div class="form-group col-md-6">
+                                    <label>Property Type</label>
                                     <select id="property_types_id" name="property_types_id" class="form-control">
                                         <option value="">Select Property Types</option>
                                         @foreach ($data['property_types'] as $type)
@@ -58,12 +58,23 @@
                                     @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label>Cities</label>
-                                    <select id="property_cities_id" name="property_cities_id" class="form-control">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>City</label>
+                                    <select id="property_cities_id" name="property_cities_id" class="form-control" onchange="callSubCities(this);">
                                         <option value="">Select City</option>
                                         @foreach ($data['cities'] as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Sub-City</label>
+                                    <select id="subCity" name="property_sub_cities_id" class="form-control">
+                                        <option value="">Select Sub-City</option>
+                                        @foreach ($data['subcities'] as $subcity)
+                                        <option value="{{ $subcity->id }}">{{ $subcity->name }}</option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -106,9 +117,39 @@
 </div>
 @endsection
 @section('scripts')
+<script src="{{ URL::asset('admin/js/jquery.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
 <script>
     var editor = CKEDITOR.replace( 'page_content' );
 CKFinder.setupCKEditor( editor );
+
+function callSubCities(data) {
+            var id = data.value;
+            
+            $.ajax({
+                type: "GET",
+                url: "{{ route('callSubCities') }}",
+                async: true,
+                data: {
+                    id: id // as you are getting in request('id') 
+                },
+                success: function (response) {
+                    var subcities = response['subcities'];
+                    if(subcities == ''){
+                        console.log('a');
+                        $("#subCity").empty();     
+                        $("#subCity").append('<option value="">No Result Found</option>');
+                    }else{
+                        $("#subCity").empty();     
+                        $.each(subcities, function(key,value){
+                        $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
+                        });
+                    }
+
+                }
+            });
+
+        }
 </script>
 @endsection

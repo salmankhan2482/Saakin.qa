@@ -1128,6 +1128,16 @@ class PropertiesController extends Controller
             ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
 
 
+            
+            $purp = ($buyOrRent == 'buy' ? 2 : 1);
+            $landing_page_content = LandingPage::where('property_purposes_id', $purp)
+            ->where('property_types_id',$type->id)
+            ->where('property_cities_id',$city_keyword->id)
+            ->where('property_sub_cities_id',$subcity_keyword->id)
+            ->first();
+            
+
+
             if($properties->total() > 0){
                 $meta_description = $properties->random()->property_name. ' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ '.$page_info;
             }else{
@@ -1135,7 +1145,7 @@ class PropertiesController extends Controller
             }
                  
             return view('front.pages.properties.subcity-property-type-for-purpose', 
-            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'towns', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info', 'data'));
+            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'towns', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info', 'data','landing_page_content'));
             
         }elseif(count($town_props) > 0){
             //town if

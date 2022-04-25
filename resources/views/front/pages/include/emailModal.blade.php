@@ -283,12 +283,13 @@
           </div>
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="tel" placeholder="4023 0023" name="telephone" class="form-control" id="telephoneInput" required>
+              <input type="tel" placeholder="Phone Number" name="telephone" class="form-control" id="telephoneInput" required>
             </div>
           </div>
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="date" placeholder="Move in Date" name="movein_date" data-date-format='dd-mm-yy' class="form-control" required>
+              <input placeholder="Movein Date" class="textbox-n form-control" type="text" onfocus="(this.type='date')" id="date" required>
+              {{-- <input type="date" placeholder="Move in Date" name="movein_date" data-date-format='dd-mm-yy' class="form-control" required> --}}
             </div>
           </div>
         </div>

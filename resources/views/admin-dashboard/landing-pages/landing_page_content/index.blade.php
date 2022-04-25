@@ -26,6 +26,7 @@
                                     <th>Purpose</th>
                                     <th>Type</th>
                                     <th>City</th>
+                                    <th>Sub-City</th>
                                     <th>Cotnent</th>
                                     <th>{{ trans('words.action') }}</th>
                                 </tr>
@@ -37,6 +38,7 @@
                                         <td>{{ $item->PropertyPurposes->name ?? 'Not Available' }}</td>
                                         <td>{{ $item->PropertyTypes->types ?? 'Not Available' }}</td>
                                         <td>{{ $item->PropertyCities->name ?? 'Not Available' }}</td>
+                                        <td>{{ $item->PropertySubCities->name ?? 'Not Available' }}</td>
                                         <td>{{ $item->meta_title ?? 'Not Available' }}</td>
                                         <td>
                                             <a href="{{ route('landing-pages.edit',$item->id) }}"
