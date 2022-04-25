@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\PropertyCities;
+use App\PropertySubCities;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -42,6 +43,7 @@ class LandingPagesController extends Controller
         $data['property_purposes'] = PropertyPurpose::all();
         $data['property_types'] = Types::all();
         $data['cities'] = PropertyCities::all();
+        $data['subcities'] = PropertySubCities::all();
         $data['landing_pages_content'] = LandingPage::all();
         $action = 'saakin_create';
         
@@ -70,6 +72,7 @@ class LandingPagesController extends Controller
         where('property_purposes_id', request('property_purposes_id'))
         ->where('property_types_id', request('property_types_id'))
         ->where('property_cities_id', request('property_cities_id'))
+        ->where('property_sub_cities_id', request('property_sub_cities_id'))
         ->first();
 
         if ($checkDuplicate){
@@ -80,6 +83,7 @@ class LandingPagesController extends Controller
         $landing_pages_content->property_purposes_id = $inputs['property_purposes_id'];
         $landing_pages_content->property_types_id = $inputs['property_types_id'];
         $landing_pages_content->property_cities_id = $inputs['property_cities_id'];
+        $landing_pages_content->property_sub_cities_id = $inputs['property_sub_cities_id'];
         $landing_pages_content->page_content = $inputs['page_content'];
         $landing_pages_content->meta_title = $inputs['meta_title'];
         $landing_pages_content->meta_description = $inputs['meta_description'];
@@ -101,6 +105,7 @@ class LandingPagesController extends Controller
         $data['property_purposes'] = PropertyPurpose::all();
         $data['property_types'] = Types::all();
         $data['cities'] = PropertyCities::all();
+        $data['subcities'] = PropertySubCities::all();
         $data['landing_page_content'] = LandingPage::findOrFail($id);
         $action = 'saakin_create';
 
@@ -124,6 +129,7 @@ class LandingPagesController extends Controller
         $landing_page_content->property_purposes_id = $inputs['property_purposes_id'];
         $landing_page_content->property_types_id = $inputs['property_types_id'];
         $landing_page_content->property_cities_id = $inputs['property_cities_id'];
+        $landing_page_content->property_sub_cities_id = $inputs['property_sub_cities_id'];
         $landing_page_content->page_content = $inputs['page_content'];
         $landing_page_content->meta_title = $inputs['meta_title'];
         $landing_page_content->meta_description = $inputs['meta_description'];

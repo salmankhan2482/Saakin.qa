@@ -1,16 +1,17 @@
 @extends("front.layouts.main")
-@if ($page_info != null)
-    @section('title', $page_info . ' | ' . ' Saakin.qa')
-    @section('description', $meta_description ?? $page_info . ' the best place for rent and seling properties')
-    @section('keyword', $page_info)
+@if ($landing_page_content != null)
+    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
+    @section('description', $landing_page_content->meta_description)
+    @section('keyword', $landing_page_content->meta_keyword)
     @section('type', 'property')
     @section('url', url()->current())
 @else
     @section('title', $page_info . '|' . 'Saakin.qa')
-    @section('description', $page_info)
+    @section('description', $data['page_des'] ?? '')
     @section('type', 'property')
     @section('url', url()->current())
 @endif
+
 
 @section('content')
 
@@ -1301,6 +1302,13 @@
 
             @endif
 
+        </div>
+    </div>
+    <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
+        <div class="container">
+            @if ($properties->onFirstPage())
+                {!! $landing_page_content->page_content ?? '' !!}
+            @endif
         </div>
     </div>
 
