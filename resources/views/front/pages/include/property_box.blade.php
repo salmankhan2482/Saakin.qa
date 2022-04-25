@@ -201,7 +201,7 @@
         dots: true,
         autoplay: false,
         autoplaySpeed: 2000,
-        speed: 150,
+        speed: 10,
       });
     });
   </script>

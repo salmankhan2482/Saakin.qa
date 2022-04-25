@@ -1360,7 +1360,7 @@
                 dots: true,
                 // autoplay: true,
                 autoplaySpeed: 2000,
-                speed: 150,
+                speed: 10,
             });
         });
 
