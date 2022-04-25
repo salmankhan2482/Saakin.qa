@@ -304,5 +304,5 @@
             }
         }
     </script>
-
+    @include('front.pages.include.mobileSliderCode')
 @endsection

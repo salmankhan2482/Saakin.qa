@@ -18,20 +18,15 @@ use App\Http\Controllers\Admin\TypesController;
        
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
+
+// social login urls
 Route::get('auth/google', 'SocialController@redirectToGoogle')->name('google.login');
 Route::get('auth/facebook', 'SocialController@redirectToFacebook')->name('facebook.login');
 
-Route::get('auth/google/callback', 'SocialController@handleGoogleCallback');
-Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
-
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
-    Route::get('/dashboard/new', 'OmahadminController@saakin_dashboard')->middleware('auth')
-    ->name('new_dashboard');
     Route::get('/ckeditor','OmahadminController@ckeditor')->name('ckeditor');
     Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
-    // new routes
-    
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
     Route::get('/our_backup_database', 'UserController@dbBackup')->name('our_backup_database');
@@ -107,7 +102,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('property-amenity', 'PropertyAmenityController');
     Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy')->name('property-amenity.destroy');
 
-    Route::group(['middleware' => ['auth']], function() {
+    Route::group(['prefix' => 'user-management', 'middleware' => 'auth'], function() {
         Route::resource('roles','RoleController');
         Route::resource('users','UsersController');
         Route::get('users/delete/{id}','UsersController@destroy')->name('users.destroy');
@@ -230,18 +225,23 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     // multi task
     Route::resource('popularSearches', 'PopularSearchesController');
     Route::get('popularSearches/delete/{id}', 'PopularSearchesController@destroy')->name('popularSearches.destroy');
-    //property cities routes
-    Route::resource('propertyCities', 'PropertyCitiesController');
-    Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
-    //property sub cities routes
-    Route::resource('propertySubCities', 'PropertySubCitiesController');
-    Route::get('propertySubCities/delete/{id}', 'PropertySubCitiesController@destroy')->name('propertySubCities.destroy');
-    //property towns routes
-    Route::resource('propertyTowns', 'PropertyTownsController');
-    Route::get('propertyTowns/delete/{id}', 'PropertyTownsController@destroy')->name('propertyTowns.destroy');
-    //property areas routes
-    Route::resource('propertyAreas', 'PropertyAreasController');
-    Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
+   
+    Route::group(['prefix' => 'location'], function(){
+        
+        //property cities routes
+        Route::resource('propertyCities', 'PropertyCitiesController');
+        Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
+        //property sub cities routes
+        Route::resource('propertySubCities', 'PropertySubCitiesController');
+        Route::get('propertySubCities/delete/{id}', 'PropertySubCitiesController@destroy')->name('propertySubCities.destroy');
+        //property towns routes
+        Route::resource('propertyTowns', 'PropertyTownsController');
+        Route::get('propertyTowns/delete/{id}', 'PropertyTownsController@destroy')->name('propertyTowns.destroy');
+        //property areas routes
+        Route::resource('propertyAreas', 'PropertyAreasController');
+        Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
+
+    });
 
     //property click counter or traffic route
     Route::prefix('traffic')->group(function () {
