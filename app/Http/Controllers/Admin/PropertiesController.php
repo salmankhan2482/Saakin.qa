@@ -212,16 +212,6 @@ class PropertiesController extends MainAdminController
         $featured_image = $request->file('featured_image');
 
         if ($featured_image) {
-    //         $file->move(public_path('/test/image'), $name);  
-    //   //convert to webp
-    //    $webp = public_path() . '/test/image/' . $name;      
-    //    $im = imagecreatefromstring
-    //    (file_get_contents($webp)); 
-    //     $new_webp = preg_replace('"\.(jpg|jpeg|png|webp)$"','.webp', $webp);  
-    //     imagewebp($im, $new_webp, 50);
-
-            // $image = $request->file('featured_image');
-            // $featured_image = \Image::make($image)->stream("webp", 100);
 
             $tmpFilePath = public_path('upload/properties/');
             $featured_image_name = $featured_image->getClientOriginalName();
