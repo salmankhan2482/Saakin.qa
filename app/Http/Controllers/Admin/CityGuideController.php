@@ -73,6 +73,8 @@ class CityGuideController extends Controller
         $city->name = $inputs['name'];
         $city->sequence_id = $inputs['sequence_id'] ?? 100;
         $city->long_description = $inputs['long_description'];
+        $city->map = $inputs['map'];
+
         
         $city_slug = $inputs['name'];
         $city->city_slug = (str_replace(' ', '-', strtolower($city_slug))); 
@@ -130,6 +132,7 @@ class CityGuideController extends Controller
         $city->name = $inputs['name'];
         $city->sequence_id = $inputs['sequence_id'];
         $city->long_description = $inputs['long_description'];
+        $city->map = $inputs['map'];
 
         $city_image = $request->file('city_image');
         if($city_image) {
