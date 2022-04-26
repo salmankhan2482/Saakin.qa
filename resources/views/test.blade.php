@@ -5,7 +5,9 @@
   </head>
   <body>
     <h2>Test Email</h2>
-    {{-- <p>{{ $test_message }}</p> --}}
-    <?php print_r($data); ?>
+    <div class="col-6">
+      <label>Featured Image</label>
+      <input type="file" name="featured_image" class="form-control" required>
+  </div>
   </body>
 </html>
