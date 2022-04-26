@@ -1368,8 +1368,9 @@ class PropertiesController extends Controller
         $randomProp = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose))->where('property_type', $type->id)->where('city', $city_keyword->id)->select('description','bedrooms','bathrooms')->inRandomOrder()->limit(1)->first();
         
         $page_info =  $type->plural_name . ' for '. ucfirst($property_purpose) .' in '. $city_keyword->name ;
+
         if(!isset($landing_page_content)){
-        $data['page_des'] = "Find ".$page_info." of bed $randomProp->bedrooms and bath $randomProp->bathrooms ". Str::limit($randomProp->description, 154);
+            $data['page_des'] = "Find ".$properties->random()->property_name." of bed ".$properties->random()->bedrooms." and bath". $properties->random()->bathrooms.Str::limit(strip_tags($properties->random()->description), 150).$page_info;
         }
         
         $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
