@@ -14,6 +14,7 @@
     
     @include('front.layouts.chat')
     @include('front.layouts.footer')
+    @include('cookieConsent::index')
 
 </body>
 </html>

@@ -8,6 +8,9 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Notifications</h4>
+                    <a href="{{ route('markAllAsRead') }}" class="btn btn-rounded btn-sm btn-info">
+                        Mark All as Read
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -24,27 +27,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($inquirieslist as $i => $inquiries)
-                                <tr>
-                                
-                                <td>{{ $inquiries->id }}</td>
-                                <td>{{ $inquiries->type }}</td>
-                                <td>{{ $inquiries->name }}</td>
-                                <td>{{ $inquiries->email }}</td>
-                                <td>{{ $inquiries->Agencies->name ??''}} </td>
+                                @foreach ($inquirieslist as $i => $inquiries)
+                                    <tr>
 
-                                @if ($inquiries->enquire_id == 1)
-                                <td> <i class="badge badge-rounded badge-success">{{ $inquiries->EnquireStatus->status ??''}}</i> </td>
-                                @else
-                                <td> <i class="badge badge-rounded badge-danger">{{ $inquiries->EnquireStatus->status ??''}}</i> </td>
-                                @endif    
-                                <td class="text-center">
-                                            <a href="{{ route('view_notification', $inquiries->id ) }}" 
+                                        <td>{{ $inquiries->id }}</td>
+                                        <td>{{ $inquiries->type }}</td>
+                                        <td>{{ $inquiries->name }}</td>
+                                        <td>{{ $inquiries->email }}</td>
+                                        <td>{{ $inquiries->Agencies->name ?? '' }} </td>
+
+                                        @if ($inquiries->enquire_id == 1)
+                                            <td> 
+                                                <i class="badge badge-rounded badge-success">
+                                                    {{ $inquiries->EnquireStatus->status ?? '' }}
+                                                </i>
+                                            </td>
+                                        @else
+                                            <td> 
+                                                <i class="badge badge-rounded badge-danger">
+                                                    {{ $inquiries->EnquireStatus->status ?? '' }}
+                                                </i>
+                                            </td>
+                                        @endif
+                                        <td class="text-center">
+                                            <a href="{{ route('view_notification', $inquiries->id) }}"
                                                 class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ url('admin/inquiries/delete/'.Crypt::encryptString($inquiries->id)) }}"     
-                                                class="btn btn-danger rounded btn-xs action-btn"
+                                            <a href="{{ url('admin/inquiries/delete/' . Crypt::encryptString($inquiries->id)) }}"   class="btn btn-danger rounded btn-xs action-btn" 
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>
                                             </a>

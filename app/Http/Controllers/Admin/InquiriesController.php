@@ -250,4 +250,9 @@ class InquiriesController extends MainAdminController
 
     }
 
+    public function markAllAsRead()
+    {
+        Enquire::where('id', '>', 0)->update(['enquire_id' => 1]);
+        return redirect()->back();
+    }
 }

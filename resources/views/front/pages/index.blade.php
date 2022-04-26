@@ -9,5 +9,4 @@
 </div>
 
 @include('front.pages.include.city_guide_area')
-
 @endsection
