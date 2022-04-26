@@ -138,6 +138,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
 	Route::get('notifications', 'InquiriesController@notifications')->name('notifications');   
+	Route::get('MarkAllAsRead', 'InquiriesController@markAllAsRead')->name('markAllAsRead');   
     Route::get('view_notification/{id}', 'InquiriesController@view_notification')->name('view_notification');
 
 	Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');

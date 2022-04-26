@@ -572,7 +572,7 @@
 
             <ul class="navbar-nav header-right ml-5">
                 <li class="nav-item dropdown header-profile">
-                    <a class="nav-link" href="#" role="button" data-toggle="dropdown"
+                    <a class="nav-link" href="{{ route('dashboard.index') }}" role="button" data-toggle="dropdown"
                         style="padding: 0 30px 0 0px;">
                         <div class="header-info">
                             <span style="line-height: 22px;">{{ Str::limit(auth()->user()->name,20, '')  }}</span>
@@ -587,6 +587,13 @@
                         @endif
                     </a>
                     <div class="dropdown-menu w-50" style="left: 3em;">
+                        <a href="{!! route('dashboard.index') !!}" class="dropdown-item ai-icon">
+                            <i class="fa fa-home"></i>
+                            <span class="ml-2">
+                                Dashboard
+                            </span>
+                        </a>
+
                         <a href="{!! route('profile') !!}" class="dropdown-item ai-icon">
                             <svg id="icon-user1" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18"
                                 height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
