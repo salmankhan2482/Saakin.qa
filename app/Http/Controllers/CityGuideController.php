@@ -36,7 +36,7 @@ class CityGuideController extends Controller
     {
         
         $cityGuide = City::where('city_slug',$slug)->where('status',1)->first();
-
+        
         $city_guide_description = Str::of($cityGuide->long_description)->limit(154) ;
         $city_guide_description = strip_tags($city_guide_description);
         

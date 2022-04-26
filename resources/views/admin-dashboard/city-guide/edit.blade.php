@@ -51,6 +51,12 @@
                                 </div>
                             </div>
                             <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>Map Link</label>
+                                    <input type="txt" id="map" name="map" class="form-control" placeholder="Map Link" value="{{ $city->map }}" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-md-5">
                                     <label>Featured Image (Choose Image 584px × 515px)</label>
                                     <div class="input-group">

@@ -8,6 +8,7 @@
 </head>
 
 <body>
+    @include('cookieConsent::index')
     @include('front.layouts.header')
     
     @yield('content')

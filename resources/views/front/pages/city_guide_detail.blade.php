@@ -81,7 +81,7 @@
           {!! $cityGuideContent->neighborhood ??'' !!}
           <div class="p-2 border mb-3">
             <iframe class="d-block"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d714.7768477657363!2d74.3806660590514!3d31.549670099468507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3919053f257c413f%3A0x4600666a4d2dbdf1!2sServaid%20Pharmacy!5e0!3m2!1sen!2s!4v1648668166597!5m2!1sen!2s"
+              src="{{$cityGuide->map ??''}}"
               width="100%" height="450" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
 
