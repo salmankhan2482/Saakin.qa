@@ -18,20 +18,15 @@ use App\Http\Controllers\Admin\TypesController;
        
 //route to changes buy and sell featured products on home page
 Route::get('/select/buyRent/for/search/{purpose}', 'IndexController@selectBuyRentForSearch');
+
+// social login urls
 Route::get('auth/google', 'SocialController@redirectToGoogle')->name('google.login');
 Route::get('auth/facebook', 'SocialController@redirectToFacebook')->name('facebook.login');
 
-Route::get('auth/google/callback', 'SocialController@handleGoogleCallback');
-Route::get('auth/facebook/callback', 'SocialController@handleFacebookCallback');
-
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
-    Route::get('/dashboard/new', 'OmahadminController@saakin_dashboard')->middleware('auth')
-    ->name('new_dashboard');
     Route::get('/ckeditor','OmahadminController@ckeditor')->name('ckeditor');
     Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
-    // new routes
-    
 	Route::post('login', 'IndexController@postLogin');
 	Route::get('logout', 'IndexController@logout');
     Route::get('/our_backup_database', 'UserController@dbBackup')->name('our_backup_database');
@@ -70,7 +65,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
     Route::get('properties/status/{id}', 'PropertiesController@status')->name('properties.status');
 	Route::get('properties/featuredproperty/{id}', 'PropertiesController@featuredproperty');
-	Route::get('featuredproperties', 'FeaturedPropertiesController@propertieslist')->name('featuredproperties.index');
+	Route::get('properties_featured', 'FeaturedPropertiesController@propertieslist')->name('featuredproperties.index');
     Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties')->name('featuredproperties.pending');
 	Route::get('properties/export', 'PropertiesController@property_export');
 	Route::post('properties/plan_update', 'PropertiesController@plan_update')->name('changePlan.update');
@@ -107,14 +102,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('property-amenity', 'PropertyAmenityController');
     Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy')->name('property-amenity.destroy');
 
-    Route::group(['middleware' => ['auth']], function() {
+    Route::group(['prefix' => 'user-management', 'middleware' => 'auth'], function() {
         Route::resource('roles','RoleController');
         Route::resource('users','UsersController');
         Route::get('users/delete/{id}','UsersController@destroy')->name('users.destroy');
         Route::resource('permissions','PermissionController');
     });
 	
-	Route::get('subscriber', 'SubscriberController@subscriberlist')->name('subscriber');
+	Route::get('leads/subscriber', 'SubscriberController@subscriberlist')->name('subscriber');
 	Route::get('subscriber/delete/{id}', 'SubscriberController@delete')->name('subscriber.destroy');
 
 
@@ -126,15 +121,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
 	Route::get('inquiries', 'InquiriesController@inquirieslist')->name('inquiries');
 
-    Route::get('property_inquiries', 'InquiriesController@property_inquiries')->name('property_inquiries');
+    Route::get('leads/property_inquiries', 'InquiriesController@property_inquiries')->name('property_inquiries');
     Route::get('inquiry/create', 'InquiriesController@create_inquiry')->name('create_inquiry');
     Route::post('inquiry/create', 'InquiriesController@store_property_inquiry')->name('store_proprty_inquiry');
     Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
     Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
 	
-	Route::get('agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
-	Route::get('contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
-	Route::get('comp_reg_inquiries', 'InquiriesController@comp_reg_inquiries')->name('comp_reg_inquiries');
+	Route::get('leads/agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
+	Route::get('leads/contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
+	Route::get('leads/comp_reg_inquiries', 'InquiriesController@comp_reg_inquiries')->name('comp_reg_inquiries');
     
     Route::get('view_inquiry/{id}', 'InquiriesController@view_inquiry')->name('view_inquiry');
     Route::get('view_property_inquiry/{id}', 'InquiriesController@view_property_inquiry');
@@ -154,16 +149,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('transactions', 'TransactionsController@transactions_list');
 	Route::get('transactions/export', 'TransactionsController@transactions_export');
 	Route::get('transactions/user_invoice/{id}', 'TransactionsController@user_invoice');
-
-	Route::get('about_page', 'PagesController@about_page')->name('about_page');
-	Route::post('about_page', 'PagesController@update_about_page')->name('update_about_page');
-	Route::get('terms_page', 'PagesController@terms_page')->name('terms_page');
-	Route::post('terms_page', 'PagesController@update_terms_page')->name('update_terms_page');
-	Route::get('privacy_policy_page', 'PagesController@privacy_policy_page')->name('privacy_page');
-	Route::post('privacy_policy_page', 'PagesController@update_privacy_policy_page')->name('update_privacy_page');
-	Route::get('faq_page', 'PagesController@faq_page')->name('faq_page');
-	Route::post('faq_page', 'PagesController@update_faq_page')->name('update_faq_page');
-
+    
     Route::get('properties_for_purpose_page', 'PagesController@properties_for_purpose_page');
     Route::post('properties_for_purpose_page', 'PagesController@update_properties_for_purpose_page');
 
@@ -211,51 +197,71 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::resource('landing-pages', 'LandingPagesController');
     Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy')->name('landing-pages.destroy');
 
-    Route::get('landing-pages/properties-page/content', 'LandingPagesController@properties_page_content')
-        ->name('properties-page-content');
-    Route::post('landing-pages/properties-page/content', 'LandingPagesController@update_properties_page_content')
-        ->name('update-properties-page-content');
-    
-    Route::get('landing-pages/city-guide-page/content', 'LandingPagesController@city_guide_page_content')
-    ->name('city-guide-landing-pages.index');
-    Route::put('update/city-guide-page/content', 'LandingPagesController@update_city_guide_page_content')
-    ->name('city-guide-landing-pages.update');
+    Route::get('about_page', 'PagesController@about_page')->name('about_page');
+    Route::post('about_page', 'PagesController@update_about_page')->name('update_about_page');
+    Route::get('terms_page', 'PagesController@terms_page')->name('terms_page');
+    Route::post('terms_page', 'PagesController@update_terms_page')->name('update_terms_page');
+    Route::get('privacy_policy_page', 'PagesController@privacy_policy_page')->name('privacy_page');
+    Route::post('privacy_policy_page', 'PagesController@update_privacy_policy_page')->name('update_privacy_page');
+    Route::get('faq_page', 'PagesController@faq_page')->name('faq_page');
+    Route::post('faq_page', 'PagesController@update_faq_page')->name('update_faq_page');
 
-    Route::get('landing-pages/agencies-page/content', 'LandingPagesController@agencies_page_content')
-    ->name('agency-landing-pages.index');
-    Route::put('agencies-page/content', 'LandingPagesController@update_agencies_page_content')
-    ->name('agency-landing-pages.update');
-    
+    Route::group(['prefix' => 'landing-pages'], function(){
 
-    // multi task
+        Route::get('properties-page/content', 'LandingPagesController@properties_page_content')
+            ->name('properties-page-content');
+        Route::post('properties-page/content', 'LandingPagesController@update_properties_page_content')
+            ->name('update-properties-page-content');
+        
+        Route::get('city-guide-page/content', 'LandingPagesController@city_guide_page_content')
+            ->name('city-guide-landing-pages.index');
+        Route::put('update/city-guide-page/content', 'LandingPagesController@update_city_guide_page_content')
+            ->name('city-guide-landing-pages.update');
+
+        Route::get('agencies-page/content', 'LandingPagesController@agencies_page_content')
+            ->name('agency-landing-pages.index');
+        Route::put('agencies-page/content', 'LandingPagesController@update_agencies_page_content')
+            ->name('agency-landing-pages.update');
+    });
+
     Route::resource('popularSearches', 'PopularSearchesController');
     Route::get('popularSearches/delete/{id}', 'PopularSearchesController@destroy')->name('popularSearches.destroy');
-    //property cities routes
-    Route::resource('propertyCities', 'PropertyCitiesController');
-    Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
-    //property sub cities routes
-    Route::resource('propertySubCities', 'PropertySubCitiesController');
-    Route::get('propertySubCities/delete/{id}', 'PropertySubCitiesController@destroy')->name('propertySubCities.destroy');
-    //property towns routes
-    Route::resource('propertyTowns', 'PropertyTownsController');
-    Route::get('propertyTowns/delete/{id}', 'PropertyTownsController@destroy')->name('propertyTowns.destroy');
-    //property areas routes
-    Route::resource('propertyAreas', 'PropertyAreasController');
-    Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
+   
+    Route::group(['prefix' => 'location'], function(){
+        
+        //property cities routes
+        Route::resource('propertyCities', 'PropertyCitiesController');
+        Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
+        //property sub cities routes
+        Route::resource('propertySubCities', 'PropertySubCitiesController');
+        Route::get('propertySubCities/delete/{id}', 'PropertySubCitiesController@destroy')->name('propertySubCities.destroy');
+        //property towns routes
+        Route::resource('propertyTowns', 'PropertyTownsController');
+        Route::get('propertyTowns/delete/{id}', 'PropertyTownsController@destroy')->name('propertyTowns.destroy');
+        //property areas routes
+        Route::resource('propertyAreas', 'PropertyAreasController');
+        Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
+
+    });
 
     //property click counter or traffic route
-    Route::prefix('traffic')->group(function () {
+    Route::group(['prefix' => 'traffic'], function () {
+        Route::get('agencyCallToActionList/{id}', 'ClickCountersController@agencyCallToActionList')
+        ->name('agencyCallToActionList');
+        
+        Route::get('visits_per_month/{id?}', 'ClickCountersController@propertyVisitsPerMonth')
+        ->name('propertyVisits_per_month');
+        
         Route::resource('callToAction', 'ClickCountersController');
+        Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
+        Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
+        Route::get('topTenProperties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
+        Route::get('topTenProperties/{id}', 'ClickCountersController@topTenPropertiesList')->name('top_Ten_Properties.list');
+        Route::get('top10areas', 'ClickCountersController@top10Areas')->name('top_10_areas');
+        Route::get('top10areas/{id}', 'ClickCountersController@top10AreasList')->name('top_10_areas.list');
+        Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
+        
     });
-    Route::get('agencyCallToActionList/{id}', 'ClickCountersController@agencyCallToActionList')->name('agencyCallToActionList');
-    Route::get('propertyVisits_per_month/{id?}', 'ClickCountersController@propertyVisitsPerMonth')->name('propertyVisits_per_month');
-    Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
-    Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
-    Route::get('top_Ten_Properties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
-    Route::get('top_Ten_Properties/{id}', 'ClickCountersController@topTenPropertiesList')->name('top_Ten_Properties.list');
-    Route::get('top_10_areas', 'ClickCountersController@top10Areas')->name('top_10_areas');
-    Route::get('top_10_areas/{id}', 'ClickCountersController@top10AreasList')->name('top_10_areas.list');
-    Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
     
     //company registration resource controller
     Route::resource('companyRegistration', 'CompanyRegistrationController');
@@ -316,8 +322,8 @@ Route::post('login', 'IndexController@postLogin');
 Route::get('register', 'IndexController@register');
 Route::post('register', 'IndexController@postRegister');
 
-Route::get('company_registration', 'CompanyRegistrationController@index');
-Route::post('company_registration', 'CompanyRegistrationController@post_registration')->name('company_registration');
+Route::get('company-registration', 'CompanyRegistrationController@index');
+Route::post('company-registration', 'CompanyRegistrationController@post_registration')->name('company-registration');
 
 Route::get('logout', 'IndexController@logout');
 
@@ -384,6 +390,7 @@ Route::get('featured-properties', 'PropertiesController@featureProperties')->nam
 
 //property reports
 Route::resource('property-reports', 'PropertyReportController');
+Route::get('admin/property-reports', 'PropertyReportController@index')->name('property-reports.index');
 Route::get('admin/property_reports/delete/{id}', 'PropertyReportController@destroy')->name('property-reports.destroy');
 
 //live serach url on home page

@@ -33,9 +33,11 @@
                                 <div class="card contact-form mt-3 mt-lg-0">
                                     @if (count($errors) > 0)
                                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                            @foreach ($errors->all() as $error)
-                                                {{ $error }}
-                                            @endforeach
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
                                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                                 aria-label="Close">
                                             </button>
@@ -51,7 +53,7 @@
                                         </div>
                                     @endif
                                     <div class="card-body">
-                                        <form action="{{ url('company_registration') }}" method="POST">
+                                        <form action="{{ url('company-registration') }}" method="POST">
                                             @csrf
                                             <div class="form-control-wrap row gx-2 gy-3">
                                                 <div class="form-group col-md-6">

@@ -90,7 +90,7 @@
 
     <div id="main-wrapper">
         <div class="nav-header">
-            <a href="{!! route('new_dashboard'); !!}" class="brand-logo">
+            <a href="{!! route('dashboard.index'); !!}" class="brand-logo">
                 <img class="brand-title" style="float: right" src="{{ asset('assets/images/black_logo.png') }}" alt="" width="100%">
             </a>
              <div class="nav-control">

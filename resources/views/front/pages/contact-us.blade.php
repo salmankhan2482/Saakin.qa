@@ -163,7 +163,7 @@
     </section>
     <section class="py-3 py-5 bg-primary">
         <div class="container text-center">
-            <a href="{{ route('company_registration') }}">
+            <a href="{{ route('company-registration') }}">
                 <button class="btn btn-outline-light py-3 px-5 text-uppercase fw-bold" data-bs-toggle="modal"
                     data-bs-target="#registrationForm">
                     Company Registration

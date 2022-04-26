@@ -246,9 +246,10 @@ class PropertiesController extends Controller
         });
         
         $commercialIds = array(); array_push($commercialIds, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
+        
         if (isset($request->commercial)) {
             $properties->whereIn('property_type', $commercialIds);
-        }else{
+        }elseif(!in_array(request('property_type'), $commercialIds)){
             $properties->whereNotIn('property_type', $commercialIds);
         }
 
@@ -1127,8 +1128,6 @@ class PropertiesController extends Controller
             ->groupBy('property_sub_cities.name')
             ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
 
-
-            
             $purp = ($buyOrRent == 'buy' ? 2 : 1);
             $landing_page_content = LandingPage::where('property_purposes_id', $purp)
             ->where('property_types_id',$type->id)
@@ -1136,10 +1135,8 @@ class PropertiesController extends Controller
             ->where('property_sub_cities_id',$subcity_keyword->id)
             ->first();
             
-
-
             if($properties->total() > 0){
-                $meta_description = $properties->random()->property_name. ' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ '.$page_info;
+                $meta_description = $properties->random()->property_name. ' Short Term Flats &amp; '.Str::limit(strip_tags($properties->random()->description), 150).' Long Term Rentals✓ Long Term Sale✓ '.$page_info;
             }else{
                 $meta_description = 'Search '.$page_info.' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ ';
             }
@@ -1371,8 +1368,9 @@ class PropertiesController extends Controller
         $randomProp = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose))->where('property_type', $type->id)->where('city', $city_keyword->id)->select('description','bedrooms','bathrooms')->inRandomOrder()->limit(1)->first();
         
         $page_info =  $type->plural_name . ' for '. ucfirst($property_purpose) .' in '. $city_keyword->name ;
+
         if(!isset($landing_page_content)){
-        $data['page_des'] = "Find ".$page_info." of bed $randomProp->bedrooms and bath $randomProp->bathrooms ". Str::limit($randomProp->description, 154);
+            $data['page_des'] = "Find ".$properties->random()->property_name." of bed ".$properties->random()->bedrooms." and bath". $properties->random()->bathrooms.Str::limit(strip_tags($properties->random()->description), 150).$page_info;
         }
         
         $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))

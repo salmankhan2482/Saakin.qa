@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Enquire;
 use App\PropertyCities;
 use App\CompanyRegistration;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CompanyRegistrationMail;
-use App\User;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class CompanyRegistrationController extends Controller
 {
@@ -18,22 +20,17 @@ class CompanyRegistrationController extends Controller
     }
     public function post_registration(Request $request)
     {
-         
-        $validator = request()->validate([
+        $this->validate($request,[
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email',
             'phone' => 'required',
             'company_name' => 'required',
             'city' => 'required',
             'job_title' => 'required',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:company_registrations,email',
             'g-recaptcha-response' => 'required|captcha',
-
         ]);
-        $user_emails =User::where('email',request('email'));
-        return redirect()->back()->withErrors($validator->messages());
-
+        
         $cr = new CompanyRegistration();
         $cr->first_name = request('first_name');
         $cr->last_name = request('last_name');
@@ -59,9 +56,7 @@ class CompanyRegistrationController extends Controller
         Mail::to('hello@saakin.qa')->send(new CompanyRegistrationMail($data));
 
         Session::flash('flash_message_company_registration', 'Request for Company Registration has been Sent Successfully');
-        return Redirect::back();
+        return redirect()->back();
 
-        // return redirect()->back()->with('flash_message_company_registration', 
-        // 'Request for company registration has been sent.');
     }
 }

@@ -694,7 +694,9 @@
                     <p>
                       {{ $propx->propertiesTypes->types }}
                       <br>
-                      {{ $property->address }}
+                      <span class="hideAddress">
+                        {{ $property->address }}
+                      </span>
                     </p>
                   </div>
 
@@ -815,7 +817,7 @@
     $(document).ready(function() {
       $(".single-gallery-slider").slick({
         dots: true,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 2000,
         speed: 10,
         slidesToShow: 1,
