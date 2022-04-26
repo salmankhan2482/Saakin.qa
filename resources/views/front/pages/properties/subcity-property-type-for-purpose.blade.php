@@ -7,7 +7,7 @@
     @section('url', url()->current())
 @else
     @section('title', $page_info . '|' . 'Saakin.qa')
-    @section('description', $data['page_des'] ?? '')
+    @section('description', $meta_description ?? '')
     @section('type', 'property')
     @section('url', url()->current())
 @endif
