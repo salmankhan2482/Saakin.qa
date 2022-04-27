@@ -1048,11 +1048,11 @@
                         <div class="location-item {{ $loop->index > 7 ? 'moreLess' : '' }}">
                             
                             @if (ucfirst(request()->property_purpose) == 'Sale')
-                            <a href="{{ route('property-type-purpose', ['buy',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
-                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
+                                <a href="{{ route('property-type-purpose', ['buy',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
+                                        {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
                                 </a>
                             @else
-                            <a href="{{ route('property-type-purpose', ['rent',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
+                                <a href="{{ route('property-type-purpose', ['rent',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
                                     {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
                                 </a>
                             @endif
@@ -1299,6 +1299,8 @@
                                     @endforeach
                                 </ul>
                             </div>
+                            
+                            @if (count($data['nearbyAreasLinks']) > 0)
                             <div class="sidebar-links p-3">
                                 <h6>Nearby Places</h6>
                                 <ul>
@@ -1310,7 +1312,9 @@
                                     </li>
                                     @endforeach
                                 </ul>
-                            </div>
+                            </div>  
+                            @endif
+                            
                             <div class="sidebar-links p-3">
                                 <h6>Properties for {{ request('property_purpose') == 'sale' ? 'Rent' : 'Sale' }}</h6>
                                 <ul>
