@@ -27,6 +27,7 @@ class OmahadminController extends Controller
 
     public function saakin_dashboard()
     {
+        
         if(auth()->user()->usertype == 'Agency'){
             $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
             
@@ -93,6 +94,8 @@ class OmahadminController extends Controller
                 })
                 ->orderBy('id', 'desc')
                 ->count();
+
+                
                
             // last month
             $data['last_month_properties'] = Properties::

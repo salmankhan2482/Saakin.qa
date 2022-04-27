@@ -1049,11 +1049,11 @@
                             
                             @if (ucfirst(request()->property_purpose) == 'Sale')
                             <a href="{{ route('property-type-purpose', ['buy',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
-                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
+                                    {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }})</span>
                                 </a>
                             @else
                             <a href="{{ route('property-type-purpose', ['rent',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
-                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
+                                    {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }})</span>
                                 </a>
                             @endif
                             
