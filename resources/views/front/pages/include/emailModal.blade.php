@@ -36,6 +36,7 @@
             </ul>
           </div>
         </div>
+        
 
         {{ Form::open(['url' => 'send-email-agent', 'class' => '', 'role' => 'form']) }}
         {{-- Use Hidden Field For Getting Property ID and Agency ID --}}
@@ -293,6 +294,17 @@
             </div>
           </div>
         </div>
+        <div class="form-group{{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
+          <div class="mb-2">
+              {!! NoCaptcha::renderJs() !!}
+              {!! NoCaptcha::display() !!}
+              @if ($errors->has('g-recaptcha-response'))
+                  <span class="help-block">
+                      {{ $errors->first('g-recaptcha-response') }}
+                  </span>
+              @endif
+          </div>
+      </div>
         <div class="modal-footer">
           <div class="form-group">
             <input type="checkbox" class="form-check-input" id="exampleCheck1" name="similar_user_email">

@@ -522,6 +522,7 @@ class PropertiesController extends Controller
 		        'user_name' => 'required',
 				'user_email' => 'required|email',
 		        'user_message' => 'required',
+                'g-recaptcha-response' => 'required|captcha',
 		   		 );
 
 	   	 $validator = \Validator::make($data,$rule);
@@ -588,7 +589,7 @@ class PropertiesController extends Controller
             
             Mail::to('hello@saakin.qa')->send(new Property_Inquiry($data_email));
             
-            Session::flash('message', trans('words.thanks_for_contacting_us')); 
+            Session::flash('flash_message_email_modal', trans('words.thanks_for_contacting_us')); 
             return redirect()->back();
     }
 

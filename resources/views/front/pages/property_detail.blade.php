@@ -23,8 +23,14 @@
   $agency = \App\Agency::where('id', $property->agency_id)->first();
   $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 
-  $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR ' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . 'Location: ' . $property->address . 'Link:' . $propertyUrl;
-
+  $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa
+  
+  Reference: ' . $property->refference_code . '
+  Price: QR ' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . '
+  Location: ' . $property->address . '
+  
+  Link: ' 
+  . $propertyUrl;
   @endphp
 
   <div class="inner-content">
@@ -639,12 +645,31 @@
               <i class="fas fa-flag"></i>
               Report this Property
             </a>
-            @if ($message = Session::get('message'))
+            {{-- @if ($message = Session::get('message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ $message }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> </button>
             </div>
-            @endif
+            @endif --}}
+
+            @if (count($errors) > 0)
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @foreach ($errors->all() as $error)
+                {{ $error }}
+            @endforeach
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    @endif
+
+    @if (Session::has('flash_message_email_modal'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert"
+                aria-label="Close">
+            </button>
+            {{ Session::get('flash_message_email_modal') }}
+        </div>
+    @endif
           </div>
 
         </div>
