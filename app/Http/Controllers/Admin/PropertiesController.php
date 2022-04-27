@@ -151,6 +151,7 @@ class PropertiesController extends MainAdminController
     public function store(Request $request)
     {
         
+        
         if(Properties::where('property_name', request('property_name'))->first()){
             return redirect()->back()->withErrors(['msg' => 'Duplicate Record Cannot be Inserted.']);
         }
@@ -200,7 +201,8 @@ class PropertiesController extends MainAdminController
         $agencyName = Agency::where('id', $request_data['agency_id'])->value('name');
         $agencyNameExplode = explode(' ', $agencyName);
         
-        $request_data['refference_code'] = $agencyNameExplode[0].$agencyNameExplode[0];
+        $request_data['refference_code'] = preg_replace('~\S\K\S*\s*~u', '', $agencyName).'-'.preg_replace('~\S\K\S*\s*~u', '', $request_data['property_type']).'-'.preg_replace('~\S\K\S*\s*~u', '', $request_data['property_purpose']);
+        // $request_data['refference_code'] = $agencyNameExplode[0].$agencyNameExplode[0];
         $request_data['property_slug'] = $property_slug;
         $request_data['rooms'] = request()->rooms;
         $request_data['sub_city'] = $request_data['subcity'];
@@ -239,7 +241,7 @@ class PropertiesController extends MainAdminController
         }
         
         $property = Properties::create($request_data);
-        $reference = $request_data['refference_code'].'_'.$property->id;
+        $reference = $request_data['refference_code'].'-'.$property->id;
         $pro = Properties::find($property->id);
         if (request('property_amenities')) {
             $pro->amenities()->attach($request->property_amenities); 
