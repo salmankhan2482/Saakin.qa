@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Pages;
 use App\Types;
 use App\Agency;
-use App\AmenityProduct;
 use App\Enquire;
 use App\PageVisits;
 use App\Properties;
+use App\SaveSearch;
 use App\LandingPage;
 use App\PropertyAreas;
 use App\PropertyTowns;
+use App\AmenityProduct;
 use App\PropertyCities;
+use App\PopularSearches;
 use App\PropertyAmenity;
 use App\PropertyCounter;
 use App\PropertyGallery;
@@ -26,8 +28,8 @@ use App\PropertyNeighborhood;
 use App\Mail\Property_Inquiry;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
-use App\PopularSearches;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
@@ -286,6 +288,9 @@ class PropertiesController extends Controller
         if(request('bedrooms')){
             $name = $name.(request('bedrooms') ? request('bedrooms').' bedroom ' : '');
         }
+        if(request('bathrooms')){
+            $name = $name.(request('bathrooms') ? request('bathrooms').' bathroom ' : '');
+        }
         if(request('furnishings')){
             $furnishing = PropertyAmenity::where('id', request('furnishings'))->value('name').' ';
             $name = $name.$furnishing;
@@ -344,8 +349,14 @@ class PropertiesController extends Controller
             }
         }
         
+        $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $saveSearch = 0;
+        if(auth()->user()){
+            $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+            $saveSearch = isset($record) ? 1 : 0;
+        }
         return view('front.pages.properties', 
-        compact('properties', 'propertyTypes', 'data', 'propertyPurposes', 'request','landing_page_content', 'page_des', 'heading_info'));
+        compact('properties', 'propertyTypes', 'data', 'saveSearch', 'propertyPurposes', 'request','landing_page_content', 'page_des', 'heading_info'));
     }
 
     public function findKeyWord($city = null, $subcity = null, $town = null, $area = null)
@@ -894,26 +905,22 @@ class PropertiesController extends Controller
         } else {
             $properties->orderBy('id', 'desc');
         }
-
         $properties = $properties->paginate(getcong('pagination_limit'));
-
-        $propertyTypes =  DB::table('property_types')
+        
+        $propertyTypes = DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
-            ->select('property_types.id', 'property_types.types', 'property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
+            ->select('property_types.id', 'property_types.types', 'property_types.*', 
+            DB::Raw('COUNT(properties.id) as pcount'))
             ->where("properties.status", 1)
             ->where('property_purpose', ucfirst($property_purpose))
-            ->groupBy("property_types.id")
-            ->orderBy("pcount", "desc")
-            ->get();
+            ->groupBy("property_types.id")->orderBy("pcount", "desc")->get();
 
 
         $cities = Properties::select("city")
-            ->where('status', 1)
-            ->where('city', '!=', '')
+            ->where('status', 1)->where('city', '!=', '')
             ->groupBy('city')->orderBy("city", "asc")->get();
             
         $propertyPurposes = PropertyPurpose::all();
-
 
         if($buyOrRent == 'buy'){
             $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id',null )->first();
@@ -921,8 +928,7 @@ class PropertiesController extends Controller
             $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id',null )->first();
         }
 
-        $heading_info = '';
-        $furnishing = '';
+        $heading_info = ''; $furnishing = '';
         if(request()->get('furnishings')){
             $furnishing = PropertyAmenity::where('id', request()->get('furnishings'))->value('name');
         }   
@@ -933,14 +939,23 @@ class PropertiesController extends Controller
             $heading_info = $furnishing.' Properties for '.request()->property_purpose.' in Qatar';
         }
         
-        $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst(request('property_purpose')))
+        $data['popularSearchesLinks'] = PopularSearches::
+        where('property_purpose', ucfirst(request('property_purpose')))
         ->where('city_id', null)->where('subcity_id', null)
         ->where('town_id', null)->where('area_id', null)
         ->orderBy('count', 'DESC')->limit(6)->get();
         
-        $data['nearbyAreasLinks'] = DB::table('properties')->join('property_cities','properties.city','property_cities.id')
-        ->select('property_cities.id','property_cities.name')->where("properties.status", 1)
-        ->groupBy('property_cities.name')->where('property_purpose', ucfirst(request('property_purpose')))->limit(6)->get();
+        if(count($data['popularSearchesLinks']) == 0){
+            $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', request()->property_purpose)
+            ->inRandomOrder()->limit(6)->get();
+        }
+        
+        $data['nearbyAreasLinks'] = DB::table('properties')
+        ->join('property_cities','properties.city','property_cities.id')
+        ->select('property_cities.id','property_cities.name')
+        ->where("properties.status", 1)
+        ->where('property_purpose', ucfirst(request('property_purpose')))
+        ->groupBy('property_cities.name')->limit(6)->get();
         
         $request = request();
         return view('front.pages.properties.properties-for-purpose',
@@ -992,15 +1007,14 @@ class PropertiesController extends Controller
         $properties = $properties->paginate(getcong('pagination_limit'));
 
         $cities = DB::table('property_cities')
-            ->leftJoin('properties', 'property_cities.id', 'properties.city')
-            ->select('property_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
-            ->where('property_purpose', ucfirst($property_purpose))
-            ->where("properties.status", 1)
-            ->where('property_type', $type->id)
-            ->groupBy('property_cities.name')
-            ->orderBy("pcount", "DESC")
-            ->get();
-
+        ->leftJoin('properties', 'property_cities.id', 'properties.city')
+        ->select('property_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
+        ->where('property_purpose', ucfirst($property_purpose))
+        ->where("properties.status", 1)
+        ->where('property_type', $type->id)
+        ->groupBy('property_cities.name')
+        ->orderBy("pcount", "DESC")
+        ->get();
 
         $propertyTypes =  DB::table('property_types')
         ->join('properties', "property_types.id", "properties.property_type")
@@ -1014,7 +1028,8 @@ class PropertiesController extends Controller
         $propertyPurposes = PropertyPurpose::all();
 
         $purp = ($buyOrRent == 'buy' ? 2 : 1);
-        $landing_page_content = LandingPage::where('property_purposes_id', $purp)->where('property_types_id',$type->id)->first();
+        $landing_page_content = LandingPage::where('property_purposes_id', $purp)->where('property_types_id',$type->id)
+        ->first();
         $page_info = $type->plural.' for '.$property_purpose;
         $heading_info = ($type->plural_name ? $type->plural_name : ' Properties for ').' for '.$property_purpose.' in Qatar';
 
@@ -1024,14 +1039,19 @@ class PropertiesController extends Controller
         ->where('subcity_id', null)
         ->where('town_id', null)
         ->where('area_id', null)->limit(6)->get();
+
+        if(count($data['popularSearchesLinks']) == 0){
+            $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
+            ->inRandomOrder()->limit(6)->get();
+        }
         
-        $data['nearbyAreasLinks'] = DB::table('properties')->join('property_cities','properties.city','property_cities.id')
+        $data['nearbyAreasLinks'] = DB::table('properties')
+        ->join('property_cities','properties.city','property_cities.id')
         ->select('property_cities.id','property_cities.name')
         ->where("properties.status", 1)
-        ->where("properties.property_type", $type->id)
-        ->groupBy('property_cities.name')
-        ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
-
+        ->where('property_purpose', ucfirst($property_purpose))
+        ->groupBy('property_cities.name')->limit(6)->get();
+        
         $request = request();
         return view('front.pages.properties.property-type-for-purpose',
         compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 'propertyPurposes','landing_page_content','page_info', 'request', 'heading_info', 'data'));
@@ -1120,12 +1140,17 @@ class PropertiesController extends Controller
             ->where('town_id', null)
             ->where('area_id', null)->limit(6)->get();
 
+            if(count($data['popularSearchesLinks']) == 0){
+                $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
+                ->inRandomOrder()->limit(6)->get();
+            }
+
             $data['nearbyAreasLinks'] = DB::table('properties')
             ->join('property_sub_cities','properties.subcity','property_sub_cities.id')
             ->select('property_sub_cities.id','property_sub_cities.name','property_sub_cities.property_cities_id')
             ->where("properties.status", 1)
+            ->where('property_sub_cities.id', '!=', $subcity_keyword->id)
             ->where("properties.property_type", $type->id)
-            ->where("properties.subcity", $subcity_keyword->id)
             ->groupBy('property_sub_cities.name')
             ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
 
@@ -1217,22 +1242,28 @@ class PropertiesController extends Controller
             ->where('town_id', $town_keyword->id)
             ->where('area_id', null)->limit(6)->get();
 
-            $data['nearbyAreasLinks'] = DB::table('properties')
-            ->join('property_towns','properties.town','property_towns.id')
-            ->select('property_towns.id','property_towns.name','property_towns.property_cities_id','property_towns.property_sub_cities_id')
-            ->where("properties.status", 1)
-            ->where("properties.property_type", $type->id)
-            ->where("properties.town", $town_keyword->id)
-            ->groupBy('property_towns.name')
-            ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
+            if(count($data['popularSearchesLinks']) == 0){
+                $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
+                ->inRandomOrder()->limit(6)->get();
+            }
+
             
+            $data['nearbyAreasLinks'] = DB::table('property_towns')
+            ->leftJoin('properties', 'property_towns.id', 'properties.town')
+            ->select('property_towns.name', 'property_towns.id')
+            ->where('property_towns.property_sub_cities_id', $subcity_keyword->id)
+            ->where('property_towns.id', '!=', $town_keyword->id)
+            ->where("properties.status", 1)
+            ->where('property_purpose', ucfirst($property_purpose))
+            ->where('properties.property_type', $type->id)
+            ->groupBy("property_towns.name")->limit(6)->get();
+
             return view('front.pages.properties.town-property-type-for-purpose',
             compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'areas', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','data'));
             
         
-        }elseif(count($area_props) > 0){
-            
-        //areas if   
+        }elseif(count($area_props) > 0){         
+            //areas if   
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
             $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
             
@@ -1292,16 +1323,23 @@ class PropertiesController extends Controller
             ->where('area_id', $area_keyword->id)
             ->limit(6)->get();
 
-            $data['nearbyAreasLinks'] = DB::table('properties')
-            ->join('property_areas','properties.area','property_areas.id')
-            ->select('property_areas.id','property_areas.name','property_areas.property_cities_id',
-            'property_areas.property_sub_cities_id','property_areas.property_towns_id')
-            ->where("properties.status", 1)
-            ->where("properties.property_type", $type->id)
-            ->where("properties.area", $area_keyword->id)
-            ->groupBy('property_areas.name')
-            ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
+            if(count($data['popularSearchesLinks']) == 0){
+                $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
+                ->inRandomOrder()->limit(6)->get();
+            }
 
+
+            $data['nearbyAreasLinks'] = DB::table('property_areas')
+            ->leftJoin('properties', 'property_areas.id', 'properties.area')
+            ->select('property_areas.name', 'property_areas.id', 'property_areas.property_cities_id', 'property_areas.property_sub_cities_id','property_areas.property_towns_id')
+            ->where('property_areas.property_sub_cities_id', $subcity_keyword->id)
+            ->where('property_areas.property_towns_id', $town_keyword->id)
+            ->where('property_areas.id', '!=', $area_keyword->id)
+            ->where("properties.status", 1)
+            ->where('property_purpose', ucfirst($property_purpose))
+            ->where('properties.property_type', $type->id)
+            ->groupBy("property_areas.name")->limit(6)->get();
+            
             return view('front.pages.properties.area-property-type-for-purpose',
             compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'area_keyword', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info', 'data'));
 
@@ -1357,17 +1395,12 @@ class PropertiesController extends Controller
 
         $propertyPurposes = PropertyPurpose::all();
         
-        
         $purp = ($buyOrRent == 'buy' ? 2 : 1);
         $landing_page_content = LandingPage::where('property_purposes_id', $purp)
         ->where('property_types_id',$type->id)
         ->where('property_cities_id',$city_keyword->id)
         ->first();
     
-        $page_info =  $type->plural_name . ' for '. ucfirst($property_purpose) .' in '. $city_keyword->name ;
-        
-        $randomProp = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose))->where('property_type', $type->id)->where('city', $city_keyword->id)->select('description','bedrooms','bathrooms')->inRandomOrder()->limit(1)->first();
-        
         $page_info =  $type->plural_name . ' for '. ucfirst($property_purpose) .' in '. $city_keyword->name ;
 
         if(!isset($landing_page_content)){
@@ -1381,14 +1414,21 @@ class PropertiesController extends Controller
         ->where('town_id', null)
         ->where('area_id', null)->limit(6)->get();
 
-        $data['nearbyAreasLinks'] = DB::table('properties')->join('property_cities','properties.city','property_cities.id')
+        if(count($data['popularSearchesLinks']) == 0){
+            $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
+            ->inRandomOrder()->limit(6)->get();
+        }
+
+
+        $data['nearbyAreasLinks'] = DB::table('properties')
+        ->join('property_cities','properties.city','property_cities.id')
         ->select('property_cities.id','property_cities.name')
+        ->where('property_cities.id', '!=', $city_keyword->id)
         ->where("properties.status", 1)
         ->where("properties.property_type", $type->id)
-        ->where("properties.city", $city_keyword->id)
         ->groupBy('property_cities.name')
         ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
-
+        
         $request = request();
         return view('front.pages.properties.city-property-type-for-purpose',
         compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content', 'request', 'data'));

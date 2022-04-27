@@ -59,6 +59,11 @@ class User extends Authenticatable
         return $this->hasMany('App\PropertyReport');
     }
 
+    public function save_searches()
+    {
+        return $this->hasMany(SaveSearch::class,'user_id');
+    }
+
 
     public function scopeSearchUserByKeyword($query, $keyword,$type)
     {

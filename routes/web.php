@@ -4,6 +4,7 @@ use Intervention\Image\Image;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypesController;
+use App\Http\Controllers\SaveSearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -413,3 +414,7 @@ Route::get('click_count', 'AjaxController@clickCount')->name('click_count');
 Route::get('commercial-property_types', 'AjaxController@commercialPropertyTypes')->name('commercial-property_types');
 Route::get('site-register', 'SiteAuthController@siteRegister');
 Route::post('site-register', 'SiteAuthController@siteRegisterPost');
+
+
+//save search controller
+Route::resource('save-search', 'SaveSearchController');

@@ -1256,18 +1256,22 @@
                                     @endforeach
                                 </ul>
                             </div>
+
+                            @if (count($data['nearbyAreasLinks']) > 0)
                             <div class="sidebar-links p-3">
                                 <h6>Nearby Places</h6>
                                 <ul>
                                     @foreach ($data['nearbyAreasLinks'] as $item)
                                     <li>
-                                        <a href="{{ url("properties?city=$item->id&property_purpose=$property_purpose&property_type=$type->id") }}">
-                                            {{ $type->plural_name }} for {{ $property_purpose }} in {{ $item->name }}
+                                        <a href="{{ url("properties?city=$item->id&property_purpose=".ucfirst(request('property_purpose'))) }}">
+                                            Properties for {{ request('property_purpose') }} in {{ $item->name }}
                                         </a>
                                     </li>
                                     @endforeach
                                 </ul>
                             </div>
+                            @endif
+                            
                             <div class="sidebar-links p-3">
                                 <h6>Properties for {{ request('property_purpose') == 'sale' ? 'Rent' : 'Sale' }}</h6>
                                 <ul>

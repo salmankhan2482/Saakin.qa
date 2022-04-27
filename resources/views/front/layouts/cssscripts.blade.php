@@ -62,6 +62,12 @@
 @stack('styles')
 
 <style>
+
+    .yellowStar{
+        color: yellow;
+        -webkit-text-stroke-width: 1px;
+        -webkit-text-stroke-color: orange;
+    }
     .social-div .btn-monochrome {
       --btn-bg-color: #fff;
       --btn-border-color: #e8e1e0;

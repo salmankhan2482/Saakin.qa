@@ -1,4 +1,5 @@
-<div class="modal fade" id="emailAgentModal" tabindex="-1" aria-labelledby="emailAgentModalLabel" aria-hidden="true" role="dialog">
+<div class="modal fade" id="emailAgentModal" tabindex="-1" aria-labelledby="emailAgentModalLabel" 
+  aria-hidden="true" role="dialog">
 
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content email-content">

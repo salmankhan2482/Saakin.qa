@@ -1246,18 +1246,22 @@
                                     @endforeach
                                 </ul>
                             </div>
+                            
+                            @if (count($data['nearbyAreasLinks']) > 0)
                             <div class="sidebar-links p-3">
                                 <h6>Nearby Places</h6>
                                 <ul>
                                     @foreach ($data['nearbyAreasLinks'] as $item)
                                     <li>
-                                        <a href="{{ url("properties?city=$item->property_cities_id&subcity=$item->property_sub_cities_id&town=$item->property_towns_id&area=$item->id&property_purpose=$property_purpose&property_type=$type->id") }}">
+                                        <a href="{{ route('cpt-purpose', [$buyOrRent, Str::slug($city_keyword->slug), Str::slug($type->types) . 's-for-' . strtolower($property_purpose).'-'.$subcity_keyword->slug.'-'.$town_keyword->slug.'-'. Str::slug($item->name) ]) }}">
                                             {{ $type->plural_name }} for {{ $property_purpose }} in {{ $item->name }}
                                         </a>
                                     </li>
                                     @endforeach
                                 </ul>
                             </div>
+                            @endif
+                            
                             <div class="sidebar-links p-3">
                                 <h6>Properties for {{ request('property_purpose') == 'sale' ? 'Rent' : 'Sale' }}</h6>
                                 <ul>
