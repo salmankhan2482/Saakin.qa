@@ -625,6 +625,7 @@
 
     var sparkBar = function() {
             // Bar Chart
+            // var php_var = "<?php echo $data['top10properties']; ?>";
             if (jQuery('#spark-bar').length > 0) {
                 $("#spark-bar").sparkline([33, 22, 68, 54, 8, 30, 74, 7, 36, 5, 41, 19, 43, 29, 38], {
                     type: "bar",
