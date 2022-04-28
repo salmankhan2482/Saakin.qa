@@ -224,18 +224,17 @@ class DashboardController extends MainAdminController
             ->where('properties.status', 1)
             ->orderBy("pcount", "desc")
             ->groupBy("property_cities.id")
-            ->get();
+            ->limit('10');
 
             //Top 10 Properties
-                    $data['top10Proprties'] = DB::table('properties')
-                    ->join('property_counters', 'properties.id', 'property_counters.property_id')
-                    ->select('properties.id', 'properties.property_name', 'properties.property_purpose', 
-                    'properties.property_slug', DB::raw(' SUM(property_counters.counter) as counter '))
-                    // ->where('properties.agency_id', $id)
-                    ->groupBy('properties.id')
-                    ->orderByDesc('counter')
-                ->limit('10');
-                
+            $data['top10Proprties'] = DB::table('properties')
+            ->join('property_counters', 'properties.id', 'property_counters.property_id')
+            ->select('properties.id', 'properties.property_name', 'property_counters.counter')
+            ->groupBy('properties.id')
+            ->orderByDesc('property_counters.counter')
+            ->get();
+            $top10 = json_encode($data['top10Proprties'],JSON_NUMERIC_CHECK);
+                dd($top10);
             
             $action = 'saakin_dashboard';
 
