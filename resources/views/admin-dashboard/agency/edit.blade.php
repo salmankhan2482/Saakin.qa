@@ -121,19 +121,23 @@
                                 <div class="form-group col-md-6">
                                     <label >{{trans('words.meta_keyword')}}</label>
                                     <textarea type="text" name="meta_keyword" id="meta_keyword" rows="4" class="form-control">{{ $data['agency']->meta_keyword }}</textarea>
-                                </div>
-                                
+                                </div>  
                             </div>
-
-                            <hr>
-                            <div class="form-group col-md-12">
-                                <div class="col-sm-12 text-right">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label>Status</label>
+                                    <select type="text" name="status" class="form-control">
+                                        <option value="0" {{ $data['agency']->status == 1 ? 'selected' : '' }}>Publish</option>
+                                        <option value="0" {{ $data['agency']->status == 0 ? 'selected' : '' }}>Unpublish</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label>&nbsp;</label><br>
                                     <button type="submit" class="btn btn-rounded btn-success" id="add_new_Agency">
-                                        {{ trans('words.update') }}
+                                        {{ trans('words.save') }}
                                     </button>
                                 </div>
                             </div>
-
                         {!! Form::close() !!}
                     </div>
                 </div>

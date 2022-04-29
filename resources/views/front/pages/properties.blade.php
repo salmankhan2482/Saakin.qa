@@ -1,19 +1,15 @@
 ﻿@extends("front.layouts.main")
 @if ($landing_page_content != null)
-
-@section('title', $landing_page_content->meta_title . ' | '.' Saakin.qa')
-@section('description', $landing_page_content->meta_description)
-@section('keyword', $landing_page_content->meta_keyword)
-@section('type','property')
-@section('url',url()->current())
-
+    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
+    @section('description', $landing_page_content->meta_description)
+    @section('keyword', $landing_page_content->meta_keyword)
+    @section('type', 'property')
+    @section('url', url()->current())
 @else
-
-@section('title','Properties in Qatar | Saakin.qa')
-@section('description',$page_des)
-@section('type','property')
-@section('url',url()->current())
-
+    @section('title', 'Properties in Qatar | Saakin.qa')
+    @section('description', $page_des)
+    @section('type', 'property')
+    @section('url', url()->current())
 @endif
 
 @section('content')
@@ -540,7 +536,7 @@
                                     <i class="fas fa-sliders-h"></i>
                                     Sort By
                                 </button>
-                            
+
                             </div>
                         </div>
                         {{-- Mobile Filters --}}
@@ -966,10 +962,11 @@
 
                             </div>
                         </form>
-                        
-                        <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal" aria-labelledby="mSearchFilterLabel" style="height: 60vh !important;">
-                            <form action="{{ url("properties") }}" method="GET">
-                                
+
+                        <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal"
+                            aria-labelledby="mSearchFilterLabel" style="height: 60vh !important;">
+                            <form action="{{ url('properties') }}" method="GET">
+
                                 <input type="hidden" name="city" value="{{ request('city') }}">
                                 <input type="hidden" name="subcity" value="{{ request('subcity') }}">
                                 <input type="hidden" name="town" value="{{ request('town') }}">
@@ -983,9 +980,10 @@
                                 <input type="hidden" name="bedrooms" value="{{ request('bedrooms') }}">
                                 <input type="hidden" name="bathrooms" value="{{ request('bathrooms') }}">
                                 <input type="hidden" name="furnishings" value="{{ request('furnishings') }}">
-                                
+
                                 <div class="offcanvas-header border-bottom">
-                                    <h5 class="offcanvas-title" id="mSearchFilterLabel" data-bs-dismiss="offcanvas" aria-label="Close">
+                                    <h5 class="offcanvas-title" id="mSearchFilterLabel" data-bs-dismiss="offcanvas"
+                                        aria-label="Close">
                                         <i class="fas fa-times"></i>
                                         Sorting
                                     </h5>
@@ -993,42 +991,45 @@
 
                                 <div class="offcanvas-body">
                                     <div class="mb-3 spbwx8">
-                                        <input type="radio" class="btn-check" name="sort_by" id="btnnewest" value="newest"
-                                        @if ($request->sort_by == 'newest') checked @endif>
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnnewest"
+                                            value="newest" @if ($request->sort_by == 'newest') checked @endif>
                                         <label class="btn btn-monochrome btn-sm" for="btnnewest">Newest</label>
                                     </div>
-                            
+
                                     <div class="mb-3 spbwx8">
-                                        <input type="radio" class="btn-check" name="sort_by" id="btnfeatured" value="featured"
-                                        @if ($request->sort_by == 'featured') checked @endif>
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnfeatured"
+                                            value="featured" @if ($request->sort_by == 'featured') checked @endif>
                                         <label class="btn btn-monochrome btn-sm" for="btnfeatured">Featured</label>
                                     </div>
-                              
+
                                     <div class="mb-3 spbwx8">
-                                        <input type="radio" class="btn-check" name="sort_by" id="btnlow_price" value="low_price"
-                                        @if ($request->sort_by == 'low_price') checked @endif>
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnlow_price"
+                                            value="low_price" @if ($request->sort_by == 'low_price') checked @endif>
                                         <label class="btn btn-monochrome btn-sm" for="btnlow_price">Low Price</label>
                                     </div>
-                                
+
                                     <div class="mb-3 spbwx8">
-                                        <input type="radio" class="btn-check" name="sort_by" id="btnhigh_price" value="high_price" @if ($request->sort_by == 'high_price') checked @endif>
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnhigh_price"
+                                            value="high_price" @if ($request->sort_by == 'high_price') checked @endif>
                                         <label class="btn btn-monochrome btn-sm" for="btnhigh_price">High Price</label>
                                     </div>
-                           
+
                                     <div class="mb-3 spbwx8">
-                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_least" value="beds_least" @if ($request->sort_by == 'beds_least') checked @endif>
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_least"
+                                            value="beds_least" @if ($request->sort_by == 'beds_least') checked @endif>
                                         <label class="btn btn-monochrome btn-sm" for="btnbeds_least">Beds Least</label>
                                     </div>
-                            
+
                                     <div class="mb-3 spbwx8">
-                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_most" value="beds_most"
-                                        @if ($request->sort_by == 'beds_most') checked @endif>
+                                        <input type="radio" class="btn-check" name="sort_by" id="btnbeds_most"
+                                            value="beds_most" @if ($request->sort_by == 'beds_most') checked @endif>
                                         <label class="btn btn-monochrome btn-sm" for="btnbeds_most">Beds Most</label>
                                     </div>
                                 </div>
 
                                 <div class="p-3 bg-white border-top sticky-bottom">
-                                    <input type="submit" class="btn btn-info form-control d-block fs-sm fw-normal mt-2" value="Sort">
+                                    <input type="submit" class="btn btn-info form-control d-block fs-sm fw-normal mt-2"
+                                        value="Sort">
                                 </div>
 
                             </form>
@@ -1071,11 +1072,11 @@
                                     <div class="">
                                         <input type="checkbox" class="btn-check" autocomplete="off">
                                         <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
-                                        @if ($saveSearch == 0)
-                                        type="button" data-bs-toggle="modal" data-bs-target="#saveSearchModal"
-                                        @endif>
-                                            <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star" id="save-search-icon"></i>
-                                            <span id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
+                                            @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="#saveSearchModal" @endif>
+                                            <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
+                                                id="save-search-icon"></i>
+                                            <span
+                                                id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
                                         </label>
                                     </div>
                                     {{-- Sort By --}}
@@ -1095,7 +1096,7 @@
                                                         @if ($request->sort_by == 'featured') selected @endif>
                                                         Featured
                                                     </option>
-                                                    
+
                                                     <option value="low_price"
                                                         @if ($request->sort_by == 'low_price') selected @endif>
                                                         Price (Low)
@@ -1144,18 +1145,16 @@
                             </a>
                         </div>
 
-                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
-                    <div class="location-item">
-                        @if (count($data['result']) > 8)
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
+                        @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                            <div class="location-item">
+                                @if (count($data['result']) > 8)
+                                    <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                        Show more <i class="fas fa-chevron-down"></i>
+                                    </a>
+                                @endif
+                            </div>
                         @endif
-                    </div>  
-                    @endif
-                </div>
-                
-
+                    </div>
                 @elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && $data['result']->count() > 0)
                     <div class="location-wrap">
                         @foreach ($data['result'] as $town)
@@ -1177,18 +1176,16 @@
                             </a>
                         </div>
 
-                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
-                    <div class="location-item">
-                        @if (count($data['result']) > 8)
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
+                        @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                            <div class="location-item">
+                                @if (count($data['result']) > 8)
+                                    <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                        Show more <i class="fas fa-chevron-down"></i>
+                                    </a>
+                                @endif
+                            </div>
                         @endif
-                    </div>  
-                    @endif
-                </div>
-                
-
+                    </div>
                 @elseif(request('property_purpose') && request('property_type') && request('city') && $data['result']->count() > 0)
                     <div class="location-wrap">
                         @foreach ($data['result'] as $subcity)
@@ -1210,18 +1207,16 @@
                             </a>
                         </div>
 
-                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
-                    <div class="location-item">
-                        @if (count($data['result']) > 8)
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
+                        @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                            <div class="location-item">
+                                @if (count($data['result']) > 8)
+                                    <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                        Show more <i class="fas fa-chevron-down"></i>
+                                    </a>
+                                @endif
+                            </div>
                         @endif
-                    </div>  
-                    @endif
-                </div>
-                
-
+                    </div>
                 @elseif(request('property_purpose') && request('property_type') && $data['result']->count() > 0)
                     <div class="location-wrap">
                         @foreach ($data['result'] as $city)
@@ -1243,39 +1238,38 @@
                             </a>
                         </div>
 
-                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
-                    <div class="location-item">
-                        @if (count($data['result']) > 8)
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
+                        @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                            <div class="location-item">
+                                @if (count($data['result']) > 8)
+                                    <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                        Show more <i class="fas fa-chevron-down"></i>
+                                    </a>
+                                @endif
+                            </div>
                         @endif
-                    </div>  
-                    @endif
-                </div>
-                
+                    </div>
                 @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
-                
-                <div class="location-wrap">
-                    @foreach ($propertyTypes as $propertyType)
-                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
-                            <a href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+                    <div class="location-wrap">
+                        @foreach ($propertyTypes as $propertyType)
+                            <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
+                                <a
+                                    href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
 
-                                {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
-                            
-                            </a>
-                        </div>
-                    @endforeach
-                    @if((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
-                    <div class="location-item">
-                        @if (count($data['result']) > 8)
-                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
-                            Show more <i class="fas fa-chevron-down"></i>
-                        </a>
+                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
+
+                                </a>
+                            </div>
+                        @endforeach
+                        @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                            <div class="location-item">
+                                @if (count($data['result']) > 8)
+                                    <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                                        Show more <i class="fas fa-chevron-down"></i>
+                                    </a>
+                                @endif
+                            </div>
                         @endif
-                    </div>  
-                    @endif
-                </div>
+                    </div>
 
                 @endif
 
@@ -1290,7 +1284,8 @@
                                 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
                                 $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
-                            <div class="single-property-box horizontal-view"  @if (!(new \Jenssegers\Agent\Agent())->isMobile())style="height: 32vh;" @endif>
+                            <div class="single-property-box horizontal-view"
+                                @if (!(new \Jenssegers\Agent\Agent())->isMobile()) style="height: 32vh;" @endif>
                                 {{--  --}}
                                 <div class="property-item">
                                     <div class="pro-slider">
@@ -1328,7 +1323,7 @@
                                 </div>
 
 
-                                <div class="property-title-box"> 
+                                <div class="property-title-box">
 
                                     <div class="price">
                                         {{ $property->getPrice() }}
@@ -1487,6 +1482,25 @@
                         </div>
                         {{-- Pagination ends --}}
                     </div>
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="list-sidebar mt-3 mt-lg-0">
+                            <div class="sidebar-links p-3">
+
+                                <div class="g-ads">
+                                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                                                        crossorigin="anonymous"></script>
+                                    <!-- search filter ads -->
+                                    <ins class="adsbygoogle" style="display:block"
+                                        data-ad-client="ca-pub-2421573832685297" data-ad-slot="5528669403"
+                                        data-ad-format="auto" data-full-width-responsive="true"></ins>
+                                    <script>
+                                        (adsbygoogle = window.adsbygoogle || []).push({});
+                                    </script>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             @else
                 <div class="mb-3">
@@ -1538,36 +1552,35 @@
     <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
 
     <script type="text/javascript">
-
-        $(document).ready(function(){
-            $("#save-search").on('click', function(){
+        $(document).ready(function() {
+            $("#save-search").on('click', function() {
                 var name = $("#search_name").val();
 
                 $.ajax({
-                url: '{{ route('save-search.store') }}',
-                type: "post",
-                dataType: 'json',
-                data: {
-                    '_token': '{{ @csrf_token() }}',
-                    name: name,
-                },
-                success: function(data) {
-                    if(data.message == 'Saved'){
-                        $("#save-search-icon").removeClass('far fa-star');
-                        $("#save-search-icon").addClass('fa fa-star yellowStar');
-                        $("#search_name").val('');
-                        $("#saveSearchModal").modal('hide');
-                        $("#saveSearchText").html('Saved');
-                        $('#saveSearchLabel').attr('data-bs-target','');
-                        $('#saveSearchLabel').attr('data-bs-toggle','');
-                    }else if(data.message == 'Removed'){
-                        location.reload();
-                        // $("#save-search-icon").removeClass('fa fa-star yellowStar');
-                        // $("#save-search-icon").addClass('far fa-star');
-                    }
-                },
+                    url: '{{ route('save-search.store') }}',
+                    type: "post",
+                    dataType: 'json',
+                    data: {
+                        '_token': '{{ @csrf_token() }}',
+                        name: name,
+                    },
+                    success: function(data) {
+                        if (data.message == 'Saved') {
+                            $("#save-search-icon").removeClass('far fa-star');
+                            $("#save-search-icon").addClass('fa fa-star yellowStar');
+                            $("#search_name").val('');
+                            $("#saveSearchModal").modal('hide');
+                            $("#saveSearchText").html('Saved');
+                            $('#saveSearchLabel').attr('data-bs-target', '');
+                            $('#saveSearchLabel').attr('data-bs-toggle', '');
+                        } else if (data.message == 'Removed') {
+                            location.reload();
+                            // $("#save-search-icon").removeClass('fa fa-star yellowStar');
+                            // $("#save-search-icon").addClass('far fa-star');
+                        }
+                    },
 
-            });
+                });
             })
         });
 

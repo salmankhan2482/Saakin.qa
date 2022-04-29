@@ -69,6 +69,15 @@
             <li>ROI</li>
           </ul> --}}
         </div>
+        <div class="google-ad">
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                  crossorigin="anonymous"></script>
+          <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
+              data-ad-format="fluid" data-ad-client="ca-pub-2421573832685297" data-ad-slot="7852560352"></ins>
+          <script>
+              (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+      </div>
         <div id="neighborhood">
           <h5 class="p-3 rounded bg-dark" style="--bs-bg-opacity:.05;">NeighborHood</h5>
           {{-- <ul class="sub-details">
@@ -209,6 +218,11 @@
 @endsection
 
 @push('styles')
+<style>
+  .google-ad{
+    margin: 10px;
+  }
+</style>
   <!-- Add the slick-theme.css if you want default styling -->
   <link rel="stylesheet" type="text/css" href="{{ asset('assets/plugins/slick/slick.css') }}" />
   <!-- Add the slick-theme.css if you want default styling -->
