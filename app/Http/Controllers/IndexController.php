@@ -49,7 +49,7 @@ class IndexController extends Controller
         $agents = User::where('usertype', 'Agency')->get();
         $amenities = PropertyAmenity::all()->sortBy('name');
 
-        $featured_properties = Properties::where('status', '1')->where('featured_property', '1')->inRandomOrder()->take(6)->get();
+        $featured_properties = Properties::where('status', '1')->where('featured_property', '1')->inRandomOrder()->take(4)->get();
         $partners = Partners::orderBy('id', 'desc')->get();
         $cityGuides = City::where('status', '1')->orderBy('sequence_id', 'asc')->take(4)->get();
 
@@ -70,7 +70,7 @@ class IndexController extends Controller
         if (request()->ajax()) {
             $featured_properties = Properties::where('status', '1')
                 ->where('featured_property', '1')
-                ->inRandomOrder()->take(6)
+                ->inRandomOrder()->take(4)
                 ->where('property_purpose', $purpose)
                 ->get();
             return view('front.pages.include.featured_properties', compact('featured_properties'))->render();
@@ -443,7 +443,8 @@ class IndexController extends Controller
         $properties = Properties::where(['status' => '1'])->orderBy('id', 'desc')->get();
         $blogs = Blog::get();
         $blog_categories = BlogCategory::pluck('slug');
-        $agencies = Agency::get();
+        $agencies = Agency::where('status,1')->get();
+        dd($agencies);
         $city_guides = CityGuide::get();
 
         $salePropertyTypes =  DB::table('property_types')

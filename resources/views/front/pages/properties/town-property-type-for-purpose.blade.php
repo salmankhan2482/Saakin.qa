@@ -1245,6 +1245,16 @@
                     <div class="col-lg-3 order-lg-2">
                         <div class="list-sidebar mt-3 mt-lg-0">
                             <div class="sidebar-links p-3">
+                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                                                crossorigin="anonymous"></script>
+                                <!-- Town Property Type for purpose page listing ads -->
+                                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2421573832685297"
+                                    data-ad-slot="6731050378" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                            </div>
+                            <div class="sidebar-links p-3">
                                 <h6>Popular Searches</h6>
                                 <ul>
                                     @foreach ($data['popularSearchesLinks'] as $item)

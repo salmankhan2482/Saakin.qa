@@ -74,6 +74,7 @@ class AgencyController extends Controller
         $agency->meta_title = $inputs['meta_title'];
         $agency->meta_description = $inputs['meta_description'];
         $agency->meta_keyword = $inputs['meta_keyword'];
+        $agency->status = $inputs['status'];
 
         if($request->hasFile('image')) {
             $image = $request->file('image'); 
@@ -165,6 +166,7 @@ class AgencyController extends Controller
         $agency->meta_title = $inputs['meta_title'];
         $agency->meta_description = $inputs['meta_description'];
         $agency->meta_keyword = $inputs['meta_keyword'];
+        $agency->status = $inputs['status'];
 
             if($request->hasFile('image')) {
                 $image = $request->file('image'); 
