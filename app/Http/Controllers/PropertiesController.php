@@ -1107,6 +1107,7 @@ class PropertiesController extends Controller
 
             $properties = $properties->paginate(getcong('pagination_limit'));
             $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
+            // dd($subcity_keyword);
 
             $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
