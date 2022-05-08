@@ -1148,10 +1148,13 @@
 
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="">
-                                        <input type="checkbox" class="btn-check" id="save-search" autocomplete="off">
-                                        <label class="btn btn-outline-primary btn-sm" for="save-search">
-                                            <i class="far fa-star"></i>
-                                            Save Search
+                                        <input type="checkbox" class="btn-check" autocomplete="off">
+                                        <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
+                                            @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
+                                            <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
+                                                id="save-search-icon"></i>
+                                            <span
+                                                id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
                                         </label>
                                     </div>
                                     {{-- Sort By --}}
@@ -1513,7 +1516,7 @@
             @endif
         </div>
     </div>
-
+    @include('front.pages.include.saveSearchModal')
 @endsection
 
 @push('styles')
@@ -1540,6 +1543,40 @@
     <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
 
     <script type="text/javascript">
+        $(document).ready(function() {
+            $("#save-search").on('click', function() {
+                var name = $("#search_name").val();
+
+                $.ajax({
+                    url: '{{ route('save-search.store') }}',
+                    type: "post",
+                    dataType: 'json',
+                    data: {
+                        '_token': '{{ @csrf_token() }}',
+                        name: name,
+                    },
+                    success: function(data) {
+                        if (data.message == 'Saved') {
+                            $("#save-search-icon").removeClass('far fa-star');
+                            $("#save-search-icon").addClass('fa fa-star yellowStar');
+                            $("#search_name").val('');
+                            $("#saveSearchModal").modal('hide');
+                            $("#saveSearchText").html('Saved');
+                            $('#saveSearchLabel').attr('data-bs-target', '');
+                            $('#saveSearchLabel').attr('data-bs-toggle', '');
+                        } else if (data.message == 'Removed') {
+                            location.reload();
+                            $("#save-search-icon").removeClass('fa fa-star yellowStar');
+                            $("#save-search-icon").addClass('far fa-star');
+                        }
+                    },
+
+                });
+            })
+        });
+
+
+
         var bednumber = $("#bedroomInput").val();
         var bathnumber = $("#bathroomInput").val();
         showBedBath();

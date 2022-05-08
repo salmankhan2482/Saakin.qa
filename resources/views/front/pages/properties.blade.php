@@ -1072,7 +1072,7 @@
                                     <div class="">
                                         <input type="checkbox" class="btn-check" autocomplete="off">
                                         <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
-                                            @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="#saveSearchModal" @endif>
+                                            @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
                                             <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
                                                 id="save-search-icon"></i>
                                             <span
@@ -1575,8 +1575,8 @@
                             $('#saveSearchLabel').attr('data-bs-toggle', '');
                         } else if (data.message == 'Removed') {
                             location.reload();
-                            // $("#save-search-icon").removeClass('fa fa-star yellowStar');
-                            // $("#save-search-icon").addClass('far fa-star');
+                            $("#save-search-icon").removeClass('fa fa-star yellowStar');
+                            $("#save-search-icon").addClass('far fa-star');
                         }
                     },
 
