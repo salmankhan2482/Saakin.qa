@@ -958,8 +958,17 @@ class PropertiesController extends Controller
         ->groupBy('property_cities.name')->limit(6)->get();
         
         $request = request();
+
+        $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $saveSearch = 0;
+        if(auth()->user()){
+            $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+            $saveSearch = isset($record) ? 1 : 0;
+        }
+
         return view('front.pages.properties.properties-for-purpose',
-        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'data', 'heading_info', 'buyOrRent', 'property_purpose','landing_page_content', 'request'));
+        compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'data',
+         'heading_info', 'buyOrRent', 'property_purpose','landing_page_content', 'request','saveSearch'));
     }
 
     public function propertyTypeForPurpose($buyOrRent, $property)
@@ -1053,8 +1062,18 @@ class PropertiesController extends Controller
         ->groupBy('property_cities.name')->limit(6)->get();
         
         $request = request();
+
+        $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $saveSearch = 0;
+        if(auth()->user()){
+            $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+            $saveSearch = isset($record) ? 1 : 0;
+        }
+
+
         return view('front.pages.properties.property-type-for-purpose',
-        compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 'propertyPurposes','landing_page_content','page_info', 'request', 'heading_info', 'data'));
+        compact('properties', 'propertyTypes', 'type', 'cities', 'property_purpose', 'buyOrRent', 
+        'propertyPurposes','landing_page_content','page_info', 'request', 'heading_info', 'data','saveSearch'));
     }
 
     public function cityPropertyTypeForPurpose($buyOrRent, $city_slug, $property_type_purpose)
@@ -1167,9 +1186,18 @@ class PropertiesController extends Controller
             }else{
                 $meta_description = 'Search '.$page_info.' Short Term Flats &amp; Long Term Rentals✓ Long Term Sale✓ ';
             }
+
+            $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $saveSearch = 0;
+            if(auth()->user()){
+               $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+               $saveSearch = isset($record) ? 1 : 0;
+            }
                  
             return view('front.pages.properties.subcity-property-type-for-purpose', 
-            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'towns', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info', 'data','landing_page_content'));
+            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'towns', 
+            'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info', 'data',
+            'landing_page_content','saveSearch'));
             
         }elseif(count($town_props) > 0){
             //town if
@@ -1259,8 +1287,16 @@ class PropertiesController extends Controller
             ->where('properties.property_type', $type->id)
             ->groupBy("property_towns.name")->limit(6)->get();
 
+            $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $saveSearch = 0;
+            if(auth()->user()){
+               $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+               $saveSearch = isset($record) ? 1 : 0;
+            }
+
             return view('front.pages.properties.town-property-type-for-purpose',
-            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'areas', 'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','data'));
+            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'areas', 
+            'meta_description', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','data','saveSearch'));
             
         
         }elseif(count($area_props) > 0){         
@@ -1340,9 +1376,18 @@ class PropertiesController extends Controller
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('properties.property_type', $type->id)
             ->groupBy("property_areas.name")->limit(6)->get();
+
+            $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $saveSearch = 0;
+            if(auth()->user()){
+               $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+               $saveSearch = isset($record) ? 1 : 0;
+            }
             
             return view('front.pages.properties.area-property-type-for-purpose',
-            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 'area_keyword', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info', 'data'));
+            compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcity_keyword', 'town_keyword', 
+            'area_keyword', 'property_purpose', 'meta_description', 'propertyPurposes', 'buyOrRent','page_info', 
+            'data','saveSearch'));
 
         }        
         
@@ -1431,8 +1476,18 @@ class PropertiesController extends Controller
         ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
         
         $request = request();
+
+
+        $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $saveSearch = 0;
+            if(auth()->user()){
+               $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+               $saveSearch = isset($record) ? 1 : 0;
+            }
+            
         return view('front.pages.properties.city-property-type-for-purpose',
-        compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcities', 'property_purpose', 'propertyPurposes', 'buyOrRent','page_info','landing_page_content', 'request', 'data'));
+        compact('properties',  'propertyTypes', 'type', 'city_keyword', 'subcities', 'property_purpose', 'propertyPurposes',
+         'buyOrRent','page_info','landing_page_content', 'request', 'data','saveSearch'));
     }
 
 
@@ -1475,8 +1530,15 @@ class PropertiesController extends Controller
         $request = request();
         $heading_info = 'Featured Properties in Qatar';
 
+        $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http")."://" . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            $saveSearch = 0;
+            if(auth()->user()){
+               $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
+               $saveSearch = isset($record) ? 1 : 0;
+            }
+
         return view('front.pages.properties.featured-properties',
-        compact('properties', 'request', 'propertyTypes', 'city', 'heading_info', 'propertyPurposes','page_info'));
+        compact('properties', 'request', 'propertyTypes', 'city', 'heading_info', 'propertyPurposes','page_info','saveSearch'));
     }
 
 }

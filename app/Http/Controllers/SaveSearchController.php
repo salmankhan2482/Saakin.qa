@@ -15,8 +15,10 @@ class SaveSearchController extends Controller
      */
     public function index()
     {
-        $search = SaveSearch::all();
-        return view('front.pages.save-search-properties', compact('search'));
+        
+        $searches = SaveSearch::where('user_id',Auth::User()->id)->get();
+       
+        return view('front.pages.save-search-properties', compact('searches'));
     }
 
     /**
@@ -74,7 +76,7 @@ class SaveSearchController extends Controller
      */
     public function edit(SaveSearch $saveSearch)
     {
-        //
+        
     }
 
     /**
