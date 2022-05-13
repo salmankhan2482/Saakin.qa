@@ -399,7 +399,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-4 col-xxl-3">
+            {{-- <div class="col-xl-4 col-xxl-3">
                 <div class="card overflow-hidden">
                     <div class="card-header">
                         <h4 class="card-title">Bar Chart</h4>
@@ -410,7 +410,7 @@
                         </div>                            
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection

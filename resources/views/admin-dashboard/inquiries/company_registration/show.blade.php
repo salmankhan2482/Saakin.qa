@@ -8,7 +8,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Agency Inquiry</h4>
+                    <h4 class="card-title">Company Registration Inquiry</h4>
                     <a href="{{ route('companyRegistration.index') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <i class="fa fa-arrow-left"></i>
@@ -47,10 +47,6 @@
                                 <tr>
                                     <td><strong>City Name</strong></td>
                                     <td>{{ $registration->relatedCity->name ??'' }}</td>
-                                </tr>
-                                <tr> 
-                                    <td><strong>Message</strong></td>
-                                    <td>{{ $registration->message }}</td>
                                 </tr>
                             </thead>
                             <tbody>

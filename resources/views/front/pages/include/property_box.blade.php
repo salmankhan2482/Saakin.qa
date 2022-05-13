@@ -12,7 +12,7 @@
             <div class="pro-slider">
                 <div class="pro-slider-item property-img">
                     <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                        alt="{{ $property->property_name }}">
+                    width="124" height="160" alt="{{ $property->property_name }}">
                 </div>
 
                 @if (count($property->gallery) > 0)
@@ -20,7 +20,7 @@
                         @if ($loop->index < 5)
                             <div class="pro-slider-item  property-img">
                                 <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                    alt="{{ $property->property_name }}">
+                                width="124" height="160" alt="{{ $property->property_name }}">
                             </div>
                         @endif
                     @endforeach
@@ -30,7 +30,7 @@
             <div class="property-img">
                 @if ($property->featured_image)
                     <img src="{{ URL::asset('upload/properties/thumb_' . $property->featured_image) }}"
-                        alt="Featured Image of Property">
+                       width="416" height="250" alt="Featured Image of Property">
                 @else
                     <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}"
                         alt="Image of Property if no Featured Image found">

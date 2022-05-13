@@ -24,6 +24,7 @@
                                     <th>Email</th>
                                     <th>Image</th>
                                     <th>Created</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,6 +39,13 @@
                                                 alt="{{ $agency->name.'- agency image' }}" width="60" />
                                         </td>
                                         <td>{{ date('d-m-Y', strtotime($agency->created_at)) ??''}} </td>
+                                        <td class="text-center">
+                                            @if ($agency->status == 1)
+                                                <i class="fa fa-circle text-success mr-1"></i>
+                                            @else
+                                                <i class="fa fa-circle text-danger mr-1"></i>
+                                            @endif
+                                        </td>
                                         <td>
                                             <a href="{{ route('agencies.edit', $agency->id) }}"
                                                 class="btn btn-primary rounded btn-xs action-btn">

@@ -1017,7 +1017,7 @@
                 <div class="location-wrap">
                     @foreach ($towns as $item)
                         <div class="location-item {{ $loop->index > 7 ? 'moreLess' : '' }}">
-                            
+                          
                             <a href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose) . '-' . $subcity_keyword->slug . '-' . $item->slug]) }}" >
                                 {{ Str::limit($item->name,25) }} <span> ({{ $item->pcount }}) </span>
                             </a>

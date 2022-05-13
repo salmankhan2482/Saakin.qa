@@ -74,9 +74,13 @@ class SaveSearchController extends Controller
      * @param  \App\SaveSearch  $saveSearch
      * @return \Illuminate\Http\Response
      */
-    public function edit(SaveSearch $saveSearch)
+    public function edit($id)
     {
-        
+        $search = SaveSearch::where('id',$id)->first();
+        // dd($search);
+        return response()->json([
+            'data' => $search
+          ]);
     }
 
     /**
