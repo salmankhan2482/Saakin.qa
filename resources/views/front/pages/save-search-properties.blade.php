@@ -38,8 +38,9 @@
               <div class="agency-tile-info border-top">
                 <div class="p-3">
                   <div class="agency-tile-contact d-flex spbwx8 pt-1">
-                    <a class="btn btn-monochrome btn-sm flex-grow-1" href="javascript:void(0)" 
-                    data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#editSaveSearchModalLabel' : '#user-login-popup' }}">
+                    <a id="editSaveSearchModalLabel" class="btn btn-monochrome btn-sm flex-grow-1" href="{{ route('save-search.edit', $search->id) }}" 
+                    data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#editSaveSearchModalLabel' : '#user-login-popup' }}"
+                    >
                       <i class="fa fa-edit"></i>
                       Edit
                     </a>
@@ -67,3 +68,21 @@
     </section>
     @include('front.pages.include.editSaveSearchModal')
 @endsection
+<script>
+  $(document).ready(function () {
+
+$('body').on('click', '#editSaveSearchModalLabel', function (event) {
+
+    event.preventDefault();
+    var id = $(this).data('id');
+    $.get('save-search/' + id + '/edit', function (data) {
+         $('#userCrudModal').html("Edit search");
+         $('#submit').val("Edit search");
+         $('#editSaveSearchModalLabel').modal('show');
+         $('#id').val(data.data.id);
+         $('#name').val(data.data.name);
+     })
+});
+
+}); 
+</script>

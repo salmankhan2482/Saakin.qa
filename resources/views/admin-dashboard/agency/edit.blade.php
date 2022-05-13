@@ -127,7 +127,7 @@
                                 <div class="form-group col-md-4">
                                     <label>Status</label>
                                     <select type="text" name="status" class="form-control">
-                                        <option value="0" {{ $data['agency']->status == 1 ? 'selected' : '' }}>Publish</option>
+                                        <option value="1" {{ $data['agency']->status == 1 ? 'selected' : '' }}>Publish</option>
                                         <option value="0" {{ $data['agency']->status == 0 ? 'selected' : '' }}>Unpublish</option>
                                     </select>
                                 </div>

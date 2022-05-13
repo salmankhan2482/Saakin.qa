@@ -6,6 +6,7 @@ use App\Enquire;
 use App\PropertyCities;
 use App\CompanyRegistration;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\CompanyRegistrationMail;
 use Illuminate\Support\Facades\Session;
@@ -68,10 +69,14 @@ class CompanyRegistrationController extends MainAdminController
     
     public function show($id)
     {
+        
         $registration = CompanyRegistration::find($id);
-        $inquire = Enquire::where('company_registrations_id', $registration->id)->first();
-        $inquire->enquire_id = 1;
-        $inquire->update();
+        // $inquire = Enquire::where('company_registrations_id', $registration->id)->first();
+        // $inquire->enquire_id =1;
+        // $inquire->update();
+        DB::table('enquire')
+            ->where('company_registrations_id', $registration->id)
+            ->update(['enquire_id' => 1]);
         $action = 'saakin_index';
         return view('admin-dashboard.inquiries.company_registration.show', compact('registration','action'));
 

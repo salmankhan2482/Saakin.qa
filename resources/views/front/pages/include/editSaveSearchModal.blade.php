@@ -1,5 +1,5 @@
 @php
-   $edit_name = \App\SaveSearch::where('id',$search->id)->value('name');
+   $edit_name = \App\SaveSearch::where('id',request()->id)->value('name');
 @endphp
 
 <div class="modal fade" id="editSaveSearchModalLabel" tabindex="-1" aria-labelledby="editSaveSearchModalLabel" 
@@ -17,7 +17,7 @@
             <div class="col-12">
               <div class="form-group">
                 <input type="text" class="form-control" id="search_name" name="search_name" aria-describedby="name" 
-                    placeholder="* Search name" value="{{ $edit_name }}" required>
+                    placeholder="* Search name" value="{{ request()->id }}" required>
               </div>
             </div>
         </div>

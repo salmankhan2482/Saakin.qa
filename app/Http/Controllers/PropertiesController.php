@@ -1097,15 +1097,16 @@ class PropertiesController extends Controller
 
         //subcity if
         if(count($subcitie_props) > 0){
+            // dd($subcitie_props);
             $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
             $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
-            
+           
             $properties = Properties::where('status', 1)
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('property_type', $type->id)
             ->where('sub_city_slug', $property_type_purpose)
             ->where('city', $city_keyword->id);
-
+            
             if (isset(request()->sort_by) && !empty(request()->sort_by)) {
                 if (request()->sort_by == "newest") {
                             $properties->orderBy('id', 'desc');

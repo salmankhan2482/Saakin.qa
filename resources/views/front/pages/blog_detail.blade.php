@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="google-ad">
+                    <div class="google-ad mb-4">
                         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
                                                 crossorigin="anonymous"></script>
                         <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"

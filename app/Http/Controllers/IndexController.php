@@ -443,8 +443,8 @@ class IndexController extends Controller
         $properties = Properties::where(['status' => '1'])->orderBy('id', 'desc')->get();
         $blogs = Blog::get();
         $blog_categories = BlogCategory::pluck('slug');
-        $agencies = Agency::where('status,1')->get();
-        dd($agencies);
+        $agencies = Agency::where('status',1)->get();
+        
         $city_guides = CityGuide::get();
 
         $salePropertyTypes =  DB::table('property_types')

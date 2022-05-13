@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Agency;
+use App\PropertyCities;
+use Illuminate\Database\Eloquent\Model;
 
 class Properties extends Model
 {
