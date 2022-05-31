@@ -351,7 +351,7 @@
                 </div>
             </div>
 
-            <div class="col-xl-8 col-xxl-7">
+            <div class="col-xl-9 col-xxl-8">
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="card">
@@ -399,18 +399,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-xl-4 col-xxl-3">
-                <div class="card overflow-hidden">
-                    <div class="card-header">
-                        <h4 class="card-title">Bar Chart</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="ico-sparkline">
-                            <div id="spark-bar"></div>
-                        </div>                            
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
 @endsection
@@ -621,20 +609,6 @@
     });
 
     })(jQuery);
-
-
-    var sparkBar = function() {
-            // Bar Chart
-            if (jQuery('#spark-bar').length > 0) {
-                $("#spark-bar").sparkline([33, 22, 68, 54, 8, 30, 74, 7, 36, 5, 41, 19, 43, 29, 38], {
-                    type: "bar",
-                    height: "200",
-                    barWidth: 6,
-                    barSpacing: 7,
-                    barColor: "#1bd084"
-                });
-            }
-        }
 </script>
 
 @endsection

@@ -53,7 +53,7 @@
                                         </div>
                                     @endif
                                     <div class="card-body">
-                                        <form action="{{ url('company-registration') }}" method="POST">
+                                        <form action="{{ url('company_registration') }}" method="POST">
                                             @csrf
                                             <div class="form-control-wrap row gx-2 gy-3">
                                                 <div class="form-group col-md-6">

@@ -37,6 +37,7 @@ use Illuminate\Support\Facades\Session;
 use Stevebauman\Location\Facades\Location;
 
 
+
 class PropertiesController extends Controller
 {
     public function __construct()
@@ -284,7 +285,7 @@ class PropertiesController extends Controller
 
         $data['keyword'] = $this->findKeyWord(request('city'), request('subcity'), request('town'), request('area'));
         $furnishing = ''; $name = ''; $link = '';
-        
+
         if(request('bedrooms')){
             $name = $name.(request('bedrooms') ? request('bedrooms').' bedroom ' : '');
         }
@@ -321,12 +322,13 @@ class PropertiesController extends Controller
         $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
         $heading_info = $furnishing.' '.
-        (ucfirst($request['type']->plural ?? ' properties'))
+        (ucfirst($request['type']->plural ?? ' Properties'))
         .' for '.
         (request()->property_purpose ? request()->property_purpose : 'rent and sale ') 
         .' in '. 
         ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
         
+
         if(count($properties) > 0){
             if (request('property_purpose') != '') {
             $popularSearches = PopularSearches::updateOrCreate(
@@ -501,10 +503,11 @@ class PropertiesController extends Controller
                     ->orderBy('land_area', 'asc')
                     ->get();
 
-        
+        $property_counter = PropertyCounter::where('property_id',$property->id)->value('counter');
+            //  dd($property_counter);  
         $property_des = Str::limit($property->property_name.'  '.$property->description, 150, '...');
 
-        return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address'));
+        return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address','property_counter'));
 
     }
 
@@ -519,6 +522,7 @@ class PropertiesController extends Controller
         $property_des = $request->property_data;
         $property_data = Properties::where('id',$property_des)->first();
 	    $rule=array(
+                'property_data' => 'nullable|required',
 		        'user_name' => 'required',
 				'user_email' => 'required|email',
 		        'user_message' => 'required',
@@ -934,9 +938,9 @@ class PropertiesController extends Controller
         }   
         if(request('property_type')){
             $type = Types::where('id', request('property_type'))->value('types'); 
-            $heading_info = $furnishing.' '.$type.' for '.request()->property_purpose.' in Qatar';
+            $heading_info = $furnishing.' '.$type.' for '.ucfirst(request()->property_purpose).' in Qatar';
         }else{
-            $heading_info = $furnishing.' Properties for '.request()->property_purpose.' in Qatar';
+            $heading_info = $furnishing.' Properties for '.ucfirst(request()->property_purpose).' in Qatar';
         }
         
         $data['popularSearchesLinks'] = PopularSearches::
@@ -965,7 +969,6 @@ class PropertiesController extends Controller
             $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
             $saveSearch = isset($record) ? 1 : 0;
         }
-
         return view('front.pages.properties.properties-for-purpose',
         compact('properties', 'propertyTypes', 'cities', 'propertyPurposes', 'data',
          'heading_info', 'buyOrRent', 'property_purpose','landing_page_content', 'request','saveSearch'));
@@ -973,6 +976,7 @@ class PropertiesController extends Controller
 
     public function propertyTypeForPurpose($buyOrRent, $property)
     {
+       
         $property_type = '';
         $property_purpose = '';
         
@@ -1040,7 +1044,7 @@ class PropertiesController extends Controller
         $landing_page_content = LandingPage::where('property_purposes_id', $purp)->where('property_types_id',$type->id)
         ->first();
         $page_info = $type->plural.' for '.$property_purpose;
-        $heading_info = ($type->plural_name ? $type->plural_name : ' Properties for ').' for '.$property_purpose.' in Qatar';
+        $heading_info = ($type->plural_name ? $type->plural_name : ' Properties for ').' for '.ucfirst($property_purpose).' in Qatar';
 
         $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
         ->where('type_id', $type->id)
@@ -1125,7 +1129,11 @@ class PropertiesController extends Controller
                 $properties->orderBy('id', 'desc');
             }
 
+            
             $properties = $properties->paginate(getcong('pagination_limit'));
+            if($properties->total() == 0){
+                return redirect()->route('home');
+            }
             $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
             // dd($subcity_keyword);
 
@@ -1152,7 +1160,7 @@ class PropertiesController extends Controller
             ->get();
             
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city_keyword->name.', '.$subcity_keyword->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$subcity_keyword->name.', '.$city_keyword->name;
             
             $data['popularSearchesLinks'] = PopularSearches::
             where('property_purpose', ucfirst($property_purpose))
@@ -1256,7 +1264,7 @@ class PropertiesController extends Controller
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city_keyword->name.', '.$subcity_keyword->name.', '.$town_keyword->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$town_keyword->name.', '.$subcity_keyword->name.', '.$city_keyword->name;
 
             if($properties->total() > 0){
                 $meta_description = 
@@ -1345,7 +1353,7 @@ class PropertiesController extends Controller
             ->get();
 
             $propertyPurposes = PropertyPurpose::all();
-            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$city_keyword->name.', '.$subcity_keyword->name.', '.$town_keyword->name.', '.$area_keyword->name;
+            $page_info = $type->plural_name.' for '.$property_purpose.' in '.$area_keyword->name.', '.$town_keyword->name.', '.$subcity_keyword->name.', '.$city_keyword->name;
 
             if($properties->total() > 0){
                 $meta_description = 
@@ -1393,12 +1401,18 @@ class PropertiesController extends Controller
         }        
         
         $type = Types::where('plural', $property_type)->firstOrFail();
+       
         $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
+        
         
         $properties = Properties::where('status', 1)
         ->where('property_purpose', ucfirst($property_purpose))
         ->where('property_type', $type->id)
         ->where('city', $city_keyword->id);
+        
+        if(empty($properties->count())){
+            return redirect()->route('home');
+        }
         
         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
             if (request()->sort_by == "newest") {

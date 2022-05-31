@@ -291,9 +291,7 @@ Route::post('agency-contact','AgenciesController@agency_email');
 Route::post('agencies', 'AgenciesController@searchAgencies');
 Route::get('agency/{name}/{id}', 'AgenciesController@agencyDetail')->name('agency_detail')->where('id', '[0-9]+');
 Route::post('agency/email', 'AgenciesController@agencyDetail')->name('email_inquiry');
-// Route::get('/agency/page/faq', 'AgenciesController@agencyDetail' ,function(){ 
-//     return redirect('/', 301); 
-// });
+
 
 Route::get('blog', 'BlogController@index');
 Route::get('blogs', function(){ 

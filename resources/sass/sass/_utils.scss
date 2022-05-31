@@ -1,0 +1,41 @@
+// Utils
+//
+// Space between inline child elements
+// To be used with flex/inline-flex until `gap` is a living standard
+@each $i in 4, 8, 12, 16, 20, 24, 32, 40, 48, 54 {
+  .spbwx#{$i} {
+    > :not(:last-child) {
+      margin-right: $i * 1px;
+    }
+  }
+
+  .spbwy#{$i} {
+    > * + * {
+      margin-top: $i * 1px;
+    }
+  }
+}
+
+.item-separator {
+  --spbw: 1rem;
+
+  > * + * {
+    padding-left: var(--spbw);
+    margin-left: var(--spbw);
+    border-left: 1px solid $border-color;
+  }
+}
+
+//
+
+.can-scroll-x {
+  scroll-behavior: smooth;
+  overflow-x: auto;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+    display: none;
+  }
+}

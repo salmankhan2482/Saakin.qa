@@ -79,8 +79,10 @@
 
         @endif
 
-        <a class="text-decoration-none"
-            href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}">
+        
+
+        <a class="text-decoration-none stretched-link"
+         href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}">
             <h5 class="property-card__property-title">
                 {{ $property->property_name }}
             </h5>

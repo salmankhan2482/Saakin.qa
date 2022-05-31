@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\SaveSearch;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class SaveSearchController extends Controller
 {
@@ -63,9 +64,16 @@ class SaveSearchController extends Controller
      * @param  \App\SaveSearch  $saveSearch
      * @return \Illuminate\Http\Response
      */
-    public function show(SaveSearch $saveSearch)
+    public function show($id)
     {
-        //
+
+        $search = SaveSearch::where('id',$id)->first();
+        $search->delete();
+        
+        \Session::flash('flash_message', trans('words.deleted'));
+
+        return redirect()->back();
+
     }
 
     /**
@@ -76,6 +84,7 @@ class SaveSearchController extends Controller
      */
     public function edit($id)
     {
+        dd("edit");
         $search = SaveSearch::where('id',$id)->first();
         // dd($search);
         return response()->json([
@@ -92,7 +101,7 @@ class SaveSearchController extends Controller
      */
     public function update(Request $request, SaveSearch $saveSearch)
     {
-        //
+        dd("update");
     }
 
     /**

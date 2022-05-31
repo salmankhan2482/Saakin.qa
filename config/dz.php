@@ -315,10 +315,6 @@ return [
 					'admin/js/plugins-init/flot-init.js',
 					'admin/vendor/morris/raphael-min.js',
 					'admin/vendor/morris/morris.min.js',
-					'admin/vendor/jquery-sparkline/jquery.sparkline.min.js',
-					'admin/js/plugins-init/sparkline-init.js',
-					'admin/js/custom.min.js',
-					'admin/js/deznav-init.js',
 					
 				],
 

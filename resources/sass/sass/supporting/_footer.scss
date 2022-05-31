@@ -1,0 +1,25 @@
+.site-footer {
+  background-color: $white;
+  box-shadow: $box-shadow;
+  margin-top: 2.5rem;
+
+  a {
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--bs-body-color);
+
+    &:hover {
+      color: var(--bs-primary);
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    --bs-body-font-size: 1.125rem;
+
+    margin-top: 4.5rem;
+  }
+
+  .container-fluid {
+    max-width: 1670px;
+  }
+}

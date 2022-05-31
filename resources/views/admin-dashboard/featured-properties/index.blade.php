@@ -30,7 +30,7 @@
                     <div class="basic-form">
                         <form action="{{ route('featuredproperties.index') }}" method="GET">
                             <div class="row">
-                                <div class="col-sm-2 offset-1">
+                                <div class="col-sm-2">
                                     <input type="text" class="form-control" name="keyword" placeholder="Search" value="{{ request('keyword') }}">
                                 </div>
                                 <div class="col-sm-2 mt-2 mt-sm-0">

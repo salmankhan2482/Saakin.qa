@@ -88,124 +88,122 @@
                                     <th>Created</th>
                                     <th>Health</th>
                                     <th>Status</th>
-                                    <th>Action</th>
+                                    <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($data['propertieslist'] as $i => $property)
-                                <tr>
-                                    <td>{{ $property->id }}</td>
-                                    <td>{{ Str::limit($property->Agency->name, 15) ?? $property->user->name}}</td>
-                                    <td>
-                                        <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
+                                @foreach ($data['propertieslist'] as $i => $property)
+                                    <tr>
+                                        <td>{{ $property->id }}</td>
+                                        <td>{{ $property->Agency->name ?? $property->user->name}}</td>
+                                        <td>
+                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
 
-                                            {{ Str::limit($property->property_name, 30) }}
-                                        </a>
-                                    </td>
-                                    <td> 
-                                    {{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }} 
-                                    </td>
-                                    <td> {{ $property->property_purpose }} </td>
-                                    <td> {{ App\PageVisits::where('property_id', $property->id)->count() ?? 0 }} </td>
-                                    <td>
-                                        @if ($property->created_at !== null)
-                                        {{ date('d-m-Y', strtotime($property->created_at)) }}
-                                        @endif
-                                    </td>
-                                    <td>90%</td>
-                                    <td class="text-center">
-                                        @if ($property->status == 1)
-                                            <i class="fa fa-circle text-success mr-1"></i>
-                                        @else
-                                            <i class="fa fa-circle text-danger mr-1"></i>
-                                        @endif
-                                        @if ($property->featured_property == 1)
-                                        <i class="fa fa-star"></i>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
-                                            Action
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            @if ($property->user)
-                                                @if (Auth::User()->usertype == 'Admin')
-                                                <a href="Javascript:void(0);" class="dropdown-item"
-                                                    data-toggle="modal"
-                                                    data-target="#PropertyPlanModal"
-                                                    data-propertyid="{{ $property->id }}"
-                                                    id="changePlan_button"
-                                                    >
-                                                    <i class="fa fa-dollar"></i>
-                                                    {{ trans('words.change_plan') }}
-                                                </a>
-                                                @endif
-
-                                                <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
-                                                    <i class="fa fa-edit"></i> {{ trans('words.edit') }}
-                                                </a>
-
-                                                <a href="{{ url('admin/properties/gallery/' . $property->id) }}" class="dropdown-item">
-                                                    <i class="fa fa-edit"></i> Gallery Images
-                                                </a>
-
-                                                @if (Auth::User()->usertype == 'Admin')
-                                                    @if ($property->featured_property == 0)
-                                                    <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
-                                                        class="dropdown-item">
-                                                        <i class="fa fa-star"></i> {{ trans('words.set_as_featured') }}
-                                                    </a>
-                                                    @else
-                                                    <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
-                                                        class="dropdown-item">
-                                                        <i class="fa fa-check"></i> {{ trans('words.unset_as_featured') }}
+                                                {{ $property->property_name }}
+                                            </a>
+                                        </td>
+                                        <td> {{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }} </td>
+                                        <td> {{ $property->property_purpose }} </td>
+                                        <td> {{ App\PageVisits::where('property_id', $property->id)->count() ?? 0 }} </td>
+                                        <td>
+                                             @if ($property->created_at !== null)
+                                                {{ date('d-m-Y', strtotime($property->created_at)) }}
+                                             @endif
+                                        </td>
+                                        <td>90%</td>
+                                        <td class="text-center">
+                                            @if ($property->status == 1)
+                                                <i class="fa fa-circle text-success mr-1"></i>
+                                            @else
+                                                <i class="fa fa-circle text-danger mr-1"></i>
+                                            @endif
+                                            @if ($property->featured_property == 1)
+                                            <i class="fa fa-star"></i>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                                                Action
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                @if ($property->user)
+                                                    @if (Auth::User()->usertype == 'Admin')
+                                                    <a href="Javascript:void(0);" class="dropdown-item"
+                                                        data-toggle="modal"
+                                                        data-target="#PropertyPlanModal"
+                                                        data-propertyid="{{ $property->id }}"
+                                                        id="changePlan_button"
+                                                        >
+                                                        <i class="fa fa-dollar"></i>
+                                                        {{ trans('words.change_plan') }}
                                                     </a>
                                                     @endif
-                                                @endif
-                                                
-                                                @if ($property->status == 1 && Auth::User()->usertype == 'Admin')
-                                                <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
-                                                    <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
-                                                </a>
-                                                @elseif($property->status == 0 && Auth::User()->usertype == 'Admin')
+
+                                                    <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
+                                                        <i class="fa fa-edit"></i> {{ trans('words.edit') }}
+                                                    </a>
+
+                                                    <a href="{{ url('admin/properties/gallery/' . $property->id) }}" class="dropdown-item">
+                                                        <i class="fa fa-edit"></i> Gallery Images
+                                                    </a>
+
+                                                    @if (Auth::User()->usertype == 'Admin')
+                                                        @if ($property->featured_property == 0)
+                                                        <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
+                                                            class="dropdown-item">
+                                                            <i class="fa fa-star"></i> {{ trans('words.set_as_featured') }}
+                                                        </a>
+                                                        @else
+                                                        <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
+                                                            class="dropdown-item">
+                                                            <i class="fa fa-check"></i> {{ trans('words.unset_as_featured') }}
+                                                        </a>
+                                                        @endif
+                                                    @endif
+                                                    
+                                                    @if ($property->status == 1 && Auth::User()->usertype == 'Admin')
                                                     <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
-                                                        <i class="fa fa-check"></i> 
-                                                        {{ trans('words.publish') }}
+                                                        <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
+                                                    </a>
+                                                    @elseif($property->status == 0 && Auth::User()->usertype == 'Admin')
+                                                        <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
+                                                            <i class="fa fa-check"></i> 
+                                                            {{ trans('words.publish') }}
+                                                        </a>
+                                                    @endif
+
+                                                    @if ($property->status == 0 && Auth::User()->usertype != 'Admin')
+                                                        <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
+                                                            <i class="fa fa-check"></i> 
+                                                            {{ trans('words.publish') }}
+                                                        </a>
+                                                    @endif
+                                                    
+                                                @else
+                                                    <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}" class="dropdown-item">
+                                                        <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
                                                     </a>
                                                 @endif
 
-                                                @if ($property->status == 0 && Auth::User()->usertype != 'Admin')
-                                                    <a href="{{ route('properties.status',Crypt::encryptString($property->id)) }}" class="dropdown-item">
-                                                        <i class="fa fa-check"></i> 
-                                                        {{ trans('words.publish') }}
+                                                @if(Auth::User()->usertype == 'Admin')
+                                                    <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
+                                                        onclick="return confirm('{{ trans('words.dlt_warning_text') }}')" class="dropdown-item">
+                                                        <i class="fa fa-trash"></i> 
+                                                        {{ trans('words.remove') }}
+                                                    </a>
+                                                @elseif(Auth::User()->usertype != 'Admin' && $property->status == 1)
+                                                    <a  href="javascript::void()" class="callRemovePropertyPopup dropdown-item"
+                                                        data-id="{{Crypt::encryptString($property->id)}}"
+                                                        data-toggle="modal" data-target="#removePropertyPopup"
+                                                    >
+                                                        <i class="fa fa-trash"></i> 
+                                                        {{ trans('words.remove') }}
                                                     </a>
                                                 @endif
-                                                
-                                            @else
-                                                <a href="{{ route('properties.status', Crypt::encryptString($property->id)) }}" class="dropdown-item">
-                                                    <i class="fa fa-close"></i> {{ trans('words.unpublish') }}
-                                                </a>
-                                            @endif
-
-                                            @if(Auth::User()->usertype == 'Admin')
-                                                <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
-                                                    onclick="return confirm('{{ trans('words.dlt_warning_text') }}')" class="dropdown-item">
-                                                    <i class="fa fa-trash"></i> 
-                                                    {{ trans('words.remove') }}
-                                                </a>
-                                            @elseif(Auth::User()->usertype != 'Admin' && $property->status == 1)
-                                                <a  href="javascript::void()" class="callRemovePropertyPopup dropdown-item"
-                                                    data-id="{{Crypt::encryptString($property->id)}}"
-                                                    data-toggle="modal" data-target="#removePropertyPopup"
-                                                >
-                                                    <i class="fa fa-trash"></i> 
-                                                    {{ trans('words.remove') }}
-                                                </a>
-                                            @endif
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>

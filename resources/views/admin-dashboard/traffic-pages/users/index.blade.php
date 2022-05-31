@@ -13,31 +13,21 @@
                     <div class="basic-form">
                         <form action="{{ route('trafficUsers') }}" method="GET">
                             <div class="row justify-content-center">
-                                <div class="col-sm-2"></div>
-                                <div class="col-sm-3">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label d-flex justify-content-center">From</label>
-                                        <div class="col-sm-9">
-                                        <input type="date" class="h-100 form-control" name="from" value="{{request('from')}}" >
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <div class="col-sm-3">
-                                    <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label d-flex justify-content-center">To</label>
-                                        <div class="col-sm-9">
-                                            <input type="date" class="h-100 form-control"name="to" value="{{ request('to') }}" >
-                                        </div>
-                                    </div>
+                                <div class="col-sm-2">
+                                    <label for="">From</label>
+                                    <input type="date" id="start" name="from" value="{{ request('from') }}" >
                                 </div>
                                 
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-dark btn-sm p-2">
+                                    <label for="">To</label>
+                                    <input type="date" id="start" name="to" value="{{ request('to') }}" >
+                                </div>
+                                
+                                <div class="col-sm-1">
+                                    <button type="submit" class="btn btn-dark btn-sm">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
-                                <div class="col-sm-2"></div>
                             </div>
                         </form>
                     </div>
