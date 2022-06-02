@@ -29,7 +29,8 @@
                     <div class="card-header">
                         <h4 class="card-title">Edit Property</h4>
                         <a href="{{ url()->previous() }}">
-                            <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                            <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i>
+                                Back</button>
                         </a>
                     </div>
                     <div class="card-body">
@@ -41,25 +42,27 @@
                                     <legend>Basic Details</legend>
                                     <div class="row">
 
-                                    @if (Auth::User()->usertype == 'Admin')
+                                        @if (Auth::User()->usertype == 'Admin')
+                                            <div class="col-6">
+                                                <label>Property Agency *</label>
+                                                <select class="form-control" name="agency_id" required>
+                                                    <option value="">Select an Agency</option>
+
+                                                    @foreach (\App\Agency::orderBy('name', 'asc')->get() as $agency)
+                                                        <option value="{{ $agency->id }}"
+                                                            @if ($agency->id == $data['property']->agency_id) selected @endif>
+                                                            {{ $agency->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endif
                                         <div class="col-6">
-                                            <label>Property Agency *</label>
-                                            <select class="form-control" name="agency_id" required>
-                                                <option value="">Select an Agency</option>
-                                                
-                                                @foreach(\App\Agency::orderBy("name","asc")->get() as $agency)
-                                                <option value="{{$agency->id}}" @if($agency->id == $data['property']->agency_id) selected
-                                                    @endif>{{$agency->name}}</option>
-                                                @endforeach
-                                            </select>
+                                            <label>Property Title *</label>
+                                            <input type="text" class="form-control" name="property_name" id="p-title"
+                                                value="{{ stripslashes($data['property']->property_name) }}" required />
                                         </div>
-                                    @endif
-                                    <div class="col-6">
-                                        <label>Property Title *</label>
-                                        <input type="text" class="form-control" name="property_name" id="p-title" value="{{stripslashes($data['property']->property_name)}}" required />
                                     </div>
-                                    </div>
-                                    
+
                                 </fieldset>
                                 <fieldset>
                                     <legend>Property Details</legend>
@@ -71,26 +74,27 @@
                                             <input type="hidden" name="rooms" value="0">
                                             <input type="hidden" name="garage" value="0">
                                             <label>Property Purpose</label>
-                                            <select class="form-control" name="property_purpose" id="property_purpose" required>
-                                                <option value="">{{trans('words.property_purpose')}}</option>
-                                                
-                                                @foreach($data['purposes'] as $purpose)
-                                                <option value="{{$purpose->name}}" 
-                                                    @if($data['property']->property_purpose==$purpose->name) selected @endif>
-                                                    {{$purpose->name}}</option>
+                                            <select class="form-control" name="property_purpose" id="property_purpose"
+                                                required>
+                                                <option value="">{{ trans('words.property_purpose') }}</option>
+
+                                                @foreach ($data['purposes'] as $purpose)
+                                                    <option value="{{ $purpose->name }}"
+                                                        @if ($data['property']->property_purpose == $purpose->name) selected @endif>
+                                                        {{ $purpose->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="col-6">
                                             <label>Property Type</label>
                                             <select class="form-control" id="property_type" name="property_type" required>
-                                                <option value="">{{trans('words.property_type')}}</option>
-                                               
-                                                @foreach($data['types'] as $type)
-                                                <option value="{{$type->id}}" 
-                                                    @if($data['property']->property_type==$type->id) selected @endif>
-                                                    {{$type->types}}
-                                                </option>
+                                                <option value="">{{ trans('words.property_type') }}</option>
+
+                                                @foreach ($data['types'] as $type)
+                                                    <option value="{{ $type->id }}"
+                                                        @if ($data['property']->property_type == $type->id) selected @endif>
+                                                        {{ $type->types }}
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -98,18 +102,28 @@
                                         <div class="col-3">
                                             <label>Number of Beds</label>
                                             <select id="bedrooms" name="bedrooms"
-                                                class="listing-input hero__form-input  form-control custom-select" >
-                                                <option value="">{{trans('words.bedroom')}}</option>
-                                                <option value="1" @if($data['property']->bedrooms=='1') selected @endif>1</option>
-                                                <option value="2" @if($data['property']->bedrooms=='2') selected @endif>2</option>
-                                                <option value="3" @if($data['property']->bedrooms=='3') selected @endif>3</option>
-                                                <option value="4" @if($data['property']->bedrooms=='4') selected @endif>4</option>
-                                                <option value="5" @if($data['property']->bedrooms=='5') selected @endif>5</option>
-                                                <option value="6" @if($data['property']->bedrooms=='6') selected @endif>6</option>
-                                                <option value="7" @if($data['property']->bedrooms=='7') selected @endif>7</option>
-                                                <option value="8" @if($data['property']->bedrooms=='8') selected @endif>8</option>
-                                                <option value="9" @if($data['property']->bedrooms=='9') selected @endif>9</option>
-                                                <option value="10" @if($data['property']->bedrooms=='10') selected @endif>10</option>
+                                                class="listing-input hero__form-input  form-control custom-select">
+                                                <option value="">{{ trans('words.bedroom') }}</option>
+                                                <option value="1" @if ($data['property']->bedrooms == '1') selected @endif>1
+                                                </option>
+                                                <option value="2" @if ($data['property']->bedrooms == '2') selected @endif>2
+                                                </option>
+                                                <option value="3" @if ($data['property']->bedrooms == '3') selected @endif>3
+                                                </option>
+                                                <option value="4" @if ($data['property']->bedrooms == '4') selected @endif>4
+                                                </option>
+                                                <option value="5" @if ($data['property']->bedrooms == '5') selected @endif>5
+                                                </option>
+                                                <option value="6" @if ($data['property']->bedrooms == '6') selected @endif>6
+                                                </option>
+                                                <option value="7" @if ($data['property']->bedrooms == '7') selected @endif>7
+                                                </option>
+                                                <option value="8" @if ($data['property']->bedrooms == '8') selected @endif>8
+                                                </option>
+                                                <option value="9" @if ($data['property']->bedrooms == '9') selected @endif>9
+                                                </option>
+                                                <option value="10" @if ($data['property']->bedrooms == '10') selected @endif>10
+                                                </option>
 
                                             </select>
                                         </div>
@@ -118,28 +132,40 @@
                                             <label>Number of Baths</label>
                                             <select name="bathrooms" id="bathrooms"
                                                 class="listing-input hero__form-input  form-control custom-select">
-                                                <option value="">{{trans('words.bathroom')}}</option>
-                                                <option value="1" @if($data['property']->bathrooms=='1') selected @endif>1</option>
-                                                <option value="2" @if($data['property']->bathrooms=='2') selected @endif>2</option>
-                                                <option value="3" @if($data['property']->bathrooms=='3') selected @endif>3</option>
-                                                <option value="4" @if($data['property']->bathrooms=='4') selected @endif>4</option>
-                                                <option value="5" @if($data['property']->bathrooms=='5') selected @endif>5</option>
-                                                <option value="6" @if($data['property']->bathrooms=='6') selected @endif>6</option>
-                                                <option value="7" @if($data['property']->bathrooms=='7') selected @endif>7</option>
-                                                <option value="8" @if($data['property']->bathrooms=='8') selected @endif>8</option>
-                                                <option value="9" @if($data['property']->bathrooms=='9') selected @endif>9</option>
-                                                <option value="10" @if($data['property']->bathrooms=='10') selected @endif>10</option>
+                                                <option value="">{{ trans('words.bathroom') }}</option>
+                                                <option value="1" @if ($data['property']->bathrooms == '1') selected @endif>1
+                                                </option>
+                                                <option value="2" @if ($data['property']->bathrooms == '2') selected @endif>2
+                                                </option>
+                                                <option value="3" @if ($data['property']->bathrooms == '3') selected @endif>3
+                                                </option>
+                                                <option value="4" @if ($data['property']->bathrooms == '4') selected @endif>4
+                                                </option>
+                                                <option value="5" @if ($data['property']->bathrooms == '5') selected @endif>5
+                                                </option>
+                                                <option value="6" @if ($data['property']->bathrooms == '6') selected @endif>6
+                                                </option>
+                                                <option value="7" @if ($data['property']->bathrooms == '7') selected @endif>7
+                                                </option>
+                                                <option value="8" @if ($data['property']->bathrooms == '8') selected @endif>8
+                                                </option>
+                                                <option value="9" @if ($data['property']->bathrooms == '9') selected @endif>9
+                                                </option>
+                                                <option value="10" @if ($data['property']->bathrooms == '10') selected @endif>10
+                                                </option>
                                             </select>
                                         </div>
 
                                         <div class="col-3">
                                             <label>Property Price</label>
-                                            <input type="number" name="price" class="form-control" id="p-price" min="0" value="{{$data['property']->price}}" required>
+                                            <input type="number" name="price" class="form-control" id="p-price" min="0"
+                                                value="{{ $data['property']->price }}" required>
                                         </div>
 
                                         <div class="col-3">
                                             <label>Property Size</label>
-                                            <input type="number" name="land_area" class="form-control" id="p-land" value="{{$data['property']->land_area}}" required>
+                                            <input type="number" name="land_area" class="form-control" id="p-land"
+                                                value="{{ $data['property']->land_area }}" required>
                                         </div>
 
                                     </div>
@@ -154,7 +180,8 @@
                                                 onchange="callSubCityTown(this);">
                                                 <option value="">Select City</option>
                                                 @foreach ($data['cities'] as $city)
-                                                    <option value="{{ $city->id }}" {{ $data['property']->city == $city->id ? 'selected' : '' }}>
+                                                    <option value="{{ $city->id }}"
+                                                        {{ $data['property']->city == $city->id ? 'selected' : '' }}>
                                                         {{ $city->name }}
                                                     </option>
                                                 @endforeach
@@ -167,7 +194,8 @@
                                                 onchange="callTown(this);">
                                                 <option value="">Select Sub City</option>
                                                 @foreach ($data['subCities'] as $subCity)
-                                                    <option value="{{ $subCity->id }}" {{ $data['property']->subcity == $subCity->id ? 'selected' : '' }}>
+                                                    <option value="{{ $subCity->id }}"
+                                                        {{ $data['property']->subcity == $subCity->id ? 'selected' : '' }}>
                                                         {{ $subCity->name }}
                                                     </option>
                                                 @endforeach
@@ -179,7 +207,8 @@
                                             <select name="town" id="town" class="form-control" onchange="callArea(this);">
                                                 <option value="">Select Town</option>
                                                 @foreach ($data['towns'] as $town)
-                                                    <option value="{{ $town->id }}" {{ $data['property']->town == $town->id ? 'selected' : '' }}>
+                                                    <option value="{{ $town->id }}"
+                                                        {{ $data['property']->town == $town->id ? 'selected' : '' }}>
                                                         {{ $town->name }}
                                                     </option>
                                                 @endforeach
@@ -188,10 +217,12 @@
 
                                         <div class="col-6">
                                             <label>Area</label>
-                                            <select name="area" id="area" class="form-control" onchange="callLatLong(this);">
+                                            <select name="area" id="area" class="form-control"
+                                                onchange="callLatLong(this);">
                                                 <option value="">Select Area</option>
                                                 @foreach ($data['areas'] as $area)
-                                                    <option value="{{ $area->id }}" {{ $data['property']->area == $area->id ? 'selected' : '' }}>
+                                                    <option value="{{ $area->id }}"
+                                                        {{ $data['property']->area == $area->id ? 'selected' : '' }}>
                                                         {{ $area->name }}
                                                     </option>
                                                 @endforeach
@@ -200,12 +231,14 @@
 
                                         <div class="col-6">
                                             <label>Longitude</label>
-                                            <input type="text" name="map_longitude" id="p-long" class="form-control" value="{{ $data['property']->map_longitude }}" />
+                                            <input type="text" name="map_longitude" id="p-long" class="form-control"
+                                                value="{{ $data['property']->map_longitude }}" />
                                         </div>
 
                                         <div class="col-6">
                                             <label>Latitude</label>
-                                            <input type="text" name="map_latitude" id="p-lat" class="form-control" value="{{ $data['property']->map_latitude }}" />
+                                            <input type="text" name="map_latitude" id="p-lat" class="form-control"
+                                                value="{{ $data['property']->map_latitude }}" />
                                         </div>
 
                                     </div>
@@ -217,23 +250,37 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <label>Agent Name</label>
-                                            <input type="text" class="form-control" autocomplete="off" value="{{$data['property']->agent_name}}" name="agent_name" id="agent_name">
+                                            <input type="text" class="form-control" autocomplete="off"
+                                                value="{{ $data['property']->agent_name }}" name="agent_name"
+                                                id="agent_name">
                                         </div>
 
                                         <div class="col-6">
                                             <label>Agent Whatsapp</label>
-                                            <input type="text" class="form-control" autocomplete="off" value="{{$data['property']->whatsapp}}" name="whatsapp" id="whatsapp">
+                                            <input type="text" class="form-control" autocomplete="off"
+                                                value="{{ $data['property']->whatsapp }}" name="whatsapp" id="whatsapp">
                                         </div>
 
                                         <div class="col-6">
                                             <label>Agent Picture</label>
-                                            <input type="file" name="agent_picture" id="agent_picture" class="form-control">
-                                            @if(!empty($data['property']->agent_picture))
-                                            <img src="{{ URL::asset('upload/properties/'.$data['property']->agent_picture) }}" 
-                                                alt="{{ $data['property']->property_name.'- agent picture' }}" class="mt-1" width="200">
+                                            <input type="file" name="agent_picture" id="agent_picture"
+                                                class="form-control">
+                                            @if (!empty($data['property']->agent_picture))
+                                                <img src="{{ URL::asset('upload/properties/' . $data['property']->agent_picture) }}"
+                                                    alt="{{ $data['property']->property_name . '- agent picture' }}"
+                                                    class="mt-1" width="200">
                                             @endif
                                         </div>
-                                        
+                                        <div class="col-6">
+                                            <label>Featured Image</label>
+                                            <input type="file" name="featured_image" class="form-control">
+                                            @if (!empty($data['property']->featured_image))
+                                                <img src="{{ URL::asset('upload/properties/thumb_' . $data['property']->featured_image) }}"
+                                                    alt="{{ $data['property']->property_name . '- featured image' }}"
+                                                    class="mt-1">
+                                            @endif
+                                        </div>
+
 
                                     </div>
                                 </fieldset>
@@ -241,7 +288,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <label>Description</label>
-                                        <textarea class="form-control" rows="4" name="description" id="p-desc" required>{{$data['property']->description}}</textarea>
+                                        <textarea class="form-control" rows="4" name="description" id="p-desc"
+                                            required>{{ $data['property']->description }}</textarea>
                                     </div>
                                 </div>
 
@@ -250,14 +298,18 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <label>Gallery Image(s)</label>
-                                            <div class="gallery_image"></div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label>Featured Image</label>
-                                            <input type="file" name="featured_image" class="form-control" >
-                                            @if(!empty($data['property']->featured_image))
-                                        <img src="{{ URL::asset('upload/properties/thumb_'.$data['property']->featured_image) }}"  alt="{{ $data['property']->property_name.'- featured image' }}" class="mt-1">
-                                            @endif
+                                            <div class="container">
+                                                @if (!empty($data['property_gallery_images']))
+                                                    @foreach ($data['property_gallery_images'] as $gallery_image)
+                                                        <img src="{{ URL::asset('upload/gallery/' . $gallery_image) }}"
+                                                            alt="{{ $gallery_image }}" width="100" height="100" />
+                                                        {{-- <img src="{{ URL::asset('upload/gallery'.$data['property_gallery_images']) }}"  alt="{{ $data['property_gallery_images'].'- Gallery Image' }}" class="mt-1"> --}}
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                            <input type="file" name="images[]" class="form-control gallery_image mt-4" multiple value="{{$data['property_gallery_images']}}">
+                                            {{-- <div class="gallery_image mt-4"> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -271,7 +323,8 @@
                                                     @foreach ($data['amenities'] as $amenity)
                                                         <div class="col-md-4 custom-control custom-checkbox">
                                                             <input type="checkbox" name="property_amenities[]"
-                                                                value="{{ $amenity->id }}" {{ $data['property']->amenities->contains($amenity->id) ? 'checked' : '' }}>
+                                                                value="{{ $amenity->id }}"
+                                                                {{ $data['property']->amenities->contains($amenity->id) ? 'checked' : '' }}>
                                                             <label>
                                                                 {{ $amenity->name }}
                                                             </label>
@@ -292,12 +345,13 @@
                                             <label>
                                                 Choose Document ONLY (584px × 515px)
                                             </label>
-                                            <input type="file" name="property_document"  multiple="" class="form-control">
+                                            <input type="file" name="property_document" multiple="" class="form-control">
                                         </div>
 
                                         <div class="col-6">
                                             <label>{{ trans('words.meta_title') }}</label>
-                                            <input class="form-control" rows="4" name="meta_title" id="p-desc" value="{{$data['property']->meta_title}}">
+                                            <input class="form-control" rows="4" name="meta_title" id="p-desc"
+                                                value="{{ $data['property']->meta_title }}">
                                         </div>
                                     </div>
 
@@ -305,19 +359,20 @@
                                         <div class="col-6">
                                             <label>{{ trans('words.meta_description') }}</label>
                                             <textarea class="form-control" rows="4" name="meta_description"
-                                                id="meta_description">{{$data['property']->meta_description}}</textarea>
+                                                id="meta_description">{{ $data['property']->meta_description }}</textarea>
                                         </div>
-    
+
                                         <div class="col-6">
                                             <label>{{ trans('words.meta_keyword') }}</label>
-                                            <textarea class="form-control" rows="4" name="meta_keyword" id="meta_keyword">{{$data['property']->meta_keyword}}</textarea>
+                                            <textarea class="form-control" rows="4" name="meta_keyword"
+                                                id="meta_keyword">{{ $data['property']->meta_keyword }}</textarea>
                                         </div>
                                     </div>
 
                                 </fieldset>
                                 <div class="m-4">
                                     <button id="SaveProperty" type="submit" class="btn btn-rounded btn-success">Update
-                                        </button>
+                                    </button>
                                 </div>
                                 {!! Form::close() !!}
                             </div>

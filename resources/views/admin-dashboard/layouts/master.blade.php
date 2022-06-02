@@ -5,11 +5,25 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>{{ config('dz.name') }} </title>
+
+    <?php
+//Agency Name
+$data['agency_name'] = App\Agency::when(auth()->user()->usertype == 'Agency', function ($query) {
+    $query->where('id', Auth::User()->agency_id);
+})
+    ->value('name');
+?>
+   
+    @if (Auth()->User()->usertype =='Agency')
+    <title>{{$data['agency_name']}} - Real Estate CRM</title>
+    @else
+    <title>Saakin Dashboard - Real Estate CRM</title>
+    @endif
+    
 
 	<meta name="description" content="Saakin Real Estate"/>
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/images/favicon.png') }}">
-
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('upload/favicon.png') }}">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	@if(!empty(config('dz.public.pagelevel.css.'.$action)))
         @foreach(config('dz.public.pagelevel.css.'.$action) as $style)
             <link href="{{ asset($style) }}" rel="stylesheet" type="text/css"/>

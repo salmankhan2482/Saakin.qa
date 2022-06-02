@@ -1,26 +1,21 @@
-<div class="bg-light py-5">
+<div class="bg-light py-3">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10">
                 <div class="text-center">
-                    <h2 class="h1 mb-3">Featured Properties</h2>
-                    <p class="text-justify">Saakin is the fastest-growing real estate directory in Qatar.
-                        You can find featured properties on the website,
-                        and you discover all the updates of the real estate market of Qatar through the listings.
-                        Moreover, the portal has managed an amazing platform to connect buyers and sellers with real
-                        estate agencies.
+                    <h2 class="h3 mb-2">Featured Properties in Qatar</h2>
+                    <p class="text-justify">Saakin is the fastest-growing real estate directory in Qatar. You can find featured properties 
+                        on our website and discover all the updates on the real estate market in Qatar. Moreover, 
+                        our developed dashboard contains a platform to connect property buyers with Qatar's best real estate agencies.
                         <span id="dots">...</span>
                         <span id="more" style="display: none">
-                            We respond to you quickly to connect with the agents to provide you with the best
-                            properties.
-                            You find properties for Sale and Rent on the website,
-                            and you get multiple choices to have the selling and buying properties in Qatar.
-                            Whether you are searching for apartments for living or commercial properties for investment
-                            purposes,
-                            we help you with fast assistance. Saakin inc tries its best to bring you the most desirable
-                            and ideal property.
-                            You can have information on the specifications of the featured properties and prices through
-                            our portal.
+                            We respond to customers quickly to help them communicate with top real estate agents in Qatar and provide access to 
+                            their high valued properties. Find property in Qatar for Rent and Sale on our website or get various selections to 
+                            sell and buy property. Whether you are searching for properties for a living, commercial, or investment purposes, 
+                            Saakin helps you with fast assistance. Saakin Inc. is at its best to bring you the most desirable and ideal properties 
+                            in Doha, Qatar. Expats can have
+                             specific information about any property, area, and all about the State of Qatar using our city guide area and blogs.
+                             You can find all types of properties for rent or sale in Qatar with our easy to use faceted search filters.
                         </span>
                         <a class="btn btn-primary btn-sm" href="javascript:void(0)" onclick="myFunction()">Read more</a>
                     </p>
@@ -29,15 +24,18 @@
         </div>
 
         <!-- Add Arrows -->
-        <div class="row">
+
+        <div class="row gy-4">
+            @foreach ($featured_properties as $key => $property)
+                    <div class="col-sm-6 col-lg-4">
+                        @include('front.pages.include.property_box')
+                    </div>
+            @endforeach
+        </div>
+
+        {{-- <div class="row">
             <div class="col-lg-8">
-                <div class="row gy-4 mt-1">
-                    @foreach ($featured_properties as $property)
-                        <div class="col-md-6">
-                            @include('front.pages.include.property_box')
-                        </div>
-                    @endforeach
-                </div>
+                
             </div>
             <div class="col-lg-4">
                 <div class="row gy-4 mt-1">
@@ -52,7 +50,7 @@
                             (adsbygoogle = window.adsbygoogle || []).push({});
                         </script>
                     </div>
-                    <div class="col-md-12" >
+                    <div class="col-md-12">
                         <div class="g-ads">
                             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
                                                         crossorigin="anonymous"></script>
@@ -66,7 +64,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <div class="row justify-content-center mt-3 mt-md-5">
             <div class="col-md-3">

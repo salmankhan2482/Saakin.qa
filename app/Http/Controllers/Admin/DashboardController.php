@@ -147,7 +147,7 @@ class DashboardController extends MainAdminController
                 '12' => 'Dec'
             ];
         
-            // properties per month
+           //properties per month
             foreach ($months as $key => $value) {
                 $data['propertiesPer'.$value] = Properties::
                     when(auth()->user()->usertype == 'Agency', function($query){
@@ -235,11 +235,194 @@ class DashboardController extends MainAdminController
                     ->groupBy('properties.id')
                     ->orderByDesc('counter')
                 ->limit('10');
-                
+
+        //Simple Pie Chart
+        // $data['clickCounters'] = DB::table('click_counters')
+        // ->leftJoin('properties', 'click_counters.property_id', 'properties.id')
+        // ->select('click_counters.button_name as cbutton_name',
+        // DB::raw('count(IF(button_name = "Call",1,NULL)) totalCall'),
+        // DB::raw('count(IF(button_name = "Email",1,NULL)) totalEmail'),
+        // DB::raw('count(IF(button_name = "WhatsApp",1,NULL)) totalWhatsApp'),
+        // 'properties.id as pid', 'properties.property_name as pname', 
+        // 'properties.property_purpose as ppurpose', 'properties.property_slug as pslug')
+        // // ->where('properties.agency_id', $id)
+        // ->groupBy('cbutton_name')->get();
+
+        // dd($data['clickCounters']);
+
+        // $data['email'] = ClickCounters::where('button_name','Email')->count();
+        // $data['call'] = ClickCounters::where('button_name','Call')->count();
+        // $data['whatsapp'] = ClickCounters::where('button_name','WhatsApp')->count();
+
+
+        
+        // $data['clickCounters'] = DB::table('click_counters')->select(
+        // DB::raw('count(IF(button_name = "Call",1,NULL)) totalCall'),
+        // DB::raw('count(IF(button_name = "Email",1,NULL)) totalEmail'),
+        // DB::raw('count(IF(button_name = "WhatsApp",1,NULL)) totalWhatsApp'),
+        // )
+
+        // $result = DB::select(DB::raw("COUNT(*), as total_number,
+        // button_name from click_counters GROUP BY button_name"));
+
+    $result = DB::table('click_counters')
+    ->select('button_name', DB::raw('count(*) as total'))
+    ->when(auth()->user()->usertype == 'Agency', function($query){
+    $query->where("agency_id", Auth::User()->agency_id);
+    })
+    ->groupBy('button_name')
+    ->get('total','button_name');
+
+    $chartData = "";
+    foreach($result as $list)
+    {
+        $chartData.="['".$list->button_name."',  ".$list->total.
+        "],";
+    }
+    $arr['chartData'] = rtrim($chartData,",");
+    
+
+     //Clicks this year
+     $data['ClicksThisYear'] = ClickCounters::
+     when(auth()->user()->usertype == 'Agency', function($query){
+         $query->where("agency_id", Auth::User()->agency_id);
+     })
+     ->select('button_name', DB::raw('count(*) as total'))
+     ->whereYear('created_at', Carbon::now()->year)
+     ->groupBy('button_name')
+    ->get('total','button_name');
+
+    $BarchartData = "";
+    foreach($result as $list)
+    {
+        $BarchartData.="['".$list->button_name."',  ".$list->total.
+        "],";
+    }
+    $arr['BarchartData'] = rtrim($BarchartData,",");
+
+    //  dd($arr['BarchartData']);
+
+
+
+
+
+    // foreach ($months as $key => $value) {
+    //     $data['propertiesPer'.$value] = Properties::
+    //         when(auth()->user()->usertype == 'Agency', function($query){
+    //             $query->where("agency_id", Auth::User()->agency_id);
+    //         })
+    //         ->whereYear('created_at', Carbon::now()->year)
+    //         ->whereMonth('created_at', $key)
+    //         ->count();
+    // }
+
+
+
+
+    //Multi Line Chart Clicks per Month
+    $months = [
+        '1' => 'Jan', 
+        '2' => 'Feb', 
+        '3' => 'Mar', 
+        '4' => 'Apr', 
+        '5' => 'May', 
+        '6' => 'June', 
+        '7' => 'July', 
+        '8' => 'Aug', 
+        '9' => 'Sep', 
+        '10' => 'Oct', 
+        '11' => 'Nov', 
+        '12' => 'Dec'
+    ];
+
+    foreach ($months as $key => $value) {
+    $data['EmailPer'.$value] = ClickCounters::
+     when(auth()->user()->usertype == 'Agency', function($query){
+         $query->where("agency_id", Auth::User()->agency_id);
+     })
+     ->where('button_name','Email')
+     ->whereYear('created_at', Carbon::now()->year)
+     ->whereMonth('created_at', $key)
+     ->count();
+    }
+
+
+    //  dd($data['EmailPerMay']);
+    foreach ($months as $key => $value) {
+     $data['CallPer'.$value] = ClickCounters::
+     when(auth()->user()->usertype == 'Agency', function($query){
+         $query->where("agency_id", Auth::User()->agency_id);
+     })
+     ->where('button_name','Call')
+     ->whereYear('created_at', Carbon::now()->year)
+     ->whereMonth('created_at', $key)
+     ->count();
+    }
+
+
+    //  dd($data['CallThisYear']);
+    foreach ($months as $key => $value) {
+     $data['WhatsAppPer'.$value] = ClickCounters::
+     when(auth()->user()->usertype == 'Agency', function($query){
+         $query->where("agency_id", Auth::User()->agency_id);
+     })
+     ->where('button_name','WhatsApp')
+     ->whereYear('created_at', Carbon::now()->year)
+     ->whereMonth('created_at', $key)
+     ->count();
+    }
+
+
+    // number of Unique users per Month
+    $data['numberOfUsers'] = PageVisits::when(auth()->user()->usertype == 'Agency', function($query){
+        $query->where('agency_id', auth()->user()->agency_id);
+    })
+    ->distinct('ip_address')->count();
+
+    
+
+    //  dd($data['WhatsAppThisYear']);
+        //  ->groupBy('button_name')
+        // $data['Call Count'] = ClickCounters::where('button_name','Call')
+        // ->when(auth()->user()->usertype == 'Agency', function($query){
+        //         $query->where("agency_id", Auth::User()->agency_id);
+        // })->count();
+
+        // $data['WhatsApp Count'] = ClickCounters::where('button_name','WhatsApp')
+        // ->when(auth()->user()->usertype == 'Agency', function($query){
+        //         $query->where("agency_id", Auth::User()->agency_id);
+        // })->count();
+
+        // $data['Email Count'] = ClickCounters::where('button_name','WhatsApp')
+        // ->when(auth()->user()->usertype == 'Agency', function($query){
+        //         $query->where("agency_id", Auth::User()->agency_id);
+        // })->count();
+
+
+
+
+        // $result =DB::table('property_counters')
+        // ->when(auth()->user()->usertype == 'Agency', function($query){
+        // $query->where("agency_id", Auth::User()->agency_id);
+        // })
+        // ->orderByDesc('counter')
+        // ->get('property_id', 'counter','updated_at');
+
+        
+        // ->take(10);
+        // dd($result); 
+        // $Property_Views_Data = "";
+        // foreach($result as $list)
+        // {
+        //     $Property_Views_Data.="['".$list->id."',  ".$list->counter.
+        //     "],";
+        // }
+        // $arr['Property_Views_Data'] = rtrim($Property_Views_Data,",");
+        // dd($arr['Property_Views_Data']);    
             
             $action = 'saakin_dashboard';
 
-            return view('admin-dashboard.index', compact('data', 'action'));
+            return view('admin-dashboard.index', compact('data', 'action','arr','chartData','BarchartData'));
             
     }
 

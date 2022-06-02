@@ -17,6 +17,34 @@
 @endif
 
 @section('content')
+{{-- @php
+$phone = \App\Properties::getPhoneNumber($property->id);
+$whatsapp = \App\Properties::getWhatsapp($property->id);
+$agency = \App\Agency::where('id', $property->agency_id)->first();
+$propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
+$whatsapText =
+    'Hello,
+                                                                                I would like to inquire about this property posted on
+                                                                                saakin.qa
+
+                                                                                Reference: ' .
+    $property->refference_code .
+    '
+                                                                                Price: QR ' .
+    $property->getPrice() .
+    '/month
+                                                                                Type: ' .
+    $property->propertiesTypes->types .
+    '
+                                                                                Location: ' .
+    $property->address .
+    '
+
+                                                                                Link:' .
+    $propertyUrl;
+@endphp --}}
+
+
   @php
   $phone = \App\Properties::getPhoneNumber($property->id);
   $whatsapp = \App\Properties::getWhatsapp($property->id);
@@ -102,6 +130,9 @@
             data-width="640" data-height="480" href="https://maps.google.com/maps?q={{ $property->address }}&output=embed" target="_blank">
             View Map
            </a>
+           <a data-fancybox-index="0" class="btn btn-sm btn-primary">
+            <i class="fa fa-eye">  {{ $property_counter}}</i>
+          </a>
         </div>
         <div class="grid single-gallery @if ((new \Jenssegers\Agent\Agent())->isMobile()) single-gallery-slider @endif">
           <div class="gallery-item">
@@ -682,7 +713,7 @@
             @foreach ($properties as $propx)
               <div class="single-property-box border">
                 <div class="property-item">
-                  <a class="property-img" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                  <a class="property-img stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
                     @if ($propx->featured_image)
                       <img src="{{ URL::asset('upload/properties/thumb_' . $propx->featured_image) }}" alt="{{ $propx->property_name }}">
                     @else
@@ -712,9 +743,11 @@
                   </div>
                 </div>
                 <div class="property-title-box" >
-                  <h2 class="property-card__property-title">
-                    {{ \Illuminate\Support\Str::limit($property->property_name) }}
-                  </h2>
+                  <a class="text-decoration-none stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                    <h5 class="property-card__property-title">
+                      {{ \Illuminate\Support\Str::limit($property->property_name) }}
+                    </h5>
+                  </a> 
                   <div class="property-location">
                     <p>
                       {{ $propx->propertiesTypes->types }}

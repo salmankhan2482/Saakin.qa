@@ -14,7 +14,6 @@
 
 @section('content')
 
-
     <div class="filter-wrap">
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
@@ -1040,6 +1039,19 @@
                         <h1 class="h6">{{ $heading_info ?? '' }}
                             <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                         </h1>
+
+                        @if ((new \Jenssegers\Agent\Agent())->isMobile())
+                        <div class="">
+                            <input type="checkbox" class="btn-check" autocomplete="off">
+                            <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
+                                @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
+                                <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
+                                    id="save-search-icon"></i>
+                                <span
+                                    id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
+                            </label>
+                        </div>
+                        @endif
                     </div>
 
                     {{-- Short design for desktop and tablet --}}
@@ -1251,11 +1263,17 @@
                 @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
                     <div class="location-wrap">
                         @foreach ($propertyTypes as $propertyType)
+                        
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
                                 <a
                                     href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
-
-                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
+                                    {{-- Capital Breadcrumbs --}}
+                                    <?php
+                                         $p_types = str_replace("-"," ",$propertyType->plural);
+                                         $p_types = ucwords($p_types);
+                                    ?>
+                                    
+                                    {{ $p_types }} <span>({{ $propertyType->pcount }})</span>
 
                                 </a>
                             </div>
@@ -1285,7 +1303,7 @@
                                 $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
                             <div class="single-property-box horizontal-view"
-                                @if (!(new \Jenssegers\Agent\Agent())->isMobile()) style="height: 32vh;" @endif>
+                                @if (!(new \Jenssegers\Agent\Agent())->isMobile()) @endif>
                                 {{--  --}}
                                 <div class="property-item">
                                     <div class="pro-slider">
@@ -1332,7 +1350,7 @@
                                             / Month
                                         @endif
                                     </div>
-                                    <a class="text-decoration-none"
+                                    <a class="text-decoration-none stretched-link"
                                         href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
                                         <h5 class="property-card__property-title">
                                             {{ $property->property_name }}
@@ -1498,7 +1516,6 @@
                                     </script>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

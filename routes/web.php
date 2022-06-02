@@ -196,6 +196,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');
 
     //landing pages
+    
+    // Route::get('landing-pages', 'LandingPagesController@index')->name('landing-pages.index');
     Route::resource('landing-pages', 'LandingPagesController');
     Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy')->name('landing-pages.destroy');
 
@@ -253,9 +255,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         
         Route::get('visits_per_month/{id?}', 'ClickCountersController@propertyVisitsPerMonth')
         ->name('propertyVisits_per_month');
+
+        Route::get('visits_per_month_IPs/{id?}', 'ClickCountersController@propertyVisitsPerMonthIPs')
+        ->name('propertyVisits_per_month_IPs');
         
         Route::resource('callToAction', 'ClickCountersController');
         Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
+        Route::get('trafficUsersIPs/{id?}', 'ClickCountersController@trafficUsersIPs')->name('trafficUsersIPs');
         Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
         Route::get('topTenProperties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
         Route::get('topTenProperties/{id}', 'ClickCountersController@topTenPropertiesList')->name('top_Ten_Properties.list');
@@ -267,6 +273,9 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     
     //company registration resource controller
     Route::resource('companyRegistration', 'CompanyRegistrationController');
+
+    // MLS
+    Route::resource('mls', 'MLSController');
 
 });
 

@@ -31,7 +31,7 @@
                                                     <span class="sr-only">100% Complete</span>
                                                 </div>
                                             </div>
-                                            <span class="fs-14">{{ $data['last_month_properties'] }} 
+                                            <span class="fs-14">{{ $data['last_month_properties'] }}
                                                 Properties Added Last Month
                                             </span>
                                         </div>
@@ -42,7 +42,7 @@
                         </a>
                     </div>
                     <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <a href="{{url('admin/properties?purpose=Sale')}}">
+                        <a href="{{ url('admin/properties?purpose=Sale') }}">
                             <div class="widget-stat card bg-primary">
                                 <div class="card-body  p-4">
                                     <div class="media">
@@ -53,10 +53,10 @@
                                             <p class="mb-1">Properties for Sale</p>
                                             <h3 class="text-white">{{ $data['sale_properties'] }}</h3>
                                             <div class="progress mb-2 bg-secondary">
-                                                @if ($data['total_properties'] > 0)        
-                                                <div class="progress-bar progress-animated bg-light"
-                                                    style="width: {{ $data['total_properties'] > 1 ? (($data['sale_properties'] / $data['total_properties']) * 100) : '' }}%">
-                                                </div>
+                                                @if ($data['total_properties'] > 0)
+                                                    <div class="progress-bar progress-animated bg-light"
+                                                        style="width: {{ $data['total_properties'] > 1 ? ($data['sale_properties'] / $data['total_properties']) * 100 : '' }}%">
+                                                    </div>
                                                 @endif
                                             </div>
                                             {{-- <small>80% Increase in 20 Days</small> --}}
@@ -66,20 +66,21 @@
                             </div>
                         </a>
                     </div>
- 
+
                     <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <a href="{{url('admin/properties?purpose=Rent')}}">
+                        <a href="{{ url('admin/properties?purpose=Rent') }}">
                             <div class="widget-stat card bg-info">
                                 <div class="card-body p-4">
                                     <div class="media">
                                         <span class="mr-3">
-                                            <i class="la la-home"></i>
+                                            <i class="la la-building"></i>
                                         </span>
                                         <div class="media-body text-white">
                                             <p class="mb-1">Properties for Rent</p>
                                             <h3 class="text-white">{{ $data['rent_properties'] }}</h3>
                                             <div class="progress mb-2 bg-primary">
-                                                <div class="progress-bar progress-animated bg-light" style="width: {{ $data['total_properties'] > 1 ? (($data['rent_properties'] / $data['total_properties']) * 100) : '' }}%">
+                                                <div class="progress-bar progress-animated bg-light"
+                                                    style="width: {{ $data['total_properties'] > 1 ? ($data['rent_properties'] / $data['total_properties']) * 100 : '' }}%">
                                                 </div>
                                             </div>
                                             {{-- <small>50% Increase in 25 Days</small> --}}
@@ -100,10 +101,11 @@
                                         </span>
                                         <div class="media-body text-white">
                                             <p class="mb-1">Featured Properties</p>
-                                            <h3 class="text-white">{{$data['featured_properties']}}</h3>
+                                            <h3 class="text-white">{{ $data['featured_properties'] }}</h3>
                                             <div class="progress mb-2 bg-secondary">
-                                                <div class="progress-bar progress-animated bg-light" 
-                                                style="width: {{ $data['total_properties'] > 1 ? (($data['featured_properties'] / $data['total_properties']) * 100) : '' }}%"></div>
+                                                <div class="progress-bar progress-animated bg-light"
+                                                    style="width: {{ $data['total_properties'] > 1 ? ($data['featured_properties'] / $data['total_properties']) * 100 : '' }}%">
+                                                </div>
                                             </div>
                                             {{-- <small>30% Increase in 30 Days</small> --}}
                                         </div>
@@ -114,7 +116,7 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <a href="{{route('properties.index')}}">
+                        <a href="{{ route('properties.index') }}">
                             <div class="widget-stat card bg-secondary">
                                 <div class="card-body p-4">
                                     <div class="media">
@@ -126,7 +128,7 @@
                                             <h3 class="text-white">{{ $data['active_properties'] }}</h3>
                                             <div class="progress mb-2 bg-primary">
                                                 <div class="progress-bar progress-animated bg-light"
-                                    style="width:{{ $data['total_properties'] > 1 ? (($data['active_properties'] / $data['total_properties']) * 100) : '' }}%">
+                                                    style="width:{{ $data['total_properties'] > 1 ? ($data['active_properties'] / $data['total_properties']) * 100 : '' }}%">
                                                 </div>
                                             </div>
                                             {{-- <small>76% Increase in 20 Days</small> --}}
@@ -136,21 +138,21 @@
                             </div>
                         </a>
                     </div>
-                     
+
                     <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <a href="{{route('inactive_properties.index')}}">
+                        <a href="{{ route('inactive_properties.index') }}">
                             <div class="widget-stat card bg-warning">
                                 <div class="card-body  p-4">
                                     <div class="media">
                                         <span class="mr-3">
-                                            <i class="la la-users"></i>
+                                            <i class="la la-ban"></i>
                                         </span>
                                         <div class="media-body text-white">
                                             <p class="mb-1">Inactive Properties</p>
                                             <h3 class="text-white">{{ $data['inactive_properties'] }}</h3>
                                             <div class="progress mb-2 bg-secondary">
                                                 <div class="progress-bar progress-animated bg-light"
-                                                    style="width: {{ $data['total_properties'] > 1 ? (($data['inactive_properties'] / $data['total_properties']) * 100) : '' }}%">
+                                                    style="width: {{ $data['total_properties'] > 1 ? ($data['inactive_properties'] / $data['total_properties']) * 100 : '' }}%">
                                                 </div>
                                             </div>
                                             {{-- <small>80% Increase in 20 Days</small> --}}
@@ -162,19 +164,19 @@
                     </div>
 
                     <div class="col-xl-3 col-lg-6 col-sm-6">
-                        <a href="{{ url('/property-reports')}}">
+                        <a href="{{ url('/property-reports') }}">
                             <div class="widget-stat card bg-danger">
                                 <div class="card-body  p-4">
                                     <div class="media">
                                         <span class="mr-3">
-                                            <i class="la la-users"></i>
+                                            <i class="la la-file"></i>
                                         </span>
                                         <div class="media-body text-white">
                                             <p class="mb-1">Report Properties</p>
                                             <h3 class="text-white">{{ $data['reports'] }}</h3>
                                             <div class="progress mb-2 bg-secondary">
                                                 <div class="progress-bar progress-animated bg-light"
-                                    style="width: {{ $data['total_properties'] > 1 ? (($data['reports'] / $data['total_properties']) * 100) : '' }}%">
+                                                    style="width: {{ $data['total_properties'] > 1 ? ($data['reports'] / $data['total_properties']) * 100 : '' }}%">
                                                 </div>
                                             </div>
                                             {{-- <small>80% Increase in 20 Days</small> --}}
@@ -184,49 +186,103 @@
                             </div>
                         </a>
                     </div>
-                     <div class="col-sm-12 col-md-6">
-                         <a href="{{route('inquiries')}}">
-                         <div class="card">
-                             <div class="card-body">
-                                 <div class="media align-items-center">
-                                     <div class="media-body mr-3">
-                                         <h2 class="fs-36 text-black font-w600">{{ $data['inquiries'] }}</h2>
-                                         <p class="fs-18 mb-0 text-black font-w500">Total Leads</p>
-                                         {{-- <span class="fs-13">Target 3k/month</span> --}}
-                                     </div>
-                                     <div class="d-inline-block position-relative donut-chart-sale">
-                                         <span class="donut1"
-                                             data-peity='{ "fill": ["rgb(60, 76, 184)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>5/8</span>
-                                         <small class="text-primary">71%</small>
-                                         <span class="circle bgl-primary"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                       </a>
-                     </div>
-                     <div class="col-sm-12 col-md-6">
-                         <a href="{{route('propertyVisits_per_month')}}">
-                         <div class="card">
-                             <div class="card-body">
-                                 <div class="media align-items-center">
-                                     <div class="media-body mr-3">
-                                         <h2 class="fs-36 text-black font-w600">{{ $data['trafficPerMonth'] }}</h2>
-                                         <p class="fs-18 mb-0 text-black font-w500">Property Visits</p>
-                                         {{-- <span class="fs-13">Target 3k/month</span> --}}
-                                     </div>
-                                     <div class="d-inline-block position-relative donut-chart-sale">
-                                         <span class="donut1"
-                                             data-peity='{ "fill": ["rgb(60, 76, 184)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>5/8</span>
-                                         <small class="text-primary">71%</small>
-                                         <span class="circle bgl-primary"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                      </a>
-                     </div>
-                     <div class="col-sm-12 col-md-6">
+                    <div class="col-xl-3 col-lg-6 col-sm-6">
+                        <a href="{{ route('inquiries') }}">
+                            <div class="widget-stat card">
+                                <div class="card-body p-4">
+                                    <div class="media ai-icon">
+                                        <span class="mr-3 bgl-success text-success">
+                                            <i class="la la-comments"></i>
+                                        </span>
+                                        <div class="media-body">
+                                            <p class="mb-1">Total Leads</p>
+                                            <h4 class="mb-0">{{ $data['inquiries'] }}</h4>
+                                            {{-- <span class="badge badge-warning">+3.5%</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {{-- <div class="col-sm-12 col-md-6">
+                        <a href="{{ route('inquiries') }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="media align-items-center">
+                                        <div class="media-body mr-3">
+                                            <h2 class="fs-36 text-black font-w600">{{ $data['inquiries'] }}</h2>
+                                            <p class="fs-18 mb-0 text-black font-w500">Total Leads</p> --}}
+                                            {{-- <span class="fs-13">Target 3k/month</span> --}}
+                                        {{-- </div>
+                                        <div class="d-inline-block position-relative donut-chart-sale">
+                                            <span class="donut1"
+                                                data-peity='{ "fill": ["rgb(60, 76, 184)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>5/8</span>
+                                            <small class="text-primary">71%</small>
+                                            <span class="circle bgl-primary"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div> --}}
+                    <div class="col-xl-3 col-lg-6 col-sm-6">
+                        <a href="{{ route('propertyVisits_per_month') }}">
+                            <div class="widget-stat card">
+                                <div class="card-body p-4">
+                                    <div class="media ai-icon">
+                                        <span class="mr-3 bgl-primary text-primary">
+                                            <i class="la la-building"></i>
+                                        </span>
+                                        <div class="media-body">
+                                            <p class="mb-1">Property Visits</p>
+                                            <h4 class="mb-0">{{ $data['trafficPerMonth'] }}</h4>
+                                            {{-- <span class="badge badge-warning">+3.5%</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {{-- <div class="col-sm-12 col-md-6">
+                        <a href="{{ route('propertyVisits_per_month') }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="media align-items-center">
+                                        <div class="media-body mr-3">
+                                            <h2 class="fs-36 text-black font-w600">{{ $data['trafficPerMonth'] }}</h2>
+                                            <p class="fs-18 mb-0 text-black font-w500">Property Visits</p>
+                                            <span class="fs-13">Target 3k/month</span>
+                                        </div>
+                                        <div class="d-inline-block position-relative donut-chart-sale">
+                                            <span class="donut1"
+                                                data-peity='{ "fill": ["rgb(60, 76, 184)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>5/8</span>
+                                            <small class="text-primary">71%</small>
+                                            <span class="circle bgl-primary"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div> --}}
+                    <div class="col-xl-3 col-lg-6 col-sm-6">
+                        <a href="{{ route('callToAction.index') }}">
+                            <div class="widget-stat card">
+                                <div class="card-body p-4">
+                                    <div class="media ai-icon">
+                                        <span class="mr-3 bgl-secondary text-secondary">
+                                            <i class="la la-building"></i>
+                                        </span>
+                                        <div class="media-body">
+                                            <p class="mb-1">Click to Action</p>
+                                            <h4 class="mb-0">{{ $data['clicksPerMonths'] }}</h4>
+                                            {{-- <span class="badge badge-warning">+3.5%</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {{-- <div class="col-sm-12 col-md-6">
                         <a href="{{ route('callToAction.index') }}">
                             <div class="card">
                                 <div class="card-body">
@@ -234,7 +290,7 @@
                                         <div class="media-body mr-3">
                                             <h2 class="fs-36 text-black font-w600">{{ $data['clicksPerMonths'] }}</h2>
                                             <p class="fs-18 mb-0 text-black font-w500">Click to Action</p>
-                                            {{-- <span class="fs-13">Target 3k/month</span> --}}
+                                            <span class="fs-13">Target 3k/month</span>
                                         </div>
                                         <div class="d-inline-block position-relative donut-chart-sale">
                                             <span class="donut1"
@@ -246,70 +302,88 @@
                                 </div>
                             </div>
                         </a>
-                     </div>
-                     <div class="col-sm-12 col-md-6">
-                         <a href="{{route('trafficUsers')}}">
-                         <div class="card">
-                             <div class="card-body">
-                                 <div class="media align-items-center">
-                                     <div class="media-body mr-3">
-                                         <h2 class="fs-36 text-black font-w600">{{ $data['numberOfUsers'] }}</h2>
-                                         <p class="fs-18 mb-0 text-black font-w500">Unique Users</p>
-                                         {{-- <span class="fs-13">Target 3k/month</span> --}}
-                                     </div>
-                                     <div class="d-inline-block position-relative donut-chart-sale">
-                                         <span class="donut1"
-                                             data-peity='{ "fill": ["rgb(55, 209, 90)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
-                                         <small class="text-success">90%</small>
-                                         <span class="circle bgl-success"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                       </a>
-                     </div>
-                     <div class="col-sm-12 col-md-6">
-                      <a href="{{route('top_Ten_Properties')}}">
-                         <div class="card">
-                             <div class="card-body">
-                                 <div class="media align-items-center">
-                                     <div class="media-body mr-3">
-                                         <h2 class="fs-36 text-black font-w600"></h2>
-                                         <p class="fs-18 mb-0 text-black font-w500">Top 10 Properties</p>
-                                         {{-- <span class="fs-13">Target 3k/month</span> --}}
-                                     </div>
-                                     <div class="d-inline-block position-relative donut-chart-sale">
-                                         <span class="donut1"
-                                             data-peity='{ "fill": ["rgb(43, 152, 214)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
-                                         <small class="text-info">90%</small>
-                                         <span class="circle bgl-success"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                       </a>
-                     </div>
-                     <div class="col-sm-12 col-md-6">
-                      <a href="{{route('top_10_areas')}}">
-                         <div class="card">
-                             <div class="card-body">
-                                 <div class="media align-items-center">
-                                     <div class="media-body mr-3">
-                                         <h2 class="fs-36 text-black font-w600"></h2>
-                                         <p class="fs-18 mb-0 text-black font-w500">Top 10 Areas</p>
-                                         {{-- <span class="fs-13">Target 3k/month</span> --}}
-                                     </div>
-                                     <div class="d-inline-block position-relative donut-chart-sale">
-                                         <span class="donut1"
-                                             data-peity='{ "fill": ["rgb(43, 152, 214)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
-                                         <small class="text-info">90%</small>
-                                         <span class="circle bgl-success"></span>
-                                     </div>
-                                 </div>
-                             </div>
-                         </div>
-                      </a>
-                     </div>
+                    </div> --}}
+                    <div class="col-xl-3 col-lg-6 col-sm-6">
+                        <a href="{{ route('trafficUsers') }}">
+                            <div class="widget-stat card">
+                                <div class="card-body p-4">
+                                    <div class="media ai-icon">
+                                        <span class="mr-3 bgl-danger text-danger">
+                                            <i class="la la-users"></i>
+                                        </span>
+                                        <div class="media-body">
+                                            <p class="mb-1">Unique Users</p>
+                                            <h4 class="mb-0">{{ $data['numberOfUsers'] }}</h4>
+                                            {{-- <span class="badge badge-warning">+3.5%</span> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {{-- <div class="col-sm-12 col-md-6">
+                        <a href="{{ route('trafficUsers') }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="media align-items-center">
+                                        <div class="media-body mr-3">
+                                            <h2 class="fs-36 text-black font-w600">{{ $data['numberOfUsers'] }}</h2>
+                                            <p class="fs-18 mb-0 text-black font-w500">Unique Users</p>
+                                            <span class="fs-13">Target 3k/month</span>
+                                        </div>
+                                        <div class="d-inline-block position-relative donut-chart-sale">
+                                            <span class="donut1"
+                                                data-peity='{ "fill": ["rgb(55, 209, 90)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
+                                            <small class="text-success">90%</small>
+                                            <span class="circle bgl-success"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div> --}}
+                    {{-- <div class="col-sm-12 col-md-6">
+                        <a href="{{ route('top_Ten_Properties') }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="media align-items-center">
+                                        <div class="media-body mr-3">
+                                            <h2 class="fs-36 text-black font-w600"></h2>
+                                            <p class="fs-18 mb-0 text-black font-w500">Top 10 Properties</p>
+                                            <span class="fs-13">Target 3k/month</span>
+                                        </div>
+                                        <div class="d-inline-block position-relative donut-chart-sale">
+                                            <span class="donut1"
+                                                data-peity='{ "fill": ["rgb(43, 152, 214)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
+                                            <small class="text-info">90%</small>
+                                            <span class="circle bgl-success"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <a href="{{ route('top_10_areas') }}">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="media align-items-center">
+                                        <div class="media-body mr-3">
+                                            <h2 class="fs-36 text-black font-w600"></h2>
+                                            <p class="fs-18 mb-0 text-black font-w500">Top 10 Areas</p>
+                                            <span class="fs-13">Target 3k/month</span>
+                                        </div>
+                                        <div class="d-inline-block position-relative donut-chart-sale">
+                                            <span class="donut1"
+                                                data-peity='{ "fill": ["rgb(43, 152, 214)", "rgba(236, 236, 236, 1)"],   "innerRadius": 38, "radius": 10}'>7/8</span>
+                                            <small class="text-info">90%</small>
+                                            <span class="circle bgl-success"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div> --}}
                     <div class="col-xl-6 col-lg-6">
                         <div class="card">
                             <div class="card-header">
@@ -324,9 +398,9 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">
-                                    <span style="color: rgb(59, 76, 184)">Call to Action </span> , 
-                                    <span style="color: #37D159">Unique Users </span> 
-                                    Per Month 
+                                    <span style="color: rgb(59, 76, 184)">Click to Action </span> ,
+                                    <span style="color: #37D159">Unique Users </span>
+                                    Per Month Comparison
                                 </h4>
                             </div>
                             <div class="card-body">
@@ -351,63 +425,98 @@
                 </div>
             </div>
 
-            <div class="col-xl-8 col-xxl-7">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header border-0 pb-0">
-                                <h3 class="fs-20 text-black">Properties Map Location</h3>
-                                <div class="dropdown ml-auto">
-                                    <div class="btn-link" data-toggle="dropdown">
-                                        <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24"></rect>
-                                                <circle fill="#000000" cx="5" cy="12" r="2"></circle>
-                                                <circle fill="#000000" cx="12" cy="12" r="2"></circle>
-                                                <circle fill="#000000" cx="19" cy="12" r="2"></circle>
-                                            </g>
-                                        </svg>
-                                    </div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="javascript:void(0);">Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                    </div>
-                                </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Click to Action</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="donutchart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <span style="color: rgb(59, 76, 184)">Emails</span>,
+                            <span style="color: #37D159">Calls </span>,
+                            <span style="color: #ff9900">WhatsApp </span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="multi-line-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header border-0 pb-0">
+                        <h3 class="fs-20 text-black">Properties Map Location</h3>
+                        <div class="dropdown ml-auto">
+                            <div class="btn-link" data-toggle="dropdown">
+                                <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24"></rect>
+                                        <circle fill="#000000" cx="5" cy="12" r="2"></circle>
+                                        <circle fill="#000000" cx="12" cy="12" r="2"></circle>
+                                        <circle fill="#000000" cx="19" cy="12" r="2"></circle>
+                                    </g>
+                                </svg>
                             </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-lg-3">
-                                        @foreach ($data['propertyCities'] as $propertyCity)
-                                        <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">{{ $propertyCity->name }}
-                                            <span class="pull-right text-dark fs-14 ml-2">{{ $propertyCity->pcount }} Properties</span>
-                                        </p>
-                                        <div class="progress mb-4" style="height:10px">
-                                            <div class="progress-bar bg-primary progress-animated"
-                                            style="width: {{ $data['total_properties'] > 1 ? (($propertyCity->pcount / $data['total_properties']) * 100) : '' }}%%">
-                                                <span class="sr-only">{{ $data['total_properties'] > 1 ? (($propertyCity->pcount / $data['total_properties']) * 100) : '' }}%</span>
-                                            </div>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="javascript:void(0);">Edit</a>
+                                <a class="dropdown-item" href="javascript:void(0);">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-3">
+                                @foreach ($data['propertyCities'] as $propertyCity)
+                                    <p class="mb-2 d-flex align-items-center  fs-16 text-black font-w500">
+                                        {{ $propertyCity->name }}
+                                        <span class="pull-right text-dark fs-14 ml-2">{{ $propertyCity->pcount }}
+                                            Properties</span>
+                                    </p>
+                                    <div class="progress mb-4" style="height:10px">
+                                        <div class="progress-bar bg-primary progress-animated"
+                                            style="width: {{ $data['total_properties'] > 1 ? ($propertyCity->pcount / $data['total_properties']) * 100 : '' }}%%">
+                                            <span
+                                                class="sr-only">{{ $data['total_properties'] > 1 ? ($propertyCity->pcount / $data['total_properties']) * 100 : '' }}%</span>
                                         </div>
-                                        @endforeach
-                                        
                                     </div>
-                                    <div class="col-lg-9">
-                                        <div id="world-map"></div>
-                                    </div>
-                                </div>
+                                @endforeach
+
+                            </div>
+                            <div class="col-lg-9">
+                                <div id="world-map"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-xl-4 col-xxl-3">
-                <div class="card overflow-hidden">
+            {{-- <div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <span style="color: rgb(59, 76, 184)">New Users</span>
+                            <span style="color: #37D159">Calls </span>,
+                            <span style="color: #ff9900">WhatsApp </span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="multi-line-chart-2" class="ct-chart ct-golden-section chartlist-chart"></div>
+                    </div>
+                </div>
+            </div> --}}
+            {{-- <div class="col-xl-6 col-lg-6">
+                <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Bar Chart</h4>
                     </div>
                     <div class="card-body">
-                        <div class="ico-sparkline">
-                            <div id="spark-bar"></div>
-                        </div>                            
+                        <div id="morris_bar" class="morris_chart_height"></div>
                     </div>
                 </div>
             </div> --}}
@@ -415,226 +524,314 @@
     </div>
 @endsection
 @section('scripts')
-<script>
-    (function($) {
+    <script>
+        (function($) {
 
-    var dzChartlist = function() {
-        var screenWidth = $(window).width();
+            var dzChartlist = function() {
+                var screenWidth = $(window).width();
 
-        var chartTimeline = function() {
+                var chartTimeline = function() {
 
-            var optionsTimeline = {
-                chart: {
-                    type: "bar",
-                    height: 200,
-                    stacked: true,
-                    toolbar: {
-                        show: false
-                    },
-                    sparkline: {
-                        //enabled: true
-                    },
-                    offsetX: -10,
-                },
-                series: [{
-                    name: "Properties",
-                    data: [
-                        {{ $data['propertiesPerJan'] }},
-                        {{ $data['propertiesPerFeb'] }},
-                        {{ $data['propertiesPerMar'] }},
-                        {{ $data['propertiesPerApr'] }},
-                        {{ $data['propertiesPerMay'] }},
-                        {{ $data['propertiesPerJune'] }},
-                        {{ $data['propertiesPerJuly'] }},
-                        {{ $data['propertiesPerAug'] }},
-                        {{ $data['propertiesPerSep'] }},
-                        {{ $data['propertiesPerOct'] }},
-                        {{ $data['propertiesPerNov'] }},
-                        {{ $data['propertiesPerDec'] }},
-                    ]
+                    var optionsTimeline = {
+                        chart: {
+                            type: "bar",
+                            height: 200,
+                            stacked: true,
+                            toolbar: {
+                                show: false
+                            },
+                            sparkline: {
+                                //enabled: true
+                            },
+                            offsetX: -10,
+                        },
+                        series: [{
+                            name: "Properties",
+                            data: [
+                                {{ $data['propertiesPerJan'] }},
+                                {{ $data['propertiesPerFeb'] }},
+                                {{ $data['propertiesPerMar'] }},
+                                {{ $data['propertiesPerApr'] }},
+                                {{ $data['propertiesPerMay'] }},
+                                {{ $data['propertiesPerJune'] }},
+                                {{ $data['propertiesPerJuly'] }},
+                                {{ $data['propertiesPerAug'] }},
+                                {{ $data['propertiesPerSep'] }},
+                                {{ $data['propertiesPerOct'] }},
+                                {{ $data['propertiesPerNov'] }},
+                                {{ $data['propertiesPerDec'] }},
+                            ]
 
-                }],
+                        }],
 
-                plotOptions: {
-                    bar: {
-                        columnWidth: "25%",
-                        endingShape: "rounded",
-                        startingShape: "rounded",
+                        plotOptions: {
+                            bar: {
+                                columnWidth: "25%",
+                                endingShape: "rounded",
+                                startingShape: "rounded",
 
-                        colors: {
-                            backgroundBarColors: ['#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0',
-                                '#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0'
+                                colors: {
+                                    backgroundBarColors: ['#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0',
+                                        '#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0'
+                                    ],
+                                    backgroundBarOpacity: 1,
+                                    backgroundBarRadius: 5,
+                                },
+
+                            },
+                            distributed: true
+                        },
+                        colors: ['#3B4CB8'],
+                        grid: {
+                            show: false,
+                        },
+                        legend: {
+                            show: false
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        dataLabels: {
+                            enabled: false,
+                            colors: ['#000'],
+                            dropShadow: {
+                                enabled: true,
+                                top: 1,
+                                left: 1,
+                                blur: 1,
+                                opacity: 1
+                            }
+                        },
+                        xaxis: {
+                            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug',
+                                'Sep',
+                                'Oct', 'Nov', 'Dec'
                             ],
-                            backgroundBarOpacity: 1,
-                            backgroundBarRadius: 5,
+                            labels: {
+                                style: {
+                                    colors: '#787878',
+                                    fontSize: '13px',
+                                    fontFamily: 'poppins',
+                                    fontWeight: 100,
+                                    cssClass: 'apexcharts-xaxis-label',
+                                },
+                            },
+                            crosshairs: {
+                                show: false,
+                            },
+                            axisBorder: {
+                                show: false,
+                            },
                         },
 
-                    },
-                    distributed: true
-                },
-                colors: ['#3B4CB8'],
-                grid: {
-                    show: false,
-                },
-                legend: {
-                    show: false
-                },
-                fill: {
-                    opacity: 1
-                },
-                dataLabels: {
-                    enabled: false,
-                    colors: ['#000'],
-                    dropShadow: {
-                        enabled: true,
-                        top: 1,
-                        left: 1,
-                        blur: 1,
-                        opacity: 1
-                    }
-                },
-                xaxis: {
-                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    labels: {
-                        style: {
-                            colors: '#787878',
-                            fontSize: '13px',
-                            fontFamily: 'poppins',
-                            fontWeight: 100,
-                            cssClass: 'apexcharts-xaxis-label',
+                        yaxis: {
+                            show: false
                         },
-                    },
-                    crosshairs: {
-                        show: false,
-                    },
-                    axisBorder: {
-                        show: false,
-                    },
-                },
 
-                yaxis: {
-                    show: false
-                },
+                        tooltip: {
+                            x: {
+                                show: true
+                            }
+                        }
+                    };
+                    var chartTimelineRender = new ApexCharts(document.querySelector("#chartTimeline"),
+                        optionsTimeline);
+                    chartTimelineRender.render();
+                }
 
-                tooltip: {
-                    x: {
-                        show: true
+                var simpleLineChart = function() {
+                    //Simple line chart
+                    new Chartist.Line('#simple-line-chart', {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep',
+                            'Oct',
+                            'Nov', 'Dec'
+                        ],
+                        series: [
+                            [
+                                {{ $data['clicksPerJan'] }},
+                                {{ $data['clicksPerFeb'] }},
+                                {{ $data['clicksPerMar'] }},
+                                {{ $data['clicksPerApr'] }},
+                                {{ $data['clicksPerMay'] }},
+                                {{ $data['clicksPerJune'] }},
+                                {{ $data['clicksPerJuly'] }},
+                                {{ $data['clicksPerAug'] }},
+                                {{ $data['clicksPerSep'] }},
+                                {{ $data['clicksPerOct'] }},
+                                {{ $data['clicksPerNov'] }},
+                                {{ $data['clicksPerDec'] }},
+                            ],
+
+                            [
+                                {{ $data['usersPerJan'] }},
+                                {{ $data['usersPerFeb'] }},
+                                {{ $data['usersPerMar'] }},
+                                {{ $data['usersPerApr'] }},
+                                {{ $data['usersPerMay'] }},
+                                {{ $data['usersPerJune'] }},
+                                {{ $data['usersPerJuly'] }},
+                                {{ $data['usersPerAug'] }},
+                                {{ $data['usersPerSep'] }},
+                                {{ $data['usersPerOct'] }},
+                                {{ $data['usersPerNov'] }},
+                                {{ $data['usersPerDec'] }},
+                            ],
+
+                        ]
+                    }, {
+                        fullWidth: true,
+                        chartPadding: {
+                            right: 40
+                        },
+                        plugins: [
+                            Chartist.plugins.tooltip()
+                        ]
+                    });
+
+                }
+
+                var donutChart = function() {
+                    Morris.Donut({
+                        element: 'morris_donught',
+                        data: [{
+                            label: " Agency Inquiry ",
+                            value: {{ $data['Agency Inquiry'] }},
+                        }, {
+                            label: " Contact Inquiry ",
+                            value: {{ $data['Contact Inquiry'] }}
+                        }, {
+                            label: " Property Inquiry ",
+                            value: {{ $data['Property Inquiry'] }}
+                        }],
+                        resize: true,
+                        redraw: true,
+                        colors: ['#37d159', 'rgb(59, 76, 184)', '#2b98d6'],
+                        responsive: true,
+                    });
+                }
+
+                /* Function ============ */
+                return {
+                    init: function() {},
+                    load: function() {
+                        chartTimeline();
+                        simpleLineChart();
+                        donutChart();
+
+                    },
+                    resize: function() {
+                        simpleLineChart();
                     }
                 }
-            };
-            var chartTimelineRender = new ApexCharts(document.querySelector("#chartTimeline"),
-                optionsTimeline);
-            chartTimelineRender.render();
-        }
 
-        var simpleLineChart = function(){
-            //Simple line chart
-            new Chartist.Line('#simple-line-chart', {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                series: [
-                    [
-                        {{ $data['clicksPerJan'] }},
-                        {{ $data['clicksPerFeb'] }},
-                        {{ $data['clicksPerMar'] }},
-                        {{ $data['clicksPerApr'] }},
-                        {{ $data['clicksPerMay'] }},
-                        {{ $data['clicksPerJune'] }},
-                        {{ $data['clicksPerJuly'] }},
-                        {{ $data['clicksPerAug'] }},
-                        {{ $data['clicksPerSep'] }},
-                        {{ $data['clicksPerOct'] }},
-                        {{ $data['clicksPerNov'] }},
-                        {{ $data['clicksPerDec'] }},
-                    ],
-                    
-                    [
-                        {{ $data['usersPerJan'] }},
-                        {{ $data['usersPerFeb'] }},
-                        {{ $data['usersPerMar'] }},
-                        {{ $data['usersPerApr'] }},
-                        {{ $data['usersPerMay'] }},
-                        {{ $data['usersPerJune'] }},
-                        {{ $data['usersPerJuly'] }},
-                        {{ $data['usersPerAug'] }},
-                        {{ $data['usersPerSep'] }},
-                        {{ $data['usersPerOct'] }},
-                        {{ $data['usersPerNov'] }},
-                        {{ $data['usersPerDec'] }},
-                    ],
+            }();
 
-                ]
-            }, {
-                fullWidth: true,
-                chartPadding: {
-                right: 40
-                },
-                plugins: [
-                Chartist.plugins.tooltip()
-                ]
+
+            jQuery(window).on('load', function() {
+                setTimeout(function() {
+                    dzChartlist.load();
+                }, 1000);
             });
-            
-        }
-       
-        var donutChart = function(){
-			Morris.Donut({
-				element: 'morris_donught',
-				data: [
-                    {
-					label: " Agency Inquiry ",
-					value: {{ $data['Agency Inquiry'] }},
-				    }, {
-					label: " Contact Inquiry ",
-					value: {{ $data['Contact Inquiry'] }}
-				    }, {
-					label: " Property Inquiry ",
-					value: {{ $data['Property Inquiry'] }}
-				    }
-                ],
-				resize: true,
-				redraw: true,
-				colors: ['#37d159', 'rgb(59, 76, 184)', '#2b98d6'],
-				responsive:true,
-			});
-		}
 
-        /* Function ============ */
-        return {
-            init: function() {},
-            load: function() {
-                chartTimeline();
-                simpleLineChart();	
-                donutChart();	
-
-            },
-            resize: function() {
-                simpleLineChart();	
-            }
-        }
-
-    }();
+        })(jQuery);
 
 
-    jQuery(window).on('load', function() {
-        setTimeout(function() {
-            dzChartlist.load();
-        }, 1000);
-    });
 
-    })(jQuery);
+//  START Multi-line CHART
+var multiLineChart = function() {
+                //Multi-line labels
+                new Chartist.Bar('#multi-line-chart', {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep',
+                        'Oct',
+                        'Nov', 'Dec'
+                    ],
+                    series: [
+                        [
+                            {{ $data['EmailPerJan'] }},
+                            {{ $data['EmailPerFeb'] }},
+                            {{ $data['EmailPerMar'] }},
+                            {{ $data['EmailPerApr'] }},
+                            {{ $data['EmailPerMay'] }},
+                            {{ $data['EmailPerJune'] }},
+                            {{ $data['EmailPerJuly'] }},
+                            {{ $data['EmailPerAug'] }},
+                            {{ $data['EmailPerSep'] }},
+                            {{ $data['EmailPerOct'] }},
+                            {{ $data['EmailPerNov'] }},
+                            {{ $data['EmailPerDec'] }},
+                        ],
+                        [
+                            {{ $data['CallPerJan'] }},
+                            {{ $data['CallPerFeb'] }},
+                            {{ $data['CallPerMar'] }},
+                            {{ $data['CallPerApr'] }},
+                            {{ $data['CallPerMay'] }},
+                            {{ $data['CallPerJune'] }},
+                            {{ $data['CallPerJuly'] }},
+                            {{ $data['CallPerAug'] }},
+                            {{ $data['CallPerSep'] }},
+                            {{ $data['CallPerOct'] }},
+                            {{ $data['CallPerNov'] }},
+                            {{ $data['CallPerDec'] }},
 
 
-    var sparkBar = function() {
-            // Bar Chart
-            if (jQuery('#spark-bar').length > 0) {
-                $("#spark-bar").sparkline([33, 22, 68, 54, 8, 30, 74, 7, 36, 5, 41, 19, 43, 29, 38], {
-                    type: "bar",
-                    height: "200",
-                    barWidth: 6,
-                    barSpacing: 7,
-                    barColor: "#1bd084"
+                        ],
+                        [
+                            {{ $data['WhatsAppPerJan'] }},
+                            {{ $data['WhatsAppPerFeb'] }},
+                            {{ $data['WhatsAppPerMar'] }},
+                            {{ $data['WhatsAppPerApr'] }},
+                            {{ $data['WhatsAppPerMay'] }},
+                            {{ $data['WhatsAppPerJune'] }},
+                            {{ $data['WhatsAppPerJuly'] }},
+                            {{ $data['WhatsAppPerAug'] }},
+                            {{ $data['WhatsAppPerSep'] }},
+                            {{ $data['WhatsAppPerOct'] }},
+                            {{ $data['WhatsAppPerNov'] }},
+                            {{ $data['WhatsAppPerDec'] }},
+
+                        ]
+                    ]
+                }, {
+                    seriesBarDistance: 10,
+                    axisX: {
+                        offset: 60
+                    },
+                    axisY: {
+                        offset: 80,
+                        labelInterpolationFnc: function(value) {
+                            return value
+                        },
+                        scaleMinSpace: 15
+                    },
+                    plugins: [
+                        Chartist.plugins.tooltip()
+                    ]
                 });
             }
-        }
-</script>
 
+            // END BASIC BAR CHART
+        
+
+
+        google.charts.load("current", {
+            packages: ["corechart"]
+        });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                <?php echo $chartData; ?>
+            ]);
+
+            var options = {
+                // title: 'Click to Action',
+                pieHole: 0.4,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+            chart.draw(data, options);
+        }
+    </script>
 @endsection

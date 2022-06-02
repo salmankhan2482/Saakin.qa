@@ -8,15 +8,14 @@
         <div class="col-12">
             <div class="page-titles">
                 <ol class="breadcrumb">
-                    <a href="{{route('notifications')}}">
-                        <button type="button" class="btn btn-rounded btn-dark">Back</button>
-                    </a>
                 </ol>
             </div>
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">View Notification</h4>
-                    
+                    <a href="{{route('notifications')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

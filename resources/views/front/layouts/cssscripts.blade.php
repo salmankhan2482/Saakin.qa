@@ -23,13 +23,19 @@
 <meta property="og:description" content="@yield('description',  getcong('site_description'))" />
 <meta property="og:image" content="@yield('image',  url('/upload/favicon1.png'))" />
 
+<meta name="facebook-domain-verification" content="dagk5twy4ade2yb8vwnfchn65yuzh7" />
+
 <!-- Fav and touch icons -->
 <link href="{{ URL::asset('upload/' . getcong('site_favicon')) }}" rel="shortcut icon" type="image/x-icon" />
 <link href="{{ asset('assets/css/fontawesome.css') }}" rel="stylesheet" />
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
-     crossorigin="anonymous"></script>
 
+<!-- Google Auto Ads Code -->
+
+{{-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+     crossorigin="anonymous"></script> --}}
+
+     
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DHP1WPHH9"></script>
 <script>
@@ -54,6 +60,38 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "9cpbk955xj");
 </script>
+
+<!-- Twitter universal website tag code -->
+<script>
+    !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
+    },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
+    a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
+    // Insert Twitter Pixel ID and Standard Event data below
+    twq('init','o8t53');
+    twq('track','PageView');
+    </script>
+    <!-- End Twitter universal website tag code -->
+
+    <!-- Meta Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '483643002213916');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=483643002213916&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
+      {{-- Google Optimizer Code --}}
+    <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5QL22C6"></script>
 
 @yield('style')
 

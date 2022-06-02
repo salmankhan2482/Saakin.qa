@@ -1,0 +1,317 @@
+.qo-section {
+  margin-bottom: 10rem;
+  padding: 2.5rem;
+  padding-bottom: 10rem;
+
+  @include media-breakpoint-up(xxl) {
+    margin-bottom: 10rem;
+    padding: 4.5rem;
+    padding-bottom: 10rem;
+  }
+}
+
+.options-grid {
+  --template: repeat(4, 1fr);
+  --gap: 30px;
+
+  margin-bottom: calc(-43px - 13rem);
+  margin-top: 3rem;
+
+  .option-item {
+    padding: 3rem 1rem;
+    text-align: center;
+    box-shadow: $box-shadow;
+  }
+
+  @include media-breakpoint-up(xxl) {
+    --gap: 90px;
+  }
+}
+
+// .dashboard-sections {
+// }
+
+.option-item {
+  background-color: var(--bs-white);
+  font-size: 1.125rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--bs-dark);
+  transition: all 0.3s ease-out;
+
+  .option-item-icon {
+    font-size: 3.125rem;
+    display: block;
+    margin: 0 auto 1.5rem;
+    line-height: 1;
+    color: var(--bs-primary);
+    transition: all 0.3s ease-out;
+  }
+
+  &:hover {
+    background-color: var(--bs-dark);
+    color: var(--bs-white);
+
+    .option-item-icon {
+      color: var(--bs-white);
+    }
+    .admin-icon {
+      .icon-cog {
+        color: var(--bs-white);
+        background-color: var(--bs-dark);
+      }
+    }
+  }
+
+  .admin-icon {
+    position: relative;
+    display: inline-flex;
+
+    .icon-cog {
+      position: absolute;
+      right: -10%;
+      top: 44%;
+      background-color: var(--bs-white);
+      border-radius: 50%;
+      font-size: 44%;
+      color: var(--bs-primary);
+      transition: all 0.3s ease-out;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+  }
+}
+
+// Add new User popup
+
+.modal-xxl {
+  max-width: 100%;
+
+  @include media-breakpoint-up(xl) {
+    max-width: 1260px;
+  }
+}
+
+.mw420 {
+  max-width: 420px;
+}
+
+.mw290 {
+  max-width: 290px;
+}
+
+.addUserPopup {
+  padding: 2rem 3rem;
+
+  @include media-breakpoint-up(xxl) {
+    padding: 3.5rem 4.5rem;
+  }
+
+  .row:not(.g-3) {
+    --bs-gutter-x: 2.25rem;
+  }
+
+  .addUser {
+    padding: 3rem 0 0;
+  }
+
+  .userType {
+    gap: 30px;
+
+    .btn-lg {
+      --bs-secondary: #{$primary};
+
+      padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
+    }
+  }
+
+  .stepList {
+    list-style: none;
+    padding: 0;
+
+    li + li {
+      margin-top: 1.5rem;
+
+      @include media-breakpoint-up(sm) {
+        margin-top: 2rem;
+      }
+
+      @include media-breakpoint-up(lg) {
+        margin-top: 3.125rem;
+      }
+    }
+
+    li {
+      a {
+        text-decoration: none;
+
+        &.active,
+        &:hover {
+          color: inherit;
+          text-decoration: none;
+
+          .step-number {
+            background-color: var(--bs-primary);
+            color: #fff;
+          }
+        }
+
+        .step-text {
+          color: var(--bs-gray-500);
+        }
+
+        h6 {
+          color: var(--bs-dark);
+        }
+
+        .step-number {
+          width: 55px;
+          height: 55px;
+          display: inline-flex;
+
+          background-color: var(--bs-light);
+          color: var(--bs-primary);
+          justify-content: center;
+          align-items: center;
+          font-size: 1.125rem;
+          font-weight: 500;
+          margin-right: 1.25rem;
+        }
+      }
+    }
+  }
+
+  .step2 {
+    .row {
+      --bs-gutter-x: 50px;
+    }
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  .step-final {
+    min-height: 100%;
+
+    h4 {
+      margin: 2.5rem 0;
+    }
+
+    .final-icon {
+      --ionicon-stroke-width: 1.125rem;
+      font-size: 6.5rem;
+      color: var(--bs-primary);
+    }
+  }
+}
+
+//
+
+.invoicePopup {
+  padding: 2rem 3rem;
+
+  @include media-breakpoint-up(xxl) {
+    padding: 3.5rem 4.5rem;
+  }
+
+  .row:not(.g-3) {
+    --bs-gutter-x: 2.25rem;
+  }
+
+  .invoicePopupBody {
+    padding: 3rem 0 0;
+  }
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  .v-steps {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .step {
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+
+    &.active,
+    &:hover {
+      color: inherit;
+      text-decoration: none;
+
+      .step-number {
+        background-color: var(--bs-primary);
+        color: #fff;
+      }
+    }
+
+    .step-text {
+      color: var(--bs-gray-500);
+    }
+
+    h6 {
+      color: var(--bs-dark);
+    }
+
+    .step-number {
+      width: 55px;
+      height: 55px;
+      display: inline-flex;
+
+      background-color: var(--bs-light);
+      color: var(--bs-primary);
+      justify-content: center;
+      align-items: center;
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin: 0 auto 1.25rem;
+    }
+  }
+}
+
+//
+
+.participant-card {
+  & + & {
+    margin-top: 0.5rem;
+  }
+}
+
+.participant-name {
+  h6 {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  span {
+    font-size: 10px;
+  }
+}
+
+.participant-remove {
+  font-size: 1rem;
+
+  &:hover {
+    color: var(--bs-danger);
+  }
+}
+
+// .emailRequest {}
+
+//
+
+#claimDetailPopup {
+  @include media-breakpoint-up(md) {
+    .modal-dialog {
+      max-width: 1500px;
+    }
+  }
+}
+
+.cost-div + .cost-div {
+  border-top: 1px solid $border-color;
+}

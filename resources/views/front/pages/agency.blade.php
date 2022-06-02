@@ -33,7 +33,7 @@
                 <div class="col-lg-8">
                     <div class="agent-details-wrapper">
                         <div class="d-md-flex mb-3 mb-md-4">
-                            <div class="agent-logo mx-auto me-md-4 mb-3 mb-md-0">
+                            <div class="agent-logo mx-auto ms-md-0 me-md-4 mb-3 mb-md-0">
                                 <img class="img-fluid" src="{{ asset('upload/agencies/' . $agency->image) }}"
                                     alt="{{ $agency->name }}">
                             </div>

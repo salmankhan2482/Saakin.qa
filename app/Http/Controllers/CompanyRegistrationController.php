@@ -20,6 +20,7 @@ class CompanyRegistrationController extends Controller
     }
     public function post_registration(Request $request)
     {
+        
         $this->validate($request,[
             'first_name' => 'required',
             'last_name' => 'required',
@@ -27,10 +28,20 @@ class CompanyRegistrationController extends Controller
             'company_name' => 'required',
             'city' => 'required',
             'job_title' => 'required',
+            'images' => 'required',
             'email' => 'required|email|unique:company_registrations,email',
             'g-recaptcha-response' => 'required|captcha',
         ]);
-        
+
+        if($request->has('images'))
+        {
+            foreach($request->file('images') as $image)
+            {
+                $image_name = 'Company_Registration_' . time() . rand(1,1000).'.'.$image->extension();
+                $image->move(public_path('upload/company_registration'),$image_name);
+            } 
+        }
+
         $cr = new CompanyRegistration();
         $cr->first_name = request('first_name');
         $cr->last_name = request('last_name');
@@ -40,7 +51,10 @@ class CompanyRegistrationController extends Controller
         $cr->city = request('city');
         $cr->job_title = request('job_title');
         $cr->email = request('email');
+        $cr->images = implode('|',request('images'));
+       
         $cr->save();
+
 
         $enquire = new Enquire();
         $enquire->name = request('company_name');

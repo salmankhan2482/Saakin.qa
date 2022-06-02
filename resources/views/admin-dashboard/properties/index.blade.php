@@ -103,7 +103,7 @@
                                         </a>
                                     </td>
                                     <td> 
-                                    {{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }} 
+                                    {{ $property->property_type ? getPropertyTypeName($property->property_type)->types ??'' : '' }} 
                                     </td>
                                     <td> {{ $property->property_purpose }} </td>
                                     <td> {{ App\PageVisits::where('property_id', $property->id)->count() ?? 0 }} </td>
@@ -145,9 +145,9 @@
                                                     <i class="fa fa-edit"></i> {{ trans('words.edit') }}
                                                 </a>
 
-                                                <a href="{{ url('admin/properties/gallery/' . $property->id) }}" class="dropdown-item">
+                                                {{-- <a href="{{ url('admin/properties/gallery/' . $property->id) }}" class="dropdown-item">
                                                     <i class="fa fa-edit"></i> Gallery Images
-                                                </a>
+                                                </a> --}}
 
                                                 @if (Auth::User()->usertype == 'Admin')
                                                     @if ($property->featured_property == 0)

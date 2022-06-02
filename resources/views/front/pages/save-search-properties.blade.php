@@ -38,13 +38,7 @@
               <div class="agency-tile-info border-top">
                 <div class="p-3">
                   <div class="agency-tile-contact d-flex spbwx8 pt-1">
-                    <a id="editSaveSearchModalLabel" class="btn btn-monochrome btn-sm flex-grow-1" href="{{ route('save-search.edit', $search->id) }}" 
-                    data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#editSaveSearchModalLabel' : '#user-login-popup' }}"
-                    >
-                      <i class="fa fa-edit"></i>
-                      Edit
-                    </a>
-                    <a class="btn btn-monochrome btn-sm flex-grow-1" href="#">
+                    <a class="btn btn-monochrome btn-sm flex-grow-1" href="{{ route('save-search.destroy' , $search->id) }}">
                       <i class="fa fa-trash"></i>
                       Delete
                     </a>

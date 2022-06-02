@@ -16,10 +16,10 @@
                         <div class="photo-content">
                             <div class="cover-photo">
                                 @if ($data['user']->usertype == 'Agency')
-                                    <img src="{{ asset('assets/images/profile.jpg') }}"
+                                    <img src="{{ asset('assets/images/agencies.jpg') }}"
                                         class="img-fluid" alt="Agency Img" />
                                 @else
-                                    <img src="{{ asset('assets/images/profile.jpg') }}"
+                                    <img src="{{ asset('assets/images/agencies.jpg') }}"
                                         class="img-fluid" alt="">
                                 @endif
 
@@ -55,7 +55,7 @@
                         <div class="custom-tab-1">
                             <ul class="nav nav-tabs">
                                 <li class="nav-item"><a href="#about-me" data-toggle="tab"
-                                        class="nav-link active show">About Me</a>
+                                        class="nav-link active show">About</a>
                                 </li>
                                 <li class="nav-item"><a href="#profile-settings" data-toggle="tab"
                                         class="nav-link">Setting</a>
@@ -68,7 +68,7 @@
                                 <div id="about-me" class="tab-pane fade active show">
                                     <div class="profile-about-me">
                                         <div class="pt-4 border-bottom-1 pb-3">
-                                            <h4 class="text-primary">About Me</h4>
+                                            <h4 class="text-primary">About Us</h4>
                                             <p class="mb-2">{{ $data['user']->about }}</p>
                                         </div>
                                     </div>
@@ -76,7 +76,7 @@
                                         <h4 class="text-primary mb-2">Status</h4>
                                         <a href="javascript:void()" class="text-muted pr-3 f-s-16">
                                             <i class="flag-icon flag-icon-us"></i>
-                                            {{ $data['user']->status == 1 ? 'Active' : 'Inactive' }}
+                                           <b> {{ $data['user']->status == 1 ? 'Active' : 'Inactive' }}</b>  since <b>{{ date('d-m-Y', strtotime($data['user']->created_at)) }}</b>
                                         </a>
                                     </div>
                                     <div class="profile-personal-info">

@@ -54,7 +54,7 @@
                 <a href="{{ url('city-guide') }}" class="btn btn-primary w-100">See All Our City</a>
             </div>
         </div>
-        <div class="row gy-4 mt-1">
+        <div class="container">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
                         crossorigin="anonymous"></script>
             <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed"

@@ -106,6 +106,8 @@ class InquiriesController extends MainAdminController
 
     public function property_inquiries()
     {
+        // $enquire = Enquire::find(49)->GetProperty;
+        // dd($enquire);
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
             Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
@@ -114,7 +116,16 @@ class InquiriesController extends MainAdminController
         $inquirieslist = Enquire::when(Auth::User()->usertype=="Agency", function($query){
             $query->where('agency_id',Auth::User()->agency_id);
         })
-        ->where('type','Property Inquiry')->orderBy('id', 'desc')->paginate(10);
+        ->where('type','Property Inquiry')->orderBy('id', 'desc')
+        ->whereNotNull('property_id')->paginate(10);
+        // $properties = Properties::where('id', $inquirieslist->id)->first();
+        // $inquire = Enquire::where('type','Property Inquiry')->get();
+        // $inquire = $inquire->Properties;
+ 
+        // $property = $inquire->Properties;
+ 
+        // dd($inquire);
+        // dd($properties);
 
 
         $action = 'saakin_index';

@@ -49,11 +49,12 @@ class AgenciesController extends Controller
             ->leftJoin('properties', 'agencies.id', 'properties.agency_id')
             ->select('agencies.*', DB::Raw( 'COUNT(properties.agency_id) as pcount' ))
             ->where('properties.status', 1)
+            ->where('agencies.status', 1)
             ->groupBy('agencies.name')
             ->orderBy('pcount', 'DESC')
             ->paginate(12);
         }
-
+       
         $landing_page_content= LandingPage::find('55');
         $page_des = strip_tags($landing_page_content->page_content);
         $page_des = Str::limit($page_des, 170, '...');

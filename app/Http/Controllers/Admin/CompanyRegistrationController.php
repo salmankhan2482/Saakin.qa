@@ -16,7 +16,7 @@ class CompanyRegistrationController extends MainAdminController
 
     public function index()
     {
-        $registrations = CompanyRegistration::paginate();
+        $registrations = CompanyRegistration::paginate(10);
         $action = 'saakin_index';
         return view('admin-dashboard.inquiries.company_registration.index', compact('registrations', 'action'));
     }
@@ -77,6 +77,7 @@ class CompanyRegistrationController extends MainAdminController
         DB::table('enquire')
             ->where('company_registrations_id', $registration->id)
             ->update(['enquire_id' => 1]);
+            
         $action = 'saakin_index';
         return view('admin-dashboard.inquiries.company_registration.show', compact('registration','action'));
 

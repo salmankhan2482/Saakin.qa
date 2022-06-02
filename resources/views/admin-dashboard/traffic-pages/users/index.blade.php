@@ -60,10 +60,18 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 @foreach ($users as $i => $user)
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->totalUsers }}</td>
+                                <td>
+                                    <a class="btn btn-success rounded btn-xs action-btn"
+                                    href="{{ url('admin/traffic/trafficUsersIPs/'.$user->id.'?from='.request('from').'&to='.request('to')) }}">
+                                     {{-- href="{{ url('admin/traffic/visits_per_month_IPs/'.$user->id ??"") }}"> --}}
+                                            <i class="fa fa-eye"></i>
+                                    </a>
+                            </td>
                             </tr>
                         @endforeach
                             </tbody>

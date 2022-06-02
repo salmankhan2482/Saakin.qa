@@ -1030,6 +1030,18 @@
                             {{ $page_info }}
                             <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                         </h1>
+                        @if ((new \Jenssegers\Agent\Agent())->isMobile())
+                        <div class="">
+                            <input type="checkbox" class="btn-check" autocomplete="off">
+                            <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
+                                @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
+                                <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
+                                    id="save-search-icon"></i>
+                                <span
+                                    id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
+                            </label>
+                        </div>
+                        @endif
                     </div>
                     {{-- Short design for desktop and tablet --}}
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
@@ -1105,7 +1117,7 @@
                                 $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
                             <div class="single-property-box horizontal-view"
-                                @if (!(new \Jenssegers\Agent\Agent())->isMobile()) style="height: 32vh;" @endif>
+                                @if (!(new \Jenssegers\Agent\Agent())->isMobile()) @endif>
                                 {{--  --}}
                                 <div class="property-item">
                                     <div class="pro-slider">
@@ -1151,7 +1163,7 @@
                                             / Month
                                         @endif
                                     </div>
-                                    <a class="text-decoration-none"
+                                    <a class="text-decoration-none stretched-link"
                                         href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
                                         <h5 class="property-card__property-title">
                                             {{ $property->property_name }}
@@ -1332,7 +1344,7 @@
                                         @foreach ($data['nearbyAreasLinks'] as $item)
                                             <li>
                                                 <a
-                                                    href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->types) .'s-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug .'-' .Str::slug($item->name)]) }}">
+                                                    href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) .'-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug .'-' .Str::slug($item->name)]) }}">
                                                     {{ $type->plural_name }} for {{ $property_purpose }} in
                                                     {{ $item->name }}
                                                 </a>

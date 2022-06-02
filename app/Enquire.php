@@ -2,7 +2,10 @@
 
 namespace App;
 
+use App\Properties;
+use App\CompanyRegistration;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Enquire extends Model
 {
@@ -27,6 +30,11 @@ class Enquire extends Model
      {
          return $this->belongsTo(CompanyRegistration::class,'company_registrations_id');
      }
+     public function GetProperty()
+     {
+         return $this->belongsTo('App\Properties','property_id');
+     }
+
     
     
 }
