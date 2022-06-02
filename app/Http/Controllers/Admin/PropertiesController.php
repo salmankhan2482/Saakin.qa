@@ -199,7 +199,6 @@ class PropertiesController extends MainAdminController
         }
 
         $agencyName = Agency::where('id', $request_data['agency_id'])->value('name');
-        $agencyNameExplode = explode(' ', $agencyName);
         
         $request_data['refference_code'] = preg_replace('~\S\K\S*\s*~u', '', $agencyName).'-'.preg_replace('~\S\K\S*\s*~u', '', $request_data['property_type']).'-'.preg_replace('~\S\K\S*\s*~u', '', $request_data['property_purpose']);
         // $request_data['refference_code'] = $agencyNameExplode[0].$agencyNameExplode[0];
