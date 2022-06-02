@@ -13,6 +13,7 @@
                     <div class="basic-form">
                         <form action="{{ route('propertyVisits_per_month') }}" method="GET">
                             <div class="row justify-content-center">
+
                                 {{-- <div class="col-sm-2"></div> --}}
                                 <div class="col-sm-3">
                                     <div class="form-group row">
@@ -30,14 +31,15 @@
                                             <input type="date" class="h-100 form-control"name="to" value="{{ request('to') }}" >
                                         </div>
                                     </div>
+
                                 </div>
                                 
                                 <div class="col-sm-2">
-                                    <button type="submit" class="btn btn-dark btn-sm p-2">
+                                    <button type="submit" class="btn btn-dark btn-sm">
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
-                                {{-- <div class="col-sm-2"></div> --}}
+
                             </div>
                         </form>
                     </div>

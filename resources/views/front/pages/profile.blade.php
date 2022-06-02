@@ -17,18 +17,13 @@
                                 alt="Profile Image" height="50%" class="card-img-top">
                         @else
                             <img src="{{ URL::asset('site_assets/img/agent-img3.jpg') }}" alt="Default Agent Pic"
-                                class="profile-avatar img-fluid">
+                                class="profile-avatar">
                         @endif
                         <div class="card-body" style="text-align: center">
                             <h5 class="card-title">{{ Auth::user()->name }}</h5>
                             <p class="card-text">{{ Auth::user()->email }}</p>
                         </div>
                         <ul class="list-group list-group-flush">
-                            <a href="{{ route('save-search.index') }}">
-                                <li class="list-group-item"><i class="fa fa-heart icon"></i> 
-                                    Searches & Properties
-                                </li>
-                            </a>
                             <a href="{{ URL::to('profile') }}">
                                 <li class="list-group-item"><i class="fa fa-user icon"></i> Profile</li>
                             </a>

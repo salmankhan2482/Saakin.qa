@@ -2,12 +2,14 @@
 
 namespace App;
 
+
 use App\Agency;
 use App\Enquire;
 use App\PropertyCities;
 use ReCaptcha\RequestMethod\Post;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Properties extends Model
 {

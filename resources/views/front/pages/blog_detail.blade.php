@@ -153,15 +153,19 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="google-ad mb-4">
-                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
-                                                crossorigin="anonymous"></script>
-                        <ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article"
-                            data-ad-format="fluid" data-ad-client="ca-pub-2421573832685297" data-ad-slot="7852560352"></ins>
-                        <script>
-                            (adsbygoogle = window.adsbygoogle || []).push({});
-                        </script>
-                    </div>
+                  <div class="google-ad mb-4">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2421573832685297"
+     data-ad-slot="7852560352"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                  </div>
                     {{-- <img class="img-fluid" src="{{ asset('upload/blogs/' . $blog->image) }}" alt="{{ $blog->name }}"> --}}
                     {!! $blog->description !!}
 
@@ -289,7 +293,7 @@
             </div>
         </div>
         <button class="btn btn-primary scrollTopBtn" onclick="scrollToTop()">
-            <i class="fas fa-chevron-up"></i>
+          <i class="fas fa-chevron-up"></i>
         </button>
     </div>
 @endsection
@@ -300,83 +304,84 @@
         $(document).ready(function() {
             $(document).on("scroll", onScroll);
 
-            //smoothscroll
-            $('a[href^="#"]').on('click', function(e) {
-                e.preventDefault();
 
-                $(document).off("scroll");
+      //smoothscroll
+      $('a[href^="#"]').on('click', function(e) {
+        e.preventDefault();
 
-                var navHeight = jQuery('.cityGideNav').outerHeight() + 20;
-                var target = this.hash,
-                    menu = target;
-                $target = $(target);
+        $(document).off("scroll");
 
-                $('html, body').stop().animate({
-                    scrollTop: jQuery($target).offset().top - navHeight
-                }, 500, 'swing', function() {
-                    window.location.hash = target;
-                    $(document).on("scroll", onScroll);
-                });
-            });
+        var navHeight = jQuery('.cityGideNav').outerHeight() + 20;
+        var target = this.hash,
+          menu = target;
+        $target = $(target);
+
+        $('html, body').stop().animate({
+          scrollTop: jQuery($target).offset().top - navHeight
+        }, 500, 'swing', function() {
+          window.location.hash = target;
+          $(document).on("scroll", onScroll);
         });
+      });
+    });
 
-        function onScroll(event) {
-            var scrollPos = $(document).scrollTop();
-            var navHeight = jQuery('.cityGideNav').outerHeight() + 20;
-            $('#cityGideNav .nav-link').each(function() {
-                var currLink = $(this);
-                var refElement = $(currLink.attr("href"));
-                // console.log(currLink);
-                if (refElement.offset().top - navHeight <= scrollPos && refElement.offset().top - navHeight +
-                    refElement.height() > scrollPos) {
-                    $('#cityGideNav .nav-link').removeClass("active");
-                    currLink.addClass("active");
-                } else {
-                    currLink.removeClass("active");
-                }
-            });
+    function onScroll(event) {
+      var scrollPos = $(document).scrollTop();
+      var navHeight = jQuery('.cityGideNav').outerHeight() + 20;
+      $('#cityGideNav .nav-link').each(function() {
+        var currLink = $(this);
+        var refElement = $(currLink.attr("href"));
+        // console.log(currLink);
+        if (refElement.offset().top - navHeight <= scrollPos && refElement.offset().top - navHeight + refElement.height() > scrollPos) {
+          $('#cityGideNav .nav-link').removeClass("active");
+          currLink.addClass("active");
+        } else {
+          currLink.removeClass("active");
         }
-    </script>
-    <script>
-        function scrollToTop() {
-            $(window).scrollTop(0);
+      });
+    }
+  </script>
+<script>
+  function scrollToTop() {
+    $(window).scrollTop(0);
+  }
+
+  $(document).ready(function() {
+
+    $(".pro-same-slider").slick({
+      arrows: false,
+      dots: false,
+      autoplay: true,
+      autoplaySpeed: 2000,
+      slidesToShow: 5,
+      slidesToScroll: 5,
+      responsive: [{
+          breakpoint: 991,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 3
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
         }
+      ]
+    });
 
-        $(document).ready(function() {
-
-            $(".pro-same-slider").slick({
-                arrows: false,
-                dots: false,
-                autoplay: true,
-                autoplaySpeed: 2000,
-                slidesToShow: 5,
-                slidesToScroll: 5,
-                responsive: [{
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3
-                        }
-                    },
-                    {
-                        breakpoint: 600,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
 
 
         });
     </script>
-               
+
 @endpush

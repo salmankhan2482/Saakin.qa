@@ -53,6 +53,7 @@
                                         </div>
                                     @endif
                                     <div class="card-body">
+
                                         {{-- {!! Form::open(['url' => ['company-registration'], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!} --}}
                                         <form action="{{ url('company-registration') }}" method="POST" enctype="multipart/form-data">
                                             @csrf

@@ -39,7 +39,6 @@
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
-                                <div class="col-sm-2"></div>
                             </div>
                         </form>
                     </div>

@@ -290,7 +290,7 @@ class PropertiesController extends Controller
 
         $data['keyword'] = $this->findKeyWord(request('city'), request('subcity'), request('town'), request('area'));
         $furnishing = ''; $name = ''; $link = '';
-        
+
         if(request('bedrooms')){
             $name = $name.(request('bedrooms') ? request('bedrooms').' bedroom ' : '');
         }
@@ -529,6 +529,7 @@ class PropertiesController extends Controller
 	    $rule=array(
 		        
 		        'property_data' => 'nullable|required',
+
 		        'user_name' => 'required',
 				'user_email' => 'required|email',
 		        'user_message' => 'required',

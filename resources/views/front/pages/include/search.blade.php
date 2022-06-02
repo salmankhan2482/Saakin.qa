@@ -1,4 +1,4 @@
-<div class="site-banner home-banner" style="background-image: url('{{ 'assets/images/backgrounds/bg-7.webp' }}')">
+<div class="site-banner home-banner" style="background-image: url('{{ 'assets/images/backgrounds/bg-7.jpg' }}')">
   <!--Listing filter starts-->
   <div class="container">
     <h1 class="text-sm-center font-weight-bold">Find Your Property</h1>

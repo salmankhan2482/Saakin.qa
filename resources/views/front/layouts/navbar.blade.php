@@ -10,11 +10,11 @@
 
         @if (Request::is('property/*'))
           <a href="{{ URL::to('/') }}">
-            <img src="{{ URL::asset('assets/images/Whitelogo.webp') }}" class="ms-3" alt="Saakin" height="32">
+            <img src="{{ URL::asset('assets/images/Whitelogo.png') }}" class="ms-3" alt="Saakin" height="32">
           </a>
         @else
           <a href="{{ URL::to('/') }}">
-            <img src="{{ URL::asset('upload/logo.webp') }}" class="ms-3" alt="Saakin" height="32">
+            <img src="{{ URL::asset('upload/logo.png') }}" class="ms-3" alt="Saakin" height="32">
           </a>
         @endif
 
