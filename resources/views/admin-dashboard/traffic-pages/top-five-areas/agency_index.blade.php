@@ -7,16 +7,18 @@
         <div class="col-12">
             <div class="page-titles">
                 <ol class="breadcrumb">
-                    <a href="{{route('top_10_areas')}}">
-                        <button type="button" class="btn btn-rounded btn-dark fa fa-arrow-left"> 
-                            Back
-                        </button>
-                    </a>
                 </ol>
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Top 10 Areas of "{{ $agency }}"</h4>
+                    @if (Auth()->User()->usertype == 'Agency')
+                    <h4 class="card-title">Top 10 Areas</h4>
+                    @else
+                    <h4 class="card-title">Top 10 Areas for "{{ $agency ??'' }}"</h4>
+                    @endif  
+                    <a href="{{route('dashboard.index')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

@@ -92,52 +92,62 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data['propertieslist'] as $i => $property)
-                                    <tr>
-                                        <td>{{ $property->id }}</td>
-                                        <td>{{ $property->Agency->name ?? $property->user->name}}</td>
-                                        <td>
-                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
+                            @foreach ($data['propertieslist'] as $i => $property)
+                                <tr>
+                                    <td>{{ $property->id }}</td>
+                                    <td>{{ Str::limit($property->Agency->name, 15) ?? $property->user->name}}</td>
+                                    <td>
+                                        <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
 
-                                                {{ $property->property_name }}
-                                            </a>
-                                        </td>
-                                        <td> {{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }} </td>
-                                        <td> {{ $property->property_purpose }} </td>
-                                        <td> {{ App\PageVisits::where('property_id', $property->id)->count() ?? 0 }} </td>
-                                        <td>
-                                             @if ($property->created_at !== null)
-                                                {{ date('d-m-Y', strtotime($property->created_at)) }}
-                                             @endif
-                                        </td>
-                                        <td>90%</td>
-                                        <td class="text-center">
-                                            @if ($property->status == 1)
-                                                <i class="fa fa-circle text-success mr-1"></i>
-                                            @else
-                                                <i class="fa fa-circle text-danger mr-1"></i>
-                                            @endif
-                                            @if ($property->featured_property == 1)
-                                            <i class="fa fa-star"></i>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                @if ($property->user)
-                                                    @if (Auth::User()->usertype == 'Admin')
-                                                    <a href="Javascript:void(0);" class="dropdown-item"
-                                                        data-toggle="modal"
-                                                        data-target="#PropertyPlanModal"
-                                                        data-propertyid="{{ $property->id }}"
-                                                        id="changePlan_button"
-                                                        >
-                                                        <i class="fa fa-dollar"></i>
-                                                        {{ trans('words.change_plan') }}
-                                                    </a>
-                                                    @endif
+                                            {{ Str::limit($property->property_name, 30) }}
+                                        </a>
+                                    </td>
+                                    <td> 
+                                    {{ $property->property_type ? getPropertyTypeName($property->property_type)->types ??'' : '' }} 
+                                    </td>
+                                    <td> {{ $property->property_purpose }} </td>
+                                    <td> {{ App\PageVisits::where('property_id', $property->id)->count() ?? 0 }} </td>
+                                    <td>
+                                        @if ($property->created_at !== null)
+                                        {{ date('d-m-Y', strtotime($property->created_at)) }}
+                                        @endif
+                                    </td>
+                                    <td>90%</td>
+                                    <td class="text-center">
+                                        @if ($property->status == 1)
+                                            <i class="fa fa-circle text-success mr-1"></i>
+                                        @else
+                                            <i class="fa fa-circle text-danger mr-1"></i>
+                                        @endif
+                                        @if ($property->featured_property == 1)
+                                        <i class="fa fa-star"></i>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            @if ($property->user)
+                                                @if (Auth::User()->usertype == 'Admin')
+                                                <a href="Javascript:void(0);" class="dropdown-item"
+                                                    data-toggle="modal"
+                                                    data-target="#PropertyPlanModal"
+                                                    data-propertyid="{{ $property->id }}"
+                                                    id="changePlan_button"
+                                                    >
+                                                    <i class="fa fa-dollar"></i>
+                                                    {{ trans('words.change_plan') }}
+                                                </a>
+                                                @endif
+
+                                                <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
+                                                    <i class="fa fa-edit"></i> {{ trans('words.edit') }}
+                                                </a>
+
+                                                {{-- <a href="{{ url('admin/properties/gallery/' . $property->id) }}" class="dropdown-item">
+                                                    <i class="fa fa-edit"></i> Gallery Images
+                                                </a> --}}
 
                                                     <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
                                                         <i class="fa fa-edit"></i> {{ trans('words.edit') }}

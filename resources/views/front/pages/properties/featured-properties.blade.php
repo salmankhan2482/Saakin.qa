@@ -1106,8 +1106,8 @@
                         <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
 
                             <a href="{{ url('properties?property_type=' . $propertyType->id . '&featured=1') }}">
-                                <span style="color: #009FFF"> {{ $propertyType->types }} </span>
-                                ({{ $propertyType->pcount }})
+                                {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }}) </span>
+                                
                             </a>
 
                         </div>

@@ -150,6 +150,7 @@
                     </loc>
                     <changefreq>Daily</changefreq>
                     <priority>1</priority>
+                    <priority>$item</priority>
                 </url>
                 @endforeach    
                 
@@ -162,6 +163,7 @@
             <?php $cities = DB::table('property_cities')
             ->leftJoin('properties', 'property_cities.id', 'properties.city')
             ->select('property_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
+            ->where("properties.status", 1)
             ->where('property_purpose', 'Rent')
             ->where('property_type', $type->id)
             ->groupBy('property_cities.name')

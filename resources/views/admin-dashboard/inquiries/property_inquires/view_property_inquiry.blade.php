@@ -65,7 +65,8 @@
                                     </tr>
                                     <tr> 
                                         <th>Sending Date</th>
-                                        <td>{{ date('d-m-Y', strtotime($inquire->created_at)) ??'' }}</td>
+                                        <td>
+                                            {{ date('d-m-Y', strtotime($inquire->created_at)) ??'' }} at  {{ date('H:i:s', strtotime($inquire->created_at)) ??'' }}</td>
                                     </tr>
                             </thead>
                             <tbody>

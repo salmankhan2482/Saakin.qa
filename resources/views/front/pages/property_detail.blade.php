@@ -17,97 +17,76 @@
 @endif
 
 @section('content')
-    @php
-    $phone = \App\Properties::getPhoneNumber($property->id);
-    $whatsapp = \App\Properties::getWhatsapp($property->id);
-    $agency = \App\Agency::where('id', $property->agency_id)->first();
-    $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 
-    $whatsapText =
-        'Hello, I would like to inquire about this property posted on saakin.qa
-      
-Reference: ' .
-        $property->refference_code .
-        '
-Price: QR ' .
-        $property->getPrice() .
-        '/month Type: ' .
-        $property->propertiesTypes->types .
-        '
-Location: ' .
-        $property->address .
-        '
-      
-Link: ' .
-        $propertyUrl;
-    @endphp
+{{-- @php
+$phone = \App\Properties::getPhoneNumber($property->id);
+$whatsapp = \App\Properties::getWhatsapp($property->id);
+$agency = \App\Agency::where('id', $property->agency_id)->first();
+$propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
+$whatsapText =
+    'Hello,
+                                                                                I would like to inquire about this property posted on
+                                                                                saakin.qa
 
-    <div class="inner-content">
+                                                                                Reference: ' .
+    $property->refference_code .
+    '
+                                                                                Price: QR ' .
+    $property->getPrice() .
+    '/month
+                                                                                Type: ' .
+    $property->propertiesTypes->types .
+    '
+                                                                                Location: ' .
+    $property->address .
+    '
 
-        <div class="container">
+                                                                                Link:' .
+    $propertyUrl;
+@endphp --}}
 
-            @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
-                <div class="row d-none d-md-flex">
-                    <div class="col">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
 
-                                <li class="breadcrumb-item">
-                                    <a
-                                        href="{{ route('cpt-purpose', [
-                                            $property->property_purpose == 'Sale' ? 'buy' : 'rent',
-                                            Str::slug($property->propertyCity->name),
-                                            Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose),
-                                        ]) }}">
+  @php
+  $phone = \App\Properties::getPhoneNumber($property->id);
+  $whatsapp = \App\Properties::getWhatsapp($property->id);
+  $agency = \App\Agency::where('id', $property->agency_id)->first();
+  $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
 
-                                        {{ $property->propertyCity->name }}
+  $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa
+  
+  Reference: ' . $property->refference_code . '
+  Price: QR ' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . '
+  Location: ' . $property->address . '
+  
+  Link: ' 
+  . $propertyUrl;
+  @endphp
 
-                                    </a>
-                                </li>
+  <div class="inner-content">
 
-                                @isset($property->propertySubCity->name)
-                                    <li class="breadcrumb-item">
-                                        <a
-                                            href="{{ route('cpt-purpose', [$property->property_purpose == 'Sale' ? 'buy' : 'rent', Str::slug($property->propertyCity->name), Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose) . '-' . Str::slug($property->propertySubCity->name)]) }}">
+    <div class="container">
 
-                                            {{ $property->propertySubCity->name }}
+      @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+        <div class="row d-none d-md-flex">
+          <div class="col">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                  
+                <li class="breadcrumb-item">
+                  <a href="{{ route('cpt-purpose', [$property->property_purpose == 'Sale' ? 'buy' : 'rent',  Str::slug($property->propertyCity->name), 
+                  Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose)]) }}">
 
-                                        </a>
-                                    </li>
-                                @endisset
+                    {{ $property->propertyCity->name }}
+                    
+                  </a>
+                </li>
 
-                                @isset($property->propertyTown->name)
-                                    <li class="breadcrumb-item">
-                                        <a
-                                            href="{{ route('cpt-purpose', [$property->property_purpose == 'Sale' ? 'buy' : 'rent', Str::slug($property->propertyCity->name), Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose) . '-' . Str::slug($property->propertySubCity->name . '-' . Str::slug($property->propertyTown->name))]) }}">
+                @isset($property->propertySubCity->name)
+                  <li class="breadcrumb-item">
+                    <a href="{{ route('cpt-purpose', [$property->property_purpose == 'Sale' ? 'buy' : 'rent',  Str::slug($property->propertyCity->name), Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose) . '-' . Str::slug($property->propertySubCity->name)]) }}">
 
-                                            {{ $property->propertyTown->name }}
+                      {{ $property->propertySubCity->name }}
 
-                                        </a>
-                                    </li>
-                                @endisset
-
-                                @isset($property->propertyArea->name)
-                                    <li class="breadcrumb-item">
-                                        <a
-                                            href="{{ route('cpt-purpose', [$property->property_purpose == 'Sale' ? 'buy' : 'rent', Str::slug($property->propertyCity->name), Str::slug($property->propertiesTypes->plural) . '-for-' . strtolower($property->property_purpose) . '-' . Str::slug($property->propertySubCity->name . '-' . Str::slug($property->propertyTown->name) . '-' . Str::slug($property->propertyArea->name))]) }}">
-
-                                            {{ $property->propertyArea->name }}
-
-                                        </a>
-                                    </li>
-                                @endisset
-
-                            </ol>
-                        </nav>
-                    </div>
-                    <div class="col">
-                        <p class="text-end fs-sm">
-                            Properties for {{ $property->property_purpose }} in {{ $property->address }}
-                        </p>
-                    </div>
-                </div>
-            @endif
 
             <div class="position-relative">
                 <div class="gallery_btn position-absolute bottom-0 start-0 p-3 d-none d-md-block" style="z-index: 1;">
@@ -123,27 +102,75 @@ Link: ' .
                     <a data-fancybox-index="0" class="btn btn-sm btn-primary">
                         <i class="fa fa-eye"> {{ $property_counter }}</i>
                     </a>
-                </div>
-                <div class="grid single-gallery @if ((new \Jenssegers\Agent\Agent())->isMobile()) single-gallery-slider @endif">
-                    <div class="gallery-item">
-                        <a data-caption="{{ $property->property_name }}" data-fancybox="gallery"
-                            href="{{ asset('upload/properties/' . $property->featured_image) }}">
-                            <img src="{{ asset('upload/properties/' . $property->featured_image) }}"
-                                alt="{{ $property->property_name }}">
-                        </a>
-                    </div>
-                    @if (count($property_gallery_images) > 0)
-                        @foreach ($property_gallery_images as $gallery)
-                            <div class="gallery-item">
-                                <a data-caption="{{ $property->property_name }}" data-fancybox="gallery"
-                                    href="{{ URL::asset('upload/gallery/' . $gallery->image_name) }}">
-                                    <img src="{{ URL::asset('upload/gallery/' . $gallery->image_name) }}"
-                                        alt="{{ $property->property_name }}" />
-                                </a>
-                            </div>
-                        @endforeach
-                    @endif
-                </div>
+                  </li>
+                @endisset
+
+              </ol>
+            </nav>
+          </div>
+          <div class="col">
+            <p class="text-end fs-sm">
+              Properties for {{ $property->property_purpose }} in {{ $property->address }}
+            </p>
+          </div>
+        </div>
+      @endif
+
+      <div class="position-relative">
+        <div class="gallery_btn position-absolute bottom-0 start-0 p-3 d-none d-md-block" style="z-index: 1;">
+          <a href="javascript:void(0)" data-fancybox-trigger="gallery" data-fancybox-index="0" class="btn btn-sm btn-primary">
+            View Gallery
+          </a>
+          <a class="googleMapPopUp btn btn-sm btn-info" rel="nofollow" data-fancybox data-type="iframe" data-preload="false" 
+            data-width="640" data-height="480" href="https://maps.google.com/maps?q={{ $property->address }}&output=embed" target="_blank">
+            View Map
+           </a>
+           <a data-fancybox-index="0" class="btn btn-sm btn-primary">
+            <i class="fa fa-eye">  {{ $property_counter}}</i>
+          </a>
+        </div>
+        <div class="grid single-gallery @if ((new \Jenssegers\Agent\Agent())->isMobile()) single-gallery-slider @endif">
+          <div class="gallery-item">
+            <a data-caption="{{ $property->property_name }}" data-fancybox="gallery" href="{{ asset('upload/properties/' . $property->featured_image) }}">
+              <img src="{{ asset('upload/properties/' . $property->featured_image) }}" alt="{{ $property->property_name }}">
+            </a>
+          </div>
+          @if (count($property_gallery_images) > 0)
+            @foreach ($property_gallery_images as $gallery)
+              <div class="gallery-item">
+                <a data-caption="{{ $property->property_name }}" data-fancybox="gallery" href="{{ URL::asset('upload/gallery/' . $gallery->image_name) }}">
+                  <img src="{{ URL::asset('upload/gallery/' . $gallery->image_name) }}" alt="{{ $property->property_name }}" />
+                </a>
+              </div>
+            @endforeach
+          @endif
+        </div>
+      </div>
+
+      <div class="grid details-content">
+        <div class="mt-4">
+          <div class="list-details-wrap">
+            <div class="d-sm-none pb-4 text-center">
+              <h2 class="h3">
+                <strong>{{ $property->getPrice() }}
+                  @if ($property->property_purpose == 'For Rent' || $property->property_purpose == 'Rent')
+                    / Month
+                  @endif
+                </strong>
+              </h2>
+
+              <div class="btn-group btn-group-sm d-flex share-btns" role="group" aria-label="Share Link">
+                <button type="button" class="btn btn-monochrome">
+                  <i class="far fa-heart"></i><br> Save
+                </button>
+                <button type="button" class="btn btn-monochrome" data-bs-toggle="modal" data-bs-target="#shareModal">
+                  <i class="far fa-share-square"></i><br>
+                  Share</button>
+                <button type="button" class="btn btn-monochrome" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#reportModal' : '#user-login-popup' }}">
+                  <i class="far fa-flag"></i><br>
+                  Report</button>
+              </div>
+
             </div>
 
             <div class="grid details-content">
@@ -700,79 +727,76 @@ Link: ' .
         </div>
 
         @if (count($properties) > 0)
-            <div class="col-lg-8 mt-4">
-                <h3 class="mb-4">{{ $properties->count() }} More Properties in the Same Area</h3>
-                <div
-                    class="@if ((new \Jenssegers\Agent\Agent())->isMobile()) pro-same-m d-flex can-scroll-x spbwx16 @else pro-same-slider @endif">
-                    @foreach ($properties as $propx)
-                        <div class="single-property-box border">
-                            <div class="property-item">
-                                <a class="property-img"
-                                    href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
-                                    @if ($propx->featured_image)
-                                        <img src="{{ URL::asset('upload/properties/thumb_' . $propx->featured_image) }}"
-                                            alt="{{ $propx->property_name }}">
-                                    @else
-                                        <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}"
-                                            alt="{{ $propx->property_name }}">
-                                    @endif
-                                </a>
-                                <ul class="feature_text">
-                                    @if ($propx->featured_property == 1)
-                                        <li class="feature_cb"><span> Featured</span>
-                                        </li>
-                                    @endif
-                                    @if (!empty($propx->property_purpose))
-                                        <li class="feature_or">
-                                            <span>{{ $propx->property_purpose }}</span>
-                                        </li>
-                                    @endif
 
-                                </ul>
-                                <div class="property-author-wrap">
-                                    <div class="property-author">
-                                        <span>{{ $propx->getPrice() }}
-                                            @if ($propx->property_purpose == 'For Rent' || $propx->property_purpose == 'Rent')
-                                                / Month
-                                            @endif
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="property-title-box">
-                                <h2 class="property-card__property-title">
-                                    {{ \Illuminate\Support\Str::limit($property->property_name) }}
-                                </h2>
-                                <div class="property-location">
-                                    <p>
-                                        {{ $propx->propertiesTypes->types }}
-                                        <br>
-                                        <span class="hideAddress">
-                                            {{ $property->address }}
-                                        </span>
-                                    </p>
-                                </div>
+        <div class="col-lg-8 mt-4">
+          <h3 class="mb-4">{{ $properties->count() }} More Properties in the Same Area</h3>
+          <div class="@if ((new \Jenssegers\Agent\Agent())->isMobile()) pro-same-m d-flex can-scroll-x spbwx16 @else pro-same-slider @endif">
+            @foreach ($properties as $propx)
+              <div class="single-property-box border">
+                <div class="property-item">
+                  <a class="property-img stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                    @if ($propx->featured_image)
+                      <img src="{{ URL::asset('upload/properties/thumb_' . $propx->featured_image) }}" alt="{{ $propx->property_name }}">
+                    @else
+                      <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}" alt="{{ $propx->property_name }}">
+                    @endif
+                  </a>
+                  <ul class="feature_text">
+                    @if ($propx->featured_property == 1)
+                      <li class="feature_cb"><span> Featured</span>
+                      </li>
+                    @endif
+                    @if (!empty($propx->property_purpose))
+                      <li class="feature_or">
+                        <span>{{ $propx->property_purpose }}</span>
+                      </li>
+                    @endif
 
-                                <ul class="property-feature">
-                                    @if ($propx->getProperty_type())
-                                        <li class="me-1">
-                                            <i class="fas fa-bed fas-icon"></i>
-                                            <span>{{ $propx->bedrooms }} </span>
-                                        </li>
-                                        <li class="me-1">
-                                            <i class="fas fa-bath fas-icon"></i>
-                                            <span>{{ $propx->bathrooms }}
-                                            </span>
-                                        </li>
-                                    @endif
-                                    <li class="me-1">
-                                        <i class="fas fa-chart-area fas-icon"></i>
-                                        <span> {{ $propx->getSqm() }} </span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    @endforeach
+                  </ul>
+                  <div class="property-author-wrap">
+                    <div class="property-author">
+                      <span>{{ $propx->getPrice() }}
+                        @if ($propx->property_purpose == 'For Rent' || $propx->property_purpose == 'Rent')
+                          / Month
+                        @endif
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-title-box" >
+                  <a class="text-decoration-none stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                    <h5 class="property-card__property-title">
+                      {{ \Illuminate\Support\Str::limit($property->property_name) }}
+                    </h5>
+                  </a> 
+                  <div class="property-location">
+                    <p>
+                      {{ $propx->propertiesTypes->types }}
+                      <br>
+                      <span class="hideAddress">
+                        {{ $property->address }}
+                      </span>
+                    </p>
+                  </div>
+
+                  <ul class="property-feature">
+                    @if ($propx->getProperty_type())
+                      <li class="me-1">
+                        <i class="fas fa-bed fas-icon"></i>
+                        <span>{{ $propx->bedrooms }} </span>
+                      </li>
+                      <li class="me-1">
+                        <i class="fas fa-bath fas-icon"></i>
+                        <span>{{ $propx->bathrooms }}
+                        </span>
+                      </li>
+                    @endif
+                    <li class="me-1">
+                      <i class="fas fa-chart-area fas-icon"></i>
+                      <span> {{ $propx->getSqm() }} </span>
+                    </li>
+                  </ul>
+
                 </div>
             </div>
         @endif

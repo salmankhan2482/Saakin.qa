@@ -48,6 +48,15 @@
                                     <td><strong>City Name</strong></td>
                                     <td>{{ $registration->relatedCity->name ??'' }}</td>
                                 </tr>
+                                {{-- <tr>
+                                    <td><strong>Attachment</strong></td>
+                                    <td>
+                                    @if (!empty($registration->images))
+                                                <img src="{{ URL::asset('upload/company_registration/' . $registration->images) }}"
+                                                class="mt-1">
+                                            @endif
+                                </td>
+                                </tr> --}}
                             </thead>
                             <tbody>
                                 

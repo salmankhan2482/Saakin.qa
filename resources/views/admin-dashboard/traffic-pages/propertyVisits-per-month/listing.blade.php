@@ -26,6 +26,7 @@
                                     <th>Property ID</th>
                                     <th>Property Title</th>
                                     <th>Property Visits</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,6 +43,7 @@
                                     <td>
                                         {{ $traffic->count }}
                                     </td>
+                                    
                                 
                                 </tr>
                             @endforeach

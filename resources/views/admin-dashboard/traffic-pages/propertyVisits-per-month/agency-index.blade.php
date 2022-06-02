@@ -13,14 +13,25 @@
                     <div class="basic-form">
                         <form action="{{ route('propertyVisits_per_month') }}" method="GET">
                             <div class="row justify-content-center">
-                                <div class="col-sm-2">
-                                    <label for="">From</label>
-                                    <input type="date" id="start" name="from" value="{{ request('from') }}" >
+
+                                {{-- <div class="col-sm-2"></div> --}}
+                                <div class="col-sm-3">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label d-flex">From</label>
+                                        <div class="col-sm-9">
+                                        <input type="date" class="h-100 form-control" name="from" value="{{request('from')}}" >
+                                        </div>
+                                    </div>
                                 </div>
                                 
-                                <div class="col-sm-2">
-                                    <label for="">To</label>
-                                    <input type="date" id="start" name="to" value="{{ request('to') }}" >
+                                <div class="col-sm-3">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 col-form-label d-flex">To</label>
+                                        <div class="col-sm-9">
+                                            <input type="date" class="h-100 form-control"name="to" value="{{ request('to') }}" >
+                                        </div>
+                                    </div>
+
                                 </div>
                                 
                                 <div class="col-sm-2">
@@ -28,6 +39,7 @@
                                         {{ trans('words.search') }}
                                     </button>
                                 </div>
+
                             </div>
                         </form>
                     </div>
@@ -39,7 +51,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Visits</h4>
-                    <a href="{{ url()->previous() }}">
+                    <a href="{{ route('dashboard.index') }}">
                         <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
                 </div>
@@ -50,6 +62,7 @@
                                 <tr>
                                     <th>Property Name</th>
                                     <th>Property Visits</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,6 +79,12 @@
                                         @endif
                                     </td>
                                     <td>{{ $click->counter }}</td>
+                                    <td>
+                                        <a class="btn btn-success rounded btn-xs action-btn"
+                                         href="{{ url('admin/traffic/visits_per_month_IPs/'.$click->property_id ??"") }}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
                                    
                                 </tr>
                                 @endforeach

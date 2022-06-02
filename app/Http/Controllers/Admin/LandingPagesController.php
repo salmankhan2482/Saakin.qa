@@ -25,12 +25,23 @@ class LandingPagesController extends Controller
 
     public function index()
     {
+        
         if(Auth::User()->usertype!="Admin"){
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('dashboard');
         }
         $action = 'saakin_index';
-        $data['landing_pages_content'] = LandingPage::paginate(15);
+        $data['landing_pages_content'] = LandingPage::
+        
+        when(request('keyword'), function($query){
+            return $query->where('meta_title','like', '%'. request('keyword') . '%');
+        })
+        ->when(request('keyword'), function($query){
+            return $query->orWhere('id', request('keyword'));
+        })
+        
+        ->paginate(15);
+
         return view('admin-dashboard.landing-pages.landing_page_content.index', compact('data', 'action'));
     }
     public function create()    {

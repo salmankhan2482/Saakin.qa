@@ -32,6 +32,12 @@
 {{-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
      crossorigin="anonymous"></script> --}}
 
+<!-- Google Auto Ads Code -->
+
+{{-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+     crossorigin="anonymous"></script> --}}
+
+     
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-0DHP1WPHH9"></script>
 <script>
@@ -68,7 +74,9 @@
     </script>
     <!-- End Twitter universal website tag code -->
 
-   <!-- Meta Pixel Code -->
+
+    <!-- Meta Pixel Code -->
+
 <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -85,6 +93,10 @@
     src="https://www.facebook.com/tr?id=483643002213916&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
+    
+      {{-- Google Optimizer Code --}}
+    <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5QL22C6"></script>
+
 
 @yield('style')
 

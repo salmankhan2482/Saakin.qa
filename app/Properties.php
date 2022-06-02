@@ -2,8 +2,14 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+
 use App\Agency;
+use App\Enquire;
+use App\PropertyCities;
+use ReCaptcha\RequestMethod\Post;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Properties extends Model
 {
@@ -98,7 +104,11 @@ class Properties extends Model
     {
         return $this->hasMany('App\PropertyGallery','property_id','id');
     }
-
+    public function GetInquiries()
+    {
+        return $this->hasMany('App\Enquire','property_id','id');
+    }
+    
     public static function getWhatsapp($propertyid)
     {
         $property = Properties::where("id",$propertyid)->first();

@@ -14,7 +14,6 @@
 
 @section('content')
 
-
     <div class="filter-wrap">
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
@@ -1264,11 +1263,17 @@
                 @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
                     <div class="location-wrap">
                         @foreach ($propertyTypes as $propertyType)
+                        
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
                                 <a
                                     href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
-
-                                    {{ $propertyType->types }} <span>({{ $propertyType->pcount }})</span>
+                                    {{-- Capital Breadcrumbs --}}
+                                    <?php
+                                         $p_types = str_replace("-"," ",$propertyType->plural);
+                                         $p_types = ucwords($p_types);
+                                    ?>
+                                    
+                                    {{ $p_types }} <span>({{ $propertyType->pcount }})</span>
 
                                 </a>
                             </div>
@@ -1511,7 +1516,6 @@
                                     </script>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

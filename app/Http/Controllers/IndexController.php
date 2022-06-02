@@ -480,6 +480,7 @@ class IndexController extends Controller
             ->orderBy("pcount", "desc")
             ->get();
 
-        return response()->view('pages.sitemap', compact('site_url', 'properties', 'blogs', 'blog_categories', 'agencies', 'salePropertyTypes', 'rentPropertyTypes', 'city_guides'))->header('Content-Type', 'text/xml');
+        return response()->view('pages.sitemap', compact('site_url', 'properties', 'blogs', 'blog_categories',
+         'agencies', 'salePropertyTypes', 'rentPropertyTypes', 'city_guides'))->header('Content-Type', 'text/xml');
     }
 }

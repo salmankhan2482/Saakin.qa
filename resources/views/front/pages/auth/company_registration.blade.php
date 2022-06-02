@@ -1,11 +1,11 @@
 @extends("front.layouts.main")
 
-@section('title', 'Register | saakin.qa')
-@section('description', 'Register your Account on Sakkin with few clicks')
-@section('type', 'saakin-register')
+@section('title', 'Company Registeration | saakin.qa')
+@section('description', 'To advertise with Saakin Inc. you need to be a broker or real estate company with a registered office in Doha, Qatar')
+@section('type', 'saakin-registeration')
 @section('url', Request::url())
 
-@section('head_title', trans('words.sign_in') . ' | ' . getcong('site_name'))
+@section('head_title', 'Company Registeration | saakin.qa')
 @section('head_url', Request::url())
 
 @section('content')
@@ -53,7 +53,9 @@
                                         </div>
                                     @endif
                                     <div class="card-body">
-                                        <form action="{{ url('company_registration') }}" method="POST">
+
+                                        {{-- {!! Form::open(['url' => ['company-registration'], 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!} --}}
+                                        <form action="{{ url('company-registration') }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-control-wrap row gx-2 gy-3">
                                                 <div class="form-group col-md-6">
@@ -72,11 +74,11 @@
                                                     <input type="text" name="phone" placeholder="Phone Number *"
                                                         class="form-control" required>
                                                 </div>
-                                                <div class="form-group col-md-4">
+                                                <div class="form-group col-md-6">
                                                     <input type="text" name="company_name" placeholder="Company Name *"
                                                         class="form-control" required>
                                                 </div>
-                                                <div class="form-group col-md-4">
+                                                <div class="form-group col-md-6">
                                                     <select name="city" id="city" class="form-control" required>
                                                         <option value="">Select City</option>
                                                         <option value="1">Doha</option>
@@ -88,7 +90,7 @@
                                                         <option value="7">Lusail</option>
                                                     </select>
                                                 </div>
-                                                <div class="form-group col-md-4">
+                                                <div class="form-group col-md-6">
                                                     <select name="job_title" id="job_title" class="form-control" required>
                                                         <option value="">Select Job Title</option>
                                                         <option value="CEO">CEO</option>
@@ -109,6 +111,12 @@
                                                         <option value="Admin">Admin</option>
                                                     </select>
                                                 </div>
+                                                <div class="form-group col-md-6">
+                                                    <input type="file" name="images[]"
+                                                           class="form-control" 
+                                                           multiple>
+                                                        
+                                                </div>
                                                 <div class="form-row">
                                                     <div
                                                         class="form-group col-md-6 {{ $errors->has('g-recaptcha-response') ? ' has-error' : '' }}">
@@ -128,6 +136,7 @@
                                                 </div>
                                             </div>
                                         </form>
+                                        {{-- {!! Form::close() !!} --}}
                                     </div>
                                 </div>
                             </div>

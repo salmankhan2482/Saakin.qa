@@ -54,7 +54,7 @@ class AgenciesController extends Controller
             ->orderBy('pcount', 'DESC')
             ->paginate(12);
         }
-
+       
         $landing_page_content= LandingPage::find('55');
         $page_des = strip_tags($landing_page_content->page_content);
         $page_des = Str::limit($page_des, 170, '...');

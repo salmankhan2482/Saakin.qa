@@ -20,12 +20,17 @@
                         <table id="example3" class="display min-w850">
                             <thead>
                                 <tr>
-                                    <th>Property ID</th>
+                                    <th>ID</th>
                                     <th>Name</th>
-                                    <th>Email</th>
                                     <th>Phone</th>
+                                    <th>Types</th>
+                                    <th>Purpose</th>
+                                    <th>Bed's</th>
+                                    <th>Location</th>
                                     <th>Agency</th>
                                     <th>Date</th>
+                                    <th>Move In</th>
+                                    <th>Status</th>
                                     <th>{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
@@ -35,10 +40,19 @@
 
                                         <td>{{ $inquiries->property_id }}</td>
                                         <td>{{ $inquiries->name }}</td>
-                                        <td>{{ $inquiries->email }}</td>
                                         <td>{{ $inquiries->phone }}</td>
+                                        <td>{{ $inquiries->GetProperty->propertiesTypes->types ??''}}</td>
+                                        <td>{{ $inquiries->GetProperty->property_purpose ??''}}</td>
+                                        <td>{{ $inquiries->GetProperty->bedrooms ??''}}</td>
+                                        <td>{{ $inquiries->GetProperty->address ??''}}</td>
                                         <td>{{ $inquiries->Agencies->name ?? '' }} </td>
                                         <td>{{ date('d-m-Y', strtotime($inquiries->created_at)) ?? '' }} </td>
+                                        <td>{{ $inquiries->movein_date ??''}}</td>
+                                        <td> @if ($inquiries->GetProperty->status == 1)
+                                            <i class="fa fa-circle text-success mr-1"></i>
+                                        @else
+                                            <i class="fa fa-circle text-danger mr-1"></i>
+                                        @endif</td>
                                         <td>
                                             <a href="{{ url('admin/view_inquiry', $inquiries->id) }}"
                                                 class="btn btn-success rounded btn-xs action-btn">
