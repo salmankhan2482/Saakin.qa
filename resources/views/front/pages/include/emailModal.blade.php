@@ -285,7 +285,7 @@
           </div>
           <div class="col-12 col-md-4">
             <div class="form-group">
-              <input type="tel" placeholder="Phone Number" name="telephone" class="form-control" id="telephoneInput" required>
+              <input type="tel" placeholder="Phone Number" name="telephone" class="form-control" min="8" maxlength="13" id="telephoneInput" required>
             </div>
           </div>
           <div class="col-12 col-md-4">

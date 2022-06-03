@@ -1,4 +1,4 @@
-@extends("front.layouts.main")
+@extends('front.layouts.main')
 
 @if ($blog->meta_title != null)
     @section('title', $blog->meta_title . ' | ' . 'Saakin.qa')
@@ -17,123 +17,122 @@
 @endif
 @section('schema-markup')
     <script type="application/ld+json">
-        [
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "@id": "#Article",
-    "url": "{{ url()->current() }}",
-    "inLanguage": "en-US",
-    "mainEntityOfPage": "{{ url()->current() }}",
-    "headline": "{{ $blog->title }}",
-    "description": "{{ $blog->meta_description }}",
-    "articleBody": "{{ strip_tags($blog->description) }}",
-    "keywords": "Article",
-    @if ($blog->updated_at)
-    "dateModified": "{{ date('d-m-Y', strtotime($blog->updated_at)) }}",
-    @else
-    "datePublished": "{{ date('d-m-Y', strtotime($blog->created_at)) }}",
-    @endif
-    "author": {
-        "@type": "Person",
-        "name": "Admin",
-        "description": "",
-        "url": "https://www.saakin.qa/author/admin/",
-        "image": {
-            "@type": "ImageObject",
-            "url": "https://www.saakin.qa/upload/logo.png",
-            "height": 96,
-            "width": 96
-        }
-    },
-    "image": [
-        {
-            "@type": "ImageObject",
-            "@id": "{{ asset('upload/blogs/' . $blog->image) }}#primaryimage",
-            "url": "{{ asset('upload/blogs/' . $blog->image) }}",
-            "width": "1491",
-            "height": "240"
-        }
-    ]},
-    {
-        "@context": "https://schema.org",
-        "@type": "NewsArticle",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "{{ url()->current() }}"
-        },
-        "headline": "{{ $blog->title }}",
-        "image": [
-            "{{ asset('upload/blogs/' . $blog->image) }}"
-        ],
-        @if ($blog->updated_at)
-        "dateModified": "{{ date('d-m-Y', strtotime($blog->updated_at)) }}",
-        @else
-        "datePublished": "{{ date('d-m-Y', strtotime($blog->created_at)) }}",
-        @endif
-        "author": {
-            "@type": "Person",
-            "name": "admin",
-            "description": "",
-            "url": "https://www.saakin.qa/author/admin/",
-            "image": {
-                "@type": "ImageObject",
-                "url": "https://www.saakin.qa/upload/logo.png",
-                "height": 96,
-                "width": 96
+        [{
+                "@context": "https://schema.org",
+                "@type": "Article",
+                "@id": "#Article",
+                "url": "{{ url()->current() }}",
+                "inLanguage": "en-US",
+                "mainEntityOfPage": "{{ url()->current() }}",
+                "headline": "{{ $blog->title }}",
+                "description": "{{ $blog->meta_description }}",
+                "articleBody": "{{ strip_tags($blog->description) }}",
+                "keywords": "Article",
+                @if ($blog->updated_at)
+                    "dateModified": "{{ date('d-m-Y', strtotime($blog->updated_at)) }}",
+                @else
+                    "datePublished": "{{ date('d-m-Y', strtotime($blog->created_at)) }}",
+                @endif
+                "author": {
+                    "@type": "Person",
+                    "name": "Admin",
+                    "description": "",
+                    "url": "https://www.saakin.qa/author/admin/",
+                    "image": {
+                        "@type": "ImageObject",
+                        "url": "https://www.saakin.qa/upload/logo.png",
+                        "height": 96,
+                        "width": 96
+                    }
+                },
+                "image": [{
+                    "@type": "ImageObject",
+                    "@id": "{{ asset('upload/blogs/' . $blog->image) }}#primaryimage",
+                    "url": "{{ asset('upload/blogs/' . $blog->image) }}",
+                    "width": "1491",
+                    "height": "240"
+                }]
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "NewsArticle",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "{{ url()->current() }}"
+                },
+                "headline": "{{ $blog->title }}",
+                "image": [
+                    "{{ asset('upload/blogs/' . $blog->image) }}"
+                ],
+                @if ($blog->updated_at)
+                    "dateModified": "{{ date('d-m-Y', strtotime($blog->updated_at)) }}",
+                @else
+                    "datePublished": "{{ date('d-m-Y', strtotime($blog->created_at)) }}",
+                @endif
+                "author": {
+                    "@type": "Person",
+                    "name": "admin",
+                    "description": "",
+                    "url": "https://www.saakin.qa/author/admin/",
+                    "image": {
+                        "@type": "ImageObject",
+                        "url": "https://www.saakin.qa/upload/logo.png",
+                        "height": 96,
+                        "width": 96
+                    }
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "SAAKIN INC.",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "https://www.saakin.qa/upload/logo.png"
+                    }
+                }
+            },
+            {
+                "@context": "https://schema.org",
+                "@type": "BlogPosting",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "{{ url()->current() }}"
+                },
+                "headline": "{{ $blog->title }}",
+                "image": [
+                    "{{ asset('upload/blogs/' . $blog->image) }}"
+                ],
+                @if ($blog->updated_at)
+                    "dateModified": "{{ date('d-m-Y', strtotime($blog->updated_at)) }}",
+                @else
+                    "datePublished": "{{ date('d-m-Y', strtotime($blog->created_at)) }}",
+                @endif
+                "author": {
+                    "@type": "Person",
+                    "name": "admin",
+                    "description": "",
+                    "url": "https://www.saakin.qa/author/admin/",
+                    "image": {
+                        "@type": "ImageObject",
+                        "url": "https://www.saakin.qa/upload/logo.png",
+                        "height": 96,
+                        "width": 96
+                    }
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "SAAKIN INC.",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "",
+                        "caption": "Saakin Inc. logo"
+                    }
+                }
             }
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "SAAKIN INC.",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://www.saakin.qa/upload/logo.png"
-            }
+        ]
         }
-    },
-    {
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        "mainEntityOfPage": {
-            "@type": "WebPage",
-            "@id": "{{ url()->current() }}"
-        },
-        "headline": "{{ $blog->title }}",
-        "image": [
-            "{{ asset('upload/blogs/' . $blog->image) }}"
-        ],
-        @if ($blog->updated_at)
-        "dateModified": "{{ date('d-m-Y', strtotime($blog->updated_at)) }}",
-        @else
-        "datePublished": "{{ date('d-m-Y', strtotime($blog->created_at)) }}",
-        @endif
-        "author": {
-            "@type": "Person",
-            "name": "admin",
-            "description": "",
-            "url": "https://www.saakin.qa/author/admin/",
-            "image": {
-                "@type": "ImageObject",
-                "url": "https://www.saakin.qa/upload/logo.png",
-                "height": 96,
-                "width": 96
-            }
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "SAAKIN INC.",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "",
-                "caption": "Saakin Inc. logo"
-            }
-        }
-    }]
-}
-]
+        ]
     </script>
-    @endsection 
+@endsection
 @section('content')
 
     {{-- Banner Start --}}
@@ -284,7 +283,18 @@
                             @endforeach
                         </div>
                     </div>
-
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                                        crossorigin="anonymous"></script>
+                            <!-- home page listing ads -->
+                            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2421573832685297"
+                                data-ad-slot="6731050378" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -294,7 +304,6 @@
     </div>
 @endsection
 @push('scripts')
-
     <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
     <script>
         $(document).ready(function() {
@@ -378,5 +387,4 @@
 
         });
     </script>
-               
 @endpush
