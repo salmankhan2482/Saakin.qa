@@ -8,14 +8,12 @@
 </head>
 
 <body>
-    @include('cookieConsent::index')
     @include('front.layouts.header')
     
     @yield('content')
     
     @include('front.layouts.chat')
     @include('front.layouts.footer')
-    @include('cookieConsent::index')
 
 </body>
 </html>

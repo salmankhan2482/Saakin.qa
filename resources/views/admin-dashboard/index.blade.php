@@ -425,6 +425,7 @@
                 </div>
             </div>
 
+
             <div class="col-xl-6 col-lg-6">
                 <div class="card">
                     <div class="card-header">
@@ -463,6 +464,7 @@
                                         <circle fill="#000000" cx="19" cy="12" r="2"></circle>
                                     </g>
                                 </svg>
+
                             </div>
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a class="dropdown-item" href="javascript:void(0);">Edit</a>
@@ -496,6 +498,7 @@
                     </div>
                 </div>
             </div>
+
             {{-- <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header">
@@ -520,6 +523,7 @@
                     </div>
                 </div>
             </div> --}}
+
         </div>
     </div>
 @endsection
@@ -734,6 +738,7 @@
             });
 
         })(jQuery);
+
 
 
 

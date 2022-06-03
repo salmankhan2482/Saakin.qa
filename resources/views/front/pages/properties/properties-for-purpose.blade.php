@@ -1139,6 +1139,7 @@
                             <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                         </h1>
                         @if ((new \Jenssegers\Agent\Agent())->isMobile())
+
                             <div class="">
                                 <input type="checkbox" class="btn-check" autocomplete="off">
                                 <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
@@ -1148,6 +1149,7 @@
                                     <span id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
                                 </label>
                             </div>
+
                         @endif
                     </div>
                     {{-- Short design for desktop and tablet --}}
@@ -1248,8 +1250,8 @@
                                 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
                                 $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
+
                             <div class="single-property-box horizontal-view" @if (!(new \Jenssegers\Agent\Agent())->isMobile())  @endif>
-                                {{--  --}}
 
                                 <div class="property-item">
                                     <div class="pro-slider">

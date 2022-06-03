@@ -29,6 +29,8 @@
 <link href="{{ URL::asset('upload/' . getcong('site_favicon')) }}" rel="shortcut icon" type="image/x-icon" />
 <link href="{{ asset('assets/css/fontawesome.css') }}" rel="stylesheet" />
 
+{{-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+     crossorigin="anonymous"></script> --}}
 
 <!-- Google Auto Ads Code -->
 
@@ -72,7 +74,9 @@
     </script>
     <!-- End Twitter universal website tag code -->
 
+
     <!-- Meta Pixel Code -->
+
 <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -93,6 +97,7 @@
       {{-- Google Optimizer Code --}}
     <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5QL22C6"></script>
 
+
 @yield('style')
 
 <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
@@ -100,12 +105,6 @@
 @stack('styles')
 
 <style>
-
-    .yellowStar{
-        color: yellow;
-        -webkit-text-stroke-width: 1px;
-        -webkit-text-stroke-color: orange;
-    }
     .social-div .btn-monochrome {
       --btn-bg-color: #fff;
       --btn-border-color: #e8e1e0;

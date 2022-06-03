@@ -444,7 +444,6 @@ class IndexController extends Controller
         $blogs = Blog::get();
         $blog_categories = BlogCategory::pluck('slug');
         $agencies = Agency::where('status',1)->get();
-        
         $city_guides = CityGuide::get();
 
         $salePropertyTypes =  DB::table('property_types')

@@ -31,11 +31,11 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Area</h4>
+                        <h4 class="card-title">Add Area</h4>
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
-                            {!! Form::open(['route' => ['propertyAreas.update', $area->id], 'method' => 'PATCH', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::open(['route' => 'propertyAreas.store', 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
@@ -43,11 +43,8 @@
                                     <select id="city" name="city" class="form-control" onchange="callSubCityTown(this);">
                                         <option selected>Select City</option>
                                         @foreach ($cities as $city)
-                                            <option value="{{ $city->id }}"
-                                                {{ $area->property_cities_id == $city->id ? 'selected' : '' }}>
-                                                {{ $city->name }}
-                                            </option>
-                                        @endforeach
+                                        <option value="{{ $city->id }}">{{ $city->name }}</option>
+                                    @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -55,11 +52,8 @@
                                     <select id="subCity" name="subCity" class="form-control" onchange="callTown(this);">
                                         <option selected>Select Sub-City</option>
                                         @foreach ($subCities as $subCity)
-                                            <option value="{{ $subCity->id }}"
-                                                {{ $area->property_sub_cities_id == $subCity->id ? 'selected' : '' }}>
-                                                {{ $subCity->name }}
-                                            </option>
-                                        @endforeach
+                                    <option value="{{ $subCity->id }}">{{ $subCity->name }}</option>
+                                 @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -69,53 +63,51 @@
                                     <select id="town" name="town" class="form-control">
                                         <option selected>Select Town</option>
                                         @foreach ($towns as $town)
-                                            <option value="{{ $town->id }}"
-                                                {{ $area->property_towns_id == $town->id ? 'selected' : '' }}>
-                                                {{ $town->name }}
-                                            </option>
-                                        @endforeach
+                                        <option value="{{ $town->id }}">{{ $town->name }}</option>
+                                    @endforeach
                                     </select>
                                 </div>
+
                                 <div class="form-group col-md-6">
                                     <label>Name</label>
                                     <input type="text" id="name" name="name" class="form-control"
-                                        placeholder="Enter a Location" value="{{ $town->name }}">
+                                        placeholder="Enter a Location">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Latitude</label>
                                     <input type="text" id="latitude" name="latitude" class="form-control"
-                                        placeholder="25.2773946" value="{{ $town->latitude }}">
+                                        placeholder="25.2773946">
                                 </div>
 
                                 <div class="form-group col-md-6">
                                     <label>Longitude</label>
                                     <input type="text" id="longitude" name="longitude" class="form-control"
-                                        placeholder="51.4985448" value="{{ $town->longitude }}">
+                                        placeholder="51.4985448">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
                                 </div>
                             </div>
-
-                            {!! Form::close() !!}
+                                {!! Form::close() !!}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-@section('scripts-custom')
+    @endsection
+    @section('scripts-custom')
     <script>
+        
         function initialize() {
             var input = document.getElementById('name');
             var autocomplete = new google.maps.places.Autocomplete(input);
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            google.maps.event.addListener(autocomplete, 'place_changed', function () {
                 var place = autocomplete.getPlace();
                 document.getElementById('longitude').value = place.geometry.location.lat();
                 document.getElementById('latitude').value = place.geometry.location.lng();
@@ -123,11 +115,10 @@
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
-        google.maps.event.addDomListener(window, 'load', initializex);
 
         function callSubCityTown(data) {
             var id = data.value;
-
+            
             $.ajax({
                 type: "GET",
                 url: "{{ route('callSubCityTown') }}",
@@ -135,28 +126,34 @@
                 data: {
                     id: id // as you are getting in request('id') 
                 },
-                success: function(response) {
+                success: function (response) {
                     var subcities = response['subcities'];
                     var towns = response['towns'];
 
-                    console.log(response);
+                    if(subcities == ''){
+                        $("#subCity").empty();     
+                        $("#subCity").append('<option value="">No Result Found</option>');
+                    }else{
+                        $("#subCity").empty();     
+                        $.each(subcities, function(key,value){
+                        $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
+                        });
+                    }    
 
-                    $("#subCity").empty();
-                    //we are making the state select empty coz we are appending new data if we dont empty it, then there will be old data and then new data 
 
-                    $.each(subcities, function(key, value) {
-                        $("#subCity").append('<option value="' + value.id + '">' + value.name +
-                            '</option>');
-                    });
-
-                    $("#town").empty();
-                    //we are making the state select empty coz we are appending new data if we dont empty it, then there will be old data and then new data 
-
-                    $.each(towns, function(key, value) {
-                        $("#town").append('<option value="' + value.id + '">' + value.name +
-                            '</option>');
-                    });
-
+                    if(towns === 'No Records Found'){
+                        $("#town").empty();     
+                        $("#town").append('<option value="">No Result Found</option>');
+                    }else if(towns == ''){
+                        $("#town").empty();     
+                        $("#town").append('<option value="">No Result Found</option>');
+                    }
+                    else{
+                        $("#town").empty();     
+                        $.each(towns, function(key,value){
+                        $("#town").append('<option value="'+value.id+'">'+value.name+'</option>');
+                        });
+                    }
                 }
             });
 
@@ -165,7 +162,7 @@
 
         function callTown(data) {
             var id = data.value;
-
+            
             $.ajax({
                 type: "GET",
                 url: "{{ route('callTown') }}",
@@ -173,16 +170,18 @@
                 data: {
                     id: id // as you are getting in request('id') 
                 },
-                success: function(response) {
+                success: function (response) {
                     var towns = response['towns'];
-                    console.log(towns);
-                    $("#town").empty();
-                    //we are making the state select empty coz we are appending new data if we dont empty it, then there will be old data and then new data 
-
-                    $.each(towns, function(key, value) {
-                        $("#town").append('<option value="' + value.id + '">' + value.name +
-                            '</option>');
-                    });
+                    if(towns == ''){
+                        $("#town").empty();     
+                        $("#town").append('<option value="">No Result Found</option>');
+                    }
+                    else{
+                        $("#town").empty();     
+                        $.each(towns, function(key,value){
+                        $("#town").append('<option value="'+value.id+'">'+value.name+'</option>');
+                        });
+                    }
 
                 }
             });

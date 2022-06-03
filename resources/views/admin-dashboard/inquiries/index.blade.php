@@ -7,14 +7,12 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">All Inquiries</h4>
-                    <a href="{{ route('create_inquiry') }}">
+                    <h4 class="card-title">Areas</h4>
+                    <a href="{{ route('propertyAreas.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
-                            </span>
-                            Add
-                        </button>
+                            </span>Add</button>
                     </a>
                 </div>
                 <div class="card-body">
@@ -27,19 +25,22 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Agency</th>
-                                    <th>Action</th>
+                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($inquirieslist as $i => $inquiries)
-                                    <tr>
-                                        <td>{{ $inquiries->id }}</td>
-                                        <td>{{ $inquiries->type }}</td>
-                                        <td>{{ $inquiries->name }}</td>
-                                        <td>{{ $inquiries->email }}</td>
-                                        <td>{{ $inquiries->Agencies->name ?? '' }} </td>
-                                        <td>
-                                            <a href="{{ url('admin/inquiries/delete/' . Crypt::encryptString($inquiries->id)) }}" class="btn btn-danger rounded btn-xs action-btn" onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                @foreach($inquirieslist as $i => $inquiries)
+                                <tr>
+                                
+                                <td>{{ $inquiries->id }}</td>
+                                <td>{{ $inquiries->type }}</td>
+                                <td>{{ $inquiries->name }}</td>
+                                <td>{{ $inquiries->email }}</td>
+                                <td>{{ $inquiries->Agencies->name ??''}} </td>
+                                        <td class="text-center">
+                                            <a href="{{ url('admin/inquiries/delete/'.Crypt::encryptString($inquiries->id)) }}"     
+                                                class="btn btn-danger rounded btn-xs action-btn"
+                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>

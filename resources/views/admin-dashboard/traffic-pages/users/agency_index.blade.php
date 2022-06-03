@@ -1,6 +1,7 @@
     {{-- Extends layout --}}
     @extends('admin-dashboard.layouts.master')
 
+
     {{-- Content --}}
     @section('content')
         <div class="container-fluid">
@@ -43,6 +44,7 @@
                                 </div>
                             </form>
                         </div>
+
                     </div>
                 </div>
             </div>
