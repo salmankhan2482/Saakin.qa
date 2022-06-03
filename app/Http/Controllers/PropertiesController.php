@@ -47,7 +47,6 @@ class PropertiesController extends Controller
 
     public function getPropertyListing(Request $request)
     {   
-        // dd($request);
         if( request()->property_type ){
             $request['type'] = Types::findOrFail(request()->property_type);
             
@@ -70,8 +69,7 @@ class PropertiesController extends Controller
 
         if(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && request('area')){
             $data['result'] = DB::table('properties')->where('id', -1);
-            
-            
+
         }elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town')){
             
             $data['subcity'] = PropertySubCities::find(request('subcity'));
@@ -326,12 +324,9 @@ class PropertiesController extends Controller
         
         $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
-        $heading_info = $furnishing.' '.
-        (ucfirst($request['type']->plural ?? ' Properties'))
-        .' for '.
-        (request()->property_purpose ? request()->property_purpose : 'rent and sale ') 
-        .' in '. 
-        ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
+        $heading_info = $furnishing.' '.(ucfirst($request['type']->plural ?? ' Properties'))
+        .' for '. (request()->property_purpose ? request()->property_purpose : 'rent and sale ') 
+        .' in '. ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
         
 
         if(count($properties) > 0){
