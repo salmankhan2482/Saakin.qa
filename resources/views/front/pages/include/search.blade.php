@@ -120,7 +120,7 @@
                             <span class="separator">-</span>
                           </div>
                           <div class="flex-grow-1">
-                            <select name="max_price" onchange="setMax(this);" class="hero__form-input form-control custom-select">
+                            <select name="max_price" onchange="setMax(this);" class="maxPriceSelect hero__form-input form-control custom-select">
                               <option value="">Max Price</option>
                               <option value="5000">QAR 5000</option>
                               <option value="10000">QAR 10000</option>
@@ -136,9 +136,11 @@
                               <option value="100000">QAR 100000</option>
                               <option value="125000">QAR 125000</option>
                               <option value="150000">QAR 150000</option>
+                              <option value="Other">Other</option>
                             </select>
                           </div>
                         </div>
+                           <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
                       </div>
                     </div>
                   </div>
@@ -279,7 +281,6 @@
 
   <script>
     $(document).ready(function() {
-
       $('.js-dropdown .dropdown-menu').click(function(e) {
         e.stopPropagation();
       });
@@ -362,7 +363,11 @@
 
     function setMax(selectObject) {
       maxPrice = selectObject.value;
-      $('.minMaxDiv').text(minPrice + '-' + maxPrice + ' QAR');
+      if(maxPrice !== 'Other'){
+         $('.minMaxDiv').text(minPrice + '-' + maxPrice + ' QAR');
+      }else{
+         $('.minMaxDiv').text(minPrice + ' QAR');
+      }
     }
 
     function minAreaFunction(min) {
@@ -376,6 +381,11 @@
     }
 
     $(document).ready(function() {
+      $(".input_label").keydown(function(){
+         let maxPriceValue = $(".input_label").val();
+         $('.minMaxDiv').text(minPrice + '-' + maxPriceValue + ' QAR');
+      });
+
       $(".choose-type-btns a").click(function() {
         $(".choose-type-btns a").removeClass("active"),
           $(this).addClass("active");

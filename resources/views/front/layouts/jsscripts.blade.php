@@ -135,12 +135,14 @@
         draggable: true,
         icon: image
       });
+
       if (jQuery('#p-address').length > 0) {
         var input = document.getElementById('p-address');
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.setComponentRestrictions({
           'country': ['qa']
         });
+
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
           var place = autocomplete.getPlace();
           jQuery('#p-lat').val(place.geometry.location.lat());
@@ -150,6 +152,7 @@
           map.setZoom(15);
         });
       }
+
       google.maps.event.addListener(marker, 'dragend', function(event) {
         jQuery('#p-lat').val(event.latLng.lat());
         jQuery('#p-long').val(event.latLng.lng());
@@ -306,6 +309,20 @@
   });
 
   $(document).ready(function() {
+
+   // for max price other option
+   if($('.maxPriceSelect option:selected').text() == "Other"){
+      $('.input_label').show();
+   }
+   $('.maxPriceSelect').change(function(){
+      if($('.maxPriceSelect option:selected').text() == "Other"){
+      $('.input_label').show();
+      }
+      else{
+      $('.input_label').hide();
+      }
+   });
+
     var purposeValue = $("#property_purpose").val();
     $('#globalPropertyPurposeValue').val(purposeValue);
   });
