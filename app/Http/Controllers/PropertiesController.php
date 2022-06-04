@@ -46,10 +46,9 @@ class PropertiesController extends Controller
     }
 
     public function getPropertyListing(Request $request)
-    {   
+    {          
         if( request()->property_type ){
             $request['type'] = Types::findOrFail(request()->property_type);
-            
         }
         
         $propertyTypes =  DB::table('property_types')
@@ -134,7 +133,10 @@ class PropertiesController extends Controller
             ->where("status", 1);
 
         }
-       
+
+      $max_price = request()->input('max_price') == 'Other' ? request()->input('input_max_price') : request()->input('max_price');
+      request()->merge(['max_price' => $max_price]);
+      
         $data['result'] = $data['result']->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
             $query->whereBetween('properties.price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
         })
