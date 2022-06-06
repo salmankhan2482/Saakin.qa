@@ -37,6 +37,13 @@
                 <div class="card agency-tile flex-grow-1">
                   <a class="blog-thumb stretched-link" href="{{ url('blog/' . $blog->slug) }}">
                     <img class="img-fluid" src="{{ asset('upload/blogs/thumbnail/' . $blog->image) }}" alt="{{ $blog->title }}">
+                    <div class="position-relative">
+                      <div class="gallery_btn position-absolute bottom-0 start-0 p-2 d-md-block" style="z-index: 1;">
+                        <a data-fancybox-index="0" class="btn btn-sm btn-dark">
+                          <i class="fa fa-eye">  {{ $blog->count ??''}}</i>
+                        </a>
+                      </div>
+                    </div>
                   </a>
                   <div class="card-body">
                     <h5 class="card-title text-truncate">
@@ -76,6 +83,18 @@
               </form>
             </div>
           </div>
+          <div class="card mt-3">
+            <div class="card-body">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                            crossorigin="anonymous"></script>
+                <!-- home page listing ads -->
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2421573832685297"
+                    data-ad-slot="6731050378" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
           <div class="card mt-3">
             <div class="card-body">
               <h4 class="card-title">Categories </h4>

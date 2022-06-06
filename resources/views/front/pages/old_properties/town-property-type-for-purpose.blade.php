@@ -1,7 +1,7 @@
 @extends("front.layouts.main")
 @if ($page_info != null)
     @section('title', $page_info . ' | ' . ' Saakin.qa')
-    @section('description', $meta_description ?? $page_info . ' Your partner to find you the best property in qatar')
+    @section('description', $meta_description ?? $page_info . ' the best real estate directory in Qatar')
     @section('keyword', $page_info)
     @section('type', 'property')
     @section('url', url()->current())
@@ -13,7 +13,6 @@
 @endif
 
 @section('content')
-
 
     <div class="filter-wrap">
         <div class="container">
@@ -964,7 +963,7 @@
                         </form>
 
                         <form
-                            action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->types) .'s-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug .'-' .$area_keyword->slug]) }}"
+                            action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) .'-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug]) }}"
                             method="get">
 
                             <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal"
@@ -1048,7 +1047,7 @@
                         <div>
 
                             <form
-                                action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->types) .'s-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug .'-' .$area_keyword->slug]) }}"
+                                action="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) .'-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug]) }}"
                                 name="frmSortBy" id="frmSortBy" class="form-inline form-1" method="get">
 
                                 <div class="d-flex align-items-center justify-content-between">
@@ -1070,7 +1069,6 @@
                                                 <select name="sort_by" id="sort_by"
                                                     class="form-select form-select-sm custom-select"
                                                     onchange="document.getElementById('frmSortBy').submit();">
-
                                                     <option value="newest"
                                                         @if (request()->sort_by == 'newest') selected @endif>
                                                         Newest
@@ -1079,6 +1077,7 @@
                                                         @if (request()->sort_by == 'featured') selected @endif>
                                                         Featured
                                                     </option>
+
                                                     <option value="low_price"
                                                         @if (request()->sort_by == 'low_price') selected @endif>
                                                         Price (Low)
@@ -1105,6 +1104,24 @@
                     @endif
                 </div>
 
+                <div class="location-wrap">
+                    @foreach ($areas as $item)
+                        <div class="location-item {{ $loop->index > 7 ? 'moreLess' : '' }}">
+
+                            <a
+                                href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) .'-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug .'-' .$item->slug]) }}">
+                                {{ Str::limit($item->name, 25) }} <span> ({{ $item->pcount }}) </span>
+                            </a>
+
+                        </div>
+                    @endforeach
+                    <div class="location-item">
+                        <a href="javascript:void(0)" onclick="showLessOrMore()" id="myBtn">
+                            Show more <i class="fas fa-chevron-down"></i>
+                        </a>
+                    </div>
+                </div>
+
                 {{-- list view --}}
                 <div class="row gx-3">
                     <div class="col-lg-9">
@@ -1122,26 +1139,16 @@
                                 <div class="property-item">
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
-                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @else
-                                                <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @endif
+                                            <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                alt="{{ $property->property_name }}">
                                         </div>
 
                                         @if (count($property->gallery) > 0)
                                             @foreach ($property->gallery as $gallery)
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
-                                                        @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @else
-                                                            <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @endif
+                                                        <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                            alt="{{ $property->property_name }}">
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1152,7 +1159,6 @@
                                         @if ($property->featured_property == 1)
                                             <li class="feature_cb"><span> Featured </span></li>
                                         @endif
-
                                         @if ($property->property_purpose == 1)
                                             <li class="feature_or"><span> For Rent </span></li>
                                         @elseif($property->property_purpose == 2)
@@ -1328,7 +1334,7 @@
                             <div class="sidebar-links p-3">
                                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
                                                                 crossorigin="anonymous"></script>
-                                <!-- Area Property Type for purpose page listing ads -->
+                                <!-- Town Property Type for purpose page listing ads -->
                                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2421573832685297"
                                     data-ad-slot="6731050378" data-ad-format="auto" data-full-width-responsive="true"></ins>
                                 <script>
@@ -1355,7 +1361,7 @@
                                         @foreach ($data['nearbyAreasLinks'] as $item)
                                             <li>
                                                 <a
-                                                    href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) .'-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug .'-' .Str::slug($item->name)]) }}">
+                                                    href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) .'-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .Str::slug($item->name)]) }}">
                                                     {{ $type->plural_name }} for {{ $property_purpose }} in
                                                     {{ $item->name }}
                                                 </a>
@@ -1386,9 +1392,7 @@
                 </div>
             @else
                 <div class="mb-3">
-                    <h1 class="h6">
-                        {{ $type->plural_name }} for {{ ucfirst($property_purpose) }} in
-                        {{ $city_keyword->name }}
+                    <h1 class="h6">{{ $page_info ?? '' }}
                         <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                     </h1>
                 </div>
@@ -1400,7 +1404,6 @@
 
         </div>
     </div>
-
     @include('front.pages.include.saveSearchModal')
 @endsection
 

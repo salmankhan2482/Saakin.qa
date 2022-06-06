@@ -47,10 +47,8 @@ class PropertiesController extends Controller
 
     public function getPropertyListing(Request $request)
     {   
-        // dd($request);
         if( request()->property_type ){
             $request['type'] = Types::findOrFail(request()->property_type);
-            
         }
         
         $propertyTypes =  DB::table('property_types')
@@ -66,14 +64,12 @@ class PropertiesController extends Controller
         
         // breadcrumbs
         $data['result'] = DB::table('properties')->where('id', -1);
-        // dd($data['result']);
 
         if(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && request('area')){
             $data['result'] = DB::table('properties')->where('id', -1);
             
-            
         }elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town')){
-            
+
             $data['subcity'] = PropertySubCities::find(request('subcity'));
             $data['town'] = PropertyTowns::find(request('town'));
             
@@ -93,7 +89,7 @@ class PropertiesController extends Controller
             ->where("status", 1);
             
         }elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity')){
-         
+            
             $data['subcity'] = PropertySubCities::find(request('subcity'));
             $property_type_purpose = Str::slug($request['type']->plural.'-for-'.request('property_purpose').'-'.$data['subcity']->name);
             
@@ -110,7 +106,7 @@ class PropertiesController extends Controller
             ->where("status", 1);
 
         }elseif(request('property_purpose') && request('property_type') && request('city')){
-           
+
             $data['result'] = DB::table('property_sub_cities')
             ->leftJoin('properties', 'property_sub_cities.id', 'properties.subcity')
             ->select('property_sub_cities.*', DB::Raw(' COUNT(properties.id) as pcount '))
@@ -136,7 +132,7 @@ class PropertiesController extends Controller
             ->where("status", 1);
 
         }
-       
+
         $data['result'] = $data['result']->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
             $query->whereBetween('properties.price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
         })
@@ -177,7 +173,6 @@ class PropertiesController extends Controller
         ->when(request('furnishings'), function ($query) {
             $query->where('properties.property_features', 'like', '%'.request()->get('furnishings').'%');
         })->get();
-        
         
         //==================================================================
         $propertyPurposes = PropertyPurpose::all();
@@ -327,7 +322,7 @@ class PropertiesController extends Controller
         $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
         $heading_info = $furnishing.' '.
-        (ucfirst($request['type']->plural ?? ' Properties'))
+        (ucfirst($request['type']->plural_name ?? ' Properties'))
         .' for '.
         (request()->property_purpose ? request()->property_purpose : 'rent and sale ') 
         .' in '. 
@@ -518,7 +513,7 @@ class PropertiesController extends Controller
 
     public function property_details_sendemail(Request $request)
     {
-        // dd($request->property_data->agency_id);
+        
     	$data =  \Request::except(array('_token')) ;
         $agency_id = $request->agency_id;
         $agency_name = $request->agency_name;
@@ -527,9 +522,7 @@ class PropertiesController extends Controller
         $property_des = $request->property_data;
         $property_data = Properties::where('id',$property_des)->first();
 	    $rule=array(
-		        
-		        'property_data' => 'nullable|required',
-
+                'property_data' => 'nullable|required',
 		        'user_name' => 'required',
 				'user_email' => 'required|email',
 		        'user_message' => 'required',
@@ -546,11 +539,14 @@ class PropertiesController extends Controller
         $enquire = new Enquire();
         if(!empty($property_data->id)){
             $enquire->property_id = $property_data->id;
-            
+        }else{
+            $enquire->property_id = 0;
         }
 
         if(!empty($property_data->agency_id)){
             $enquire->agency_id = $property_data->agency_id;
+        }else{
+            $enquire->agency_id = 0;
         }
 
         if(!empty($property_data->agent_id)){

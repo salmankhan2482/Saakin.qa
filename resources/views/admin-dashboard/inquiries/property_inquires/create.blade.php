@@ -78,12 +78,24 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label>Agencies</label>
-                                        <select id="agency_name" name="agency_name" class="form-control">
-                                            <option value="">Select Agency</option>
-                                            @foreach ($agencies as $agency)
-                                                <option value="{{ $agency->id }}">{{ $agency->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <div class="input-group-overlay input-search country-list-wrap">
+                                            <div class="input-group-prepend-overlay">
+                                              <span class="input-group-text" id="keyword"><i class="fa fa-search"></i></span>
+                                            </div>
+                                            <input class="form-control prepended-form-control typeahead" type="text" name="keyword" id="keyword" autocomplete="off" placeholder="Enter Agent or Company Name...">
+                                            <div class="resulted-search country-list scroll-y"></div>
+                                          </div>
+                                          
+
+                                              {{-- <div id="extra_keywords" style="display: none;">
+                                              <input type="hidden" id="agency_name" name="agency_name" value="{{ $data['keyword'] ??'' }}">
+                                              </div> --}}
+                                              {{-- <select id="agency_name" name="agency_name" class="form-control">
+                                               <option value="">Select Agency</option>
+                                              @foreach ($agencies as $agency)
+                                                  <option value="{{ $agency->id }}">{{ $agency->name }}</option>
+                                              @endforeach
+                                              </select> --}}
                                     </div>
                                 </div>
                             </div>
@@ -162,3 +174,34 @@
 
     }
 </script>
+<script type="text/javascript">
+
+    function FormSubmit(coming) {
+        document.getElementById('sortForm').submit();
+    }
+
+    $(".typeahead").on('keyup', function(){
+        $(".resulted-search").html('');
+        var value = $(this).val();
+        
+        var path = "{{ url('autocomplete/agencies') }}";
+        
+        $.ajax({
+            url: path,
+            type: "GET",
+            data: {
+                'keyword': value,
+            },
+            success: function(data) {
+                $('.resulted-search').html(data);
+            }
+        }) //ajax call ends
+    })
+    
+    $(document).on('click', '.select-agency', function() {
+        var value = $(this).text();
+        $('.desktop-search-li').css('display', 'none');
+        $('.typeahead').val(value);
+    });
+
+    </script>

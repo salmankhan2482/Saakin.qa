@@ -1308,16 +1308,26 @@
                                 <div class="property-item">
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
-                                            <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                alt="{{ $property->property_name }}">
+                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                                <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
+                                                    alt="{{ $property->property_name }}">
+                                            @else
+                                                <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                    alt="{{ $property->property_name }}">
+                                            @endif
                                         </div>
 
                                         @if (count($property->gallery) > 0)
                                             @foreach ($property->gallery as $gallery)
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
-                                                        <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                            alt="{{ $property->property_name }}">
+                                                        @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
+                                                                alt="{{ $property->property_name }}">
+                                                        @else
+                                                            <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                                alt="{{ $property->property_name }}">
+                                                        @endif
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1328,6 +1338,7 @@
                                         @if ($property->featured_property == 1)
                                             <li class="feature_cb"><span> Featured </span></li>
                                         @endif
+
                                         @if ($property->property_purpose == 1)
                                             <li class="feature_or"><span> For Rent </span></li>
                                         @elseif($property->property_purpose == 2)

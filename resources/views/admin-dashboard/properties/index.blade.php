@@ -144,14 +144,7 @@
                                                 <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
                                                     <i class="fa fa-edit"></i> {{ trans('words.edit') }}
                                                 </a>
-
-                                                {{-- <a href="{{ url('admin/properties/gallery/' . $property->id) }}" class="dropdown-item">
-                                                    <i class="fa fa-edit"></i> Gallery Images
-                                                </a> --}}
-
-                                                    <a href="{{ route('properties.edit' , $property->id) }}" class="dropdown-item">
-                                                        <i class="fa fa-edit"></i> {{ trans('words.edit') }}
-                                                    </a>
+     
 
                                                     <a href="{{ url('admin/properties/gallery/' . $property->id) }}" class="dropdown-item">
                                                         <i class="fa fa-edit"></i> Gallery Images
