@@ -147,7 +147,7 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <select name="max_price"
-                                                    class="hero__form-input form-control custom-select">
+                                                    class="maxPriceSelect hero__form-input form-control custom-select">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max Price
                                                     </option>
@@ -223,9 +223,11 @@
                                                         value="1000000">
                                                         QAR 1,00,0000
                                                     </option>
+                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
+                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -695,7 +697,7 @@
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <select name="max_price" class="form-control">
+                                                <select name="max_price" class="maxPriceSelect form-control">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max Price
                                                     </option>
@@ -771,9 +773,11 @@
                                                         value="1000000">
                                                         QAR 1,00,0000
                                                     </option>
+                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
+                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
                                     </div>
 
                                     <div class="mb-3 border-bottom">
@@ -1648,7 +1652,6 @@
         var myFunction = function() {
             var attribute = this.getAttribute("data-telNumber");
             this.innerText = attribute;
-            // this.href = "tel:"+attribute;
             if (click == 0) {
                 this.href = "javaScript:void();";
                 click++;

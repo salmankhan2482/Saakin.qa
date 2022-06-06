@@ -133,7 +133,7 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <select name="max_price"
-                                                    class="hero__form-input form-control custom-select">
+                                                    class="maxPriceSelect hero__form-input form-control custom-select">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max
                                                         Price</option>
@@ -192,9 +192,12 @@
                                                         value="1000000">QAR
                                                         1,00,0000
                                                     </option>
+                                                    <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
+                                          <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}"
+                                          class="input_label form-control prepended-form-control mt-1" style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -620,7 +623,7 @@
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <select name="max_price" class="form-control">
+                                                <select name="max_price" class="maxPriceSelect form-control">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max Price</option>
                                                     <option {{ $request->max_price == '5000' ? 'selected' : '' }}
@@ -659,9 +662,11 @@
                                                         value="850000">QAR 8,50,000</option>
                                                     <option {{ $request->max_price == '1000000' ? 'selected' : '' }}
                                                         value="1000000">QAR 1,00,0000</option>
+                                                    <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
+                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
                                     </div>
 
                                     <div class="mb-3 border-bottom">
@@ -974,6 +979,7 @@
                                 <input type="hidden" name="property_type" value="{{ request('property_type') }}">
                                 <input type="hidden" name="min_price" value="{{ request('min_price') }}">
                                 <input type="hidden" name="max_price" value="{{ request('max_price') }}">
+                                <input type="hidden" name="input_max_price" value="{{ request('input_max_price') }}">
                                 <input type="hidden" name="min_area" value="{{ request('min_area') }}">
                                 <input type="hidden" name="max_area" value="{{ request('max_area') }}">
                                 <input type="hidden" name="bedrooms" value="{{ request('bedrooms') }}">
@@ -1071,6 +1077,7 @@
                                 <input type="hidden" name="bathrooms" value="{{ request()->bathrooms }}" />
                                 <input type="hidden" name="min_price" value="{{ request()->min_price }}" />
                                 <input type="hidden" name="max_price" value="{{ request()->max_price }}" />
+                                <input type="hidden" name="input_max_price" value="{{ request()->input_max_price }}" />
                                 <input type="hidden" name="min_area" value="{{ request()->min_area }}" />
                                 <input type="hidden" name="max_area" value="{{ request()->max_area }}" />
                                 <input type="hidden" name="furnishings" value="{{ request()->furnishings }}" />
@@ -1142,7 +1149,7 @@
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
 
                                 <a
-                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$area->id&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$area->id&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&input_max_price=$request->input_max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
 
                                     {{ $area->name }}
                                     <span>({{ $area->pcount }})</span>
@@ -1173,7 +1180,7 @@
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
 
                                 <a
-                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$town->id&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$town->id&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&input_max_price=$request->input_max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
 
                                     {{ $town->name }}
                                     <span>({{ $town->pcount }})</span>
@@ -1204,7 +1211,7 @@
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
 
                                 <a
-                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$subcity->id&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+                                    href="{{ url("properties?featured=$request->featured&city=$request->city&subcity=$subcity->id&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&input_max_price=$request->input_max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
 
                                     {{ $subcity->name }}
                                     <span>({{ $subcity->pcount }})</span>
@@ -1235,7 +1242,7 @@
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
 
                                 <a
-                                    href="{{ url("properties?featured=&city=$city->id&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+                                    href="{{ url("properties?featured=&city=$city->id&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=$request->min_price&max_price=$request->max_price&input_max_price=$request->input_max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
 
                                     {{ $city->name }}
                                     <span>({{ $city->pcount }})</span>
@@ -1266,7 +1273,7 @@
                         
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
                                 <a
-                                    href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
+                                    href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&input_max_price=$request->input_max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
                                     {{-- Capital Breadcrumbs --}}
                                     <?php
                                          $p_types = str_replace("-"," ",$propertyType->plural);
@@ -1506,7 +1513,7 @@
                         {{-- Pagination starts --}}
                         <div>
                             @if ($properties->total() > getcong('pagination_limit'))
-                                {{ $properties->links('front.pages.include.pagination') }}
+                                {{ $properties->withQueryString()->links('front.pages.include.pagination') }}
                             @endif
                         </div>
                         {{-- Pagination ends --}}
@@ -1609,7 +1616,7 @@
                     },
 
                 });
-            })
+            });
         });
 
 
@@ -1709,5 +1716,6 @@
                 }
             }
         }
+
     </script>
 @endpush

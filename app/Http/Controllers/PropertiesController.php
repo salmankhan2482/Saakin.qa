@@ -46,7 +46,8 @@ class PropertiesController extends Controller
     }
 
     public function getPropertyListing(Request $request)
-    {   
+
+    {          
         if( request()->property_type ){
             $request['type'] = Types::findOrFail(request()->property_type);
         }
@@ -67,7 +68,7 @@ class PropertiesController extends Controller
 
         if(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town') && request('area')){
             $data['result'] = DB::table('properties')->where('id', -1);
-            
+
         }elseif(request('property_purpose') && request('property_type') && request('city') && request('subcity') && request('town')){
 
             $data['subcity'] = PropertySubCities::find(request('subcity'));
@@ -132,6 +133,11 @@ class PropertiesController extends Controller
             ->where("status", 1);
 
         }
+
+
+      $max_price = request()->input('max_price') == 'Other' ? request()->input('input_max_price') : request()->input('max_price');
+      request()->merge(['max_price' => $max_price]);
+      
 
         $data['result'] = $data['result']->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
             $query->whereBetween('properties.price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
@@ -321,13 +327,13 @@ class PropertiesController extends Controller
         
         $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
+
         $heading_info = $furnishing.' '.
         (ucfirst($request['type']->plural_name ?? ' Properties'))
         .' for '.
         (request()->property_purpose ? request()->property_purpose : 'rent and sale ') 
         .' in '. 
         ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
-        
 
         if(count($properties) > 0){
             if (request('property_purpose') != '') {
