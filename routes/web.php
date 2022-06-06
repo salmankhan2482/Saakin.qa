@@ -127,6 +127,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::post('inquiry/create', 'InquiriesController@store_property_inquiry')->name('store_proprty_inquiry');
     Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
     Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
+
+    Route::get('autocompletesearch/create_inquiry', 'InquiriesController@search_agency_name');
 	
 	Route::get('leads/agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
 	Route::get('leads/contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');

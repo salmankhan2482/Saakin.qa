@@ -498,21 +498,6 @@
                     </div>
                 </div>
             </div>
-
-            {{-- <div class="col-xl-6 col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">
-                            <span style="color: rgb(59, 76, 184)">New Users</span>
-                            <span style="color: #37D159">Calls </span>,
-                            <span style="color: #ff9900">WhatsApp </span>
-                        </h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="multi-line-chart-2" class="ct-chart ct-golden-section chartlist-chart"></div>
-                    </div>
-                </div>
-            </div> --}}
             {{-- <div class="col-xl-6 col-lg-6">
                 <div class="card">
                     <div class="card-header">

@@ -44,13 +44,13 @@
                         <div class="d-flex spbwx8 order-3 order-xl-2 mt-2 mt-xl-0 me-xl-2">
                             <div class="">
                                 <select name="property_purpose" id="property_purpose"
-                                    class="hero__form-input form-select custom-select @isset($property_purpose) active-search @endisset"
+                                    class="hero__form-input form-select custom-select @isset($request->property_purpose) active-search @endisset"
                                     onchange="setPropertyPurpose(value)">
 
                                     <option value="" selected>Property Purpose</option>
                                     @foreach ($propertyPurposes as $propertyPurpose)
                                         <option value="{{ $propertyPurpose->name }}"
-                                            @if (ucfirst($property_purpose) == $propertyPurpose->name) selected @endif>
+                                            @if (ucfirst($request->property_purpose) == $propertyPurpose->name) selected @endif>
                                             {{ $propertyPurpose->name }}
                                         </option>
                                     @endforeach
@@ -59,12 +59,12 @@
 
                             <div class="">
                                 <select name="property_type" id="property_type" onchange="setPropertyType(this)"
-                                    class="hero__form-input form-select custom-select @isset($type->id) active-search @endisset">
+                                    class="hero__form-input form-select custom-select @isset($request->property_type) active-search @endisset">
                                     <option value="" selected>All Type</option>
                                     @foreach ($propertyTypes as $propertyType)
                                         <option value="{{ $propertyType->id }}"
-                                            @if ($type->id == $propertyType->id) selected @endif>
-                                            {{ $propertyType->types }}
+                                            @if ($request->property_type == $propertyType->id) selected @endif>
+                                            {{ $propertyType->types }} ({{ $propertyType->pcount }})
                                         </option>
                                     @endforeach
                                 </select>
@@ -86,46 +86,60 @@
                                                         Price</option>
                                                     <option {{ $request->min_price == '5000' ? 'selected' : '' }}
                                                         value="5000">
-                                                        QAR 5,000</option>
+                                                        QAR 5,000
+                                                    </option>
                                                     <option {{ $request->min_price == '10000' ? 'selected' : '' }}
-                                                        value="10000">QAR
-                                                        10,000</option>
+                                                        value="10000">
+                                                        QAR 10,000
+                                                    </option>
                                                     <option {{ $request->min_price == '15000' ? 'selected' : '' }}
-                                                        value="10000">QAR
-                                                        15,000</option>
+                                                        value="10000">
+                                                        QAR 15,000
+                                                    </option>
                                                     <option {{ $request->min_price == '20000' ? 'selected' : '' }}
-                                                        value="20000">QAR
-                                                        20,000</option>
+                                                        value="20000">
+                                                        QAR 20,000
+                                                    </option>
                                                     <option {{ $request->min_price == '25000' ? 'selected' : '' }}
-                                                        value="25000">QAR
-                                                        25,000</option>
+                                                        value="25000">
+                                                        QAR 25,000
+                                                    </option>
                                                     <option {{ $request->min_price == '30000' ? 'selected' : '' }}
-                                                        value="30000">QAR
-                                                        30,000</option>
+                                                        value="30000">
+                                                        QAR 30,000
+                                                    </option>
                                                     <option {{ $request->min_price == '40000' ? 'selected' : '' }}
-                                                        value="40000">QAR
-                                                        40,000</option>
+                                                        value="40000">
+                                                        QAR 40,000
+                                                    </option>
                                                     <option {{ $request->min_price == '50000' ? 'selected' : '' }}
-                                                        value="50000">QAR
-                                                        50,000</option>
+                                                        value="50000">
+                                                        QAR 50,000
+                                                    </option>
                                                     <option {{ $request->min_price == '60000' ? 'selected' : '' }}
-                                                        value="60000">QAR
-                                                        60,000</option>
+                                                        value="60000">
+                                                        QAR 60,000
+                                                    </option>
                                                     <option {{ $request->min_price == '70000' ? 'selected' : '' }}
-                                                        value="70000">QAR
-                                                        70,000</option>
+                                                        value="70000">
+                                                        QAR 70,000
+                                                    </option>
                                                     <option {{ $request->min_price == '90000' ? 'selected' : '' }}
-                                                        value="90000">QAR
-                                                        90,000</option>
+                                                        value="90000">
+                                                        QAR 90,000
+                                                    </option>
                                                     <option {{ $request->min_price == '100000' ? 'selected' : '' }}
-                                                        value="100000">QAR
-                                                        100,000</option>
+                                                        value="100000">
+                                                        QAR 100,000
+                                                    </option>
                                                     <option {{ $request->min_price == '125000' ? 'selected' : '' }}
-                                                        value="125000">QAR
-                                                        1,25,000</option>
+                                                        value="125000">
+                                                        QAR 1,25,000
+                                                    </option>
                                                     <option {{ $request->min_price == '150000' ? 'selected' : '' }}
-                                                        value="150000">QAR
-                                                        1,50,000</option>
+                                                        value="150000">
+                                                        QAR 1,50,000
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="">
@@ -133,70 +147,85 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <select name="max_price"
-                                                    class="maxPriceSelect hero__form-input form-control custom-select">
+                                                    class="hero__form-input form-control custom-select">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
-                                                        Max
-                                                        Price</option>
+                                                        Max Price
+                                                    </option>
                                                     <option {{ $request->max_price == '5000' ? 'selected' : '' }}
-                                                        value="5000">QAR 5,000
+                                                        value="5000">
+                                                        QAR 5,000
                                                     </option>
                                                     <option {{ $request->max_price == '10000' ? 'selected' : '' }}
-                                                        value="10000">QAR
-                                                        10,000</option>
-                                                    <option {{ $request->max_price == '15000' ? 'selected' : '' }}
-                                                        value="15000">QAR
-                                                        15,000</option>
-                                                    <option {{ $request->max_price == '20000' ? 'selected' : '' }}
-                                                        value="20000">QAR
-                                                        20,000</option>
-                                                    <option {{ $request->max_price == '25000' ? 'selected' : '' }}
-                                                        value="25000">QAR
-                                                        25,000</option>
-                                                    <option {{ $request->max_price == '30000' ? 'selected' : '' }}
-                                                        value="30000">QAR
-                                                        30,000</option>
-                                                    <option {{ $request->max_price == '40000' ? 'selected' : '' }}
-                                                        value="40000">QAR
-                                                        40,000</option>
-                                                    <option {{ $request->max_price == '50000' ? 'selected' : '' }}
-                                                        value="50000">QAR
-                                                        50,000</option>
-                                                    <option {{ $request->max_price == '60000' ? 'selected' : '' }}
-                                                        value="60000">QAR
-                                                        60,000</option>
-                                                    <option {{ $request->max_price == '70000' ? 'selected' : '' }}
-                                                        value="70000">QAR
-                                                        70,000</option>
-                                                    <option {{ $request->max_price == '90000' ? 'selected' : '' }}
-                                                        value="90000">QAR
-                                                        90,000</option>
-                                                    <option {{ $request->max_price == '100000' ? 'selected' : '' }}
-                                                        value="100000">QAR
-                                                        100,000</option>
-                                                    <option {{ $request->max_price == '125000' ? 'selected' : '' }}
-                                                        value="125000">QAR
-                                                        1,25,000</option>
-                                                    <option {{ $request->max_price == '150000' ? 'selected' : '' }}
-                                                        value="150000">QAR
-                                                        1,50,000</option>
-                                                    <option {{ $request->max_price == '250000' ? 'selected' : '' }}
-                                                        value="250000">QAR
-                                                        2,50,000</option>
-                                                    <option {{ $request->max_price == '450000' ? 'selected' : '' }}
-                                                        value="450000">QAR
-                                                        4,50,000</option>
-                                                    <option {{ $request->max_price == '850000' ? 'selected' : '' }}
-                                                        value="850000">QAR
-                                                        8,50,000</option>
-                                                    <option {{ $request->max_price == '1000000' ? 'selected' : '' }}
-                                                        value="1000000">QAR
-                                                        1,00,0000
+                                                        value="10000">
+                                                        QAR 10,000
                                                     </option>
-                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
+                                                    <option {{ $request->max_price == '15000' ? 'selected' : '' }}
+                                                        value="15000">
+                                                        QAR 15,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '20000' ? 'selected' : '' }}
+                                                        value="20000">
+                                                        QAR 20,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '25000' ? 'selected' : '' }}
+                                                        value="25000">
+                                                        QAR 25,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '30000' ? 'selected' : '' }}
+                                                        value="30000">
+                                                        QAR 30,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '40000' ? 'selected' : '' }}
+                                                        value="40000">
+                                                        QAR 40,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '50000' ? 'selected' : '' }}
+                                                        value="50000">
+                                                        QAR 50,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '60000' ? 'selected' : '' }}
+                                                        value="60000">
+                                                        QAR 60,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '70000' ? 'selected' : '' }}
+                                                        value="70000">
+                                                        QAR 70,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '90000' ? 'selected' : '' }}
+                                                        value="90000">
+                                                        QAR 90,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '100000' ? 'selected' : '' }}
+                                                        value="100000">
+                                                        QAR 100,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '125000' ? 'selected' : '' }}
+                                                        value="125000">
+                                                        QAR 1,25,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '150000' ? 'selected' : '' }}
+                                                        value="150000">
+                                                        QAR 1,50,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '250000' ? 'selected' : '' }}
+                                                        value="250000">
+                                                        QAR 2,50,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '450000' ? 'selected' : '' }}
+                                                        value="450000">
+                                                        QAR 4,50,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '850000' ? 'selected' : '' }}
+                                                        value="850000">
+                                                        QAR 8,50,000
+                                                    </option>
+                                                    <option {{ $request->max_price == '1000000' ? 'selected' : '' }}
+                                                        value="1000000">
+                                                        QAR 1,00,0000
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -419,26 +448,33 @@
                                         <h6>Bedrooms</h6>
                                         <div class="d-flex spbwx8 mb-3">
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value=""> Any
+                                                onclick="bedrooms(this);" data-value="">
+                                                Any
                                             </li>
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="1">1
+                                                onclick="bedrooms(this);" data-value="1">
+                                                1
                                             </li>
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="2">2
+                                                onclick="bedrooms(this);" data-value="2">
+                                                2
                                             </li>
 
-                                            <li class="dropdown-item item-in-line bedrooms{{ request('bedrooms') == '3' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="3">3
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '3' ? 'bg-info' : '' }}"
+                                                onclick="bedrooms(this);" data-value="3">
+                                                3
                                             </li>
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="4">4
+                                                onclick="bedrooms(this);" data-value="4">
+                                                4
                                             </li>
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '5' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="5">5
+                                                onclick="bedrooms(this);" data-value="5">
+                                                5
                                             </li>
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '6+' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="6+">6+
+                                                onclick="bedrooms(this);" data-value="6+">
+                                                6 +
                                             </li>
                                         </div>
 
@@ -450,31 +486,38 @@
                                             <h6>Bathrooms</h6>
                                             <div class="d-flex spbwx8">
                                                 <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value=""> Any
+                                                    onclick="bathrooms(this);" data-value="">
+                                                    Any
                                                 </li>
 
                                                 <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '1' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="1"> 1
+                                                    onclick="bathrooms(this);" data-value="1">
+                                                    1
                                                 </li>
 
                                                 <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '2' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="2"> 2
+                                                    onclick="bathrooms(this);" data-value="2">
+                                                    2
                                                 </li>
 
                                                 <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '3' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="3"> 3
+                                                    onclick="bathrooms(this);" data-value="3">
+                                                    3
                                                 </li>
 
                                                 <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '4' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="4"> 4
+                                                    onclick="bathrooms(this);" data-value="4">
+                                                    4
                                                 </li>
 
                                                 <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '5' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="5"> 5
+                                                    onclick="bathrooms(this);" data-value="5">
+                                                    5
                                                 </li>
 
                                                 <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '6+' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="6+"> 6+
+                                                    onclick="bathrooms(this);" data-value="6+">
+                                                    6+
                                                 </li>
                                             </div>
                                         </div>
@@ -488,7 +531,9 @@
                             <div class="flex-grow-1">
                                 <select name="furnishings"
                                     class="hero__form-input form-select custom-select @if (isset($request->furnishings)) active-search @endif">
-                                    <option value="">All furnishings</option>
+                                    <option value="">
+                                        All furnishings
+                                    </option>
                                     <option value="109" {{ Request::get('furnishings') == 109 ? 'selected' : '' }}>
                                         Furnished
                                     </option>
@@ -532,7 +577,7 @@
                             </div>
                             <div class="col">
                                 <button type="button" data-bs-toggle="offcanvas" data-bs-target="#mSortingModal"
-                                    aria-controls="mSearchFilter" class="btn btn-monochrome btn-sm w-100"
+                                    aria-controls="mSortingModal" class="btn btn-monochrome btn-sm w-100"
                                     style="--btn-bg-color: transparent;">
                                     <i class="fas fa-sliders-h"></i>
                                     Sort By
@@ -555,14 +600,13 @@
                                             <input type="radio" class="btn-check" name="property_purpose"
                                                 id="btn{{ $propertyPurpose->name }}"
                                                 value="{{ $propertyPurpose->name }}"
-                                                {{ ucfirst($property_purpose) == $propertyPurpose->name ? 'checked' : '' }}>
+                                                {{ ucfirst(request('property_purpose')) == $propertyPurpose->name ? 'checked' : '' }}>
 
                                             <label class="btn btn-monochrome btn-sm"
                                                 for="btn{{ $propertyPurpose->name }}">
                                                 {{ $propertyPurpose->name }}
                                             </label>
                                         @endforeach
-
                                     </div>
 
                                     <div class="mb-3 border-bottom mt-2">
@@ -572,7 +616,7 @@
                                             @foreach ($propertyTypes as $pt)
                                                 <input type="radio" class="btn-check" name="property_type"
                                                     id="ptAny{{ $pt->id }}" value="{{ $pt->id }}"
-                                                    {{ $type->id == $pt->id ? 'checked' : '' }}>
+                                                    {{ request('property_type') == $pt->id ? 'checked' : '' }}>
                                                 <label class="btn btn-monochrome btn-sm" for="ptAny{{ $pt->id }}">
                                                     {{ $pt->types }}
                                                 </label>
@@ -592,82 +636,144 @@
                                                         Min Price
                                                     </option>
                                                     <option {{ $request->min_price == '5000' ? 'selected' : '' }}
-                                                        value="5000"> QAR 5,000</option>
+                                                        value="5000">
+                                                        QAR 5,000
+                                                    </option>
                                                     <option {{ $request->min_price == '10000' ? 'selected' : '' }}
-                                                        value="10000">QAR 10,000</option>
+                                                        value="10000">
+                                                        QAR 10,000
+                                                    </option>
                                                     <option {{ $request->min_price == '15000' ? 'selected' : '' }}
-                                                        value="10000">QAR 15,000</option>
+                                                        value="10000">
+                                                        QAR 15,000
+                                                    </option>
                                                     <option {{ $request->min_price == '20000' ? 'selected' : '' }}
-                                                        value="20000">QAR 20,000</option>
+                                                        value="20000">
+                                                        QAR 20,000
+                                                    </option>
                                                     <option {{ $request->min_price == '25000' ? 'selected' : '' }}
-                                                        value="25000">QAR 25,000</option>
+                                                        value="25000">
+                                                        QAR 25,000
+                                                    </option>
                                                     <option {{ $request->min_price == '30000' ? 'selected' : '' }}
-                                                        value="30000">QAR 30,000</option>
+                                                        value="30000">
+                                                        QAR 30,000
+                                                    </option>
                                                     <option {{ $request->min_price == '40000' ? 'selected' : '' }}
-                                                        value="40000">QAR 40,000</option>
+                                                        value="40000">
+                                                        QAR 40,000
+                                                    </option>
                                                     <option {{ $request->min_price == '50000' ? 'selected' : '' }}
-                                                        value="50000">QAR 50,000</option>
+                                                        value="50000">
+                                                        QAR 50,000
+                                                    </option>
                                                     <option {{ $request->min_price == '60000' ? 'selected' : '' }}
-                                                        value="60000">QAR 60,000</option>
+                                                        value="60000">
+                                                        QAR 60,000
+                                                    </option>
                                                     <option {{ $request->min_price == '70000' ? 'selected' : '' }}
-                                                        value="70000">QAR 70,000</option>
+                                                        value="70000">
+                                                        QAR 70,000
+                                                    </option>
                                                     <option {{ $request->min_price == '90000' ? 'selected' : '' }}
-                                                        value="90000">QAR 90,000</option>
+                                                        value="90000">
+                                                        QAR 90,000
+                                                    </option>
                                                     <option {{ $request->min_price == '100000' ? 'selected' : '' }}
-                                                        value="100000">QAR 100,000</option>
+                                                        value="100000">
+                                                        QAR 100,000
+                                                    </option>
                                                     <option {{ $request->min_price == '125000' ? 'selected' : '' }}
-                                                        value="125000">QAR 1,25,000</option>
+                                                        value="125000">
+                                                        QAR 1,25
+                                                        ,000</option>
                                                     <option {{ $request->min_price == '150000' ? 'selected' : '' }}
-                                                        value="150000">QAR 1,50,000</option>
+                                                        value="150000">
+                                                        QAR 1,50,000
+                                                    </option>
 
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <select name="max_price" class="maxPriceSelect form-control">
+                                                <select name="max_price" class="form-control">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
-                                                        Max Price</option>
+                                                        Max Price
+                                                    </option>
                                                     <option {{ $request->max_price == '5000' ? 'selected' : '' }}
-                                                        value="5000">QAR 5,000</option>
+                                                        value="5000">
+                                                        QAR 5,000
+                                                    </option>
                                                     <option {{ $request->max_price == '10000' ? 'selected' : '' }}
-                                                        value="10000">QAR 10,000</option>
+                                                        value="10000">
+                                                        QAR 10,000
+                                                    </option>
                                                     <option {{ $request->max_price == '15000' ? 'selected' : '' }}
-                                                        value="15000">QAR 15,000</option>
+                                                        value="15000">
+                                                        QAR 15,000
+                                                    </option>
                                                     <option {{ $request->max_price == '20000' ? 'selected' : '' }}
-                                                        value="20000">QAR 20,000</option>
+                                                        value="20000">
+                                                        QAR 20,000
+                                                    </option>
                                                     <option {{ $request->max_price == '25000' ? 'selected' : '' }}
-                                                        value="25000">QAR 25,000</option>
+                                                        value="25000">
+                                                        QAR 25,000
+                                                    </option>
                                                     <option {{ $request->max_price == '30000' ? 'selected' : '' }}
-                                                        value="30000">QAR 30,000</option>
+                                                        value="30000">
+                                                        QAR 30,000
+                                                    </option>
                                                     <option {{ $request->max_price == '40000' ? 'selected' : '' }}
-                                                        value="40000">QAR 40,000</option>
+                                                        value="40000">
+                                                        QAR 40,000
+                                                    </option>
                                                     <option {{ $request->max_price == '50000' ? 'selected' : '' }}
-                                                        value="50000">QAR 50,000</option>
+                                                        value="50000">
+                                                        QAR 50,000
+                                                    </option>
                                                     <option {{ $request->max_price == '60000' ? 'selected' : '' }}
-                                                        value="60000">QAR 60,000</option>
+                                                        value="60000">
+                                                        QAR 60,000
+                                                    </option>
                                                     <option {{ $request->max_price == '70000' ? 'selected' : '' }}
-                                                        value="70000">QAR 70,000</option>
+                                                        value="70000">
+                                                        QAR 70,000
+                                                    </option>
                                                     <option {{ $request->max_price == '90000' ? 'selected' : '' }}
-                                                        value="90000">QAR 90,000</option>
+                                                        value="90000">
+                                                        QAR 90,000
+                                                    </option>
                                                     <option {{ $request->max_price == '100000' ? 'selected' : '' }}
-                                                        value="100000">QAR 100,000</option>
+                                                        value="100000">
+                                                        QAR 100,000
+                                                    </option>
                                                     <option {{ $request->max_price == '125000' ? 'selected' : '' }}
-                                                        value="125000">QAR 1,25,000</option>
+                                                        value="125000">
+                                                        QAR 1,25,000
+                                                    </option>
                                                     <option {{ $request->max_price == '150000' ? 'selected' : '' }}
-                                                        value="150000">QAR 1,50,000</option>
+                                                        value="150000">
+                                                        QAR 1,50,000
+                                                    </option>
                                                     <option {{ $request->max_price == '250000' ? 'selected' : '' }}
-                                                        value="250000">QAR 2,50,000</option>
+                                                        value="250000">
+                                                        QAR 2,50,000
+                                                    </option>
                                                     <option {{ $request->max_price == '450000' ? 'selected' : '' }}
-                                                        value="450000">QAR 4,50,000</option>
+                                                        value="450000">
+                                                        QAR 4,50,000
+                                                    </option>
                                                     <option {{ $request->max_price == '850000' ? 'selected' : '' }}
-                                                        value="850000">QAR 8,50,000</option>
+                                                        value="850000">
+                                                        QAR 8,50,000
+                                                    </option>
                                                     <option {{ $request->max_price == '1000000' ? 'selected' : '' }}
-                                                        value="1000000">QAR 1,00,0000</option>
-                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
+                                                        value="1000000">
+                                                        QAR 1,00,0000
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
-
                                     </div>
 
                                     <div class="mb-3 border-bottom">
@@ -968,9 +1074,8 @@
                             </div>
                         </form>
 
-                        <form
-                            action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->plural) . '-for-' . $property_purpose]) }}"
-                            method="get">
+                        <form action="{{ route('property-purpose', [$buyOrRent, strtolower($property_purpose)]) }}"
+                            method="GET">
                             <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal"
                                 aria-labelledby="mSearchFilterLabel" style="height: 60vh !important;">
                                 <div class="offcanvas-header border-bottom">
@@ -1050,8 +1155,7 @@
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                         <div>
 
-                            <form
-                                action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->plural) . '-for-' . $property_purpose]) }}"
+                            <form action="{{ route('property-purpose', [$buyOrRent, strtolower($property_purpose)]) }}"
                                 name="frmSortBy" id="frmSortBy" class="form-inline form-1" method="get">
 
                                 <div class="d-flex align-items-center justify-content-between">
@@ -1073,11 +1177,11 @@
                                                 <select name="sort_by" id="sort_by"
                                                     class="form-select form-select-sm custom-select"
                                                     onchange="document.getElementById('frmSortBy').submit();">
+
                                                     <option value="newest"
                                                         @if ($request->sort_by == 'newest') selected @endif>
                                                         Newest
                                                     </option>
-
                                                     <option value="featured"
                                                         @if ($request->sort_by == 'featured') selected @endif>
                                                         Featured
@@ -1110,13 +1214,20 @@
                 </div>
 
                 <div class="location-wrap">
-                    @foreach ($cities as $item)
+                    @foreach ($propertyTypes as $propertyType)
                         <div class="location-item {{ $loop->index > 7 ? 'moreLess' : '' }}">
 
-                            <a
-                                href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($item->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}">
-                                {{ Str::limit($item->name, 25) }} <span> ({{ $item->pcount }}) </span>
-                            </a>
+                            @if (ucfirst(request()->property_purpose) == 'Sale')
+                                <a
+                                    href="{{ route('property-type-purpose', ['buy',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
+                                    {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }})</span>
+                                </a>
+                            @else
+                                <a
+                                    href="{{ route('property-type-purpose', ['rent',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
+                                    {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }})</span>
+                                </a>
+                            @endif
 
                         </div>
                     @endforeach
@@ -1144,26 +1255,16 @@
                                 <div class="property-item">
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
-                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @else
-                                                <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @endif
+                                            <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                alt="{{ $property->property_name }}">
                                         </div>
 
                                         @if (count($property->gallery) > 0)
                                             @foreach ($property->gallery as $gallery)
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
-                                                        @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @else
-                                                            <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @endif
+                                                        <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                            alt="{{ $property->property_name }}">
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1202,8 +1303,8 @@
                                             {{ $property->property_name }}
                                         </h5>
                                     </a>
-                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
 
+                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
                                         @if ($property->getProperty_type())
                                             <li><i class="fas fa-bed"></i>
@@ -1220,11 +1321,10 @@
                                     </ul>
                                     <div class="property-location">
                                         <i class="fa fa-map-marker-alt"></i>
-                                        <p class="hideAddress">
+                                        <span class="hideAddress">
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
-                                        </p>
+                                        </span>
                                     </div>
-
                                     <div class="social-div mt-md-2">
                                         @if (!empty($property->whatsapp))
                                             <a href="" class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
@@ -1350,7 +1450,7 @@
                             <div class="sidebar-links p-3">
                                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
                                                                 crossorigin="anonymous"></script>
-                                <!-- Property Type for purpose page listing ads -->
+                                <!-- Property purpose page listing ads -->
                                 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2421573832685297"
                                     data-ad-slot="6731050378" data-ad-format="auto" data-full-width-responsive="true"></ins>
                                 <script>
@@ -1486,7 +1586,6 @@
                 });
             })
         });
-
 
 
 
