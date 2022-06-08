@@ -43,13 +43,17 @@ class InquiriesController extends MainAdminController
             return redirect('admin/dashboard');
         }
         $keyword = request()->get('keyword');
-        $agencies = Agency::all();
+        // $data['agenices'] = Agency::all();
+        $data['keyword'] = Agency::select("name as agency_name", "id as id")->where("name", "LIKE", "%{$request->input('keyword')}%")->get();
+
         $properties = Properties::select('property_name','agency_id','id')->get();
         $action = 'saakin_index';
         
         return view('admin-dashboard.inquiries.property_inquires.create',
-        compact('agencies','properties','action'));
+        compact('data','properties','action'));
     }
+
+    
 
     public function store_property_inquiry(Request $request)
     {
@@ -104,6 +108,37 @@ class InquiriesController extends MainAdminController
         return \Redirect::back();
     }
 
+    public function search_agency_name(Request $request)
+    {
+
+        $data = Agency::where("name","LIKE","%{$request->input('keyword')}%")
+                ->orWhere("agency_detail","LIKE","%{$request->input('keyword')}%")
+                ->get();
+
+        $output = '<ul class="list-group desktop-search-li col-12"  >';
+        if ( count($data) > 0 ) {
+            
+            foreach ($data as $i => $row){
+                if($i <= 10){
+                $output .= '<li class="list-group-item select-agency"><input type="hidden" id="agency_id" name="agency_id" value="'.$row->id.'" ><img alt="'.$row->image.'" src="upload/agencies/'.$row->image .'" width="50px;"> '.$row->name.'</li>';
+                }
+            }
+             
+            }else {
+                $output .= '<li class="list-group-item">'.'No results'.'</li></ul>';
+            }
+            return $output;
+        // $inputs = $request->all();
+        // $keyword = $inputs['keyword'];
+
+        // $agencies = Agency::where('status', 1)->
+        // where(function ($query) use ($keyword) {
+        //     $query->where('name', 'like', '%' . $keyword . '%')
+        //         ->orWhere('agency_detail', 'like', '%' . $keyword . '%');
+        // })->paginate(15);
+
+        // return view('admin-dashboard.inquiries.property_inquires.create', compact('keyword','inputs','agencies'));
+    }
     public function property_inquiries()
     {
         // $enquire = Enquire::find(49)->GetProperty;

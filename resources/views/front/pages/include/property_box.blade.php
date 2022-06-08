@@ -11,16 +11,27 @@
         @if ((new \Jenssegers\Agent\Agent())->isMobile())
             <div class="pro-slider">
                 <div class="pro-slider-item property-img">
-                    <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                    width="124" height="160" alt="{{ $property->property_name }}">
+                    @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                        <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
+                            alt="{{ $property->property_name }}">
+                    @else
+                        <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}" width="124"
+                            height="160" alt="{{ $property->property_name }}">
+                    @endif
                 </div>
 
                 @if (count($property->gallery) > 0)
                     @foreach ($property->gallery as $gallery)
                         @if ($loop->index < 5)
                             <div class="pro-slider-item  property-img">
-                                <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                width="124" height="160" alt="{{ $property->property_name }}">
+                                @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                    <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
+                                        alt="{{ $property->property_name }}">
+                                @else
+                                    <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}" width="124"
+                                        height="160" alt="{{ $property->property_name }}">
+                                @endif
+
                             </div>
                         @endif
                     @endforeach
@@ -29,8 +40,8 @@
         @else
             <div class="property-img">
                 @if ($property->featured_image)
-                    <img src="{{ URL::asset('upload/properties/thumb_' . $property->featured_image) }}"
-                       width="416" height="250" alt="Featured Image of Property">
+                    <img src="{{ URL::asset('upload/properties/thumb_' . $property->featured_image) }}" width="416"
+                        height="250" alt="Featured Image of Property">
                 @else
                     <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}"
                         alt="Image of Property if no Featured Image found">
@@ -79,10 +90,10 @@
 
         @endif
 
-        
+
 
         <a class="text-decoration-none stretched-link"
-         href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}">
+            href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}">
             <h5 class="property-card__property-title">
                 {{ $property->property_name }}
             </h5>

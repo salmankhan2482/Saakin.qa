@@ -1,4 +1,4 @@
-@extends('front.layouts.main')
+@extends("front.layouts.main")
 @if ($landing_page_content->meta_title != null)
     @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
     @section('description', $landing_page_content->meta_description)
@@ -1143,17 +1143,16 @@
                             <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                         </h1>
                         @if ((new \Jenssegers\Agent\Agent())->isMobile())
-
-                            <div class="">
-                                <input type="checkbox" class="btn-check" autocomplete="off">
-                                <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
-                                    @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
-                                    <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
-                                        id="save-search-icon"></i>
-                                    <span id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
-                                </label>
-                            </div>
-
+                        <div class="">
+                            <input type="checkbox" class="btn-check" autocomplete="off">
+                            <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
+                                @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
+                                <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
+                                    id="save-search-icon"></i>
+                                <span
+                                    id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
+                            </label>
+                        </div>
                         @endif
                     </div>
                     {{-- Short design for desktop and tablet --}}
@@ -1224,12 +1223,12 @@
 
                             @if (ucfirst(request()->property_purpose) == 'Sale')
                                 <a
-                                    href="{{ route('property-type-purpose', ['buy', Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
+                                    href="{{ route('property-type-purpose', ['buy',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
                                     {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }})</span>
                                 </a>
                             @else
                                 <a
-                                    href="{{ route('property-type-purpose', ['rent', Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
+                                    href="{{ route('property-type-purpose', ['rent',Str::slug($propertyType->plural) . '-for-' . request()->property_purpose]) }}">
                                     {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }})</span>
                                 </a>
                             @endif
@@ -1254,14 +1253,13 @@
                                 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
                                 $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
-
-                            <div class="single-property-box horizontal-view" @if (!(new \Jenssegers\Agent\Agent())->isMobile())  @endif>
-
+                            <div class="single-property-box horizontal-view" @if (!(new \Jenssegers\Agent\Agent())->isMobile()) @endif>
+                                {{--  --}}
                                 <div class="property-item">
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
                                             @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                <img src="{{ asset('upload/featured/mobile_thumb_' . $property->featured_image) }}"
+                                                <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
                                                     alt="{{ $property->property_name }}">
                                             @else
                                                 <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
@@ -1274,7 +1272,7 @@
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
                                                         @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_property_' . $gallery->image_name }}"
+                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
                                                                 alt="{{ $property->property_name }}">
                                                         @else
                                                             <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"

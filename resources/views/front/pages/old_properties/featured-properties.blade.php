@@ -1,13 +1,13 @@
-@extends("front.layouts.main")
-@if ($landing_page_content->meta_title != null)
-    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
-    @section('description', $landing_page_content->meta_description)
-    @section('keyword', $landing_page_content->meta_keyword)
+﻿@extends("front.layouts.main")
+@if ($page_info->meta_title != null)
+    @section('title', $page_info->meta_title . ' | ' . ' Saakin.qa')
+    @section('description', $page_info->meta_description)
+    @section('keyword', $page_info->meta_keyword)
     @section('type', 'property')
     @section('url', url()->current())
 @else
-    @section('title', 'Properties in Qatar | Saakin.qa')
-    @section('description', $page_des)
+    @section('title', $page_info->title . '|' . 'Saakin.qa')
+    @section('description', $page_info->page_content)
     @section('type', 'property')
     @section('url', url()->current())
 @endif
@@ -40,17 +40,18 @@
                         </div>
                     </div>
 
+
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                         <div class="d-flex spbwx8 order-3 order-xl-2 mt-2 mt-xl-0 me-xl-2">
                             <div class="">
                                 <select name="property_purpose" id="property_purpose"
-                                    class="hero__form-input form-select custom-select @isset($property_purpose) active-search @endisset"
+                                    class="hero__form-input form-select custom-select @isset($request->property_purpose) active-search @endisset"
                                     onchange="setPropertyPurpose(value)">
 
                                     <option value="" selected>Property Purpose</option>
                                     @foreach ($propertyPurposes as $propertyPurpose)
                                         <option value="{{ $propertyPurpose->name }}"
-                                            @if (ucfirst($property_purpose) == $propertyPurpose->name) selected @endif>
+                                            @if (ucfirst($request->property_purpose) == $propertyPurpose->name) selected @endif>
                                             {{ $propertyPurpose->name }}
                                         </option>
                                     @endforeach
@@ -59,11 +60,11 @@
 
                             <div class="">
                                 <select name="property_type" id="property_type" onchange="setPropertyType(this)"
-                                    class="hero__form-input form-select custom-select @isset($type->id) active-search @endisset">
+                                    class="hero__form-input form-select custom-select @isset($request->property_type) active-search @endisset">
                                     <option value="" selected>All Type</option>
                                     @foreach ($propertyTypes as $propertyType)
                                         <option value="{{ $propertyType->id }}"
-                                            @if ($type->id == $propertyType->id) selected @endif>
+                                            @if ($request->property_type == $propertyType->id) selected @endif>
                                             {{ $propertyType->types }}
                                         </option>
                                     @endforeach
@@ -133,7 +134,7 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <select name="max_price"
-                                                    class="maxPriceSelect hero__form-input form-control custom-select">
+                                                    class="hero__form-input form-control custom-select">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max
                                                         Price</option>
@@ -192,11 +193,9 @@
                                                         value="1000000">QAR
                                                         1,00,0000
                                                     </option>
-                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -532,7 +531,7 @@
                             </div>
                             <div class="col">
                                 <button type="button" data-bs-toggle="offcanvas" data-bs-target="#mSortingModal"
-                                    aria-controls="mSearchFilter" class="btn btn-monochrome btn-sm w-100"
+                                    aria-controls="mSortingModal" class="btn btn-monochrome btn-sm w-100"
                                     style="--btn-bg-color: transparent;">
                                     <i class="fas fa-sliders-h"></i>
                                     Sort By
@@ -549,19 +548,17 @@
                                         Filters
                                     </h5>
                                 </div>
+
                                 <div class="offcanvas-body">
                                     <div class="btn-group btn-group-sm d-flex" role="group" aria-label="Sell type">
-                                        @foreach ($propertyPurposes as $propertyPurpose)
-                                            <input type="radio" class="btn-check" name="property_purpose"
-                                                id="btn{{ $propertyPurpose->name }}"
-                                                value="{{ $propertyPurpose->name }}"
-                                                {{ ucfirst($property_purpose) == $propertyPurpose->name ? 'checked' : '' }}>
 
-                                            <label class="btn btn-monochrome btn-sm"
-                                                for="btn{{ $propertyPurpose->name }}">
-                                                {{ $propertyPurpose->name }}
-                                            </label>
-                                        @endforeach
+                                        <input type="radio" class="btn-check" name="property_purpose" id="btnRent"
+                                            value="Rent" {{ request('property_purpose') == 'Rent' ? 'checked' : '' }}>
+                                        <label class="btn btn-monochrome btn-sm" for="btnRent">Rent</label>
+
+                                        <input type="radio" class="btn-check" name="property_purpose" id="btnSale"
+                                            value="Sale" {{ request('property_purpose') == 'Sale' ? 'checked' : '' }}>
+                                        <label class="btn btn-monochrome btn-sm" for="btnSale">Buy</label>
 
                                     </div>
 
@@ -572,7 +569,7 @@
                                             @foreach ($propertyTypes as $pt)
                                                 <input type="radio" class="btn-check" name="property_type"
                                                     id="ptAny{{ $pt->id }}" value="{{ $pt->id }}"
-                                                    {{ $type->id == $pt->id ? 'checked' : '' }}>
+                                                    {{ request('property_type') == $pt->id ? 'checked' : '' }}>
                                                 <label class="btn btn-monochrome btn-sm" for="ptAny{{ $pt->id }}">
                                                     {{ $pt->types }}
                                                 </label>
@@ -623,7 +620,7 @@
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <select name="max_price" class="maxPriceSelect form-control">
+                                                <select name="max_price" class="form-control">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max Price</option>
                                                     <option {{ $request->max_price == '5000' ? 'selected' : '' }}
@@ -662,12 +659,9 @@
                                                         value="850000">QAR 8,50,000</option>
                                                     <option {{ $request->max_price == '1000000' ? 'selected' : '' }}
                                                         value="1000000">QAR 1,00,0000</option>
-                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
-
                                     </div>
 
                                     <div class="mb-3 border-bottom">
@@ -968,9 +962,8 @@
                             </div>
                         </form>
 
-                        <form
-                            action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->plural) . '-for-' . $property_purpose]) }}"
-                            method="get">
+                        <form action="{{ route('featured-properties') }}" method="GET">
+
                             <div class="offcanvas offcanvas-top mSearchFilter" tabindex="-2" id="mSortingModal"
                                 aria-labelledby="mSearchFilterLabel" style="height: 60vh !important;">
                                 <div class="offcanvas-header border-bottom">
@@ -1046,13 +1039,12 @@
                         </div>
                         @endif
                     </div>
+
                     {{-- Short design for desktop and tablet --}}
                     @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
                         <div>
-
-                            <form
-                                action="{{ route('property-type-purpose', [$buyOrRent, Str::slug($type->plural) . '-for-' . $property_purpose]) }}"
-                                name="frmSortBy" id="frmSortBy" class="form-inline form-1" method="get">
+                            <form action="{{ route('featured-properties') }}" name="frmSortBy" id="frmSortBy"
+                                class="form-inline form-1" method="get">
 
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="">
@@ -1071,7 +1063,7 @@
                                             <label class="fs-sm">Sort by:</label>
                                             <div class="short-by">
                                                 <select name="sort_by" id="sort_by"
-                                                    class="form-select form-select-sm custom-select"
+                                                    class="hero__form-input form-select form-select-sm custom-select"
                                                     onchange="document.getElementById('frmSortBy').submit();">
                                                     <option value="newest"
                                                         @if ($request->sort_by == 'newest') selected @endif>
@@ -1110,12 +1102,12 @@
                 </div>
 
                 <div class="location-wrap">
-                    @foreach ($cities as $item)
-                        <div class="location-item {{ $loop->index > 7 ? 'moreLess' : '' }}">
+                    @foreach ($propertyTypes as $propertyType)
+                        <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
 
-                            <a
-                                href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($item->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose)]) }}">
-                                {{ Str::limit($item->name, 25) }} <span> ({{ $item->pcount }}) </span>
+                            <a href="{{ url('properties?property_type=' . $propertyType->id . '&featured=1') }}">
+                                {{ $propertyType->plural_name }} <span>({{ $propertyType->pcount }}) </span>
+                                
                             </a>
 
                         </div>
@@ -1144,26 +1136,16 @@
                                 <div class="property-item">
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
-                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @else
-                                                <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @endif
+                                            <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                alt="property feature">
                                         </div>
 
                                         @if (count($property->gallery) > 0)
                                             @foreach ($property->gallery as $gallery)
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
-                                                        @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @else
-                                                            <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @endif
+                                                        <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                            alt="property slider">
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1174,7 +1156,6 @@
                                         @if ($property->featured_property == 1)
                                             <li class="feature_cb"><span> Featured </span></li>
                                         @endif
-
                                         @if ($property->property_purpose == 1)
                                             <li class="feature_or"><span> For Rent </span></li>
                                         @elseif($property->property_purpose == 2)
@@ -1202,14 +1183,17 @@
                                             {{ $property->property_name }}
                                         </h5>
                                     </a>
-                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
 
+                                    <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
                                     <ul class="property-feature">
+
                                         @if ($property->getProperty_type())
-                                            <li><i class="fas fa-bed"></i>
+                                            <li>
+                                                <i class="fas fa-bed"></i>
                                                 <span>{{ $property->bedrooms }} </span>
                                             </li>
-                                            <li><i class="fas fa-bath"></i>
+                                            <li>
+                                                <i class="fas fa-bath"></i>
                                                 <span>{{ $property->bathrooms }} </span>
                                             </li>
                                         @endif
@@ -1224,18 +1208,18 @@
                                             {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
                                         </p>
                                     </div>
-
-                                    <div class="social-div mt-md-2">
+                                    <div class="social-div mt-md-2 d-flex">
                                         @if (!empty($property->whatsapp))
-                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->whatsapp }}"
                                                 data-property_id={{ $property->id }}
                                                 data-agency_id={{ $property->agency_id }} data-button_name='Call'>
+
                                                 <i class="fas fa-phone-alt text-primary"></i>
                                                 <span class="d-md-inline-block">Call</span>
                                             </a>
                                         @else
-                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-2 btnCount"
+                                            <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
                                                 data-telNumber="{{ $property->Agency->phone }}"
                                                 data-property_id={{ $property->id }}
                                                 data-agency_id={{ $property->agency_id }} data-button_name='Call'>
@@ -1248,7 +1232,7 @@
                                         @if ((new \Jenssegers\Agent\Agent())->isMobile())
                                             @if (!empty($property->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                    class="btn btn-monochrome btn-sm mt-1 me-1 btnCount"
                                                     data-property_id={{ $property->id }}
                                                     data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
@@ -1257,7 +1241,7 @@
                                                     <span class=" d-md-inline-block">WhatsApp</span>
                                                 </a>
                                             @else
-                                                <button class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                     data-property_id={{ $property->id }}
                                                     data-agency_id={{ $property->agency_id }} data-button_name='Email'
                                                     type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
@@ -1278,7 +1262,7 @@
                                         @else
                                             @if (!empty($property->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount me-1"
                                                     data-property_id={{ $property->id }}
                                                     data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
@@ -1288,7 +1272,7 @@
                                                 </a>
                                             @elseif(!empty($property->Agency->whatsapp))
                                                 <a href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
-                                                    class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                                    class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                     data-property_id={{ $property->id }}
                                                     data-agency_id={{ $property->agency_id }}
                                                     data-button_name='WhatsApp'>
@@ -1298,7 +1282,7 @@
                                                 </a>
                                             @endif
 
-                                            <button class="btn btn-monochrome btn-sm mt-2 btnCount"
+                                            <button class="btn btn-monochrome btn-sm mt-1 btnCount"
                                                 data-property_id={{ $property->id }}
                                                 data-agency_id={{ $property->agency_id }} data-button_name='Email'
                                                 type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
@@ -1327,7 +1311,7 @@
                                         </div>
                                         <div>
                                             <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}"
-                                                width="80" alt="{{ $property->property_name }}">
+                                                width="80" alt="agency pic">
                                         </div>
                                     </div>
                                 @endif
@@ -1344,65 +1328,23 @@
                         </div>
                         {{-- Pagination ends --}}
                     </div>
-
                     <div class="col-lg-3 order-lg-2">
                         <div class="list-sidebar mt-3 mt-lg-0">
                             <div class="sidebar-links p-3">
-                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
-                                                                crossorigin="anonymous"></script>
-                                <!-- Property Type for purpose page listing ads -->
-                                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2421573832685297"
-                                    data-ad-slot="6731050378" data-ad-format="auto" data-full-width-responsive="true"></ins>
-                                <script>
-                                    (adsbygoogle = window.adsbygoogle || []).push({});
-                                </script>
-                            </div>
-                            <div class="sidebar-links p-3">
-                                <h6>Popular Searches</h6>
-                                <ul>
-                                    @foreach ($data['popularSearchesLinks'] as $item)
-                                        <li>
-                                            <a href="{{ url($item->link) }}">
-                                                {{ $item->name }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
 
-                            @if (count($data['nearbyAreasLinks']) > 0)
-                                <div class="sidebar-links p-3">
-                                    <h6>Nearby Places</h6>
-                                    <ul>
-                                        @foreach ($data['nearbyAreasLinks'] as $item)
-                                            <li>
-                                                <a
-                                                    href="{{ url("properties?city=$item->id&property_purpose=" . ucfirst(request('property_purpose'))) }}">
-                                                    Properties for {{ request('property_purpose') }} in
-                                                    {{ $item->name }}
-                                                </a>
-                                            </li>
-                                        @endforeach
-                                    </ul>
+                                <div class="g-ads">
+                                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                                                        crossorigin="anonymous"></script>
+                                    <!-- Featured Properties page listing ads -->
+                                    <ins class="adsbygoogle" style="display:block"
+                                        data-ad-client="ca-pub-2421573832685297" data-ad-slot="6731050378"
+                                        data-ad-format="auto" data-full-width-responsive="true"></ins>
+                                    <script>
+                                        (adsbygoogle = window.adsbygoogle || []).push({});
+                                    </script>
                                 </div>
-                            @endif
-
-                            <div class="sidebar-links p-3">
-                                <h6>Properties for {{ request('property_purpose') == 'sale' ? 'Rent' : 'Sale' }}</h6>
-                                <ul>
-                                    <li>
-                                        @if (request('property_purpose') == 'sale')
-                                            <a href="{{ route('property-purpose', ['rent', 'rent']) }}">
-                                                Properties for Rent
-                                            </a>
-                                        @else
-                                            <a href="{{ route('property-purpose', ['buy', 'sale']) }}">
-                                                Properties for Sale
-                                            </a>
-                                        @endif
-                                    </li>
-                                </ul>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -1418,14 +1360,6 @@
 
             @endif
 
-        </div>
-    </div>
-
-    <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
-        <div class="container">
-            @if ($properties->onFirstPage())
-                {!! $landing_page_content->page_content !!}
-            @endif
         </div>
     </div>
     @include('front.pages.include.saveSearchModal')
@@ -1455,7 +1389,8 @@
     <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
 
     <script type="text/javascript">
-        $(document).ready(function() {
+
+$(document).ready(function() {
             $("#save-search").on('click', function() {
                 var name = $("#search_name").val();
 
@@ -1487,9 +1422,7 @@
             })
         });
 
-
-
-
+        
         var bednumber = $("#bedroomInput").val();
         var bathnumber = $("#bathroomInput").val();
         showBedBath();

@@ -15,9 +15,9 @@ $data['agency_name'] = App\Agency::when(auth()->user()->usertype == 'Agency', fu
 ?>
    
     @if (Auth()->User()->usertype =='Agency')
-    <title>{{$data['agency_name']}} - Real Estate CRM</title>
+    <title>{{$data['agency_name']}} Dashboard - Saakin Real Estate CRM</title>
     @else
-    <title>Saakin Dashboard - Real Estate CRM</title>
+    <title>Dashboard - Saakin Real Estate CRM</title>
     @endif
     
 

@@ -133,7 +133,7 @@
                                             </div>
                                             <div class="flex-grow-1">
                                                 <select name="max_price"
-                                                    class="maxPriceSelect hero__form-input form-control custom-select">
+                                                    class="hero__form-input form-control custom-select">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max
                                                         Price</option>
@@ -192,11 +192,9 @@
                                                         value="1000000">QAR
                                                         1,00,0000
                                                     </option>
-                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -623,7 +621,7 @@
                                                 </select>
                                             </div>
                                             <div class="col">
-                                                <select name="max_price" class="maxPriceSelect form-control">
+                                                <select name="max_price" class="form-control">
                                                     <option {{ $request->max_price == '' ? 'selected' : '' }} value="">
                                                         Max Price</option>
                                                     <option {{ $request->max_price == '5000' ? 'selected' : '' }}
@@ -662,12 +660,9 @@
                                                         value="850000">QAR 8,50,000</option>
                                                     <option {{ $request->max_price == '1000000' ? 'selected' : '' }}
                                                         value="1000000">QAR 1,00,0000</option>
-                                                     <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
-
                                     </div>
 
                                     <div class="mb-3 border-bottom">
@@ -1144,26 +1139,16 @@
                                 <div class="property-item">
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
-                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @else
-                                                <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @endif
+                                            <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                alt="{{ $property->property_name }}">
                                         </div>
 
                                         @if (count($property->gallery) > 0)
                                             @foreach ($property->gallery as $gallery)
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
-                                                        @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @else
-                                                            <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
-                                                        @endif
+                                                        <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                            alt="{{ $property->property_name }}">
                                                     </div>
                                                 @endif
                                             @endforeach
@@ -1174,7 +1159,6 @@
                                         @if ($property->featured_property == 1)
                                             <li class="feature_cb"><span> Featured </span></li>
                                         @endif
-
                                         @if ($property->property_purpose == 1)
                                             <li class="feature_or"><span> For Rent </span></li>
                                         @elseif($property->property_purpose == 2)
