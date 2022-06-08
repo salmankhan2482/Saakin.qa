@@ -57,7 +57,6 @@ class ClickCountersController extends Controller
         })
         ->groupBy('agency_name')->get(15);
 
-        
         return view('admin-dashboard.traffic-pages.call-to-action.index',compact('data','action'));
     }
 
