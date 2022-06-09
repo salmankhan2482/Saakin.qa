@@ -487,7 +487,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                             <h6
                                                 class="mb-1
                                                 {{ Request::is('url', 'admin/traffic/trafficUsers') ? 'text-saakin' : '' }}">
-                                                Unique Users
+                                                Unique Visitors
                                             </h6>
                                         </div>
                                     </a>
@@ -498,7 +498,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                             <h6
                                                 class="mb-1
                                             {{ Request::is('url', 'admin/traffic/topTenProperties') ? 'text-saakin' : '' }}">
-                                                Top 10 Properties
+                                                Top Properties
                                             </h6>
                                         </div>
                                     </a>
@@ -509,7 +509,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                             <h6
                                                 class="mb-1
                                             {{ Request::is('url', 'admin/traffic/top10areas') ? 'text-saakin' : '' }}">
-                                                Top 10 Areas
+                                                Trending Areas
                                             </h6>
                                         </div>
                                     </a>
@@ -641,7 +641,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                 @endif
 
                 {{-- MLS --}}
-                @if (auth()->user()->usertype == 'Admin')
+                @if (auth()->user()->usertype == 'Agency')
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}"
                             href="{{ route('mls.index') }}">

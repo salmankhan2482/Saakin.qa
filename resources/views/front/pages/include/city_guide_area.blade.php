@@ -57,8 +57,9 @@
         <div class="container">
             <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
                         crossorigin="anonymous"></script>
-            <ins class="adsbygoogle" style="display:block" data-ad-format="autorelaxed"
-                data-ad-client="ca-pub-2421573832685297" data-ad-slot="1588590246"></ins>
+            <ins class="adsbygoogle" style="display:block" data-ad-format="fluid"
+                data-ad-layout-key="-6t+ed+2i-1n-4w" data-ad-client="ca-pub-2421573832685297"
+                data-ad-slot="4709939966"></ins>
             <script>
                 (adsbygoogle = window.adsbygoogle || []).push({});
             </script>

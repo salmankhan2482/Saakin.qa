@@ -34,6 +34,7 @@ class LandingPagesController extends Controller
         $data['landing_pages_content'] = LandingPage::
         
         when(request('keyword'), function($query){
+            
             return $query->where('meta_title','like', '%'. request('keyword') . '%');
         })
         ->when(request('keyword'), function($query){

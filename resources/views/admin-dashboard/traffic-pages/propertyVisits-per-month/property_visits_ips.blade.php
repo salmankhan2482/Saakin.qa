@@ -23,7 +23,7 @@
                                 <tr>
                                     
                                     <th>IP Addresses</th>
-                                    {{-- <th>Last Contacted</th> --}}
+                                    <th>Last Contacted</th>
                                     <th>Last Viewed</th>
                                 </tr>
                             </thead>
@@ -35,9 +35,9 @@
                                 <tr>
                                   
                                     <td>{{ $IPs->ip_address }}</td>
-                                    {{-- <td>
-                                        {{ $IPs->country }}
-                                    </td> --}}
+                                    <td>
+                                        {{ $IPs->country ??''}}
+                                    </td> 
                                     <td>{{ date('d-m-Y', strtotime($IPs->created_at)) ??'' }} &nbsp;&nbsp;  At  &nbsp;&nbsp;  {{ date('H:i:s', strtotime($IPs->created_at)) ??'' }}</td>
                                 </tr>
                                 

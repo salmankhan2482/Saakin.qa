@@ -26,11 +26,26 @@ class CityGuideController extends Controller
             return redirect('dashboard');
         }
 
-        $cities = City::paginate(10);
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            
+            $data['cities'] = City::
+            when($keyword, function($query){
+                return $query->where('name','like', '%'. request('keyword') . '%');
+            })
+            
+            ->orWhere('id', $keyword)
+            ->paginate(15);
+            $data['cities']->appends($_GET)->links();
+
+        }else{
+            $data['cities'] = City::paginate();
+        }
+
         
         $action = 'saakin_index';
 
-        return view('admin-dashboard.city-guide.index',compact('cities','action'));
+        return view('admin-dashboard.city-guide.index',compact('data','action'));
     }
 
     public function create()    {

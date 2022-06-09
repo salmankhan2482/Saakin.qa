@@ -23,11 +23,25 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        
-        $permissions = Permission::orderBy('id','DESC')->paginate(10);
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            
+            $data['permissions'] = Permission::
+            when($keyword, function($query){
+                return $query->where('name','like', '%'. request('keyword') . '%');
+            })
+            
+            ->orWhere('id', $keyword)
+            ->paginate(15);
+            $data['permissions']->appends($_GET)->links();
+
+        }else{
+            $data['permissions'] = Permission::paginate();
+        }
         
         $action = 'saakin_index';
-        return view('admin-dashboard.user-management.permissions.index',compact('permissions','action'));
+
+        return view('admin-dashboard.user-management.permissions.index',compact('data','action'));
     }
 
     /**

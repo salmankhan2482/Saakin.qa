@@ -7,6 +7,29 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                    <h4 class="card-title">Search Permission</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form action="{{ route('permissions.index') }}" method="GET">
+                            <div class="row">
+                                <div class="col-sm-4 offset-sm-2">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search">
+                                </div>
+                                <div class="col-sm-1 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm">
+                                        {{ trans('words.search') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
                     <h4 class="card-title">Permissions</h4>
                     <a href="{{ route('permissions.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
@@ -28,7 +51,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               @foreach ($permissions as $permission)
+                               @foreach ($data['permissions'] as $permission)
                                    <tr>
                                        <td>{{ $permission->id }}</td>
                                        <td>{{ $permission->name }}</td>
@@ -55,7 +78,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="9" class="text-center">
-                                        {{ $permissions->render() }}
+                                        {{ $data['permissions']->render() }}
                                     </td>
                                 </tr>
                             </tfoot>
