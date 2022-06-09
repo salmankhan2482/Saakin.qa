@@ -32,7 +32,7 @@ class BlogController extends Controller
             
             $data['blogs'] = Blog::
             when($keyword, function($query){
-                return $query->where('title', 'like', '%'.request('keyword').'%');
+                return $query->where('title','like', '%'. request('keyword') . '%');
             })
             ->when($category, function($query){
                 return $query->where('category_id', request('category'));
@@ -47,6 +47,7 @@ class BlogController extends Controller
         
         $data['blog-categories'] = BlogCategory::all();
         $action = 'saakin_index';
+
         return view('admin-dashboard.blog.index',compact('data', 'action'));
 
     }

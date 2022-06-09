@@ -60,7 +60,7 @@ class PropertiesController extends MainAdminController
             return $query->where('property_type', request('type'));
          })
          ->when(request('keyword'), function ($query) {
-            return $query->where('property_name', request('keyword'));
+            return $query->where('property_name','like', '%'. request('keyword') . '%');
          })
          ->when(request('status'), function ($query) {
             return $query->where('status', request('status'));
@@ -99,7 +99,7 @@ class PropertiesController extends MainAdminController
             $query->where('agency_id', auth()->user()->agency_id);
          })
          ->when(request('keyword'), function ($query) {
-            return $query->where('property_name', request('keyword'));
+            return $query->where('property_name', 'like', '%'. request('keyword') . '%');
          })
          ->when(request('status'), function ($query) {
             return $query->where('status', request('status'));

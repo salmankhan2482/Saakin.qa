@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Cities</h4>
+                    <h4 class="card-title">City Guide Details</h4>
                     <a href="{{ route('city_detail_create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">

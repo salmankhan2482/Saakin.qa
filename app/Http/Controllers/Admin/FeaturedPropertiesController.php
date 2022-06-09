@@ -26,7 +26,8 @@ class FeaturedPropertiesController extends MainAdminController
             $query->where("user_id",Auth::User()->id);
         })
         ->when(request('keyword'), function($query){
-            return $query->where('property_name', 'like', '%'.request('keyword').'%');
+            
+            return $query->where('property_name','like', '%'.request('keyword').'%');
         })
         ->when(request('purpose'), function($query){
             $query->where("property_purpose", request('purpose'));

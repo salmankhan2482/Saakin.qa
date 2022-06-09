@@ -600,7 +600,7 @@ return [
 
 					'admin/vendor/chart.js/Chart.bundle.min.js',
 
-					'admin/vendor/apexchart/apexchart.js',
+					// 'admin/vendor/apexchart/apexchart.js',
 
 					'admin/vendor/owl-carousel/owl.carousel.js',
 
@@ -610,11 +610,11 @@ return [
 
 					'admin/vendor/peity/jquery.peity.min.js',
 
-					'admin/js/dashboard/dashboard-1.js',
+					// 'admin/js/dashboard/dashboard-1.js',
 
-					'admin/vendor/chartist/js/chartist.min.js',
+					// 'admin/vendor/chartist/js/chartist.min.js',
 
-					'admin/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js',
+					// 'admin/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js',
 					
 					'admin/js/plugins-init/chartist-init.js',
 
@@ -637,17 +637,14 @@ return [
 					'admin/vendor/morris/raphael-min.js',
 
 					'admin/vendor/morris/morris.min.js',
-					
-
-					
+						
 
 				],
 
 
 
 				'saakin_create' => [
-
-					
+	
 
 					'admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js',
 

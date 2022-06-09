@@ -32,7 +32,24 @@ class AgencyController extends Controller
             return redirect('dashboard');
         }
 
-        $data['agencies'] = Agency::paginate(10);
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+        
+            
+            $data['agencies'] = Agency::
+            when($keyword, function($query){
+                return $query->where('name','like', '%'. request('keyword') . '%');
+            })
+            ->orWhere('id', $keyword)
+            ->paginate(15);
+
+            $data['agencies']->appends($_GET)->links();
+
+        }else{
+            $data['agencies'] = Agency::paginate();
+        }
+
+        
         return view('admin-dashboard.agency.index',compact('data','action'));
     }
 

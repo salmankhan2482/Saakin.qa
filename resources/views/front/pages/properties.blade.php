@@ -7,7 +7,7 @@
     @section('url', url()->current())
 @else
     @section('title', 'Properties in Qatar | Saakin.qa')
-    @section('description', $page_des)
+    @section('description', $landing_page_content->meta_description)
     @section('type', 'property')
     @section('url', url()->current())
 @endif
@@ -1555,7 +1555,7 @@
     <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
         <div class="container">
             @if ($properties->onFirstPage())
-                {!! $landing_page_content->page_content !!}
+                {!! $landing_page_content->page_content ??'' !!}
             @endif
         </div>
     </div>

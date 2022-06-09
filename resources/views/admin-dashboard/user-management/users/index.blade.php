@@ -11,7 +11,8 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        {!! Form::open(['url' => 'admin/users',  'id' => 'search', 'method' => 'get']) !!}
+                        <form action="{{ route('users.index') }}" method="GET">
+                        {{-- {!! Form::open(['url' => 'admin/users',  'id' => 'search', 'method' => 'get']) !!} --}}
                         <div class="row">
                             <div class="col-4 offset-2">
                                 <input type="text" class="form-control" name="keyword" placeholder="Search by name, mail">
@@ -29,7 +30,8 @@
                                 </button>
                             </div>
                         </div>
-                        {!! Form::close() !!}
+                        {{-- {!! Form::close() !!} --}}
+                        </form>
                     </div>
                 </div>
             </div>

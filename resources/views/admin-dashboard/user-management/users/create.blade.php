@@ -33,7 +33,7 @@
                     @endif
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Add User</h4>
+                    <h4 class="card-title">Add Member</h4>
                     <a href="{{route('users.index')}}">
                         <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
@@ -47,34 +47,13 @@
                                 <input type="text" name="name" value="{{ old('name') }}" class="form-control" required>
                         </div>
                         <div class="col-6">
-                            <label for="" class="control-label">{{trans('words.phone')}} *</label>
+                            <label for="" class="control-label">Phone *</label>
                                 <input type="text" name="phone" value="{{ old('phone') }}" class="form-control" required>
                         </div>
                         <div class="col-6">
-                            <label for="" class="control-label">Whatsapp Number *</label>
+                            <label for="" class="control-label">Whatsapp *</label>
                                 <input type="text" name="whatsapp" placeholder="Whatsapp Number" class="form-control" required>
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="control-label">Facebook</label>
-                                <input type="text" name="facebook" value="{{ old('facebook') }}" class="form-control">
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="control-label">Twitter</label>
-                                <input type="text" name="twitter" value="{{ old('twitter') }}" class="form-control">
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="control-label">Instagram</label>
-                                <input type="text" name="instagram" value="{{ old('instagram') }}" class="form-control">
-                        </div>
-                        <div class="col-6">
-                            <label for="" class="control-label">Linkedin</label>
-                                <input type="text" name="linkedin" value="{{ old('linkedin') }}" class="form-control">
-                        </div>
-                        <div class="col-12">
-                            <label for="" class="control-label">{{trans('words.about')}}</label>
-                                <textarea name="about" cols="50" rows="5" class="form-control">{{ old('about') }}</textarea>
-                        </div>
-        
+                        </div>        
                         <div class="col-6">
                             <label for="" class="control-label">{{trans('words.profile_picture')}}</label>
                             <div class="col-sm-6">
@@ -86,7 +65,7 @@
                             <label for="" class="control-label">{{trans('words.user_type')}} *</label>
                                 <select name="usertype" id="basic" class="show-tick form-control" onchange="toggleAgency(this.value);">
                                     <option value="Agents">{{trans('words.agent')}}</option>
-                                    <option value="User">{{trans('words.user')}}</option>
+                                    {{-- <option value="User">{{trans('words.user')}}</option> --}}
                                 </select>
                         </div>
                         

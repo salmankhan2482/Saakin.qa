@@ -7,6 +7,29 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
+                    <h4 class="card-title">Search City</h4>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form action="{{ route('cities.index') }}" method="GET">
+                            <div class="row">
+                                <div class="col-sm-4 offset-sm-2">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search">
+                                </div>
+                                <div class="col-sm-1 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm">
+                                        {{ trans('words.search') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
                     <h4 class="card-title">Cities</h4>
                     <a href="{{ route('cities.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
@@ -28,7 +51,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($cities as $i => $city)
+                                @foreach ($data['cities'] as $i => $city)
                                     <tr>
                                         <td>{{ $city->name }}</td>
                                         <td>
@@ -55,7 +78,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="9" class="text-center">
-                                        {{ $cities->render() }}
+                                        {{ $data['cities']->render() }}
                                     </td>
                                 </tr>
                             </tfoot>

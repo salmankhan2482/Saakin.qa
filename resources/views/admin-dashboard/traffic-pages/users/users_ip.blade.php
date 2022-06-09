@@ -11,7 +11,7 @@
             </div>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">User IPs</h4>
+                    <h4 class="card-title">Visitor IPs</h4>
                     <a href="{{route('trafficUsers')}}">
                         <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
@@ -24,7 +24,7 @@
                                     <th>ID</th>
                                     <th>IP Addresses</th>
                                     {{-- <th>Location</th> --}}
-                                    <th>Date & Time</th>
+                                    <th>Last Viewed</th>
                                 </tr>
                             </thead>
                             <tbody>

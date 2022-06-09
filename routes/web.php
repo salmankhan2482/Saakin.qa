@@ -429,3 +429,13 @@ Route::post('site-register', 'SiteAuthController@siteRegisterPost');
 
 //save search controller
 Route::resource('save-search', 'SaveSearchController');
+
+
+Route::get('get-ip-details', function () {
+	$ip = '31.11.55.255';
+    $ip2 = request()->ip();
+    dump($ip);
+    dd($ip2);
+    $data = \Location::get($ip);
+    dd($data);
+});

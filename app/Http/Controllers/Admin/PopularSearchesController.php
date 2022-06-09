@@ -19,7 +19,23 @@ class PopularSearchesController extends Controller
      */
     public function index()
     {
-        $data['popularSearches'] = PopularSearches::paginate(10);
+
+        if (isset($_GET['keyword'])) {
+            $keyword = $_GET['keyword'];
+            
+            $data['popularSearches'] = PopularSearches::
+            when($keyword, function($query){
+                return $query->where('name','like', '%'. request('keyword') . '%');
+            })
+            
+            ->orWhere('id', $keyword)
+            ->paginate(15);
+            $data['popularSearches']->appends($_GET)->links();
+
+        }else{
+            $data['popularSearches'] = PopularSearches::paginate();
+        }
+
         $action = 'saakin_index';
         return view('admin-dashboard.popular-searches.index', compact('data','action'));
     }
