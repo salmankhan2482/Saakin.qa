@@ -293,110 +293,127 @@ class PropertiesController extends Controller
         
         if(!empty(request('property_purpose')) && empty(request('property_type')) && empty(request('city')) && empty(request('subcity')))
         {
-            dd("AA");
-            if(request('max_price') ==null)
-            {
-                $landing_page_content = LandingPage::find(53);
-                $page_des = Str::limit($landing_page_content->page_content, 170, '...');
-            }
-            // dd("Empty Property_purpose, Property_Type, City, Subcity");
+            // dd("Property Purpose");
+
             $landing_page_content = LandingPage::where('property_purposes_id',$property_purpose_id)
             ->where('property_types_id', null)
             ->where('property_cities_id', null)
             ->where('property_sub_cities_id', null)
             ->first();
+            if($landing_page_content==null)
+            {
+              $page_des=getcong('site_description');
+            }
+            else
+            {
+              $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+            }
+        }
+        elseif(!empty(request('property_purpose')) && !empty(request('property_type')) && empty(request('city')) && empty(request('subcity')))
+        {
+            // dd("Property Purpose, Type");
+
+                $landing_page_content = LandingPage::where('property_purposes_id',$property_purpose_id)
+                ->where('property_types_id', request('property_type'))
+                ->where('property_cities_id', null)
+                ->where('property_sub_cities_id', null)
+                ->first();
+                if($landing_page_content==null)
+          {
+            $page_des=getcong('site_description');
+          }
+          else
+          {
+            $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+          }
         
-          $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+          
         }
-        elseif(empty(request('city')) && empty(request('subcity')))
+        elseif(!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && empty(request('subcity')))
         {
-            dd("Empty City, Subcity");
-          $landing_page_content = LandingPage::where('property_purposes_id',$property_purpose_id)
-          ->where('property_types_id', request('property_type'))
-          ->where('property_cities_id', null)
-          ->where('property_sub_cities_id', null)
-          ->first();
-          $page_des = Str::limit($landing_page_content->page_content, 170, '...');
-        }
-        elseif(empty(request('subcity')))
-        {
-            dd("Empty Subcity");
+            // dd("Property Purpose, Type, City");
+
           $landing_page_content = LandingPage::where('property_purposes_id',$property_purpose_id)
           ->where('property_types_id', request('property_type'))
           ->where('property_cities_id', request('city'))
           ->where('property_sub_cities_id', null)
           ->first();
-          $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+          if($landing_page_content==null)
+          {
+            $page_des=getcong('site_description');
+          }
+          else
+          {
+            $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+          }
         }
-        elseif(empty(request('property_type')) && empty(request('city')) && !empty(request('subcity')))
+        elseif(!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && !empty(request('subcity')))
         {
-            dd("Properties Page");
+            // dd("Property Purpose, Property Type, Property City, Property Subcity");
+
           $landing_page_content = LandingPage::where('property_purposes_id',$property_purpose_id)
           ->where('property_types_id', request('property_type'))
           ->where('property_cities_id', request('city'))
           ->where('property_sub_cities_id', request('subcity'))
           ->first();
-          $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+          if($landing_page_content==null)
+          {
+            $page_des=getcong('site_description');
+          }
+          else
+          {
+            $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+          }
+         
         }
         else
         {
-            dd("ELSE");
-            $landing_page_content = LandingPage::where('property_purposes_id',$property_purpose_id)
-            ->where('property_types_id', request('property_type'))
-            ->where('property_cities_id', request('city'))
-            ->where('property_sub_cities_id', request('subcity'))
+            // dd("Properties Page Content");
+
+            $landing_page_content = LandingPage::where('property_purposes_id',null)
+            ->where('property_types_id',null)
+            ->where('property_cities_id',null)
+            ->where('property_sub_cities_id',null)
             ->first();
+            if($landing_page_content==null)
+          {
+            $page_des=getcong('site_description');
+          }
+          else
+          {
             $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+          }
         }
 
-        // dd($landing_page_content);
 
-        // if(request('property_purpose')=='Sale')
-        // {
-        //     if(request('property_purpose')!='' && request('property_type')=='' && request('city')=='' && request('subcity')=='')
-        // {
-        //     $landing_page_content = LandingPage::where('property_purposes_id',2)->get();
 
-        //     // $page_des = Str::limit($landing_page_content->page_content, 170, '...');
-            
-        //     dd($landing_page_content);
+        // $properties_same_area = Properties::where('status',1)
+        // ->where('city', request('city'))
+        // ->where('subcity', request('subcity'))
+        // ->where('town',  request('town'))
+        // ->where('area',  request('area'))->get();
 
+        // if(request('city') && )
+        // $address =  '';
+        // if(request('area')){
+        //     if(request('city') && request('subcity')){
+        //         $address = $property->propertyCity->name.', '.$property->propertySubCity->name.', '.$property->propertyTown->name;
+        //     }
+        // }else{
+        //     if($property->city && $property->subcity){
+        //         $address = $property->propertyCity->name.', '.$property->propertySubCity->name;
+        //     }
         // }
-        // else if(request('property_purpose')!='' && request('property_type')!='' && request('city')=='' && request('subcity')=='')
-        // {
-        //     $landing_page_content = LandingPage::where('property_types_id',request('property_type'))
-        //                                    ->where('property_purposes_id',2)
-        //                                    ->get();
-
-        //     // $page_des = Str::limit($landing_page_content->page_content, 170, '...');
-            
-        //     dd($landing_page_content);
-        // }
-        // else if(request('property_purpose')!='' && request('property_type')!='' && request('city')!='' && request('subcity')=='')
-        // {
-        //     $landing_page_content = LandingPage::where('property_types_id',request('property_type'))
-        //                                    ->where('property_purposes_id',2)
-        //                                    ->where('property_cities_id',request('city'))
-        //                                    ->get();
-        //                                    dd($landing_page_content);
-        // // $page_des = Str::limit($landing_page_content->page_content, 170, '...');
-        // }
-        // else if(request('property_purpose')!='' && request('property_type')!='' && request('city')!='' && request('subcity')!='')
-        // {
-        //     $landing_page_content = LandingPage::where('property_types_id',request('property_type'))
-        //                                    ->where('property_purposes_id',2)
-        //                                    ->where('property_cities_id',request('city'))
-        //                                    ->where('property_sub_cities_id',request('subcity'))
-        //                                    ->get();
-        //                                    dd($landing_page_content);
-
         
-        // }
+        // $properties = Properties::where('address', $property->address)
+        //             ->where("status", "1")
+        //             ->where("property_purpose", $property->property_purpose)
+        //             ->where("id", "!=", $id)
+        //             ->where('property_type', $property->property_type)
+        //             ->orderBy('land_area', 'asc')
+        //             ->get();
 
-        // }
-    
-       
-        
+
 
         $data['keyword'] = $this->findKeyWord(request('city'), request('subcity'), request('town'), request('area'));
         $furnishing = ''; $name = ''; $link = '';

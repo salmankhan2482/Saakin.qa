@@ -1033,7 +1033,7 @@
                             {{ $page_info }}
                             <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                         </h1>
-                        @if ((new \Jenssegers\Agent\Agent())->isMobile())
+                        @if ((new \Jenssegers\Agent\Agent())->isMobile() && !(new \Jenssegers\Agent\Agent())->isTablet())
                         <div class="">
                             <input type="checkbox" class="btn-check" autocomplete="off">
                             <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
