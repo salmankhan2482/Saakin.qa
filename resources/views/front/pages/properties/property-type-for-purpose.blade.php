@@ -1033,7 +1033,7 @@
                         <h1 class="h6">{{ $heading_info ?? '' }}
                             <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
                         </h1>
-                        @if ((new \Jenssegers\Agent\Agent())->isMobile())
+                        @if ((new \Jenssegers\Agent\Agent())->isMobile() && !(new \Jenssegers\Agent\Agent())->isTablet())
                         <div class="">
                             <input type="checkbox" class="btn-check" autocomplete="off">
                             <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
@@ -1144,10 +1144,10 @@
                                 <div class="property-item">
                                     <div class="pro-slider">
                                         <div class="pro-slider-item">
-                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                            @if ((new \Jenssegers\Agent\Agent())->isMobile()) 
                                                 <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
                                                     alt="{{ $property->property_name }}">
-                                            @else
+                                            @elseif ((new \Jenssegers\Agent\Agent())->isDesktop() || (new \Jenssegers\Agent\Agent())->isTablet())
                                                 <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
                                                     alt="{{ $property->property_name }}">
                                             @endif
@@ -1157,10 +1157,10 @@
                                             @foreach ($property->gallery as $gallery)
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
-                                                        @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                                        @if ((new \Jenssegers\Agent\Agent())->isMobile())
                                                             <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
                                                                 alt="{{ $property->property_name }}">
-                                                        @else
+                                                        @elseif ((new \Jenssegers\Agent\Agent())->isDesktop() || (new \Jenssegers\Agent\Agent())->isTablet())
                                                             <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
                                                                 alt="{{ $property->property_name }}">
                                                         @endif
@@ -1428,6 +1428,9 @@
             @endif
         </div>
     </div>
+    <button class="btn btn-primary scrollTopBtn" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
     @include('front.pages.include.saveSearchModal')
 @endsection
 
@@ -1453,6 +1456,47 @@
 
 @push('scripts')
     <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
+    <script>
+        function scrollToTop() {
+            $(window).scrollTop(0);
+        }
+
+        $(document).ready(function() {
+
+            $(".pro-same-slider").slick({
+                arrows: false,
+                dots: false,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                slidesToShow: 5,
+                slidesToScroll: 5,
+                responsive: [{
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+
+        });
+    </script>
 
     <script type="text/javascript">
         $(document).ready(function() {

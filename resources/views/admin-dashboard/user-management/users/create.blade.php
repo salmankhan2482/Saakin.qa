@@ -65,7 +65,7 @@
                             <label for="" class="control-label">{{trans('words.user_type')}} *</label>
                                 <select name="usertype" id="basic" class="show-tick form-control" onchange="toggleAgency(this.value);">
                                     <option value="Agents">{{trans('words.agent')}}</option>
-                                    {{-- <option value="User">{{trans('words.user')}}</option> --}}
+                                    <option value="User">{{trans('words.user')}}</option>
                                 </select>
                         </div>
                         

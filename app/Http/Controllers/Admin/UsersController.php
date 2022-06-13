@@ -135,12 +135,12 @@ class UsersController extends MainAdminController
 		$user->name = $inputs['name'];
 		$user->email = $inputs['email'];
 		$user->phone = $inputs['phone'];
-  		$user->about = $inputs['about'];
+  		// $user->about = $inputs['about'];
         $user->whatsapp = $inputs['whatsapp'];
-		$user->facebook = $inputs['facebook'];
-		$user->twitter = $inputs['twitter'];
-		$user->instagram = $inputs['instagram'];
-		$user->linkedin = $inputs['linkedin'];
+		// $user->facebook = $inputs['facebook'];
+		// $user->twitter = $inputs['twitter'];
+		// $user->instagram = $inputs['instagram'];
+		// $user->linkedin = $inputs['linkedin'];
         $user->status = $inputs['status'];
 		$user->password= bcrypt($inputs['password']);
 	    
@@ -170,7 +170,7 @@ class UsersController extends MainAdminController
                 $inputs['agency_'] = $agencyName;
             }
             Mail::send('emails.agent', $inputs, function ($message) use ($userEmail, $agencyName) {
-                $message->from('hello@saakin.com', 'Saakin Inc.');
+                $message->from('hello@saakin.qa', 'Saakin Qatar.');
                 $message->subject('Your agent account has been created');
                 $message->to($userEmail);
                 

@@ -96,7 +96,7 @@
       @endif
 
       <div class="position-relative">
-        <div class="gallery_btn position-absolute bottom-0 start-0 p-3 d-none d-md-block" style="z-index: 1;">
+        <div class="gallery_btn position-absolute bottom-0 start-0 p-3 d-none d-md-block @if ((new \Jenssegers\Agent\Agent())->isMobile()) mb-3 @endif" style="z-index: 1;">
           <a href="javascript:void(0)" data-fancybox-trigger="gallery" data-fancybox-index="0" class="btn btn-sm btn-primary">
             View Gallery
           </a>
@@ -474,7 +474,7 @@
             @endif
           </div>
 
-          @if (!(new \Jenssegers\Agent\Agent())->isMobile())
+          {{-- @if (!(new \Jenssegers\Agent\Agent())->isMobile()) --}}
 
           <div class="mt-4 d-none d-sm-block">
             <h5 class="border-bottom pb-3 mb-2">Share This Property</h5>
@@ -532,10 +532,10 @@
             </div>
           </div>
 
-          @endif
+          {{-- @endif --}}
         </div>
 
-        <div class="mt-4 d-none d-lg-block">
+        <div class="mt-4 d-none d-sm-block">
           <div class="card sticky-lg-top call-email-block" tabindex="1">
             <div class="card-body">
               <h2 class="h3">
@@ -682,14 +682,13 @@
       </div>
 
         @if (count($properties) > 0)
-
         <div class="col-lg-8 mt-4">
           <h3 class="mb-4">{{ $properties->count() }} More Properties in the Same Area</h3>
           <div class="@if ((new \Jenssegers\Agent\Agent())->isMobile()) pro-same-m d-flex can-scroll-x spbwx16 @else pro-same-slider @endif">
             @foreach ($properties as $propx)
               <div class="single-property-box border">
                 <div class="property-item">
-                  <a class="property-img stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                  <a style="--img-container-height: 155px" class="property-img stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
                     @if ($propx->featured_image)
                       <img src="{{ URL::asset('upload/properties/thumb_' . $propx->featured_image) }}" alt="{{ $propx->property_name }}">
                     @else
@@ -856,6 +855,7 @@
         speed: 10,
         slidesToShow: 1,
         slidesToScroll: 1,
+        infinite: false,
       });
     });
   </script>

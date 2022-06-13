@@ -1,4 +1,4 @@
-﻿@extends("front.layouts.main")
+﻿@extends('front.layouts.main')
 @if ($landing_page_content != null)
     @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
     @section('description', $landing_page_content->meta_description)
@@ -7,7 +7,7 @@
     @section('url', url()->current())
 @else
     @section('title', 'Properties in Qatar | Saakin.qa')
-    @section('description', $landing_page_content->meta_description)
+    @section('description', getcong('site_description'))
     @section('type', 'property')
     @section('url', url()->current())
 @endif
@@ -192,12 +192,16 @@
                                                         value="1000000">QAR
                                                         1,00,0000
                                                     </option>
-                                                    <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
+                                                    <option
+                                                        {{ $request->max_price == request('input_max_price') ? 'selected' : '' }}
+                                                        value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                          <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}"
-                                          class="input_label form-control prepended-form-control mt-1" style="display:none;">
+                                        <input type="text" name="input_max_price" placeholder="Max Price"
+                                            value="{{ request('input_max_price') ?? '' }}"
+                                            class="input_label form-control prepended-form-control mt-1"
+                                            style="display:none;">
                                     </div>
                                 </div>
                             </div>
@@ -662,11 +666,16 @@
                                                         value="850000">QAR 8,50,000</option>
                                                     <option {{ $request->max_price == '1000000' ? 'selected' : '' }}
                                                         value="1000000">QAR 1,00,0000</option>
-                                                    <option {{ $request->max_price == request('input_max_price') ? 'selected' : '' }} value="Other">Other</option>
+                                                    <option
+                                                        {{ $request->max_price == request('input_max_price') ? 'selected' : '' }}
+                                                        value="Other">Other</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <input type="text" name="input_max_price" placeholder="Max Price" value="{{ request('input_max_price') ?? '' }}" class="input_label form-control prepended-form-control mt-1" style="display:none;">
+                                        <input type="text" name="input_max_price" placeholder="Max Price"
+                                            value="{{ request('input_max_price') ?? '' }}"
+                                            class="input_label form-control prepended-form-control mt-1"
+                                            style="display:none;">
                                     </div>
 
                                     <div class="mb-3 border-bottom">
@@ -1047,16 +1056,15 @@
                         </h1>
 
                         @if ((new \Jenssegers\Agent\Agent())->isMobile())
-                        <div class="">
-                            <input type="checkbox" class="btn-check" autocomplete="off">
-                            <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
-                                @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
-                                <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
-                                    id="save-search-icon"></i>
-                                <span
-                                    id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
-                            </label>
-                        </div>
+                            <div class="">
+                                <input type="checkbox" class="btn-check" autocomplete="off">
+                                <label class="btn btn-outline-primary btn-sm" id="saveSearchLabel"
+                                    @if ($saveSearch == 0) type="button" data-bs-toggle="modal" data-bs-target="{{ auth()->check() ? '#saveSearchModal' : '#user-login-popup' }}" @endif>
+                                    <i class="{{ $saveSearch == 1 ? 'fa yellowStar' : 'far' }} fa-star"
+                                        id="save-search-icon"></i>
+                                    <span id="saveSearchText">{{ $saveSearch == 1 ? 'Saved' : 'Save Search' }}</span>
+                                </label>
+                            </div>
                         @endif
                     </div>
 
@@ -1270,16 +1278,15 @@
                 @elseif(request('property_purpose') && request('property_type') == '' && request('city') == '' && request('subcity') == '' && request('town') == '' && request('area') == '')
                     <div class="location-wrap">
                         @foreach ($propertyTypes as $propertyType)
-                        
                             <div class="location-item {{ $loop->index > 8 ? 'moreLess' : '' }}">
                                 <a
                                     href="{{ url("properties?featured=&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$propertyType->id&min_price=$request->min_price&max_price=$request->max_price&input_max_price=$request->input_max_price&min_area=$request->min_area&max_area=$request->max_area&bedrooms=$request->bedrooms&bathrooms=$request->bathrooms&furnishings=$request->furnishings") }}">
                                     {{-- Capital Breadcrumbs --}}
                                     <?php
-                                         $p_types = str_replace("-"," ",$propertyType->plural);
-                                         $p_types = ucwords($p_types);
+                                    $p_types = str_replace('-', ' ', $propertyType->plural);
+                                    $p_types = ucwords($p_types);
                                     ?>
-                                    
+
                                     {{ $p_types }} <span>({{ $propertyType->pcount }})</span>
 
                                 </a>
@@ -1309,8 +1316,7 @@
                                 $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
                                 $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
                             @endphp
-                            <div class="single-property-box horizontal-view"
-                                @if (!(new \Jenssegers\Agent\Agent())->isMobile()) @endif>
+                            <div class="single-property-box horizontal-view" @if (!(new \Jenssegers\Agent\Agent())->isMobile())  @endif>
                                 {{--  --}}
                                 <div class="property-item">
                                     <div class="pro-slider">
@@ -1547,15 +1553,95 @@
                     Record Not Found!
                 </div>
 
-            @endif
+                @if (count($properties))
+                    <h1>Testing </h1>
+                    <div class="col-lg-8 mt-4">
+                        <h3 class="mb-4">{{ $properties->count() }} More Properties in the Same Area</h3>
+                        <div
+                            class="@if ((new \Jenssegers\Agent\Agent())->isMobile()) pro-same-m d-flex can-scroll-x spbwx16 @else pro-same-slider @endif">
+                            @foreach ($properties as $propx)
+                                <div class="single-property-box border">
+                                    <div class="property-item">
+                                        <a class="property-img stretched-link"
+                                            href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                                            @if ($propx->featured_image)
+                                                <img src="{{ URL::asset('upload/properties/thumb_' . $propx->featured_image) }}"
+                                                    alt="{{ $propx->property_name }}">
+                                            @else
+                                                <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}"
+                                                    alt="{{ $propx->property_name }}">
+                                            @endif
+                                        </a>
+                                        <ul class="feature_text">
+                                            @if ($propx->featured_property == 1)
+                                                <li class="feature_cb"><span> Featured</span>
+                                                </li>
+                                            @endif
+                                            @if (!empty($propx->property_purpose))
+                                                <li class="feature_or">
+                                                    <span>{{ $propx->property_purpose }}</span>
+                                                </li>
+                                            @endif
 
+                                        </ul>
+                                        <div class="property-author-wrap">
+                                            <div class="property-author">
+                                                <span>{{ $propx->getPrice() }}
+                                                    @if ($propx->property_purpose == 'For Rent' || $propx->property_purpose == 'Rent')
+                                                        / Month
+                                                    @endif
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="property-title-box">
+                                        <a class="text-decoration-none stretched-link"
+                                            href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                                            <h5 class="property-card__property-title">
+                                                {{ \Illuminate\Support\Str::limit($property->property_name) }}
+                                            </h5>
+                                        </a>
+                                        <div class="property-location">
+                                            <p>
+                                                {{ $propx->propertiesTypes->types }}
+                                                <br>
+                                                <span class="hideAddress">
+                                                    {{ $property->address }}
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                        <ul class="property-feature">
+                                            @if ($propx->getProperty_type())
+                                                <li class="me-1">
+                                                    <i class="fas fa-bed fas-icon"></i>
+                                                    <span>{{ $propx->bedrooms }} </span>
+                                                </li>
+                                                <li class="me-1">
+                                                    <i class="fas fa-bath fas-icon"></i>
+                                                    <span>{{ $propx->bathrooms }}
+                                                    </span>
+                                                </li>
+                                            @endif
+                                            <li class="me-1">
+                                                <i class="fas fa-chart-area fas-icon"></i>
+                                                <span> {{ $propx->getSqm() }} </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endif
         </div>
     </div>
 
     <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
         <div class="container">
             @if ($properties->onFirstPage())
-                {!! $landing_page_content->page_content ??'' !!}
+                {!! $landing_page_content->page_content ?? '' !!}
             @endif
         </div>
     </div>
@@ -1578,7 +1664,6 @@
             --btn-hover-border-color: #e8e1e0;
             --btn-hover-text-color: #403b45;
         }
-
     </style>
 @endpush
 
@@ -1716,6 +1801,5 @@
                 }
             }
         }
-
     </script>
 @endpush
