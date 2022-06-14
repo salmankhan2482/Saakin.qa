@@ -58,8 +58,7 @@
                                 <td>
                                     <a class="btn btn-success rounded btn-xs action-btn"
                                     href="{{ url('admin/traffic/trafficUsersIPs/'.$user->id.'?from='.request('from').'&to='.request('to')) }}">
-                                     {{-- href="{{ url('admin/traffic/visits_per_month_IPs/'.$user->id ??"") }}"> --}}
-                                            <i class="fa fa-eye"></i>
+                                       <i class="fa fa-eye"></i>
                                     </a>
                             </td>
                             </tr>
@@ -67,7 +66,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="1" class="text-center">
                                         {{ $users->render() }}
                                     </td>
                                 </tr>

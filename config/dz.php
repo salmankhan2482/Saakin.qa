@@ -353,7 +353,6 @@ return [
 					'admin/vendor/pickadate/picker.js',
 					'admin/vendor/pickadate/picker.date.js',
 					'admin/js/plugins-init/bs-daterange-picker-init.js',
-					'admin/js/plugins-init/material-date-picker-init.js',
 					'admin/js/plugins-init/pickadate-init.js',
 
 				],
