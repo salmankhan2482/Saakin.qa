@@ -1355,6 +1355,9 @@
             @endif
         </div>
     </div>
+    <button class="btn btn-primary scrollTopBtn" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
     @include('front.pages.include.saveSearchModal')
 @endsection
 
@@ -1381,6 +1384,48 @@
 @push('scripts')
     <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
 
+
+    <script>
+        function scrollToTop() {
+            $(window).scrollTop(0);
+        }
+
+        $(document).ready(function() {
+
+            $(".pro-same-slider").slick({
+                arrows: false,
+                dots: false,
+                autoplay: true,
+                autoplaySpeed: 2000,
+                slidesToShow: 5,
+                slidesToScroll: 5,
+                responsive: [{
+                        breakpoint: 991,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
+
+
+        });
+    </script>
     <script type="text/javascript">
     $(document).ready(function() {
             $("#save-search").on('click', function() {
