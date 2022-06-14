@@ -309,7 +309,6 @@
   });
 
   $(document).ready(function() {
-
    // for max price other option
    if($('.maxPriceSelect option:selected').text() == "Other"){
       $('.input_label').show();

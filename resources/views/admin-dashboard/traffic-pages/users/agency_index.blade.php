@@ -1,7 +1,6 @@
     {{-- Extends layout --}}
     @extends('admin-dashboard.layouts.master')
 
-
     {{-- Content --}}
     @section('content')
         <div class="container-fluid">
@@ -48,16 +47,19 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-xl-6 col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">Label placement</h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="label-placement-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
-                    </div>
-                </div>
-            </div> --}}
+            
+            <div class="col-xl-12 col-lg-12">
+               <div class="card">
+                  <div class="card-header">
+                        <h4 class="card-title">Unique Users Per Month</h4>
+                  </div>
+                  <div class="card-body">
+                        <div id="horizontal-bar-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
+                  </div>
+               </div>
+            </div>
+            
+            
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
@@ -76,22 +78,20 @@
                                 <tbody>
                                     @foreach ($users as $i => $user)
                                         <tr>
-                                            {{-- <td>@dd($user)</td> --}}
                                             <td>{{ $user->country ?? 'Null Country' }}</td>
                                             <td>{{ $user->totalUsers }}</td>
-																						<td>
-																							<a class="btn btn-success rounded btn-xs action-btn"
-																							href="{{ url('admin/traffic/trafficUsersIPs/'.$user->id	.'?from='.request('from').'&to='.request('to')) }}">
-																							 {{-- href="{{ url('admin/traffic/visits_per_month_IPs/'.$user->id ??"") }}"> --}}
-																									<i class="fa fa-eye"></i>
-																							</a>
-																					</td>
+                                             <td>
+                                                <a class="btn btn-success rounded btn-xs action-btn"
+                                                   href="{{ url('admin/traffic/trafficUsersIPs/'.$user->id	.'?from='.request('from').'&to='.request('to')) }}">
+                                                      <i class="fa fa-eye"></i>
+                                                   </a>
+                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="9" class="text-center">
+                                        <td colspan="2" class="text-center">
                                             {{ $users->render() }}
                                         </td>
                                     </tr>
@@ -103,33 +103,70 @@
             </div>
         </div>
     @endsection
-    @section('scripts')
-        <script>
-            (function($) {
+   @section('scripts')
 
-                    var labelPlacementChart = function() {
-                        //Label placement
+<script src="{{ asset('admin/vendor/chartist/js/chartist.min.js') }}"></script>
+<script src="{{ asset('admin/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
 
-                        new Chartist.Bar('#label-placement-chart', {
-                            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                            series: [
-                                [5, 4, 3, 7, 5, 10, 3],
-                                [3, 2, 9, 5, 4, 6, 4]
-                            ]
-                        }, {
-                            axisX: {
-                                // On the x-axis start means top and end means bottom
-                                position: 'start'
-                            },
-                            axisY: {
-                                // On the y-axis start means left and end means right
-                                position: 'end'
-                            },
-                            plugins: [
-                                Chartist.plugins.tooltip()
-                            ]
+<script>
+   (function($) {
+    /* "use strict" */
 
-                        })(jQuery);
-                    }   
-        </script>
-    @endsection
+
+ var dzChartlist = function(){
+	var screenWidth = $(window).width();
+	var horizontalBarChart = function(){
+		//Horizontal bar chart
+  
+		new Chartist.Bar('#horizontal-bar-chart', {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+				series: [
+				   [
+                  {{ $data['UniqueUsersPerJan'] }}, {{ $data['UniqueUsersPerFeb'] }}, {{ $data['UniqueUsersPerMar'] }}, {{ $data['UniqueUsersPerApr'] }}, {{ $data['UniqueUsersPerMay'] }}, {{ $data['UniqueUsersPerJune'] }}, {{ $data['UniqueUsersPerJuly'] }}, {{ $data['UniqueUsersPerAug'] }},  {{ $data['UniqueUsersPerSep'] }}, {{ $data['UniqueUsersPerOct'] }}, {{ $data['UniqueUsersPerNov'] }}, {{ $data['UniqueUsersPerDec'] }} 
+               ],
+				]
+			  }, {
+				seriesBarDistance: 10,
+				reverseData: true,
+				horizontalBars: true,
+				axisY: {
+				  offset: 70,
+				},
+				plugins: [
+				  Chartist.plugins.tooltip(),
+				]
+			  });
+	}
+
+	
+	/* Function ============ */
+		return {
+			init:function(){
+			},
+			
+			
+			load:function(){
+				horizontalBarChart();
+			},
+			
+			resize:function(){
+				horizontalBarChart();
+			}
+		}
+	
+	}();
+
+	jQuery(document).ready(function(){
+	});
+		
+	jQuery(window).on('load',function(){
+		dzChartlist.load();
+	});
+
+	jQuery(window).on('resize',function(){
+		dzChartlist.resize();
+	});     
+
+})(jQuery);
+</script>
+@endsection

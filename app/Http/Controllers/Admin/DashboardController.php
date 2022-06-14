@@ -230,8 +230,8 @@ class DashboardController extends MainAdminController
          ->groupBy("property_cities.id")
          ->get();
 
-
-         foreach ($months as $key => $value) {
+      // Email Call and Whatsapp per month of  whole year 
+      foreach ($months as $key => $value) {
          $data['EmailPer'.$value] = ClickCounters::
          when(auth()->user()->usertype == 'Agency', function($query){
                $query->where("agency_id", Auth::User()->agency_id);
@@ -240,33 +240,24 @@ class DashboardController extends MainAdminController
          ->whereYear('created_at', Carbon::now()->year)
          ->whereMonth('created_at', $key)
          ->count();
-         }
 
-
-      
-      foreach ($months as $key => $value) {
-      $data['CallPer'.$value] = ClickCounters::
-      when(auth()->user()->usertype == 'Agency', function($query){
+         $data['CallPer' . $value] = ClickCounters::when(auth()->user()->usertype == 'Agency', function ($query) {
             $query->where("agency_id", Auth::User()->agency_id);
-      })
-      ->where('button_name','Call')
-      ->whereYear('created_at', Carbon::now()->year)
-      ->whereMonth('created_at', $key)
-      ->count();
+         })
+         ->where('button_name', 'Call')
+         ->whereYear('created_at', Carbon::now()->year)
+         ->whereMonth('created_at', $key)
+         ->count();
+
+         $data['WhatsAppPer' . $value] = ClickCounters::when(auth()->user()->usertype == 'Agency', function ($query) {
+            $query->where("agency_id", Auth::User()->agency_id);
+         })
+         ->where('button_name', 'WhatsApp')
+         ->whereYear('created_at', Carbon::now()->year)
+         ->whereMonth('created_at', $key)
+         ->count();
       }
 
-
-      //  dd($data['CallThisYear']);
-      foreach ($months as $key => $value) {
-      $data['WhatsAppPer'.$value] = ClickCounters::
-      when(auth()->user()->usertype == 'Agency', function($query){
-            $query->where("agency_id", Auth::User()->agency_id);
-      })
-      ->where('button_name','WhatsApp')
-      ->whereYear('created_at', Carbon::now()->year)
-      ->whereMonth('created_at', $key)
-      ->count();
-      }
       
       $action = 'saakin_dashboard';
       return view('admin-dashboard.index', compact('data', 'action', 'pieChart'));

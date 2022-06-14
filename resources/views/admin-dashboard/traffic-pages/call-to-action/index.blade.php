@@ -51,18 +51,6 @@
             </div>
         </div>
 
-        {{-- graph chart stalked bar--}}
-         <div class="col-xl-12 col-lg-12">
-            <div class="card">
-               <div class="card-header">
-                     <h4 class="card-title">Stacked bar chart</h4>
-               </div>
-               <div class="card-body">
-                     <div id="stacked-bar-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
-               </div>
-            </div>
-         </div>
-
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -94,88 +82,11 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            {{-- <tfoot>
-                                <tr>
-                                    <td colspan="9" class="text-center">
-                                        {{ $data['clickCounters']->render() }}
-                                    </td>
-                                </tr>
-                            </tfoot> --}}
+                            
                         </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
-@section('scripts')
-   <script src="{{ asset('admin/vendor/chartist/js/chartist.min.js') }}"></script>
-   <script src="{{ asset('admin/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}"></script>
-   <script src="{{ asset('admin/js/plugins-init/chartist-init.js') }}"></script>
-
-   <script>
-   
-   (function($) {
-    /* "use strict" */
-   var dzChartlist = function(){
-   var screenWidth = $(window).width();
-   var stackedBarChart = function(){
-		 //Stacked bar chart  
-		new Chartist.Bar('#stacked-bar-chart', {
-			labels: ['Q1', 'Q2', 'Q3', 'Q4','Q5', 'Q6', 'Q7', 'Q8','Q9', 'Q10', 'Q11', 'Q12'],
-			series: [
-			  [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
-			  [21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32],
-			  [31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42]
-			]
-		  }, {
-			stackBars: true,
-			axisY: {
-			  labelInterpolationFnc: function(value) {
-				return (value / 100);
-            console.log(value);
-			  }
-			},
-			plugins: [
-			  Chartist.plugins.tooltip()
-			]
-		}).on('draw', function(data) {
-			if(data.type === 'bar') {
-			  data.element.attr({
-				style: 'stroke-width: 30px'
-			  });
-			}
-		});
-	}
-	
-	/* Function ============ */
-		return {
-			init:function(){
-			},
-			
-			load:function(){
-				stackedBarChart();
-			},
-			
-			resize:function(){
-				stackedBarChart();
-			}
-		}
-	
-	}();   
-
-   jQuery(document).ready(function(){
-	});
-		
-	jQuery(window).on('load',function(){
-		dzChartlist.load();
-	});
-
-	jQuery(window).on('resize',function(){
-		dzChartlist.resize();
-	});  
-
-})(jQuery);
-
-   </script>
 @endsection

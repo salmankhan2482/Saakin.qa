@@ -69,7 +69,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="3" class="text-center">
                                         {{ $data['propertyVisitsPerMonth']->render() }}
                                     </td>
                                 </tr>
