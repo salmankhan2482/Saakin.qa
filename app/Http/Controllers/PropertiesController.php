@@ -40,15 +40,10 @@ use Stevebauman\Location\Facades\Location;
 
 class PropertiesController extends Controller
 {
-    public function __construct()
-    {
-        //  check_property_exp();
-    }
-
-    public function getPropertyListing(Request $request)
-
-    {          
-        // dd($request);
+    public function getPropertyListing(Request $request){          
+        request('bathrooms') == 'Any' ? $request->merge(['bathrooms' => null]) : request('bathrooms');
+        request('bedrooms') == 'Any' ? $request->merge(['bedrooms' => null]) : request('bedrooms');
+           
         if( request()->property_type ){
             $request['type'] = Types::findOrFail(request()->property_type);
         }
@@ -160,8 +155,6 @@ class PropertiesController extends Controller
         })
         ->when(request('min_area') == 0 && request('max_area') != 0, function ($query) {
             $query->where('properties.land_area', '<=', [(int)request()->get('max_area')]);
-        })
-        ->when(request('min_area') == 0 && request('max_area') == 0, function ($query) {
         })
         ->when(isset($request->bedrooms) && !empty($request->bedrooms), function ($query) {
             if (request('bedrooms') == "6+") {
@@ -384,36 +377,6 @@ class PropertiesController extends Controller
             $page_des = Str::limit($landing_page_content->page_content, 170, '...');
           }
         }
-
-
-
-        // $properties_same_area = Properties::where('status',1)
-        // ->where('city', request('city'))
-        // ->where('subcity', request('subcity'))
-        // ->where('town',  request('town'))
-        // ->where('area',  request('area'))->get();
-
-        // if(request('city') && )
-        // $address =  '';
-        // if(request('area')){
-        //     if(request('city') && request('subcity')){
-        //         $address = $property->propertyCity->name.', '.$property->propertySubCity->name.', '.$property->propertyTown->name;
-        //     }
-        // }else{
-        //     if($property->city && $property->subcity){
-        //         $address = $property->propertyCity->name.', '.$property->propertySubCity->name;
-        //     }
-        // }
-        
-        // $properties = Properties::where('address', $property->address)
-        //             ->where("status", "1")
-        //             ->where("property_purpose", $property->property_purpose)
-        //             ->where("id", "!=", $id)
-        //             ->where('property_type', $property->property_type)
-        //             ->orderBy('land_area', 'asc')
-        //             ->get();
-
-
 
         $data['keyword'] = $this->findKeyWord(request('city'), request('subcity'), request('town'), request('area'));
         $furnishing = ''; $name = ''; $link = '';
@@ -1369,7 +1332,9 @@ class PropertiesController extends Controller
                 $properties->orderBy('id', 'desc');
             }
             $properties = $properties->paginate(getcong('pagination_limit'));
-            
+            if(!isset($properties[0])){
+               return redirect()->route('home');
+            }  
             $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
             $town_keyword = PropertyTowns::find($properties[0]->town);
             
