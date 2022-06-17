@@ -116,8 +116,8 @@
     /* "use strict" */
       var dzChartlist = function(){
          var screenWidth = $(window).width();
+
          var multiLineChart = function(){
-            //Multi-line labels
             new Chartist.Bar('#multi-line-chart', {
                labels: <?php echo $chartData['Label']; ?>,
                series: [
@@ -133,12 +133,18 @@
                labelInterpolationFnc: function(value) {
                   return value 
                },
-               scaleMinSpace: 15
+               scaleMinSpace: 10
                },
                plugins: [
                Chartist.plugins.tooltip()
                ]
-            });
+            }).on('draw', function(data) {
+                  if(data.type === 'bar') {
+                  data.element.attr({
+                     style: 'stroke-width: 30px'
+                  });
+                  }
+               });
          }
 
          /* Function ============ */

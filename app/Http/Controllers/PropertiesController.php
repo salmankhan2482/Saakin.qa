@@ -43,7 +43,9 @@ class PropertiesController extends Controller
     public function getPropertyListing(Request $request){          
         request('bathrooms') == 'Any' ? $request->merge(['bathrooms' => null]) : request('bathrooms');
         request('bedrooms') == 'Any' ? $request->merge(['bedrooms' => null]) : request('bedrooms');
-           
+         $max_price = request('max_price') == 'Other' ? request('input_max_price') : request()->input('max_price');
+         request()->merge(['max_price' => $max_price]);
+      
         if( request()->property_type ){
             $request['type'] = Types::findOrFail(request()->property_type);
         }
@@ -77,11 +79,21 @@ class PropertiesController extends Controller
             ->leftJoin('properties', 'property_areas.id', 'properties.area')
             ->select('property_areas.*', DB::Raw(' COUNT(properties.id) as pcount '))
             ->where('property_areas.property_cities_id', request('city'))
-            
             ->where('town_slug', $property_type_purpose)
             ->where('property_purpose', ucfirst(request('property_purpose')))
             ->where('properties.property_type', request('property_type'))
             ->groupBy("property_areas.id")
+            ->orderBy("pcount", "desc")
+            ->where("status", 1);
+
+            $data['result'] = DB::table('property_towns')
+            ->leftJoin('properties', 'property_towns.id', 'properties.town')
+            ->select('property_towns.*', DB::Raw(' COUNT(properties.id) as pcount '))
+            ->where('property_towns.property_sub_cities_id', request('subcity'))
+            ->where('sub_city_slug', $property_type_purpose)
+            ->where('property_purpose', ucfirst(request('property_purpose')))
+            ->where('properties.property_type', request('property_type'))
+            ->groupBy("property_towns.id")
             ->orderBy("pcount", "desc")
             ->where("status", 1);
             
@@ -130,10 +142,6 @@ class PropertiesController extends Controller
 
         }
 
-
-      $max_price = request()->input('max_price') == 'Other' ? request()->input('input_max_price') : request()->input('max_price');
-      request()->merge(['max_price' => $max_price]);
-      
 
         $data['result'] = $data['result']->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
             $query->whereBetween('properties.price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
