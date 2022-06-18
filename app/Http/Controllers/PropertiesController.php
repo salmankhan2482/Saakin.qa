@@ -78,14 +78,18 @@ class PropertiesController extends Controller
       $link = "properties?featured=$request->featured&city=$request->city&subcity=$request->subcity&town=$request->town&area=$request->area&property_purpose=$request->property_purpose&property_type=$request->property_type&min_price=&max_price=&min_area=&max_area=&bedrooms=$request->bedrooms&bathrooms=&furnishings=$request->furnishings";
 
       $heading_info = $furnishing . ' ' .
-         (ucfirst($request['type']->plural_name ?? ' Properties'))
-         . ' for ' .
-         (request()->property_purpose ? request()->property_purpose : 'Rent and Sale ')
-         . ' in ' .
+         (ucfirst($request['type']->plural_name ?? ' Properties')) . ' for ' .
+         (request('property_purpose') ? request('property_purpose') : 'Rent and Sale ') . ' in ' .
          ($data['keyword'] != '' ? $data['keyword'] : 'Qatar');
 
-      if (count($properties) > 0) {
-         $this->propertyrepo->popularSearches($name, $link); //creating popular searches
+      $nearbyProperties = '';
+      $this->propertyrepo->popularSearches($name, $link); //creating popular searches
+      
+      if (count($properties) == 0) {
+         $nearbyProperties =  $this->propertyrepo->getNearbyProperties($request);
+         if(count($nearbyProperties) == 0){
+            $nearbyProperties =  $this->propertyrepo->getNearbyPropertiesWithoutType($request);
+         }
       }
 
       $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -95,9 +99,7 @@ class PropertiesController extends Controller
          $saveSearch = isset($record) ? 1 : 0;
       }
 
-      return view(
-         'front.pages.properties',
-         compact('properties', 'propertyTypes', 'data', 'saveSearch', 'propertyPurposes', 'request', 'landing_page_content', 'page_des', 'heading_info')
+      return view( 'front.pages.properties', compact('properties', 'propertyTypes', 'data', 'saveSearch', 'propertyPurposes', 'request', 'landing_page_content', 'page_des', 'heading_info', 'nearbyProperties')
       );
    }
 

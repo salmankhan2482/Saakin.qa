@@ -158,9 +158,9 @@ class PropertyRepository
    public function getProperties(Request $request)
    {
       $properties = Properties::where('status', 1)
-      ->when(request()->property_purpose, function ($query) {
-         $query->where('property_purpose', request()->property_purpose);
-      })
+         ->when(request()->property_purpose, function ($query) {
+            $query->where('property_purpose', request()->property_purpose);
+         })
          ->when(request()->city, function ($query) {
             $query->where('city', request()->city);
          })
@@ -411,5 +411,173 @@ class PropertyRepository
          );
          return $popularSearch;
       }
+   }
+
+   public function getNearbyProperties(Request $request)
+   {
+      $properties = Properties::where('status', 1)
+      ->when(request()->property_purpose, function ($query) {
+         $query->where('property_purpose', request()->property_purpose);
+      })
+      ->when(request()->area, function ($query) {
+         $query->where('town', request()->town);
+      })
+      ->when(request()->town, function ($query) {
+         $query->where('subcity', request()->subcity);
+      })
+      ->when(request()->subcity, function ($query) {
+         $query->where('city', request()->city);
+      })
+      ->when(request()->city, function ($query) {
+         // $query->where('city', request()->city);
+      })
+      ->when(request('property_type'), function ($query) {
+         $query->where('property_type', request('property_type'));
+      })
+      ->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
+         $query->whereBetween('price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
+      })
+      ->when(request('min_price') != 0 && request('max_price') == 0, function ($query) {
+         $query->where('price', '>=', [(int)request()->get('min_price')]);
+      })
+      ->when(request('min_price') == 0 && request('max_price') != 0, function ($query) {
+         $query->where('price', '<=', [(int)request()->get('max_price')]);
+      })
+      ->when(request()->get('furnishings'), function ($query) {
+         $query->where('property_features', 'like', '%' . request()->get('furnishings') . '%');
+      })
+      ->when(request()->get('amenities'), function ($query) {
+         $ids = array();
+         foreach (request()->get('amenities') as $value) {
+            $records =  AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
+            foreach ($records as $value) {
+               array_push($ids, $value->property_id);
+            }
+         }
+         $result = array_unique($ids);
+         $query->whereIn('id', $result);
+      })
+      ->when(request('min_area') != 0 && request('max_area') != 0, function ($query) {
+         $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
+      })
+      ->when(request('min_area') != 0 && request('max_area') == 0, function ($query) {
+         $query->where('land_area', '>=', [(int)request()->get('min_area')]);
+      })
+      ->when(request('min_area') == 0 && request('max_area') != 0, function ($query) {
+         $query->where('land_area', '<=', [(int)request()->get('max_area')]);
+      })
+      ->when(isset($request->bedrooms) && !empty($request->bedrooms), function ($query) {
+         if (request('bedrooms') == "6+") {
+            $query->where('properties.bedrooms', '>=', 6);
+         } else {
+            $query->where('properties.bedrooms', request('bedrooms'));
+         }
+      })
+      ->when(isset($request->bathrooms) && !empty($request->bathrooms), function ($query) {
+         if (request('bathrooms') == "6+") {
+            $query->where('properties.bathrooms', '>=', 6);
+         } else {
+            $query->where('properties.bathrooms', request('bathrooms'));
+         }
+      })
+      ->when(request()->agent, function ($query) {
+         $query->where('agency_id', request()->agent);
+      });
+
+      $commercialIds = array();
+      array_push($commercialIds, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
+
+      if (isset($request->commercial)) {
+         $properties->whereIn('property_type', $commercialIds);
+      } elseif (!in_array(request('property_type'), $commercialIds)) {
+         $properties->whereNotIn('property_type', $commercialIds);
+      }
+
+      return $properties = $properties->limit(10)->paginate(getcong('pagination_limit'));
+
+   }
+   
+   public function getNearbyPropertiesWithoutType(Request $request)
+   {
+      $properties = Properties::where('status', 1)
+      ->when(request()->property_purpose, function ($query) {
+         $query->where('property_purpose', request()->property_purpose);
+      })
+      ->when(request()->area, function ($query) {
+         $query->where('town', request()->town);
+      })
+      ->when(request()->town, function ($query) {
+         $query->where('subcity', request()->subcity);
+      })
+      ->when(request()->subcity, function ($query) {
+         $query->where('city', request()->city);
+      })
+      ->when(request()->city, function ($query) {
+         // $query->where('city', request()->city);
+      })
+      // ->when(request('property_type'), function ($query) {
+      //    $query->where('property_type', request('property_type'));
+      // })
+      ->when(request('min_price') != 0 && request('max_price') != 0, function ($query) {
+         $query->whereBetween('price', [(int)request()->get('min_price'), (int)request()->get('max_price')]);
+      })
+      ->when(request('min_price') != 0 && request('max_price') == 0, function ($query) {
+         $query->where('price', '>=', [(int)request()->get('min_price')]);
+      })
+      ->when(request('min_price') == 0 && request('max_price') != 0, function ($query) {
+         $query->where('price', '<=', [(int)request()->get('max_price')]);
+      })
+      ->when(request()->get('furnishings'), function ($query) {
+         $query->where('property_features', 'like', '%' . request()->get('furnishings') . '%');
+      })
+      ->when(request()->get('amenities'), function ($query) {
+         $ids = array();
+         foreach (request()->get('amenities') as $value) {
+            $records =  AmenityProduct::where('amenity_id', $value)->select('property_id')->get();
+            foreach ($records as $value) {
+               array_push($ids, $value->property_id);
+            }
+         }
+         $result = array_unique($ids);
+         $query->whereIn('id', $result);
+      })
+      ->when(request('min_area') != 0 && request('max_area') != 0, function ($query) {
+         $query->whereBetween('land_area', [(int)request()->get('min_area'), (int)request()->get('max_area')]);
+      })
+      ->when(request('min_area') != 0 && request('max_area') == 0, function ($query) {
+         $query->where('land_area', '>=', [(int)request()->get('min_area')]);
+      })
+      ->when(request('min_area') == 0 && request('max_area') != 0, function ($query) {
+         $query->where('land_area', '<=', [(int)request()->get('max_area')]);
+      })
+      ->when(isset($request->bedrooms) && !empty($request->bedrooms), function ($query) {
+         if (request('bedrooms') == "6+") {
+            $query->where('properties.bedrooms', '>=', 6);
+         } else {
+            $query->where('properties.bedrooms', request('bedrooms'));
+         }
+      })
+      ->when(isset($request->bathrooms) && !empty($request->bathrooms), function ($query) {
+         if (request('bathrooms') == "6+") {
+            $query->where('properties.bathrooms', '>=', 6);
+         } else {
+            $query->where('properties.bathrooms', request('bathrooms'));
+         }
+      })
+      ->when(request()->agent, function ($query) {
+         $query->where('agency_id', request()->agent);
+      });
+
+      $commercialIds = array();
+      array_push($commercialIds, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
+
+      if (isset($request->commercial)) {
+         $properties->whereIn('property_type', $commercialIds);
+      } elseif (!in_array(request('property_type'), $commercialIds)) {
+         $properties->whereNotIn('property_type', $commercialIds);
+      }
+
+      return $properties = $properties->limit(10)->paginate(getcong('pagination_limit'));
+
    }
 }
