@@ -91,7 +91,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="2" class="text-center">
+                                        <td colspan="3" class="text-center">
                                             {{ $users->render() }}
                                         </td>
                                     </tr>

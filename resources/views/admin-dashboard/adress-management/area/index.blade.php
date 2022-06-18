@@ -55,7 +55,7 @@
                                     <th>Town</th>
                                     <th>Latitude</th>
                                     <th>Longitude</th>
-                                    <th >Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             

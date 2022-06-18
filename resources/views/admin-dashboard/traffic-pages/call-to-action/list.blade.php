@@ -75,7 +75,7 @@
                         </tbody>
                         <tfoot>
                               <tr>
-                                 <td colspan="4" class="text-center">
+                                 <td colspan="5" class="text-center">
                                     {{ $data['clickCounters']->render() }}
                                  </td>
                               </tr>

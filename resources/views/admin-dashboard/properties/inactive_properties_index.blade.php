@@ -87,7 +87,7 @@
                                     <th>Created</th>
                                     <th>Health</th>
                                     <th>Status</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -177,7 +177,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="10" class="text-center">
                                         {{ $data['propertieslist']->render() }}
                                     </td>
                                 </tr>

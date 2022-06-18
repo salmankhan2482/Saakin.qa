@@ -81,7 +81,7 @@
                             
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="6" class="text-center">
                                         {{ $towns->render() }}
                                     </td>
                                 </tr>

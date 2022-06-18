@@ -69,7 +69,7 @@
                                     <th>City</th>
                                     <th>Sub-City</th>
                                     <th>Cotnent</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,7 +97,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="7" class="text-center">
                                         {{ $data['landing_pages_content']->render() }}
                                     </td>
                                 </tr>
