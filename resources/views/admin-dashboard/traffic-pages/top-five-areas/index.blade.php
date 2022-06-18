@@ -32,11 +32,10 @@
                                     </td>
                                 </tr>
                             @endforeach
-                               
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="3" class="text-center">
                                         {{ $top10Properties->render() }}
                                     </td>
                                 </tr>

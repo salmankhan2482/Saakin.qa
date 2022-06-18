@@ -47,7 +47,7 @@
                                     <th>Image</th>
                                     <th>Attributes</th>
                                     <th>Sequence</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +77,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="5" class="text-center">
                                         {{ $data['cities']->render() }}
                                     </td>
                                 </tr>

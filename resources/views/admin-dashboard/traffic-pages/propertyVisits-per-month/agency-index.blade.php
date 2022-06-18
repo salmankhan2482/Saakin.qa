@@ -83,7 +83,6 @@
                             <tbody>
                                 @foreach ($data['propertyVisitsPerMonth'] as $i => $click)
                                 <tr>
-                                    {{-- <td>{{ $click->id }}</td> --}}
                                     <td>
                                         @if(isset($click->property->property_purpose))
                                         <a href="{{ url(strtolower($click->property->property_purpose) . '/' . $click->property->property_slug . '/' . $click->property->id) }}">
@@ -106,7 +105,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="2" class="text-center">
+                                    <td colspan="3" class="text-center">
                                         {{ $data['propertyVisitsPerMonth']->render() }}
                                     </td>
                                 </tr>

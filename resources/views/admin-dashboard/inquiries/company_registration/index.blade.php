@@ -58,7 +58,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="7" class="text-center">
                                         {{ $registrations->render() }}
                                     </td>
                                 </tr>

@@ -39,7 +39,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="4" class="text-center">
                                         {{ $top10Proprties->render() }}
                                     </td>
                                 </tr>

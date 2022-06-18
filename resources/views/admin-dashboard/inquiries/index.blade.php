@@ -25,7 +25,7 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Agency</th>
-                                    <th class="text-center width-100">{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,7 +49,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="6" class="text-center">
                                         {{ $inquirieslist->render() }}
                                     </td>
                                 </tr>

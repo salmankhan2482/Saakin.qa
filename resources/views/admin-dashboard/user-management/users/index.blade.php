@@ -12,25 +12,26 @@
                 <div class="card-body">
                     <div class="basic-form">
                         <form action="{{ route('users.index') }}" method="GET">
-                        {{-- {!! Form::open(['url' => 'admin/users',  'id' => 'search', 'method' => 'get']) !!} --}}
-                        <div class="row">
-                            <div class="col-4 offset-2">
-                                <input type="text" class="form-control" name="keyword" placeholder="Search by name, mail">
+                            {{-- {!! Form::open(['url' => 'admin/users',  'id' => 'search', 'method' => 'get']) !!} --}}
+                            <div class="row">
+                                <div class="col-4 offset-2">
+                                    <input type="text" class="form-control" name="keyword"
+                                        placeholder="Search by name, mail">
+                                </div>
+                                <div class="col-3">
+                                    <select name="type" id="basic" class="selectpicker show-tick form-control">
+                                        <option value="">Select User Type</option>
+                                        <option value="Agent">{{ trans('words.agent') }}</option>
+                                        <option value="User">{{ trans('words.user') }}</option>
+                                    </select>
+                                </div>
+                                <div class="col-2 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm pull-left">
+                                        {{ trans('words.search') }}
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-3">
-                                <select name="type" id="basic" class="selectpicker show-tick form-control">
-                                    <option value="">Select User Type</option>
-                                    <option value="Agent">{{ trans('words.agent') }}</option>
-                                    <option value="User">{{ trans('words.user') }}</option>
-                                </select>
-                            </div>
-                            <div class="col-2 mt-2">
-                                <button type="submit" class="btn btn-dark btn-sm pull-left">
-                                    {{ trans('words.search') }}
-                                </button>
-                            </div>
-                        </div>
-                        {{-- {!! Form::close() !!} --}}
+                            {{-- {!! Form::close() !!} --}}
                         </form>
                     </div>
                 </div>
@@ -61,12 +62,12 @@
                         <table class="table table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th>{{ trans('words.user_type') }}</th>
-                                    <th>{{ trans('words.image') }}</th>
-                                    <th>{{ trans('words.name') }}</th>
-                                    <th>{{ trans('words.email') }}</th>
+                                    <th>User Type</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
                                     <th>Roles </th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
 
@@ -115,7 +116,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="7" class="text-center">
+                                    <td colspan="6" class="text-center">
                                         {{ $allusers->render() }}
                                     </td>
                                 </tr>

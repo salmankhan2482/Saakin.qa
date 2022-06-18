@@ -53,7 +53,7 @@
                                     <th>Name</th>
                                     <th>Type</th>
                                     <th>Count</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,7 +76,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="6" class="text-center">
                                         {{ $data['popularSearches']->render() }}
                                     </td>
                                 </tr>

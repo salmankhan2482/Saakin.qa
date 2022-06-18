@@ -15,14 +15,14 @@
                             <div class="row justify-content-center">
                                 <div class="col-sm-2">
                                     <label for="">From</label>
-                                    <input type="date" id="start" name="from" value="{{ request('from') }}" >
+                                    <input type="date" id="start" name="from" value="{{ request('from') }}">
                                 </div>
-                                
+
                                 <div class="col-sm-2">
                                     <label for="">To</label>
-                                    <input type="date" id="start" name="to" value="{{ request('to') }}" >
+                                    <input type="date" id="start" name="to" value="{{ request('to') }}">
                                 </div>
-                                
+
                                 <div class="col-sm-1">
                                     <button type="submit" class="btn btn-dark btn-sm">
                                         {{ trans('words.search') }}
@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
         <div class="col-12">
             <div class="card">
@@ -50,23 +50,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 @foreach ($users as $i => $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->totalUsers }}</td>
-                                <td>
-                                    <a class="btn btn-success rounded btn-xs action-btn"
-                                    href="{{ url('admin/traffic/trafficUsersIPs/'.$user->id.'?from='.request('from').'&to='.request('to')) }}">
-                                       <i class="fa fa-eye"></i>
-                                    </a>
-                            </td>
-                            </tr>
-                        @endforeach
+                                    <tr>
+                                        <td>{{ $user->name }}</td>
+                                        <td>{{ $user->totalUsers }}</td>
+                                        <td>
+                                            <a class="btn btn-success rounded btn-xs action-btn"
+                                                href="{{ url('admin/traffic/trafficUsersIPs/' . $user->id . '?from=' . request('from') . '&to=' . request('to')) }}">
+                                                <i class="fa fa-eye"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="1" class="text-center">
+                                    <td colspan="2" class="text-center">
                                         {{ $users->render() }}
                                     </td>
                                 </tr>

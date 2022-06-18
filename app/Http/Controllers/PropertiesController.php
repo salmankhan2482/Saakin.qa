@@ -40,6 +40,7 @@ use Stevebauman\Location\Facades\Location;
 
 class PropertiesController extends Controller
 {
+   
    protected $propertyrepo;
    public function __construct(PropertyRepository $propertyrepo)
    {
@@ -183,7 +184,6 @@ class PropertiesController extends Controller
       return redirect($property->property_purpose . '/' . $property->property_slug . '/' . $property->id);
    }
 
-
    public function single_properties(Request $request, $property_purpose, $slug, $id)
    {
       $property = Properties::with('gallery')->where('property_slug', $slug)->findOrFail($id);
@@ -252,7 +252,6 @@ class PropertiesController extends Controller
 
    public function property_details_sendemail(Request $request)
    {
-
       $data =  \Request::except(array('_token'));
       $agency_id = $request->agency_id;
       $agency_name = $request->agency_name;
@@ -1217,17 +1216,20 @@ class PropertiesController extends Controller
             )
          );
       }
+      
+      $extraTextInUrl = substr($property_type_purpose, strlen('apartments-for-sale'));
+      if($extraTextInUrl){
+         return redirect('/');
+      }
 
       $type = Types::where('plural', $property_type)->firstOrFail();
-
       $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
-
 
       $properties = Properties::where('status', 1)
          ->where('property_purpose', ucfirst($property_purpose))
          ->where('property_type', $type->id)
          ->where('city', $city_keyword->id);
-
+      
       if (empty($properties->count())) {
          return redirect()->route('home');
       }
