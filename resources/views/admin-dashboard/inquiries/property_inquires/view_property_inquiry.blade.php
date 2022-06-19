@@ -70,12 +70,80 @@
                                     </tr>
                             </thead>
                             <tbody>
-                                
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        @foreach ($properties as $property)
+              <div class="single-property-box border">
+                <div class="property-item">
+                  <a style="--img-container-height: 155px" class="property-img stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
+                    @if ($property->featured_image)
+                      <img src="{{ URL::asset('upload/properties/thumb_' . $property->featured_image) }}" alt="{{ $property->property_name }}">
+                    @else
+                      <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}" alt="{{ $property->property_name }}">
+                    @endif
+                  </a>
+                  <ul class="feature_text">
+                    @if ($property->featured_property == 1)
+                      <li class="feature_cb"><span> Featured</span>
+                      </li>
+                    @endif
+                    @if (!empty($property->property_purpose))
+                      <li class="feature_or">
+                        <span>{{ $property->property_purpose }}</span>
+                      </li>
+                    @endif
+
+                  </ul>
+                  <div class="property-author-wrap">
+                    <div class="property-author">
+                      <span>{{ $property->getPrice() }}
+                        @if ($property->property_purpose == 'For Rent' || $property->property_purpose == 'Rent')
+                          / Month
+                        @endif
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="property-title-box" >
+                  <a class="text-decoration-none stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                    <h5 class="property-card__property-title">
+                      {{ \Illuminate\Support\Str::limit($property->property_name) }}
+                    </h5>
+                  </a> 
+                  <div class="property-location">
+                    <p>
+                      {{ $property->propertiesTypes->types }}
+                      <br>
+                      <span class="hideAddress">
+                        {{ $property->address }}
+                      </span>
+                    </p>
+                  </div>
+
+                  <ul class="property-feature">
+                    @if ($property->getProperty_type())
+                      <li class="me-1">
+                        <i class="fas fa-bed fas-icon"></i>
+                        <span>{{ $property->bedrooms }} </span>
+                      </li>
+                      <li class="me-1">
+                        <i class="fas fa-bath fas-icon"></i>
+                        <span>{{ $property->bathrooms }}
+                        </span>
+                      </li>
+                    @endif
+                    <li class="me-1">
+                      <i class="fas fa-chart-area fas-icon"></i>
+                      <span> {{ $property->getSqm() }} </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            @endforeach
+        
     </div>
 @endsection

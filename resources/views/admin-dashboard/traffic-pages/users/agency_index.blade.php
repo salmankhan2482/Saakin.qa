@@ -70,15 +70,15 @@
                             <table id="example3" class="display min-w850">
                                 <thead>
                                     <tr>
-                                        <th>Country</th>
-                                        <th>Visitors</th>
+                                        <th>ID</th>
+                                        <th>Total Visitors</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($users as $i => $user)
                                         <tr>
-                                            <td>{{ $user->country ?? 'Null Country' }}</td>
+                                            <td>{{ $i+1 }}</td>
                                             <td>{{ $user->totalUsers }}</td>
                                              <td>
                                                 <a class="btn btn-success rounded btn-xs action-btn"
@@ -91,8 +91,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <td colspan="3" class="text-center">
-                                            {{ $users->render() }}
+                                        <td colspan="2" class="text-center">
+                                           
+
                                         </td>
                                     </tr>
                                 </tfoot>

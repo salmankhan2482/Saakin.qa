@@ -411,7 +411,7 @@ class AgenciesController extends Controller
                 ->orWhere("agency_detail","LIKE","%{$request->input('keyword')}%")
                 ->get();
 
-        $output = '<ul class="list-group desktop-search-li col-12"  >';;
+        $output = '<ul class="list-group desktop-search-li col-12"  >';
         if ( count($data) > 0 ) {
             
             foreach ($data as $i => $row){

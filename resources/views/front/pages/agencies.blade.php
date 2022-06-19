@@ -41,7 +41,6 @@
       </form>
     </div>
   </div>
-
   <div class="inner-content">
     <div class="container">
       <div class="row align-items-center mb-3 mb-md-4 fs-sm">
