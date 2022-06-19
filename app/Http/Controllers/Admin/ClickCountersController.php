@@ -215,6 +215,7 @@ class ClickCountersController extends Controller
             ->paginate(10);
 
          return view('admin-dashboard.traffic-pages.users.index', compact('users', 'action'));
+
       } elseif (auth()->user()->usertype == 'Agency') {
 
          $users = DB::table('page_visits')->where('agency_id', auth()->user()->agency_id)
@@ -230,8 +231,8 @@ class ClickCountersController extends Controller
                $query->whereBetween('page_visits.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
             })
             //  ->groupBy('totalUsers')
-            ->orderBy('totalUsers', 'DESC')
-            ->paginate(10);
+            // ->orderBy('totalUsers', 'DESC')
+            ->paginate(20);
          //  dd($users);
 
          //BAR CHART NEW USERS PER MONTH

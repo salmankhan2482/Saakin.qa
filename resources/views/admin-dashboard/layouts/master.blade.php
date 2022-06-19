@@ -90,7 +90,6 @@ $data['agency_name'] = App\Agency::when(auth()->user()->usertype == 'Agency', fu
 
     }
     </style>
-
 </head>
 <body>
 

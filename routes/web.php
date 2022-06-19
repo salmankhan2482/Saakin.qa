@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypesController;
 use App\Http\Controllers\SaveSearchController;
+use App\Http\Controllers\Admin\InquiriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -128,7 +129,12 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
     Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
 
-    Route::get('autocompletesearch/create_inquiry', 'InquiriesController@search_agency_name');
+    Route::get('show_agency', 'InquiriesController@show_agency')->name('show_agency');
+    Route::get('searchagency', 'InquiriesController@searchagency')->name('searchagency');
+    Route::get('property_search', 'InquiriesController@property_search')->name('property_search');
+
+
+    Route::get('searchautocomplete', 'InquiriesController@search_agency_name')->name('searchautocomplete');
 	
 	Route::get('leads/agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
 	Route::get('leads/contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
