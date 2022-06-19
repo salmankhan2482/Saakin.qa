@@ -23,7 +23,6 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>IP Addresses</th>
-                                    {{-- <th>Location</th> --}}
                                     <th>Last Viewed</th>
                                 </tr>
                             </thead>
@@ -32,16 +31,13 @@
                                 <tr>
                                     <td>{{ $IPs->id }}</td>
                                     <td>{{ $IPs->ip_address }}</td>
-                                    {{-- <td>
-                                        {{ $IPs->country }}
-                                    </td> --}}
                                     <td>{{ date('d-m-Y', strtotime($IPs->created_at)) ??'' }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="3" class="text-center">
                                         {{ $data['trafficUsersIPs']->render() }}
                                     </td>
                                 </tr>

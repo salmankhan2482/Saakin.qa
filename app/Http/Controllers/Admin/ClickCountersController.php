@@ -185,10 +185,7 @@ class ClickCountersController extends Controller
    public function propertyVisitsPerMonthIPs($id)
    {
       $action = 'saakin_index';
-
       $data['property_visit_IPs'] = PageVisits::where('property_id', $id)->orderBy('id', 'DESC')->paginate(10);
-      // dd($data['property_visit_IPs']);
-
       return view('admin-dashboard.traffic-pages.propertyVisits-per-month.property_visits_ips', compact('data', 'action'));
    }
 
@@ -281,10 +278,6 @@ class ClickCountersController extends Controller
             ->groupBy('ip_address')
             ->paginate(20);
       }
-
-
-      // dd($data['trafficUsersIPs']);
-
       return view('admin-dashboard.traffic-pages.users.users_ip', compact('data', 'action'));
    }
 

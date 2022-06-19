@@ -8,7 +8,8 @@ vendor_old/
 /phpMyAdmin
 .htaccess
 .idea/
-
+/zips
+zips
 resources/views/front/layouts
 
 public/site_assets/*

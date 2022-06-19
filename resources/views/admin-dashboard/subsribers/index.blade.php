@@ -20,7 +20,7 @@
                                     <th>ID</th>
                                     <th>Email</th>
                                     <th>IP Address</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,7 +41,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="4" class="text-center">
                                         {{ $subscriberlist->render() }}
                                     </td>
                                 </tr>

@@ -22,7 +22,7 @@
                                 <tr>
                                     <th>Category</th>
                                     <th>Description</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,7 +46,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="3" class="text-center">
                                         {{ $blogCategories->render() }}
                                     </td>
                                 </tr>

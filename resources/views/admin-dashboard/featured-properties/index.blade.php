@@ -101,7 +101,7 @@
                                     <th>Created</th>
                                     <th>Health</th>
                                     <th>Status</th>
-                                    <th>{{ trans('words.action') }}</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>

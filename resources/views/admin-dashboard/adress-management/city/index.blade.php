@@ -50,7 +50,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="9" class="text-center">
+                                    <td colspan="4" class="text-center">
                                         {{ $cities->render() }}
                                     </td>
                                 </tr>
