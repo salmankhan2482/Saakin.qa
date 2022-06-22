@@ -41,12 +41,13 @@
                                     <input type="text" id="page_title" name="page_title" class="form-control" placeholder="Page Title" value="{{ isset($page_title) ? $page_title : null }}">
                                 </div>
                             </div>
+                            
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Description</label>
-                                    <div class="card-body">
-                                        <textarea id="page_content" name="page_content" rows="5" class="summernote">{{ isset($page_info->page_content) ? stripslashes($page_info->page_content) : null }}</textarea>
-                                    </div>
+                                    <textarea type="text" rows="5" id="page_content" name="page_content" class="form-control" 
+                                    required>{{ isset($page_info->page_content) ? stripslashes($page_info->page_content) : null }}
+                                </textarea>
                                 </div>
                             </div>
 
@@ -70,7 +71,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
-                                    <button type="submit" class="btn btn-rounded btn-success">Save</button>
+                                    <button type="submit" class="btn btn-rounded btn-success">Update</button>
                                 </div>
                             </div>
                         {!! Form::close() !!}
@@ -80,4 +81,17 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ URL::asset('admin/js/jquery.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
+
+<script>
+    
+var editor = CKEDITOR.replace( 'page_content' );
+CKFinder.setupCKEditor( editor );
+
+</script>
+
 @endsection

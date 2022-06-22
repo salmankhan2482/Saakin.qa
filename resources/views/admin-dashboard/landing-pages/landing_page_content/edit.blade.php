@@ -97,7 +97,9 @@
                                 <div class="form-group col-md-12">
                                     <label>Description</label>
                                     
-                                        <textarea type="text" id="page_content" name="page_content" class="form-control" placeholder="Page Content">{{ isset($data['landing_page_content']->page_content) ? stripslashes($data['landing_page_content']->page_content) : null }}</textarea>
+                                        <textarea type="text" id="page_content" name="page_content" class="form-control" placeholder="Page Content">
+                                            {{ isset($data['landing_page_content']->page_content) ? stripslashes($data['landing_page_content']->page_content) : null }}
+                                        </textarea>
                                     
                                 </div>
                             </div>

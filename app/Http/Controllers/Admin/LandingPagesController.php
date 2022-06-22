@@ -172,13 +172,14 @@ class LandingPagesController extends Controller
 
         $page_info = LandingPage::find('53');
         $page_title=trans('words.properties_page_content');
-        $action = 'saakin_edit';
+        $action = 'saakin_create';
 
         return view('admin-dashboard.landing-pages.properties_page_content.properties_page_content',
          compact('page_info','page_title','action'));
     }
     public function update_properties_page_content(Request $request)
     {
+       
         $page_obj = LandingPage::find('53');
 	    $data =  \Request::except(array('_token')) ;
 	    $rule=array('page_title' => 'required' );

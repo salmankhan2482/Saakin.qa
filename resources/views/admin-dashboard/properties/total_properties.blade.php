@@ -110,7 +110,7 @@
                                         </td>
                                         <td> {{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }} </td>
                                         <td> {{ $property->property_purpose }} </td>
-                                        <td> {{ App\PageVisits::where('property_id', $property->id)->count() ?? 0 }} </td>
+                                        <td> {{ App\PropertyCounter::where('property_id', $property->id)->value('counter') ?? 0 }} </td>
                                         <td>
                                              @if ($property->created_at !== null)
                                                 {{ date('d-m-Y', strtotime($property->created_at)) }}

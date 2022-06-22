@@ -22,6 +22,7 @@ class FeaturedPropertiesController extends MainAdminController
         }
 
         $propertieslist = Properties::where('featured_property','1')
+        ->where('status',1)
         ->when(Auth::User()->usertype=="Agency", function($query){
             $query->where("user_id",Auth::User()->id);
         })

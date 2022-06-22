@@ -67,7 +67,7 @@
                                 <fieldset>
                                     <legend>Property Details</legend>
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-3">
                                             <input type="hidden" name="age" value="0" />
                                             <input type="hidden" name="build_area" value="0">
                                             <input type="hidden" name="rental_period" value="Monthly">
@@ -85,7 +85,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-3">
                                             <label>Property Type</label>
                                             <select class="form-control" id="property_type" name="property_type" required>
                                                 <option value="">{{ trans('words.property_type') }}</option>
@@ -97,6 +97,12 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                        <div class="col-6">
+                                            <label>Reference Code</label>
+                                            <input type="text" name="reference_code" class="form-control" id="p-reference_code"
+                                                   placeholder="Reference Code"
+                                                value="{{ $data['property']->refference_code }}" required>
                                         </div>
 
                                         <div class="col-3">

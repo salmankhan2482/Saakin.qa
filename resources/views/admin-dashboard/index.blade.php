@@ -35,7 +35,23 @@
                                                 Properties Added Last Month
                                             </span>
                                         </div>
-                                        <span class="fs-46 font-w500">{{ $data['total_properties'] }}</span>
+                                        {{-- Use Conditions for conveting Numbers to Abbrivations Ex: 1000 -> 1k --}}
+                                        @if ($data['total_properties'] > 0)
+                                            @if ($data['total_properties'] <= 999)
+                                                <span class="fs-46 font-w500">{{ $data['total_properties'] }}</span>
+                                            @elseif ($data['total_properties'] > 999999)
+                                                <?php $data['total_properties'] = round($data['total_properties'] / 1000000, 2);
+                                                ?>
+                                                <span class="fs-46 font-w500">{{ $data['total_properties'] . 'M' }}</span>
+                                            @else
+                                                <?php
+                                                $data['total_properties'] = round($data['total_properties'] / 1000, 2);
+                                                ?>
+                                                <span class="fs-46 font-w500">{{ $data['total_properties'] }} K</span>
+                                            @endif
+                                        @else
+                                            <span class="fs-46 font-w500">{{ $data['total_properties'] }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -204,7 +220,7 @@
                             </div>
                         </a>
                     </div>
-                
+
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <a href="{{ route('propertyVisits_per_month') }}">
                             <div class="widget-stat card">
@@ -223,7 +239,7 @@
                             </div>
                         </a>
                     </div>
-                   
+
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <a href="{{ route('callToAction.index') }}">
                             <div class="widget-stat card">
@@ -242,7 +258,7 @@
                             </div>
                         </a>
                     </div>
-                  
+
                     <div class="col-xl-3 col-lg-6 col-sm-6">
                         <a href="{{ route('trafficUsers') }}">
                             <div class="widget-stat card">
@@ -261,7 +277,7 @@
                             </div>
                         </a>
                     </div>
-                  
+
                     <div class="col-xl-6 col-lg-6">
                         <div class="card">
                             <div class="card-header">
@@ -305,29 +321,29 @@
 
 
             <div class="col-xl-6 col-lg-12">
-               <div class="card">
-                  <div class="card-header">
-                        <h4 class="card-title">Pie chart with custom labels</h4>
-                  </div>
-                  <div class="card-body">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Click to Action</h4>
+                    </div>
+                    <div class="card-body">
                         <div id="pie-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
 
             <div class="col-xl-6 col-lg-12">
-               <div class="card">
-                  <div class="card-header">
-                     <h4 class="card-title">
-                           <span style="color: rgb(59, 76, 184)">Emails</span>,
-                           <span style="color: #37D159">Calls </span>,
-                           <span style="color: #ff9900">WhatsApp </span>
-                     </h4>
-                  </div>
-                  <div class="card-body">
-                     <div id="stacked-bar-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
-                  </div>
-               </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <span style="color: rgb(59, 76, 184)">Emails</span>,
+                            <span style="color: #37D159">Calls </span>,
+                            <span style="color: #ff9900">WhatsApp </span>
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="stacked-bar-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
+                    </div>
+                </div>
             </div>
             <div class="col-xl-6 col-lg-6">
                 <div class="card">
@@ -386,262 +402,278 @@
         (function($) {
 
             var dzChartlist = function() {
-               var screenWidth = $(window).width();
+                var screenWidth = $(window).width();
 
-               var chartTimeline = function() {
+                var chartTimeline = function() {
 
-                  var optionsTimeline = {
-                     chart: {
-                           type: "bar",
-                           height: 200,
-                           stacked: true,
-                           toolbar: {
-                              show: false
-                           },
-                           sparkline: {
-                              //enabled: true
-                           },
-                           offsetX: -10,
-                     },
-                     series: [{
-                           name: "Properties",
-                           data: [
-                              {{ $data['propertiesPerJan'] }},
-                              {{ $data['propertiesPerFeb'] }},
-                              {{ $data['propertiesPerMar'] }},
-                              {{ $data['propertiesPerApr'] }},
-                              {{ $data['propertiesPerMay'] }},
-                              {{ $data['propertiesPerJune'] }},
-                              {{ $data['propertiesPerJuly'] }},
-                              {{ $data['propertiesPerAug'] }},
-                              {{ $data['propertiesPerSep'] }},
-                              {{ $data['propertiesPerOct'] }},
-                              {{ $data['propertiesPerNov'] }},
-                              {{ $data['propertiesPerDec'] }},
-                           ]
+                    var optionsTimeline = {
+                        chart: {
+                            type: "bar",
+                            height: 200,
+                            stacked: true,
+                            toolbar: {
+                                show: false
+                            },
+                            sparkline: {
+                                //enabled: true
+                            },
+                            offsetX: -10,
+                        },
+                        series: [{
+                            name: "Properties",
+                            data: [
+                                {{ $data['propertiesPerJan'] }},
+                                {{ $data['propertiesPerFeb'] }},
+                                {{ $data['propertiesPerMar'] }},
+                                {{ $data['propertiesPerApr'] }},
+                                {{ $data['propertiesPerMay'] }},
+                                {{ $data['propertiesPerJune'] }},
+                                {{ $data['propertiesPerJuly'] }},
+                                {{ $data['propertiesPerAug'] }},
+                                {{ $data['propertiesPerSep'] }},
+                                {{ $data['propertiesPerOct'] }},
+                                {{ $data['propertiesPerNov'] }},
+                                {{ $data['propertiesPerDec'] }},
+                            ]
 
-                     }],
+                        }],
 
-                     plotOptions: {
-                           bar: {
-                              columnWidth: "25%",
-                              endingShape: "rounded",
-                              startingShape: "rounded",
+                        plotOptions: {
+                            bar: {
+                                columnWidth: "25%",
+                                endingShape: "rounded",
+                                startingShape: "rounded",
 
-                              colors: {
-                                 backgroundBarColors: ['#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0',
-                                       '#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0'
-                                 ],
-                                 backgroundBarOpacity: 1,
-                                 backgroundBarRadius: 5,
-                              },
+                                colors: {
+                                    backgroundBarColors: ['#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0',
+                                        '#f0f0f0', '#f0f0f0', '#f0f0f0', '#f0f0f0'
+                                    ],
+                                    backgroundBarOpacity: 1,
+                                    backgroundBarRadius: 5,
+                                },
 
-                           },
-                           distributed: true
-                     },
-                     colors: ['#3B4CB8'],
-                     grid: {
-                           show: false,
-                     },
-                     legend: {
-                           show: false
-                     },
-                     fill: {
-                           opacity: 1
-                     },
-                     dataLabels: {
-                           enabled: false,
-                           colors: ['#000'],
-                           dropShadow: {
-                              enabled: true,
-                              top: 1,
-                              left: 1,
-                              blur: 1,
-                              opacity: 1
-                           }
-                     },
-                     xaxis: {
-                           categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug',
-                              'Sep',
-                              'Oct', 'Nov', 'Dec'
-                           ],
-                           labels: {
-                              style: {
-                                 colors: '#787878',
-                                 fontSize: '13px',
-                                 fontFamily: 'poppins',
-                                 fontWeight: 100,
-                                 cssClass: 'apexcharts-xaxis-label',
-                              },
-                           },
-                           crosshairs: {
-                              show: false,
-                           },
-                           axisBorder: {
-                              show: false,
-                           },
-                     },
+                            },
+                            distributed: true
+                        },
+                        colors: ['#3B4CB8'],
+                        grid: {
+                            show: false,
+                        },
+                        legend: {
+                            show: false
+                        },
+                        fill: {
+                            opacity: 1
+                        },
+                        dataLabels: {
+                            enabled: false,
+                            colors: ['#000'],
+                            dropShadow: {
+                                enabled: true,
+                                top: 1,
+                                left: 1,
+                                blur: 1,
+                                opacity: 1
+                            }
+                        },
+                        xaxis: {
+                            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug',
+                                'Sep',
+                                'Oct', 'Nov', 'Dec'
+                            ],
+                            labels: {
+                                style: {
+                                    colors: '#787878',
+                                    fontSize: '13px',
+                                    fontFamily: 'poppins',
+                                    fontWeight: 100,
+                                    cssClass: 'apexcharts-xaxis-label',
+                                },
+                            },
+                            crosshairs: {
+                                show: false,
+                            },
+                            axisBorder: {
+                                show: false,
+                            },
+                        },
 
-                     yaxis: {
-                           show: false
-                     },
+                        yaxis: {
+                            show: false
+                        },
 
-                     tooltip: {
-                           x: {
-                              show: true
-                           }
-                     }
-                  };
-                  var chartTimelineRender = new ApexCharts(document.querySelector("#chartTimeline"),
-                     optionsTimeline);
-                  chartTimelineRender.render();
-               }
+                        tooltip: {
+                            x: {
+                                show: true
+                            }
+                        }
+                    };
+                    var chartTimelineRender = new ApexCharts(document.querySelector("#chartTimeline"),
+                        optionsTimeline);
+                    chartTimelineRender.render();
+                }
 
-               var simpleLineChart = function() {
-                  //Simple line chart
-                  new Chartist.Line('#simple-line-chart', {
-                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep',
-                           'Oct',
-                           'Nov', 'Dec'
-                     ],
-                     series: [
-                           [
-                              {{ $data['clicksPerJan'] }},
-                              {{ $data['clicksPerFeb'] }},
-                              {{ $data['clicksPerMar'] }},
-                              {{ $data['clicksPerApr'] }},
-                              {{ $data['clicksPerMay'] }},
-                              {{ $data['clicksPerJune'] }},
-                              {{ $data['clicksPerJuly'] }},
-                              {{ $data['clicksPerAug'] }},
-                              {{ $data['clicksPerSep'] }},
-                              {{ $data['clicksPerOct'] }},
-                              {{ $data['clicksPerNov'] }},
-                              {{ $data['clicksPerDec'] }},
-                           ],
+                var simpleLineChart = function() {
+                    //Simple line chart
+                    new Chartist.Line('#simple-line-chart', {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep',
+                            'Oct',
+                            'Nov', 'Dec'
+                        ],
+                        series: [
+                            [
+                                {{ $data['clicksPerJan'] }},
+                                {{ $data['clicksPerFeb'] }},
+                                {{ $data['clicksPerMar'] }},
+                                {{ $data['clicksPerApr'] }},
+                                {{ $data['clicksPerMay'] }},
+                                {{ $data['clicksPerJune'] }},
+                                {{ $data['clicksPerJuly'] }},
+                                {{ $data['clicksPerAug'] }},
+                                {{ $data['clicksPerSep'] }},
+                                {{ $data['clicksPerOct'] }},
+                                {{ $data['clicksPerNov'] }},
+                                {{ $data['clicksPerDec'] }},
+                            ],
 
-                           [
-                              {{ $data['usersPerJan'] }},
-                              {{ $data['usersPerFeb'] }},
-                              {{ $data['usersPerMar'] }},
-                              {{ $data['usersPerApr'] }},
-                              {{ $data['usersPerMay'] }},
-                              {{ $data['usersPerJune'] }},
-                              {{ $data['usersPerJuly'] }},
-                              {{ $data['usersPerAug'] }},
-                              {{ $data['usersPerSep'] }},
-                              {{ $data['usersPerOct'] }},
-                              {{ $data['usersPerNov'] }},
-                              {{ $data['usersPerDec'] }},
-                           ],
+                            [
+                                {{ $data['usersPerJan'] }},
+                                {{ $data['usersPerFeb'] }},
+                                {{ $data['usersPerMar'] }},
+                                {{ $data['usersPerApr'] }},
+                                {{ $data['usersPerMay'] }},
+                                {{ $data['usersPerJune'] }},
+                                {{ $data['usersPerJuly'] }},
+                                {{ $data['usersPerAug'] }},
+                                {{ $data['usersPerSep'] }},
+                                {{ $data['usersPerOct'] }},
+                                {{ $data['usersPerNov'] }},
+                                {{ $data['usersPerDec'] }},
+                            ],
 
-                     ]
-                  }, {
-                     fullWidth: true,
-                     chartPadding: {
-                           right: 40
-                     },
-                     plugins: [
-                           Chartist.plugins.tooltip()
-                     ]
-                  });
+                        ]
+                    }, {
+                        fullWidth: true,
+                        chartPadding: {
+                            right: 40
+                        },
+                        plugins: [
+                            Chartist.plugins.tooltip()
+                        ]
+                    });
 
-               }
+                }
 
-               var donutChart = function() {
-                  Morris.Donut({
-                     element: 'morris_donught',
-                     data: [{
-                           label: " Agency Inquiry ",
-                           value: {{ $data['Agency Inquiry'] }},
-                     }, {
-                           label: " Contact Inquiry ",
-                           value: {{ $data['Contact Inquiry'] }}
-                     }, {
-                           label: " Property Inquiry ",
-                           value: {{ $data['Property Inquiry'] }}
-                     }],
-                     resize: true,
-                     redraw: true,
-                     colors: ['#37d159', 'rgb(59, 76, 184)', '#2b98d6'],
-                     responsive: true,
-                  });
-               }
+                var donutChart = function() {
+                    Morris.Donut({
+                        element: 'morris_donught',
+                        data: [{
+                            label: " Agency Inquiry ",
+                            value: {{ $data['Agency Inquiry'] }},
+                        }, {
+                            label: " Contact Inquiry ",
+                            value: {{ $data['Contact Inquiry'] }}
+                        }, {
+                            label: " Property Inquiry ",
+                            value: {{ $data['Property Inquiry'] }}
+                        }],
+                        resize: true,
+                        redraw: true,
+                        colors: ['#37d159', 'rgb(59, 76, 184)', '#2b98d6'],
+                        responsive: true,
+                    });
+                }
 
-               var pieChart = function(){
-                  //Pie chart with custom labels
+                var pieChart = function() {
+                    //Pie chart with custom labels
 
-                  var data = {
-                     labels: <?php echo $pieChart['Label']; ?>,
-                     series: <?php echo $pieChart['Data']; ?>
-                  };
+                    var data = {
+                        labels: <?php echo $pieChart['Label']; ?>,
+                        series: <?php echo $pieChart['Data']; ?>
+                    };
 
-                  var options = {
-                     labelInterpolationFnc: function(value) {
-                     return value[0]
-                     }
-                  };
+                    var options = {
+                        labelInterpolationFnc: function(value) {
+                            return value[0]
+                        }
+                    };
 
-                  var responsiveOptions = [
-                     ['screen and (min-width: 640px)', {
-                     chartPadding: 30,
-                     donut: true,
-                     labelOffset: 100,
-                     donutWidth: 40,
-                     labelDirection: 'explode',
-                     labelInterpolationFnc: function(value) {
-                        return value;
-                     }
-                     }],
-                     ['screen and (min-width: 1024px)', {
-                     labelOffset: 30,
-                     chartPadding: 20
-                     }]
-                  ];
+                    var responsiveOptions = [
+                        ['screen and (min-width: 640px)', {
+                            chartPadding: 30,
+                            donut: true,
+                            labelOffset: 100,
+                            donutWidth: 40,
+                            labelDirection: 'explode',
+                            labelInterpolationFnc: function(value) {
+                                return value;
+                            }
+                        }],
+                        ['screen and (min-width: 1024px)', {
+                            labelOffset: 30,
+                            chartPadding: 20
+                        }]
+                    ];
 
-                  new Chartist.Pie('#pie-chart', data, options, responsiveOptions);
+                    new Chartist.Pie('#pie-chart', data, options, responsiveOptions);
 
-               }
+                }
 
-            var stackedBarChart = function(){
-               //Stacked bar chart  
-               new Chartist.Bar('#stacked-bar-chart', {
-                  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-                  series: [
-                     [
-                        {{ $data['EmailPerJan'] }}, {{ $data['EmailPerFeb'] }}, {{ $data['EmailPerMar'] }}, {{ $data['EmailPerApr'] }}, 
-                        {{ $data['EmailPerMay'] }}, {{ $data['EmailPerJune'] }}, {{ $data['EmailPerJuly'] }}, {{ $data['EmailPerAug'] }}, 
-                        {{ $data['EmailPerSep'] }}, {{ $data['EmailPerOct'] }}, {{ $data['EmailPerNov'] }}, {{ $data['EmailPerDec'] }} 
-                     ],
-                     [
-                        {{ $data['CallPerJan'] }}, {{ $data['CallPerFeb'] }}, {{ $data['CallPerMar'] }}, {{ $data['CallPerApr'] }}, 
-                        {{ $data['CallPerMay'] }}, {{ $data['CallPerJune'] }}, {{ $data['CallPerJuly'] }}, {{ $data['CallPerAug'] }}, 
-                        {{ $data['CallPerSep'] }}, {{ $data['CallPerOct'] }}, {{ $data['CallPerNov'] }}, {{ $data['CallPerDec'] }}
-                     ],
-                     [
-                        {{ $data['WhatsAppPerJan'] }}, {{ $data['WhatsAppPerFeb'] }}, {{ $data['WhatsAppPerMar'] }}, {{ $data['WhatsAppPerApr'] }}, 
-                        {{ $data['WhatsAppPerMay'] }}, {{ $data['WhatsAppPerJune'] }}, {{ $data['WhatsAppPerJuly'] }}, {{ $data['WhatsAppPerAug'] }}, 
-                        {{ $data['WhatsAppPerSep'] }}, {{ $data['WhatsAppPerOct'] }}, {{ $data['WhatsAppPerNov'] }}, {{ $data['WhatsAppPerDec'] }}
-                     ]
-                  ]
-               }, {
-                  stackBars: true,
-                  axisY: {
-                  labelInterpolationFnc: function(value) {
-                     return (value / 10) + 'k';
-                  }
-                  },
-                  plugins: [
-                  Chartist.plugins.tooltip()
-                  ]
-               }).on('draw', function(data) {
-                  if(data.type === 'bar') {
-                  data.element.attr({
-                     style: 'stroke-width: 30px'
-                  });
-                  }
-               });
-            }
+                var stackedBarChart = function() {
+                    //Stacked bar chart  
+                    new Chartist.Bar('#stacked-bar-chart', {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct',
+                            'Nov', 'Dec'
+                        ],
+                        series: [
+                            [
+                                {{ $data['EmailPerJan'] }}, {{ $data['EmailPerFeb'] }},
+                                {{ $data['EmailPerMar'] }}, {{ $data['EmailPerApr'] }},
+                                {{ $data['EmailPerMay'] }}, {{ $data['EmailPerJune'] }},
+                                {{ $data['EmailPerJuly'] }}, {{ $data['EmailPerAug'] }},
+                                {{ $data['EmailPerSep'] }}, {{ $data['EmailPerOct'] }},
+                                {{ $data['EmailPerNov'] }}, {{ $data['EmailPerDec'] }}
+                            ],
+                            [
+                                {{ $data['CallPerJan'] }}, {{ $data['CallPerFeb'] }},
+                                {{ $data['CallPerMar'] }}, {{ $data['CallPerApr'] }},
+                                {{ $data['CallPerMay'] }}, {{ $data['CallPerJune'] }},
+                                {{ $data['CallPerJuly'] }}, {{ $data['CallPerAug'] }},
+                                {{ $data['CallPerSep'] }}, {{ $data['CallPerOct'] }},
+                                {{ $data['CallPerNov'] }}, {{ $data['CallPerDec'] }}
+                            ],
+                            [
+                                {{ $data['WhatsAppPerJan'] }},
+                                {{ $data['WhatsAppPerFeb'] }},
+                                {{ $data['WhatsAppPerMar'] }},
+                                {{ $data['WhatsAppPerApr'] }},
+                                {{ $data['WhatsAppPerMay'] }},
+                                {{ $data['WhatsAppPerJune'] }},
+                                {{ $data['WhatsAppPerJuly'] }},
+                                {{ $data['WhatsAppPerAug'] }},
+                                {{ $data['WhatsAppPerSep'] }},
+                                {{ $data['WhatsAppPerOct'] }},
+                                {{ $data['WhatsAppPerNov'] }}, {{ $data['WhatsAppPerDec'] }}
+                            ]
+                        ]
+                    }, {
+                        stackBars: true,
+                        axisY: {
+                            labelInterpolationFnc: function(value) {
+                                return (value / 10) + 'k';
+                            }
+                        },
+                        plugins: [
+                            Chartist.plugins.tooltip()
+                        ]
+                    }).on('draw', function(data) {
+                        if (data.type === 'bar') {
+                            data.element.attr({
+                                style: 'stroke-width: 30px'
+                            });
+                        }
+                    });
+                }
 
                 /* Function ============ */
                 return {
@@ -651,12 +683,12 @@
                         simpleLineChart();
                         donutChart();
                         pieChart();
-				            stackedBarChart();
+                        stackedBarChart();
                     },
                     resize: function() {
                         simpleLineChart();
                         pieChart();
-				            stackedBarChart();
+                        stackedBarChart();
                     }
                 }
 
@@ -668,15 +700,15 @@
                 }, 1000);
             });
 
-            jQuery(window).on('resize',function(){
-               dzChartlist.resize();
-            }); 
+            jQuery(window).on('resize', function() {
+                dzChartlist.resize();
+            });
 
         })(jQuery);
 
-        $(document).ready(function(){
-           
+        $(document).ready(function() {
+
             $(".chartjs-render-monitor").attr("background-color", "darkblue;");
-         });
+        });
     </script>
 @endsection
