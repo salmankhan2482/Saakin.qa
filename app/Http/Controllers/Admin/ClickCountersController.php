@@ -143,16 +143,15 @@ class ClickCountersController extends Controller
       }
       if ($id) {
          $data['propertyVisitsPerMonth'] = PropertyCounter::where('agency_id', $id)
-            ->when(request('from'), function ($query) {
-               $query->where('property_counters.created_at', '>=', request('from') . ' 00:00:01');
-            })
-            ->when(request('to'), function ($query) {
-               $query->where('property_counters.created_at', '<=', request('to') . ' 23:59:59');
-            })
-            ->when(request('from') && request('to'), function ($query) {
-               $query->whereBetween('property_counters.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
-            })->paginate(10);
-           
+         ->when(request('from'), function ($query) {
+            $query->where('property_counters.created_at', '>=', request('from') . ' 00:00:01');
+         })
+         ->when(request('to'), function ($query) {
+            $query->where('property_counters.created_at', '<=', request('to') . ' 23:59:59');
+         })
+         ->when(request('from') && request('to'), function ($query) {
+            $query->whereBetween('property_counters.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
+         })->paginate(10);
            
          $months = ['1' => 'Jan', '2' => 'Feb', '3' => 'Mar',  '4' => 'Apr', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'Aug', '9' => 'Sep', '10' => 'Oct', '11' => 'Nov', '12' => 'Dec'];
        
@@ -161,8 +160,7 @@ class ClickCountersController extends Controller
             $data['propertiesVisitsPer' . $value] = PropertyCounter::where('agency_id', $id)
             ->whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', $key)
-            ->sum('counter');
-            
+            ->sum('counter');   
          }
          
          return view('admin-dashboard.traffic-pages.propertyVisits-per-month.agency-index', compact('data', 'action'));

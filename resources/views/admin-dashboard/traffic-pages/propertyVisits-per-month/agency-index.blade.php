@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="col-xl-12 col-lg-12">
+        <div class="col-xl-6 col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Views</h4>
