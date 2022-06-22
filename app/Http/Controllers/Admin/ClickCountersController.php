@@ -168,8 +168,6 @@ class ClickCountersController extends Controller
          return view('admin-dashboard.traffic-pages.propertyVisits-per-month.agency-index', compact('data', 'action'));
       } elseif(auth()->user()->usertype == 'Admin') {
 
-         $data['propertyVisitsPerMonth'] = PropertyCounter::where
-
          $data['propertyVisitsPerMonth'] = DB::table('property_counters')
             ->join('agencies', 'property_counters.agency_id', 'agencies.id')
             ->select('agencies.id as aid', 'agencies.name as aname', DB::raw(' SUM(property_counters.counter) as totalTraffic '))
@@ -183,7 +181,7 @@ class ClickCountersController extends Controller
             ->when(request('from') && request('to'), function ($query) {
                $query->whereBetween('property_counters.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
             })->groupBy('agencies.name')->paginate(10);
-            dd($data['propertyVisitsPerMonth']);
+          
 
          return view('admin-dashboard.traffic-pages.propertyVisits-per-month.index', compact('data', 'action'));
       }
