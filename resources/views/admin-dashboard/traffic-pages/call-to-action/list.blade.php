@@ -23,7 +23,7 @@
                   </h4>
             </div>
             <div class="card-body">
-                  <div id="multi-line-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
+                  <div id="stacked-bar-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
             </div>
          </div>
       </div>
@@ -99,12 +99,11 @@
       var dzChartlist = function(){
          var screenWidth = $(window).width();
          
-         var multiLineChart = function(){
-            //Multi-line labels
-            new Chartist.Bar('#multi-line-chart', {
-               labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-
-                series: [
+         var stackedBarChart = function(){
+               //Stacked bar chart  
+               new Chartist.Bar('#stacked-bar-chart', {
+                  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
+                  series: [
                      [
                         {{ $data['EmailPerJan'] }}, {{ $data['EmailPerFeb'] }}, {{ $data['EmailPerMar'] }}, {{ $data['EmailPerApr'] }}, 
                         {{ $data['EmailPerMay'] }}, {{ $data['EmailPerJune'] }}, {{ $data['EmailPerJuly'] }}, {{ $data['EmailPerAug'] }}, 
@@ -121,23 +120,24 @@
                         {{ $data['WhatsAppPerSep'] }}, {{ $data['WhatsAppPerOct'] }}, {{ $data['WhatsAppPerNov'] }}, {{ $data['WhatsAppPerDec'] }}
                      ]
                   ]
-            }, {
-               seriesBarDistance: 10,
-               axisX: {
-               offset: 60
-               },
-               axisY: {
-               offset: 80,
-               labelInterpolationFnc: function(value) {
-                  return value
-               },
-               scaleMinSpace: 15
-               },
-               plugins: [
-               Chartist.plugins.tooltip()
-               ]
-            });
-         }
+               }, {
+                  stackBars: true,
+                  axisY: {
+                  labelInterpolationFnc: function(value) {
+                     return (value / 10) + 'k';
+                  }
+                  },
+                  plugins: [
+                  Chartist.plugins.tooltip()
+                  ]
+               }).on('draw', function(data) {
+                  if(data.type === 'bar') {
+                  data.element.attr({
+                     style: 'stroke-width: 30px'
+                  });
+                  }
+               });
+            }
          
          
          /* Function ============ */
@@ -147,11 +147,11 @@
                
                
                load:function(){
-                  multiLineChart();
+                  stackedBarChart();
                },
                
                resize:function(){
-                  multiLineChart();
+                  stackedBarChart();
                }
             }
          
