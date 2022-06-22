@@ -181,7 +181,6 @@ class ClickCountersController extends Controller
             ->when(request('from') && request('to'), function ($query) {
                $query->whereBetween('property_counters.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
             })->groupBy('agencies.name')->paginate(10);
-          
 
          return view('admin-dashboard.traffic-pages.propertyVisits-per-month.index', compact('data', 'action'));
       }
@@ -219,7 +218,6 @@ class ClickCountersController extends Controller
          return view('admin-dashboard.traffic-pages.users.index', compact('users', 'action'));
 
       } elseif (auth()->user()->usertype == 'Agency') {
-
          $users = DB::table('page_visits')->where('agency_id', auth()->user()->agency_id)
             ->select('page_visits.*', DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
 
@@ -232,10 +230,7 @@ class ClickCountersController extends Controller
             ->when(request('from') && request('to'), function ($query) {
                $query->whereBetween('page_visits.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
             })
-            //  ->groupBy('totalUsers')
-            // ->orderBy('totalUsers', 'DESC')
             ->paginate(20);
-         //  dd($users);
 
          //BAR CHART NEW USERS PER MONTH
          $months = [
@@ -270,19 +265,40 @@ class ClickCountersController extends Controller
    public function trafficUsersIPs($id)
    {
       $action = 'saakin_index';
-
       if (auth()->user()->usertype == 'Agency') {
          $id = auth()->user()->agency_id;
       }
-      if ($id) {
-         $data['trafficUsersIPs'] = PageVisits::where('agency_id', $id)
-            ->groupBy('ip_address')
-            ->paginate(20);
-      } else {
-         $data['trafficUsersIPs'] = PageVisits::where('agency_id', $id)
-            ->groupBy('ip_address')
-            ->paginate(20);
+    
+      $data['trafficUsersIPs'] = PageVisits::where('agency_id', $id)
+         ->groupBy('ip_address')
+         ->paginate(20);
+
+      //BAR CHART NEW USERS PER MONTH
+      $months = [
+         '1' => 'Jan',
+         '2' => 'Feb',
+         '3' => 'Mar',
+         '4' => 'Apr',
+         '5' => 'May',
+         '6' => 'June',
+         '7' => 'July',
+         '8' => 'Aug',
+         '9' => 'Sep',
+         '10' => 'Oct',
+         '11' => 'Nov',
+         '12' => 'Dec'
+      ];
+
+      foreach ($months as $key => $value) {
+         $data['UniqueUsersPer' . $value] = DB::table('page_visits')
+         ->select('ip_address')
+         ->distinct('ip_address')
+         ->where("agency_id", Auth::User()->agency_id)
+            ->whereYear('created_at', Carbon::now()->year)
+            ->whereMonth('created_at', $key)
+            ->count('ip_address');
       }
+
       return view('admin-dashboard.traffic-pages.users.users_ip', compact('data', 'action'));
    }
 
