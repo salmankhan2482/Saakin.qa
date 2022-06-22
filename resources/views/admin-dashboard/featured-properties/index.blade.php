@@ -31,7 +31,8 @@
                         <form action="{{ route('featuredproperties.index') }}" method="GET">
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="keyword" placeholder="Search" value="{{ request('keyword') }}">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search"
+                                        value="{{ request('keyword') }}">
                                 </div>
                                 <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select name="purpose" class="form-control">
@@ -61,7 +62,7 @@
                                         <option value="">{{ trans('words.property_type') }}</option>
                                         @if (count($data['propertyTypes']) > 0)
                                             @foreach ($data['propertyTypes'] as $type)
-                                                <option value="{{ $type->id }}" 
+                                                <option value="{{ $type->id }}"
                                                     {{ request('type') == $type->id ? 'selected' : '' }}>
                                                     {{ $type->types }}
                                                 </option>
@@ -79,9 +80,9 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
-        
+
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -109,6 +110,7 @@
                                     @php
                                         $pUser = \App\User::where('id', $property->user_id)->first();
                                     @endphp
+                                    
                                     <tr>
                                         @if ($loop->index == 4)
                                         @endif
@@ -116,7 +118,8 @@
                                         <td>{{ $property->Agency->name ?? $property->user->name }}</td>
 
                                         <td>
-                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
+                                            <a
+                                                href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
                                                 {{ $property->property_name }}
                                             </a>
                                         </td>
@@ -125,7 +128,8 @@
                                         </td>
                                         <td>{{ $property->property_purpose }}</td>
                                         <td class="text-center">
-                                            {{ App\PageVisits::where('property_id', $property->id)->count() ?? 0 }}</td>
+                                            {{ App\PropertyCounter::where('property_id', $property->id)->value('counter') ?? 0 }}
+                                        </td>
                                         <td>
                                             @if ($property->created_at !== null)
                                                 <small>{{ date('d-m-Y', strtotime($property->created_at)) }}</small>
@@ -136,7 +140,7 @@
                                         <td class="text-center">
                                             @if ($property->status == 1)
                                                 <i class="fa fa-circle text-success mr-1"></i>
-                                            @elseif ($property->status == 1 and $property->featured_property ==1)
+                                            @elseif ($property->status == 1 and $property->featured_property == 1)
                                                 <i class="fa fa-star"></i>
                                             @else
                                                 <i class="fa fa-circle text-danger mr-1"></i>
@@ -151,30 +155,27 @@
                                                 @if ($property->user)
                                                     @if (Auth::User()->usertype == 'Admin')
                                                         <a href="Javascript:void(0);" class="dropdown-item"
-                                                            data-toggle="modal"
-                                                            data-target="#PropertyPlanModal"
-                                                            data-propertyid="{{ $property->id }}"
-                                                            id="changePlan_button"
-                                                            >
+                                                            data-toggle="modal" data-target="#PropertyPlanModal"
+                                                            data-propertyid="{{ $property->id }}" id="changePlan_button">
                                                             <i class="fa fa-dollar"></i>
                                                             {{ trans('words.change_plan') }}
                                                         </a>
                                                     @endif
 
                                                     {{-- @if (Auth::User()->usertype == 'Admin') --}}
-                                                        @if ($property->featured_property == 0)
-                                                            <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
-                                                                class="dropdown-item">
-                                                                <i class="fa fa-star"></i>
-                                                                {{ trans('words.set_as_featured') }}
-                                                            </a>
-                                                        @else
-                                                            <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
-                                                                class="dropdown-item">
-                                                                <i class="fa fa-check"></i>
-                                                                {{ trans('words.unset_as_featured') }}
-                                                            </a>
-                                                        @endif
+                                                    @if ($property->featured_property == 0)
+                                                        <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
+                                                            class="dropdown-item">
+                                                            <i class="fa fa-star"></i>
+                                                            {{ trans('words.set_as_featured') }}
+                                                        </a>
+                                                    @else
+                                                        <a href="{{ url('admin/properties/featuredproperty/' . Crypt::encryptString($property->id)) }}"
+                                                            class="dropdown-item">
+                                                            <i class="fa fa-check"></i>
+                                                            {{ trans('words.unset_as_featured') }}
+                                                        </a>
+                                                    @endif
                                                     {{-- @endif --}}
                                                 @endif
                                             </div>
@@ -196,42 +197,43 @@
         </div>
     </div>
 
-    <div class="modal fade" id="PropertyPlanModal" tabindex="-1" role="dialog" aria-labelledby="PropertyPlanModal" aria-hidden="true">
+    <div class="modal fade" id="PropertyPlanModal" tabindex="-1" role="dialog" aria-labelledby="PropertyPlanModal"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-    
+
                 <div class="modal-header" style="padding: 10px">
                     <h5 class="modal-title" id="exampleModalLongTitle">
                         Change Plan
                     </h5>
                 </div>
-    
+
                 {!! Form::open(['url' => ['admin/properties/plan_update'], 'class' => '', 'name' => 'plan_form', 'id' => 'plan_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
-                    <input type="hidden" id="hidden_property_id" name="property_id" value="">
-                    <div class="modal-body" style="padding: 10px">
-                        <div class="row">
-                            <div class="col-6">
-                                <label>{{ trans('words.subscription_plan') }}</label>
-                                <select id="plan_id" name="plan_id" class="form-control" required>
-                                    <option value="1">Basic Plan</option>
-                                    <option value="2">Premium Plan</option>
-                                    <option value="3">Platinum Plan</option>
-                                </select>
-                            </div>
-                            <div class="col-6">
-                                <label>Expiry Date</label>
-                                <input type="date" name="property_exp_date" class="form-control">
-                            </div>
+                <input type="hidden" id="hidden_property_id" name="property_id" value="">
+                <div class="modal-body" style="padding: 10px">
+                    <div class="row">
+                        <div class="col-6">
+                            <label>{{ trans('words.subscription_plan') }}</label>
+                            <select id="plan_id" name="plan_id" class="form-control" required>
+                                <option value="1">Basic Plan</option>
+                                <option value="2">Premium Plan</option>
+                                <option value="3">Platinum Plan</option>
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label>Expiry Date</label>
+                            <input type="date" name="property_exp_date" class="form-control">
                         </div>
                     </div>
-                    <div class="modal-footer" style="padding: 10px">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">
-                            Save changes
-                        </button>
-                    </div>
+                </div>
+                <div class="modal-footer" style="padding: 10px">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Save changes
+                    </button>
+                </div>
                 {!! Form::close() !!}
             </div>
         </div>
@@ -239,7 +241,6 @@
 @endsection
 @section('scripts')
     <script>
-        
         $(document).on("click", "#changePlan_button", function() {
             var id = $(this).attr('data-propertyId');
             $('#hidden_property_id').val(id);

@@ -623,6 +623,7 @@ class PropertiesController extends Controller
 
    public function propertiesForPurpose($buyOrRent, $property_purpose)
    {
+      
       if (request()->filled('buyOrRent') && request()->filled('property_purpose')) {
          $buyOrRent = request('buyOrRent');
          $property_purpose = request('property_purpose');
@@ -731,7 +732,7 @@ class PropertiesController extends Controller
 
    public function propertyTypeForPurpose($buyOrRent, $property)
    {
-
+     
       $property_type = '';
       $property_purpose = '';
 
@@ -852,6 +853,7 @@ class PropertiesController extends Controller
 
    public function cityPropertyTypeForPurpose($buyOrRent, $city_slug, $property_type_purpose)
    {
+      
       if (request()->filled('buyOrRent') && request()->filled('property_type_purpose')) {
          $buyOrRent = request('buyOrRent');
          $property_type = explode('-for-', request('property_type_purpose'))[0];
@@ -862,18 +864,22 @@ class PropertiesController extends Controller
             $property_purpose = 'Sale';
          }
       } else {
+         
          $buyOrRent = $buyOrRent;
          $property_type = explode('-for-', $property_type_purpose)[0];
-
+         
          if ($buyOrRent == 'Rent' or $buyOrRent == 'rent') {
             $property_purpose = 'Rent';
+            
          } else {
             $property_purpose = 'Sale';
+           
          }
       }
       $subcitie_props = Properties::where('sub_city_slug', $property_type_purpose)->where('status', 1)->get();
       $town_props = Properties::where('town_slug', $property_type_purpose)->where('status', 1)->get();
       $area_props = Properties::where('area_slug', $property_type_purpose)->where('status', 1)->get();
+      
 
       //subcity if
       if (count($subcitie_props) > 0) {
@@ -1217,10 +1223,11 @@ class PropertiesController extends Controller
          );
       }
       
-      $extraTextInUrl = substr($property_type_purpose, strlen('apartments-for-sale'));
-      if($extraTextInUrl){
-         return redirect('/');
-      }
+      // $extraTextInUrl = substr($property_type_purpose, strlen('apartments-for-sale'));
+     
+      // if($extraTextInUrl){
+      //    return redirect('/');
+      // }
 
       $type = Types::where('plural', $property_type)->firstOrFail();
       $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();

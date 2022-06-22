@@ -206,8 +206,8 @@ class PropertiesController extends MainAdminController
       }
 
       $agencyName = Agency::where('id', $request_data['agency_id'])->value('name');
-      $request_data['refference_code'] = preg_replace('~\S\K\S*\s*~u', '', $agencyName) . '-' . preg_replace('~\S\K\S*\s*~u', '', $request_data['property_type']) . '-' . preg_replace('~\S\K\S*\s*~u', '', $request_data['property_purpose']);
-
+      // $request_data['refference_code'] = preg_replace('~\S\K\S*\s*~u', '', $agencyName) . '-' . preg_replace('~\S\K\S*\s*~u', '', $request_data['property_type']) . '-' . preg_replace('~\S\K\S*\s*~u', '', $request_data['property_purpose']);
+      $request_data['refference_code'] = $request_data['reference_code'];
       $request_data['property_slug'] = $property_slug;
       $request_data['rooms'] = request()->rooms;
       $request_data['sub_city'] = $request_data['subcity'];
@@ -243,7 +243,7 @@ class PropertiesController extends MainAdminController
       }
 
       $property = Properties::create($request_data);
-      $reference = $request_data['refference_code'] . '-' . $property->id;
+      $reference = $request_data['refference_code'];
       
       $pro = Properties::find($property->id);
       if (request('property_amenities')) {
@@ -402,7 +402,7 @@ class PropertiesController extends MainAdminController
       if ($validator->fails()) {
          return redirect()->back()->withErrors($validator->messages());
       }
-
+      $request_data['refference_code'] = $request_data['reference_code'];
       $request_data['address_slug'] = $address_slug;
       $request_data['address'] = $address_without_slug;
       $request_data['property_slug'] = $property_slug;

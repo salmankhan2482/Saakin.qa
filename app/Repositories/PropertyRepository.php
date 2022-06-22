@@ -335,6 +335,7 @@ class PropertyRepository
          ->where('property_cities_id', null)
          ->where('property_sub_cities_id', null)
          ->first();
+         // dd($landing_page_content);
          if ($landing_page_content == null) {
             $page_des = getcong('site_description');
          } else {

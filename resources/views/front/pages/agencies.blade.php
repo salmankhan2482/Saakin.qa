@@ -39,6 +39,10 @@
           </div>
         </div>
       </form>
+      <a class="text-decoration-none" 
+      href="{{url('company-registration')}}">
+      <h4 class="text-center company-registration">Company Regisration</h4>
+      </a>
     </div>
   </div>
   <div class="inner-content">
@@ -184,6 +188,14 @@
 
 
 @push('styles')
+
+<style>
+  .company-registration
+{
+  color: white;
+  padding: 10px;
+}
+</style>
 @endpush
 
 @push('scripts')
