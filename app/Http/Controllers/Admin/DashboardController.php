@@ -97,17 +97,14 @@ class DashboardController extends MainAdminController
 
       //traffic per month
       $data['trafficPerMonth'] = PropertyCounter::when(auth()->user()->usertype == 'Agency', function ($query) {
-         $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
-         $query->whereIn('property_id', $property_ids);
-      })
-         ->sum('counter');
+         $query->where('agency_id', auth()->user()->agency_id);
+      })->sum('counter');
 
       // clicks per month
       $data['clicksPerMonths'] = ClickCounters::when(auth()->user()->usertype == 'Agency', function ($query) {
          $property_ids = Properties::where('agency_id', auth()->user()->agency_id)->get(['id'])->toArray();
          $query->whereIn('property_id', $property_ids);
-      })
-         ->count();
+      })->count();
 
 
       // number of users
