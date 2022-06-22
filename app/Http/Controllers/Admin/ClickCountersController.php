@@ -231,19 +231,7 @@ class ClickCountersController extends Controller
             ->paginate(20);
 
          //BAR CHART NEW USERS PER MONTH
-         $months = [
-            '1' => 'Jan',
-            '2' => 'Feb',
-            '3' => 'Mar',
-            '4' => 'Apr',
-            '5' => 'May',
-            '6' => 'June',
-            '7' => 'July',
-            '8' => 'Aug',
-            '9' => 'Sep',
-            '10' => 'Oct',
-            '11' => 'Nov',
-            '12' => 'Dec'
+         $months = [ '1' => 'Jan', '2' => 'Feb', '3' => 'Mar', '4' => 'Apr', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'Aug', '9' => 'Sep', '10' => 'Oct', '11' => 'Nov', '12' => 'Dec'
          ];
 
          foreach ($months as $key => $value) {
@@ -263,40 +251,27 @@ class ClickCountersController extends Controller
    public function trafficUsersIPs($id)
    {
       $action = 'saakin_index';
-      if (auth()->user()->usertype == 'Agency') {
-         $id = auth()->user()->agency_id;
-      }
-    
-      $data['trafficUsersIPs'] = PageVisits::where('agency_id', $id)
-         ->groupBy('ip_address')
-         ->paginate(20);
+      $id = auth()->user()->usertype == 'Agency' ? auth()->user()->agency_id : $id;
+      
+      $data['trafficUsersIPs'] = PageVisits::where('agency_id', $id)->groupBy('ip_address')->paginate(20);
+      $data['agencyName'] = Agency::where('id', $id)->value('name');
+      
+      if(auth()->user()->usertype == 'Admin'){
+         $months = [
+            '1' => 'Jan', '2' => 'Feb', '3' => 'Mar', '4' => 'Apr', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'Aug', '9' => 'Sep', '10' => 'Oct', '11' => 'Nov', '12' => 'Dec'
+         ];
 
-      //BAR CHART NEW USERS PER MONTH
-      $months = [
-         '1' => 'Jan',
-         '2' => 'Feb',
-         '3' => 'Mar',
-         '4' => 'Apr',
-         '5' => 'May',
-         '6' => 'June',
-         '7' => 'July',
-         '8' => 'Aug',
-         '9' => 'Sep',
-         '10' => 'Oct',
-         '11' => 'Nov',
-         '12' => 'Dec'
-      ];
-
-      foreach ($months as $key => $value) {
-         $data['UniqueUsersPer' . $value] = DB::table('page_visits')
-         ->select('ip_address')
-         ->distinct('ip_address')
-         ->where("agency_id", Auth::User()->agency_id)
+         foreach ($months as $key => $value) {
+            $data['UniqueUsersPer' . $value] = DB::table('page_visits')
+            ->select('ip_address')
+            ->distinct('ip_address')
+            ->where("agency_id", $id)
             ->whereYear('created_at', Carbon::now()->year)
             ->whereMonth('created_at', $key)
             ->count('ip_address');
+         }  
       }
-
+      
       return view('admin-dashboard.traffic-pages.users.users_ip', compact('data', 'action'));
    }
 
@@ -355,12 +330,10 @@ class ClickCountersController extends Controller
          }
          $chartData['Data'] .= "]";
          $chartData['Label'] .= "]";
-
          $agencyId = auth()->user()->agency_id;
-         return view(
-            'admin-dashboard.traffic-pages.top-ten-properties.agency_index',
-            compact('top10Proprties', 'action', 'agencyId', 'chartData')
-         );
+         return view('admin-dashboard.traffic-pages.top-ten-properties.agency_index',
+               compact('top10Proprties', 'action', 'agencyId', 'chartData'));
+
       } else {
          $top10Proprties = DB::table('property_counters')
             ->join('agencies', 'property_counters.agency_id', 'agencies.id')
@@ -369,9 +342,7 @@ class ClickCountersController extends Controller
                'agencies.name as aname',
                'agencies.id as aid'
             )
-            ->orderBy('counter', 'DESC')
-            ->groupBy('aname')
-            ->paginate(10);
+            ->orderBy('counter', 'DESC')->groupBy('aname')->paginate(10);
 
          return view('admin-dashboard.traffic-pages.top-ten-properties.index', compact('top10Proprties', 'action'));
       }
