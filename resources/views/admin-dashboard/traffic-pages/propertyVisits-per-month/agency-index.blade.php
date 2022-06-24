@@ -64,7 +64,7 @@
             <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Simple pie chart</h4>
+                        <h4 class="card-title">Property Purpose</h4>
                     </div>
                     <div class="card-body">
                         <div id="simple-pie" class="ct-chart ct-golden-section simple-pie-chart-chartist chartlist-chart">
@@ -160,8 +160,8 @@
                 series: [
 
                     {{ $data['rent'] }}, 
-                    {{ $data['sale'] }}, 
-                    4
+                    {{ $data['sale'] }}
+                    
                 ]
             };
 
