@@ -4,6 +4,7 @@ namespace App;
 
 
 use App\Agency;
+use App\PropertyCounter;
 use App\Enquire;
 use App\PropertyCities;
 use ReCaptcha\RequestMethod\Post;
@@ -191,11 +192,12 @@ class Properties extends Model
 
     public function propertyCounter()
     {
-        return $this->belongsTo(PropertyCounter::class,'property_id');
+        return $this->hasOne('App\PropertyCounter');
     }
 
     public function amenities()
     {
         return $this->belongsToMany(PropertyAmenity::class, 'amenity_property', 'property_id', 'amenity_id');
     }
+
 }

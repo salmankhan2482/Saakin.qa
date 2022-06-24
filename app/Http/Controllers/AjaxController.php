@@ -6,6 +6,7 @@ use App\ClickCounters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\PropertySubCities;
 use App\Types;
 use Stevebauman\Location\Facades\Location;
 
