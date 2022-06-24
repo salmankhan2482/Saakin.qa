@@ -50,18 +50,29 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-xl-6 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Property Views</h4>
+        <div class="row">
+            <div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Property Views</h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barChart_1"></canvas>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <canvas id="barChart_1"></canvas>
+            </div>
+            <div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Simple pie chart</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="simple-pie" class="ct-chart ct-golden-section simple-pie-chart-chartist chartlist-chart">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
         {{-- <div class="col-xl-12 col-lg-12">
          <div class="card">
             <div class="card-header">
@@ -132,95 +143,158 @@
 @endsection
 
 @section('scripts')
-   <script src="{{ asset('admin/vendor/chart.js/Chart.bundle.min.js') }}"></script>
-   <script>
-      (function($) {
+    <script src="{{ asset('admin/vendor/chart.js/Chart.bundle.min.js') }}"></script>
 
-         var dzSparkLine = function() {
-               let draw = Chart.controllers.line.__super__.draw; //draw shadow
+    <script src="{{ asset('admin/vendor/chartist/js/chartist.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('admin/vendor/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js') }}" type="text/javascript"></script>
+    
+<script>
+    (function($) {
+    /* "use strict" */
+      var dzChartlist = function(){
+         var screenWidth = $(window).width();
+         var simplePieChart = function() {
+            //Simple pie chart
 
-               var screenWidth = $(window).width();
+            var data1 = {
+                series: [
 
-               var barChart1 = function() {
-                  if (jQuery('#barChart_1').length > 0) {
-                     const barChart_1 = document.getElementById("barChart_1").getContext('2d');
+                    {{ $data['rent'] }}, 
+                    {{ $data['sale'] }}, 
+                    4
+                ]
+            };
 
-                     barChart_1.height = 100;
+            var sum = function(a, b) { return a + b };
 
-                     new Chart(barChart_1, {
-                           type: 'bar',
-                           data: {
-                              defaultFontFamily: 'Poppins',
-                              labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' ],
-                              datasets: [{
-                                 label: "Views",
-                                 data: [
-                                       {{ $data['propertiesVisitsPerJan'] }}, 
-                                       {{ $data['propertiesVisitsPerFeb'] }}, 
-                                       {{ $data['propertiesVisitsPerMar'] }}, 
-                                       {{ $data['propertiesVisitsPerApr'] }}, 
-                                       {{ $data['propertiesVisitsPerMay'] }}, 
-                                       {{ $data['propertiesVisitsPerJune'] }}, 
-                                       {{ $data['propertiesVisitsPerJuly'] }}, 
-                                       {{ $data['propertiesVisitsPerAug'] }},  
-                                       {{ $data['propertiesVisitsPerSep'] }}, 
-                                       {{ $data['propertiesVisitsPerOct'] }}, 
-                                       {{ $data['propertiesVisitsPerNov'] }}, 
-                                       {{ $data['propertiesVisitsPerDec'] }}
-                                 ],
-                                 borderColor: 'rgba(59, 76, 184, 1)',
-                                 borderWidth: "0",
-                                 backgroundColor: 'rgba(59, 76, 184, 1)'
-                              }]
-                           },
-                           options: {
-                              legend: false,
-                              scales: {
-                                 yAxes: [{
-                                       ticks: {
-                                          beginAtZero: true
-                                       }
-                                 }],
-                                 xAxes: [{
-                                       // Change here
-                                       barPercentage: 0.5
-                                 }]
-                              }
-                           }
-                     });
+            new Chartist.Pie('#simple-pie', data1, {
+                labelInterpolationFnc: function(value) {
+                    return Math.round(value / data1.series.reduce(sum) * 100) + '%';
+                }
+            });
+
+        }
+
+         /* Function ============ */
+            return {
+               init:function(){
+               },
+
+
+               load:function(){
+                simplePieChart();
+               },
+
+               resize:function(){
+                  simplePieChart();
                   }
-               }
-
-               /* Function ============ */
-               return {
-                  init: function() {},
-
-
-                  load: function() {
-                     barChart1();
-                     
-                  },
-
-                  resize: function() {
-                     barChart1();
-                     
-                  }
-               }
+            }
 
          }();
 
-         jQuery(document).ready(function() {});
-
-         jQuery(window).on('load', function() {
-               dzSparkLine.load();
+         jQuery(document).ready(function(){
          });
 
-         jQuery(window).on('resize', function() {
-               dzSparkLine.resize();
+         jQuery(window).on('load',function(){
+            dzChartlist.load();
+         });
 
+         jQuery(window).on('resize',function(){
+            dzChartlist.resize();
          });
 
       })(jQuery);
-   </script>
 
+</script>
+    <script>
+        (function($) {
+
+            var dzSparkLine = function() {
+                let draw = Chart.controllers.line.__super__.draw; //draw shadow
+
+                var screenWidth = $(window).width();
+
+                var barChart1 = function() {
+                    if (jQuery('#barChart_1').length > 0) {
+                        const barChart_1 = document.getElementById("barChart_1").getContext('2d');
+
+                        barChart_1.height = 100;
+
+                        new Chart(barChart_1, {
+                            type: 'bar',
+                            data: {
+                                defaultFontFamily: 'Poppins',
+                                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug',
+                                    'Sep', 'Oct', 'Nov', 'Dec'
+                                ],
+                                datasets: [{
+                                    label: "Views",
+                                    data: [
+                                        {{ $data['propertiesVisitsPerJan'] }},
+                                        {{ $data['propertiesVisitsPerFeb'] }},
+                                        {{ $data['propertiesVisitsPerMar'] }},
+                                        {{ $data['propertiesVisitsPerApr'] }},
+                                        {{ $data['propertiesVisitsPerMay'] }},
+                                        {{ $data['propertiesVisitsPerJune'] }},
+                                        {{ $data['propertiesVisitsPerJuly'] }},
+                                        {{ $data['propertiesVisitsPerAug'] }},
+                                        {{ $data['propertiesVisitsPerSep'] }},
+                                        {{ $data['propertiesVisitsPerOct'] }},
+                                        {{ $data['propertiesVisitsPerNov'] }},
+                                        {{ $data['propertiesVisitsPerDec'] }}
+                                    ],
+                                    borderColor: 'rgba(59, 76, 184, 1)',
+                                    borderWidth: "0",
+                                    backgroundColor: 'rgba(59, 76, 184, 1)'
+                                }]
+                            },
+                            options: {
+                                legend: false,
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero: true
+                                        }
+                                    }],
+                                    xAxes: [{
+                                        // Change here
+                                        barPercentage: 0.5
+                                    }]
+                                }
+                            }
+                        });
+                    }
+                }
+
+                /* Function ============ */
+                return {
+                    init: function() {},
+
+
+                    load: function() {
+                        barChart1();
+
+                    },
+
+                    resize: function() {
+                        barChart1();
+
+                    }
+                }
+
+            }();
+
+            jQuery(document).ready(function() {});
+
+            jQuery(window).on('load', function() {
+                dzSparkLine.load();
+            });
+
+            jQuery(window).on('resize', function() {
+                dzSparkLine.resize();
+
+            });
+
+        })(jQuery);
+    </script>
 @endsection

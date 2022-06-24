@@ -152,7 +152,7 @@ class ClickCountersController extends Controller
          ->when(request('from') && request('to'), function ($query) {
             $query->whereBetween('property_counters.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
          })->paginate(10);
-           
+         //   dd($data['propertyVisitsPerMonth']);
          $months = ['1' => 'Jan', '2' => 'Feb', '3' => 'Mar',  '4' => 'Apr', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'Aug', '9' => 'Sep', '10' => 'Oct', '11' => 'Nov', '12' => 'Dec'];
        
          // properties per month
@@ -162,6 +162,58 @@ class ClickCountersController extends Controller
             ->whereMonth('created_at', $key)
             ->sum('counter');   
          }
+
+         $data['rent'] = Properties::where('agency_id',$id)
+         ->where('status',1)
+         ->where('property_purpose','Rent')
+         ->count();
+
+         $data['sale'] = Properties::where('agency_id',$id)
+         ->where('status',1)
+         ->where('property_purpose','Sale')
+         ->count();
+
+
+
+         // ->get('property_purpose')->count()
+         // ->groupBy('property_purpose');
+         // dd($data['rent']);
+         // $data['property_types'] = Properties::where('agency_id', $id)->get()->toArray();
+         // // $data['property_types'] = Properties::with('propertyCounter')->where('agency_id', $id)->get()->toArray();
+         // foreach ($data['property_types'] as $key => $value)
+         // {  
+         //    $key+1;
+         //    $value = $value->propertyCounter;
+           
+         // }
+
+
+         // $results = DB::table('properties')
+         // ->join('property_counters', 'properties.id', '=', 'property_counters.property_id')
+         // ->select('property_counters.property_id', 'properties.property_purpose')
+         // ->get()->toArray();
+         // dd($results);
+
+
+         //   $p_purpose = Properties::where('agency_id', $id)->where('status',1)
+         //   ->groupBy('property_purpose')
+         //   ->get();
+         //   dd($p_purpose);
+
+         // $p_ids = PropertyCounter::where('agency_id',$id)->get();
+        
+         // foreach ($p_ids as $key => $p_id)
+         // {
+         //    $data['property_purpose'] = Properties::where('id',$p_id->property_id)->first();
+         //    $result = $data['property_purpose'];
+         
+         // }
+         // dd($result);
+         // dd($value->property_id);
+         // $data['property_types'] = Properties::where('id',$value->property_id)->get()->toArray();
+         // dd($data['property_types']);
+         
+         
          
          return view('admin-dashboard.traffic-pages.propertyVisits-per-month.agency-index', compact('data', 'action'));
       } elseif(auth()->user()->usertype == 'Admin') {
