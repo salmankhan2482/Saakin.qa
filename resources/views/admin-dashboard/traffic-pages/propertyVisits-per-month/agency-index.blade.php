@@ -65,6 +65,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h4 class="card-title">Property Purpose</h4>
+                        <h4><span style="color: #b655e4">Rent</span> | <span style="color: #00a2ff"> Sale</span> </h4>
                     </div>
                     <div class="card-body">
                         <div id="simple-pie" class="ct-chart ct-golden-section simple-pie-chart-chartist chartlist-chart">
@@ -73,16 +74,6 @@
                 </div>
             </div>
         </div>
-        {{-- <div class="col-xl-12 col-lg-12">
-         <div class="card">
-            <div class="card-header">
-                  <h4 class="card-title">Property Visits Per Month</h4>
-            </div>
-            <div class="card-body">
-                  <div id="horizontal-bar-chart" class="ct-chart ct-golden-section chartlist-chart"></div>
-            </div>
-         </div>
-      </div> --}}
 
         <div class="col-12">
             <div class="card">
@@ -159,8 +150,8 @@
             var data1 = {
                 series: [
 
-                    {{ $data['rent'] }}, 
-                    {{ $data['sale'] }}
+                    {{ $results[0]->purpose_count }}, 
+                    {{ $results[1]->purpose_count }}
                     
                 ]
             };

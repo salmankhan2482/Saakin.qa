@@ -25,5 +25,12 @@ class LandingPage extends Model
     {   
         return $this->belongsTo('App\PropertySubCities', 'property_sub_cities_id', 'id');
     }
-
+    public function PropertyTowns()
+    {   
+        return $this->belongsTo('App\PropertyTowns', 'property_towns_id', 'id');
+    }
+    public function PropertyAreas()
+    {   
+        return $this->belongsTo('App\PropertyAreas', 'property_areas_id', 'id');
+    }
 }

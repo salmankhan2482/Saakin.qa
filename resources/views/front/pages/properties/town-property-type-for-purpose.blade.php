@@ -1419,6 +1419,13 @@
 
         </div>
     </div>
+    <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
+        <div class="container">
+            @if ($properties->onFirstPage())
+                {!! $landing_page_content->page_content ?? '' !!}
+            @endif
+        </div>
+    </div>
     <button class="btn btn-primary scrollTopBtn" onclick="scrollToTop()">
         <i class="fas fa-chevron-up"></i>
     </button>

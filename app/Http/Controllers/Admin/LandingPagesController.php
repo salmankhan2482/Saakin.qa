@@ -6,12 +6,15 @@ use App\Types;
 use App\Agency;
 use App\LandingPage;
 use App\LandingPages;
+use App\PropertyAreas;
+use App\PropertyTowns;
+use App\PropertyCities;
 use App\PropertyPurpose;
+use App\PropertySubCities;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\PropertyCities;
-use App\PropertySubCities;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -40,7 +43,7 @@ class LandingPagesController extends Controller
         ->when(request('keyword'), function($query){
             return $query->orWhere('id', request('keyword'));
         })
-        
+        ->orderBy('id', 'DESC')
         ->paginate(15);
 
         return view('admin-dashboard.landing-pages.landing_page_content.index', compact('data', 'action'));
@@ -53,12 +56,14 @@ class LandingPagesController extends Controller
 
         $data['property_purposes'] = PropertyPurpose::all();
         $data['property_types'] = Types::all();
-        $data['cities'] = PropertyCities::all();
-        $data['subcities'] = PropertySubCities::all();
+        $data['property_cities'] = DB::table('property_cities')->get();
+        $data['property_subcities'] = PropertySubCities::all();
+        $data['property_towns'] = PropertyTowns::all();
+        $data['property_areas'] = PropertyAreas::all();
         $data['landing_pages_content'] = LandingPage::all();
         $action = 'saakin_create';
         
-        return view('admin-dashboard.landing-pages.landing_page_content.create', compact('data','action'));
+        return view('admin-dashboard.landing-pages.landing_page_content.create', compact('data','action',$data));
     }
 
     public function show($id)
@@ -67,6 +72,7 @@ class LandingPagesController extends Controller
     }
     public function store(Request $request)
     {
+        
         $data =  \Request::except(array('_token')) ;
         $inputs = $request->all();
         $rule=array(
@@ -82,8 +88,10 @@ class LandingPagesController extends Controller
         $checkDuplicate = LandingPage::
         where('property_purposes_id', request('property_purposes_id'))
         ->where('property_types_id', request('property_types_id'))
-        ->where('property_cities_id', request('property_cities_id'))
-        ->where('property_sub_cities_id', request('property_sub_cities_id'))
+        ->where('property_cities_id', request('city'))
+        ->where('property_sub_cities_id', request('subcity'))
+        ->where('property_towns_id', request('town'))
+        ->where('property_areas_id', request('area'))
         ->first();
 
         if ($checkDuplicate){
@@ -93,8 +101,10 @@ class LandingPagesController extends Controller
         $landing_pages_content = new LandingPage();
         $landing_pages_content->property_purposes_id = $inputs['property_purposes_id'];
         $landing_pages_content->property_types_id = $inputs['property_types_id'];
-        $landing_pages_content->property_cities_id = $inputs['property_cities_id'];
-        $landing_pages_content->property_sub_cities_id = $inputs['property_sub_cities_id'];
+        $landing_pages_content->property_cities_id = $inputs['city'];
+        $landing_pages_content->property_sub_cities_id = $inputs['subcity'];
+        $landing_pages_content->property_towns_id = $inputs['town'];
+        $landing_pages_content->property_areas_id = $inputs['area'];
         $landing_pages_content->page_content = $inputs['page_content'];
         $landing_pages_content->meta_title = $inputs['meta_title'];
         $landing_pages_content->meta_description = $inputs['meta_description'];
@@ -117,6 +127,8 @@ class LandingPagesController extends Controller
         $data['property_types'] = Types::all();
         $data['cities'] = PropertyCities::all();
         $data['subcities'] = PropertySubCities::all();
+        $data['towns'] = PropertyTowns::all();
+        $data['areas'] = PropertyAreas::all();
         $data['landing_page_content'] = LandingPage::findOrFail($id);
         $action = 'saakin_create';
 
