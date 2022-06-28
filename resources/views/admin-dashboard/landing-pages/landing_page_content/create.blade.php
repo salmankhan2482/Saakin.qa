@@ -135,7 +135,6 @@
     var editor = CKEDITOR.replace( 'page_content' );
 CKFinder.setupCKEditor( editor );
 
-
 jQuery(document).ready(function(){
 
     jQuery('#city').change(function(){
