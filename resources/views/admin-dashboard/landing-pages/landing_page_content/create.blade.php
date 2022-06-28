@@ -143,8 +143,9 @@ function callSubCities(data) {
                     }else{
                         $("#subCity").empty();     
                         $.each(subcities, function(key,value){
-                        $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
+                           $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
                         });
+                        $("#subCity").append('<option value="">Select Sub-City</option>');
                     }
 
                 }

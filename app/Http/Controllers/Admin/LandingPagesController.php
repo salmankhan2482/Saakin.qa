@@ -46,7 +46,6 @@ class LandingPagesController extends Controller
         return view('admin-dashboard.landing-pages.landing_page_content.index', compact('data', 'action'));
     }
     public function create()    {
-
         if(Auth::User()->usertype!="Admin"){
             \Session::flash('flash_message', trans('words.access_denied'));
             return redirect('admin/dashboard');

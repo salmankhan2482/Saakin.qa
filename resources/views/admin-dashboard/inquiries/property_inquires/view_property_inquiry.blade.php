@@ -3,7 +3,6 @@
 
 {{-- Content --}}
 @section('content')
-
     <div class="container-fluid">
         <div class="col-12">
             <div class="card">
@@ -15,135 +14,197 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example3" class="table table-striped table-hover dt-responsive" cellspacing="0" width="100%">
-                            <thead>
+                        <table class="table table-clear dt-responsive">
+                            <tbody>
                                 <tr>
                                     <th>Inquiry ID</th>
-                                    <td>{{ $inquire->id }}</td>
+                                    <td>{{ $enquire->id }}</td>
                                 </tr>
                                 <tr>
                                     <th>Inquiry Type</th>
-                                    <td>{{ $inquire->type }}</td>
+                                    <td>{{ $enquire->type }}</td>
                                 </tr>
                                 <tr>
                                     <th>Property ID</th>
-                                    <td>{{ $inquire->property_id ??''}}</td>
+                                    <td>{{ $enquire->property_id ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Property Title</th>
                                     <td>
-                                    @isset($property)
-                                        <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
-                                            {{ $property->property_name }}
+                                        <a href="{{ url(strtolower($enquire->property->property_purpose) . '/' . $enquire->property->property_slug . '/' . $enquire->property->id) }}"
+                                            target="_blank">
+                                            {{ $enquire->property->property_name }}
                                         </a>
-                                    @endisset    
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Name</th>
-                                    <td>{{ $inquire->name }}</td>
+                                    <td>{{ $enquire->name }}</td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
-                                    <td>{{ $inquire->email }}</td>
+                                    <td>{{ $enquire->email }}</td>
                                 </tr>
                                 <tr>
                                     <th>Phone</th>
-                                    <td>{{ $inquire->phone }}</td>
+                                    <td>{{ $enquire->phone }}</td>
                                 </tr>
                                 <tr>
                                     <th>Agency Name</th>
-                                    <td>{{ $inquire->Agencies->name ?? '' }}</td>
+                                    <td>{{ $enquire->Agencies->name ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Movin Date</th>
-                                    <td>{{ $inquire->movein_date ?? '' }}</td>
+                                    <td>{{ $enquire->movein_date ?? '' }}</td>
                                 </tr>
-                                <tr> 
-                                        <th>Message</th>
-                                        <td>{{ $inquire->message }}</td>
-                                    </tr>
-                                    <tr> 
-                                        <th>Sending Date</th>
-                                        <td>
-                                            {{ date('d-m-Y', strtotime($inquire->created_at)) ??'' }} at  {{ date('H:i:s', strtotime($inquire->created_at)) ??'' }}</td>
-                                    </tr>
-                            </thead>
-                            <tbody>
+                                <tr>
+                                    <th>Message</th>
+                                    <td>{{ $enquire->message }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sending Date</th>
+                                    <td>
+                                        {{ date('d-m-Y', strtotime($enquire->created_at)) ?? '' }} at
+                                        {{ date('H:i:s', strtotime($enquire->created_at)) ?? '' }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        @foreach ($properties as $property)
-              <div class="single-property-box border">
-                <div class="property-item">
-                  <a style="--img-container-height: 155px" class="property-img stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
-                    @if ($property->featured_image)
-                      <img src="{{ URL::asset('upload/properties/thumb_' . $property->featured_image) }}" alt="{{ $property->property_name }}">
-                    @else
-                      <img src="{{ URL::asset('assets/images/icon-no-image.svg') }}" alt="{{ $property->property_name }}">
-                    @endif
-                  </a>
-                  <ul class="feature_text">
-                    @if ($property->featured_property == 1)
-                      <li class="feature_cb"><span> Featured</span>
-                      </li>
-                    @endif
-                    @if (!empty($property->property_purpose))
-                      <li class="feature_or">
-                        <span>{{ $property->property_purpose }}</span>
-                      </li>
-                    @endif
 
-                  </ul>
-                  <div class="property-author-wrap">
-                    <div class="property-author">
-                      <span>{{ $property->getPrice() }}
-                        @if ($property->property_purpose == 'For Rent' || $property->property_purpose == 'Rent')
-                          / Month
-                        @endif
-                      </span>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Similar Properties</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-responsive-sm">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Agency</th>
+                                    <th>Property Title</th>
+                                    <th>Type</th>
+                                    <th>Purpose</th>
+                                    <th>Views</th>
+                                    <th>Created</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($similarProperties as $i => $property)
+                                    <tr>
+                                        <td>{{ $property->id }}</td>
+                                        <td>{{ Str::limit($property->Agency->name, 15) ?? $property->user->name }}</td>
+                                        <td>
+                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}"
+                                                target="_blank">
+
+                                                {{ Str::limit($property->property_name, 30) }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            {{ $property->property_type ? getPropertyTypeName($property->property_type)->types ?? '' : '' }}
+                                        </td>
+                                        <td> {{ $property->property_purpose }} </td>
+                                        <td> {{ App\PropertyCounter::where('property_id', $property->id)->value('counter') ?? 0 }}
+                                        </td>
+                                        <td>
+                                            @if ($property->created_at !== null)
+                                                {{ date('d-m-Y', strtotime($property->created_at)) }}
+                                            @endif
+                                        </td>
+                                        <td>{{ $property->price }}</td>
+                                        <td class="text-center">
+                                            @if ($property->status == 1)
+                                                <i class="fa fa-circle text-success mr-1"></i>
+                                            @else
+                                                <i class="fa fa-circle text-danger mr-1"></i>
+                                            @endif
+                                            @if ($property->featured_property == 1)
+                                                <i class="fa fa-star"></i>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                  </div>
                 </div>
-                <div class="property-title-box" >
-                  <a class="text-decoration-none stretched-link" href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
-                    <h5 class="property-card__property-title">
-                      {{ \Illuminate\Support\Str::limit($property->property_name) }}
-                    </h5>
-                  </a> 
-                  <div class="property-location">
-                    <p>
-                      {{ $property->propertiesTypes->types }}
-                      <br>
-                      <span class="hideAddress">
-                        {{ $property->address }}
-                      </span>
-                    </p>
-                  </div>
-
-                  <ul class="property-feature">
-                    @if ($property->getProperty_type())
-                      <li class="me-1">
-                        <i class="fas fa-bed fas-icon"></i>
-                        <span>{{ $property->bedrooms }} </span>
-                      </li>
-                      <li class="me-1">
-                        <i class="fas fa-bath fas-icon"></i>
-                        <span>{{ $property->bathrooms }}
-                        </span>
-                      </li>
-                    @endif
-                    <li class="me-1">
-                      <i class="fas fa-chart-area fas-icon"></i>
-                      <span> {{ $property->getSqm() }} </span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            @endforeach
-        
+            </div>
+        </div>
+        <div class="col-12">
+         <div class="card">
+             <div class="card-header">
+                 <h4 class="card-title">Available Near By Properties</h4>
+             </div>
+             <div class="card-body">
+                 <div class="table-responsive">
+                     <table id="example3" class="display min-w850">
+                         <thead>
+                             <tr>
+                                 <th>ID</th>
+                                 <th>Agency</th>
+                                 <th>Property Title</th>
+                                 <th>Type</th>
+                                 <th>Purpose</th>
+                                 <th>Views</th>
+                                 <th>Created</th>
+                                 <th>Price</th>
+                                 <th>Status</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             @foreach ($availableNearbyProperties as $i => $property)
+                                 <tr>
+                                     <td>{{ $property->id }}</td>
+                                     <td>{{ Str::limit($property->Agency->name, 15) ?? $property->user->name }}</td>
+                                     <td>
+                                         <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}"
+                                             target="_blank">
+                                             {{ Str::limit($property->property_name, 30) }}
+                                         </a>
+                                     </td>
+                                     <td>
+                                         {{ $property->property_type ? getPropertyTypeName($property->property_type)->types ?? '' : '' }}
+                                     </td>
+                                     <td> {{ $property->property_purpose }} </td>
+                                     <td> {{ App\PropertyCounter::where('property_id', $property->id)->value('counter') ?? 0 }}
+                                     </td>
+                                     <td>
+                                         @if ($property->created_at !== null)
+                                             {{ date('d-m-Y', strtotime($property->created_at)) }}
+                                         @endif
+                                     </td>
+                                     <td>{{ $property->price }}</td>
+                                     <td class="text-center">
+                                         @if ($property->status == 1)
+                                             <i class="fa fa-circle text-success mr-1"></i>
+                                         @else
+                                             <i class="fa fa-circle text-danger mr-1"></i>
+                                         @endif
+                                         @if ($property->featured_property == 1)
+                                             <i class="fa fa-star"></i>
+                                         @endif
+                                     </td>
+                                 </tr>
+                             @endforeach
+                         </tbody>
+                         <tfoot>
+                           <tr>
+                               <td colspan="12" class="text-center">
+                                   {{ $availableNearbyProperties->render() }}
+                               </td>
+                           </tr>
+                       </tfoot>
+                     </table>
+                 </div>
+             </div>
+         </div>
+      </div>
     </div>
 @endsection
