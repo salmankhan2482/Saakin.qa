@@ -424,6 +424,12 @@ Route::get('callTown','AjaxController@callTown')->name('callTown');
 Route::get('callArea','AjaxController@callArea')->name('callArea');
 Route::get('callLatLong','AjaxController@callLatLong')->name('callLatLong');
 
+//Ajax for Call Sub-City, Town and Area Landing Pages Content
+Route::post('/getSubcity', 'AjaxController@getSubcity');
+Route::post('/getTown', 'AjaxController@getTown');
+Route::post('/getArea', 'AjaxController@getArea');
+
+
 //ajax route to click count on call and whatsapp and email button 
 Route::get('click_count', 'AjaxController@clickCount')->name('click_count');
     

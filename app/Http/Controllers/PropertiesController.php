@@ -1092,6 +1092,14 @@ class PropertiesController extends Controller
             ->where('properties.property_type', $type->id)
             ->groupBy("property_towns.name")->limit(6)->get();
 
+         $purp = ($buyOrRent == 'buy' ? 2 : 1);
+         $landing_page_content = LandingPage::where('property_purposes_id', $purp)
+            ->where('property_types_id', $type->id)
+            ->where('property_cities_id', $city_keyword->id)
+            ->where('property_sub_cities_id', $subcity_keyword->id)
+            ->where('property_towns_id', $town_keyword->id)
+            ->first();
+
          $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
          $saveSearch = 0;
          if (auth()->user()) {
@@ -1114,6 +1122,7 @@ class PropertiesController extends Controller
                'propertyPurposes',
                'buyOrRent',
                'page_info',
+               'landing_page_content',
                'data',
                'saveSearch'
             )
@@ -1195,6 +1204,16 @@ class PropertiesController extends Controller
             ->where('properties.property_type', $type->id)
             ->groupBy("property_areas.name")->limit(6)->get();
 
+
+         $purp = ($buyOrRent == 'buy' ? 2 : 1);
+         $landing_page_content = LandingPage::where('property_purposes_id', $purp)
+            ->where('property_types_id', $type->id)
+            ->where('property_cities_id', $city_keyword->id)
+            ->where('property_sub_cities_id', $subcity_keyword->id)
+            ->where('property_towns_id', $town_keyword->id)
+            ->where('property_areas_id', $area_keyword->id)
+            ->first();
+
          $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
          $saveSearch = 0;
          if (auth()->user()) {
@@ -1217,6 +1236,7 @@ class PropertiesController extends Controller
                'propertyPurposes',
                'buyOrRent',
                'page_info',
+               'landing_page_content',
                'data',
                'saveSearch'
             )

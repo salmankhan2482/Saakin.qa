@@ -62,20 +62,31 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>City</label>
-                                    <select id="property_cities_id" name="property_cities_id" class="form-control" onchange="callSubCities(this);">
+                                    <select id="city" name="city" class="form-control">
                                         <option value="">Select City</option>
-                                        @foreach ($data['cities'] as $city)
+                                        @foreach ($data['property_cities'] as $city)
                                         <option value="{{ $city->id }}">{{ $city->name }}</option>
                                     @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Sub-City</label>
-                                    <select id="subCity" name="property_sub_cities_id" class="form-control">
+                                    <select id="subcity" name="subcity" class="form-control">
                                         <option value="">Select Sub-City</option>
-                                        @foreach ($data['subcities'] as $subcity)
-                                        <option value="{{ $subcity->id }}">{{ $subcity->name }}</option>
-                                    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Town</label>
+                                    <select id="town" name="town" class="form-control">
+                                        <option value="">Select Town</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Area</label>
+                                    <select id="area" name="area" class="form-control">
+                                        <option value="">Select Area</option>
                                     </select>
                                 </div>
                             </div>
@@ -124,32 +135,62 @@
     var editor = CKEDITOR.replace( 'page_content' );
 CKFinder.setupCKEditor( editor );
 
-function callSubCities(data) {
-            var id = data.value;
-            
-            $.ajax({
-                type: "GET",
-                url: "{{ route('callSubCities') }}",
-                async: true,
-                data: {
-                    id: id // as you are getting in request('id') 
-                },
-                success: function (response) {
-                    var subcities = response['subcities'];
-                    if(subcities == ''){
-                        console.log('a');
-                        $("#subCity").empty();     
-                        $("#subCity").append('<option value="">No Result Found</option>');
-                    }else{
-                        $("#subCity").empty();     
-                        $.each(subcities, function(key,value){
-                        $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
-                        });
-                    }
 
-                }
-            });
+jQuery(document).ready(function(){
 
-        }
+    jQuery('#city').change(function(){
+        let cid = jQuery(this).val();
+        jQuery('#town').html('<option value="">Select Town</option>')
+        jQuery('#area').html('<option value="">Select Area</option>')
+        jQuery.ajax({
+            url: '/getSubcity',
+            type: 'post',
+            data: 'cid='+cid+'&_token={{csrf_token()}}',
+            success: function(result){
+                 jQuery('#subcity').html(result)
+                 
+
+            }
+
+        });
+
+    });
+
+    jQuery('#subcity').change(function(){
+        let sid = jQuery(this).val();
+        jQuery('#area').html('<option value="">Select Area</option>')
+        jQuery.ajax({
+            url: '/getTown',
+            type: 'post',
+            data: 'sid='+sid+'&_token={{csrf_token()}}',
+            success: function(result){
+                 jQuery('#town').html(result)
+                 
+
+            }
+
+        });
+
+    });
+
+    jQuery('#town').change(function(){
+        let tid = jQuery(this).val();
+        
+        jQuery.ajax({
+            url: '/getArea',
+            type: 'post',
+            data: 'tid='+tid+'&_token={{csrf_token()}}',
+            success: function(result){
+                 jQuery('#area').html(result)
+                 
+
+            }
+
+        });
+
+    });
+
+});
+
 </script>
 @endsection
