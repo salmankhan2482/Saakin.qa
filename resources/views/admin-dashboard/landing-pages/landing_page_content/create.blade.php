@@ -125,32 +125,32 @@
 CKFinder.setupCKEditor( editor );
 
 function callSubCities(data) {
-            var id = data.value;
-            
-            $.ajax({
-                type: "GET",
-                url: "{{ route('callSubCities') }}",
-                async: true,
-                data: {
-                    id: id // as you are getting in request('id') 
-                },
-                success: function (response) {
-                    var subcities = response['subcities'];
-                    if(subcities == ''){
-                        console.log('a');
-                        $("#subCity").empty();     
-                        $("#subCity").append('<option value="">No Result Found</option>');
-                    }else{
-                        $("#subCity").empty();     
-                        $.each(subcities, function(key,value){
-                           $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
-                        });
-                        $("#subCity").append('<option value="">Select Sub-City</option>');
-                    }
+   var id = data.value;
+   
+   $.ajax({
+         type: "GET",
+         url: "{{ route('callSubCities') }}",
+         async: true,
+         data: {
+            id: id // as you are getting in request('id') 
+         },
+         success: function (response) {
+            var subcities = response['subcities'];
+            if(subcities == ''){
+               console.log('a');
+               $("#subCity").empty();     
+               $("#subCity").append('<option value="">No Result Found</option>');
+            }else{
+               $("#subCity").empty();     
+               $.each(subcities, function(key,value){
+                  $("#subCity").append('<option value="'+value.id+'">'+value.name+'</option>');
+               });
+               $("#subCity").append('<option value="">Select Sub-City</option>');
+            }
 
-                }
-            });
+         }
+   });
 
-        }
+}
 </script>
 @endsection
