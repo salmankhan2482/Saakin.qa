@@ -283,7 +283,6 @@ class InquiriesController extends MainAdminController
 
    public function view_property_inquiry(Enquire $enquire)
    {
-      dd('aa');
       $inquire = Enquire::where('id', $enquire)->first();
       $inquire->enquire_id = 1;
       $inquire->update();

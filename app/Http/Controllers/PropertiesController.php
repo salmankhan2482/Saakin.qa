@@ -880,7 +880,6 @@ class PropertiesController extends Controller
       $town_props = Properties::where('town_slug', $property_type_purpose)->where('status', 1)->get();
       $area_props = Properties::where('area_slug', $property_type_purpose)->where('status', 1)->get();
       
-
       //subcity if
       if (count($subcitie_props) > 0) {
          // dd($subcitie_props);
@@ -1243,11 +1242,20 @@ class PropertiesController extends Controller
          );
       }
       
-      // $extraTextInUrl = substr($property_type_purpose, strlen('apartments-for-sale'));
+      $urlResult = 0;
+      if($buyOrRent == 'buy'){
+         $prefix = "-for-sale";
+         $index = strpos($property_type_purpose, $prefix) + strlen($prefix);
+         $urlResult = substr($property_type_purpose, $index);
+      }else{
+         $prefix = "-for-rent";
+         $index = strpos($property_type_purpose, $prefix) + strlen($prefix);
+         $urlResult = substr($property_type_purpose, $index);
+      }
+      if(strlen($urlResult) > 0){
+         return redirect('/');
+      }
      
-      // if($extraTextInUrl){
-      //    return redirect('/');
-      // }
 
       $type = Types::where('plural', $property_type)->firstOrFail();
       $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
