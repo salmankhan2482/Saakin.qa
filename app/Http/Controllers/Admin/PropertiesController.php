@@ -230,7 +230,11 @@ class PropertiesController extends MainAdminController
          $image_resize->resize(275, 205);
          $resize = $tmpFilePath . 'thumb_' . $name;
          $image_resize->save($resize);
-         $image_resize->resize('124', '182')->save(public_path() . '/upload/m_properties/' . 'mobile_thumb_' . $name);
+         // $canvas = Image::canvas(124, 180);
+         $image_resize->resize('135', '180')
+         // $canvas->insert($image_resize, 'center');
+         // $canvas->save(public_path() . '/upload/m_properties/' . 'mobile_thumb_' . $name);
+         ->save(public_path() . '/upload/m_properties/' . 'mobile_thumb_' . $name);
       }
 
       $agent_picture = $request->file('agent_picture');
