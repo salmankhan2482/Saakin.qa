@@ -140,7 +140,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('leads/contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
 	Route::get('leads/comp_reg_inquiries', 'InquiriesController@comp_reg_inquiries')->name('comp_reg_inquiries');
     
-    Route::get('view_inquiry/{id}', 'InquiriesController@view_inquiry')->name('view_inquiry');
+    Route::get('view_inquiry/{enquire}', 'InquiriesController@view_inquiry')->name('view_inquiry');
     Route::get('view_property_inquiry/{id}', 'InquiriesController@view_property_inquiry');
     Route::get('view_agency_inquiry/{id}', 'InquiriesController@view_agency_inquiry')->name('view_agency_inquiry');
     Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry')->name('view_contact_inquiry');   

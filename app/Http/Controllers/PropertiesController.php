@@ -87,7 +87,7 @@ class PropertiesController extends Controller
       $nearbyProperties = '';
       $this->propertyrepo->popularSearches($name, $link); //creating popular searches
       
-      if (count($properties) == 0) {
+      if (count($properties) == 0) {//getting near by properties
          $nearbyProperties =  $this->propertyrepo->getNearbyProperties($request);
          if(count($nearbyProperties) == 0){
             $nearbyProperties =  $this->propertyrepo->getNearbyPropertiesWithoutType($request);
