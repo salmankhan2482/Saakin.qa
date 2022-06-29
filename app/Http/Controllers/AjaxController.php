@@ -211,4 +211,42 @@ class AjaxController extends Controller
         }
         return $result;
     }
+
+    public function getSubcity(Request $request)
+    {
+        $cid = $request->post('cid');
+        $subcity = DB::table("property_sub_cities")
+        ->where("property_cities_id",$cid)
+        ->get();
+        $html= '<option value="">Select Sub-City</option>';
+        foreach($subcity as $list){
+            $html.='<option value="'.$list->id.'">'.$list->name.'</option>';
+        }
+        echo $html;
+    }
+    public function getTown(Request $request)
+    {
+        $sid = $request->post('sid');
+        $town = DB::table("property_towns")
+        ->where("property_sub_cities_id",$sid)
+        ->get();
+        $html= '<option value="">Select Town</option>';
+        foreach($town as $list){
+            $html.='<option value="'.$list->id.'">'.$list->name.'</option>';
+        }
+        echo $html;
+    }
+
+    public function getArea(Request $request)
+    {
+        $tid = $request->post('tid');
+        $area = DB::table("property_areas")
+        ->where("property_towns_id",$tid)
+        ->get();
+        $html= '<option value="">Select Area</option>';
+        foreach($area as $list){
+            $html.='<option value="'.$list->id.'">'.$list->name.'</option>';
+        }
+        echo $html;
+    }
 }

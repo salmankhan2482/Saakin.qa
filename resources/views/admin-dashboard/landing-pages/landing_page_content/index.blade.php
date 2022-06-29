@@ -68,7 +68,9 @@
                                     <th>Type</th>
                                     <th>City</th>
                                     <th>Sub-City</th>
-                                    <th>Cotnent</th>
+                                    <th>Town</th>
+                                    <th>Area</th>
+                                    <th>Content</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -76,10 +78,47 @@
                                 @foreach ($data['landing_pages_content'] as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td>{{ $item->PropertyPurposes->name ?? 'Not Available' }}</td>
-                                        <td>{{ $item->PropertyTypes->types ?? 'Not Available' }}</td>
-                                        <td>{{ $item->PropertyCities->name ?? 'Not Available' }}</td>
-                                        <td>{{ $item->PropertySubCities->name ?? 'Not Available' }}</td>
+
+                                        @if (!empty($item->PropertyPurposes->name))
+                                        <td>{{ $item->PropertyPurposes->name}}</td>
+                                        @else
+                                        <td class="text-center"><i class="fa fa-circle text-danger mr-1"></i></td> 
+                                        @endif
+                                        
+
+                                        @if (!empty($item->PropertyTypes->types))
+                                        <td>{{ $item->PropertyTypes->types }}</td>
+                                        @else
+                                        <td class="text-center"><i class="fa fa-circle text-danger mr-1"></i></td> 
+                                        @endif
+                                        
+
+                                        @if (!empty($item->PropertyCities->name))
+                                        <td>{{ $item->PropertyCities->name }}</td>
+                                        @else
+                                        <td class="text-center"><i class="fa fa-circle text-danger mr-1"></i></td> 
+                                        @endif
+                                        
+
+                                        @if (!empty($item->PropertySubCities->name))
+                                        <td>{{ $item->PropertySubCities->name }}</td>
+                                        @else
+                                        <td class="text-center"><i class="fa fa-circle text-danger mr-1"></i></td>  
+                                        @endif
+                                        
+
+                                        @if (!empty($item->PropertyTowns->name))
+                                        <td>{{ $item->PropertyTowns->name }}</td>
+                                        @else
+                                        <td class="text-center"><i class="fa fa-circle text-danger mr-1"></i></td>
+                                        @endif
+
+                                        @if (!empty($item->PropertyAreas->name))
+                                        <td>{{ $item->PropertyAreas->name }}</td>
+                                        @else
+                                        <td class="text-center"><i class="fa fa-circle text-danger mr-1"></i></td>
+                                        @endif
+                                        
                                         <td>{{ $item->meta_title ?? 'Not Available' }}</td>
                                         <td>
                                             <a href="{{ route('landing-pages.edit',$item->id) }}"

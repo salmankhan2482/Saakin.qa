@@ -18,7 +18,23 @@
 
 @section('content')
 
-    @php
+@php
+$phone = \App\Properties::getPhoneNumber($property->id);
+$whatsapp = \App\Properties::getWhatsapp($property->id);
+$agency = \App\Agency::where("id",$property->agency_id)->first();
+$propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
+$whatsapText = 'Hello,
+I would like to inquire about this property posted on saakin.qa
+
+Reference: '.$property->refference_code.'
+Price: QR '.$property->getPrice().'/month
+Type: '.$property->propertiesTypes->types.'
+Location: '.$property->address.'
+
+Link: '.$propertyUrl;
+@endphp
+
+    {{-- @php
     $phone = \App\Properties::getPhoneNumber($property->id);
     $whatsapp = \App\Properties::getWhatsapp($property->id);
     $agency = \App\Agency::where('id', $property->agency_id)->first();
@@ -41,7 +57,7 @@
               
               Link: ' .
         $propertyUrl;
-    @endphp
+    @endphp --}}
 
     <div class="inner-content">
 
