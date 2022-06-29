@@ -49,6 +49,7 @@ class PropertiesController extends Controller
 
    public function getPropertyListing(Request $request)
    {
+      
       request('bathrooms') == 'Any' ? $request->merge(['bathrooms' => null]) : request('bathrooms');
       request('bedrooms') == 'Any' ? $request->merge(['bedrooms' => null]) : request('bedrooms');
 
@@ -670,9 +671,21 @@ class PropertiesController extends Controller
       $propertyPurposes = PropertyPurpose::all();
 
       if ($buyOrRent == 'buy') {
-         $landing_page_content = LandingPage::where('property_purposes_id', 2)->where('property_types_id', null)->first();
+         $landing_page_content = LandingPage::where('property_purposes_id', 2)
+         ->where('property_types_id', null)
+         ->where('property_cities_id', null)
+         ->where('property_sub_cities_id', null)
+         ->where('property_towns_id', null)
+         ->where('property_areas_id', null)
+         ->first();
       } else {
-         $landing_page_content = LandingPage::where('property_purposes_id', 1)->where('property_types_id', null)->first();
+         $landing_page_content = LandingPage::where('property_purposes_id', 1)
+         ->where('property_types_id', null)
+         ->where('property_cities_id', null)
+         ->where('property_sub_cities_id', null)
+         ->where('property_towns_id', null)
+         ->where('property_areas_id', null)
+         ->first();
       }
 
       $heading_info = '';
@@ -797,8 +810,13 @@ class PropertiesController extends Controller
       $propertyPurposes = PropertyPurpose::all();
 
       $purp = ($buyOrRent == 'buy' ? 2 : 1);
-      $landing_page_content = LandingPage::where('property_purposes_id', $purp)->where('property_types_id', $type->id)
-         ->first();
+      $landing_page_content = LandingPage::where('property_purposes_id', $purp)
+      ->where('property_types_id', $type->id)
+      ->where('property_cities_id', null)
+      ->where('property_sub_cities_id', null)
+      ->where('property_towns_id', null)
+      ->where('property_areas_id', null)
+      ->first();
       $page_info = $type->plural . ' for ' . $property_purpose;
       $heading_info = ($type->plural_name ? $type->plural_name : ' Properties for ') . ' for ' . ucfirst($property_purpose) . ' in Qatar';
 
@@ -968,6 +986,8 @@ class PropertiesController extends Controller
             ->where('property_types_id', $type->id)
             ->where('property_cities_id', $city_keyword->id)
             ->where('property_sub_cities_id', $subcity_keyword->id)
+            ->where('property_towns_id', null)
+            ->where('property_areas_id', null)
             ->first();
 
          if ($properties->total() > 0) {
@@ -1097,6 +1117,7 @@ class PropertiesController extends Controller
             ->where('property_cities_id', $city_keyword->id)
             ->where('property_sub_cities_id', $subcity_keyword->id)
             ->where('property_towns_id', $town_keyword->id)
+            ->where('property_areas_id', null)
             ->first();
 
          $currentURL = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
@@ -1315,6 +1336,9 @@ class PropertiesController extends Controller
       $landing_page_content = LandingPage::where('property_purposes_id', $purp)
          ->where('property_types_id', $type->id)
          ->where('property_cities_id', $city_keyword->id)
+         ->where('property_sub_cities_id', null)
+         ->where('property_towns_id', null)
+         ->where('property_areas_id', null)
          ->first();
 
       $page_info =  $type->plural_name . ' for ' . ucfirst($property_purpose) . ' in ' . $city_keyword->name;

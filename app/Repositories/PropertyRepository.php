@@ -285,44 +285,95 @@ class PropertyRepository
    {
       $property_purpose_id = request('property_purpose') == 'Rent' ? 1 : 2;
 
-      if (!empty(request('property_purpose')) && empty(request('property_type')) && empty(request('city')) && empty(request('subcity'))) {
+      //  Property Purpose
+
+      if (!empty(request('property_purpose')) && empty(request('property_type')) && empty(request('city')) && empty(request('subcity')) && empty(request('town')) && empty(request('area'))) {
          $landing_page_content = LandingPage::where('property_purposes_id', $property_purpose_id)
             ->where('property_types_id', null)
             ->where('property_cities_id', null)
             ->where('property_sub_cities_id', null)
+            ->where('property_towns_id', null)
+            ->where('property_areas_id', null)
             ->first();
          if ($landing_page_content == null) {
             $page_des = getcong('site_description');
          } else {
             $page_des = Str::limit($landing_page_content->page_content, 170, '...');
          }
-      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && empty(request('city')) && empty(request('subcity'))) {
+
+         // Property Type For Purpose
+
+      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && empty(request('city')) && empty(request('subcity')) && empty(request('town')) && empty(request('area'))) {
          $landing_page_content = LandingPage::where('property_purposes_id', $property_purpose_id)
             ->where('property_types_id', request('property_type'))
             ->where('property_cities_id', null)
             ->where('property_sub_cities_id', null)
+            ->where('property_towns_id', null)
+            ->where('property_areas_id', null)
             ->first();
          if ($landing_page_content == null) {
             $page_des = getcong('site_description');
          } else {
             $page_des = Str::limit($landing_page_content->page_content, 170, '...');
          }
-      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && empty(request('subcity'))) {
+
+         // City Property Type For Purpose
+
+      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && empty(request('subcity')) && empty(request('town')) && empty(request('area'))) {
          $landing_page_content = LandingPage::where('property_purposes_id', $property_purpose_id)
             ->where('property_types_id', request('property_type'))
             ->where('property_cities_id', request('city'))
             ->where('property_sub_cities_id', null)
+            ->where('property_towns_id', null)
+            ->where('property_areas_id', null)
             ->first();
          if ($landing_page_content == null) {
             $page_des = getcong('site_description');
          } else {
             $page_des = Str::limit($landing_page_content->page_content, 170, '...');
          }
-      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && !empty(request('subcity'))) {
+
+         // Sub-City Type For Property Purpose
+
+      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && !empty(request('subcity')) && empty(request('town')) && empty(request('area'))) {
          $landing_page_content = LandingPage::where('property_purposes_id', $property_purpose_id)
             ->where('property_types_id', request('property_type'))
             ->where('property_cities_id', request('city'))
             ->where('property_sub_cities_id', request('subcity'))
+            ->where('property_towns_id', null)
+            ->where('property_areas_id', null)
+            ->first();
+         if ($landing_page_content == null) {
+            $page_des = getcong('site_description');
+         } else {
+            $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+         }
+
+         //Town Property Type For Purpose
+
+      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && !empty(request('subcity')) && !empty(request('town')) && empty(request('area'))) {
+         $landing_page_content = LandingPage::where('property_purposes_id', $property_purpose_id)
+            ->where('property_types_id', request('property_type'))
+            ->where('property_cities_id', request('city'))
+            ->where('property_sub_cities_id', request('subcity'))
+            ->where('property_towns_id', request('town'))
+            ->where('property_areas_id', null)
+            ->first();
+         if ($landing_page_content == null) {
+            $page_des = getcong('site_description');
+         } else {
+            $page_des = Str::limit($landing_page_content->page_content, 170, '...');
+         }
+
+         //Area Property Type For Purpose
+
+      } elseif (!empty(request('property_purpose')) && !empty(request('property_type')) && !empty(request('city')) && !empty(request('subcity')) && !empty(request('town')) && !empty(request('area'))) {
+         $landing_page_content = LandingPage::where('property_purposes_id', $property_purpose_id)
+            ->where('property_types_id', request('property_type'))
+            ->where('property_cities_id', request('city'))
+            ->where('property_sub_cities_id', request('subcity'))
+            ->where('property_towns_id', request('town'))
+            ->where('property_areas_id', request('area'))
             ->first();
          if ($landing_page_content == null) {
             $page_des = getcong('site_description');
@@ -334,6 +385,8 @@ class PropertyRepository
          ->where('property_types_id', null)
          ->where('property_cities_id', null)
          ->where('property_sub_cities_id', null)
+         ->where('property_towns_id', null)
+         ->where('property_areas_id', null)
          ->first();
          // dd($landing_page_content);
          if ($landing_page_content == null) {
