@@ -423,26 +423,26 @@
                                         aria-labelledby="dropdownMenuButton">
                                         <h6>Bedrooms</h6>
                                         <div class="d-flex spbwx8 mb-3">
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '' ? 'bg-info' : '' }}" onclick="bedrooms(this);" data-value=""> 
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '' ? 'bg-info' : '' }}" data-value="Any"> 
                                              Any
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}" onclick="bedrooms(this);" data-value="1">
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}" data-value="1">
                                              1
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}" onclick="bedrooms(this);" data-value="2">
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}" data-value="2">
                                              2
                                             </li>
 
-                                            <li class="dropdown-item item-in-line bedrooms{{ request('bedrooms') == '3' ? 'bg-info' : '' }}" onclick="bedrooms(this);" data-value="3">
+                                            <li class="dropdown-item item-in-line bedrooms{{ request('bedrooms') == '3' ? 'bg-info' : '' }}" data-value="3">
                                              3
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}" onclick="bedrooms(this);" data-value="4">
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}" data-value="4">
                                              4
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '5' ? 'bg-info' : '' }}" onclick="bedrooms(this);" data-value="5">
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '5' ? 'bg-info' : '' }}" data-value="5">
                                              5
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '6+' ? 'bg-info' : '' }}" onclick="bedrooms(this);" data-value="6+">
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '6+' ? 'bg-info' : '' }}" data-value="6+">
                                              6+
                                             </li>
                                         </div>
@@ -454,31 +454,31 @@
                                         <div class="mb-3">
                                             <h6>Bathrooms</h6>
                                             <div class="d-flex spbwx8">
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '' ? 'bg-info' : '' }}" onclick="bathrooms(this);" data-value=""> 
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '' ? 'bg-info' : '' }}" data-value="Any"> 
                                                    Any
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '1' ? 'bg-info' : '' }}" onclick="bathrooms(this);" data-value="1"> 
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '1' ? 'bg-info' : '' }}" data-value="1"> 
                                                    1
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '2' ? 'bg-info' : '' }}" onclick="bathrooms(this);" data-value="2"> 
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '2' ? 'bg-info' : '' }}" data-value="2"> 
                                                    2
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '3' ? 'bg-info' : '' }}" onclick="bathrooms(this);" data-value="3"> 
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '3' ? 'bg-info' : '' }}" data-value="3"> 
                                                    3
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '4' ? 'bg-info' : '' }}" onclick="bathrooms(this);" data-value="4"> 
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '4' ? 'bg-info' : '' }}" data-value="4"> 
                                                    4
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '5' ? 'bg-info' : '' }}" onclick="bathrooms(this);" data-value="5"> 
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '5' ? 'bg-info' : '' }}" data-value="5"> 
                                                    5
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '6+' ? 'bg-info' : '' }}"  onclick="bathrooms(this);" data-value="6+"> 
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '6+' ? 'bg-info' : '' }}"  data-value="6+"> 
                                                    6+
                                                 </li>
                                             </div>
@@ -1836,9 +1836,7 @@
 @section('scripts-custom')
    <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
    <script>
-      window.onload=function(){
-   
-      }
+
       function scrollToTop() {
          $(window).scrollTop(0);
       }
@@ -1875,8 +1873,6 @@
                   }
                ]
          });
-
-
          
          $('.js-dropdown .dropdown-menu').click(function(e) {
                e.stopPropagation();
@@ -1920,30 +1916,37 @@
          });
       });
 
+      
 
       var bednumber = $("#bedroomInput").val();
       var bathnumber = $("#bathroomInput").val();
       showBedBath();
 
-      function bedrooms(valx) {
+      $(function () {
+         
+         $(".bedrooms").on("click", function (e) {
+         var valx = $(this).data("value");
          $('.bedrooms').removeClass('bg-info');
-         $(valx).addClass('bg-info');
-         var valv = $(valx).html();
+         $(this).addClass('bg-info');
+         var valv = valx;
          $('#bedrooms').val(valv);
          bednumber = valv;
-         $("#bedroomInput").val($(valx).data('value'));
+         $("#bedroomInput").val(valx);
          showBedBath();
-      }
-
-      function bathrooms(valx) {
+         });
+         
+         $(".bathrooms").on("click", function (e) {
+         var valx = $(this).data("value");
          $('.bathrooms').removeClass('bg-info');
-         $(valx).addClass('bg-info');
-         var valv = $(valx).html();
+         $(this).addClass('bg-info');
+         var valv = valx;
          $('#bathrooms').val(valv);
          bathnumber = valv;
-         $("#bathroomInput").val($(valx).data('value'));
+         $("#bathroomInput").val(valx);
          showBedBath();
-      }
+         });
+
+      });
 
       function showBedBath() {
          var bedResult = (bednumber == 1 ? bednumber + " Bed" : bednumber + " Beds");
