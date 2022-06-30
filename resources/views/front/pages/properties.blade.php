@@ -429,13 +429,15 @@
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}" data-value="1">
                                              1
                                             </li>
+                                            
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}" data-value="2">
                                              2
                                             </li>
-
-                                            <li class="dropdown-item item-in-line bedrooms{{ request('bedrooms') == '3' ? 'bg-info' : '' }}" data-value="3">
+                                            
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '3' ? 'bg-info' : '' }}" data-value="3">
                                              3
                                             </li>
+
                                             <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}" data-value="4">
                                              4
                                             </li>
@@ -1923,17 +1925,20 @@
       showBedBath();
 
       $(function () {
+         var el = document.getElementsByClassName('bedrooms');
+         if(el){
+            $(".bedrooms").on("click", function (e) {
+            var valx = $(this).data("value");
+            $('.bedrooms').removeClass('bg-info');
+            $(this).addClass('bg-info');
+            var valv = valx;
+            $('#bedrooms').val(valv);
+            bednumber = valv;
+            $("#bedroomInput").val(valx);
+            showBedBath();
+            });
+         }
          
-         $(".bedrooms").on("click", function (e) {
-         var valx = $(this).data("value");
-         $('.bedrooms').removeClass('bg-info');
-         $(this).addClass('bg-info');
-         var valv = valx;
-         $('#bedrooms').val(valv);
-         bednumber = valv;
-         $("#bedroomInput").val(valx);
-         showBedBath();
-         });
          
          $(".bathrooms").on("click", function (e) {
          var valx = $(this).data("value");
