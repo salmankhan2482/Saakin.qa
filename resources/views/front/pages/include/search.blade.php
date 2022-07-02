@@ -57,29 +57,25 @@
                       <div class="dropdown-menu px-2 custom-dropdown"  aria-labelledby="dropdownMenuButton">
                         <h6>Bedrooms</h6>
                         <div class="d-flex spbwx8 mb-3">
-                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">Any</a>
-                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">1</a>
-                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">2</a>
-                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">3</a>
-                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">4</a>
-                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">5</a>
-                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" onclick="bedrooms(this);">6+</a>
+                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" data-value="Any">Any</a>
+                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" data-value="1">1</a>
+                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" data-value="2">2</a>
+                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" data-value="3">3</a>
+                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" data-value="4">4</a>
+                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" data-value="5">5</a>
+                          <a class="dropdown-item item-in-line bedrooms" href="javascript:;" data-value="6+">6+</a>
                         </div>
-
-                        {{-- <div class="mb-3">
-                          <input type="checkbox" name="exact_bedrooms" value="1"> Use exact values
-                        </div> --}}
 
                         <div class="mb-3">
                           <h6>Bathrooms</h6>
                           <div class="d-flex spbwx8">
-                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">Any</a>
-                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">1</a>
-                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">2</a>
-                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">3</a>
-                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">4</a>
-                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">5</a>
-                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" onclick="bathrooms(this);">6+</a>
+                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" data-value="Any">Any</a>
+                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" data-value="1">1</a>
+                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" data-value="2">2</a>
+                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" data-value="3">3</a>
+                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" data-value="4">4</a>
+                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" data-value="5">5</a>
+                            <a class="dropdown-item item-in-line bathrooms second-bath-option" href="javascript:;" data-value="6+">6+</a>
                           </div>
                         </div>
                         {{-- <div class="">
@@ -332,23 +328,31 @@
     var minArea = 0;
     var maxArea = 0;
 
-    function bedrooms(valx) {
-      $('.bedrooms').removeClass('bg-primary text-white border-primary');
-      $(valx).addClass('bg-primary text-white border-primary');
-      var valv = $(valx).html();
-      $('#bedrooms').val(valv);
-      bednumber = valv;
-      showBedBath();
-    }
+    $(function () {
+         var el = document.getElementsByClassName('bedrooms');
+         if(el){
+            $(".bedrooms").on("click", function (e) {
+            var valx = $(this).data("value");
+            $('.bedrooms').removeClass('bg-primary text-white border-primary');
+            $(this).addClass('bg-primary text-white border-primary');
+            var valv = valx;
+            $('#bedrooms').val(valv);
+            bednumber = valv;
+            showBedBath();
+            });
 
-    function bathrooms(valx) {
-      $('.bathrooms').removeClass('bg-primary text-white border-primary');
-      $(valx).addClass('bg-primary text-white border-primary');
-      var valv = $(valx).html();
-      $('#bathrooms').val(valv);
-      bathnumber = valv;
-      showBedBath();
-    }
+            $(".bathrooms").on("click", function (e) {
+            var valx = $(this).data("value");
+            $('.bathrooms').removeClass('bg-primary text-white border-primary');
+            $(this).addClass('bg-primary text-white border-primary');
+            var valv = valx;
+            $('#bathrooms').val(valv);
+            bathnumber = valv;
+            showBedBath();
+            });
+         }
+
+      });
 
     function showBedBath() {
       var bedResult = (bednumber == 1 ? bednumber + " Bed" : bednumber + " Beds");
