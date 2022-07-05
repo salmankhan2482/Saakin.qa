@@ -19,8 +19,8 @@
 
   <div class="site-banner text-center" style="background-image: url('{{ asset('assets/images/citys/city_guide.jpg') }}')">
     <div class="container">
-      <h1>City Guide</h1>
-      <div class="text-white">{!! $landing_page_content->page_content !!}</div>
+      <h1>Doha City Guide</h1>
+      {{-- <div class="text-white">{!! $landing_page_content->page_content !!}</div> --}}
     </div>
   </div>
 
@@ -51,6 +51,15 @@
       </div>
     </div>
   </div>
+  
+  <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
+    <div class="container">
+      <div class="meta-paragraph-container">
+        {!! $landing_page_content->page_content ??'' !!}
+      </div>
+    </div>
+  </div>
+
 @endsection
 
 

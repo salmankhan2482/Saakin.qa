@@ -170,19 +170,17 @@
         {{ $agencies->appends(request()->except(['page', '_token']))->links('front.pages.include.pagination') }}
       @endif
 
-      {{--  --}}
-
-      @if ($agencies->onFirstPage())
-        <div class="container">
-          <div class="meta-paragraph-container">
-            {!! $landing_page_content->page_content !!}
-          </div>
-        </div>
-      @endif
-
     </div>
   </div>
-
+  @if ($agencies->onFirstPage())
+  <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
+    <div class="container">
+      <div class="meta-paragraph-container">
+        {!! $landing_page_content->page_content ??'' !!}
+      </div>
+    </div>
+  </div>
+  @endif
   {{-- <span class="scrolltotop"><i class="lnr lnr-arrow-up"></i></span> --}}
 @endsection
 

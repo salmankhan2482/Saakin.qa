@@ -34,31 +34,6 @@ Location: '.$property->address.'
 Link: '.$propertyUrl;
 @endphp
 
-    {{-- @php
-    $phone = \App\Properties::getPhoneNumber($property->id);
-    $whatsapp = \App\Properties::getWhatsapp($property->id);
-    $agency = \App\Agency::where('id', $property->agency_id)->first();
-    $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
-
-    $whatsapText =
-        'Hello, I would like to inquire about this property posted on saakin.qa
-              
-              Reference: ' .
-        $property->refference_code .
-        '
-              Price: QR ' .
-        $property->getPrice() .
-        '/month Type: ' .
-        $property->propertiesTypes->types .
-        '
-              Location: ' .
-        $property->address .
-        '
-              
-              Link: ' .
-        $propertyUrl;
-    @endphp --}}
-
     <div class="inner-content">
 
         <div class="container">
@@ -774,7 +749,7 @@ Link: '.$propertyUrl;
                                 <a class="text-decoration-none stretched-link"
                                     href="{{ url(strtolower($property->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
                                     <h5 class="property-card__property-title">
-                                        {{ \Illuminate\Support\Str::limit($property->property_name) }}
+                                        {{ \Illuminate\Support\Str::limit($propx->property_name) }}
                                     </h5>
                                 </a>
                                 <div class="property-location">

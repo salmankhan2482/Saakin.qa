@@ -230,10 +230,7 @@ class PropertiesController extends MainAdminController
          $image_resize->resize(275, 205);
          $resize = $tmpFilePath . 'thumb_' . $name;
          $image_resize->save($resize);
-         // $canvas = Image::canvas(124, 180);
          $image_resize->resize('135', '180')
-         // $canvas->insert($image_resize, 'center');
-         // $canvas->save(public_path() . '/upload/m_properties/' . 'mobile_thumb_' . $name);
          ->save(public_path() . '/upload/m_properties/' . 'mobile_thumb_' . $name);
       }
 
@@ -291,7 +288,7 @@ class PropertiesController extends MainAdminController
             $img->resize(861, 608, function ($constraint) {
                $constraint->aspectRatio();
             })->save($gallery_image_path . '/' . $name);
-            $img->resize('124', '182')->save(public_path() . '/upload/m_gallery/' . 'mobile_' . $name);
+            $img->resize('135', '180')->save(public_path() . '/upload/m_gallery/' . 'mobile_' . $name);
 
             // remove the down line of move to resize the image
 
@@ -431,14 +428,14 @@ class PropertiesController extends MainAdminController
          $image_resize = Image::make($image_original_path);
          $image_resize->resize(275, 205);
          $resize = $tmpFilePath . 'thumb_' . $name;
-         $image_resize->resize('124', '182')->save(public_path() . '/upload/m_properties/' . 'mobile_thumb_' . $name);
+         $image_resize->resize('135', '180')->save(public_path() . '/upload/m_properties/' . 'mobile_thumb_' . $name);
          $image_resize->save($resize);
          
       }else{
          // check if the agent pic does not exist in mbl folder then copy it from pc folder
          if (!file_exists(public_path() . '/upload/m_properties/mobile_thumb_' . $property->featured_image)) {
             $img = Image::make(file_get_contents(public_path() . '/upload/properties/thumb_' . $property->featured_image));
-            $img->resize('124', '182')->save(public_path() . '/upload/m_properties/mobile_thumb_' . $property->featured_image);
+            $img->resize('135', '180')->save(public_path() . '/upload/m_properties/mobile_thumb_' . $property->featured_image);
          } 
       }
 
@@ -460,7 +457,7 @@ class PropertiesController extends MainAdminController
       foreach ($property_gallery_images as $gallery_image) {
          if (!file_exists(public_path() . '/upload/m_gallery/mobile_' . $gallery_image->image_name)) {
             $img = Image::make(file_get_contents($gallery_image_path . DIRECTORY_SEPARATOR . $gallery_image->image_name));
-            $img->resize('124', '182')->save(public_path() . '/upload/m_gallery/' . 'mobile_' . $gallery_image->image_name);
+            $img->resize('135', '180')->save(public_path() . '/upload/m_gallery/' . 'mobile_' . $gallery_image->image_name);
          }  
       }
 
@@ -483,7 +480,7 @@ class PropertiesController extends MainAdminController
             $img->resize(861, 608, function ($constraint) {
                $constraint->aspectRatio();
             })->save($gallery_image_path . '/' . $name);
-            $img->resize('124', '182')->save(public_path() . '/upload/m_gallery/' . 'mobile_' . $name);
+            $img->resize('135', '180')->save(public_path() . '/upload/m_gallery/' . 'mobile_' . $name);
 
             // remove the down line of move to resize the image
 

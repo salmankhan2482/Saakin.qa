@@ -19,19 +19,15 @@
 		</div>
 	@endif
 <div class="container-fluid">
-    <div class="page-titles">
-        <ol class="breadcrumb">
-            <a href="{{ route('dashboard.index')}}">
-                <button type="button" class="btn btn-rounded btn-dark">Back</button>
-            </a>
-        </ol>
-    </div>
     <!-- row -->
     <div class="row">
         <div class="col-xl-12 col-xxl-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Agency Page Content</h4>
+                    <h4 class="card-title">Agencies Page Content</h4>
+                    <a href="{{ route('dashboard.index')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -51,7 +47,8 @@
                                 <div class="form-group col-md-12">
                                     <label>Description</label>
                                     <div class="card-body">
-                                        <textarea id="page_content" name="page_content" rows="5" class="summernote">{{ isset($data['page_info']->page_content) ? stripslashes($data['page_info']->page_content) : null }}</textarea>
+                                        <textarea id="page_content" 
+                                        name="page_content">{{ isset($data['page_info']->page_content) ? stripslashes($data['page_info']->page_content) : null }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -86,4 +83,15 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="{{ URL::asset('admin/js/jquery.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('admin/vendor/ckfinder/ckfinder.js') }}"></script>
+<script>
+    
+var editor = CKEDITOR.replace( 'page_content' );
+CKFinder.setupCKEditor( editor );
+
+</script>
 @endsection

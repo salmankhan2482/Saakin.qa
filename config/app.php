@@ -258,7 +258,7 @@ return [
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'WhatsappBtn' => \Eyuva\WhatsappBtn\WhatsappBtnFacade::class,
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
-        'Location' => 'Stevebauman\Location\Facades\Location',
+        'Location' => Stevebauman\Location\Facades\Location::class,
 
     ],
 

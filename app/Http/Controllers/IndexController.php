@@ -17,16 +17,17 @@ use App\BlogCategory;
 use App\Testimonials;
 use App\PropertyAmenity;
 use App\PropertyPurpose;
+use App\Mail\Register_Mail;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Mail\Contact_Inquiry;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Mail\Register_Mail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
+use Stevebauman\Location\Facades\Location;
 
 
 class IndexController extends Controller
@@ -434,6 +435,83 @@ class IndexController extends Controller
 
         return redirect('login/');
         //return view('pages.login');
+    }
+
+    public function ip_location()
+    {
+    
+    return view('front.pages.ip_location');
+    }
+    public function view_ip_location(Request $request)
+    {
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $position = Location::get($ip);
+        $location = $position->countryName ??'';
+        dd($position);  
+
+
+
+
+
+
+        // $ip = $_SERVER['REMOTE_ADDR'];
+        
+        // $ch = curl_init();
+        // curl_setopt($ch, CURLOPT_URL, "https://api.ipgeolocation.io/ipgeo?apiKey=06829436eca44a009ce4244e9af3633e&ip=".$ip);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        // $output = curl_exec($ch);
+        // print_r($output);
+        // dd($output);
+        // curl_close($ch);
+
+
+        // $ch = curl_init("https://api.ipgeolocation.io/ipgeo?apiKey=06829436eca44a009ce4244e9af3633e&ip=".$ip);
+        // $fp = fopen("example_homepage.txt", "w");
+
+        // curl_setopt($ch, CURLOPT_FILE, $fp);
+        // curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        // curl_exec($ch);
+        // if(curl_error($ch)) {
+        // fwrite($fp, curl_error($ch));
+        // }
+        // curl_close($ch);
+        // fclose($fp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //   $get_ip = \Request::getClientIp(true);
+   
+        // foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+        //     if (array_key_exists($key, $_SERVER) === true){
+        //         foreach (explode(',', $_SERVER[$key]) as $ip){
+        //             $ip = trim($ip); // just to be safe
+        //             if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+        //                dd($ip);
+        //             }
+        //         }
+        //     }
+        // }
+    // $ip = '31.11.55.255';
+    $ip2 = $request->ip_location;
+   
+    $data = Location::get('$ip2');
+    // $location = $data->countryName;
+    print_r($ip2);
+     dump($get_ip);
+     dd($get_location);
+    // dd($location);
+    // dd($location);
     }
 
     public function sitemap()
