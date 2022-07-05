@@ -423,27 +423,29 @@
                                         aria-labelledby="dropdownMenuButton">
                                         <h6>Bedrooms</h6>
                                         <div class="d-flex spbwx8 mb-3">
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value=""> Any
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '' ? 'bg-info' : '' }}" data-value="Any"> 
+                                             Any
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="1">1
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '1' ? 'bg-info' : '' }}" data-value="1">
+                                             1
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="2">2
+                                            
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '2' ? 'bg-info' : '' }}" data-value="2">
+                                             2
+                                            </li>
+                                            
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '3' ? 'bg-info' : '' }}" data-value="3">
+                                             3
                                             </li>
 
-                                            <li class="dropdown-item item-in-line bedrooms{{ request('bedrooms') == '3' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="3">3
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}" data-value="4">
+                                             4
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '4' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="4">4
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '5' ? 'bg-info' : '' }}" data-value="5">
+                                             5
                                             </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '5' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="5">5
-                                            </li>
-                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '6+' ? 'bg-info' : '' }}"
-                                                onclick="bedrooms(this);" data-value="6+">6+
+                                            <li class="dropdown-item item-in-line bedrooms {{ request('bedrooms') == '6+' ? 'bg-info' : '' }}" data-value="6+">
+                                             6+
                                             </li>
                                         </div>
 
@@ -454,32 +456,32 @@
                                         <div class="mb-3">
                                             <h6>Bathrooms</h6>
                                             <div class="d-flex spbwx8">
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value=""> Any
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '' ? 'bg-info' : '' }}" data-value="Any"> 
+                                                   Any
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '1' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="1"> 1
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '1' ? 'bg-info' : '' }}" data-value="1"> 
+                                                   1
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '2' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="2"> 2
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '2' ? 'bg-info' : '' }}" data-value="2"> 
+                                                   2
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '3' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="3"> 3
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '3' ? 'bg-info' : '' }}" data-value="3"> 
+                                                   3
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '4' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="4"> 4
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '4' ? 'bg-info' : '' }}" data-value="4"> 
+                                                   4
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '5' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="5"> 5
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '5' ? 'bg-info' : '' }}" data-value="5"> 
+                                                   5
                                                 </li>
 
-                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '6+' ? 'bg-info' : '' }}"
-                                                    onclick="bathrooms(this);" data-value="6+"> 6+
+                                                <li class="dropdown-item item-in-line bathrooms {{ request('bathrooms') == '6+' ? 'bg-info' : '' }}"  data-value="6+"> 
+                                                   6+
                                                 </li>
                                             </div>
                                         </div>
@@ -1833,180 +1835,181 @@
 @endpush
 
 
-@push('scripts')
-    <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
+@section('scripts-custom')
+   <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
+   <script>
 
+      function scrollToTop() {
+         $(window).scrollTop(0);
+      }
 
-    <script>
-        function scrollToTop() {
-            $(window).scrollTop(0);
-        }
+      $(document).ready(function() {
 
-        $(document).ready(function() {
+         $(".pro-same-slider").slick({
+               arrows: false,
+               dots: false,
+               autoplay: true,
+               autoplaySpeed: 2000,
+               slidesToShow: 5,
+               slidesToScroll: 5,
+               responsive: [{
+                     breakpoint: 991,
+                     settings: {
+                           slidesToShow: 3,
+                           slidesToScroll: 3
+                     }
+                  },
+                  {
+                     breakpoint: 600,
+                     settings: {
+                           slidesToShow: 2,
+                           slidesToScroll: 2
+                     }
+                  },
+                  {
+                     breakpoint: 480,
+                     settings: {
+                           slidesToShow: 1,
+                           slidesToScroll: 1
+                     }
+                  }
+               ]
+         });
+         
+         $('.js-dropdown .dropdown-menu').click(function(e) {
+               e.stopPropagation();
+         });
 
-            $(".pro-same-slider").slick({
-                arrows: false,
-                dots: false,
-                autoplay: true,
-                autoplaySpeed: 2000,
-                slidesToShow: 5,
-                slidesToScroll: 5,
-                responsive: [{
-                        breakpoint: 991,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3
-                        }
-                    },
-                    {
-                        breakpoint: 600,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                ]
-            });
+         $(".pro-slider").slick({
+               dots: true,
+               // autoplay: true,
+               autoplaySpeed: 2000,
+               speed: 10,
+         });
+         
+         $("#save-search").on('click', function() {
+               var name = $("#search_name").val();
 
+               $.ajax({
+                  url: '{{ route('save-search.store') }}',
+                  type: "post",
+                  dataType: 'json',
+                  data: {
+                     '_token': '{{ @csrf_token() }}',
+                     name: name,
+                  },
+                  success: function(data) {
+                     if (data.message == 'Saved') {
+                           $("#save-search-icon").removeClass('far fa-star');
+                           $("#save-search-icon").addClass('fa fa-star yellowStar');
+                           $("#search_name").val('');
+                           $("#saveSearchModal").modal('hide');
+                           $("#saveSearchText").html('Saved');
+                           $('#saveSearchLabel').attr('data-bs-target', '');
+                           $('#saveSearchLabel').attr('data-bs-toggle', '');
+                     } else if (data.message == 'Removed') {
+                           location.reload();
+                           $("#save-search-icon").removeClass('fa fa-star yellowStar');
+                           $("#save-search-icon").addClass('far fa-star');
+                     }
+                  },
 
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#save-search").on('click', function() {
-                var name = $("#search_name").val();
+               });
+         });
+      });
 
-                $.ajax({
-                    url: '{{ route('save-search.store') }}',
-                    type: "post",
-                    dataType: 'json',
-                    data: {
-                        '_token': '{{ @csrf_token() }}',
-                        name: name,
-                    },
-                    success: function(data) {
-                        if (data.message == 'Saved') {
-                            $("#save-search-icon").removeClass('far fa-star');
-                            $("#save-search-icon").addClass('fa fa-star yellowStar');
-                            $("#search_name").val('');
-                            $("#saveSearchModal").modal('hide');
-                            $("#saveSearchText").html('Saved');
-                            $('#saveSearchLabel').attr('data-bs-target', '');
-                            $('#saveSearchLabel').attr('data-bs-toggle', '');
-                        } else if (data.message == 'Removed') {
-                            location.reload();
-                            $("#save-search-icon").removeClass('fa fa-star yellowStar');
-                            $("#save-search-icon").addClass('far fa-star');
-                        }
-                    },
+      
 
-                });
-            });
-        });
+      var bednumber = $("#bedroomInput").val();
+      var bathnumber = $("#bathroomInput").val();
+      showBedBath();
 
-
-        var bednumber = $("#bedroomInput").val();
-        var bathnumber = $("#bathroomInput").val();
-        showBedBath();
-
-        function bedrooms(valx) {
+      $(function () {
+         var el = document.getElementsByClassName('bedrooms');
+         if(el){
+            $(".bedrooms").on("click", function (e) {
+            var valx = $(this).data("value");
             $('.bedrooms').removeClass('bg-info');
-            $(valx).addClass('bg-info');
-            var valv = $(valx).html();
+            $(this).addClass('bg-info');
+            var valv = valx;
             $('#bedrooms').val(valv);
             bednumber = valv;
-            $("#bedroomInput").val($(valx).data('value'));
+            $("#bedroomInput").val(valx);
             showBedBath();
-        }
-
-        function bathrooms(valx) {
-            $('.bathrooms').removeClass('bg-info');
-            $(valx).addClass('bg-info');
-            var valv = $(valx).html();
-            $('#bathrooms').val(valv);
-            bathnumber = valv;
-            $("#bathroomInput").val($(valx).data('value'));
-            showBedBath();
-        }
-
-        function showBedBath() {
-            var bedResult = (bednumber == 1 ? bednumber + " Bed" : bednumber + " Beds");
-            var bathResult = (bathnumber == 1 ? bathnumber + " Bath" : bathnumber + " Baths");
-            $('.bedbathdrop').text(bedResult + ' ' + bathResult);
-        }
-
-        $(document).ready(function() {
-
-            $('.js-dropdown .dropdown-menu').click(function(e) {
-                e.stopPropagation();
             });
+         }
+         
+         
+         $(".bathrooms").on("click", function (e) {
+         var valx = $(this).data("value");
+         $('.bathrooms').removeClass('bg-info');
+         $(this).addClass('bg-info');
+         var valv = valx;
+         $('#bathrooms').val(valv);
+         bathnumber = valv;
+         $("#bathroomInput").val(valx);
+         showBedBath();
+         });
 
-            $(".pro-slider").slick({
-                dots: true,
-                // autoplay: true,
-                autoplaySpeed: 2000,
-                speed: 10,
-            });
-        });
+      });
 
-        let click = 0;
-        var elements = document.getElementsByClassName("btnCall");
+      function showBedBath() {
+         var bedResult = (bednumber == 1 ? bednumber + " Bed" : bednumber + " Beds");
+         var bathResult = (bathnumber == 1 ? bathnumber + " Bath" : bathnumber + " Baths");
+         $('.bedbathdrop').text(bedResult + ' ' + bathResult);
+      }
 
-        var myFunction = function() {
-            var attribute = this.getAttribute("data-telNumber");
-            this.innerText = attribute;
-            // this.href = "tel:"+attribute;
-            if (click == 0) {
-                this.href = "javaScript:void();";
-                click++;
-            } else {
-                this.href = "tel:" + attribute;
-                click = 0;
+      let click = 0;
+      var elements = document.getElementsByClassName("btnCall");
 
-            }
-        };
+      var myFunction = function() {
+         var attribute = this.getAttribute("data-telNumber");
+         this.innerText = attribute;
+         // this.href = "tel:"+attribute;
+         if (click == 0) {
+               this.href = "javaScript:void();";
+               click++;
+         } else {
+               this.href = "tel:" + attribute;
+               click = 0;
 
-        for (var i = 0; i < elements.length; i++) {
-            elements[i].addEventListener('click', myFunction, false);
-        }
+         }
+      };
 
-        function FormSubmit(coming) {
-            var value = coming.value;
-            $("#sort_by").val(value);
-            document.getElementById('frmSortBy').submit();
-        }
+      for (var i = 0; i < elements.length; i++) {
+         elements[i].addEventListener('click', myFunction, false);
+      }
 
-        function openNav() {
-            document.getElementById("mySidebar").style.width = "80%";
-        }
+      function FormSubmit(coming) {
+         var value = coming.value;
+         $("#sort_by").val(value);
+         document.getElementById('frmSortBy').submit();
+      }
 
-        function closeNav() {
-            document.getElementById("mySidebar").style.width = "0";
+      function openNav() {
+         document.getElementById("mySidebar").style.width = "80%";
+      }
 
-        }
+      function closeNav() {
+         document.getElementById("mySidebar").style.width = "0";
 
-        function showLessOrMore() {
-            var btnText = document.getElementById("myBtn");
-            var elems = document.getElementsByClassName('moreLess');
+      }
 
-            if (btnText.innerHTML == 'Show Less <i class="fas fa-chevron-up"></i>') {
-                btnText.innerHTML = 'Show More <i class="fas fa-chevron-down"></i>'
-                for (var i = 0; i < elems.length; i += 1) {
-                    elems[i].style.display = 'none';
-                }
-            } else {
-                btnText.innerHTML = 'Show Less <i class="fas fa-chevron-up"></i>'
-                for (var i = 0; i < elems.length; i += 1) {
-                    elems[i].style.display = 'block';
-                }
-            }
-        }
-    </script>
-@endpush
+      function showLessOrMore() {
+         var btnText = document.getElementById("myBtn");
+         var elems = document.getElementsByClassName('moreLess');
+
+         if (btnText.innerHTML == 'Show Less <i class="fas fa-chevron-up"></i>') {
+               btnText.innerHTML = 'Show More <i class="fas fa-chevron-down"></i>'
+               for (var i = 0; i < elems.length; i += 1) {
+                  elems[i].style.display = 'none';
+               }
+         } else {
+               btnText.innerHTML = 'Show Less <i class="fas fa-chevron-up"></i>'
+               for (var i = 0; i < elems.length; i += 1) {
+                  elems[i].style.display = 'block';
+               }
+         }
+      }
+   </script>
+@endsection
