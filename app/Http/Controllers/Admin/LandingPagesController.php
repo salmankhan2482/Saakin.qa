@@ -151,8 +151,10 @@ class LandingPagesController extends Controller
 
         $landing_page_content->property_purposes_id = $inputs['property_purposes_id'];
         $landing_page_content->property_types_id = $inputs['property_types_id'];
-        $landing_page_content->property_cities_id = $inputs['property_cities_id'];
-        $landing_page_content->property_sub_cities_id = $inputs['property_sub_cities_id'];
+        $landing_page_content->property_cities_id = $inputs['city'];
+        $landing_page_content->property_sub_cities_id = $inputs['subcity'];
+        $landing_page_content->property_towns_id = $inputs['town'];
+        $landing_page_content->property_areas_id = $inputs['area'];
         $landing_page_content->page_content = $inputs['page_content'];
         $landing_page_content->meta_title = $inputs['meta_title'];
         $landing_page_content->meta_description = $inputs['meta_description'];
@@ -211,75 +213,5 @@ class LandingPagesController extends Controller
 	    Session::flash('flash_message', trans('words.successfully_updated'));
 
         return redirect()->back();
-    }
-    public function city_guide_page_content()
-    {
-        if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin"){
-            \Session::flash('flash_message', trans('words.access_denied'));
-            return redirect('dashboard');   
-         }
-
-        $data['page_info'] = LandingPage::find('54');
-        $data['page_title'] = trans('words.city_guide_page_content');
-        $action = 'saakin_index';
-
-        return view('admin-dashboard.landing-pages.city_guide_page_content.create', compact('data','action'));
-    }
-    public function update_city_guide_page_content(Request $request)
-    {
-        $page_obj = LandingPage::find('54');
-	    $data =  \Request::except(array('_token')) ;
-	    $rule = array('page_title' => 'required' );
-
-	   	 $validator = \Validator::make($data,$rule);
-        if ($validator->fails()){
-            return redirect()->back()->withErrors($validator->messages());
-        }
-
-	    $inputs = $request->all(); 	 
-        $page_obj->page_content = $inputs['page_content'];
-        $page_obj->meta_title = $inputs['meta_title'];
-        $page_obj->meta_description = $inputs['meta_description'];
-        $page_obj->meta_keyword = $inputs['meta_keyword'];    
-	    $page_obj->save(); 
-
- 
-	    Session::flash('flash_message', trans('words.successfully_updated'));
-        return redirect()->back();
-    }
-    public function agencies_page_content()
-    {
-        if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin"){
-            \Session::flash('flash_message', trans('words.access_denied'));
-            return redirect('dashboard');   
-         }
-
-        $data['page_info'] = LandingPage::find('55');
-        $data['page_title'] = trans('words.agencies_page_content');
-        $action = 'saakin_create';
-        return view('admin-dashboard.landing-pages.agency_page_content.create', compact('data','action'));
-    }
-    public function update_agencies_page_content(Request $request)
-    {
-        $page_obj = LandingPage::find('55');
-	    $data =  \Request::except(array('_token')) ;
-	    $rule=array('page_title' => 'required' );
-        $validator = \Validator::make($data,$rule);
-        if ($validator->fails()){
-            return redirect()->back()->withErrors($validator->messages());
-        }
-
-	    $inputs = $request->all(); 	 
-        $page_obj->page_content = $inputs['page_content'];
-        $page_obj->meta_title = $inputs['meta_title'];
-        $page_obj->meta_description = $inputs['meta_description'];
-        $page_obj->meta_keyword = $inputs['meta_keyword'];    
-	    $page_obj->save(); 
-
- 
-	    Session::flash('flash_message', trans('words.successfully_updated'));
-
-        return redirect()->back();
-        
     }
 }

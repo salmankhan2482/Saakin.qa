@@ -16,6 +16,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Pages;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
@@ -55,7 +56,7 @@ class AgenciesController extends Controller
             ->paginate(12);
         }
        
-        $landing_page_content= LandingPage::find('55');
+        $landing_page_content = Pages::find(6);
         $page_des = strip_tags($landing_page_content->page_content);
         $page_des = Str::limit($page_des, 170, '...');
 
@@ -78,6 +79,7 @@ class AgenciesController extends Controller
         $propertyTypes = DB::select("SELECT property_types.id, COUNT(properties.id) AS property_count, property_types.types as property_type FROM properties JOIN property_types ON (properties.property_type=property_types.id) WHERE properties.status='1' AND agency_id='".$agency->id."' GROUP BY property_types.id ORDER BY property_count DESC");
 
         $agency_des = Str::limit(strip_tags($agency->agency_detail), 170, '...');
+        // dd($agency_des);
         return view('front.pages.agency', compact('agency', 'properties', 'propertyTypes','user','agency_des'));
     }
 

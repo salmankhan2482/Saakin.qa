@@ -85,7 +85,7 @@
                                     <label>Sub-City</label>
                                     <select id="subcity" name="subcity" class="form-control">
                                         <option value="">Select Sub-City</option>
-
+                    
                                         @foreach ($data['subcities'] as $subcity)
                                         <option value="{{ $subcity->id }}"
                                         {{ $data['landing_page_content']->property_sub_cities_id == $subcity->id ? 'selected' : '' }}>

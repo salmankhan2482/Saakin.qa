@@ -63,7 +63,7 @@ class PropertiesController extends Controller
       $propertyPurposes = PropertyPurpose::all();
       $amenities = PropertyAmenity::all();
 
-      $properties = $this->propertyrepo->getProperties($request); // gettin all properties through search   
+      $properties = $this->propertyrepo->getProperties($request); // getting all properties through search   
       $landing_page_content = $this->propertyrepo->landingPageContent(); // landing page content 
 
       if ($landing_page_content == null) {
@@ -243,7 +243,7 @@ class PropertiesController extends Controller
          ->where('property_type', $property->property_type)
          ->orderBy('land_area', 'asc')
          ->get();
-
+         
       $property_counter = PropertyCounter::where('property_id', $property->id)->value('counter');
       //  dd($property_counter);  
       $property_des = Str::limit($property->property_name . '  ' . $property->description, 150, '...');
