@@ -57,8 +57,6 @@ class LeadsController extends MainAdminController
       return view('admin-dashboard.inquiries.property_inquires.create', compact('data', 'action'));
    }
 
-
-
    public function store_property_inquiry(Request $request)
    {
       // dd($request->all());
