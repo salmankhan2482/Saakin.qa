@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\City;
 
+use App\Pages;
 use App\CityDetail;
 use App\Properties;
 use App\LandingPage;
 use App\PropertyAreas;
+use App\PropertyTowns;
 use App\PropertyCities;
 use App\PropertySubCities;
-use App\PropertyTowns;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,7 @@ class CityGuideController extends Controller
     {
         $cityGuides = City::where('status',1)->orderBy('sequence_id', 'asc')->get();
         
-        $landing_page_content= LandingPage::find('54');
+        $landing_page_content= Pages::find('7');
         $page_des = $landing_page_content->page_content;
         $page_des = Str::limit($page_des, 170, '...');
 

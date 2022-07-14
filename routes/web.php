@@ -221,14 +221,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::post('properties-page/content', 'LandingPagesController@update_properties_page_content')
             ->name('update-properties-page-content');
         
-        Route::get('city-guide-page/content', 'LandingPagesController@city_guide_page_content')
+        Route::get('city-guide-page/content', 'PagesController@city_guide_page_content')
             ->name('city-guide-landing-pages.index');
-        Route::put('update/city-guide-page/content', 'LandingPagesController@update_city_guide_page_content')
+        Route::put('update/city-guide-page/content', 'PagesController@update_city_guide_page_content')
             ->name('city-guide-landing-pages.update');
 
-        Route::get('agencies-page/content', 'LandingPagesController@agencies_page_content')
+        Route::get('agencies-page/content', 'PagesController@agencies_page_content')
             ->name('agency-landing-pages.index');
-        Route::put('agencies-page/content', 'LandingPagesController@update_agencies_page_content')
+        Route::put('agencies-page/content', 'PagesController@update_agencies_page_content')
             ->name('agency-landing-pages.update');
     });
 
@@ -439,3 +439,4 @@ Route::post('site-register', 'SiteAuthController@siteRegisterPost');
 
 //save search controller
 Route::resource('save-search', 'SaveSearchController');
+

@@ -42,7 +42,7 @@ class BlogController extends Controller
             $data['blogs']->appends($_GET)->links();
 
         }else{
-            $data['blogs'] = Blog::paginate();
+            $data['blogs'] = Blog::orderBy('created_at','DESC')->paginate(15);
         }
         
         $data['blog-categories'] = BlogCategory::all();
