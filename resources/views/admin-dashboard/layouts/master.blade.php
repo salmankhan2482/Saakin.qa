@@ -58,7 +58,11 @@ $data['agency_name'] = App\Agency::when(auth()->user()->usertype == 'Agency', fu
         }
 
         .select2-container .select2-selection--multiple{
-            height: 40px;
+            border-radius: 0px;
+            border-color: #c9c9c9;
+            height: 56px;
+            padding: 10px;
+            line-height: 20px;
         }
         .table thead th{
             color: black;
@@ -125,13 +129,7 @@ $data['agency_name'] = App\Agency::when(auth()->user()->usertype == 'Agency', fu
 
 	@include('admin-dashboard.partials.footer-scripts')
     <script src="https://cdn.ckeditor.com/4.13.0/full/ckeditor.js"></script>
-    {{-- <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script> --}}
     @yield('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('.js-example-basic-multiple').select2();
-        });
-    </script>
+
 </body>
 </html>
