@@ -276,7 +276,7 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
   <script>
-    $(document).ready(function() {
+   $(document).ready(function() {
       $('.js-dropdown .dropdown-menu').click(function(e) {
         e.stopPropagation();
       });
@@ -319,7 +319,7 @@
         placeholder: "View of Water, Gym, or Security"
       });
 
-    });
+   });
 
     var bednumber = 0;
     var bathnumber = 0;
@@ -328,31 +328,30 @@
     var minArea = 0;
     var maxArea = 0;
 
-    $(function () {
-         var el = document.getElementsByClassName('bedrooms');
-         if(el){
-            $(".bedrooms").on("click", function (e) {
-            var valx = $(this).data("value");
-            $('.bedrooms').removeClass('bg-primary text-white border-primary');
-            $(this).addClass('bg-primary text-white border-primary');
-            var valv = valx;
-            $('#bedrooms').val(valv);
-            bednumber = valv;
-            showBedBath();
-            });
+   $(function () {
+      var el = document.getElementsByClassName('bedrooms');
+      if(el){
+         $(".bedrooms").on("click", function (e) {
+         var valx = $(this).data("value");
+         $('.bedrooms').removeClass('bg-primary text-white border-primary');
+         $(this).addClass('bg-primary text-white border-primary');
+         var valv = valx;
+         $('#bedrooms').val(valv);
+         bednumber = valv;
+         showBedBath();
+         });
 
-            $(".bathrooms").on("click", function (e) {
-            var valx = $(this).data("value");
-            $('.bathrooms').removeClass('bg-primary text-white border-primary');
-            $(this).addClass('bg-primary text-white border-primary');
-            var valv = valx;
-            $('#bathrooms').val(valv);
-            bathnumber = valv;
-            showBedBath();
-            });
-         }
-
-      });
+         $(".bathrooms").on("click", function (e) {
+         var valx = $(this).data("value");
+         $('.bathrooms').removeClass('bg-primary text-white border-primary');
+         $(this).addClass('bg-primary text-white border-primary');
+         var valv = valx;
+         $('#bathrooms').val(valv);
+         bathnumber = valv;
+         showBedBath();
+         });
+      }
+   });
 
     function showBedBath() {
       var bedResult = (bednumber == 1 ? bednumber + " Bed" : bednumber + " Beds");

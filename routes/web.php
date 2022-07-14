@@ -1,11 +1,7 @@
 <?php
 
-use Intervention\Image\Image;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypesController;
-use App\Http\Controllers\SaveSearchController;
-use App\Http\Controllers\Admin\InquiriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,34 +117,34 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('partners/addpartners/{id}', 'PartnersController@editpartners');
 	Route::get('partners/delete/{id}', 'PartnersController@delete');
 
-	Route::get('inquiries', 'InquiriesController@inquirieslist')->name('inquiries');
+	Route::get('inquiries', 'LeadsController@inquirieslist')->name('inquiries');
 
-    Route::get('leads/property_inquiries', 'InquiriesController@property_inquiries')->name('property_inquiries');
-    Route::get('inquiry/create', 'InquiriesController@create_inquiry')->name('create_inquiry');
-    Route::post('inquiry/create', 'InquiriesController@store_property_inquiry')->name('store_proprty_inquiry');
-    Route::get('property_inquiry/edit/{id}', 'InquiriesController@edit_property_inquiry');
-    Route::post('property_inquiry/update/{id}', 'InquiriesController@_property_inquiry');
+    Route::get('leads/property_inquiries', 'LeadsController@property_inquiries')->name('property_inquiries');
+    Route::get('inquiry/create', 'LeadsController@create_inquiry')->name('create_inquiry');
+    Route::post('inquiry/create', 'LeadsController@store_property_inquiry')->name('store_proprty_inquiry');
+    Route::get('property_inquiry/edit/{id}', 'LeadsController@edit_property_inquiry');
+    Route::post('property_inquiry/update/{id}', 'LeadsController@_property_inquiry');
 
-    Route::get('show_agency', 'InquiriesController@show_agency')->name('show_agency');
-    Route::get('searchagency', 'InquiriesController@searchagency')->name('searchagency');
-    Route::get('property_search', 'InquiriesController@property_search')->name('property_search');
+    Route::get('show_agency', 'LeadsController@show_agency')->name('show_agency');
+    Route::get('searchagency', 'LeadsController@searchagency')->name('searchagency');
+    Route::get('property_search', 'LeadsController@property_search')->name('property_search');
 
 
-    Route::get('searchautocomplete', 'InquiriesController@search_agency_name')->name('searchautocomplete');
+    Route::get('searchautocomplete', 'LeadsController@search_agency_name')->name('searchautocomplete');
 	
-	Route::get('leads/agency_inquiries', 'InquiriesController@agency_inquiries')->name('agency_inquiries');
-	Route::get('leads/contact_inquiries', 'InquiriesController@contact_inquiries')->name('contact_inquiries');
-	Route::get('leads/comp_reg_inquiries', 'InquiriesController@comp_reg_inquiries')->name('comp_reg_inquiries');
+	Route::get('leads/agency_inquiries', 'LeadsController@agency_inquiries')->name('agency_inquiries');
+	Route::get('leads/contact_inquiries', 'LeadsController@contact_inquiries')->name('contact_inquiries');
+	Route::get('leads/comp_reg_inquiries', 'LeadsController@comp_reg_inquiries')->name('comp_reg_inquiries');
     
-    Route::get('view_inquiry/{enquire}', 'InquiriesController@view_inquiry')->name('view_inquiry');
-    Route::get('view_property_inquiry/{id}', 'InquiriesController@view_property_inquiry');
-    Route::get('view_agency_inquiry/{id}', 'InquiriesController@view_agency_inquiry')->name('view_agency_inquiry');
-    Route::get('view_contact_inquiry/{id}', 'InquiriesController@view_contact_inquiry')->name('view_contact_inquiry');   
+    Route::get('view_inquiry/{enquire}', 'LeadsController@view_inquiry')->name('view_inquiry');
+    Route::get('view_property_inquiry/{id}', 'LeadsController@view_property_inquiry');
+    Route::get('view_agency_inquiry/{id}', 'LeadsController@view_agency_inquiry')->name('view_agency_inquiry');
+    Route::get('view_contact_inquiry/{id}', 'LeadsController@view_contact_inquiry')->name('view_contact_inquiry');   
 
-	Route::get('inquiries/delete/{id}', 'InquiriesController@delete');
-	Route::get('notifications', 'InquiriesController@notifications')->name('notifications');   
-	Route::get('MarkAllAsRead', 'InquiriesController@markAllAsRead')->name('markAllAsRead');   
-    Route::get('view_notification/{id}', 'InquiriesController@view_notification')->name('view_notification');
+	Route::get('inquiries/delete/{id}', 'LeadsController@delete');
+	Route::get('notifications', 'LeadsController@notifications')->name('notifications');   
+	Route::get('MarkAllAsRead', 'LeadsController@markAllAsRead')->name('markAllAsRead');   
+    Route::get('view_notification/{id}', 'LeadsController@view_notification')->name('view_notification');
 
 	Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');
 	Route::get('subscription_plan/add_plan', 'SubscriptionPlanController@addSubscriptionPlan');
@@ -423,6 +419,8 @@ Route::get('callSubCities', 'AjaxController@callSubCities')->name('callSubCities
 Route::get('callTown','AjaxController@callTown')->name('callTown');
 Route::get('callArea','AjaxController@callArea')->name('callArea');
 Route::get('callLatLong','AjaxController@callLatLong')->name('callLatLong');
+Route::get('callAgents','AjaxController@callAgents')->name('callAgents');
+Route::get('fetchPropertyByReference','AjaxController@fetchPropertyByReference')->name('fetchPropertyByReference');
 
 //Ajax for Call Sub-City, Town and Area Landing Pages Content
 Route::post('/getSubcity', 'AjaxController@getSubcity');
@@ -442,6 +440,3 @@ Route::post('site-register', 'SiteAuthController@siteRegisterPost');
 //save search controller
 Route::resource('save-search', 'SaveSearchController');
 
-
-Route::get('ip_location','IndexController@ip_location')->name('ip_location');
-Route::post('ip_location','IndexController@view_ip_location')->name('view_ip_location');

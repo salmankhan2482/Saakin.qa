@@ -6,7 +6,7 @@ use App\ClickCounters;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\PropertySubCities;
+use App\Properties;
 use App\Types;
 use Stevebauman\Location\Facades\Location;
 
@@ -248,5 +248,36 @@ class AjaxController extends Controller
             $html.='<option value="'.$list->id.'">'.$list->name.'</option>';
         }
         echo $html;
+    }
+
+    public function callAgents(Request $request)
+    {
+      return DB::table('users')
+            ->select('id','name')
+            ->where(['usertype' => 'Agents', 'agency_id' =>  $request->id])
+            ->get();
+    }
+   
+    public function fetchPropertyByReference(Request $request)
+    {
+      $property = Properties::where('refference_code', $request->referenceID)->first();
+      if(isset($property)){
+         $data['property'] = $property;
+         $purposeId = $property->property_purpose == 'Rent' ? 1 : 2;
+         $data['property_purpose'] = "<option value='$purposeId'> $property->property_purpose </option>";
+         
+         $data['property_type'] = '<option value="'.$property->propertiesTypes->id.'">'.$property->propertiesTypes->types.'</option>';
+         
+         $data['city'] = isset($property->propertyCity) ? '<option value="'.$property->propertyCity->id.'">'.$property->propertyCity->name.'</option>' : "<option value=''>No City</option>";
+            
+         $data['subcity'] = isset($property->propertySubcity) ? '<option value="'.$property->propertySubcity->id.'">'.$property->propertySubcity->name.'</option>' : "<option value=''>No SubCity</option>";
+         
+         $data['town'] = isset($property->propertyTown) ? '<option value="'.$property->propertyTown->id.'">'.$property->propertyTown->name.'</option>' : "<option value=''>No Town</option>";
+         
+         $data['area'] = isset($property->propertyArea) ? '<option value="'.$property->propertyArea->id.'">'.$property->propertyArea->name.'</option>' : "<option value=''>No Area</option>";
+         return $data;
+      }else{
+         return false;
+      }
     }
 }
