@@ -7,20 +7,18 @@ use App\Agency;
 
 use App\Enquire;
 use App\Lead;
+use App\LeadForwardAgent;
 use App\Properties;
-use App\PropertyAreas;
-use App\PropertyTowns;
 use App\PropertyCities;
 
 use App\PropertyAmenity;
 use App\PropertyPurpose;
-use App\PropertySubCities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 
-class InquiriesController extends MainAdminController
+class LeadsController extends MainAdminController
 {
    public function __construct()
    {
@@ -35,7 +33,7 @@ class InquiriesController extends MainAdminController
          return redirect('dashboard');
       }
 
-      $inquirieslist = Enquire::when(Auth::User()->usertype == "Agency", function ($query) {
+      $inquirieslist = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })->orderBy('id', 'desc')->paginate(10);
 
@@ -50,87 +48,72 @@ class InquiriesController extends MainAdminController
          Session::flash('flash_message', trans('words.access_denied'));
          return redirect('admin/dashboard');
       }
-      $keyword = request()->get('keyword');
-      // $data['agenices'] = Agency::all();
-      $data['keyword'] = Agency::select("name as agency_name", "id as id")->where("name", "LIKE", "%{$request->input('keyword')}%")->get();
-
-      $properties = Properties::select('property_name', 'agency_id', 'id')->get();
-
+      $data['agenices'] = Agency::all();
       $data['types'] = Types::orderBy('types')->get();
       $data['purposes'] = PropertyPurpose::get();
       $data['amenities'] = PropertyAmenity::orderBy("name", "asc")->get();
-
       $data['cities'] = PropertyCities::all();
-      $data['subCities'] = PropertySubCities::all();
-      $data['towns'] = PropertyTowns::all();
-      $data['areas'] = PropertyAreas::all();
-
       $action = 'saakin_index';
-
-      return view(
-         'admin-dashboard.inquiries.property_inquires.create',
-         compact('data', 'properties', 'action')
-      );
+      return view('admin-dashboard.inquiries.property_inquires.create', compact('data', 'action'));
    }
-
-
 
    public function store_property_inquiry(Request $request)
    {
-      dd($request);
-      $data =  \Request::except(array('_token'));
-      $inputs = $request->all();
-      $rule = array(
-
+      // dd($request->all());
+      $request->validate([
+         'agency_id' => 'required',
+         'reference_id' => 'required',
+         'property_title' => 'required',
+         'property_id' => 'required',
+         'property_purpose' => 'required',
+         'property_type' => 'required',
+         'price' => 'required',
+         'city' => 'required',
          'name' => 'required',
          'email' => 'required',
          'phone' => 'required',
+         'source' => 'required',
+         'subject' => 'required',
+         'forward_agents' => 'required',
+         'movein_date' => 'required',
          'message' => 'required',
-      );
-
-      $validator = \Validator::make($data, $rule);
-
-      if ($validator->fails()) {
-         return redirect()->back()->withErrors($validator->messages());
-      }
-
+      ]);
+      $inputs = $request->all();
       $property_lead = new Lead();
-
+      $property_lead->agency_id = $inputs['agency_id'];
+      $property_lead->agent_id = $inputs['agent_id'];
+      $property_lead->type = 'Property Inquiry';
       $property_lead->name = $inputs['name'];
       $property_lead->email = $inputs['email'];
       $property_lead->phone = $inputs['phone'];
-      $property_lead->property_id = $inputs['property_title'];
+      $property_lead->subject = $inputs['subject'];
+      $property_lead->message = $inputs['message'];
+      $property_lead->reference_id = $inputs['reference_id'];
       $property_lead->property_title = $inputs['property_title'];
+      $property_lead->property_id = $inputs['property_id'];
       $property_lead->property_purpose = $inputs['property_purpose'];
       $property_lead->property_type = $inputs['property_type'];
+      $property_lead->timeframe = $inputs['time_frame'];
+      $property_lead->price = $inputs['price'];
+      $property_lead->land_area = $inputs['land_area'];
       $property_lead->bedrooms = $inputs['bedrooms'];
       $property_lead->bathrooms = $inputs['bathrooms'];
-      $property_lead->budget = $inputs['budget'];
-      $property_lead->land_area = $inputs['land_area'];
-      $property_lead->timeframe = $inputs['timeframe'];
-      $property_lead->source = $inputs['source'];
       $property_lead->city = $inputs['city'];
       $property_lead->subcity = $inputs['subcity'];
       $property_lead->town = $inputs['town'];
       $property_lead->area = $inputs['area'];
-      $property_lead->latitude = $inputs['latitude'];
-      $property_lead->longitude = $inputs['longitude'];
-      $property_lead->subject = $inputs['subject'];
-      $property_lead->message = $inputs['message'];
-      $property_lead->status = $inputs['status'];
+      $property_lead->latitude = $inputs['map_longitude'];
+      $property_lead->longitude = $inputs['map_latitude'];
+      $property_lead->source = $inputs['source'];
+      $property_lead->movein_date = $inputs['movein_date'];
+      $property_lead->save();
 
-      $inquiry = new Enquire();
-      $inquiry->property_id = $inputs['property_title'];
-      $inquiry->agency_id = Properties::where('id', $request->property_title)->value('agency_id');
-      $inquiry->enquire_id = 2;
-      $inquiry->name = $inputs['name'];
-      $inquiry->email = $inputs['email'];
-      $inquiry->phone = $inputs['phone'];
-      $inquiry->type = str_replace('-', ' ', $inputs['type']);
-      $inquiry->subject = $inputs['subject'];
-      $inquiry->message = $inputs['message'];
-      $inquiry->movein_date = $inputs['movein_date'];
-      $inquiry->save();
+      foreach ($request->forward_agents as $key => $agent) {
+         $forwardAgent = new LeadForwardAgent();
+         $forwardAgent->agency_id = $agent;
+         $forwardAgent->lead_id = $inputs['agency_id'];
+         $forwardAgent->save();
+      }
 
       Session::flash('flash_message', trans('words.added'));
       return \Redirect::back();
@@ -187,7 +170,7 @@ class InquiriesController extends MainAdminController
          return redirect('dashboard');
       }
 
-      $inquirieslist = Enquire::when(Auth::User()->usertype == "Agency", function ($query) {
+      $inquirieslist = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })
          ->where('type', 'Property Inquiry')->orderBy('id', 'desc')
@@ -203,7 +186,7 @@ class InquiriesController extends MainAdminController
          return redirect('dashboard');
       }
 
-      $inquirieslist = Enquire::when(Auth::User()->usertype == "Agency", function ($query) {
+      $inquirieslist = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })->where('type', 'Agency Inquiry')->orderBy('id', 'desc')->paginate(10);
 
@@ -221,7 +204,7 @@ class InquiriesController extends MainAdminController
          return redirect('dashboard');
       }
 
-      $inquirieslist = Enquire::when(Auth::User()->usertype == "Agency", function ($query) {
+      $inquirieslist = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })->where('type', 'Contact Inquiry')->orderBy('id', 'desc')->paginate(10);
 
@@ -233,36 +216,36 @@ class InquiriesController extends MainAdminController
    public function delete($id)
    {
       $decrypted_id = Crypt::decryptString($id);
-      $inquire = Enquire::findOrFail($decrypted_id);
+      $inquire = Lead::findOrFail($decrypted_id);
       $inquire->delete();
 
       Session::flash('flash_message', trans('words.deleted'));
       return redirect()->back();
    }
 
-   public function view_inquiry(Enquire $enquire)
+   public function view_inquiry(Lead $lead)
    {
       $similarProperties = Properties::where('status', 1)
-         ->where('property_purpose', $enquire->property->property_purpose)
-         ->where('property_type', $enquire->property->property_type)
-         ->where('bedrooms', $enquire->property->bedrooms)
-         ->whereBetween('price', [$enquire->property->price - 2000, $enquire->property->price + 2000])
-         ->where('city', $enquire->property->city)
-         ->where('subcity', $enquire->property->subcity)
-         ->where('town', $enquire->property->town)
-         ->where('area', $enquire->property->area)
+         ->where('property_purpose', $lead->property->property_purpose)
+         ->where('property_type', $lead->property->property_type)
+         ->where('bedrooms', $lead->property->bedrooms)
+         ->whereBetween('price', [$lead->property->price - 2000, $lead->property->price + 2000])
+         ->where('city', $lead->property->city)
+         ->where('subcity', $lead->property->subcity)
+         ->where('town', $lead->property->town)
+         ->where('area', $lead->property->area)
          ->get();
 
       $nearBy  = Properties::where('status', 1)
-         ->where('property_purpose', $enquire->property->property_purpose)
-         ->whereBetween('price', [$enquire->property->price - 2000, $enquire->property->price + 2000]);
+         ->where('property_purpose', $lead->property->property_purpose)
+         ->whereBetween('price', [$lead->property->price - 2000, $lead->property->price + 2000]);
 
-      if ($enquire->property->area) {
-         $nearBy = $nearBy->where('town', $enquire->property->town);
-      } elseif ($enquire->property->town) {
-         $nearBy = $nearBy->where('subcity', $enquire->property->subcity);
-      } elseif ($enquire->property->subcity) {
-         $nearBy = $nearBy->where('city', $enquire->property->city);
+      if ($lead->property->area) {
+         $nearBy = $nearBy->where('town', $lead->property->town);
+      } elseif ($lead->property->town) {
+         $nearBy = $nearBy->where('subcity', $lead->property->subcity);
+      } elseif ($lead->property->subcity) {
+         $nearBy = $nearBy->where('city', $lead->property->city);
       }
 
       $availableNearbyProperties = $nearBy->paginate();
@@ -281,9 +264,9 @@ class InquiriesController extends MainAdminController
       );
    }
 
-   public function view_property_inquiry(Enquire $enquire)
+   public function view_property_inquiry(Lead $lead)
    {
-      $inquire = Enquire::where('id', $enquire)->first();
+      $inquire = Lead::where('id', $lead)->first();
       $inquire->enquire_id = 1;
       $inquire->update();
 
@@ -303,7 +286,7 @@ class InquiriesController extends MainAdminController
    }
    public function view_agency_inquiry($id)
    {
-      $inquire = Enquire::where('id', $id)->first();
+      $inquire = Lead::where('id', $id)->first();
       $inquire->enquire_id = 1;
       $inquire->update();
 
@@ -312,7 +295,7 @@ class InquiriesController extends MainAdminController
    }
    public function view_contact_inquiry($id)
    {
-      $inquire = Enquire::where('id', $id)->first();
+      $inquire = Lead::where('id', $id)->first();
       $inquire->enquire_id = 1;
       $inquire->update();
 
@@ -323,9 +306,9 @@ class InquiriesController extends MainAdminController
    public function notifications()
    {
       if (Auth::User()->usertype == "Agency") {
-         $inquirieslist = Enquire::where('agency_id', Auth::User()->agency_id)->orderBy('id', 'desc')->paginate(10);
+         $inquirieslist = Lead::where('agency_id', Auth::User()->agency_id)->orderBy('id', 'desc')->paginate(10);
       } else {
-         $inquirieslist = Enquire::orderBy('id', 'desc')->paginate(10);
+         $inquirieslist = Lead::orderBy('id', 'desc')->paginate(10);
       }
 
       $action = 'saakin_index';
@@ -333,7 +316,7 @@ class InquiriesController extends MainAdminController
    }
    public function view_notification($id)
    {
-      $inquire = Enquire::where('id', $id)->first();
+      $inquire = Lead::where('id', $id)->first();
       $inquire->enquire_id = 1;
       $inquire->update();
 
@@ -353,7 +336,7 @@ class InquiriesController extends MainAdminController
 
    public function markAllAsRead()
    {
-      Enquire::where('id', '>', 0)->update(['enquire_id' => 1]);
+      Lead::where('id', '>', 0)->update(['enquire_id' => 1]);
       return redirect()->back();
    }
 }

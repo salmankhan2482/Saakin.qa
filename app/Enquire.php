@@ -5,11 +5,10 @@ namespace App;
 use App\Properties;
 use App\CompanyRegistration;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Enquire extends Model
 {
-   protected $table = 'enquire';
+   protected $table = 'lead';
 
    protected $fillable = ['name', 'email', 'phone', 'message'];
 
