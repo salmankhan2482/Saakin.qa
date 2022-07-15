@@ -13,4 +13,8 @@ class ClickCounters extends Model
     {
         return $this->belongsTo(Properties::class,'property_id', 'id');
     }
+    public function agency()
+    {
+        return $this->belongsTo(Agency::class,'agency_id', 'id');
+    }
 }

@@ -152,7 +152,20 @@ class ClickCountersController extends Controller
          ->when(request('from') && request('to'), function ($query) {
             $query->whereBetween('property_counters.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
          })->paginate(10);
-         //   dd($data['propertyVisitsPerMonth']);
+
+         // Total Visitors
+         $data['total_visits'] = PropertyCounter::where('agency_id', $id)
+         ->when(request('from'), function ($query) {
+            $query->where('property_counters.created_at', '>=', request('from') . ' 00:00:01');
+         })
+         ->when(request('to'), function ($query) {
+            $query->where('property_counters.created_at', '<=', request('to') . ' 23:59:59');
+         })
+         ->when(request('from') && request('to'), function ($query) {
+            $query->whereBetween('property_counters.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
+         })->sum('property_counters.counter');
+
+         
          $months = ['1' => 'Jan', '2' => 'Feb', '3' => 'Mar',  '4' => 'Apr', '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'Aug', '9' => 'Sep', '10' => 'Oct', '11' => 'Nov', '12' => 'Dec'];
        
          // properties per month
@@ -223,6 +236,7 @@ class ClickCountersController extends Controller
             ->groupBy('name')
             ->paginate(10);
 
+
          return view('admin-dashboard.traffic-pages.users.index', compact('users', 'action'));
 
       } elseif (auth()->user()->usertype == 'Agency') {
@@ -258,13 +272,47 @@ class ClickCountersController extends Controller
       }
    }
 
-   public function trafficUsersIPs($id)
+   public function trafficUsersIPs($request)
    {
-      $action = 'saakin_index';
-      $id = auth()->user()->usertype == 'Agency' ? auth()->user()->agency_id : $id;
       
-      $data['trafficUsersIPs'] = PageVisits::where('agency_id', $id)->groupBy('ip_address')->paginate(20);
+      $action = 'saakin_index';
+      $id = auth()->user()->usertype == 'Agency' ? auth()->user()->agency_id : $request;
+   
       $data['agencyName'] = Agency::where('id', $id)->value('name');
+
+
+      // Total Unique Users
+      $data['total_users'] = DB::table('page_visits')->where('agency_id', $id)
+            ->select('page_visits.*', DB::raw(' COUNT(DISTINCT page_visits.ip_address) as totalUsers '))
+
+            ->when(request('from'), function ($query) {
+               $query->where('page_visits.created_at', '>=', request('from') . ' 00:00:01');
+            })
+            ->when(request('to'), function ($query) {
+               $query->where('page_visits.created_at', '<=', request('to') . ' 23:59:59');
+            })
+            ->when(request('from') && request('to'), function ($query) {
+               $query->whereBetween('page_visits.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
+            })
+            ->get();
+
+
+            // Get IP's 
+            $data['ips'] = PageVisits::where('agency_id', $id)
+
+            ->when(request('from'), function ($query) {
+               $query->where('page_visits.created_at', '>=', request('from') . ' 00:00:01');
+            })
+            ->when(request('to'), function ($query) {
+               $query->where('page_visits.created_at', '<=', request('to') . ' 23:59:59');
+            })
+            ->when(request('from') && request('to'), function ($query) {
+               $query->whereBetween('page_visits.created_at', [request('from') . ' 00:00:01', request('to') . ' 23:59:59']);
+            })
+            ->groupBy('ip_address')
+            ->paginate(20);
+            
+
       
       if(auth()->user()->usertype == 'Admin'){
          $months = [

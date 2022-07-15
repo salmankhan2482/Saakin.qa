@@ -662,6 +662,16 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                     </li>
                 @endif
 
+                {{-- XML Records --}}
+                @if (auth()->user()->usertype == 'Admin')
+                    <li class="nav-item dropdown notification_dropdown">
+                        <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}"
+                            href="{{ route('xml-upload') }}">
+                            XML
+                        </a>
+                    </li>
+                @endif
+
                 {{-- MLS --}}
                 @if (auth()->user()->usertype == 'Agency')
                     <li class="nav-item dropdown notification_dropdown">
