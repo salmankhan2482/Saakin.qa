@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a8c8afb3a436873071786f1495dd80d",
+    "content-hash": "21c686840ed6c9aa19530d5905f63641",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -1110,6 +1110,54 @@
                 "source": "https://github.com/maxmind/GeoIP2-php/tree/v2.12.2"
             },
             "time": "2021-11-30T18:15:25+00:00"
+        },
+        {
+            "name": "guizoxxv/laravel-multi-size-image",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guizoxxv/laravel-multi-size-image.git",
+                "reference": "00c98565066b1e9eb36cd5fdf2355c3678ba69da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guizoxxv/laravel-multi-size-image/zipball/00c98565066b1e9eb36cd5fdf2355c3678ba69da",
+                "reference": "00c98565066b1e9eb36cd5fdf2355c3678ba69da",
+                "shasum": ""
+            },
+            "require": {
+                "intervention/image": "^2.5",
+                "spatie/image-optimizer": "^1.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Guizoxxv\\LaravelMultiSizeImage\\MultiSizeImageServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Guizoxxv\\LaravelMultiSizeImage\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gustavo Simões",
+                    "email": "guizoxxv@gmail.com"
+                }
+            ],
+            "description": "Laravel package to optimize and store images in different sizes in order to load the appropriate one according to the screen size.",
+            "support": {
+                "issues": "https://github.com/guizoxxv/laravel-multi-size-image/issues",
+                "source": "https://github.com/guizoxxv/laravel-multi-size-image/tree/v0.2.0"
+            },
+            "time": "2021-05-16T14:53:53+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -4310,6 +4358,60 @@
                 "source": "https://github.com/shrikeh/teapot/tree/master"
             },
             "time": "2017-09-01T13:56:48+00:00"
+        },
+        {
+            "name": "spatie/image-optimizer",
+            "version": "1.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/image-optimizer.git",
+                "reference": "6db75529cbf8fa84117046a9d513f277aead90a0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/image-optimizer/zipball/6db75529cbf8fa84117046a9d513f277aead90a0",
+                "reference": "6db75529cbf8fa84117046a9d513f277aead90a0",
+                "shasum": ""
+            },
+            "require": {
+                "ext-fileinfo": "*",
+                "php": "^7.3|^8.0",
+                "psr/log": "^1.0 | ^2.0 | ^3.0",
+                "symfony/process": "^4.2|^5.0|^6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.5.21|^9.4.4",
+                "symfony/var-dumper": "^4.2|^5.0|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ImageOptimizer\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily optimize images using PHP",
+            "homepage": "https://github.com/spatie/image-optimizer",
+            "keywords": [
+                "image-optimizer",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/image-optimizer/issues",
+                "source": "https://github.com/spatie/image-optimizer/tree/1.6.2"
+            },
+            "time": "2021-12-21T10:08:05+00:00"
         },
         {
             "name": "spatie/laravel-permission",

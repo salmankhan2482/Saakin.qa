@@ -15,6 +15,7 @@
         "dusterio/link-preview": "^1.2",
         "eyuva/laravel-whatsapp-btn": "1.0.x-dev",
         "fideloper/proxy": "^4.0",
+        "guizoxxv/laravel-multi-size-image": "^0.2.0",
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.6",
         "jenssegers/agent": "^2.6",

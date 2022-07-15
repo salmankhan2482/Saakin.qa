@@ -79,6 +79,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Visits</h4>
+                    <h6><b> {{$data['total_visits'] ??''}} Views ( {{ date('j F Y', strtotime(request('from')))??''}} -  {{date('j F Y', strtotime(request('to')))??''}} )</b></h6>
                     <a href="{{ route('dashboard.index') }}">
                         <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i>
                             Back</button>

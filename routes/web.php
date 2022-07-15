@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypesController;
+use App\Http\Controllers\SaveSearchController;
+use App\Http\Controllers\Admin\InquiriesController;
+use App\Http\Controllers\Admin\XmlRecordController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -274,6 +278,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
         Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
         
     });
+
+    // XML Records
+    Route::match(["get", "post"], "read-xml", [XmlRecordController::class, "index"])->name('xml-upload');
+    Route::get('/listings.xml','XmlRecordController@show')->name('show-xml-record');
+
     
     //company registration resource controller
     Route::resource('companyRegistration', 'CompanyRegistrationController');

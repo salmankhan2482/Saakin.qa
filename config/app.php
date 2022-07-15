@@ -191,6 +191,7 @@ return [
         Orchestra\Parser\XmlServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
         Stevebauman\Location\LocationServiceProvider::class,
+        
 
     ],
 

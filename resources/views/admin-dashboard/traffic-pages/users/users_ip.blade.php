@@ -20,7 +20,8 @@
       <div class="col-12">
          <div class="card">
                <div class="card-header">
-                  <h4 class="card-title">Visitor IPs for {{ $data['agencyName'] }}</h4>
+                  <h4 class="card-title">{{ $data['agencyName'] }} IPs</h4>
+                  <h6>{{$data['total_users']->first()->totalUsers}} New Users ( {{ date('j F Y', strtotime(request('from')))??''}} -  {{date('j F Y', strtotime(request('to')))??''}} )</h6>
                   <a href="{{route('trafficUsers')}}">
                      <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                   </a>
@@ -30,15 +31,26 @@
                      <table id="example3" class="display min-w850 text-center">
                            <thead>
                               <tr>
-                                 <th>ID</th>
+                                 <th>Property Name</th>
                                  <th>IP Addresses</th>
                                  <th>Last Viewed</th>
                               </tr>
                            </thead>
                            <tbody>
-                              @foreach ($data['trafficUsersIPs'] as $key => $IPs)
+                              @foreach ($data['ips'] as $key => $IPs)
                               <tr>
-                                 <td>{{ $IPs->id }}</td>
+                                 <td>
+                                    @if ($IPs->property->status == 1)
+                                    <a href="{{ url(strtolower($IPs->property->property_purpose) . '/' . $IPs->property->property_slug . '/' . $IPs->property->id) }}" target="_blank">
+
+                                       {{ Str::limit($IPs->property->property_name, 30) }}
+                                   </a>
+                                   @else
+                                   <p style="color: red">Property not Available</p>
+                                    @endif
+                                    
+                                    {{-- {{ $IPs->property->property_name }} --}}
+                                 </td>
                                  <td>{{ $IPs->ip_address }}</td>
                                  <td>{{ date('d-m-Y', strtotime($IPs->created_at)) ??'' }}</td>
                               </tr>
@@ -47,7 +59,7 @@
                            <tfoot>
                               <tr>
                                  <td colspan="3" class="text-center">
-                                       {{ $data['trafficUsersIPs']->render() }}
+                                       {{ $data['ips']->render() }}
                                  </td>
                               </tr>
                            </tfoot>

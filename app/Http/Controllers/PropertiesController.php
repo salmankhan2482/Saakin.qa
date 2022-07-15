@@ -191,6 +191,23 @@ class PropertiesController extends Controller
       if (!$property) {
          abort('404');
       }
+      if ($property->status == 0)
+      {
+         return redirect('home');
+      }
+      // dd($property);
+      // if ($property->status == 1)
+      // {
+      //    if ($property->area == null && !empty($property->town) && !empty($property->subcity))
+      //    {
+      //       $city_slug = $property->propertyCity->slug;
+      //       $property_type_purpose = $property->type.'-for-'.$property->purpose;
+      //       // $property_location = $property->sub_city_slug;$buyOrRent, $city_slug, $property_type_purpose
+      //       return redirect()->route('cpt-purpose', [$property_purpose, $city_slug, $property_type_purpose], 301);
+      //    }
+      // }
+
+     
 
       $visitor = request()->ip();
       $traffic = PageVisits::where('ip_address', $visitor)->where('property_id', $id)
@@ -243,6 +260,7 @@ class PropertiesController extends Controller
          ->where('property_type', $property->property_type)
          ->orderBy('land_area', 'asc')
          ->get();
+         // dd($properties);
          
       $property_counter = PropertyCounter::where('property_id', $property->id)->value('counter');
       //  dd($property_counter);  
@@ -900,7 +918,7 @@ class PropertiesController extends Controller
       
       //subcity if
       if (count($subcitie_props) > 0) {
-         // dd($subcitie_props);
+         
          $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
          $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
 
@@ -976,6 +994,7 @@ class PropertiesController extends Controller
             ->join('property_sub_cities', 'properties.subcity', 'property_sub_cities.id')
             ->select('property_sub_cities.id', 'property_sub_cities.name', 'property_sub_cities.property_cities_id')
             ->where("properties.status", 1)
+            // ->where('property_sub_cities.property_cities_id', '==', $city_keyword->id)
             ->where('property_sub_cities.id', '!=', $subcity_keyword->id)
             ->where("properties.property_type", $type->id)
             ->groupBy('property_sub_cities.name')
