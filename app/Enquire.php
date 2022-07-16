@@ -8,11 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Enquire extends Model
 {
-   protected $table = 'lead';
-
+   protected $table = 'leads';
    protected $fillable = ['name', 'email', 'phone', 'message'];
-
-
    public $timestamps = false;
 
 
@@ -26,17 +23,9 @@ class Enquire extends Model
       return $this->belongsTo('App\Agency', 'agency_id');
    }
 
-   public function EnquireStatus()
-   {
-      return $this->belongsTo('App\EnquireStatus', 'enquire_id');
-   }
-
    public function companyRegistration()
    {
       return $this->belongsTo(CompanyRegistration::class, 'company_registrations_id');
    }
-   public function GetProperty()
-   {
-      return $this->belongsTo('App\Properties', 'property_id');
-   }
+
 }

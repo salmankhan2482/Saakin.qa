@@ -1,6 +1,11 @@
 @extends('admin-dashboard.layouts.master')
 @section('style')
 <link rel="stylesheet" href="{{ asset('admin/css/js-example-basic-multiple.css') }}">
+<style>
+   .select2-selection--multiple{
+      height: auto !important;
+   }
+</style>
 @endsection
 @section('content')
 
@@ -87,11 +92,6 @@
                                           placeholder="{{ trans('words.bedroom') }}">
                                  </div>
                                  <div class="form-group col-md-3">
-                                       <label>Bathrooms</label>
-                                       <input type="number" name="bathrooms" class="form-control" id="bathrooms" min="0"
-                                          placeholder="{{ trans('words.bathroom') }}">
-                                 </div>
-                                 <div class="form-group col-md-3">
                                        <label>Budget</label>
                                        <input type="number" name="price" class="form-control" id="price" min="0"
                                           placeholder="{{ trans('words.price') }}" value="{{ old('price') }}" required>
@@ -127,21 +127,10 @@
                                  </div>
                                  <div class="form-group col-md-6">
                                        <label>Area</label>
-                                       <select name="area" id="area" class="form-control" onchange="callLatLong(this);">
+                                       <select name="area" id="area" class="form-control">
                                           <option value="">Select Area</option>
                                        </select>
                                  </div>
-                                 <div class="form-group col-md-6">
-                                       <label>Longitude</label>
-                                       <input type="text" name="map_longitude" placeholder="{{ trans('words.longitude') }}"
-                                          id="p-long" class="form-control" value="{{ old('map_longitude') }}" />
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                       <label>Latitude</label>
-                                       <input type="text" name="map_latitude" placeholder="{{ trans('words.latitude') }}"
-                                          id="p-lat" class="form-control" value="{{ old('map_latitude') }}" />
-                                 </div>
-                                 
                               </div>
                               <div class="form-row">
                                  <div class="form-group col-md-6">
@@ -398,16 +387,13 @@
                }else{
                   $("#reference_id").removeClass('border border-danger');
                   $("#property_name").val(data.property.property_name);
-                  $("#property_name, #bathrooms, #bedrooms, #price, #land_area, #p-lat, #p-long").prop('readonly', true);
+                  $("#property_name,  #bedrooms, #price, #land_area").prop('readonly', true);
                   $("#property_id").val(data.property.id);
                   $("#property_purpose").html(`${data.property_purpose}`);
                   $("#property_type").html(`${data.property_type}`);
-                  $("#bathrooms").val(data.property.bathrooms);
                   $("#bedrooms").val(data.property.bedrooms);
                   $("#price").val(data.property.price);
                   $("#land_area").val(data.property.land_area);
-                  $("#p-lat").val(data.property.map_latitude);
-                  $("#p-long").val(data.property.map_longitude);
                   $("#city").html(`${data.city}`);
                   $("#subcity").html(`${data.subcity}`);
                   $("#town").html(`${data.town}`);

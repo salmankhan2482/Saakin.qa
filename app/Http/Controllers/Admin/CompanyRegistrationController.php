@@ -18,14 +18,8 @@ class CompanyRegistrationController extends MainAdminController
     {
         $registrations = CompanyRegistration::paginate(10);
         $action = 'saakin_index';
-        return view('admin-dashboard.inquiries.company_registration.index', compact('registrations', 'action'));
+        return view('admin-dashboard.leads.company_registration.index', compact('registrations', 'action'));
     }
-
-    public function create()
-    {
-        
-    }
-
 
     public function store(Request $request)
     {
@@ -69,28 +63,12 @@ class CompanyRegistrationController extends MainAdminController
     
     public function show($id)
     {
-        
         $registration = CompanyRegistration::find($id);
-        // $inquire = Enquire::where('company_registrations_id', $registration->id)->first();
-        // $inquire->enquire_id =1;
-        // $inquire->update();
-        DB::table('enquire')
-            ->where('company_registrations_id', $registration->id)
-            ->update(['enquire_id' => 1]);
+        DB::table('leads')->where('company_registrations_id', $registration->id)->update(['status' => 1]);
             
         $action = 'saakin_index';
-        return view('admin-dashboard.inquiries.company_registration.show', compact('registration','action'));
+        return view('admin-dashboard.leads.company_registration.show', compact('registration','action'));
 
-    }
-
-    public function edit($id)
-    {
-        
-    }
-
-    public function update(Request $request, $id)
-    {
-        
     }
 
     public function destroy($id)
