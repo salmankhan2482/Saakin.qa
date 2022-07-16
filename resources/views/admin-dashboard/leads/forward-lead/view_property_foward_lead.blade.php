@@ -7,7 +7,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Property Inquiry</h4>
+                    <h4 class="card-title">Forwarded Property Inquiry</h4>
                     <a href="{{ url()->previous() }}">
                         <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                     </a>
@@ -18,54 +18,54 @@
                             <tbody>
                                 <tr>
                                     <th>Inquiry ID</th>
-                                    <td>{{ $enquire->id }}</td>
+                                    <td>{{ $forwardLead->id }}</td>
                                 </tr>
                                 <tr>
                                     <th>Inquiry Type</th>
-                                    <td>{{ $enquire->type }}</td>
+                                    <td>{{ $forwardLead->lead->type }}</td>
                                 </tr>
                                 <tr>
                                     <th>Property ID</th>
-                                    <td>{{ $enquire->property_id ?? '' }}</td>
+                                    <td>{{ $forwardLead->lead->property->id ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Property Title</th>
                                     <td>
-                                        <a href="{{ url(strtolower($enquire->property->property_purpose) . '/' . $enquire->property->property_slug . '/' . $enquire->property->id) }}"
+                                        <a href="{{ url(strtolower($forwardLead->lead->property->property_purpose) . '/' . $forwardLead->lead->property->property_slug . '/' . $forwardLead->lead->property->id) }}"
                                             target="_blank">
-                                            {{ $enquire->property->property_name }}
+                                            {{ $forwardLead->lead->property->property_name }}
                                         </a>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Name</th>
-                                    <td>{{ $enquire->name }}</td>
+                                    <td>{{ $forwardLead->lead->name }}</td>
                                 </tr>
                                 <tr>
                                     <th>Email</th>
-                                    <td>{{ $enquire->email }}</td>
+                                    <td>{{ $forwardLead->lead->email }}</td>
                                 </tr>
                                 <tr>
                                     <th>Phone</th>
-                                    <td>{{ $enquire->phone }}</td>
+                                    <td>{{ $forwardLead->lead->phone }}</td>
                                 </tr>
                                 <tr>
                                     <th>Agency Name</th>
-                                    <td>{{ $enquire->Agencies->name ?? '' }}</td>
+                                    <td>{{ $forwardLead->lead->agency->name ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Movin Date</th>
-                                    <td>{{ $enquire->movein_date ?? '' }}</td>
+                                    <td>{{ $forwardLead->lead->movein_date ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <th>Message</th>
-                                    <td>{{ $enquire->message }}</td>
+                                    <td>{{ $forwardLead->lead->message }}</td>
                                 </tr>
                                 <tr>
                                     <th>Sending Date</th>
                                     <td>
-                                        {{ date('d-m-Y', strtotime($enquire->created_at)) ?? '' }} at
-                                        {{ date('H:i:s', strtotime($enquire->created_at)) ?? '' }}</td>
+                                        {{ date('d-m-Y', strtotime($forwardLead->lead->created_at)) ?? '' }} at
+                                        {{ date('H:i:s', strtotime($forwardLead->lead->created_at)) ?? '' }}</td>
                                 </tr>
                             </tbody>
                         </table>

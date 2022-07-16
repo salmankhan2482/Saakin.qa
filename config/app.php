@@ -179,7 +179,6 @@ return [
         Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
         Unicodeveloper\Paystack\PaystackServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-        CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -258,7 +257,6 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'WhatsappBtn' => \Eyuva\WhatsappBtn\WhatsappBtnFacade::class,
-        'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
         'Location' => Stevebauman\Location\Facades\Location::class,
 
     ],

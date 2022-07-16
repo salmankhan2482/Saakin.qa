@@ -1,11 +1,11 @@
 <?php
 //Inquiries
 $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', function ($query) {
-    $query->where('agency_id', Auth::User()->agency_id);
-})
-    ->where('enquire_id', 2)
-    ->orderBy('id', 'desc')
-    ->get();
+       $query->where('agency_id', Auth::User()->agency_id);
+   })
+   ->where('status', 2)
+   ->orderBy('id', 'desc')
+   ->get();
 ?>
 <div class="header">
     <nav class="navbar navbar-expand top-menu">

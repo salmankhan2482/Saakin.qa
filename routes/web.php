@@ -122,34 +122,30 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('partners/delete/{id}', 'PartnersController@delete');
 
 	Route::get('inquiries', 'LeadsController@inquirieslist')->name('inquiries');
+   Route::get('restore/leads', 'LeadsController@restoreLeads')->name('restoreLeads');
+   Route::get('leads/property_inquiries', 'LeadsController@property_inquiries')->name('property_inquiries');
+   Route::get('inquiry/create', 'LeadsController@create_inquiry')->name('create_inquiry');
+   Route::post('inquiry/create', 'LeadsController@store_property_inquiry')->name('store_proprty_inquiry');
+   Route::get('property_inquiry/edit/{id}', 'LeadsController@edit_property_inquiry');
+   Route::post('property_inquiry/update/{id}', 'LeadsController@_property_inquiry');
 
-    Route::get('leads/property_inquiries', 'LeadsController@property_inquiries')->name('property_inquiries');
-    Route::get('inquiry/create', 'LeadsController@create_inquiry')->name('create_inquiry');
-    Route::post('inquiry/create', 'LeadsController@store_property_inquiry')->name('store_proprty_inquiry');
-    Route::get('property_inquiry/edit/{id}', 'LeadsController@edit_property_inquiry');
-    Route::post('property_inquiry/update/{id}', 'LeadsController@_property_inquiry');
-
-    Route::get('show_agency', 'LeadsController@show_agency')->name('show_agency');
-    Route::get('searchagency', 'LeadsController@searchagency')->name('searchagency');
-    Route::get('property_search', 'LeadsController@property_search')->name('property_search');
-
-
-    Route::get('searchautocomplete', 'LeadsController@search_agency_name')->name('searchautocomplete');
-	
+   Route::get('show_agency', 'LeadsController@show_agency')->name('show_agency');
+   Route::get('searchagency', 'LeadsController@searchagency')->name('searchagency');
+   Route::get('property_search', 'LeadsController@property_search')->name('property_search');
+   Route::get('searchautocomplete', 'LeadsController@search_agency_name')->name('searchautocomplete');
 	Route::get('leads/agency_inquiries', 'LeadsController@agency_inquiries')->name('agency_inquiries');
 	Route::get('leads/contact_inquiries', 'LeadsController@contact_inquiries')->name('contact_inquiries');
 	Route::get('leads/comp_reg_inquiries', 'LeadsController@comp_reg_inquiries')->name('comp_reg_inquiries');
-    
-    Route::get('view_inquiry/{enquire}', 'LeadsController@view_inquiry')->name('view_inquiry');
-    Route::get('view_property_inquiry/{id}', 'LeadsController@view_property_inquiry');
-    Route::get('view_agency_inquiry/{id}', 'LeadsController@view_agency_inquiry')->name('view_agency_inquiry');
-    Route::get('view_contact_inquiry/{id}', 'LeadsController@view_contact_inquiry')->name('view_contact_inquiry');   
+   Route::get('view_inquiry/{id}', 'LeadsController@view_inquiry')->name('view_inquiry');
+   Route::get('view_forward_inquiry/{id}', 'LeadsController@viewForwardInquiry')->name('viewForwardInquiry');
+   Route::get('view_property_inquiry/{id}', 'LeadsController@view_property_inquiry');
+   Route::get('view_agency_inquiry/{id}', 'LeadsController@view_agency_inquiry')->name('view_agency_inquiry');
+   Route::get('view_contact_inquiry/{id}', 'LeadsController@view_contact_inquiry')->name('view_contact_inquiry');   
 
-	Route::get('inquiries/delete/{id}', 'LeadsController@delete');
+   Route::get('inquiries/delete/{id}', 'LeadsController@delete');
 	Route::get('notifications', 'LeadsController@notifications')->name('notifications');   
 	Route::get('MarkAllAsRead', 'LeadsController@markAllAsRead')->name('markAllAsRead');   
-    Route::get('view_notification/{id}', 'LeadsController@view_notification')->name('view_notification');
-
+   Route::get('view_notification/{id}', 'LeadsController@view_notification')->name('view_notification');
 	Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');
 	Route::get('subscription_plan/add_plan', 'SubscriptionPlanController@addSubscriptionPlan');
 	Route::get('subscription_plan/edit_plan/{id}', 'SubscriptionPlanController@editSubscriptionPlan');

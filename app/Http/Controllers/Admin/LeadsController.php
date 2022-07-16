@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Types;
 use App\Agency;
-
-use App\Enquire;
 use App\Lead;
 use App\LeadForwardAgent;
 use App\Properties;
 use App\PropertyCities;
-
 use App\PropertyAmenity;
 use App\PropertyPurpose;
 use Illuminate\Http\Request;
@@ -33,13 +30,13 @@ class LeadsController extends MainAdminController
          return redirect('dashboard');
       }
 
-      $inquirieslist = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
+      $leads = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })->orderBy('id', 'desc')->paginate(10);
 
       $action = 'saakin_index';
 
-      return view('admin-dashboard.inquiries.index', compact('inquirieslist', 'action'));
+      return view('admin-dashboard.leads.index', compact('leads', 'action'));
    }
 
    public function create_inquiry(Request $request)
@@ -54,12 +51,11 @@ class LeadsController extends MainAdminController
       $data['amenities'] = PropertyAmenity::orderBy("name", "asc")->get();
       $data['cities'] = PropertyCities::all();
       $action = 'saakin_index';
-      return view('admin-dashboard.inquiries.property_inquires.create', compact('data', 'action'));
+      return view('admin-dashboard.leads.property_leads.create', compact('data', 'action'));
    }
 
    public function store_property_inquiry(Request $request)
    {
-      // dd($request->all());
       $request->validate([
          'agency_id' => 'required',
          'reference_id' => 'required',
@@ -83,35 +79,35 @@ class LeadsController extends MainAdminController
       $property_lead->agency_id = $inputs['agency_id'];
       $property_lead->agent_id = $inputs['agent_id'];
       $property_lead->type = 'Property Inquiry';
+      $property_lead->is_forwarded = 1;
       $property_lead->name = $inputs['name'];
       $property_lead->email = $inputs['email'];
       $property_lead->phone = $inputs['phone'];
       $property_lead->subject = $inputs['subject'];
       $property_lead->message = $inputs['message'];
       $property_lead->reference_id = $inputs['reference_id'];
-      $property_lead->property_title = $inputs['property_title'];
       $property_lead->property_id = $inputs['property_id'];
+      $property_lead->property_title = $inputs['property_title'];
       $property_lead->property_purpose = $inputs['property_purpose'];
       $property_lead->property_type = $inputs['property_type'];
       $property_lead->timeframe = $inputs['time_frame'];
       $property_lead->price = $inputs['price'];
       $property_lead->land_area = $inputs['land_area'];
       $property_lead->bedrooms = $inputs['bedrooms'];
-      $property_lead->bathrooms = $inputs['bathrooms'];
       $property_lead->city = $inputs['city'];
       $property_lead->subcity = $inputs['subcity'];
       $property_lead->town = $inputs['town'];
       $property_lead->area = $inputs['area'];
-      $property_lead->latitude = $inputs['map_longitude'];
-      $property_lead->longitude = $inputs['map_latitude'];
       $property_lead->source = $inputs['source'];
       $property_lead->movein_date = $inputs['movein_date'];
+      $property_lead->created_by = Auth::user()->id;
       $property_lead->save();
 
       foreach ($request->forward_agents as $key => $agent) {
          $forwardAgent = new LeadForwardAgent();
          $forwardAgent->agency_id = $agent;
-         $forwardAgent->lead_id = $inputs['agency_id'];
+         $forwardAgent->type = 'Property Inquiry';
+         $forwardAgent->lead_id = $property_lead->id;
          $forwardAgent->save();
       }
 
@@ -128,8 +124,7 @@ class LeadsController extends MainAdminController
    public function showsearch(Request $request)
    {
       $action = 'saakin_index';
-
-      return view('admin-dashboard.inquiries.property_inquires.show', 'action');
+      return view('admin-dashboard.leads.property_leads.show', 'action');
    }
 
    public function getResults(Request $request)
@@ -142,24 +137,19 @@ class LeadsController extends MainAdminController
    public function show_agency()
    {
       $action = 'saakin_index';
-      return view('admin-dashboard.inquiries.property_inquires.show_agency', compact('action'));
+      return view('admin-dashboard.leads.property_leads.show_agency', compact('action'));
    }
 
    public function searchagency(Request $request)
    {
-      $data = Agency::select("name as value", "id")
-         ->where('name', 'LIKE', '%' . $request->get('search') . '%')
-         ->get();
-
+      $data = Agency::select("name as value", "id")->where('name', 'LIKE', '%' . $request->get('search') . '%')->get();
       return response()->json($data);
    }
 
    public function property_search(Request $request)
    {
       $data = Properties::select("property_name as value", "id")
-         ->where('property_name', 'LIKE', $request->get('property_search'))
-         ->get();
-
+      ->where('property_name', 'LIKE', $request('property_search'))->get();
       return response()->json($data);
    }
 
@@ -169,14 +159,20 @@ class LeadsController extends MainAdminController
          Session::flash('flash_message', trans('words.access_denied'));
          return redirect('dashboard');
       }
-
-      $inquirieslist = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
+      
+      $leads = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })
-         ->where('type', 'Property Inquiry')->orderBy('id', 'desc')
-         ->whereNotNull('property_id')->paginate(10);
+      ->where(['type' => 'Property Inquiry'])->orderBy('id', 'desc')
+      ->whereNotNull('property_id')->paginate(10);
+      
+       
+      $forwardedLeads = LeadForwardAgent::when(Auth::User()->usertype == "Agency", function ($query) {
+         $query->where('agency_id', Auth::User()->agency_id);
+      })->where('type', 'Property Inquiry')->orderBy('id', 'desc')->paginate(10);
+
       $action = 'saakin_index';
-      return view('admin-dashboard.inquiries.property_inquires.property_inquiries', compact('inquirieslist', 'action'));
+      return view('admin-dashboard.leads.property_leads.property_leads', compact('leads', 'action','forwardedLeads'));
    }
 
    public function agency_inquiries()
@@ -192,7 +188,7 @@ class LeadsController extends MainAdminController
 
       $action = 'saakin_index';
       return view(
-         'admin-dashboard.inquiries.agency_inquires.agency_inquiries',
+         'admin-dashboard.leads.agency_leads.agency_leads',
          compact('inquirieslist', 'action')
       );
    }
@@ -210,21 +206,23 @@ class LeadsController extends MainAdminController
 
       $action = 'saakin_index';
 
-      return view('admin-dashboard.inquiries.contact_inquires.contact_inquiries', compact('inquirieslist', 'action'));
+      return view('admin-dashboard.leads.contact_leads.contact_leads', compact('inquirieslist', 'action'));
    }
 
    public function delete($id)
    {
       $decrypted_id = Crypt::decryptString($id);
-      $inquire = Lead::findOrFail($decrypted_id);
-      $inquire->delete();
+      $lead = Lead::findOrFail($decrypted_id);
+      LeadForwardAgent::where('lead_id', $decrypted_id)->delete();
+      $lead->delete();
 
       Session::flash('flash_message', trans('words.deleted'));
       return redirect()->back();
    }
 
-   public function view_inquiry(Lead $lead)
+   public function view_inquiry($id)
    {
+      $lead = Lead::find($id);
       $similarProperties = Properties::where('status', 1)
          ->where('property_purpose', $lead->property->property_purpose)
          ->where('property_type', $lead->property->property_type)
@@ -251,56 +249,81 @@ class LeadsController extends MainAdminController
       $availableNearbyProperties = $nearBy->paginate();
 
       if (request()->ajax()) {
-         $view = view('admin-dashboard.inquiries.property_inquires.nearby-properties',
+         $view = view('admin-dashboard.leads.property_leads.nearby-properties',
          compact('availableNearbyProperties'))->render();
          return response()->json(['html'=>$view]);
       }
 
       $action = 'saakin_index';
 
-      return view(
-         'admin-dashboard.inquiries.property_inquires.view_property_inquiry',
-         compact('similarProperties', 'availableNearbyProperties', 'action', 'enquire')
+      return view('admin-dashboard.leads.property_leads.view_property_lead',
+         compact('similarProperties', 'availableNearbyProperties', 'action', 'lead')
       );
+   }
+   
+   public function viewForwardInquiry($id)
+   {
+      $forwardLead = LeadForwardAgent::find($id);
+      $action = 'saakin_index';
+      
+      $similarProperties = Properties::where('status', 1)
+         ->where('property_purpose', $forwardLead->lead->property->property_purpose)
+         ->where('property_type', $forwardLead->lead->property->property_type)
+         ->where('bedrooms', $forwardLead->lead->property->bedrooms)
+         ->whereBetween('price', [$forwardLead->lead->property->price - 2000, $forwardLead->lead->property->price + 2000])
+         ->where('city', $forwardLead->lead->property->city)
+         ->where('subcity', $forwardLead->lead->property->subcity)
+         ->where('town', $forwardLead->lead->property->town)
+         ->where('area', $forwardLead->lead->property->area)
+         ->get();
+
+      $nearBy  = Properties::where('status', 1)->where('property_purpose', $forwardLead->lead->property->property_purpose)
+      ->whereBetween('price', [$forwardLead->lead->property->price - 2000, $forwardLead->lead->property->price + 2000]);
+
+      if ($forwardLead->lead->property->area) {
+         $nearBy = $nearBy->where('town', $forwardLead->lead->property->town);
+      } elseif ($forwardLead->lead->property->town) {
+         $nearBy = $nearBy->where('subcity', $forwardLead->lead->property->subcity);
+      } elseif ($forwardLead->lead->property->subcity) {
+         $nearBy = $nearBy->where('city', $forwardLead->lead->property->city);
+      }
+      $availableNearbyProperties = $nearBy->paginate();
+
+      return view('admin-dashboard.leads.forward-lead.view_property_foward_lead',
+      compact('forwardLead', 'action','availableNearbyProperties', 'similarProperties'));
    }
 
    public function view_property_inquiry(Lead $lead)
    {
-      $inquire = Lead::where('id', $lead)->first();
-      $inquire->enquire_id = 1;
-      $inquire->update();
+      $lead = Lead::where('id', $lead)->first();
+      $lead->enquire_id = 1;
+      $lead->update();
 
-      if ($inquire->property_id != '') {
-         $property = Properties::find($inquire->property_id);
+      if ($lead->property_id != '') {
+         $property = Properties::find($lead->property_id);
          $action = 'saakin_create';
 
-         return view(
-            'admin-dashboard.inquiries.property_inquires.view_property_inquiry',
-            compact('inquire', 'property', 'action')
-         );
+      return view('admin-dashboard.leads.property_leads.view_property_lead',compact('lead', 'property', 'action'));
       }
-      return view(
-         'admin-dashboard.inquiries.property_inquires.view_property_inquiry',
-         compact('inquire', 'action')
-      );
+      return view('admin-dashboard.leads.property_leads.view_property_lead',compact('lead', 'action'));
    }
    public function view_agency_inquiry($id)
    {
-      $inquire = Lead::where('id', $id)->first();
-      $inquire->enquire_id = 1;
-      $inquire->update();
+      $lead = Lead::where('id', $id)->first();
+      $lead->enquire_id = 1;
+      $lead->update();
 
       $action = 'saakin_create';
-      return view('admin-dashboard.inquiries.agency_inquires.view_agency_inquiry', compact('inquire', 'action'));
+      return view('admin-dashboard.leads.agency_leads.view_agency_lead', compact('lead', 'action'));
    }
    public function view_contact_inquiry($id)
    {
-      $inquire = Lead::where('id', $id)->first();
-      $inquire->enquire_id = 1;
-      $inquire->update();
+      $lead = Lead::where('id', $id)->first();
+      $lead->enquire_id = 1;
+      $lead->update();
 
       $action = 'saakin_create';
-      return view('admin-dashboard.inquiries.contact_inquires.view_contact_inquiry', compact('inquire', 'action'));
+      return view('admin-dashboard.leads.contact_leads.view_contact_lead', compact('lead', 'action'));
    }
 
    public function notifications()
@@ -316,27 +339,31 @@ class LeadsController extends MainAdminController
    }
    public function view_notification($id)
    {
-      $inquire = Lead::where('id', $id)->first();
-      $inquire->enquire_id = 1;
-      $inquire->update();
+      $lead = Lead::where('id', $id)->first();
+      $lead->enquire_id = 1;
+      $lead->update();
 
-      if ($inquire->property_id != '') {
-         $property = Properties::find($inquire->property_id);
+      if ($lead->property_id != '') {
+         $property = Properties::find($lead->property_id);
          $action = 'saakin_create';
 
-         return view(
-            'admin-dashboard.notifications.view_notification',
-            compact('inquire', 'property', 'action')
-         );
+         return view('admin-dashboard.notifications.view_notification',compact('lead', 'property', 'action'));
       }
 
       $action = 'saakin_create';
-      return view('admin-dashboard.notifications.view_notification', compact('inquire', 'action'));
+      return view('admin-dashboard.notifications.view_notification', compact('lead', 'action'));
    }
 
    public function markAllAsRead()
    {
       Lead::where('id', '>', 0)->update(['enquire_id' => 1]);
+      return redirect()->back();
+   }
+   
+   public function restoreLeads()
+   {
+      Lead::onlyTrashed()->restore();
+      LeadForwardAgent::onlyTrashed()->restore();
       return redirect()->back();
    }
 }

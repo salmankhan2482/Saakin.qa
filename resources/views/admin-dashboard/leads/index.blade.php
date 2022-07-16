@@ -29,7 +29,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($inquirieslist as $i => $inquiries)
+                                @foreach($leads as $i => $inquiries)
                                 <tr>
                                 
                                 <td>{{ $inquiries->id }}</td>
@@ -50,7 +50,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="6" class="text-center">
-                                        {{ $inquirieslist->render() }}
+                                        {{ $leads->render() }}
                                     </td>
                                 </tr>
                             </tfoot>
