@@ -36,7 +36,7 @@
                                                 class="btn btn-success rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ url('admin/inquiries/delete/' . Crypt::encryptString($inquiries->id)) }}"
+                                            <a href="{{ route('deleteLead', $inquiries->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

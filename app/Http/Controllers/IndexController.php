@@ -252,7 +252,7 @@ class IndexController extends Controller
         }
 
         $enquire = new Enquire();
-        $enquire->enquire_id = 2;
+        $enquire->status = 2;
         $enquire->name = $request->name;
         $enquire->email = $request->email;
         $enquire->phone = $request->phone;

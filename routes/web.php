@@ -138,11 +138,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('leads/comp_reg_inquiries', 'LeadsController@comp_reg_inquiries')->name('comp_reg_inquiries');
    Route::get('view_inquiry/{id}', 'LeadsController@view_inquiry')->name('view_inquiry');
    Route::get('view_forward_inquiry/{id}', 'LeadsController@viewForwardInquiry')->name('viewForwardInquiry');
+   Route::get('comment_forward_inquiry/{id}', 'LeadsController@commentForwardLead')->name('commentForwardLead');
+   Route::put('comment_forward_inquiry/{id}', 'LeadsController@commentForwardLead')->name('commentForwardLead');
    Route::get('view_property_inquiry/{id}', 'LeadsController@view_property_inquiry');
    Route::get('view_agency_inquiry/{id}', 'LeadsController@view_agency_inquiry')->name('view_agency_inquiry');
    Route::get('view_contact_inquiry/{id}', 'LeadsController@view_contact_inquiry')->name('view_contact_inquiry');   
 
-   Route::get('inquiries/delete/{id}', 'LeadsController@delete');
+   Route::get('inquiries/delete/{id}', 'LeadsController@delete')->name('deleteLead');
 	Route::get('notifications', 'LeadsController@notifications')->name('notifications');   
 	Route::get('MarkAllAsRead', 'LeadsController@markAllAsRead')->name('markAllAsRead');   
    Route::get('view_notification/{id}', 'LeadsController@view_notification')->name('view_notification');

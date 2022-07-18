@@ -263,7 +263,6 @@ class PropertiesController extends Controller
          // dd($properties);
          
       $property_counter = PropertyCounter::where('property_id', $property->id)->value('counter');
-      //  dd($property_counter);  
       $property_des = Str::limit($property->property_name . '  ' . $property->description, 150, '...');
 
       return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address', 'property_counter'));
@@ -312,7 +311,7 @@ class PropertiesController extends Controller
       }
 
       $enquire->type = 'Property Inquiry';
-      $enquire->enquire_id = 2;
+      $enquire->status = 2;
       $enquire->name = $request->user_name;
       $enquire->email = $request->user_email;
       $enquire->phone = $request->telephone;

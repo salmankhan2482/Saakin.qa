@@ -33,7 +33,7 @@
                                 <td>{{ $inquiries->email }}</td>
                                 <td>{{ $inquiries->Agencies->name ??''}} </td>
 
-                                @if ($inquiries->enquire_id == 1)
+                                @if ($inquiries->status == 1)
                                 <td> <i class="badge badge-rounded badge-success">{{ $inquiries->EnquireStatus->status ??''}}</i> </td>
                                 @else
                                 <td> <i class="badge badge-rounded badge-danger">{{ $inquiries->EnquireStatus->status ??''}}</i> </td>
@@ -43,7 +43,7 @@
                                                 class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ url('admin/inquiries/delete/'.Crypt::encryptString($inquiries->id)) }}"     
+                                            <a href="{{ route('deleteLead', $inquiries->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>

@@ -58,11 +58,11 @@
                                        @endif
                                        <td>
                                           <a href="{{ url('admin/view_inquiry', $lead->id) }}"
-                                             class="btn btn-success rounded btn-xs action-btn">
+                                             class="btn btn-success rounded btn-xs">
                                              <i class="fa fa-eye"></i>
                                           </a>
-                                          <a href="{{ url('admin/inquiries/delete/' . Crypt::encryptString($lead->id)) }}"
-                                             class="btn btn-danger rounded btn-xs action-btn"
+                                          <a href="{{ route('deleteLead', $lead->id) }}"
+                                             class="btn btn-danger rounded btn-xs"
                                              onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                              <i class="fa fa-trash"></i>
                                           </a>
@@ -120,18 +120,20 @@
                                         <td>{{ $forwardedLead->lead->property->address ?? '' }}</td>
                                         <td>{{ $forwardedLead->lead->agency->name ?? '' }}</td>
                                         <td>{{ date('d-m-Y', strtotime($forwardedLead->lead->created_at)) ?? '' }} </td>
-                                        <td>{{ $forwardedLead->lead->movein_date ??''}}</td>
+                                        <td>{{ date('d-m-Y', strtotime($forwardedLead->lead->movein_date)) ??''}}</td>
                                         <td>{{ $forwardedLead->status == 1 ?'Read' : 'UnRead'}}</td>
                                         <td>
-                                            <a href="{{ url('admin/view_forward_inquiry', $forwardedLead->lead->id) }}"
-                                                class="btn btn-success rounded btn-xs action-btn">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <a href="{{ url('admin/inquiries/delete/' . Crypt::encryptString($forwardedLead->lead->id)) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
+                                           <a href="{{ route('viewForwardInquiry', $forwardedLead->id) }}"
+                                             class="btn btn-success btn-xs rounded">
+                                             <i class="fa fa-eye"></i>
+                                          </a>
+                                          @if(auth()->user()->id == $forwardedLead->lead->user_id)
+                                             <a href="{{ route('deleteLead', $forwardedLead->id) }}" 
+                                                class="btn btn-danger btn-xs rounded" 
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>
-                                            </a>
+                                             </a>
+                                          @endif
                                         </td>
                                     </tr>
                                 @endforeach
