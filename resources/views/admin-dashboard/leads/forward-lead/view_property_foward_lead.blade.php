@@ -4,6 +4,25 @@
 {{-- Content --}}
 @section('content')
     <div class="container-fluid">
+      <div class="col-md-12">
+         @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                  <ul>
+                     @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                     @endforeach
+                  </ul>
+            </div>
+         @endif
+         @if (Session::has('flash_message'))
+            <div class="alert alert-success">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  {{ Session::get('flash_message') }}
+            </div>
+         @endif
+      </div>
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -13,65 +32,125 @@
                     </a>
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-clear dt-responsive">
-                            <tbody>
-                                <tr>
-                                    <th>Inquiry ID</th>
-                                    <td>{{ $forwardLead->id }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Inquiry Type</th>
-                                    <td>{{ $forwardLead->lead->type }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Property ID</th>
-                                    <td>{{ $forwardLead->lead->property->id ?? '' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Property Title</th>
-                                    <td>
-                                        <a href="{{ url(strtolower($forwardLead->lead->property->property_purpose) . '/' . $forwardLead->lead->property->property_slug . '/' . $forwardLead->lead->property->id) }}"
-                                            target="_blank">
-                                            {{ $forwardLead->lead->property->property_name }}
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>Name</th>
-                                    <td>{{ $forwardLead->lead->name }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Email</th>
-                                    <td>{{ $forwardLead->lead->email }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Phone</th>
-                                    <td>{{ $forwardLead->lead->phone }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Agency Name</th>
-                                    <td>{{ $forwardLead->lead->agency->name ?? '' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Movin Date</th>
-                                    <td>{{ $forwardLead->lead->movein_date ?? '' }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Message</th>
-                                    <td>{{ $forwardLead->lead->message }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Sending Date</th>
-                                    <td>
-                                        {{ date('d-m-Y', strtotime($forwardLead->lead->created_at)) ?? '' }} at
-                                        {{ date('H:i:s', strtotime($forwardLead->lead->created_at)) ?? '' }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                  <table class="table table-clear dt-responsive">
+                        <tbody>
+                           <tr>
+                              <th>Inquiry ID</th>
+                              <td>{{ $forwardLead->lead->id }}</td>
+                              
+                              <th>Inquiry Type</th>
+                              <td>{{ $forwardLead->lead->type }}</td>
+                           </tr>
+                           <tr>
+                              <th>Agency Name</th>
+                              <td>{{ $forwardLead->lead->agency->name ?? '' }}</td>
+                              
+                              <th>Property ID</th>
+                              <td>{{ $forwardLead->lead->property->id ?? '' }}</td>
+                           
+                           </tr>
+                           <tr>
+                              <th>Ref ID</th>
+                              <td>{{ $forwardLead->lead->reference_id }}</td>
+                           
+                              <th>Property Purpose</th>
+                              <td>{{ $forwardLead->lead->property->property_purpose }}</td>
+                           </tr>
+                           <tr>
+                              <th>Property Title</th>
+                              <td>
+                                 <a href="{{ url(strtolower($forwardLead->lead->property->property_purpose) . '/' . $forwardLead->lead->property->property_slug . '/' . $forwardLead->lead->property->id) }}"
+                                    target="_blank" class="text-info">
+                                    {{ $forwardLead->lead->property->property_name }}
+                                 </a>
+                              </td>
+
+                              <th>Price</th>
+                              <td>{{ $forwardLead->lead->property->price }} QR</td>
+                           
+                           </tr>
+                           <tr>
+                              <th>Source</th>
+                              <td>{{ $forwardLead->lead->source }}</td>
+                              
+                              <th>Movin Date</th>
+                              <td>{{ $forwardLead->lead->movein_date ?? '' }}</td>
+                           
+                           </tr>
+                           <tr>
+                              <th>Address</th>
+                              <td>
+                                 {{ $forwardLead->lead->property->propertyCity->name ?? ''}}, 
+                                 {{ $forwardLead->lead->property->propertySubCity->name ?? ''}},
+                                 {{ $forwardLead->lead->property->propertyTown->name ?? ''}}, 
+                                 {{ $forwardLead->lead->property->propertyArea->name ?? ''}}
+                              </td>
+                              
+                              <th>Land Area</th>
+                              <td>{{ $forwardLead->lead->land_area ?? '' }}</td>
+                           
+                           </tr>
+                           <tr>
+                              <th>Name</th>
+                              <td>{{ $forwardLead->lead->name }}</td>
+
+                              <th>Email</th>
+                              <td>{{ $forwardLead->lead->email }}</td>
+
+                           </tr>
+                           <tr>
+                              <th>Phone</th>
+                              <td>{{ $forwardLead->lead->phone }}</td>
+
+                              <th>Sending Date</th>
+                              <td>
+                                 {{ date('d-m-Y', strtotime($forwardLead->lead->created_at)) ?? '' }} at
+                                 {{ date('H:i:s', strtotime($forwardLead->lead->created_at)) ?? '' }}
+                              </td>
+                           </tr>
+                           <tr>
+                              <th>Created By</th>
+                              <td>
+                                 {{ $forwardLead->lead->createdBy->name }}
+                              </td>
+
+                              <th>Subject</th>
+                              <td>
+                                 {{ $forwardLead->lead->subject }}
+                              </td>
+                           </tr>
+                           <tr>
+                              <th>Message</th>
+                              <td colspan="3">{{ $forwardLead->lead->message }}</td>
+                           </tr>
+                        </tbody>
+                  </table>
                 </div>
             </div>
+        </div>
+        <div class="col-12">
+         <div class="card">
+            <div class="card-body">
+               <form action="{{ route('commentForwardLead', $forwardLead->id) }}" method="POST">
+                  @csrf {{ method_field('PUT') }}
+                  <div class="form-row">
+                     <div class="form-group col-md-6">
+                         <label>Write a Comment</label>
+                         <textarea name="comment" id="comment" rows="5" class="form-control">{{ $forwardLead->comment }}</textarea>
+                     </div>
+   
+                     <div class="form-group col-md-6">
+                         <label>Move In Date</label>
+                         <input type="date" name="move_in_date" id="move_in_date" class="form-control" 
+                         value="{{ $forwardLead->move_in_date }}">
+                         <div class="pull-right mt-2">
+                           <button type="submit" class="btn btn-primary">Update</button>
+                         </div>
+                     </div>
+                 </div>
+               </form>
+            </div>
+           </div>
         </div>
 
         <div class="col-12">

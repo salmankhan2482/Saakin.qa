@@ -28,5 +28,9 @@ class Lead extends Eloquent
    {
       return $this->hasMany(LeadForwardAgent::class, 'lead_id');
    }
+   public function createdBy()
+   {
+   return $this->belongsTo(User::class, 'created_by');
+   }
 
 }

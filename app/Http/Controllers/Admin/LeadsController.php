@@ -211,9 +211,8 @@ class LeadsController extends MainAdminController
 
    public function delete($id)
    {
-      $decrypted_id = Crypt::decryptString($id);
-      $lead = Lead::findOrFail($decrypted_id);
-      LeadForwardAgent::where('lead_id', $decrypted_id)->delete();
+      $lead = Lead::findOrFail($id);
+      LeadForwardAgent::where('lead_id', $id)->delete();
       $lead->delete();
 
       Session::flash('flash_message', trans('words.deleted'));
@@ -264,6 +263,9 @@ class LeadsController extends MainAdminController
    public function viewForwardInquiry($id)
    {
       $forwardLead = LeadForwardAgent::find($id);
+      $forwardLead->status = 1;
+      $forwardLead->update();
+
       $action = 'saakin_index';
       
       $similarProperties = Properties::where('status', 1)
@@ -277,8 +279,9 @@ class LeadsController extends MainAdminController
          ->where('area', $forwardLead->lead->property->area)
          ->get();
 
-      $nearBy  = Properties::where('status', 1)->where('property_purpose', $forwardLead->lead->property->property_purpose)
-      ->whereBetween('price', [$forwardLead->lead->property->price - 2000, $forwardLead->lead->property->price + 2000]);
+      $nearBy  = Properties::where('status', 1)
+         ->where('property_purpose', $forwardLead->lead->property->property_purpose)
+         ->whereBetween('price', [$forwardLead->lead->property->price - 2000, $forwardLead->lead->property->price + 2000]);
 
       if ($forwardLead->lead->property->area) {
          $nearBy = $nearBy->where('town', $forwardLead->lead->property->town);
@@ -293,10 +296,23 @@ class LeadsController extends MainAdminController
       compact('forwardLead', 'action','availableNearbyProperties', 'similarProperties'));
    }
 
+   public function commentForwardLead(Request $request, $id)
+   {
+      $request->validate([
+         'comment' => 'required',
+         'move_in_date' => 'required'
+      ]);
+      $forwardLead = LeadForwardAgent::find($id);
+      $forwardLead->comment = request('comment');
+      $forwardLead->move_in_date = request('move_in_date');
+      $forwardLead->update();
+      return redirect()->back()->with('flash_message','Comment has been added.');
+   }
+
    public function view_property_inquiry(Lead $lead)
    {
       $lead = Lead::where('id', $lead)->first();
-      $lead->enquire_id = 1;
+      $lead->status = 1;
       $lead->update();
 
       if ($lead->property_id != '') {
@@ -310,7 +326,7 @@ class LeadsController extends MainAdminController
    public function view_agency_inquiry($id)
    {
       $lead = Lead::where('id', $id)->first();
-      $lead->enquire_id = 1;
+      $lead->status = 1;
       $lead->update();
 
       $action = 'saakin_create';
@@ -319,7 +335,7 @@ class LeadsController extends MainAdminController
    public function view_contact_inquiry($id)
    {
       $lead = Lead::where('id', $id)->first();
-      $lead->enquire_id = 1;
+      $lead->status = 1;
       $lead->update();
 
       $action = 'saakin_create';
@@ -340,7 +356,7 @@ class LeadsController extends MainAdminController
    public function view_notification($id)
    {
       $lead = Lead::where('id', $id)->first();
-      $lead->enquire_id = 1;
+      $lead->status = 1;
       $lead->update();
 
       if ($lead->property_id != '') {
@@ -356,7 +372,7 @@ class LeadsController extends MainAdminController
 
    public function markAllAsRead()
    {
-      Lead::where('id', '>', 0)->update(['enquire_id' => 1]);
+      Lead::where('id', '>', 0)->update(['status' => 1]);
       return redirect()->back();
    }
    
