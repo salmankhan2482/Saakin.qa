@@ -595,7 +595,7 @@ class PropertiesController extends MainAdminController
       $decrypted_id = Crypt::decryptString($id);
       $property = Properties::findOrFail($decrypted_id);
 
-      if (Auth::User()->id != $property->user_id and Auth::User()->usertype != "Admin") {
+      if (Auth::User()->id != $property->user_id && Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
          \Session::flash('flash_message', trans('words.access_denied'));
 
          return redirect('admin/dashboard');
