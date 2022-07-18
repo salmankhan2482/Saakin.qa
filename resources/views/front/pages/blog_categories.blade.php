@@ -32,13 +32,20 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-8 mt-2">
           <div class="row gy-4">
             @foreach ($category_blogs as $blog)
               <div class="col-md-6 d-flex">
                 <div class="card agency-tile flex-grow-1">
                   <a class="blog-thumb stretched-link" href="{{ url('blog/' . $blog->slug) }}">
                     <img class="img-fluid" src="{{ asset('upload/blogs/thumbnail/' . $blog->image) }}" alt="{{ $blog->title }}">
+                    <div class="position-relative">
+                      <div class="gallery_btn position-absolute bottom-0 start-0 p-2 d-md-block" style="z-index: 1;">
+                        <a data-fancybox-index="0" class="btn btn-sm btn-dark">
+                          <i class="fa fa-eye">  {{ $blog->count ??''}}</i>
+                        </a>
+                      </div>
+                    </div>
                   </a>
                   <div class="card-body">
                     <h5 class="card-title text-truncate">

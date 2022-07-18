@@ -26,11 +26,9 @@ class BlogController extends Controller
 
     public function index()
     {
-		$blogs = Blog::where('status',1)->when(request('keyword'), function($query){
-            $query->where('title', 'like', '%'.request('keyword').'%')
-            ->orWhere('description', 'like', '%'.request('keyword').'%');
+		$blogs = Blog::where('status', 1)->when(request('keyword'), function($query){
+            $query->where('title', 'like', '%'.request('keyword').'%');
         })
-        ->where('status', 1)
         ->orderBy('id','desc')->paginate(10);
         
         $popularposts = Blog::where('status',1)->orderBy('count', 'desc')->limit(9)->get();
