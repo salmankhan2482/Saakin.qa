@@ -1107,6 +1107,7 @@
                                  </ul>
                               </div>
 
+
                               <div class="property-title-box">
                                  <div class="price">
                                        {{ $property->getPrice() }}
@@ -1377,6 +1378,7 @@
                                              <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
                                                 alt="{{ $property->property_name }}">
                                        @endif
+
                                     </div>
 
                                     @if (count($property->gallery) > 0)

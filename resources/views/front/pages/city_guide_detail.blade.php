@@ -113,7 +113,7 @@
                                         <div class="single-property-box border">
                                             <div class="property-item">
                                                 <a class="property-img"
-                                                    href="{{ url(strtolower($propx->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                                                    href="{{ url(strtolower($propx->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}" target="_blank">
                                                     @if ($propx->featured_image)
                                                         <img src="{{ URL::asset('upload/properties/thumb_' . $propx->featured_image) }}"
                                                             alt="{{ $propx->property_name }}">
@@ -147,7 +147,7 @@
                                             <div class="property-title-box">
 
                                                 <a class="text-decoration-none stretched-link"
-                                                    href="{{ url(strtolower($propx->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}">
+                                                    href="{{ url(strtolower($propx->property_purpose) . '/' . $propx->property_slug . '/' . $propx->id) }}" target="_blank">
                                                     <h5 class="property-card__property-title">
                                                         {{ \Illuminate\Support\Str::limit($propx->property_name) }}
                                                     </h5>

@@ -93,7 +93,7 @@
 
 
         <a class="text-decoration-none stretched-link"
-            href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}">
+            href="{{ route('property-detail', [strtolower($property->property_purpose), $property->property_slug, $property->id]) }}" target="_blank">
             <h5 class="property-card__property-title">
                 {{ $property->property_name }}
             </h5>
