@@ -24,14 +24,18 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Search Property</h4>
+                    <h4 class="card-title">Featured Properties</h4>
+                    <a href="{{ route('featuredproperties.index') }}"
+                    class="badge badge-circle badge-info">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </a>  
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
                         <form action="{{ route('featuredproperties.index') }}" method="GET">
                             <div class="row">
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" name="keyword" placeholder="Search"
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="keyword" placeholder="Search Property"
                                         value="{{ request('keyword') }}">
                                 </div>
                                 <div class="col-sm-2 mt-2 mt-sm-0">
@@ -45,7 +49,7 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div class="col-sm-2 mt-2 mt-sm-0">
+                                {{-- <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select name="status" id="basic" class="selectpicker show-tick form-control"
                                         data-live-search="false">
                                         <option value="">Select Status</option>
@@ -56,7 +60,7 @@
                                             Inactive
                                         </option>
                                     </select>
-                                </div>
+                                </div> --}}
                                 <div class="col-sm-2 mt-2 mt-sm-0">
                                     <select name="type" class="selectpicker show-tick form-control">
                                         <option value="">{{ trans('words.property_type') }}</option>
@@ -70,10 +74,15 @@
                                         @endif
                                     </select>
                                 </div>
-                                <div class="col-sm-2 mt-2">
-                                    <button type="submit" class="btn btn-dark btn-sm pull-left">
+                                <div class="col-sm-2 mt-1">
+                                    <button type="submit" class="btn btn-dark btn-md pull-left">
                                         {{ trans('words.search') }}
                                     </button>
+                                    <a href="{{ route('featuredproperties.index') }}"
+                                                class="btn btn-info btn-md pull-left">
+                                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </a>
+                                    
                                 </div>
                             </div>
                         </form>
@@ -85,24 +94,25 @@
 
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                {{-- <div class="card-header">
                     <h4 class="card-title">Featured Properties</h4>
-                </div>
+                </div> --}}
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-responsive-sm">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Agency</th>
-                                    <th>Property Title</th>
-                                    <th>Type</th>
-                                    <th>Purpose</th>
-                                    <th>Views</th>
-                                    <th>Created</th>
-                                    <th>Health</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <th>| ID |</th>
+                                    <th>| Agency |</th>
+                                    <th>| Property Title |</th>
+                                    <th>| Purpose |</th>
+                                    <th>| Type |</th>
+                                    <th>| Price |</th>
+                                    <th>| Views |</th>
+                                    <th>| Updated |</th>
+                                    <th>| Health |</th>
+                                    <th>| Status |</th>
+                                    <th>| Action |</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,27 +125,35 @@
                                         @if ($loop->index == 4)
                                         @endif
                                         <td>{{ $property->id }}</td>
-                                        <td>{{ $property->Agency->name ?? $property->user->name }}</td>
+                                        <td>
+                                            {{-- {{ $property->Agency->name ?? $property->user->name }} --}}
+                                            <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}"
+                                            alt="{{ $property->Agency->name.'- agency image' }}" width="50" />
+                                        </td>
 
                                         <td>
                                             <a
                                                 href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
-                                                {{ $property->property_name }}
+                                                {{ Str::limit($property->property_name, 30, '')  }}
                                             </a>
                                         </td>
+                                        <td>{{ $property->property_purpose }}</td>
                                         <td>
                                             {{ $property->property_type ? getPropertyTypeName($property->property_type)->types : '' }}
                                         </td>
-                                        <td>{{ $property->property_purpose }}</td>
+                                        <td>{{ $property->getPrice() }}</td>
+
                                         <td class="text-center">
                                             {{ App\PropertyCounter::where('property_id', $property->id)->value('counter') ?? 0 }}
                                         </td>
                                         <td>
-                                            @if ($property->created_at !== null)
-                                                <small>{{ date('d-m-Y', strtotime($property->created_at)) }}</small>
+                                            @if ($property->updated_at !== null)
+                                                <small>{{ date('d-m-Y', strtotime($property->updated_at)) }}</small>
                                             @endif
                                         </td>
-                                        <td class="text-center">90%</td>
+                                        <td class="text-center">
+                                            <span class="badge badge-rounded badge-success">90%</span>
+                                        </td>
 
                                         <td class="text-center">
                                             @if ($property->status == 1)
@@ -146,13 +164,21 @@
                                                 <i class="fa fa-circle text-danger mr-1"></i>
                                             @endif
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-outline-primary dropdown-toggle"
-                                                data-toggle="dropdown">
-                                                Action
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                @if ($property->user)
+                                        <td class="text-center">
+                                            <div class="dropdown ml-auto">
+                                                <div class="btn-link" data-toggle="dropdown">
+                                                    <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                            <rect x="0" y="0" width="24" height="24"></rect>
+                                                            <circle fill="#7e7e7e" cx="5" cy="12" r="2"></circle>
+                                                            <circle fill="#7e7e7e" cx="12" cy="12" r="2"></circle>
+                                                            <circle fill="#7e7e7e" cx="19" cy="12" r="2"></circle>
+                                                        </g>
+                                                    </svg>
+                    
+                                                </div>
+                                                <div class="dropdown-menu">
+                                                    @if ($property->user)
                                                     @if (Auth::User()->usertype == 'Admin')
                                                         <a href="Javascript:void(0);" class="dropdown-item"
                                                             data-toggle="modal" data-target="#PropertyPlanModal"
@@ -176,8 +202,8 @@
                                                             {{ trans('words.unset_as_featured') }}
                                                         </a>
                                                     @endif
-                                                    {{-- @endif --}}
                                                 @endif
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -186,7 +212,8 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="10" class="text-center">
-                                        {{ $propertieslist->render() }}
+                                        {{-- {{ $propertieslist->render() }} --}}
+                                        {{$propertieslist->links()}}
                                     </td>
                                 </tr>
                             </tfoot>

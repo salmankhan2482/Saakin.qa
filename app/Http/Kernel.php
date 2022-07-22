@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\MyRobotsMiddleware::class,
         \App\Http\Middleware\SelectiveRobotsMiddleware::class,
         
+        
     ];
 
     /**
