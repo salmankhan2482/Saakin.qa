@@ -154,7 +154,28 @@ class PropertyRepository
          })->get();
       return $result;
    }
-
+   
+   public function sortyBy($properties, Request $request)
+   {
+      if (isset(request()->sort_by) && !empty(request()->sort_by)) {
+         if (request()->sort_by == "newest") {
+            $properties->orderBy('id', 'desc');
+         } else if (request()->sort_by == "featured") {
+            $properties->orderBy('featured_property', 'desc');
+         } else if (request()->sort_by == "low_price") {
+            $properties->orderBy('price', 'asc');
+         } else if (request()->sort_by == "high_price") {
+            $properties->orderBy('price', 'desc');
+         } else if (request()->sort_by == "beds_least") {
+            $properties->orderBy('bedrooms', 'asc');
+         } else if (request()->sort_by == "beds_most") {
+            $properties->orderBy('bedrooms', 'desc');
+         }
+      } else {
+         $properties->orderBy('id', 'desc');
+      }
+      return $properties;
+   }
    public function getProperties(Request $request)
    {
       $properties = Properties::where('status', 1)
@@ -286,7 +307,6 @@ class PropertyRepository
       $property_purpose_id = request('property_purpose') == 'Rent' ? 1 : 2;
 
       //  Property Purpose
-
       if (!empty(request('property_purpose')) && empty(request('property_type')) && empty(request('city')) && empty(request('subcity')) && empty(request('town')) && empty(request('area'))) {
          $landing_page_content = LandingPage::where('property_purposes_id', $property_purpose_id)
             ->where('property_types_id', null)
@@ -547,7 +567,7 @@ class PropertyRepository
          $properties->whereNotIn('property_type', $commercialIds);
       }
 
-      return $properties = $properties->limit(10)->paginate(getcong('pagination_limit'));
+      return $properties = $properties->inRandomOrder()->limit(10)->paginate(getcong('pagination_limit'));
 
    }
    

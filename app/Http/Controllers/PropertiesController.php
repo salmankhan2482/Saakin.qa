@@ -42,20 +42,17 @@ class PropertiesController extends Controller
 {
    
    protected $propertyrepo;
-   public function __construct(PropertyRepository $propertyrepo)
-   {
+   public function __construct(PropertyRepository $propertyrepo){
       $this->propertyrepo = $propertyrepo;
    }
 
    public function getPropertyListing(Request $request)
    {
-      
       request('bathrooms') == 'Any' ? $request->merge(['bathrooms' => null]) : request('bathrooms');
       request('bedrooms') == 'Any' ? $request->merge(['bedrooms' => null]) : request('bedrooms');
 
       isset(request()->property_type) ? $request->merge(['type' => Types::findOrFail(request()->property_type)]) : '';
       request('max_price') == 'Other' ? request()->merge(['max_price' => request('input_max_price')]) : request('max_price');
-
 
       $propertyTypes =  $this->propertyrepo->getPropertyTypes();
       $data['result'] = $this->propertyrepo->breadcrumbs($request); // breadcrumbs
@@ -306,7 +303,6 @@ class PropertiesController extends Controller
          ->where('property_type', $property->property_type)
          ->orderBy('land_area', 'asc')
          ->get();
-         // dd($properties);
          
       $property_counter = PropertyCounter::where('property_id', $property->id)->value('counter');
       $property_des = Str::limit($property->property_name . '  ' . $property->description, 150, '...');
@@ -693,25 +689,9 @@ class PropertiesController extends Controller
          $property_purpose = request('property_purpose');
       }
 
-      $properties = Properties::where('status', 1)
-         ->where('property_purpose', ucfirst($property_purpose));
-      if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-         if (request()->sort_by == "newest") {
-            $properties->orderBy('id', 'desc');
-         } else if (request()->sort_by == "featured") {
-            $properties->orderBy('featured_property', 'desc');
-         } else if (request()->sort_by == "low_price") {
-            $properties->orderBy('price', 'asc');
-         } else if (request()->sort_by == "high_price") {
-            $properties->orderBy('price', 'desc');
-         } else if (request()->sort_by == "beds_least") {
-            $properties->orderBy('bedrooms', 'asc');
-         } else if (request()->sort_by == "beds_most") {
-            $properties->orderBy('bedrooms', 'desc');
-         }
-      } else {
-         $properties->orderBy('id', 'desc');
-      }
+      $properties = Properties::where('status', 1)->where('property_purpose', ucfirst($property_purpose));
+
+      $properties = $this->propertyrepo->sortyBy($properties, request());
       $properties = $properties->paginate(getcong('pagination_limit'));
 
       $propertyTypes = DB::table('property_types')
@@ -788,22 +768,7 @@ class PropertiesController extends Controller
          $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
          $saveSearch = isset($record) ? 1 : 0;
       }
-      return view(
-         'front.pages.properties.properties-for-purpose',
-         compact(
-            'properties',
-            'propertyTypes',
-            'cities',
-            'propertyPurposes',
-            'data',
-            'heading_info',
-            'buyOrRent',
-            'property_purpose',
-            'landing_page_content',
-            'request',
-            'saveSearch'
-         )
-      );
+      return view('front.pages.properties.properties-for-purpose',compact('properties','propertyTypes','cities','propertyPurposes','data','heading_info','buyOrRent','property_purpose','landing_page_content','request','saveSearch'));
    }
 
    public function propertyTypeForPurpose($buyOrRent, $property)
@@ -830,25 +795,7 @@ class PropertiesController extends Controller
          ->where('property_purpose', ucfirst($property_purpose))
          ->where('property_type', $type->id);
 
-
-      if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-         if (request()->sort_by == "newest") {
-            $properties->orderBy('id', 'desc');
-         } else if (request()->sort_by == "featured") {
-            $properties->orderBy('featured_property', 'desc');
-         } else if (request()->sort_by == "low_price") {
-            $properties->orderBy('price', 'asc');
-         } else if (request()->sort_by == "high_price") {
-            $properties->orderBy('price', 'desc');
-         } else if (request()->sort_by == "beds_least") {
-            $properties->orderBy('bedrooms', 'asc');
-         } else if (request()->sort_by == "beds_most") {
-            $properties->orderBy('bedrooms', 'desc');
-         }
-      } else {
-         $properties->orderBy('id', 'desc');
-      }
-
+      $properties = $this->propertyrepo->sortyBy($properties, request());
       $properties = $properties->paginate(getcong('pagination_limit'));
 
       $cities = DB::table('property_cities')
@@ -912,24 +859,7 @@ class PropertiesController extends Controller
       }
 
 
-      return view(
-         'front.pages.properties.property-type-for-purpose',
-         compact(
-            'properties',
-            'propertyTypes',
-            'type',
-            'cities',
-            'property_purpose',
-            'buyOrRent',
-            'propertyPurposes',
-            'landing_page_content',
-            'page_info',
-            'request',
-            'heading_info',
-            'data',
-            'saveSearch'
-         )
-      );
+      return view('front.pages.properties.property-type-for-purpose', compact('properties','propertyTypes','type','cities','property_purpose','buyOrRent','propertyPurposes','landing_page_content','page_info','request','heading_info','data','saveSearch'));
    }
 
    public function cityPropertyTypeForPurpose($buyOrRent, $city_slug, $property_type_purpose)
@@ -956,42 +886,24 @@ class PropertiesController extends Controller
            
          }
       }
-      $subcitie_props = Properties::where('sub_city_slug', $property_type_purpose)->where('status', 1)->get();
-      $town_props = Properties::where('town_slug', $property_type_purpose)->where('status', 1)->get();
-      $area_props = Properties::where('area_slug', $property_type_purpose)->where('status', 1)->get();
+      
+      $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
+      $subcitie_props = Properties::where('sub_city_slug', $property_type_purpose)->where('city', $city_keyword->id)->where('status', 1)->get();
+      $town_props = Properties::where('town_slug', $property_type_purpose)->where('city', $city_keyword->id)->where('status', 1)->get();
+      $area_props = Properties::where('area_slug', $property_type_purpose)->where('city', $city_keyword->id)->where('status', 1)->get();
       
       //subcity if
       if (count($subcitie_props) > 0) {
          
          $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
-         $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
-
          $properties = Properties::where('status', 1)
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('property_type', $type->id)
             ->where('sub_city_slug', $property_type_purpose)
             ->where('city', $city_keyword->id);
-
-         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-            if (request()->sort_by == "newest") {
-               $properties->orderBy('id', 'desc');
-            } else if (request()->sort_by == "featured") {
-               $properties->orderBy('featured_property', 'desc');
-            } else if (request()->sort_by == "low_price") {
-               $properties->orderBy('price', 'asc');
-            } else if (request()->sort_by == "high_price") {
-               $properties->orderBy('price', 'desc');
-            } else if (request()->sort_by == "beds_least") {
-               $properties->orderBy('bedrooms', 'asc');
-            } else if (request()->sort_by == "beds_most") {
-               $properties->orderBy('bedrooms', 'desc');
-            }
-         } else {
-            $properties->orderBy('id', 'desc');
-         }
-
-
+         $properties = $this->propertyrepo->sortyBy($properties, request());
          $properties = $properties->paginate(getcong('pagination_limit'));
+
 
          //Redirect Extra Pagination Pages of Sub-City
          if (request()->get('page') > 1 && $properties->isEmpty()) {
@@ -1001,9 +913,8 @@ class PropertiesController extends Controller
          if ($properties->total() == 0) {
             return redirect()->route('/', 301);
          }
-         
+        
          $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
-         // dd($subcity_keyword);
 
          $propertyTypes =  DB::table('property_types')
             ->join('properties', "property_types.id", "properties.property_type")
@@ -1045,7 +956,6 @@ class PropertiesController extends Controller
             ->join('property_sub_cities', 'properties.subcity', 'property_sub_cities.id')
             ->select('property_sub_cities.id', 'property_sub_cities.name', 'property_sub_cities.property_cities_id')
             ->where("properties.status", 1)
-            // ->where('property_sub_cities.property_cities_id', '==', $city_keyword->id)
             ->where('property_sub_cities.id', '!=', $subcity_keyword->id)
             ->where("properties.property_type", $type->id)
             ->groupBy('property_sub_cities.name')
@@ -1083,25 +993,7 @@ class PropertiesController extends Controller
             $saveSearch = isset($record) ? 1 : 0;
          }
 
-         return view(
-            'front.pages.properties.subcity-property-type-for-purpose',
-            compact(
-               'properties',
-               'propertyTypes',
-               'type',
-               'city_keyword',
-               'subcity_keyword',
-               'towns',
-               'meta_description',
-               'property_purpose',
-               'propertyPurposes',
-               'buyOrRent',
-               'page_info',
-               'data',
-               'landing_page_content',
-               'saveSearch'
-            )
-         );
+         return view('front.pages.properties.subcity-property-type-for-purpose',compact('properties','propertyTypes','type','city_keyword','subcity_keyword','towns','meta_description','property_purpose','propertyPurposes','buyOrRent','page_info','data','landing_page_content','saveSearch'));
       } elseif (count($town_props) > 0) {
          //town if
          $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
@@ -1113,24 +1005,9 @@ class PropertiesController extends Controller
             ->where('town_slug', $property_type_purpose)
             ->where('city', $city_keyword->id);
 
-         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-            if (request()->sort_by == "newest") {
-               $properties->orderBy('id', 'desc');
-            } else if (request()->sort_by == "featured") {
-               $properties->orderBy('featured_property', 'desc');
-            } else if (request()->sort_by == "low_price") {
-               $properties->orderBy('price', 'asc');
-            } else if (request()->sort_by == "high_price") {
-               $properties->orderBy('price', 'desc');
-            } else if (request()->sort_by == "beds_least") {
-               $properties->orderBy('bedrooms', 'asc');
-            } else if (request()->sort_by == "beds_most") {
-               $properties->orderBy('bedrooms', 'desc');
-            }
-         } else {
-            $properties->orderBy('id', 'desc');
-         }
+         $properties = $this->propertyrepo->sortyBy($properties, request());
          $properties = $properties->paginate(getcong('pagination_limit'));
+
 
          //Redirect Extra Pagination Pages of Towns
          if (request()->get('page') > 1 && $properties->isEmpty()) {
@@ -1141,7 +1018,6 @@ class PropertiesController extends Controller
          // if (!isset($properties[0])) {
          //    return redirect()->route('home');
          // }
-
          $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
          $town_keyword = PropertyTowns::find($properties[0]->town);
 
@@ -1228,26 +1104,8 @@ class PropertiesController extends Controller
             $saveSearch = isset($record) ? 1 : 0;
          }
 
-         return view(
-            'front.pages.properties.town-property-type-for-purpose',
-            compact(
-               'properties',
-               'propertyTypes',
-               'type',
-               'city_keyword',
-               'subcity_keyword',
-               'town_keyword',
-               'areas',
-               'meta_description',
-               'property_purpose',
-               'propertyPurposes',
-               'buyOrRent',
-               'page_info',
-               'landing_page_content',
-               'data',
-               'saveSearch'
-            )
-         );
+         return view('front.pages.properties.town-property-type-for-purpose',compact('properties','propertyTypes','type','city_keyword','subcity_keyword','town_keyword','areas','meta_description','property_purpose','propertyPurposes','buyOrRent','page_info','landing_page_content','data','saveSearch'));
+
       } elseif (count($area_props) > 0) {
          //areas if  
          $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
@@ -1259,31 +1117,15 @@ class PropertiesController extends Controller
             ->where('area_slug', $property_type_purpose)
             ->where('city', $city_keyword->id);
 
-         if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-            if (request()->sort_by == "newest") {
-               $properties->orderBy('id', 'desc');
-            } else if (request()->sort_by == "featured") {
-               $properties->orderBy('featured_property', 'desc');
-            } else if (request()->sort_by == "low_price") {
-               $properties->orderBy('price', 'asc');
-            } else if (request()->sort_by == "high_price") {
-               $properties->orderBy('price', 'desc');
-            } else if (request()->sort_by == "beds_least") {
-               $properties->orderBy('bedrooms', 'asc');
-            } else if (request()->sort_by == "beds_most") {
-               $properties->orderBy('bedrooms', 'desc');
-            }
-         } else {
-            $properties->orderBy('id', 'desc');
-         }
-
+         $properties = $this->propertyrepo->sortyBy($properties, request());
+         $properties = $properties->paginate(getcong('pagination_limit'));
          
          $properties = $properties->paginate(getcong('pagination_limit'));
-
          //Redirect Extra Pagination Pages of Area
          if (request()->get('page') > 1 && $properties->isEmpty()) {
             return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
               }   
+
          
          $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
          $town_keyword = PropertyTowns::find($properties[0]->town);
@@ -1304,11 +1146,9 @@ class PropertiesController extends Controller
          $page_info = $type->plural_name . ' for ' . $property_purpose . ' in ' . $area_keyword->name . ', ' . $town_keyword->name . ', ' . $subcity_keyword->name . ', ' . $city_keyword->name;
          
          if ($properties->total() > 0) {
-            $meta_description =
-               $properties->random()->property_name . ' The Real Property Directory Where You Can Meet Properties of your choice  ' . $page_info;
+            $meta_description = $properties->random()->property_name.' The Real Property Directory Where You Can Meet Properties of your choice '.$page_info;
          } else {
-            $meta_description =
-               'Search ' . $page_info . ' The Real Property Directory Where You Can Meet Properties of your choice  ';
+            $meta_description = 'Search '.$page_info.' The Real Property Directory Where You Can Meet Properties of your choice';
          }
 
          $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
@@ -1354,27 +1194,7 @@ class PropertiesController extends Controller
          }
 
 
-
-         return view(
-            'front.pages.properties.area-property-type-for-purpose',
-            compact(
-               'properties',
-               'propertyTypes',
-               'type',
-               'city_keyword',
-               'subcity_keyword',
-               'town_keyword',
-               'area_keyword',
-               'property_purpose',
-               'meta_description',
-               'propertyPurposes',
-               'buyOrRent',
-               'page_info',
-               'landing_page_content',
-               'data',
-               'saveSearch'
-            )
-         );
+         return view('front.pages.properties.area-property-type-for-purpose', compact('properties','propertyTypes','type','city_keyword','subcity_keyword','town_keyword','area_keyword','property_purpose','meta_description','propertyPurposes','buyOrRent','page_info','landing_page_content','data','saveSearch'));
       }
       
       $urlResult = 0;
@@ -1387,46 +1207,54 @@ class PropertiesController extends Controller
          $index = strpos($property_type_purpose, $prefix) + strlen($prefix);
          $urlResult = substr($property_type_purpose, $index);
       }
-      if(strlen($urlResult) > 0){
-         return redirect('/');
-      }
-     
 
       $type = Types::where('plural', $property_type)->firstOrFail();
       $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
+      
+      $properties = new Properties(); 
+      $nearbyProperties = '';
 
-      $properties = Properties::where('status', 1)
+      if(strlen($urlResult) > 0){
+         
+         $inactive_props = Properties::where('sub_city_slug', $property_type_purpose)
+         ->orWhere('town_slug', $property_type_purpose)
+         ->orWhere('area_slug', $property_type_purpose)->get();
+         
+         $request = new Request();
+         $request->merge([
+            'property_purpose' => $property_purpose,
+            'city' => $city_keyword->id,
+         ]);
+
+
+         $nearbyProperties = $this->propertyrepo->getNearbyProperties($request);
+         if(count($nearbyProperties) == 0){
+            $nearbyProperties = $this->propertyrepo->getNearbyPropertiesWithoutType($request);
+         }
+         $properties = Properties::where('id', -1)->get();
+
+      }else{
+         $properties = Properties::where('status', 1)
          ->where('property_purpose', ucfirst($property_purpose))
          ->where('property_type', $type->id)
          ->where('city', $city_keyword->id);
       
-      if (empty($properties->count())) {
-         return redirect()->route('home');
+         if (empty($properties->count())) {
+            return redirect()->route('home');
+         }
+         $propertiesFlag = 'set flag';
+         $properties = $this->propertyrepo->sortyBy($properties, request());
+         $properties = $properties->paginate(getcong('pagination_limit'));
+         
       }
 
-      if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-         if (request()->sort_by == "newest") {
-            $properties->orderBy('id', 'desc');
-         } else if (request()->sort_by == "featured") {
-            $properties->orderBy('featured_property', 'desc');
-         } else if (request()->sort_by == "low_price") {
-            $properties->orderBy('price', 'asc');
-         } else if (request()->sort_by == "high_price") {
-            $properties->orderBy('price', 'desc');
-         } else if (request()->sort_by == "beds_least") {
-            $properties->orderBy('bedrooms', 'asc');
-         } else if (request()->sort_by == "beds_most") {
-            $properties->orderBy('bedrooms', 'desc');
-         }
-      } else {
-         $properties->orderBy('id', 'desc');
-      }
       $properties = $properties->paginate(getcong('pagination_limit'));
 
        //Redirect Extra Pagination Pages of City
        if (request()->get('page') > 1 && $properties->isEmpty()) {
          return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
            }
+
 
       $propertyTypes =  DB::table('property_types')
          ->join('properties', "property_types.id", "properties.property_type")
@@ -1461,11 +1289,13 @@ class PropertiesController extends Controller
          ->first();
 
       $page_info =  $type->plural_name . ' for ' . ucfirst($property_purpose) . ' in ' . $city_keyword->name;
-
-      if (!isset($landing_page_content)) {
+      if (!isset($landing_page_content) && isset($propertiesFlag)) {
          $data['page_des'] = "Find " . $properties->random()->property_name . " of bed " . $properties->random()->bedrooms . " and bath" . $properties->random()->bathrooms . Str::limit(strip_tags($properties->random()->description), 150) . $page_info;
       }
-
+      if($nearbyProperties != ''){
+      if(isset($nearbyProperties)){
+         $data['page_des'] = "Find " . $nearbyProperties->random()->property_name . " of bed " . $nearbyProperties->random()->bedrooms . " and bath" . $nearbyProperties->random()->bathrooms . Str::limit(strip_tags($nearbyProperties->random()->description), 150) . $page_info;
+      }}
       $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
          ->where('type_id', $type->id)
          ->where('city_id', $city_keyword->id)
@@ -1477,7 +1307,6 @@ class PropertiesController extends Controller
          $data['popularSearchesLinks'] = PopularSearches::where('property_purpose', ucfirst($property_purpose))
             ->inRandomOrder()->limit(6)->get();
       }
-
 
       $data['nearbyAreasLinks'] = DB::table('properties')
          ->join('property_cities', 'properties.city', 'property_cities.id')
@@ -1498,24 +1327,7 @@ class PropertiesController extends Controller
          $saveSearch = isset($record) ? 1 : 0;
       }
 
-      return view(
-         'front.pages.properties.city-property-type-for-purpose',
-         compact(
-            'properties',
-            'propertyTypes',
-            'type',
-            'city_keyword',
-            'subcities',
-            'property_purpose',
-            'propertyPurposes',
-            'buyOrRent',
-            'page_info',
-            'landing_page_content',
-            'request',
-            'data',
-            'saveSearch'
-         )
-      );
+      return view('front.pages.properties.city-property-type-for-purpose',compact('properties','propertyTypes','type','city_keyword','subcities','property_purpose','propertyPurposes','buyOrRent','page_info','landing_page_content','request','data','saveSearch','nearbyProperties'));
    }
 
 
@@ -1532,23 +1344,7 @@ class PropertiesController extends Controller
 
       $properties = Properties::where('status', 1);
 
-      if (isset(request()->sort_by) && !empty(request()->sort_by)) {
-         if (request()->sort_by == "newest") {
-            $properties->orderBy('id', 'desc');
-         } else if (request()->sort_by == "featured") {
-            $properties->orderBy('featured_property', 'desc');
-         } else if (request()->sort_by == "low_price") {
-            $properties->orderBy('price', 'asc');
-         } else if (request()->sort_by == "high_price") {
-            $properties->orderBy('price', 'desc');
-         } else if (request()->sort_by == "beds_least") {
-            $properties->orderBy('bedrooms', 'asc');
-         } else if (request()->sort_by == "beds_most") {
-            $properties->orderBy('bedrooms', 'desc');
-         }
-      } else {
-         $properties->orderBy('id', 'desc');
-      }
+      $properties = $this->propertyrepo->sortyBy($properties, request());
 
       $properties = $properties->where("featured_property", "1")->paginate(getcong('pagination_limit'));
       $propertyPurposes = PropertyPurpose::all();
@@ -1571,3 +1367,4 @@ class PropertiesController extends Controller
       );
    }
 }
+
