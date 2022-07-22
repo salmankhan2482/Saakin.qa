@@ -14,7 +14,6 @@
 
 @section('content')
 
-
     <div class="filter-wrap">
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
@@ -1528,7 +1527,6 @@
                 <div class="alert alert-info" role="alert">
                     Record Not Found!
                 </div>
-
             @endif
 
         </div>

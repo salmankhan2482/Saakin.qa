@@ -188,11 +188,69 @@ class PropertiesController extends Controller
       if (!$property) {
          abort('404');
       }
-      if ($property->status == 0)
+
+      if ($property->status == 0 || $property->id==null)
       {
-         return redirect('home');
+         if($property_purpose == 'sale')
+         {
+            $p_purpose = 'buy';
+         }
+         elseif($property_purpose == 'rent')
+         {
+            $p_purpose = 'rent';
+         }
+      $single_property = Properties::where('id',$id)->first();
+      
+      $property_type = $single_property->propertiesTypes->plural;
+      
+
+      //Area, Town, Subcity, City
+      if(!empty($single_property->city) && !empty($single_property->subcity) && !empty($single_property->town) && !empty($single_property->area))
+      {
+         // dd("ok");
+         $city_slug = $single_property->propertyCity->slug;
+         $subcity_slug = $single_property->propertySubCity->slug;
+         $address_slug = $city_slug;
+         $single_property_type_purpose = $property_type.'-for-'.$property_purpose;
+         return redirect()->route('cpt-purpose',[ $p_purpose, $address_slug, $single_property_type_purpose ], 301);
       }
-    
+
+      //Town, Subcity, City
+      elseif(!empty($single_property->town) && empty($single_property->area))
+      {
+         // dd("Null Area"); //working
+         $city_slug = $single_property->propertyCity->slug;
+         $subcity_slug = $single_property->propertySubCity->slug;
+         $town_slug = $single_property->propertyTown->slug;
+         $address_slug = $city_slug;
+         $single_property_type_purpose = $property_type.'-for-'.$property_purpose;
+         return redirect()->route('cpt-purpose',[ $p_purpose, $address_slug, $single_property_type_purpose ], 301);
+      }
+
+      //Subcity, City
+      elseif(empty($single_property->town) && empty($single_property->area))
+      {
+         // dd("Null Town");
+         $city_slug = $single_property->propertyCity->slug;
+         $subcity_slug = $single_property->propertySubCity->slug;
+         $address_slug = $city_slug;
+         $single_property_type_purpose = $property_type.'-for-'.$property_purpose;
+
+         return redirect()->route('cpt-purpose',[ $p_purpose, $address_slug, $single_property_type_purpose ], 301);
+      }
+
+      //City
+      elseif(empty($single_property->subcity) && empty($single_property->town) && empty($single_property->area))
+      {
+         dd("Null Subcity");
+         $city_slug = $single_property->propertyCity->slug;
+         $address_slug = $city_slug;
+         $single_property_type_purpose = $property_type.'-for-'.$property_purpose;
+         return redirect()->route('cpt-purpose',[ $p_purpose, $address_slug, $single_property_type_purpose ], 301);
+      }
+         
+      }
+     
 
       $visitor = request()->ip();
       $traffic = PageVisits::where('ip_address', $visitor)->where('property_id', $id)
@@ -295,7 +353,7 @@ class PropertiesController extends Controller
       }
 
       $enquire->type = 'Property Inquiry';
-      $enquire->status = 2;
+      $enquire->enquire_id = 2;
       $enquire->name = $request->user_name;
       $enquire->email = $request->user_email;
       $enquire->phone = $request->telephone;
@@ -853,9 +911,9 @@ class PropertiesController extends Controller
               } 
 
          if ($properties->total() == 0) {
-            return redirect()->route('home', 301);
+            return redirect()->route('/', 301);
          }
-
+        
          $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
 
          $propertyTypes =  DB::table('property_types')
@@ -955,11 +1013,11 @@ class PropertiesController extends Controller
          if (request()->get('page') > 1 && $properties->isEmpty()) {
             return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
               }  
-              //If Properties are not available
 
-         if (!isset($properties[0])) {
-            return redirect()->route('home', 301);
-         }
+              //If Properties are not available
+         // if (!isset($properties[0])) {
+         //    return redirect()->route('home');
+         // }
          $subcity_keyword = PropertySubCities::find($properties[0]->subcity);
          $town_keyword = PropertyTowns::find($properties[0]->town);
 
@@ -1009,13 +1067,26 @@ class PropertiesController extends Controller
 
          $data['nearbyAreasLinks'] = DB::table('property_towns')
             ->leftJoin('properties', 'property_towns.id', 'properties.town')
-            ->select('property_towns.name', 'property_towns.id')
+            ->select('property_towns.name', 'property_towns.id', 'property_towns.property_cities_id', 'property_towns.property_sub_cities_id',)
             ->where('property_towns.property_sub_cities_id', $subcity_keyword->id)
             ->where('property_towns.id', '!=', $town_keyword->id)
             ->where("properties.status", 1)
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('properties.property_type', $type->id)
             ->groupBy("property_towns.name")->limit(6)->get();
+            // dd($data['nearbyAreasLinks']);
+
+
+            // $data['nearbyAreasLinks'] = DB::table('property_areas')
+            // ->leftJoin('properties', 'property_areas.id', 'properties.area')
+            // ->select('property_areas.name', 'property_areas.id', 'property_areas.property_cities_id', 'property_areas.property_sub_cities_id', 'property_areas.property_towns_id')
+            // ->where('property_areas.property_sub_cities_id', $subcity_keyword->id)
+            // ->where('property_areas.property_towns_id', $town_keyword->id)
+            // ->where('property_areas.id', '!=', $area_keyword->id)
+            // ->where("properties.status", 1)
+            // ->where('property_purpose', ucfirst($property_purpose))
+            // ->where('properties.property_type', $type->id)
+            // ->groupBy("property_areas.name")->limit(6)->get();
 
          $purp = ($buyOrRent == 'buy' ? 2 : 1);
          $landing_page_content = LandingPage::where('property_purposes_id', $purp)
@@ -1101,6 +1172,8 @@ class PropertiesController extends Controller
             ->where('property_purpose', ucfirst($property_purpose))
             ->where('properties.property_type', $type->id)
             ->groupBy("property_areas.name")->limit(6)->get();
+            // dd($data['nearbyAreasLinks']);
+         
 
 
          $purp = ($buyOrRent == 'buy' ? 2 : 1);
@@ -1293,5 +1366,5 @@ class PropertiesController extends Controller
          compact('properties', 'request', 'propertyTypes', 'city', 'heading_info', 'propertyPurposes', 'page_info', 'saveSearch')
       );
    }
-
 }
+
