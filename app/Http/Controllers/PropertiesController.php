@@ -914,9 +914,10 @@ class PropertiesController extends Controller
          $properties = $this->propertyrepo->sortyBy($properties, request());
          $properties = $properties->paginate(getcong('pagination_limit'));
 
-          if (!isset($properties[0])) {
-            return redirect()->route('home', 301);
-
+         if (!isset($properties[0])) {
+         return redirect()->route('home', 301);
+         }
+         
          //Redirect Extra Pagination Pages of Sub-City
          if (request()->get('page') > 1 && $properties->isEmpty()) {
             return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
@@ -1315,7 +1316,6 @@ class PropertiesController extends Controller
 
       return view('front.pages.properties.city-property-type-for-purpose',compact('properties','propertyTypes','type','city_keyword','subcities','property_purpose','propertyPurposes','buyOrRent','page_info','landing_page_content','request','data','saveSearch','nearbyProperties'));
    }
-
 
    public function featureProperties()
    {
