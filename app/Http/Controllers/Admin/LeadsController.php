@@ -58,9 +58,9 @@ class LeadsController extends MainAdminController
    {
       $request->validate([
          'agency_id' => 'required',
-         'reference_id' => 'required',
+         // 'reference_id' => 'required',
          'property_title' => 'required',
-         'property_id' => 'required',
+         // 'property_id' => 'required',
          'property_purpose' => 'required',
          'property_type' => 'required',
          'price' => 'required',
@@ -70,7 +70,7 @@ class LeadsController extends MainAdminController
          'phone' => 'required',
          'source' => 'required',
          'subject' => 'required',
-         'forward_agents' => 'required',
+         // 'forward_agents' => 'required',
          'movein_date' => 'required',
          'message' => 'required',
       ]);
@@ -102,14 +102,6 @@ class LeadsController extends MainAdminController
       $property_lead->movein_date = $inputs['movein_date'];
       $property_lead->created_by = Auth::user()->id;
       $property_lead->save();
-
-      foreach ($request->forward_agents as $key => $agent) {
-         $forwardAgent = new LeadForwardAgent();
-         $forwardAgent->agency_id = $agent;
-         $forwardAgent->type = 'Property Inquiry';
-         $forwardAgent->lead_id = $property_lead->id;
-         $forwardAgent->save();
-      }
 
       Session::flash('flash_message', trans('words.added'));
       return \Redirect::back();
@@ -163,16 +155,16 @@ class LeadsController extends MainAdminController
       $leads = Lead::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })
-      ->where(['type' => 'Property Inquiry'])->orderBy('id', 'desc')
-      ->whereNotNull('property_id')->paginate(10);
-      
+      ->where(['type' => 'Property Inquiry'])->orderBy('id', 'desc')->paginate(10);
        
       $forwardedLeads = LeadForwardAgent::when(Auth::User()->usertype == "Agency", function ($query) {
          $query->where('agency_id', Auth::User()->agency_id);
       })->where('type', 'Property Inquiry')->orderBy('id', 'desc')->paginate(10);
-
+      
       $action = 'saakin_index';
-      return view('admin-dashboard.leads.property_leads.property_leads', compact('leads', 'action','forwardedLeads'));
+      $data['agenices'] = Agency::all();
+
+      return view('admin-dashboard.leads.property_leads.property_leads', compact('leads', 'action','forwardedLeads', 'data'));
    }
 
    public function agency_inquiries()
@@ -223,36 +215,29 @@ class LeadsController extends MainAdminController
    {
       $lead = Lead::find($id);
       $similarProperties = Properties::where('status', 1)
-         ->where('property_purpose', $lead->property->property_purpose)
-         ->where('property_type', $lead->property->property_type)
-         ->where('bedrooms', $lead->property->bedrooms)
-         ->whereBetween('price', [$lead->property->price - 2000, $lead->property->price + 2000])
-         ->where('city', $lead->property->city)
-         ->where('subcity', $lead->property->subcity)
-         ->where('town', $lead->property->town)
-         ->where('area', $lead->property->area)
+         ->where('property_purpose', $lead->property_purpose)
+         ->where('property_type', $lead->property_type)
+         ->where('bedrooms', $lead->bedrooms)
+         ->whereBetween('price', [$lead->price - 2000, $lead->price + 2000])
+         ->where('city', $lead->city)
+         ->where('subcity', $lead->subcity)
+         ->where('town', $lead->town)
+         ->where('area', $lead->area)
          ->get();
 
       $nearBy  = Properties::where('status', 1)
-         ->where('property_purpose', $lead->property->property_purpose)
-         ->whereBetween('price', [$lead->property->price - 2000, $lead->property->price + 2000]);
+         ->where('property_purpose', $lead->property_purpose)
+         ->whereBetween('price', [$lead->price - 2000, $lead->price + 2000]);
 
-      if ($lead->property->area) {
-         $nearBy = $nearBy->where('town', $lead->property->town);
-      } elseif ($lead->property->town) {
-         $nearBy = $nearBy->where('subcity', $lead->property->subcity);
-      } elseif ($lead->property->subcity) {
-         $nearBy = $nearBy->where('city', $lead->property->city);
+      if ($lead->area) {
+         $nearBy = $nearBy->where('town', $lead->town);
+      } elseif ($lead->town) {
+         $nearBy = $nearBy->where('subcity', $lead->subcity);
+      } elseif ($lead->subcity) {
+         $nearBy = $nearBy->where('city', $lead->city);
       }
 
       $availableNearbyProperties = $nearBy->paginate();
-
-      if (request()->ajax()) {
-         $view = view('admin-dashboard.leads.property_leads.nearby-properties',
-         compact('availableNearbyProperties'))->render();
-         return response()->json(['html'=>$view]);
-      }
-
       $action = 'saakin_index';
 
       return view('admin-dashboard.leads.property_leads.view_property_lead',
@@ -269,31 +254,44 @@ class LeadsController extends MainAdminController
       $action = 'saakin_index';
       
       $similarProperties = Properties::where('status', 1)
-         ->where('property_purpose', $forwardLead->lead->property->property_purpose)
-         ->where('property_type', $forwardLead->lead->property->property_type)
-         ->where('bedrooms', $forwardLead->lead->property->bedrooms)
-         ->whereBetween('price', [$forwardLead->lead->property->price - 2000, $forwardLead->lead->property->price + 2000])
-         ->where('city', $forwardLead->lead->property->city)
-         ->where('subcity', $forwardLead->lead->property->subcity)
-         ->where('town', $forwardLead->lead->property->town)
-         ->where('area', $forwardLead->lead->property->area)
+         ->where('property_purpose', $forwardLead->lead->property_purpose)
+         ->where('property_type', $forwardLead->lead->property_type)
+         ->where('bedrooms', $forwardLead->lead->bedrooms)
+         ->whereBetween('price', [$forwardLead->lead->price - 2000, $forwardLead->lead->price + 2000])
+         ->where('city', $forwardLead->lead->city)
+         ->where('subcity', $forwardLead->lead->subcity)
+         ->where('town', $forwardLead->lead->town)
+         ->where('area', $forwardLead->lead->area)
          ->get();
 
       $nearBy  = Properties::where('status', 1)
-         ->where('property_purpose', $forwardLead->lead->property->property_purpose)
-         ->whereBetween('price', [$forwardLead->lead->property->price - 2000, $forwardLead->lead->property->price + 2000]);
+         ->where('property_purpose', $forwardLead->lead->property_purpose)
+         ->whereBetween('price', [$forwardLead->lead->price - 2000, $forwardLead->lead->price + 2000]);
 
-      if ($forwardLead->lead->property->area) {
-         $nearBy = $nearBy->where('town', $forwardLead->lead->property->town);
-      } elseif ($forwardLead->lead->property->town) {
-         $nearBy = $nearBy->where('subcity', $forwardLead->lead->property->subcity);
-      } elseif ($forwardLead->lead->property->subcity) {
-         $nearBy = $nearBy->where('city', $forwardLead->lead->property->city);
+      if ($forwardLead->lead->area) {
+         $nearBy = $nearBy->where('town', $forwardLead->lead->town);
+      } elseif ($forwardLead->lead->town) {
+         $nearBy = $nearBy->where('subcity', $forwardLead->lead->subcity);
+      } elseif ($forwardLead->lead->subcity) {
+         $nearBy = $nearBy->where('city', $forwardLead->lead->city);
       }
       $availableNearbyProperties = $nearBy->paginate();
-
       return view('admin-dashboard.leads.forward-lead.view_property_foward_lead',
       compact('forwardLead', 'action','availableNearbyProperties', 'similarProperties'));
+   }
+
+   
+   function forwardLeadtoAgents(Request $request)
+   {
+      foreach ($request->forward_agents as $key => $agent) {
+         $forwardAgent = new LeadForwardAgent();
+         $forwardAgent->agency_id = $agent;
+         $forwardAgent->type = 'Property Inquiry';
+         $forwardAgent->lead_id = $request->lead_id;
+         $forwardAgent->save();
+      }
+      Session::flash('flash_message', trans('words.added'));
+      return \Redirect::back();
    }
 
    public function commentForwardLead(Request $request, $id)

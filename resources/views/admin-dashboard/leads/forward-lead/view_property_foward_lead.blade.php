@@ -46,7 +46,7 @@
                               <td>{{ $forwardLead->lead->agency->name ?? '' }}</td>
                               
                               <th>Property ID</th>
-                              <td>{{ $forwardLead->lead->property->id ?? '' }}</td>
+                              <td>{{ $forwardLead->lead->id ?? '' }}</td>
                            
                            </tr>
                            <tr>
@@ -54,19 +54,19 @@
                               <td>{{ $forwardLead->lead->reference_id }}</td>
                            
                               <th>Property Purpose</th>
-                              <td>{{ $forwardLead->lead->property->property_purpose }}</td>
+                              <td>{{ $forwardLead->lead->property_purpose }}</td>
                            </tr>
                            <tr>
                               <th>Property Title</th>
                               <td>
-                                 <a href="{{ url(strtolower($forwardLead->lead->property->property_purpose) . '/' . $forwardLead->lead->property->property_slug . '/' . $forwardLead->lead->property->id) }}"
+                                 <a href="{{ url(strtolower($forwardLead->lead->property_purpose) . '/' . $forwardLead->lead->property_slug . '/' . $forwardLead->lead->id) }}"
                                     target="_blank" class="text-info">
-                                    {{ $forwardLead->lead->property->property_name }}
+                                    {{ $forwardLead->lead->property_name }}
                                  </a>
                               </td>
 
                               <th>Price</th>
-                              <td>{{ $forwardLead->lead->property->price }} QR</td>
+                              <td>{{ $forwardLead->lead->price }} QR</td>
                            
                            </tr>
                            <tr>
@@ -80,10 +80,7 @@
                            <tr>
                               <th>Address</th>
                               <td>
-                                 {{ $forwardLead->lead->property->propertyCity->name ?? ''}}, 
-                                 {{ $forwardLead->lead->property->propertySubCity->name ?? ''}},
-                                 {{ $forwardLead->lead->property->propertyTown->name ?? ''}}, 
-                                 {{ $forwardLead->lead->property->propertyArea->name ?? ''}}
+                                 {{ ($lead->PropertyArea->name ?? '').' '.($lead->PropertyTown->name ?? '').' '.($lead->PropertySubcity->name ?? '').' '.($lead->PropertyCity->name ?? '') }}
                               </td>
                               
                               <th>Land Area</th>
