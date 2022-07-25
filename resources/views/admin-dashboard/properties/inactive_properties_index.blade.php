@@ -84,7 +84,7 @@
                                     <th>Type</th>
                                     <th>Purpose</th>
                                     <th>Views</th>
-                                    <th>Created</th>
+                                    <th>Updated</th>
                                     <th>Health</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -104,8 +104,8 @@
                                         <td> {{ $property->property_purpose }} </td>
                                         <td> {{ App\PropertyCounter::where('property_id', $property->id)->value('counter') ?? 0 }} </td>
                                         <td>
-                                             @if ($property->created_at !== null)
-                                                {{ date('d-m-Y', strtotime($property->created_at)) }}
+                                             @if ($property->updated_at !== null)
+                                                {{ date('d-m-Y', strtotime($property->updated_at)) }}
                                              @endif
                                         </td>
                                         <td>90%</td>

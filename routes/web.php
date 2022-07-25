@@ -68,6 +68,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
     Route::get('properties/status/{id}', 'PropertiesController@status')->name('properties.status');
 	Route::get('properties/featuredproperty/{id}', 'PropertiesController@featuredproperty');
 	Route::get('properties_featured', 'FeaturedPropertiesController@propertieslist')->name('featuredproperties.index');
+	
     Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties')->name('featuredproperties.pending');
 	Route::get('properties/export', 'PropertiesController@property_export');
 	Route::post('properties/plan_update', 'PropertiesController@plan_update')->name('changePlan.update');
@@ -435,7 +436,7 @@ Route::post('/getSubcity', 'AjaxController@getSubcity');
 Route::post('/getTown', 'AjaxController@getTown');
 Route::post('/getArea', 'AjaxController@getArea');
 
-
+// Route::group(['prefix' => 'ajax'], function(){});
 //ajax route to click count on call and whatsapp and email button 
 Route::get('click_count', 'AjaxController@clickCount')->name('click_count');
     

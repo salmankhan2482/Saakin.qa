@@ -10,6 +10,7 @@ class MyRobotsMiddleware extends RobotsMiddleware
      */
     protected function shouldIndex(Request $request)
     {
-        return 'all';
+        // return 'all';
+        return $request->segment(1) !== 'admin';
     }
 }

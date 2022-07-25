@@ -2,7 +2,7 @@
 
 
 
-<list  last_update="2022-07-12 18:28:52" listing_count="277">
+{{-- <list  last_update="2022-07-12 18:28:52" listing_count="277">
     @foreach($rentPropertyTypes as $p => $propertyType)
     <property last_update="2022-07-03 23:04:54">
         <reference_number>bhomesqa-3312987</reference_number>
@@ -68,4 +68,4 @@
         <   >51.502399,25.366592</>
     </property>
     @endforeach 
-</list>  
+</list>   --}}

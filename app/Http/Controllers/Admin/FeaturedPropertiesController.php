@@ -39,7 +39,11 @@ class FeaturedPropertiesController extends MainAdminController
         ->when(request('type'), function($query){
             $query->where("property_type", request('type'));
         })
-        ->orderBy('id')->paginate(15);
+        ->when(request('keyword'), function ($query) {
+            return $query->orWhere('id', request('keyword'));
+         })
+        ->orderBy('id')->paginate(15)->withQueryString();
+        // $propertieslist->appends(['properties_featured' => request('keyword')]);
         $data['propertyTypes'] = Types::all();
         $action = 'saakin_index';
 
