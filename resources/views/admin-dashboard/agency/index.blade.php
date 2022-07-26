@@ -7,19 +7,29 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Search Agency</h4>
+                    <h4 class="card-title">Agencies</h4>
+                    <a href="{{ route('agencies.create') }}">
+                        <button type="button" class="btn btn-rounded btn-info"><span
+                            class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
+                        </span>Add</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
                         <form action="{{ route('agencies.index') }}" method="GET">
                             <div class="row">
-                                <div class="col-sm-4 offset-sm-2">
+                                <div class="col-sm-6 offset-sm-2">
                                     <input type="text" class="form-control" name="keyword" placeholder="Search">
                                 </div>
-                                <div class="col-sm-1 mt-2">
-                                    <button type="submit" class="btn btn-dark btn-sm">
-                                        {{ trans('words.search') }}
+                                <div class="col-sm-1 mt-1">
+                                    <button type="submit" class="btn btn-dark btn-md">
+                                        {{ trans('words.search') }} 
                                     </button>
+                                </div>
+                                <div class="col-sm-1 mt-1">
+                                    <a href="{{ route('agencies.index') }}" class="btn btn-info btn-md pull-left">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -29,23 +39,20 @@
         </div>
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                {{-- <div class="card-header">
                     <h4 class="card-title">Agencies</h4>
-                    <a href="{{ route('agencies.create') }}">
-                        <button type="button" class="btn btn-rounded btn-info"><span
-                            class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
-                        </span>Add</button>
-                    </a>
-                </div>
+                    
+                </div> --}}
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example3" class="display min-w850">
+                        <table class="table table-hover table-responsive-sm">
                             <thead>
                                 <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
                                     <th>Name</th>
                                     <th>Phone</th>
                                     <th>Email</th>
-                                    <th>Image</th>
                                     <th>Created</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -54,13 +61,14 @@
                             <tbody>
                                 @foreach ($data['agencies'] as $i => $agency)
                                     <tr>
+                                        <td>{{ $agency->id }}</td>
+                                        <td>
+                                            <img src="{{ asset('upload/agencies/' . $agency->image) }}"
+                                                alt="{{ $agency->name.'- agency image' }}" width="50" />
+                                        </td>
                                         <td>{{ $agency->name }}</td>
                                         <td>{{ $agency->phone }}</td>
                                         <td>{{ $agency->email }}</td>
-                                        <td>
-                                            <img src="{{ asset('upload/agencies/' . $agency->image) }}"
-                                                alt="{{ $agency->name.'- agency image' }}" width="60" />
-                                        </td>
                                         <td>{{ date('d-m-Y', strtotime($agency->created_at)) ??''}} </td>
                                         <td class="text-center">
                                             @if ($agency->status == 1)
