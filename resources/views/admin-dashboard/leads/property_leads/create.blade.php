@@ -72,6 +72,9 @@
                                        <label>Property Purpose</label>
                                        <select class="form-control" name="property_purpose" id="property_purpose" required>
                                           <option value="">{{ trans('words.property_purpose') }}</option>
+                                          @foreach ($data['purposes'] as $purpose)
+                                             <option value="{{ $purpose->name }}">{{ $purpose->name }}</option>
+                                          @endforeach
                                        </select>
                                  </div>
                                  <div class="form-group col-md-6">
@@ -100,6 +103,11 @@
                                        <label>Property Size</label>
                                        <input type="number" name="land_area" class="form-control" id="land_area" min="0"
                                           placeholder="{{ trans('words.land_area') }}">
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <label>Move in Date </label>
+                                    <input type="date" id="movein_date" name="movein_date" class="form-control"
+                                       placeholder="Move in Date">
                                  </div>
                                  <div class="form-group col-md-6">
                                        <label>City</label>
@@ -162,22 +170,6 @@
                                  <div class="form-group col-md-6">
                                        <label>Subject</label>
                                        <input type="text" name="subject" class="form-control" id="subject" placeholder="PROPERTY INVESTMENT">
-                                 </div>
-                              </div>
-                              <div class="form-row">
-                                 <div class="form-group col-md-6">
-                                    <label>Forward Agents</label>
-                                    <select name="forward_agents[]" class="form-control js-example-basic-multiple" multiple data-live-search="true">
-                                       <option value="">Select Agency</option>
-                                       @foreach ($data['agenices'] as $agency)
-                                          <option value="{{ $agency->id }}">{{ $agency->name }}</option>
-                                       @endforeach
-                                    </select>
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                    <label>Move in Date </label>
-                                    <input type="date" id="movein_date" name="movein_date" class="form-control"
-                                       placeholder="Move in Date">
                                  </div>
                               </div>
                               <div class="form-row">

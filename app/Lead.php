@@ -18,6 +18,11 @@ class Lead extends Eloquent
    {
       return $this->belongsTo(Properties::class, 'property_id');
    }
+  
+   public function propertyType()
+   {
+      return $this->belongsTo(Types::class, 'property_type');
+   }
 
    public function agency()
    {
@@ -28,9 +33,30 @@ class Lead extends Eloquent
    {
       return $this->hasMany(LeadForwardAgent::class, 'lead_id');
    }
+
+   public function PropertyCity()
+   {
+      return $this->belongsTo(PropertyCities::class, 'city');
+   }
+   
+   public function PropertySubcity()
+   {
+      return $this->belongsTo(PropertySubCities::class, 'subcity');
+   }
+   
+   public function PropertyTown()
+   {
+      return $this->belongsTo(PropertyTowns::class, 'town') ?? '';
+   }
+   
+   public function PropertyArea()
+   {
+      return $this->belongsTo(PropertyAreas::class, 'area') ?? '';
+   }
+
    public function createdBy()
    {
-   return $this->belongsTo(User::class, 'created_by');
+      return $this->belongsTo(User::class, 'created_by');
    }
 
 }

@@ -36,23 +36,27 @@
                               <td>{{ $lead->reference_id }}</td>
                            
                               <th>Property Purpose</th>
-                              <td>{{ $lead->property->property_purpose }}</td>
+                              <td>{{ $lead->property_purpose == 1 ? 'Rent' : 'Sale'}}</td>
                            </tr>
                            <tr>
                               <th>Property Title</th>
                               <td>
+                                 @if (isset($lead->property))
                                  <a href="{{ url(strtolower($lead->property->property_purpose).'/'.$lead->property->property_slug.'/'.$lead->property->id) }}" target="_blank" class="text-info">
-                                    {{ $lead->property->property_name }}
+                                    {{ $lead->property_title }}
                                  </a>
+                                 @else
+                                 {{ $lead->property_title }}
+                                 @endif
                               </td>
 
                               <th>Price</th>
-                              <td>{{ $lead->property->price }} QR</td>
+                              <td>{{ $lead->price }} QR</td>
                            
                            </tr>
                            <tr>
                               <th>Source</th>
-                              <td>{{ $lead->source }}</td>
+                              <td>{{ $lead->source ?? 'Added From List'}}</td>
                               
                               <th>Movin Date</th>
                               <td>{{ $lead->movein_date ?? '' }}</td>
@@ -61,10 +65,7 @@
                            <tr>
                               <th>Address</th>
                               <td>
-                                 {{ $lead->property->propertyCity->name ?? ''}}, 
-                                 {{ $lead->property->propertySubCity->name ?? ''}},
-                                 {{ $lead->property->propertyTown->name ?? ''}}, 
-                                 {{ $lead->property->propertyArea->name ?? ''}}
+                                 {{ ($lead->PropertyArea->name ?? '').' '.($lead->PropertyTown->name ?? '').' '.($lead->PropertySubcity->name ?? '').' '.($lead->PropertyCity->name ?? '') }}
                               </td>
                               
                               <th>Land Area</th>
