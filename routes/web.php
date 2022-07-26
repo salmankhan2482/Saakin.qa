@@ -125,8 +125,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('inquiries', 'LeadsController@inquirieslist')->name('inquiries');
    Route::get('restore/leads', 'LeadsController@restoreLeads')->name('restoreLeads');
    Route::get('leads/property_inquiries', 'LeadsController@property_inquiries')->name('property_inquiries');
-   Route::get('inquiry/create', 'LeadsController@create_inquiry')->name('create_inquiry');
-   Route::post('inquiry/create', 'LeadsController@store_property_inquiry')->name('store_proprty_inquiry');
+   Route::get('lead/create', 'LeadsController@create_lead')->name('create_lead');
+   Route::post('lead/create', 'LeadsController@store_property_inquiry')->name('store_lead');
    Route::get('property_inquiry/edit/{id}', 'LeadsController@edit_property_inquiry');
    Route::post('property_inquiry/update/{id}', 'LeadsController@_property_inquiry');
 
@@ -147,6 +147,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
    Route::get('view_contact_inquiry/{id}', 'LeadsController@view_contact_inquiry')->name('view_contact_inquiry');   
 
    Route::get('inquiries/delete/{id}', 'LeadsController@delete')->name('deleteLead');
+   Route::get('lead/edit/{id}', 'LeadsController@editLead')->name('adminLead.edit');
+   Route::put('lead/update', 'LeadsController@updateLead')->name('adminLead.update');
 	Route::get('notifications', 'LeadsController@notifications')->name('notifications');   
 	Route::get('MarkAllAsRead', 'LeadsController@markAllAsRead')->name('markAllAsRead');   
    Route::get('view_notification/{id}', 'LeadsController@view_notification')->name('view_notification');

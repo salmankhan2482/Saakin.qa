@@ -2,14 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Lead;
+use App\User;
 use App\Types;
 use App\Agency;
-use App\Lead;
-use App\LeadForwardAgent;
 use App\Properties;
 use App\PropertyCities;
 use App\PropertyAmenity;
 use App\PropertyPurpose;
+use App\LeadForwardAgent;
+use App\PropertyAreas;
+use App\PropertySubCities;
+use App\PropertyTowns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -39,7 +43,7 @@ class LeadsController extends MainAdminController
       return view('admin-dashboard.leads.index', compact('leads', 'action'));
    }
 
-   public function create_inquiry(Request $request)
+   public function create_lead(Request $request)
    {
       if (Auth::User()->usertype != "Admin") {
          Session::flash('flash_message', trans('words.access_denied'));
@@ -58,9 +62,7 @@ class LeadsController extends MainAdminController
    {
       $request->validate([
          'agency_id' => 'required',
-         // 'reference_id' => 'required',
          'property_title' => 'required',
-         // 'property_id' => 'required',
          'property_purpose' => 'required',
          'property_type' => 'required',
          'price' => 'required',
@@ -70,7 +72,6 @@ class LeadsController extends MainAdminController
          'phone' => 'required',
          'source' => 'required',
          'subject' => 'required',
-         // 'forward_agents' => 'required',
          'movein_date' => 'required',
          'message' => 'required',
       ]);
@@ -201,6 +202,71 @@ class LeadsController extends MainAdminController
       return view('admin-dashboard.leads.contact_leads.contact_leads', compact('inquirieslist', 'action'));
    }
 
+   public function updateLead(Request $request){
+      $request->validate([
+         'agency_id' => 'required',
+         'property_title' => 'required',
+         'property_purpose' => 'required',
+         'property_type' => 'required',
+         'price' => 'required',
+         'city' => 'required',
+         'name' => 'required',
+         'email' => 'required',
+         'phone' => 'required',
+         'source' => 'required',
+         'subject' => 'required',
+         'movein_date' => 'required',
+         'message' => 'required',
+      ]);
+      $inputs = $request->all();
+      $property_lead = Lead::find($request->lead_id);
+      $property_lead->agency_id = $inputs['agency_id'];
+      $property_lead->agent_id = $inputs['agent_id'];
+      $property_lead->type = 'Property Inquiry';
+      $property_lead->is_forwarded = 1;
+      $property_lead->name = $inputs['name'];
+      $property_lead->email = $inputs['email'];
+      $property_lead->phone = $inputs['phone'];
+      $property_lead->subject = $inputs['subject'];
+      $property_lead->message = $inputs['message'];
+      $property_lead->reference_id = $inputs['reference_id'];
+      $property_lead->property_id = $inputs['property_id'];
+      $property_lead->property_title = $inputs['property_title'];
+      $property_lead->property_purpose = $inputs['property_purpose'];
+      $property_lead->property_type = $inputs['property_type'];
+      $property_lead->timeframe = $inputs['time_frame'];
+      $property_lead->price = $inputs['price'];
+      $property_lead->land_area = $inputs['land_area'];
+      $property_lead->bedrooms = $inputs['bedrooms'];
+      $property_lead->city = $inputs['city'];
+      $property_lead->subcity = $inputs['subcity'];
+      $property_lead->town = $inputs['town'];
+      $property_lead->area = $inputs['area'];
+      $property_lead->source = $inputs['source'];
+      $property_lead->movein_date = $inputs['movein_date'];
+      $property_lead->created_by = Auth::user()->id;
+      $property_lead->save();
+
+      Session::flash('flash_message', 'Lead Updated');
+      return \Redirect::back();
+   }
+
+   public function editLead($id)
+   {
+      $lead = Lead::findOrFail($id);
+      $data['agenices'] = Agency::all();
+      $data['agents'] = User::where(['agency_id' => $lead->agency_id, 'usertype' => 'Agents'])->get();
+      $data['types'] = Types::orderBy('types')->get();
+      $data['purposes'] = PropertyPurpose::get();
+      $data['amenities'] = PropertyAmenity::orderBy("name", "asc")->get();
+      $data['cities'] = PropertyCities::all();
+      $data['subcities'] = PropertySubCities::where('property_cities_id', $lead->city)->get();
+      $data['towns'] = PropertyTowns::where('property_cities_id', $lead->city)->get();
+      $data['areas'] = PropertyAreas::where('property_cities_id', $lead->city)->get();
+      $action = 'saakin_index';
+      return view('admin-dashboard.leads.property_leads.edit', compact('data', 'action','lead'));
+   }
+   
    public function delete($id)
    {
       $lead = Lead::findOrFail($id);

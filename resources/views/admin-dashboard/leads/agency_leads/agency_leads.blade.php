@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Agency Inquiries</h4>
-                    <a href="{{ route('create_inquiry') }}">
+                    <a href="{{ route('create_lead') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>

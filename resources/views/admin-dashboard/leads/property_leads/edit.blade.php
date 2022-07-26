@@ -5,13 +5,6 @@
    .select2-selection--multiple{
       height: auto !important;
    }
-   label{
-      color: #6e6e6e !important;
-   }
-   select, textarea, input{
-      color: black !important;
-      font-weight: 500 !important;
-   }
 </style>
 @endsection
 @section('content')
@@ -39,7 +32,7 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Add Inquiry</h4>
+                        <h4 class="card-title">Edit Inquiry</h4>
                         <a href="{{ url()->previous() }}">
                             <button type="button" class="btn btn-rounded btn-info">
                               <i class="fa fa-arrow-left"></i>Back
@@ -48,153 +41,171 @@
                     </div>
                     <div class="card-body">
                         <div class="basic-form">
-                            {!! Form::open(['route' => 'store_lead', 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
-
+                            {!! Form::open(['route' => 'adminLead.update', 'method' => 'POST', 'class' => 'form-horizontal padding-15', 'name' => 'type_form', 'id' => 'type_form', 'role' => 'form', 'enctype' => 'multipart/form-data']) !!}
+                              {{ method_field('PUT') }}
                               <div class="form-row">
                                  <div class="form-group col-md-6">
-                                       <label>Agency Name</label>
-                                       <select name="agency_id" id="agency_select" class="form-control" onchange="callAgent(this);">
-                                          <option value="">Select Agency</option>
-                                          @foreach ($data['agenices'] as $agency)
-                                             <option value="{{ $agency->id }}" @if (old('agency_id') == $agency->id) selected @endif>
-                                                {{ $agency->name }}
-                                             </option>
-                                          @endforeach
-                                       </select>
+                                    <label>Agency Name</label>
+                                    <select name="agency_id" id="agency_select" class="form-control">
+                                       <option value="">Select Agency</option>
+                                       @foreach ($data['agenices'] as $agency)
+                                          <option value="{{ $agency->id }}" {{ $lead->agency_id == $agency->id ? 'selected' : '' }}>
+                                             {{ $agency->name }}
+                                          </option>
+                                       @endforeach
+                                    </select>
                                  </div>
                                  <div class="form-group col-md-6">
-                                       <label>Agent Name</label>
-                                       {{ old('agent_id') }}
-                                       <select name="agent_id" id="agents_select" class="form-control">
-                                          <option value="">Select Agent</option>
-                                       </select>
+                                    <label>Agent Name</label>
+                                    <select name="agent_id" id="agents_select" class="form-control">
+                                       @foreach ($data['agents'] as $agent)
+                                          <option value="{{ $agent->id }}" {{ $lead->agent_id == $agent->id ? 'selected' : '' }}>
+                                             {{ $agent->name }}
+                                          </option>
+                                       @endforeach
+                                       <option value="">Select Agent</option>
+                                    </select>
                                  </div>
                                  <div class="form-group col-md-6">
                                     <label>Reference ID</label>
-                                    <input type="text" id="reference_id" name="reference_id" class="form-control" placeholder="Enter Your Reference ID" value="{{ old('reference_id') }}">
+                                    <input type="text" id="reference_id" name="reference_id" class="form-control" placeholder="Enter Your Reference ID" value="{{ $lead->reference_id }}">
                                  </div>
                                  <div class="form-group col-md-6">
-                                       <label>Property Name</label>
-                                       <input class="typeahead form-control" id="property_name" type="text" name="property_title" value="{{ old('property_title') }}">
-                                       <input type="hidden" name="property_id" id="property_id" value="{{ old('property_id') }}">
+                                    <label>Property Name</label>
+                                    <input class="typeahead form-control" id="property_name" type="text" 
+                                       name="property_title" value="{{ $lead->property_title }}">
+                                    <input type="hidden" name="property_id" id="property_id" value="{{ $lead->property_id }}">
+                                    <input type="hidden" name="lead_id" id="lead_id" value="{{ $lead->id }}">
                                  </div>
                                  <div class="form-group col-md-6">
-                                       <label>Property Purpose</label>
-                                       <select class="form-control" name="property_purpose" id="property_purpose" required>
-                                          <option value="">{{ trans('words.property_purpose') }}</option>
-                                          @foreach ($data['purposes'] as $purpose)
-                                             <option value="{{ $purpose->name }}" 
-                                                @if (old('property_purpose') == $purpose->name) selected @endif>
-                                                {{ $purpose->name }}
+                                    <label>Property Purpose</label>
+                                    <select class="form-control" name="property_purpose" id="property_purpose" required>
+                                       <option value="">{{ trans('words.property_purpose') }}</option>
+                                       @foreach ($data['purposes'] as $purpose)
+                                          <option value="{{ $purpose->name }}" 
+                                             {{ $lead->property_purpose == $purpose->name ? 'selected' : '' }}> {{ $purpose->name }}
+                                          </option>
+                                       @endforeach
+                                    </select>
+                                 </div>
+                                 <div class="form-group col-md-6">
+                                    <label>Property Type</label>
+                                    <select class="form-control" id="property_type" name="property_type" required>
+                                       <option value="">{{ trans('words.property_type') }}</option>
+                                       @foreach ($data['types'] as $type)
+                                             <option value="{{ $type->id }}"
+                                                @if ($lead->property_type == $type->id) selected @endif>
+                                                {{ $type->types }}
                                              </option>
-                                          @endforeach
-                                       </select>
-                                 </div>
-                                 <div class="form-group col-md-6">
-                                       <label>Property Type</label>
-                                       <select class="form-control" id="property_type" name="property_type" required>
-                                          <option value="">{{ trans('words.property_type') }}</option>
-                                          @foreach ($data['types'] as $type)
-                                                <option value="{{ $type->id }}"
-                                                   @if (old('property_type') == $type->id) selected @endif>
-                                                   {{ $type->types }}
-                                                </option>
-                                          @endforeach
-                                       </select>
+                                       @endforeach
+                                    </select>
                                  </div>
                                  <div class="form-group col-md-3">
                                        <label>Bedrooms</label>
                                        <input type="number" name="bedrooms" class="form-control" id="bedrooms" min="0"
-                                          placeholder="{{ trans('words.bedroom') }}" value="{{ old('bedrooms') }}"> 
+                                          placeholder="{{ trans('words.bedroom') }}" value="{{ $lead->bedrooms }}">
                                  </div>
                                  <div class="form-group col-md-3">
                                        <label>Budget</label>
                                        <input type="number" name="price" class="form-control" id="price" min="0"
-                                          placeholder="{{ trans('words.price') }}" value="{{ old('price') }}" required>
+                                          placeholder="{{ trans('words.price') }}" value="{{ $lead->price }}" required>
                                  </div>
                                  <div class="form-group col-md-3">
                                        <label>Property Size</label>
                                        <input type="number" name="land_area" class="form-control" id="land_area" min="0"
-                                          placeholder="{{ trans('words.land_area') }}" value="{{ old('land_area') }}">
+                                          placeholder="{{ trans('words.land_area') }}" value="{{ $lead->land_area }}">
                                  </div>
                                  <div class="form-group col-md-3">
                                     <label>Move in Date </label>
                                     <input type="date" id="movein_date" name="movein_date" class="form-control"
-                                       placeholder="Move in Date" value="{{ old('movein_date') }}">
+                                       placeholder="Move in Date" value="{{ $lead->movein_date }}">
                                  </div>
                                  <div class="form-group col-md-6">
-                                       <label>City</label>
-                                       <select name="city" id="city" class="form-control" onchange="callSubCityTown(this);">
-                                          <option value="">Select City</option>
-                                          @foreach ($data['cities'] as $city)
-                                             <option value="{{ $city->id }}"
-                                                   {{ old('city') == $city->id ? 'selected' : '' }}>
-                                                   {{ $city->name }}
-                                             </option>
-                                          @endforeach
-                                       </select>
+                                    <label>City</label>
+                                    <select name="city" id="city" class="form-control" onchange="callSubCityTown(this);">
+                                       <option value="">Select City</option>
+                                       @foreach ($data['cities'] as $city)
+                                          <option value="{{ $city->id }}" {{ $lead->city == $city->id ? 'selected' : '' }}>
+                                                {{ $city->name }}
+                                          </option>
+                                       @endforeach
+                                    </select>
                                  </div>
                                  <div class="form-group col-md-6">
-                                       <label>Sub City</label>
-                                       <select name="subcity" id="subcity" class="form-control" onchange="callTown(this);">
-                                          <option value="">Select Sub City</option>
-                                       </select>
+                                    <label>Sub City</label>
+                                    <select name="subcity" id="subcity" class="form-control" onchange="callTown(this);">
+                                       @foreach ($data['subcities'] as $subcity)
+                                          <option value="{{ $subcity->id }}" {{ $lead->subcity == $subcity->id ? 'selected' : '' }}>
+                                                {{ $subcity->name }}
+                                          </option>
+                                       @endforeach
+                                       <option value="">Select Sub City</option>
+                                    </select>
                                  </div>
                                  <div class="form-group col-md-6">
-                                       <label>Town</label>
-                                       <select name="town" id="town" class="form-control" onchange="callArea(this);">
-                                          <option value="">Select Town</option>
-                                       </select>
+                                    <label>Town</label>
+                                    <select name="town" id="town" class="form-control" onchange="callArea(this);">
+                                       @foreach ($data['towns'] as $town)
+                                          <option value="{{ $town->id }}" {{ $lead->town == $town->id ? 'selected' : '' }}>
+                                                {{ $town->name }}
+                                          </option>
+                                       @endforeach
+                                       <option value="">Select Town</option>
+                                    </select>
                                  </div>
                                  <div class="form-group col-md-6">
-                                       <label>Area</label>
-                                       <select name="area" id="area" class="form-control">
-                                          <option value="">Select Area</option>
-                                       </select>
+                                    <label>Area</label>
+                                    <select name="area" id="area" class="form-control">
+                                       @foreach ($data['areas'] as $area)
+                                          <option value="{{ $area->id }}" {{ $lead->area == $area->id ? 'selected' : '' }}>
+                                                {{ $area->name }}
+                                          </option>
+                                       @endforeach
+                                       <option value="">Select Area</option>
+                                    </select>
                                  </div>
                               </div>
                               <div class="form-row">
                                  <div class="form-group col-md-6">
                                     <label>Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name of User" value="{{ old('name') }}">
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name of User" value="{{ $lead->name }}">
                                  </div>
                                  <div class="form-group col-md-6">
                                        <label>Email</label>
-                                       <input type="text" id="email" name="email" class="form-control" placeholder="Enter Your Email Address" value="{{ old('email') }}">
+                                       <input type="text" id="email" name="email" class="form-control" placeholder="Enter Your Email Address" value="{{ $lead->email }}">
                                  </div>
                                  <div class="form-group col-md-6">
                                        <label>Phone Number</label>
-                                       <input type="tel" id="phone" name="phone" class="form-control"
-                                          placeholder="974-00-1234" value="{{ old('phone') }}" required>
+                                       <input type="tel" id="phone" name="phone" class="form-control" placeholder="974-00-1234" 
+                                       value="{{ $lead->phone }}" required>
                                  </div>  
                                  <div class="form-group col-md-6">
                                        <label>Time Frame</label>
-                                       <input type="text" name="time_frame" class="form-control" id="p-time_frame"
-                                          placeholder="2 Weeks" value="{{ old('time_frame') }}">
+                                       <input type="text" name="time_frame" class="form-control" id="p-time_frame" value="{{ $lead->timeframe }}" placeholder="2 Weeks">
                                  </div>
                                  <div class="form-group col-md-6">
                                        <label>Source</label>
                                        <select name="source" id="source" class="form-control">
-                                          <option value="Social Media" @if (old('source') == 'Social Media') selected @endif>
+                                          <option value="Social Media" {{ $lead->source == "Social Media" ? 'selected' : '' }}>
                                              Social Media
                                           </option>
-                                          <option value="Friends" @if (old('source') == 'Friends') selected @endif>
+                                          <option value="Friends" {{ $lead->source == "Friends" ? 'selected' : '' }}>
                                              Friends
                                           </option>
-                                          <option value="Website" @if (old('source') == 'Website') selected @endif>
+                                          <option value="Website" {{ $lead->source == "Website" ? 'selected' : '' }}>
                                              Website
                                           </option>
                                        </select>
                                  </div>
                                  <div class="form-group col-md-6">
                                        <label>Subject</label>
-                                       <input type="text" name="subject" class="form-control" id="subject" placeholder="PROPERTY INVESTMENT" value="{{ old('subject') }}">
+                                       <input type="text" name="subject" class="form-control" id="subject" placeholder="PROPERTY INVESTMENT" value="{{ $lead->subject }}">
                                  </div>
                               </div>
                               <div class="form-row">
                                  <div class="form-group col-md-12">
                                        <label>Message</label>
-                                       <textarea type="text" rows="5" id="message" name="message" class="form-control" placeholder="Your Message">{{ old('message') }}</textarea>
+                                       <textarea type="text" rows="5" id="message" name="message" class="form-control" placeholder="Your Message">{{ $lead->message }}</textarea>
                                  </div>
                               </div>
                               
@@ -223,24 +234,13 @@
    <script>
       
       $(document).ready(function() {
-         $('.js-example-basic-multiple').select2({
-            placeholder: "Select Forward Agents"
-         });
+            $('.js-example-basic-multiple').select2({
+               placeholder: "Select Forward Agents"
+            });
       });
 
-      var OldValue = '{{ old('city') }}';
-      var OldAgencyValue = '{{ old('agency_id') }}';
-      if(OldValue !== '') {
-         $('#city').val(OldValue );
-         $("#city").change(); 
-      }
-      if(OldAgencyValue !== '') {
-         $('#agency_select').val(OldAgencyValue );
-         $("#agency_select").change(); 
-      }
-
-      function callAgent(data) {
-         var id = data.value;
+      $(document).on('change','#agency_select', function () {
+         var id = $(this).val();
          $.ajax({
             type: "GET",
             url: "{{ route('callAgents') }}",
@@ -262,8 +262,8 @@
                }
 
             }
-         }); 
-      }
+         });
+      });
 
       function callSubCityTown(data) {
          var id = data.value;

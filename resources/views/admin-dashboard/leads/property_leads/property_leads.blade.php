@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Inquiries</h4>
-                    <a href="{{ route('create_inquiry') }}">
+                    <a href="{{ route('create_lead') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                         <span class="btn-icon-left text-info">
                            <i class="fa fa-plus color-info"></i>
@@ -80,6 +80,11 @@
                                                 <i class="fa fa-plus"></i>
                                                 Forward to Agents
                                              </a>
+                                             
+                                             <a href="{{ route('adminLead.edit', $lead->id) }}" class="dropdown-item" >
+                                                <i class="fa fa-pencil"></i>
+                                                Edit Lead
+                                             </a>  
                                              
                                              <a href="{{ route('deleteLead', $lead->id) }}" class="dropdown-item"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
