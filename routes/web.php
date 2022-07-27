@@ -142,6 +142,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
    Route::get('comment_forward_inquiry/{id}', 'LeadsController@commentForwardLead')->name('commentForwardLead');
    Route::put('comment_forward_inquiry/{id}', 'LeadsController@commentForwardLead')->name('commentForwardLead');
    Route::post('forwardLeadtoAgents', 'LeadsController@forwardLeadtoAgents')->name('forwardLeadtoAgents');
+   Route::get('delete/ForwardLeadAgent/{id}', 'LeadsController@deleteForwardLeadAgent')
+   ->name('deleteForwardLeadAgent');
    Route::get('view_property_inquiry/{id}', 'LeadsController@view_property_inquiry');
    Route::get('view_agency_inquiry/{id}', 'LeadsController@view_agency_inquiry')->name('view_agency_inquiry');
    Route::get('view_contact_inquiry/{id}', 'LeadsController@view_contact_inquiry')->name('view_contact_inquiry');   
