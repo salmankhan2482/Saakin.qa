@@ -7,17 +7,18 @@ use App\User;
 use App\Types;
 use App\Agency;
 use App\Properties;
+use App\PropertyAreas;
+use App\PropertyTowns;
 use App\PropertyCities;
 use App\PropertyAmenity;
 use App\PropertyPurpose;
 use App\LeadForwardAgent;
-use App\PropertyAreas;
 use App\PropertySubCities;
-use App\PropertyTowns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class LeadsController extends MainAdminController
 {
@@ -305,9 +306,10 @@ class LeadsController extends MainAdminController
 
       $availableNearbyProperties = $nearBy->paginate();
       $action = 'saakin_index';
+      $data['agenices'] = Agency::all();
 
       return view('admin-dashboard.leads.property_leads.view_property_lead',
-         compact('similarProperties', 'availableNearbyProperties', 'action', 'lead')
+         compact('similarProperties', 'availableNearbyProperties', 'action', 'lead', 'data')
       );
    }
    
@@ -349,15 +351,22 @@ class LeadsController extends MainAdminController
    
    function forwardLeadtoAgents(Request $request)
    {
-      foreach ($request->forward_agents as $key => $agent) {
+      foreach ($request->forward_agents as $agency) {
          $forwardAgent = new LeadForwardAgent();
-         $forwardAgent->agency_id = $agent;
+         $forwardAgent->agency_id = $agency;
          $forwardAgent->type = 'Property Inquiry';
          $forwardAgent->lead_id = $request->lead_id;
          $forwardAgent->save();
       }
-      Session::flash('flash_message', trans('words.added'));
-      return \Redirect::back();
+      Session::flash('flash_message', 'Forward Agents Added.');
+      return Redirect::back();
+   }
+   
+   function deleteForwardLeadAgent(Request $request)
+   {
+      LeadForwardAgent::where('id', $request->id)->delete();
+      Session::flash('flash_message', 'Forward Agent Deleted.');
+      return redirect()->back();
    }
 
    public function commentForwardLead(Request $request, $id)

@@ -4,6 +4,25 @@
 {{-- Content --}}
 @section('content')
     <div class="container-fluid">
+      <div class="col-md-12">
+         @if (count($errors) > 0)
+            <div class="alert alert-danger">
+                  <ul>
+                     @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                     @endforeach
+                  </ul>
+            </div>
+         @endif
+         @if (Session::has('flash_message'))
+            <div class="alert alert-success">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  {{ Session::get('flash_message') }}
+            </div>
+         @endif
+      </div>
          <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -117,6 +136,10 @@
             <div class="card">
                 <div class="card-header">
                     Comments and view by
+                    <button class="text-right btn btn-info btn-xs forwardFunction" data-toggle="modal" data-target="#forwardAgentsModal" data-lead_id="{{ $lead->id }}">
+                        <i class="fa fa-plus"></i>
+                        Forward to Agents
+                    </button>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -126,6 +149,7 @@
                            <th>Status</th>
                            <th>Move In Date</th>
                            <th>Comment</th>
+                           <th>Delete</th>
                         </thead>
                         <tbody>
                            @foreach ($lead->forwardAgents as $key => $agent)
@@ -134,6 +158,11 @@
                               <td>{{ $agent->status == 1 ? 'Read' : 'Un Read' }}</td>
                               <td>{{ $agent->move_in_date }}</td>
                               <td class="col-md-8">{{ $agent->comment }}</td>
+                              <td>
+                                 <a href="{{ route('deleteForwardLeadAgent', $agent->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete ?')">
+                                    <i class="fa fa-trash"></i>
+                                 </a>
+                              </td>
                            </tr>
                            @endforeach
                         </tbody>
@@ -278,4 +307,57 @@
             </div>
          </div>
     </div>
+    <div class="modal fade" id="forwardAgentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Forward Lead to Agents</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="{{ route('forwardLeadtoAgents') }}" method="POST">
+               @csrf
+               <div class="form-row">
+                  <div class="form-group col-12">
+                     <input type="hidden" name="lead_id" id="lead_id_input" value="">
+                     <label>Forward Agents</label>
+                     <select name="forward_agents[]" class="form-control js-example-basic-multiple" multiple data-live-search="true">
+                        <option value="">Select Agency</option>
+                        @foreach ($data['agenices'] as $agency)
+                           <option value="{{ $agency->id }}">{{ $agency->name }}</option>
+                        @endforeach
+                     </select>
+                  </div>
+               </div>
+               <div class="form-row row">
+                  <div class="col-12">
+                     <button type="submit" class="btn btn-primary btn-xs pull-right">Save changes</button>
+                  </div>
+               </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+@endsection
+@section('scripts')
+   <script src="{{ URL::asset('admin/js/jquery.js') }}"></script>
+   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+   <script>
+      $(document).ready(function() {
+         $('.js-example-basic-multiple').select2({
+            placeholder: "Select Forward Agents"
+         });
+
+         $('.forwardFunction').on('click', function () {
+            var lead_id = $(this).data('lead_id');
+            $("#lead_id_input").val(lead_id);
+         });
+
+      });
+
+   </script>
 @endsection

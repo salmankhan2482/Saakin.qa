@@ -48,7 +48,7 @@
                             <tbody style="text-align: center">
                                 @foreach ($leads as $i => $lead)
                                     <tr>
-                                       <td>{{ $i+1 }}</td>
+                                       <td>{{ $lead->id }}</td>
                                        <td>{{ $lead->name }}</td>
                                        <td>{{ Str::limit($lead->phone, 10) }}</td>
                                        <td>{{ $lead->propertyType->types ?? ''}}</td>
@@ -73,12 +73,6 @@
                                              <a href="{{ url('admin/view_inquiry', $lead->id) }}" class="dropdown-item">
                                                 <i class="fa fa-eye"></i>
                                                 Lead's Detail
-                                             </a>
-                                             
-                                             <a href="#" data-toggle="modal" data-target="#forwardAgentsModal" 
-                                                class="dropdown-item forwardFunction" data-lead_id="{{ $lead->id }}">
-                                                <i class="fa fa-plus"></i>
-                                                Forward to Agents
                                              </a>
                                              
                                              <a href="{{ route('adminLead.edit', $lead->id) }}" class="dropdown-item" >
@@ -120,7 +114,7 @@
                         <table id="example3">
                             <thead>
                                 <tr>
-                                    <th>Prop ID</th>
+                                    <th>ID</th>
                                     <th>User Name</th>
                                     <th>User Phone</th>
                                     <th>Prop Type</th>
@@ -137,7 +131,7 @@
                             <tbody class="text-center">
                                 @foreach ($forwardedLeads as $i => $forwardedLead)
                                     <tr>
-                                        <td>{{ $i+1 }}</td>
+                                        <td>{{ $lead->id }}</td>
                                         <td>{{ $forwardedLead->lead->name }}</td>
                                         <td>{{ Str::limit($forwardedLead->lead->phone, 10) }}</td>
                                         <td>{{ $forwardedLead->lead->propertyType->types }}</td>
@@ -181,58 +175,5 @@
         </div>
        @endif
     </div>
-    <div class="modal fade" id="forwardAgentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Forward Lead to Agents</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form action="{{ route('forwardLeadtoAgents') }}" method="POST">
-               @csrf
-               <div class="form-row">
-                  <div class="form-group col-12">
-                     <input type="hidden" name="lead_id" id="lead_id_input" value="">
-                     <label>Forward Agents</label>
-                     <select name="forward_agents[]" class="form-control js-example-basic-multiple" multiple data-live-search="true">
-                        <option value="">Select Agency</option>
-                        @foreach ($data['agenices'] as $agency)
-                           <option value="{{ $agency->id }}">{{ $agency->name }}</option>
-                        @endforeach
-                     </select>
-                  </div>
-               </div>
-               <div class="form-row row">
-                  <div class="col-12">
-                     <button type="submit" class="btn btn-primary btn-xs pull-right">Save changes</button>
-                  </div>
-               </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-@endsection
-@section('scripts')
-   <script src="{{ URL::asset('admin/js/jquery.js') }}"></script>
-   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-   <script>
-      
-      $(document).ready(function() {
-         $('.js-example-basic-multiple').select2({
-            placeholder: "Select Forward Agents"
-         });
-
-         $('.forwardFunction').on('click', function () {
-            var lead_id = $(this).data('lead_id');
-            $("#lead_id_input").val(lead_id);
-         });
-
-      });
-
-   </script>
+   
 @endsection
