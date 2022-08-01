@@ -15,12 +15,14 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Inquiries</h4>
-                    <a href="{{ route('create_lead') }}">
-                        <button type="button" class="btn btn-rounded btn-info">
-                        <span class="btn-icon-left text-info">
-                           <i class="fa fa-plus color-info"></i>
-                        </span>Add</button>
-                    </a>
+                     @can('lead-create')
+                        <a href="{{ route('create_lead') }}">
+                           <button type="button" class="btn btn-rounded btn-info">
+                           <span class="btn-icon-left text-info">
+                              <i class="fa fa-plus color-info"></i>
+                           </span>Add</button>
+                        </a>
+                     @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -74,17 +76,21 @@
                                                 <i class="fa fa-eye"></i>
                                                 Lead's Detail
                                              </a>
-                                             
-                                             <a href="{{ route('adminLead.edit', $lead->id) }}" class="dropdown-item" >
-                                                <i class="fa fa-pencil"></i>
-                                                Edit Lead
-                                             </a>  
-                                             
-                                             <a href="{{ route('deleteLead', $lead->id) }}" class="dropdown-item"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                <i class="fa fa-trash"></i>
-                                                Delete Lead
-                                             </a>  
+                                             @can('lead-edit')
+                                                <a href="{{ route('adminLead.edit', $lead->id) }}" class="dropdown-item" >
+                                                   <i class="fa fa-pencil"></i>
+                                                   Edit Lead
+                                                </a>  
+                                             @endcan
+
+                                             @can('lead-delete')
+                                                <a href="{{ route('deleteLead', $lead->id) }}" class="dropdown-item"
+                                                   onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                   <i class="fa fa-trash"></i>
+                                                   Delete Lead
+                                                </a> 
+                                             @endcan
+
                                           </div>
                                        </td>
                                     </tr>

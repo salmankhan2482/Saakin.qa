@@ -8,6 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Property Types</h4>
+                    @can('properties-type-create')
                     <a href="{{ route('property-types.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
@@ -16,6 +17,7 @@
                             Add
                         </button>
                     </a>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -33,15 +35,18 @@
                                         <td>{{ $item->id }}</td>
                                         <td>{{ $item->types ?? 'Not Available' }}</td>
                                         <td>
-                                            <a href="{{ route('property-types.edit',$item->id) }}"
+                                          @can('properties-type-edit')
+                                             <a href="{{ route('property-types.edit',$item->id) }}"
                                                 class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="{{ route('property-types.destroy',$item->id) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
+                                             </a>
+                                          @endcan
+                                          @can('properties-type-delete')
+                                             <a href="{{ route('property-types.destroy',$item->id) }}" class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>
-                                            </a>
+                                             </a>
+                                          @endcan
                                         </td>
                                     </tr>
                                 @endforeach

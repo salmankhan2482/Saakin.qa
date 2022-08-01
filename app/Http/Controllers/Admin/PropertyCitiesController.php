@@ -10,129 +10,97 @@ use Illuminate\Support\Facades\Session;
 
 class PropertyCitiesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $cities = PropertyCities::paginate(10);
-        $action = 'saakin_index';
-        return view('admin-dashboard.adress-management.city.index', compact('cities','action'));
-    }
+   public function __construct()
+   {
+      $this->middleware('auth');
+      $this->middleware('permission:properties-city-list', ['only' => ['index']]);
+      $this->middleware('permission:properties-city-create', ['only' => ['create','store']]);
+      $this->middleware('permission:properties-city-edit', ['only' => ['edit','update']]);
+      $this->middleware('permission:properties-city-delete', ['only' => ['destroy']]);
+   }
+   
+   public function index()
+   {
+      $cities = PropertyCities::paginate(10);
+      $action = 'saakin_index';
+      return view('admin-dashboard.adress-management.city.index', compact('cities','action'));
+   }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $action = 'saakin_create';
-        return view('admin-dashboard.adress-management.city.create',compact('action'));
-    }
+   public function create()
+   {
+      $action = 'saakin_create';
+      return view('admin-dashboard.adress-management.city.create',compact('action'));
+   }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name' => 'required'
-        ]);
-        
-        PropertyCities::create([
-            'name' => request('name'),
-            'slug' => Str::slug(request('name')),
-        ]);
+   public function store(Request $request)
+   {
+      $request->validate([
+         'name' => 'required'
+      ]);
+      
+      PropertyCities::create([
+         'name' => request('name'),
+         'slug' => Str::slug(request('name')),
+      ]);
 
 
-        Session::flash('message', 'City has been added.'); 
-        return redirect()->back();
-    }
+      Session::flash('message', 'City has been added.'); 
+      return redirect()->back();
+   }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\PropertyCities  $propertyCities
-     * @return \Illuminate\Http\Response
-     */
-    public function show(PropertyCities $propertyCities)
-    {
-        dd($propertyCities);
-    }
+   public function show(PropertyCities $propertyCities)
+   {
+      dd($propertyCities);
+   }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\PropertyCities  $propertyCities
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $propertyCity = PropertyCities::find($id);
-        $action = 'saakin_edit';
-        return view('admin-dashboard.adress-management.city.edit', compact('propertyCity','action'));
-    }
+   public function edit($id)
+   {
+      $propertyCity = PropertyCities::find($id);
+      $action = 'saakin_edit';
+      return view('admin-dashboard.adress-management.city.edit', compact('propertyCity','action'));
+   }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PropertyCities  $propertyCities
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {   
-        $request->validate([
-            'name' => 'required'
-        ]);
+   public function update(Request $request, $id)
+   {   
+      $request->validate([
+         'name' => 'required'
+      ]);
 
-        PropertyCities::where('id', $id)->update([
-            'name' => request('name'),
-            'slug' => Str::slug(request('name')),
-        ]);
-        
-        Session::flash('message', 'City has been updated.'); 
-        return redirect()->back();
-    }
+      PropertyCities::where('id', $id)->update([
+         'name' => request('name'),
+         'slug' => Str::slug(request('name')),
+      ]);
+      
+      Session::flash('message', 'City has been updated.'); 
+      return redirect()->back();
+   }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\PropertyCities  $propertyCities
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $propertyCity = PropertyCities::find($id);
+   public function destroy($id)
+   {
+      $propertyCity = PropertyCities::find($id);
 
-        foreach($propertyCity->subcities as $subcity){
-            foreach($subcity->towns as $town){
-                
-                foreach($town->areas as $area){
-                    $area->delete();
-                    // deleting the areas of the town of subcity
-                }
+      foreach($propertyCity->subcities as $subcity){
+         foreach($subcity->towns as $town){
+               
+               foreach($town->areas as $area){
+                  $area->delete();
+                  // deleting the areas of the town of subcity
+               }
 
-                $town->delete();
-                // deleting the towns of the subcity
+               $town->delete();
+               // deleting the towns of the subcity
 
-            }
+         }
 
-            $subcity->delete();
-            // at the end deleting that subcity
+         $subcity->delete();
+         // at the end deleting that subcity
 
-        }
+      }
 
-        // finally deleting the city to which subcity->town->areas are connected
-        $propertyCity->delete();
-    
-        Session::flash('message', 'City has been deleted.'); 
-        return redirect()->back();
-    }
+      // finally deleting the city to which subcity->town->areas are connected
+      $propertyCity->delete();
+   
+      Session::flash('message', 'City has been deleted.'); 
+      return redirect()->back();
+   }
 }

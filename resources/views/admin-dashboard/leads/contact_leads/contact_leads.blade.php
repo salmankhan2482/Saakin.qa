@@ -36,11 +36,13 @@
                                                 class="btn btn-success rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('deleteLead', $inquiries->id) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                          @can('lead-delete')
+                                             <a href="{{ route('deleteLead', $inquiries->id) }}"
+                                                   class="btn btn-danger rounded btn-xs action-btn"
+                                                   onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                   <i class="fa fa-trash"></i>
+                                             </a>
+                                          @endcan
                                         </td>
                                     </tr>
                                 @endforeach

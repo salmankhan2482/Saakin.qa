@@ -136,10 +136,12 @@
             <div class="card">
                 <div class="card-header">
                     Comments and view by
-                    <button class="text-right btn btn-info btn-xs forwardFunction" data-toggle="modal" data-target="#forwardAgentsModal" data-lead_id="{{ $lead->id }}">
-                        <i class="fa fa-plus"></i>
-                        Forward to Agents
-                    </button>
+                    @can('forward-lead')
+                        <button class="text-right btn btn-info btn-xs forwardFunction" data-toggle="modal" data-target="#forwardAgentsModal" data-lead_id="{{ $lead->id }}">
+                              <i class="fa fa-plus"></i>
+                              Forward to Agents
+                        </button>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -159,9 +161,11 @@
                               <td>{{ $agent->move_in_date }}</td>
                               <td class="col-md-8">{{ $agent->comment }}</td>
                               <td>
-                                 <a href="{{ route('deleteForwardLeadAgent', $agent->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete ?')">
-                                    <i class="fa fa-trash"></i>
-                                 </a>
+                                 @can('forward-lead')
+                                    <a href="{{ route('deleteForwardLeadAgent', $agent->id) }}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete ?')">
+                                       <i class="fa fa-trash"></i>
+                                    </a>
+                                 @endcan
                               </td>
                            </tr>
                            @endforeach
@@ -244,18 +248,18 @@
                </div>
                <div class="card-body">
                   <div class="table-responsive">
-                        <table id="example3" class="display min-w850">
+                     <table id="example3" class="display min-w850">
                            <thead>
                               <tr>
-                                    <th>ID</th>
-                                    <th>Agency</th>
-                                    <th>Property Title</th>
-                                    <th>Type</th>
-                                    <th>Purpose</th>
-                                    <th>Views</th>
-                                    <th>Created</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
+                                 <th>ID</th>
+                                 <th>Agency</th>
+                                 <th>Property Title</th>
+                                 <th>Type</th>
+                                 <th>Purpose</th>
+                                 <th>Views</th>
+                                 <th>Created</th>
+                                 <th>Price</th>
+                                 <th>Status</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -264,9 +268,8 @@
                                        <td>{{ $property->id }}</td>
                                        <td>{{ Str::limit($property->Agency->name, 15) ?? $property->user->name }}</td>
                                        <td>
-                                          <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}"
-                                                target="_blank">
-                                                {{ Str::limit($property->property_name, 30) }}
+                                          <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
+                                             {{ Str::limit($property->property_name, 30) }}
                                           </a>
                                        </td>
                                        <td>
@@ -277,18 +280,18 @@
                                        </td>
                                        <td>
                                           @if ($property->created_at !== null)
-                                                {{ date('d-m-Y', strtotime($property->created_at)) }}
+                                             {{ date('d-m-Y', strtotime($property->created_at)) }}
                                           @endif
                                        </td>
                                        <td>{{ $property->price }}</td>
                                        <td class="text-center">
                                           @if ($property->status == 1)
-                                                <i class="fa fa-circle text-success mr-1"></i>
+                                             <i class="fa fa-circle text-success mr-1"></i>
                                           @else
-                                                <i class="fa fa-circle text-danger mr-1"></i>
+                                             <i class="fa fa-circle text-danger mr-1"></i>
                                           @endif
                                           @if ($property->featured_property == 1)
-                                                <i class="fa fa-star"></i>
+                                             <i class="fa fa-star"></i>
                                           @endif
                                        </td>
                                     </tr>
@@ -301,7 +304,7 @@
                                  </td>
                               </tr>
                         </tfoot>
-                        </table>
+                     </table>
                   </div>
                </div>
             </div>

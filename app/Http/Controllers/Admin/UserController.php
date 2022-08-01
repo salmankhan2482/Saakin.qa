@@ -19,163 +19,132 @@ use Razorpay\Api\Api;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+   public function __construct()
+   {
+      $this->middleware('auth');
+   }
 
-    public function dashboard()
-    {
-        if (!Auth::user()) {
-            \Session::flash('flash_message', trans('words.login_required'));
-            return redirect('login');
-        }
+   public function dashboard()
+   {
+      if (!Auth::user()) {
+         \Session::flash('flash_message', trans('words.login_required'));
+         return redirect('login');
+      }
 
-        if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
-            return redirect('admin/dashboard');
-        }
+      if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
+         return redirect('admin/dashboard');
+      }
 
-        $user_id = Auth::user()->id;
-        return redirect('profile');
-    }
+      $user_id = Auth::user()->id;
+      return redirect('profile');
+   }
 
-    public function dashboard123()
-    {
-        if (!Auth::user()) {
-            \Session::flash('flash_message', trans('words.login_required'));
+   public function dashboard123()
+   {
+      if (!Auth::user()) {
+         \Session::flash('flash_message', trans('words.login_required'));
+         return redirect('login');
+      }
 
-            return redirect('login');
-        }
+      if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
+         return redirect('admin/dashboard');
+      }
 
-        if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
-            return redirect('admin/dashboard');
-        }
+      $user_id = Auth::user()->id;
+      $properties_count = Properties::where(['user_id' => $user_id])->count();
+      $pending_properties_count = Properties::where(['user_id' => $user_id, 'status' => 0])->count();
+      $inquiries = Enquire::where(['agent_id' => $user_id])->count();
+      return view('front.pages.dashboard', compact('properties_count', 'pending_properties_count', 'inquiries'));
+   }
 
-        $user_id = Auth::user()->id;
+   public function inquirieslist()
+   {
+      if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
+         return redirect('admin/dashboard');
+      }
 
-        $properties_count = Properties::where(['user_id' => $user_id])->count();
-
-        $pending_properties_count = Properties::where(['user_id' => $user_id, 'status' => 0])->count();
-
-        $inquiries = Enquire::where(['agent_id' => $user_id])->count();
-
-        return view('front.pages.dashboard', compact('properties_count', 'pending_properties_count', 'inquiries'));
-    }
-
-    public function inquirieslist()
-    {
-        if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
-            return redirect('admin/dashboard');
-        }
-
-        $user_id = Auth::user()->id;
-
-        $inquiries_list = Enquire::where('agent_id', $user_id)->orderBy('id')->paginate(8);
-
-        return view('front.pages.inquiries_list', compact('inquiries_list'));
-    }
+      $user_id = Auth::user()->id;
+      $inquiries_list = Enquire::where('agent_id', $user_id)->orderBy('id')->paginate(8);
+      return view('front.pages.inquiries_list', compact('inquiries_list'));
+   }
 
 
-    public function delete($id)
-    {
-        $decrypted_id = Crypt::decryptString($id);
+   public function delete($id)
+   {
+      $decrypted_id = Crypt::decryptString($id);
+      $inquire = Enquire::findOrFail($decrypted_id);
+      $inquire->delete();
 
-        $inquire = Enquire::findOrFail($decrypted_id);
+      \Session::flash('flash_message', trans('words.deleted'));
+      return redirect()->back();
+   }
 
+   public function profile()
+   {
+      if (!Auth::user()) {
+         \Session::flash('flash_message', trans('words.login_required'));
+         return redirect('login');
+      }
 
-        $inquire->delete();
+      if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
+         return redirect('admin/profile');
+      }
 
-        \Session::flash('flash_message', trans('words.deleted'));
+      $user_id = Auth::user()->id;
+      $user = User::findOrFail($user_id);
+      return view('front.pages.profile', compact('user'));
+   }
 
-        return redirect()->back();
-    }
+   public function profile_update(Request $request)
+   {
+      $user_id = Auth::user()->id;
+      $user = User::findOrFail($user_id);
 
-    public function profile()
-    {
-        if (!Auth::user()) {
-            \Session::flash('flash_message', trans('words.login_required'));
+      $data =  \Request::except(array('_token'));
+      $rule = array(
+         'name' => 'required',
+         'email' => 'required|email|max:75|unique:users,id',
+         'image_icon' => 'mimes:jpg,jpeg,gif,png'
+      );
 
-            return redirect('login');
-        }
+      $validator = \Validator::make($data, $rule);
+      if ($validator->fails()) {
+         return redirect()->back()->withErrors($validator->messages());
+      }
 
-        if (Auth::user()->usertype == 'Admin' || Auth::User()->usertype == "Agency") {
-            return redirect('admin/profile');
-        }
+      $inputs = $request->all();
+      $icon = $request->file('user_icon');
 
-        $user_id = Auth::user()->id;
+      if ($icon) {
 
-        $user = User::findOrFail($user_id);
+         \File::delete(public_path() . '/upload/members/' . $user->image_icon . '-b.jpg');
+         \File::delete(public_path() . '/upload/members/' . $user->image_icon . '-s.jpg');
+         $tmpFilePath = public_path('upload/members/');
+         $hardPath =  Str::slug($inputs['name'], '-') . '-' . md5(time());
+         $img = Image::make($icon);
+         $img->fit(450, 450)->save($tmpFilePath . $hardPath . '-b.jpg');
+         $img->fit(80, 80)->save($tmpFilePath . $hardPath . '-s.jpg');
+         $user->image_icon = $hardPath;
+      }
 
-        return view('front.pages.profile', compact('user'));
-    }
+      $user->name = $inputs['name'];
+      $user->email = $inputs['email'];
+      $user->phone = $inputs['phone'];
+      $user->about = $inputs['about'];
+      $user->facebook = $inputs['facebook'];
+      $user->twitter = $inputs['twitter'];
+      $user->instagram = $inputs['instagram'];
+      $user->linkedin = $inputs['linkedin'];
+      $user->save();
 
-    public function profile_update(Request $request)
-    {
-
-        $user_id = Auth::user()->id;
-
-        $user = User::findOrFail($user_id);
-
-
-        $data =  \Request::except(array('_token'));
-
-        $rule = array(
-            'name' => 'required',
-            'email' => 'required|email|max:75|unique:users,id',
-            'image_icon' => 'mimes:jpg,jpeg,gif,png'
-        );
-
-        $validator = \Validator::make($data, $rule);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->messages());
-        }
-
-
-        $inputs = $request->all();
-
-        $icon = $request->file('user_icon');
-
-        if ($icon) {
-
-            \File::delete(public_path() . '/upload/members/' . $user->image_icon . '-b.jpg');
-            \File::delete(public_path() . '/upload/members/' . $user->image_icon . '-s.jpg');
-
-            $tmpFilePath = public_path('upload/members/');
-
-            $hardPath =  Str::slug($inputs['name'], '-') . '-' . md5(time());
-
-            $img = Image::make($icon);
-
-            $img->fit(450, 450)->save($tmpFilePath . $hardPath . '-b.jpg');
-            $img->fit(80, 80)->save($tmpFilePath . $hardPath . '-s.jpg');
-
-            $user->image_icon = $hardPath;
-        }
-
-
-        $user->name = $inputs['name'];
-        $user->email = $inputs['email'];
-        $user->phone = $inputs['phone'];
-        $user->about = $inputs['about'];
-        $user->facebook = $inputs['facebook'];
-        $user->twitter = $inputs['twitter'];
-        $user->instagram = $inputs['instagram'];
-        $user->linkedin = $inputs['linkedin'];
-
-
-        $user->save();
-
-        Session::flash('flash_message_profile', trans('words.successfully_updated'));
-
-        return redirect()->back();
-    }
+      Session::flash('flash_message_profile', trans('words.successfully_updated'));
+      return redirect()->back();
+   }
 
     public function change_pass()
     {
         if (!Auth::user()) {
             \Session::flash('flash_message', trans('words.login_required'));
-
             return redirect('login');
         }
 
@@ -186,61 +155,49 @@ class UserController extends Controller
         return view('front.pages.change_pass');
     }
 
-    public function updatePassword(Request $request)
-    {
+   public function updatePassword(Request $request)
+   {
 
-        //$user = User::findOrFail(Auth::user()->id);
+      $data =  \Request::except(array('_token'));
+      $rule  =  array(
+         'password'       => 'required|confirmed',
+         'password_confirmation'       => 'required'
+      );
 
+      $validator = \Validator::make($data, $rule);
 
-        $data =  \Request::except(array('_token'));
-        $rule  =  array(
-            'password'       => 'required|confirmed',
-            'password_confirmation'       => 'required'
-        );
+      if ($validator->fails()) {
+         return redirect()->back()->withErrors($validator->messages());
+      }
 
-        $validator = \Validator::make($data, $rule);
+      $credentials = $request->only(
+         'password',
+         'password_confirmation'
+      );
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator->messages());
-        }
+      $user = \Auth::user();
+      $user->password = bcrypt($credentials['password']);
+      $user->save();
 
-        /* $val=$this->validate($request, [
-                    'password' => 'required|confirmed',
-            ]);  */
+      Session::flash('flash_message', trans('words.successfully_updated'));
 
-        $credentials = $request->only(
-            'password',
-            'password_confirmation'
-        );
+      return redirect()->back();
+   }
 
-        $user = \Auth::user();
-        $user->password = bcrypt($credentials['password']);
-        $user->save();
+   public function plan_list($id)
+   {
+      if (!Auth::check()) {
+         \Session::flash('flash_message', trans('words.access_denied'));
+         return redirect('login');
+      }
 
-        Session::flash('flash_message', trans('words.successfully_updated'));
+      $property_id = Crypt::decryptString($id);
+      $property = Properties::findOrFail($property_id);
+      Session::put('payment_property_name', $property->property_name);
+      $subscription_plan = SubscriptionPlan::orderBy('id')->get();
 
-        return redirect()->back();
-    }
-
-    public function plan_list($id)
-    {
-        if (!Auth::check()) {
-
-            \Session::flash('flash_message', trans('words.access_denied'));
-
-            return redirect('login');
-        }
-
-        $property_id = Crypt::decryptString($id);
-
-        $property = Properties::findOrFail($property_id);
-
-        Session::put('payment_property_name', $property->property_name);
-
-        $subscription_plan = SubscriptionPlan::orderBy('id')->get();
-
-        return view('pages.plan', compact('subscription_plan', 'property_id'));
-    }
+      return view('pages.plan', compact('subscription_plan', 'property_id'));
+   }
 
 
     public function plan_send(Request $request)
@@ -355,70 +312,5 @@ class UserController extends Controller
         }
 
         return view('pages.plan_summary', compact('tax_amount', 'total_price', 'total_price_razorpay', 'orderId'));
-    }
-
-    public function dbBackup()
-    {
-        if (Auth::user()->usertype == 'Admin') {
-            //ENTER THE RELEVANT INFO BELOW
-            $mysqlHostName      = env('DB_HOST');
-            $mysqlUserName      = env('DB_USERNAME');
-            $mysqlPassword      = env('DB_PASSWORD');
-            $DbName             = env('DB_DATABASE');
-            $tables             = array("properties"); //here your tables...
-            
-            $connect = new \PDO("mysql:host=$mysqlHostName;dbname=$DbName;charset=utf8", "$mysqlUserName", "$mysqlPassword", array(\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-
-            $get_all_table_query = "SHOW TABLES";
-            $statement = $connect->prepare($get_all_table_query);
-
-            $statement->execute();
-            $result = $statement->fetchAll();
-
-
-            $output = '';
-            foreach ($tables as $table) {
-                $show_table_query = "SHOW CREATE TABLE " . $table . "";
-                $statement = $connect->prepare($show_table_query);
-                $statement->execute();
-                $show_table_result = $statement->fetchAll();
-
-                foreach ($show_table_result as $show_table_row) {
-                    $output .= "\n\n" . $show_table_row["Create Table"] . ";\n\n";
-                }
-                $select_query = "SELECT * FROM " . $table . "";
-                $statement = $connect->prepare($select_query);
-                $statement->execute();
-                $total_row = $statement->rowCount();
-
-                for ($count = 0; $count < $total_row; $count++) {
-                    $single_result = $statement->fetch(\PDO::FETCH_ASSOC);
-                    $table_column_array = array_keys($single_result);
-                    $table_value_array = array_values($single_result);
-                    $output .= "\nINSERT INTO $table (";
-                    $output .= "" . implode(", ", $table_column_array) . ") VALUES (";
-                    $output .= "'" . implode("','", $table_value_array) . "');\n";
-                }
-            }
-
-            $file_name = 'database_backup_on_' . date('y-m-d') . '.sql';
-            $file_handle = fopen($file_name, 'w+');
-            fwrite($file_handle, $output);
-            fclose($file_handle);
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename=' . basename($file_name));
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($file_name));
-            ob_clean();
-            flush();
-            readfile($file_name);
-            unlink($file_name);
-        } else {
-            return redirect()->to('/');
-        }
     }
 }

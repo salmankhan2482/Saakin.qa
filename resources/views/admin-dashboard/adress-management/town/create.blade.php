@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
-                                    <button type="submit" class="btn btn-rounded btn-success">Save</button>
+                                    <button type="submit" class="btn rounded action-btn btn-xs btn-success">Save</button>
                                 </div>
                                 {!! Form::close() !!}
                             </div>

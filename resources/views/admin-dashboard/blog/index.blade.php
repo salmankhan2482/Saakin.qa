@@ -43,13 +43,15 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Blogs</h4>
-                    <a href="{{ route('blogs.create') }}">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>Add
-                        </button>
-                    </a>
+                    @can('blog-create')
+                     <a href="{{ route('blogs.create') }}">
+                           <button type="button" class="btn btn-rounded btn-info">
+                              <span class="btn-icon-left text-info">
+                                 <i class="fa fa-plus color-info"></i>
+                              </span>Add
+                           </button>
+                     </a>
+                    @endcan
                 </div>
                 <div class="card-body">
                     @if (Session::has('flash_message'))
@@ -76,7 +78,7 @@
                                 @foreach ($data['blogs'] as $i => $blog)
                                     <tr>
                                         <td>
-                                            <a href="{{ url('blog/' . $blog->slug) }}" target="_blank">
+                                          <a href="{{ url('blog/' . $blog->slug) }}" target="_blank">
                                                 {{ Str::limit($blog->title, '25', '...') }}
                                             </a>
                                         </td>
@@ -84,15 +86,13 @@
                                         <td>{{ $blog->BlogCategory->category ?? '' }} </td>
                                         <td>
                                             @if ($blog->status == 0)
-                                                <strong
-                                                    class="border border-danger bg-danger text-white p-1">Drafted</strong>
+                                                <strong class="border border-danger bg-danger text-white p-1">Drafted</strong>
                                             @else
                                                 <strong class="border border-info bg-info text-white p-1">Published</strong>
                                             @endif
                                         </td>
                                         <td>
-                                            <img src="{{ asset('upload/blogs/' . $blog->image) }}" width="100"
-                                                alt="{{ $blog->title }}" />
+                                            <img src="{{ asset('upload/blogs/' . $blog->image) }}" width="100" alt="{{ $blog->title }}" />
                                         </td>
                                         <td>
                                             <button type="button" class="btn btn-outline-primary dropdown-toggle"
@@ -100,19 +100,23 @@
                                                 Action
                                             </button>
                                             <div class="dropdown-menu">
-                                                <a href="{{ route('blogs.status', $blog->id) }}" class="dropdown-item">
-                                                    <i class="fa fa-upload"></i>
-                                                    {{ $blog->status == 1 ? 'Draft' : 'Publish' }}
+                                                @can('blog-edit')
+                                                   <a href="{{ route('blogs.status', $blog->id) }}" class="dropdown-item">
+                                                      <i class="fa fa-upload"></i>
+                                                      {{ $blog->status == 1 ? 'Draft' : 'Publish' }}
                                                 </a>
 
                                                 <a href="{{ route('blogs.edit', $blog->id) }}" class="dropdown-item">
-                                                    <i class="fa fa-edit"></i> Edit
+                                                      <i class="fa fa-edit"></i> Edit
                                                 </a>
+                                                @endcan
 
-                                                <a href="{{ route('blogs.destroy', $blog->id) }}" class="dropdown-item"
-                                                    onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                    <i class="fa fa-trash"></i> Delete
+                                                @can('blog-delete')
+                                                   <a href="{{ route('blogs.destroy', $blog->id) }}" class="dropdown-item"
+                                                      onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                      <i class="fa fa-trash"></i> Delete
                                                 </a>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

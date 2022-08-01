@@ -31,11 +31,13 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Agencies</h4>
+                    @can('agency-create')
                     <a href="{{ route('agencies.create') }}">
                         <button type="button" class="btn btn-rounded btn-info"><span
-                            class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
+                           class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
                         </span>Add</button>
-                    </a>
+                     </a>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -70,15 +72,20 @@
                                             @endif
                                         </td>
                                         <td>
+                                            @can('agency-edit')
                                             <a href="{{ route('agencies.edit', $agency->id) }}"
-                                                class="btn btn-primary rounded btn-xs action-btn">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="{{ route('agencies.destroy' , $agency->id) }}"
+                                                   class="btn btn-primary rounded btn-xs action-btn">
+                                                   <i class="fa fa-edit"></i>
+                                             </a>
+                                            @endcan
+                                            
+                                            @can('agency-delete')
+                                             <a href="{{ route('agencies.destroy' , $agency->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>
-                                            </a>
+                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

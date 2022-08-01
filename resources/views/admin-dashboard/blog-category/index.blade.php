@@ -8,12 +8,14 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Blog Categories</h4>
-                    <a href="{{ route('blog-category.create') }}">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info"> <i class="fa fa-plus color-info"></i> </span>
-                            Add
-                        </button>
-                    </a>
+                    @can('blog-category-create')
+                        <a href="{{ route('blog-category.create') }}">
+                           <button type="button" class="btn btn-rounded btn-info">
+                              <span class="btn-icon-left text-info"> <i class="fa fa-plus color-info"></i> </span>
+                              Add
+                           </button>
+                        </a>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -31,15 +33,19 @@
                                 <td>{{ $blogCategory->category }}</td>
                                 <td>{{ Str::limit($blogCategory->description, 100, '...') }}</td>
                                         <td>
-                                            <a href="{{ route('blog-category.edit', $blogCategory->id) }}"
+                                            @can('blog-category-edit')
+                                             <a href="{{ route('blog-category.edit', $blogCategory->id) }}"
                                                 class="btn btn-primary rounded btn-xs action-btn">
                                                 <i class="fa fa-edit"></i>
-                                            </a>
+                                             </a>  
+                                            @endcan
+                                            @can('blog-category-delete')
                                             <a href="{{ route('blog-category.destroy', $blogCategory->id) }}"
                                                 class="btn btn-danger rounded btn-xs action-btn"
                                                 onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                                 <i class="fa fa-trash"></i>
-                                            </a>
+                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

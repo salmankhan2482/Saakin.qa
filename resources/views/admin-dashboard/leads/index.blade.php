@@ -8,12 +8,15 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Areas</h4>
-                    <a href="{{ route('propertyAreas.create') }}">
+                    @can('lead-create')
+                        <a href="{{ route('propertyAreas.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>Add</button>
-                    </a>
+                           <span class="btn-icon-left text-info">
+                              <i class="fa fa-plus color-info"></i>
+                           </span> Add
+                        </button>
+                        </a>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -29,23 +32,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($leads as $i => $inquiries)
-                                <tr>
-                                
-                                <td>{{ $inquiries->id }}</td>
-                                <td>{{ $inquiries->type }}</td>
-                                <td>{{ $inquiries->name }}</td>
-                                <td>{{ $inquiries->email }}</td>
-                                <td>{{ $inquiries->Agencies->name ??''}} </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('deleteLead', $inquiries->id) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
+                                 @foreach($leads as $i => $inquiries)
+                                    <tr>
+                                       <td>{{ $inquiries->id }}</td>
+                                       <td>{{ $inquiries->type }}</td>
+                                       <td>{{ $inquiries->name }}</td>
+                                       <td>{{ $inquiries->email }}</td>
+                                       <td>{{ $inquiries->Agencies->name ??''}} </td>
+                                       <td class="text-center">
+                                          @can('lead-delete')
+                                             <a href="{{ route('deleteLead', $inquiries->id) }}" class="btn btn-danger rounded btn-xs action-btn" onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"> <i class="fa fa-trash"></i>
+                                             </a>
+                                          @endcan
+                                       </td>
                                     </tr>
-                                @endforeach
+                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
