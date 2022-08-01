@@ -6,116 +6,111 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Auth;
-use App\Properties;
-use App\PropertyGallery;
 use App\PropertyPurpose;
-use Carbon\Carbon;
-use App\Http\Requests;
-use Session;
-use Illuminate\Support\Str;
 
 class PropertyPurposeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    public function index()
-    {
-        if(Auth::User()->usertype!="Admin"){
-            \Session::flash('flash_message', trans('words.access_denied'));
-            return redirect('dashboard');
-        }
+   public function __construct()
+   {
+      $this->middleware('auth');
+      $this->middleware('permission:properties-purpose-list', ['only' => ['index']]);
+      $this->middleware('permission:properties-purpose-create', ['only' => ['create','store']]);
+      $this->middleware('permission:properties-purpose-edit', ['only' => ['edit','update']]);
+      $this->middleware('permission:properties-purpose-delete', ['only' => ['destroy']]);
+   }
 
-        $data['propertyPurposes'] = PropertyPurpose::orderBy('id')->get();
-        $action = 'saakin_index';
-        return view('admin-dashboard.property-purpose.index',compact('data','action'));
-    }
+   public function index()
+   {
+      if(Auth::User()->usertype!="Admin"){
+         \Session::flash('flash_message', trans('words.access_denied'));
+         return redirect('dashboard');
+      }
 
-    public function create()    {
+      $data['propertyPurposes'] = PropertyPurpose::orderBy('id')->get();
+      $action = 'saakin_index';
+      return view('admin-dashboard.property-purpose.index',compact('data','action'));
+   }
 
-        if(Auth::User()->usertype!="Admin"){
-            \Session::flash('flash_message', trans('words.access_denied'));
-            return redirect('admin/dashboard');
-        }
+   public function create()    {
 
-        $action = 'saakin_create';
-        return view('admin-dashboard.property-purpose.create',compact('action'));
-    }
+      if(Auth::User()->usertype!="Admin"){
+         \Session::flash('flash_message', trans('words.access_denied'));
+         return redirect('admin/dashboard');
+      }
 
-    public function store(Request $request)
-    {
-        $data =  \Request::except(array('_token')) ;
-        $inputs = $request->all();
-        $rule=array(
-            'name' => 'required',
-            'status' => 'required'
-        );
-        $validator = \Validator::make($data,$rule);
-        if ($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator->messages());
-        }
-        $propertyPurpose = new PropertyPurpose();
-        $propertyPurpose->name = $inputs['name'];
-        $propertyPurpose->status = $inputs['status'];
-        $propertyPurpose->save();
-        \Session::flash('flash_message', trans('words.added'));
-        return \Redirect::back();
-    }
+      $action = 'saakin_create';
+      return view('admin-dashboard.property-purpose.create',compact('action'));
+   }
 
-    public function edit($id)
-    {
-        if(Auth::User()->usertype!="Admin"){
-            \Session::flash('flash_message', trans('words.access_denied'));
-            return redirect('admin/dashboard');
-        }
+   public function store(Request $request)
+   {
+      $data =  \Request::except(array('_token')) ;
+      $inputs = $request->all();
+      $rule=array(
+         'name' => 'required',
+         'status' => 'required'
+      );
+      
+      $validator = \Validator::make($data,$rule);
+      if ($validator->fails()){
+         return redirect()->back()->withErrors($validator->messages());
+      }
+      $propertyPurpose = new PropertyPurpose();
+      $propertyPurpose->name = $inputs['name'];
+      $propertyPurpose->status = $inputs['status'];
+      $propertyPurpose->save();
+      \Session::flash('flash_message', trans('words.added'));
+      return \Redirect::back();
+   }
 
-        $data['propertyPurpose'] = PropertyPurpose::findOrFail($id);
-        $action = 'saakin_create';
-        return view('admin-dashboard.property-purpose.edit',compact('data', 'action'));
-    }
+   public function edit($id)
+   {
+      if(Auth::User()->usertype!="Admin"){
+         \Session::flash('flash_message', trans('words.access_denied'));
+         return redirect('admin/dashboard');
+      }
 
-    public function update(Request $request, $id)
-    {
-        $data =  \Request::except(array('_token')) ;
+      $data['propertyPurpose'] = PropertyPurpose::findOrFail($id);
+      $action = 'saakin_create';
+      return view('admin-dashboard.property-purpose.edit',compact('data', 'action'));
+   }
 
-        $inputs = $request->all();
+   public function update(Request $request, $id)
+   {
+      $data =  \Request::except(array('_token')) ;
+      $inputs = $request->all();
+      $rule=array(
+         'name' => 'required',
+         'status' => 'required'
+      );
 
-        $rule=array(
-            'name' => 'required',
-            'status' => 'required'
-        );
+      $validator = \Validator::make($data,$rule);
 
-        $validator = \Validator::make($data,$rule);
+      if ($validator->fails())
+      {
+         return redirect()->back()->withErrors($validator->messages());
+      }
 
-        if ($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator->messages());
-        }
+      $propertyPurpose = PropertyPurpose::findOrFail($id);
+      $propertyPurpose->name = $inputs['name'];
+      $propertyPurpose->status = $inputs['status'];
 
-        $propertyPurpose = PropertyPurpose::findOrFail($id);
-        $propertyPurpose->name = $inputs['name'];
-        $propertyPurpose->status = $inputs['status'];
+      $propertyPurpose->save();
+      \Session::flash('flash_message', trans('words.updated'));
+      return \Redirect::back();
+   }
 
-        $propertyPurpose->save();
-        \Session::flash('flash_message', trans('words.updated'));
-        return \Redirect::back();
-    }
+   public function destroy($id)
+   {
+      if(Auth::User()->usertype!="Admin"){
+         \Session::flash('flash_message', trans('words.access_denied'));
+         return redirect('admin/dashboard');
+      }
 
-    public function destroy($id)
-    {
-        if(Auth::User()->usertype!="Admin"){
-            \Session::flash('flash_message', trans('words.access_denied'));
-            return redirect('admin/dashboard');
-        }
+      $propertyPurpose = PropertyPurpose::findOrFail($id);
+      $propertyPurpose->delete();
+      \Session::flash('flash_message', trans('words.deleted'));
 
-        $propertyPurpose = PropertyPurpose::findOrFail($id);
-
-        $propertyPurpose->delete();
-
-        \Session::flash('flash_message', trans('words.deleted'));
-
-        return redirect()->back();
-    }
+      return redirect()->back();
+   }
 }

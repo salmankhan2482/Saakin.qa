@@ -14,141 +14,130 @@ use Illuminate\Support\Str;
 class PagesController extends MainAdminController
 {
 	public function __construct()
-    {
-		 $this->middleware('auth');	
+   {
+      $this->middleware('auth');	
+      
+   }
+
+   public function properties_for_purpose_page()
+   { 
+
+      if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin"){
+         \Session::flash('flash_message', trans('words.access_denied'));
+
+         return redirect('dashboard');   
+      }
+
+      $page_info = Pages::findOrFail('6');
+      $page_title=trans('words.properties_for_purpose');
          
-    }
-
-    public function properties_for_purpose_page()
-    { 
- 
-    	if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin")
-        {
-            \Session::flash('flash_message', trans('words.access_denied'));
-
-            return redirect('dashboard');   
-         }
-
-        $page_info = Pages::findOrFail('6');
-        $page_title=trans('words.properties_for_purpose');
-          
-        return view('admin.pages.properties_for_purpose_page',compact('page_title','page_info'));
-    }
-    public function update_properties_for_purpose_page(Request $request)
-    {  
+      return view('admin.pages.properties_for_purpose_page',compact('page_title','page_info'));
+   }
+   
+   public function update_properties_for_purpose_page(Request $request)
+   {  
     	 
     	$page_obj = Pages::findOrFail('6');
-	    $data =  \Request::except(array('_token')) ;
-	    $rule=array('page_title' => 'required' );
-	   	 $validator = \Validator::make($data,$rule);
-            if ($validator->fails())
-            {
-                    return redirect()->back()->withErrors($validator->messages());
-            }
+      $data =  \Request::except(array('_token')) ;
+      $rule=array('page_title' => 'required' );
+      
+      $validator = \Validator::make($data,$rule);
+      if ($validator->fails()){
+               return redirect()->back()->withErrors($validator->messages());
+      }
 
-	    $inputs = $request->all(); 
-        $page_slug = Str::slug($inputs['page_title'], '-');
+      $inputs = $request->all(); 
+      $page_slug = Str::slug($inputs['page_title'], '-');
 		$page_obj->page_title = $inputs['page_title'];
-        $page_obj->page_slug = $page_slug; 	 
-        $page_obj->page_content = $inputs['page_content'];
-        $page_obj->meta_title = $inputs['meta_title'];
-        $page_obj->meta_description = $inputs['meta_description'];
-        $page_obj->meta_keyword = $inputs['meta_keyword'];
-        $page_obj->status = $inputs['status'];       
-	    $page_obj->save(); 
-
- 
+      $page_obj->page_slug = $page_slug; 	 
+      $page_obj->page_content = $inputs['page_content'];
+      $page_obj->meta_title = $inputs['meta_title'];
+      $page_obj->meta_description = $inputs['meta_description'];
+      $page_obj->meta_keyword = $inputs['meta_keyword'];
+      $page_obj->status = $inputs['status'];       
+      $page_obj->save(); 
 	    Session::flash('flash_message', trans('words.successfully_updated'));
-
         return redirect()->back();
-    }
+   }
     
-    public function property_type_for_purpose_page()
-    { 
- 
-    	if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin")
-        {
+   public function property_type_for_purpose_page()
+   { 
+      if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin"){
             \Session::flash('flash_message', trans('words.access_denied'));
-
             return redirect('dashboard');   
-         }
+      }
 
-        $page_info = Pages::findOrFail('7');
-        $page_title=trans('words.property_type_for_purpose');
-          
-        return view('admin.pages.property_type_for_purpose_page',compact('page_title','page_info'));
-    }
-    public function update_property_type_for_purpose_page(Request $request)
-    {  
+      $page_info = Pages::findOrFail('7');
+      $page_title=trans('words.property_type_for_purpose');
+         
+      return view('admin.pages.property_type_for_purpose_page',compact('page_title','page_info'));
+   }
+    
+   public function update_property_type_for_purpose_page(Request $request)
+   {  
     	  
     	$page_obj = Pages::findOrFail('7');
-	    $data =  \Request::except(array('_token')) ;
-	    $rule=array('page_title' => 'required' );
-	   	 $validator = \Validator::make($data,$rule);
-            if ($validator->fails())
-            {
-                    return redirect()->back()->withErrors($validator->messages());
-            }
+      $data =  \Request::except(array('_token')) ;
+      $rule=array('page_title' => 'required' );
+      
+      $validator = \Validator::make($data,$rule);
+      if ($validator->fails()){
+         return redirect()->back()->withErrors($validator->messages());
+      }
 
-	    $inputs = $request->all(); 
-        $page_slug = Str::slug($inputs['page_title'], '-');
+      $inputs = $request->all(); 
+      $page_slug = Str::slug($inputs['page_title'], '-');
 		$page_obj->page_title = $inputs['page_title'];
-        $page_obj->page_slug = $page_slug; 	 
-        $page_obj->page_content = $inputs['page_content'];
-        $page_obj->meta_title = $inputs['meta_title'];
-        $page_obj->meta_description = $inputs['meta_description'];
-        $page_obj->meta_keyword = $inputs['meta_keyword'];
-        $page_obj->status = $inputs['status'];       
-	    $page_obj->save(); 
+      $page_obj->page_slug = $page_slug; 	 
+      $page_obj->page_content = $inputs['page_content'];
+      $page_obj->meta_title = $inputs['meta_title'];
+      $page_obj->meta_description = $inputs['meta_description'];
+      $page_obj->meta_keyword = $inputs['meta_keyword'];
+      $page_obj->status = $inputs['status'];       
+      $page_obj->save(); 
 
- 
-	    Session::flash('flash_message', trans('words.successfully_updated'));
+      Session::flash('flash_message', trans('words.successfully_updated'));
+      return redirect()->back();
+   }
+   
+   public function city_property_type_purpose_page()
+   { 
+      if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin"){
+         \Session::flash('flash_message', trans('words.access_denied'));
+         return redirect('dashboard');   
+      }
 
-        return redirect()->back();
-    }
-    public function city_property_type_purpose_page()
-    { 
- 
-    	if(Auth::User()->usertype!="Admin" AND Auth::User()->usertype!="Sub_Admin")
-        {
-            \Session::flash('flash_message', trans('words.access_denied'));
-
-            return redirect('dashboard');   
-         }
-
-        $page_info = Pages::findOrFail('8');
-        $page_title=trans('words.city_property_type_purpose');
-          
-        return view('admin.pages.city_property_type_purpose_page',compact('page_title','page_info'));
-    }
-    public function update_city_property_type_purpose_page(Request $request)
-    {  
-    	  
+      $page_info = Pages::findOrFail('8');
+      $page_title=trans('words.city_property_type_purpose');
+         
+      return view('admin.pages.city_property_type_purpose_page',compact('page_title','page_info'));
+   }
+    
+   public function update_city_property_type_purpose_page(Request $request)
+   {      	  
     	$page_obj = Pages::findOrFail('8');
-	    $data =  \Request::except(array('_token')) ;
-	    $rule=array('page_title' => 'required' );
-	   	 $validator = \Validator::make($data,$rule);
-            if ($validator->fails())
-            {
-                    return redirect()->back()->withErrors($validator->messages());
-            }
+      $data =  \Request::except(array('_token')) ;
+      $rule=array('page_title' => 'required' );
+      
+      $validator = \Validator::make($data,$rule);
+      if ($validator->fails()){
+         return redirect()->back()->withErrors($validator->messages());
+      }
 
-	    $inputs = $request->all(); 
-        $page_slug = Str::slug($inputs['page_title'], '-');
-		$page_obj->page_title = $inputs['page_title'];
-        $page_obj->page_slug = $page_slug; 	 
-        $page_obj->page_content = $inputs['page_content'];
-        $page_obj->meta_title = $inputs['meta_title'];
-        $page_obj->meta_description = $inputs['meta_description'];
-        $page_obj->meta_keyword = $inputs['meta_keyword'];
-        $page_obj->status = $inputs['status'];       
-	    $page_obj->save(); 
+      $inputs = $request->all(); 
+      $page_slug = Str::slug($inputs['page_title'], '-');
+      $page_obj->page_title = $inputs['page_title'];
+      $page_obj->page_slug = $page_slug; 	 
+      $page_obj->page_content = $inputs['page_content'];
+      $page_obj->meta_title = $inputs['meta_title'];
+      $page_obj->meta_description = $inputs['meta_description'];
+      $page_obj->meta_keyword = $inputs['meta_keyword'];
+      $page_obj->status = $inputs['status'];       
+      $page_obj->save(); 
 
- 
-	    Session::flash('flash_message', trans('words.successfully_updated'));
-
-        return redirect()->back();
-    }
+      Session::flash('flash_message', trans('words.successfully_updated'));
+      return redirect()->back();
+   }
 
     public function featured_properties_page()
     { 

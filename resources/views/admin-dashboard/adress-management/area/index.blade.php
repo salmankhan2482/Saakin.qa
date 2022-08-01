@@ -33,14 +33,16 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Areas</h4>
-                    <a href="{{ route('propertyAreas.create') }}">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>
-                            Add
-                        </button>
-                    </a>
+                    @can ('properties-area-create')
+                     <a href="{{ route('propertyAreas.create') }}">
+                           <button type="button" class="btn btn-rounded btn-info">
+                              <span class="btn-icon-left  text-info">
+                                 <i class="fa fa-plus color-info"></i>
+                              </span>
+                              Add
+                           </button>
+                     </a>
+                    @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -71,16 +73,20 @@
                                 <td>{{ $area->latitude }}</td>
                                 <td>{{ $area->longitude }}</td>
                                 <td>
-                                    <a href="{{ route('propertyAreas.edit', $area->id) }}"
-                                        class="btn btn-primary rounded btn-xs action-btn">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('propertyAreas.destroy', $area->id) }}"
-                                        class="btn btn-danger rounded btn-xs action-btn"
-                                        onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
+                                    @can('properties-area-edit')
+                                       <a href="{{ route('propertyAreas.edit', $area->id) }}"
+                                          class="btn btn-primary rounded btn-xs action-btn">
+                                          <i class="fa fa-edit"></i>
+                                       </a>
+                                    @endcan
+                                    @can('properties-area-delete')
+                                       <a href="{{ route('propertyAreas.destroy', $area->id) }}"
+                                          class="btn btn-danger rounded btn-xs action-btn"
+                                          onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                          <i class="fa fa-trash"></i>
+                                       </a>
+                                    @endcan
+                                 </td>
                                 </tr>
                                 @endforeach
                             </tbody>

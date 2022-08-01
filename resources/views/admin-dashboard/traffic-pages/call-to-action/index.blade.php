@@ -23,8 +23,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label d-flex">From</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="h-100 form-control" name="from"
-                                                value="{{ request('from') }}">
+                                            <input type="date" class="h-100 form-control" name="from" value="{{ request('from') }}">
                                         </div>
                                     </div>
                                 </div>
@@ -33,8 +32,7 @@
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label d-flex">To</label>
                                         <div class="col-sm-9">
-                                            <input type="date" class="h-100 form-control" name="to"
-                                                value="{{ request('to') }}">
+                                            <input type="date" class="h-100 form-control" name="to" value="{{ request('to') }}">
                                         </div>
                                     </div>
                                 </div>

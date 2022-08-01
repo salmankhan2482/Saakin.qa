@@ -7,13 +7,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <?php
-//Agency Name
-$data['agency_name'] = App\Agency::when(auth()->user()->usertype == 'Agency', function ($query) {
-    $query->where('id', Auth::User()->agency_id);
-})
-    ->value('name');
-?>
-   
+      //Agency Name
+      $data['agency_name'] = App\Agency::when(auth()->user()->usertype == 'Agency', function ($query) {
+         $query->where('id', Auth::User()->agency_id);
+      })->value('name');
+   ?>
+      
     @if (Auth()->User()->usertype =='Agency')
     <title>{{$data['agency_name']}} Dashboard - Saakin Real Estate CRM</title>
     @else
