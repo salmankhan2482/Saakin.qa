@@ -655,9 +655,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                         </div>
                     </div>
                 </li>
-
             </ul>
-
 
             <ul class="navbar-nav header-right ml-5">
                 <li class="nav-item dropdown header-profile">
