@@ -15,10 +15,10 @@ class PropertyTownsController extends Controller
    public function __construct()
    {
       $this->middleware('auth');
-      $this->middleware('permission:town-list', ['only' => ['index']]);
-      $this->middleware('permission:town-create', ['only' => ['create','store']]);
-      $this->middleware('permission:town-edit', ['only' => ['edit','update']]);
-      $this->middleware('permission:town-delete', ['only' => ['destroy']]);
+      $this->middleware('permission:properties-town-list', ['only' => ['index']]);
+      $this->middleware('permission:properties-town-create', ['only' => ['create','store']]);
+      $this->middleware('permission:properties-town-edit', ['only' => ['edit','update']]);
+      $this->middleware('permission:properties-town-delete', ['only' => ['destroy']]);
    }
 
    public function index()
