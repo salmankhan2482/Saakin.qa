@@ -69,7 +69,7 @@
                                         {{ trans('words.search') }}
                                     </button>
                                     <a href="{{ url('admin/properties') }}" class="btn btn-info btn-md pull-left">
-                                       <i class="fa fa-refresh" aria-hidden="true"></i>
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </div>

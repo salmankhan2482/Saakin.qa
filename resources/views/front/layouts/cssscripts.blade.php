@@ -55,29 +55,29 @@
     </script>
 
 <!-- Clarity tracking code for https://saakin.qa/ -->
-<script>
+{{-- <script>
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i+"?ref=bwt";
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "9cpbk955xj");
-</script>
+</script> --}}
 
 <!-- Twitter universal website tag code -->
-<script>
+{{-- <script>
     !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe.apply(s,arguments):s.queue.push(arguments);
     },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
     a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
     // Insert Twitter Pixel ID and Standard Event data below
     twq('init','o8t53');
     twq('track','PageView');
-    </script>
+    </script> --}}
     <!-- End Twitter universal website tag code -->
 
 
     <!-- Meta Pixel Code -->
 
-<script>
+{{-- <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -91,11 +91,11 @@
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=483643002213916&ev=PageView&noscript=1"
-    /></noscript>
+    /></noscript> --}}
     <!-- End Meta Pixel Code -->
     
       {{-- Google Optimizer Code --}}
-    <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5QL22C6"></script>
+    {{-- <script src="https://www.googleoptimize.com/optimize.js?id=OPT-5QL22C6"></script> --}}
 
 
 @yield('style')

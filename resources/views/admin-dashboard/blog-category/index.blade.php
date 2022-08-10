@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example3" class="display min-w850">
+                        <table class="table table-hover table-responsive-sm">
                             <thead>
                                 <tr>
                                     <th>Category</th>

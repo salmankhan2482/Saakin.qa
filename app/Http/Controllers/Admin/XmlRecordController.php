@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Properties;
+use App\PropertyGallery;
 use App\XmlGallery;
 use DOMDocument;
 use App\XmlRecord;
@@ -35,30 +37,30 @@ class XmlRecordController extends MainAdminController
                 foreach($phpDataArray['property'] as $index => $data){
 
                     $dataArray[] = [
-                        "reference_number" => $data['reference_number'],
-                        "offering_type" => $data['offering_type'],
-                        "property_type" => $data['property_type'],
-                        "price_on_application" => $data['price_on_application'],
-                        "price" => $data['price'],
+                        "refference_code" => isset($data['reference_number']) ? $data['reference_number'] : null,
+                        "property_purpose" => isset($data['offering_type']) ? $data['offering_type'] : null,
+                        "property_type" => isset($data['property_type']) ? $data['property_type'] : null,
+                        // "price_on_application" => isset($data['price_on_application']) ? $data['price_on_application'] : null,
+                        "price" => isset($data['price']) ? $data['price'] : null,
                         "rental_period" => isset($data['rental_period']) ? $data['rental_period'] : null,
-                        "cheques" => isset($data['cheques']) ? $data['cheques'] : null,
+                        // "cheques" => isset($data['cheques']) ? $data['cheques'] : null,
                         "city" => isset($data['city']) ? $data['city'] : null,
-                        "community" => isset($data['community']) ? $data['community'] : null,
-                        "sub_community" => isset($data['sub_community']) ? $data['sub_community'] : null,
-                        "property_name" => isset($data['property_name']) ? $data['property_name'] : null,
-                        "title_en" => isset($data['title_en']) ? $data['title_en'] : null,
-                        "description_en" => isset($data['description_en']) ? $data['description_en'] : null,
-                        "amenities" => isset($data['amenities']) ? $data['amenities'] : null,
-                        "size" => isset($data['size']) ? $data['size'] : null,
-                        "bedroom" => isset($data['bedroom']) ? $data['bedroom'] : null,
-                        "bathroom" => isset($data['bathroom']) ? $data['bathroom'] : null,
+                        "subcity" => isset($data['community']) ? $data['community'] : null,
+                        "town" => isset($data['sub_community']) ? $data['sub_community'] : null,
+                        "area" => isset($data['property_name']) ? $data['property_name'] : null,
+                        "property_name" => isset($data['title_en']) ? $data['title_en'] : null,
+                        "description" => isset($data['description_en']) ? $data['description_en'] : null,
+                        "property_features" => isset($data['amenities']) ? $data['amenities'] : null,
+                        "land_area" => isset($data['size']) ? $data['size'] : null,
+                        "bedrooms" => isset($data['bedroom']) ? $data['bedroom'] : null,
+                        "bathrooms" => isset($data['bathroom']) ? $data['bathroom'] : null,
                         "agent_name" => isset($data['agent']['name']) ? $data['agent']['name'] : null,
-                        "agent_email" => isset($data['agent']['email']) ? $data['agent']['email'] : null,
-                        "agent_phone" => isset($data['agent']['phone']) ? $data['agent']['phone'] : null,
-                        "agent_photo" => isset($data['agent']['photo']) ? $data['agent']['photo'] : null,
-                        "furnished" => isset($data['furnished']) ? $data['furnished'] : null,
+                        // "agent_email" => isset($data['agent']['email']) ? $data['agent']['email'] : null,
+                        "whatsapp" => isset($data['agent']['phone']) ? $data['agent']['phone'] : null,
+                        "agent_picture" => isset($data['agent']['photo']) ? $data['agent']['photo'] : null,
+                        // "furnished" => isset($data['furnished']) ? $data['furnished'] : null,
                         // "gallery_id" => $data['gallery_id'],
-                        "geopoints" => isset($data['geopoints']) ? $data['geopoints']: null
+                        // "geopoints" => isset($data['geopoints']) ? $data['geopoints']: null
                     ];
 
                     // dd($data['reference_number']);
@@ -66,17 +68,17 @@ class XmlRecordController extends MainAdminController
                     // dd();
                     foreach($data['photo']['url'] as $key => $gallery_data)
                     {
-                        $gallery_image = new XmlGallery();
+                        $gallery_image = new PropertyGallery();
 
-                        $gallery_image->gallery_images = $gallery_data;
-                        $gallery_image->reference_number = $data['reference_number'];
+                        $gallery_image->image_name = $gallery_data;
+                        $gallery_image->property_id = $data['reference_number'];
                         $gallery_image->save();
 
                     }
 
                 }
 
-                XmlRecord::insert($dataArray);
+                Properties::insert($dataArray);
 
                 return back()->with('success','Data saved successfully!');
             }
