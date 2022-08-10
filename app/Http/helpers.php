@@ -17,19 +17,17 @@ function checkMenu($data)
 }
 
 if (! function_exists('putPermanentEnv')) {
+   function putPermanentEnv($key, $value)
+   {
+      $path = app()->environmentFilePath();
+      $escaped = preg_quote('='.env($key), '/');
 
- function putPermanentEnv($key, $value)
-{
-    $path = app()->environmentFilePath();
-
-    $escaped = preg_quote('='.env($key), '/');
-
-    file_put_contents($path, preg_replace(
-        "/^{$key}{$escaped}/m",
-        "{$key}={$value}",
-        file_get_contents($path)
-    ));
-}
+      file_put_contents($path, preg_replace(
+         "/^{$key}{$escaped}/m",
+         "{$key}={$value}",
+         file_get_contents($path)
+      ));
+   }
 
 }
 

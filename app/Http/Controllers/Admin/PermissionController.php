@@ -32,11 +32,11 @@ class PermissionController extends Controller
             })
             
             ->orWhere('id', $keyword)
-            ->paginate(15);
+            ->paginate(200);
             $data['permissions']->appends($_GET)->links();
 
         }else{
-            $data['permissions'] = Permission::paginate();
+            $data['permissions'] = Permission::paginate(200);
         }
         
         $action = 'saakin_index';

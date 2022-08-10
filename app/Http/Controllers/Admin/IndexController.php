@@ -99,7 +99,7 @@ class IndexController extends MainAdminController
                 return redirect()->back()->withErrors($validator->messages());
         }
 
-        $user = new User;
+      $user = new User;
 		$user->usertype = $inputs['usertype'];
 		$user->name = $inputs['name'];
 		$user->email = $inputs['email'];

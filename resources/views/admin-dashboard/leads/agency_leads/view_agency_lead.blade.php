@@ -21,7 +21,6 @@
                                     <th>Inquiry ID</th>
                                     <td>{{ $inquire->id }}</td>
                                 </tr>
-                                
                                 <tr>
                                     <th>Name</th>
                                     <td>{{ $inquire->name }}</td>
@@ -43,16 +42,15 @@
                                     <td>{{ $inquire->subject ??'' }}</td>
                                 </tr>
                                 <tr> 
-                                        <th>Message</th>
-                                        <td>{{ $inquire->message }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Sending Date</th>
-                                        <td>{{ date('d-m-Y', strtotime($inquire->created_at)) ??'' }}</td>
-                                    </tr>
+                                       <th>Message</th>
+                                       <td>{{ $inquire->message }}</td>
+                                 </tr>
+                                 <tr>
+                                       <th>Sending Date</th>
+                                       <td>{{ date('d-m-Y', strtotime($inquire->created_at)) ??'' }}</td>
+                                 </tr>
                             </thead>
                             <tbody>
-                                
                             </tbody>
                         </table>
                     </div>

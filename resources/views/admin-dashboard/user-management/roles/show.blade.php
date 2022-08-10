@@ -23,9 +23,12 @@
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <div class="form-group">
                                 <strong>Permissions:</strong>
+                                <br>
                                 @if (!empty($rolePermissions))
                                     @foreach ($rolePermissions as $v)
-                                        <label class="badge badge-rounded badge-success">{{ $v->name }},</label>
+                                       <label class="badge badge-rounded badge-success col-2" style="font-weight: 600; padding: 5px;">
+                                          {{ $v->name }}
+                                       </label>
                                     @endforeach
                                 @endif
                             </div>

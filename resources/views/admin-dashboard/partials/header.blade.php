@@ -13,55 +13,58 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
             <ul class="navbar-nav header-right">
 
                 {{-- agency --}}
-                @if (auth()->user()->usertype == 'Admin')
-                    <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}"
-                            href="{{ route('agencies.index') }}">
-                            Agencies
-                        </a>
-                    </li>
-                @endif
+                @can('agency-list')
+                  <li class="nav-item dropdown notification_dropdown">
+                     <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}"
+                           href="{{ route('agencies.index') }}">
+                           Agencies
+                     </a>
+                  </li>
+                @endcan
 
-                {{-- blogs --}}
-                @if (auth()->user()->usertype == 'Admin')
-                    <li class="nav-item dropdown notification_dropdown">
+               {{-- blogs --}}
+               @if(auth()->user()->can('blog-list') || auth()->user()->can('blog-category-list'))
+                  <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/blog*') ? 'text-saakin' : '' }}" href="#"
-                            role="button" data-toggle="dropdown">
-                            Blog
+                           role="button" data-toggle="dropdown">
+                           Blog
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                                <ul class="timeline">
-                                    <li>
-                                        <a href="{{ route('blogs.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1 {{ Request::is('url', 'admin/blogs') ? 'text-saakin' : '' }}">
-                                                    Blogs
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('blog-category.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1 
-                                            {{ Request::is('url', 'admin/blog-category/list') ? 'text-saakin' : '' }}">
-                                                    Blog Categories
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </div>
+                           <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                              <ul class="timeline">
+                                 @can('blog-list')
+                                 <li>
+                                    <a href="{{ route('blogs.index') }}" class="timeline-panel">
+                                       <div class="media-body">
+                                             <h6
+                                                class="mb-1 {{ Request::is('url', 'admin/blogs') ? 'text-saakin' : '' }}">
+                                                Blogs
+                                             </h6>
+                                       </div>
+                                    </a>
+                                 </li>
+                                 @endcan
+                                 @can('blog-category-list')
+                                 <li>
+                                    <a href="{{ route('blog-category.index') }}" class="timeline-panel">
+                                       <div class="media-body">
+                                             <h6
+                                                class="mb-1 
+                                       {{ Request::is('url', 'admin/blog-category/list') ? 'text-saakin' : '' }}">
+                                                Blog Categories
+                                             </h6>
+                                       </div>
+                                    </a>
+                                 </li>
+                                 @endcan
+                              </ul>
+                           </div>
                         </div>
-                    </li>
-                @endif
+                  </li>
+               @endif
 
                 {{-- Addresses --}}
-                @if (auth()->user()->usertype == 'Admin')
+                @if (auth()->user()->can('properties-area-list') || auth()->user()->can('properties-city-list') || auth()->user()->can('properties-subcity-list') || auth()->user()->can('properties-city-list'))
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/location/*') ? 'text-saakin' : '' }}" href="#"
                             role="button" data-toggle="dropdown">
@@ -70,51 +73,50 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
                                 <ul class="timeline">
-                                    <li>
-                                        <a href="{{ route('propertyCities.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1 
-                                            {{ Request::is('url', 'admin/location/propertyCities') ? 'text-saakin' : '' }}">
-                                                    Cities
+                                    @can('properties-city-list')
+                                       <li>
+                                          <a href="{{ route('propertyCities.index') }}" class="timeline-panel">
+                                             <div class="media-body">
+                                                <h6 class="mb-1  {{ Request::is('url', 'admin/location/propertyCities') ? 'text-saakin' : '' }}">
+                                                      Cities
                                                 </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('propertySubCities.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/location/propertySubCities') ? 'text-saakin' : '' }}">
-                                                    Sub-Cities
+                                             </div>
+                                          </a>
+                                       </li>
+                                    @endcan
+                                    @can('properties-subcity-list')
+                                       <li>
+                                          <a href="{{ route('propertySubCities.index') }}" class="timeline-panel">
+                                             <div class="media-body">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/location/propertySubCities') ? 'text-saakin' : '' }}">
+                                                      Sub-Cities
                                                 </h6>
-                                            </div>
-                                        </a>
+                                             </div>
+                                          </a>
                                     </li>
-                                    <li>
-                                        <a href="{{ route('propertyTowns.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/location/propertyTowns') ? 'text-saakin' : '' }}">
-                                                    Towns
+                                    @endcan
+                                    @can('properties-town-list')
+                                       <li>
+                                          <a href="{{ route('propertyTowns.index') }}" class="timeline-panel">
+                                             <div class="media-body">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/location/propertyTowns') ? 'text-saakin' : '' }}">
+                                                      Towns
                                                 </h6>
-                                            </div>
-                                        </a>
+                                             </div>
+                                          </a>
                                     </li>
-                                    <li>
-                                        <a href="{{ route('propertyAreas.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/location/propertyAreas') ? 'text-saakin' : '' }}">
-                                                    Areas
+                                    @endcan
+                                    @can('properties-area-list')
+                                       <li>
+                                          <a href="{{ route('propertyAreas.index') }}" class="timeline-panel">
+                                             <div class="media-body">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/location/propertyAreas') ? 'text-saakin' : '' }}">
+                                                      Areas
                                                 </h6>
-                                            </div>
-                                        </a>
+                                             </div>
+                                          </a>
                                     </li>
-
+                                    @endcan
                                 </ul>
                             </div>
                         </div>
@@ -122,89 +124,75 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                 @endif
 
                 {{-- User Management --}}
-                <li class="nav-item dropdown notification_dropdown">
-                    @if (auth()->user()->usertype == 'Admin')
-                        <a class="nav-link {{ Request::is('url', 'admin/user-management/*') ? 'text-saakin' : '' }}"
-                            href="#" role="button" data-toggle="dropdown" style="hover:{background-color: blue}">
-                            User
-                        </a>
-                    @else
-                        <a class="nav-link {{ Request::is('url', 'admin/user-management/*') ? 'text-saakin' : '' }}"
-                            href="#" role="button" data-toggle="dropdown" style="hover:{background-color: blue}">
-                            Team
-                        </a>
-                    @endif
+                @if (auth()->user()->can('user-list') || auth()->user()->can('permission-list') || auth()->user()->can('role-list'))  
+                  <li class="nav-item dropdown notification_dropdown">
+                     @if (auth()->user()->usertype == 'Admin')
+                           <a class="nav-link {{ Request::is('url', 'admin/user-management/*') ? 'text-saakin' : '' }}"
+                              href="#" role="button" data-toggle="dropdown" style="hover:{background-color: blue}">
+                              User
+                           </a>
+                     @else
+                           <a class="nav-link {{ Request::is('url', 'admin/user-management/*') ? 'text-saakin' : '' }}"
+                              href="#" role="button" data-toggle="dropdown" style="hover:{background-color: blue}">
+                              Team
+                           </a>
+                     @endif
 
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                            <ul class="timeline">
-                                <li>
-                                    @if (auth()->user()->usertype == 'Admin')
-                                        <a href="{{ route('users.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/user-management/users') ? 'text-saakin' : '' }}">
-                                                    Users
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    @else
-                                        <a href="{{ route('users.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/user-management/users') ? 'text-saakin' : '' }}">
-                                                    Add Member
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    @endif
-                                </li>
-                                @can('permission-list')
+                     <div class="dropdown-menu dropdown-menu-right">
+                           <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                              <ul class="timeline">
+                                 @can('user-list')
                                     <li>
-                                        <a href="{{ route('permissions.index') }}" class="timeline-panel">
-                                            <div class="media-body">
+                                       <a href="{{ route('users.index') }}" class="timeline-panel">
+                                          <div class="media-body">
                                                 <h6
-                                                    class="mb-1 
-                                            {{ Request::is('url', 'admin/user-management/permissions') ? 'text-saakin' : '' }}">
-                                                    Permissions
+                                                   class="mb-1
+                                          {{ Request::is('url', 'admin/user-management/users') ? 'text-saakin' : '' }}">
+                                                   Users
                                                 </h6>
-                                            </div>
-                                        </a>
+                                          </div>
+                                       </a>
                                     </li>
-                                @endcan
-                                @can('role-list')
-                                    <li>
-                                        <a href="{{ route('roles.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1 
-                                            {{ Request::is('url', 'admin/user-management/roles') ? 'text-saakin' : '' }}">
-                                                    Roles
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                @endcan
-                            </ul>
-                        </div>
-                    </div>
-                </li>
-
+                                 @endcan
+                                 @can('permission-list')
+                                       <li>
+                                          <a href="{{ route('permissions.index') }}" class="timeline-panel">
+                                             <div class="media-body">
+                                                   <h6 class="mb-1  {{ Request::is('url', 'admin/user-management/permissions') ? 'text-saakin' : '' }}">
+                                                      Permissions
+                                                   </h6>
+                                             </div>
+                                          </a>
+                                       </li>
+                                 @endcan
+                                 @can('role-list')
+                                       <li>
+                                          <a href="{{ route('roles.index') }}" class="timeline-panel">
+                                             <div class="media-body">
+                                                   <h6 class="mb-1 {{ Request::is('url', 'admin/user-management/roles') ? 'text-saakin' : '' }}">
+                                                      Roles
+                                                   </h6>
+                                             </div>
+                                          </a>
+                                       </li>
+                                 @endcan
+                              </ul>
+                           </div>
+                     </div>
+                  </li>
+                @endif
                 {{-- Landing Pages --}}
-                @if (auth()->user()->usertype == 'Admin')
+                @if (auth()->user()->can('landing-page-list'))
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link 
-                    {{ Request::is('url', 'admin/landing-pages*') ? 'text-saakin' : '' }} 
-                    {{ Request::is('url', 'admin/popularSearches') ? 'text-saakin' : '' }}
-                    {{ Request::is('url', 'admin/about_page') ? 'text-saakin' : '' }}
-                    {{ Request::is('url', 'admin/terms_page') ? 'text-saakin' : '' }}
-                    {{ Request::is('url', 'admin/privacy_policy_page') ? 'text-saakin' : '' }}
-                    {{ Request::is('url', 'admin/faq_page') ? 'text-saakin' : '' }}
-                    "
-                            href="#" role="button" data-toggle="dropdown">
-                            Pages
+                           {{ Request::is('url', 'admin/landing-pages*') ? 'text-saakin' : '' }} 
+                           {{ Request::is('url', 'admin/popularSearches') ? 'text-saakin' : '' }}
+                           {{ Request::is('url', 'admin/about_page') ? 'text-saakin' : '' }}
+                           {{ Request::is('url', 'admin/terms_page') ? 'text-saakin' : '' }}
+                           {{ Request::is('url', 'admin/privacy_policy_page') ? 'text-saakin' : '' }}
+                           {{ Request::is('url', 'admin/faq_page') ? 'text-saakin' : '' }}" 
+                           href="#" role="button" data-toggle="dropdown">
+                           Pages
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
@@ -212,9 +200,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('properties-page-content') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/landing-pages/properties-page/content') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/landing-pages/properties-page/content') ? 'text-saakin' : '' }}">
                                                     Properties Page Content
                                                 </h6>
                                             </div>
@@ -223,9 +209,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('landing-pages.index') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/landing-pages') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/landing-pages') ? 'text-saakin' : '' }}">
                                                     Landing Page Content
                                                 </h6>
                                             </div>
@@ -234,9 +218,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('agency-landing-pages.index') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'agencies-page/content') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1 {{ Request::is('url', 'agencies-page/content') ? 'text-saakin' : '' }}">
                                                     Agencies Page Content
                                                 </h6>
                                             </div>
@@ -245,9 +227,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('city-guide-landing-pages.index') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'city-guide-page/content') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1 {{ Request::is('url', 'city-guide-page/content') ? 'text-saakin' : '' }}">
                                                     City-Guide Page Content
                                                 </h6>
                                             </div>
@@ -256,9 +236,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('popularSearches.index') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1 
-                                                {{ Request::is('url', 'admin/popularSearches') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1  {{ Request::is('url', 'admin/popularSearches') ? 'text-saakin' : '' }}">
                                                     Popular Searches
                                                 </h6>
                                             </div>
@@ -268,9 +246,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('about_page') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1 
-                                                {{ Request::is('url', 'admin/about_page') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1  {{ Request::is('url', 'admin/about_page') ? 'text-saakin' : '' }}">
                                                     About Us
                                                 </h6>
                                             </div>
@@ -280,9 +256,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('terms_page') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/terms_page') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/terms_page') ? 'text-saakin' : '' }}">
                                                     Terms of Use
                                                 </h6>
                                             </div>
@@ -292,9 +266,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('privacy_page') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/privacy_policy_page') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/privacy_policy_page') ? 'text-saakin' : '' }}">
                                                     Privacy Policy
                                                 </h6>
                                             </div>
@@ -304,9 +276,7 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                     <li>
                                         <a href="{{ route('faq_page') }}" class="timeline-panel">
                                             <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/faq_page') ? 'text-saakin' : '' }}">
+                                                <h6 class="mb-1 {{ Request::is('url', 'admin/faq_page') ? 'text-saakin' : '' }}">
                                                     FAQ's
                                                 </h6>
                                             </div>
@@ -320,367 +290,307 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                 @endif
 
                 {{-- Property types purpose report active inactive amenity management --}}
-                @if (auth()->user()->usertype == 'Admin')
-                    <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link  {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}" href="#"
-                            role="button" data-toggle="dropdown">
-                            Listing
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                                <ul class="timeline">
-                                    <li>
-                                        <a href="{{ route('featuredproperties.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/properties_featured') ? 'text-saakin' : '' }}">
-                                                    Featured Properties
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('admin/properties') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/properties') ? 'text-saakin' : '' }}">
-                                                    Active Properties
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('inactive_properties.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/properties_inactive_listing') ? 'text-saakin' : '' }}">
-                                                    In-Active Properties
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('property-types.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/property-types') ? 'text-saakin' : '' }}">
-                                                    Property Types
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('property-purpose.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/property-purpose') ? 'text-saakin' : '' }}">
-                                                    Property Purposes
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('property-amenity.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/property-amenity') ? 'text-saakin' : '' }}">
-                                                    Property Amenity
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('property-reports.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/property-reports') ? 'text-saakin' : '' }}">
-                                                    Property Reports
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                @else
-                    <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link  {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}"
-                            href="#" role="button" data-toggle="dropdown">
-                            My Listing
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                                <ul class="timeline">
-                                    <li>
-                                        <a href="{{ route('featuredproperties.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/properties_featured') ? 'text-saakin' : '' }}">
-                                                    Featured Properties
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('admin/properties') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/properties') ? 'text-saakin' : '' }}">
-                                                    Active Properties
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('inactive_properties.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/properties_inactive_listing') ? 'text-saakin' : '' }}">
-                                                    In-Active Properties
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('property-reports.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                                {{ Request::is('url', 'admin/property-reports') ? 'text-saakin' : '' }}">
-                                                    Property Reports
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
+                @if (auth()->user()->can('properties-feature-list') || auth()->user()->can('properties-list') || 
+                     auth()->user()->can('properties-type-list') || auth()->user()->can('properties-purpose-list') || 
+                     auth()->user()->can('property-amenity-list') || auth()->user()->can('property-report-list') )
+                     <li class="nav-item dropdown notification_dropdown">
+                           <a class="nav-link  {{ Request::is('url', 'admin/propert*') ? 'text-saakin' : '' }}" href="#"
+                              role="button" data-toggle="dropdown">
+                              Listing
+                           </a>
+                           <div class="dropdown-menu dropdown-menu-right">
+                              <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                                 <ul class="timeline">
+                                       @can('properties-feature-list')
+                                          <li>
+                                             <a href="{{ route('featuredproperties.index') }}" class="timeline-panel">
+                                                <div class="media-body">
+                                                      <h6 class="mb-1 {{ Request::is('url', 'admin/properties_featured') ? 'text-saakin' : '' }}"> Featured Properties
+                                                      </h6>
+                                                </div>
+                                             </a>
+                                          </li>
+                                       @endcan
+                                       @can('properties-list')
+                                          <li>
+                                             <a href="{{ url('admin/properties') }}" class="timeline-panel">
+                                                <div class="media-body">
+                                                   <h6 class="mb-1 {{ Request::is('url', 'admin/properties') ? 'text-saakin' : '' }}">
+                                                         Active Properties
+                                                   </h6>
+                                                </div>
+                                             </a>
+                                          </li>
+                                       @endcan
+                                       @can('properties-list')
+                                          <li>
+                                             <a href="{{ route('inactive_properties.index') }}" class="timeline-panel">
+                                                <div class="media-body">
+                                                   <h6 class="mb-1 {{ Request::is('url', 'admin/properties_inactive_listing') ? 'text-saakin' : '' }}">
+                                                         In-Active Properties
+                                                   </h6>
+                                                </div>
+                                             </a>
+                                          </li>
+                                       @endcan
+                                       @can('properties-type-list')   
+                                          <li>
+                                             <a href="{{ route('property-types.index') }}" class="timeline-panel">
+                                                <div class="media-body">
+                                                   <h6 class="mb-1 {{ Request::is('url', 'admin/property-types') ? 'text-saakin' : '' }}">
+                                                      Property Types
+                                                   </h6>
+                                                </div>
+                                             </a>
+                                          </li>
+                                       @endcan
+                                       @can('properties-purpose-list')
+                                          <li>
+                                             <a href="{{ route('property-purpose.index') }}" class="timeline-panel">
+                                                <div class="media-body">
+                                                   <h6 class="mb-1 {{ Request::is('url', 'admin/property-purpose') ? 'text-saakin' : '' }}">
+                                                         Property Purposes
+                                                   </h6>
+                                                </div>
+                                             </a>
+                                          </li>
+                                       @endcan
+                                       @can('property-amenity')
+                                          <li>
+                                             <a href="{{ route('property-amenity.index') }}" class="timeline-panel">
+                                                <div class="media-body">
+                                                   <h6 class="mb-1 {{ Request::is('url', 'admin/property-amenity') ? 'text-saakin' : '' }}">
+                                                         Property Amenity
+                                                   </h6>
+                                                </div>
+                                             </a>
+                                          </li>
+                                       @endcan
+                                       @can('property-report-list')
+                                          <li>
+                                             <a href="{{ route('property-reports.index') }}" class="timeline-panel">
+                                                <div class="media-body">
+                                                   <h6 class="mb-1 {{ Request::is('url', 'admin/property-reports') ? 'text-saakin' : '' }}">
+                                                         Property Reports
+                                                   </h6>
+                                                </div>
+                                             </a>
+                                          </li>
+                                       @endcan
+                                 </ul>
+                              </div>
+                           </div>
+                     </li>
                 @endif
 
                 {{-- Traffic --}}
-                <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link  {{ Request::is('url', 'admin/traff*') ? 'text-saakin' : '' }}" href="#"
+                @can('analytics')
+                  <li class="nav-item dropdown notification_dropdown">
+                     <a class="nav-link  {{ Request::is('url', 'admin/traff*') ? 'text-saakin' : '' }}" href="#"
                         role="button" data-toggle="dropdown">
                         Analytics
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right">
                         <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                            <ul class="timeline">
-
-                                <li>
+                           <ul class="timeline">
+                              @can('property-visits')
+                                 <li>
                                     <a href="{{ route('propertyVisits_per_month') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6
-                                                class="mb-1
-                                            {{ Request::is('url', 'admin/traffic/visits_per_month') ? 'text-saakin' : '' }}">
+                                       <div class="media-body">
+                                             <h6 class="mb-1 {{ Request::is('url', 'admin/traffic/visits_per_month') ? 'text-saakin' : '' }}">
                                                 Property Visits
-                                            </h6>
-                                        </div>
+                                             </h6>
+                                       </div>
                                     </a>
-                                </li>
-
-                                <li>
+                                 </li>
+                              @endcan
+                              
+                              @can('click-to-action')
+                                 <li>
                                     <a href="{{ route('callToAction.index') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6
-                                                class="mb-1
-                                            {{ Request::is('url', 'admin/traffic/callToAction') ? 'text-saakin' : '' }}">
+                                       <div class="media-body">
+                                             <h6 class="mb-1 {{ Request::is('url', 'admin/traffic/callToAction') ? 'text-saakin' : '' }}">
                                                 Click to Action
-                                            </h6>
-                                        </div>
+                                             </h6>
+                                       </div>
                                     </a>
-                                </li>
-
-                                <li>
+                                 </li>
+                              @endcan
+                              
+                              @can('unique-vistiors')
+                                 <li>
                                     <a href="{{ route('trafficUsers') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6
-                                                class="mb-1
-                                                {{ Request::is('url', 'admin/traffic/trafficUsers') ? 'text-saakin' : '' }}">
+                                       <div class="media-body">
+                                             <h6 class="mb-1 {{ Request::is('url', 'admin/traffic/trafficUsers') ? 'text-saakin' : '' }}">
                                                 Unique Visitors
-                                            </h6>
-                                        </div>
+                                             </h6>
+                                       </div>
                                     </a>
-                                </li>
-                                <li>
+                                 </li>
+                              @endcan
+                                 
+                              @can('top-properties')
+                                 <li>
                                     <a href="{{ route('top_Ten_Properties') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6
-                                                class="mb-1
-                                            {{ Request::is('url', 'admin/traffic/topTenProperties') ? 'text-saakin' : '' }}">
+                                       <div class="media-body">
+                                             <h6 class="mb-1 {{ Request::is('url', 'admin/traffic/topTenProperties') ? 'text-saakin' : '' }}">
                                                 Top Properties
-                                            </h6>
-                                        </div>
+                                             </h6>
+                                       </div>
                                     </a>
-                                </li>
-                                <li>
+                                 </li>
+                              @endcan
+                              
+                              @can('trending-areas')
+                                 <li>
                                     <a href="{{ route('top_10_areas') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6
-                                                class="mb-1
-                                            {{ Request::is('url', 'admin/traffic/top10areas') ? 'text-saakin' : '' }}">
+                                       <div class="media-body">
+                                             <h6 class="mb-1 {{ Request::is('url', 'admin/traffic/top10areas') ? 'text-saakin' : '' }}">
                                                 Trending Areas
-                                            </h6>
-                                        </div>
+                                             </h6>
+                                       </div>
                                     </a>
-                                </li>
-
-                            </ul>
+                                 </li>
+                              @endcan
+                           </ul>
                         </div>
-                    </div>
-                </li>
+                     </div>
+                  </li>
+                @endcan
 
                 {{-- Inquiries --}}
-                <li class="nav-item dropdown notification_dropdown">
-                    <a class="nav-link 
-                    {{ Request::is('url', 'admin/leads*') ? 'text-saakin' : '' }} 
-                    {{ Request::is('url', 'admin/companyRegistration') ? 'text-saakin' : '' }}"
-                        href="#" role="button" data-toggle="dropdown">
-                        Leads
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                            <ul class="timeline">
-                                <li>
-                                    <a href="{{ route('property_inquiries') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6
-                                                class="mb-1
-                                            {{ Request::is('url', 'admin/leads/property_inquiries') ? 'text-saakin' : '' }}">
-                                                Property Inquiries
-                                            </h6>
-                                        </div>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('agency_inquiries') }}" class="timeline-panel">
-                                        <div class="media-body">
-                                            <h6
-                                                class="mb-1
-                                            {{ Request::is('url', 'admin/leads/agency_inquiries') ? 'text-saakin' : '' }}">
-                                                Agency Inquiries
-                                            </h6>
-                                        </div>
-                                    </a>
-                                </li>
-                                @if (auth()->user()->usertype == 'Admin')
+               @can('lead-list')
+                  <li class="nav-item dropdown notification_dropdown">
+                     <a class="nav-link {{ Request::is('url', 'admin/leads*') ? 'text-saakin' : '' }} 
+                     {{ Request::is('url', 'admin/companyRegistration') ? 'text-saakin' : '' }}" href="#" role="button" data-toggle="dropdown">
+                           Leads
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right">
+                           <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                              <ul class="timeline">
+                                 @can('property-leads')
                                     <li>
-                                        <a href="{{ route('contact_inquiries') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1 
-                                            {{ Request::is('url', 'admin/leads/contact_inquiries') ? 'text-saakin' : '' }}">
-                                                    Contact Us
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if (auth()->user()->usertype == 'Admin')
+                                       <a href="{{ route('property_inquiries') }}" class="timeline-panel">
+                                          <div class="media-body">
+                                             <h6 class="mb-1 {{ Request::is('url', 'admin/leads/property_inquiries') ? 'text-saakin' : '' }}">
+                                                   Property Inquiries
+                                             </h6>
+                                          </div>
+                                       </a>
+                                    </li>   
+                                 @endcan
+                                 
+                                 @can('agency-leads')
                                     <li>
-                                        <a href="{{ route('companyRegistration.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/companyRegistration') ? 'text-saakin' : '' }}">
-                                                    Company Registration
-                                                </h6>
-                                            </div>
-                                        </a>
+                                       <a href="{{ route('agency_inquiries') }}" class="timeline-panel">
+                                          <div class="media-body">
+                                             <h6 class="mb-1 {{ Request::is('url', 'admin/leads/agency_inquiries') ? 'text-saakin' : '' }}">
+                                                   Agency Inquiries
+                                             </h6>
+                                          </div>
+                                       </a>
                                     </li>
+                                 @endcan
+                                 
+                                 @can('contact-us-leads')
                                     <li>
-                                        <a href="{{ route('subscriber') }}" class="timeline-panel">
-                                            <div class="media-body">
+                                       <a href="{{ route('contact_inquiries') }}" class="timeline-panel">
+                                          <div class="media-body">
                                                 <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/leads/subscriber') ? 'text-saakin' : '' }}">
-                                                    Subscribers
+                                                   class="mb-1 
+                                          {{ Request::is('url', 'admin/leads/contact_inquiries') ? 'text-saakin' : '' }}">
+                                                   Contact Us
                                                 </h6>
-                                            </div>
-                                        </a>
+                                          </div>
+                                       </a>
                                     </li>
-                                @endif
+                                 @endcan
 
-                            </ul>
-                        </div>
-                    </div>
-                </li>
+                                 @can('company-registration-leads')
+                                    <li>
+                                       <a href="{{ route('companyRegistration.index') }}" class="timeline-panel">
+                                          <div class="media-body">
+                                                <h6
+                                                   class="mb-1
+                                          {{ Request::is('url', 'admin/companyRegistration') ? 'text-saakin' : '' }}">
+                                                   Company Registration
+                                                </h6>
+                                          </div>
+                                       </a>
+                                    </li>
+                                 @endcan
+                                 
+                                 @can('subscriber-leads')
+                                    <li>
+                                       <a href="{{ route('subscriber') }}" class="timeline-panel">
+                                          <div class="media-body">
+                                                <h6
+                                                   class="mb-1
+                                          {{ Request::is('url', 'admin/leads/subscriber') ? 'text-saakin' : '' }}">
+                                                   Subscribers
+                                                </h6>
+                                          </div>
+                                       </a>
+                                    </li>
+                                 @endcan  
+                              </ul>
+                           </div>
+                     </div>
+                  </li>
+               @endcan
 
                 {{-- City Guide --}}
-                @if (auth()->user()->usertype == 'Admin')
-                    <li class="nav-item dropdown notification_dropdown">
-                        <a class="nav-link 
-                        {{ Request::is('url', 'admin/cities') ? 'text-saakin' : '' }}
-                        {{ Request::is('url', 'admin/city-detail/list') ? 'text-saakin' : '' }}"
-                            href="#" role="button" data-toggle="dropdown">
-                            Guide
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
-                                <ul class="timeline">
-                                    <li>
-                                        <a href="{{ route('cities.index') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/cities') ? 'text-saakin' : '' }}">
-                                                    Cities
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="{{ route('city-details') }}" class="timeline-panel">
-                                            <div class="media-body">
-                                                <h6
-                                                    class="mb-1
-                                            {{ Request::is('url', 'admin/city-detail/list') ? 'text-saakin' : '' }}">
-                                                    City Details
-                                                </h6>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </div>
+                @can('city-guide-list')
+                  <li class="nav-item dropdown notification_dropdown">
+                     <a class="nav-link  {{ Request::is('url', 'admin/cities') ? 'text-saakin' : '' }}
+                     {{ Request::is('url', 'admin/city-detail/list') ? 'text-saakin' : '' }}" href="#" role="button" data-toggle="dropdown">
+                        Guide
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right">
+                        <div id="DZ_W_Notification1" class="widget-media dz-scroll p-3">
+                           <ul class="timeline">
+                              <li>
+                                 <a href="{{ route('cities.index') }}" class="timeline-panel">
+                                    <div class="media-body">
+                                       <h6 class="mb-1 {{Request::is('url', 'admin/cities') ? 'text-saakin':''}}">
+                                          Cities
+                                       </h6>
+                                    </div>
+                                 </a>
+                              </li>
+                              <li>
+                                 <a href="{{ route('city-details') }}" class="timeline-panel">
+                                    <div class="media-body">
+                                       <h6 class="mb-1 {{ Request::is('url', 'admin/city-detail/list') ? 'text-saakin' : '' }}"> City Details
+                                       </h6>
+                                    </div>
+                                 </a>
+                              </li>
+                           </ul>
                         </div>
-                    </li>
-                @endif
+                     </div>
+                  </li>
+                @endcan
 
                 {{-- XML Records --}}
-                @if (auth()->user()->usertype == 'Admin')
+                @can('xml-access')
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}"
                             href="{{ route('xml-upload') }}">
                             XML
                         </a>
                     </li>
-                @endif
+                @endcan
 
                 {{-- MLS --}}
-                @if (auth()->user()->usertype == 'Agency')
+                @can('mls-access')
                     <li class="nav-item dropdown notification_dropdown">
                         <a class="nav-link {{ Request::is('url', 'admin/agenc*') ? 'text-saakin' : '' }}"
                             href="{{ route('mls.index') }}">
                             MLS
                         </a>
                     </li>
-                @endif
+                @endcan
 
                 <li class="nav-item dropdown notification_dropdown">
                     <a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
@@ -723,31 +633,29 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                                             class="d-block">{{ date('d-m-Y', strtotime($inquiry->created_at)) }}</small>
                                                     </a>
                                                 @else
-                                                    <a
-                                                        href="{{ url('admin/view_property_inquiry', $inquiry->id) }}">
-                                                        <h6 class="mb-1">{{ $inquiry->type }} to
-                                                            {{ $inquiry->Agencies->name ?? '' }}</h6>
-                                                        <small
-                                                            class="d-block">{{ date('d-m-Y', strtotime($inquiry->created_at)) }}</small>
-                                                    </a>
+                                                   <a href="{{ url('admin/view_property_inquiry', $inquiry->id) }}">
+                                                      <h6 class="mb-1">{{ $inquiry->type }} 
+                                                         to {{ $inquiry->Agencies->name ?? '' }}
+                                                      </h6>
+                                                      <small class="d-block">
+                                                         {{ date('d-m-Y', strtotime($inquiry->created_at)) }}
+                                                      </small>
+                                                   </a>
                                                 @endif
                                             </div>
                                         </div>
                                     </li>
                                 @endforeach
                                 <li>
-                                    <a class="all-notification" href="{{ route('notifications') }}">See all<i
-                                            class="ti-arrow-right"></i></a>
-
+                                    <a class="all-notification" href="{{ route('notifications') }}">
+                                       See all<i class="ti-arrow-right"></i>
+                                    </a>
                                 </li>
-
                             </ul>
                         </div>
                     </div>
                 </li>
-
             </ul>
-
 
             <ul class="navbar-nav header-right ml-5">
                 <li class="nav-item dropdown header-profile">
@@ -788,14 +696,16 @@ $data['inquiries'] = App\Enquire::when(auth()->user()->usertype == 'Agency', fun
                                 {{ trans('words.view_site') }}
                             </span>
                         </a>
-                        @if (auth()->user()->usertype == 'Admin')
-                            <a href="{!! route('admin.settings') !!}" class="dropdown-item ai-icon">
-                                <i class="fa fa-gear"></i>
-                                <span class="ml-2">
-                                    {{ trans('words.settings') }}
-                                </span>
-                            </a>
-                        @endif
+                        
+                        @can('settings-list')
+                           <a href="{!! route('admin.settings') !!}" class="dropdown-item ai-icon">
+                              <i class="fa fa-gear"></i>
+                              <span class="ml-2">
+                                 {{ trans('words.settings') }}
+                              </span>
+                           </a>
+                        @endcan
+                        
                         <a href="{!! url('logout') !!}" class="dropdown-item ai-icon">
                             <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18"
                                 height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"

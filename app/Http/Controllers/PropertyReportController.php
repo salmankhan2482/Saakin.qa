@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\Session;
 
 class PropertyReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+      $this->middleware('permission:property-report-list', ['only' => ['index']]);
+      
+    }
     public function index()
     {
         if(Auth::User()->usertype!="Admin" && Auth::User()->usertype!="Agency"){
