@@ -29,7 +29,6 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Admin\MainAdminController;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Intervention\Image\ImageManagerStatic as Image;
 
 class PropertiesController extends MainAdminController
@@ -40,7 +39,7 @@ class PropertiesController extends MainAdminController
       $this->middleware('permission:properties-list', ['only' => ['index','inactivepropertieslist']]);
       $this->middleware('permission:properties-create', ['only' => ['create','store']]);
       $this->middleware('permission:properties-edit', ['only' => ['edit','update']]);
-      $this->middleware('permission:properties-delete', ['only' => ['destroy']]);
+      $this->middleware('permission:properties-delete', ['only' => ['delete']]);
       
       $this->middleware('permission:gallery-images-list', ['only' => ['listGalleryImages']]);
       $this->middleware('permission:gallery-images-create', ['only' => ['addGalleryImages','storeGalleryImages']]);
@@ -209,11 +208,9 @@ class PropertiesController extends MainAdminController
       $type = Types::where('id', $request->property_type)->first();
 
       if ($subcity == $town) {
-         $property_slug =
-            strtolower($type->slug . '-for-' . $request->property_purpose . '-' . Str::slug($city . '-' . $subcity . '-' . $area));
+         $property_slug = strtolower($type->slug . '-for-' . $request->property_purpose . '-' . Str::slug($city . '-' . $subcity . '-' . $area));
       } else {
-         $property_slug =
-            strtolower($type->slug . '-for-' . $request->property_purpose . '-' . Str::slug($city . '-' . $subcity . '-' . $town . '-' . $area));
+         $property_slug = strtolower($type->slug . '-for-' . $request->property_purpose . '-' . Str::slug($city . '-' . $subcity . '-' . $town . '-' . $area));
       }
 
       $request_data['user_id'] = Auth::user()->id;
@@ -225,8 +222,6 @@ class PropertiesController extends MainAdminController
          $request_data['agency_id'] = Auth::user()->agency_id;
       }
 
-      $agencyName = Agency::where('id', $request_data['agency_id'])->value('name');
-      // $request_data['refference_code'] = preg_replace('~\S\K\S*\s*~u', '', $agencyName) . '-' . preg_replace('~\S\K\S*\s*~u', '', $request_data['property_type']) . '-' . preg_replace('~\S\K\S*\s*~u', '', $request_data['property_purpose']);
       $request_data['refference_code'] = $request_data['reference_code'];
       $request_data['property_slug'] = $property_slug;
       $request_data['rooms'] = request()->rooms;
@@ -235,7 +230,6 @@ class PropertiesController extends MainAdminController
       $request_data['area'] = $request->area;
       $request_data['map_latitude'] = $request_data['map_latitude'];
       $request_data['map_longitude'] = $request_data['map_longitude'];
-
       $featured_image = $request->file('featured_image');
 
       if ($featured_image) {
@@ -293,7 +287,6 @@ class PropertiesController extends MainAdminController
       $pro->address = $address_without_slug;
       $pro->update();
 
-
       $property_gallery_files = $request->file('images');
       $gallery_image_path = public_path('upload/gallery');
       $galcount = 0;
@@ -340,7 +333,6 @@ class PropertiesController extends MainAdminController
       $property->meta_description = $request->meta_description;
       $property->meta_keyword = $request->meta_keyword;
       $property->save();
-
 
       \Session::flash('flash_message', "Your Property has been submitted. It will be Publish soon");
       return redirect()->route('properties.index');
@@ -567,35 +559,35 @@ class PropertiesController extends MainAdminController
       $decrypted_id = Crypt::decryptString($id);
       $property = Properties::findOrFail($decrypted_id);
 
-      if (Auth::User()->usertype == "Admin") {
+      // if (Auth::User()->usertype == "Admin") {
 
-         File::delete(public_path() . '/upload/properties/' . $property->featured_image);
-         File::delete(public_path() . '/upload/m_properties/mobile_thumb_' . $property->featured_image);
-         File::delete(public_path() . '/upload/floorplan/' . $property->floor_plan);
-         $property->delete();
-         $property->amenities()->detach();
+      //    File::delete(public_path() . '/upload/properties/' . $property->featured_image);
+      //    File::delete(public_path() . '/upload/m_properties/mobile_thumb_' . $property->featured_image);
+      //    File::delete(public_path() . '/upload/floorplan/' . $property->floor_plan);
+      //    $property->delete();
+      //    $property->amenities()->detach();
 
-         $property_gallery_images = PropertyGallery::where('property_id', $decrypted_id)->get();
+      //    $property_gallery_images = PropertyGallery::where('property_id', $decrypted_id)->get();
 
-         foreach ($property_gallery_images as $gallery_images) {
-            File::delete(public_path() . '/upload/gallery/' . $gallery_images->image_name);
-            File::delete(public_path() . '/upload/m_gallery/mobile_' . $gallery_images->image_name);
-            $property_gallery_obj = PropertyGallery::findOrFail($gallery_images->id);
-            $property_gallery_obj->delete();
-         }
+      //    foreach ($property_gallery_images as $gallery_images) {
+      //       File::delete(public_path() . '/upload/gallery/' . $gallery_images->image_name);
+      //       File::delete(public_path() . '/upload/m_gallery/mobile_' . $gallery_images->image_name);
+      //       $property_gallery_obj = PropertyGallery::findOrFail($gallery_images->id);
+      //       $property_gallery_obj->delete();
+      //    }
 
-         Session::flash('flash_message', trans('words.deleted'));
-         return redirect()->back();
+      //    Session::flash('flash_message', trans('words.deleted'));
+      //    return redirect()->back();
 
-      } elseif (Auth::User()->usertype == "Agency") {
-         if (Auth::User()->id != $property->user_id and Auth::User()->usertype != "Admin") {
-            Session::flash('flash_message', trans('words.access_denied'));
-            return redirect('admin/dashboard');
-         }
+      // } elseif (Auth::User()->usertype == "Agency") {
+      //    if (Auth::User()->id != $property->user_id and Auth::User()->usertype != "Admin") {
+      //       Session::flash('flash_message', trans('words.access_denied'));
+      //       return redirect('admin/dashboard');
+      //    }
 
          if ($property->status == 1) {
             $property->status = '0';
-            $property->remove_reason = request('reason');
+            $property->remove_reason = request('reason') ?? '';
             $property->save();
             Session::flash('flash_message', "Property Removed .");
             return redirect()->back();
@@ -606,7 +598,7 @@ class PropertiesController extends MainAdminController
             Session::flash('flash_message', "Property Published .");
             return redirect()->back();
          }
-      }
+      // }
    }
 
 

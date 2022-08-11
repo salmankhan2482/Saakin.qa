@@ -11,10 +11,7 @@
     @section('type', 'property')
     @section('url', url()->current())
 @endif
-
-
 @section('content')
-
     <div class="filter-wrap">
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
@@ -1336,24 +1333,272 @@
                 </div>
             @else
             <div class="mb-3">
-                <h1 class="h6">{{ $page_info ?? '' }}
-                    <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
-                </h1>
+               <h1 class="h6">{{ $heading_info ?? '' }}
+                  <small class="d-block fs-sm fw-normal mt-2">{{ count($properties) > 0 ? $properties->total() . 'results' : '' }} </small>
+               </h1>
             </div>
             <div class="alert alert-info" role="alert">
-                Record Not Found!
+               Unfortunately we don't have any {{ $heading_info ?? 'properties' }}
             </div>
+            <div class="alert alert-dark" role="alert">
+               <p>You can try </p>
+               <ul>
+                  <li>Chnaging your location</li>
+                  <li>Choosing from near by properties</li>
+               </ul>
+            </div>
+            {{-- list view for near by properties --}}
+            <div class="row gx-3">
+               <div class="col-lg-9">
+                     @foreach ($nearbyProperties as $property)
+                        @php
+                           $phone = \App\Properties::getPhoneNumber($property->id);
+                           $whatsapp = \App\Properties::getWhatsapp($property->id);
+                           $agency = \App\Agency::where('id', $property->agency_id)->first();
+                           $propertyUrl = url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id);
+                           $whatsapText = 'Hello, I would like to inquire about this property posted on saakin.qa Reference: ' . $property->refference_code . 'Price: QR' . $property->getPrice() . '/month Type: ' . $property->propertiesTypes->types . ' Location: ' . $property->address . ' Link:' . $propertyUrl;
+                        @endphp
+                        <div class="single-property-box horizontal-view" @if (!(new \Jenssegers\Agent\Agent())->isMobile())  @endif>
+                           {{--  --}}
+                           <div class="property-item">
+                                 <div class="pro-slider">
+                                    <div class="pro-slider-item">
+                                       @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                             <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
+                                                alt="{{ $property->property_name }}">
+                                       @else
+                                             <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                alt="{{ $property->property_name }}">
+                                       @endif
 
+                                    </div>
+
+                                    @if (count($property->gallery) > 0)
+                                       @foreach ($property->gallery as $gallery)
+                                             @if ($loop->index < 5)
+                                                <div class="pro-slider-item">
+                                                   @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                                         <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
+                                                            alt="{{ $property->property_name }}">
+                                                   @else
+                                                         <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                            alt="{{ $property->property_name }}">
+                                                   @endif
+                                                </div>
+                                             @endif
+                                       @endforeach
+                                    @endif
+                                 </div>
+
+                                 <ul class="feature_text">
+                                    @if ($property->featured_property == 1)
+                                       <li class="feature_cb"><span> Featured </span></li>
+                                    @endif
+
+                                    @if ($property->property_purpose == 1)
+                                       <li class="feature_or"><span> For Rent </span></li>
+                                    @elseif($property->property_purpose == 2)
+                                       <li class="feature_or"><span> For Sale</span></li>
+                                    @elseif($property->property_purpose != '' || $property->property_purpose != null)
+                                       <li class="feature_or">
+                                             <span> {{ $property->property_purpose }}</span>
+                                       </li>
+                                    @endif
+                                 </ul>
+                           </div>
+
+
+                           <div class="property-title-box">
+
+                                 <div class="price">
+                                    {{ $property->getPrice() }}
+
+                                    @if ($property->property_purpose == 'For Rent' || $property->property_purpose == 'Rent')
+                                       / Month
+                                    @endif
+                                 </div>
+                                 <a class="text-decoration-none stretched-link"
+                                    href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}">
+                                    <h5 class="property-card__property-title">
+                                       {{ $property->property_name }}
+                                    </h5>
+                                 </a>
+                                 <span>{{ Str::limit($property->propertiesTypes->types, 36) }}</span>
+                                 <ul class="property-feature">
+
+                                    @if ($property->getProperty_type())
+                                       <li>
+                                             <i class="fas fa-bed"></i>
+                                             <span>{{ $property->bedrooms }} </span>
+                                       </li>
+                                       <li>
+                                             <i class="fas fa-bath"></i>
+                                             <span>{{ $property->bathrooms }} </span>
+                                       </li>
+                                    @endif
+                                    <li>
+                                       <i class="fas fa-chart-area"></i>
+                                       <span>{{ $property->getSqm() }}</span>
+                                    </li>
+                                 </ul>
+                                 <div class="property-location">
+                                    <i class="fa fa-map-marker-alt"></i>
+                                    <p class="hideAddress">
+                                       {{ $property->address }}, {{ $property->propertyCity->name ?? '' }}
+                                    </p>
+                                 </div>
+                                 <div class="social-div mt-md-2 d-flex">
+                                    @if (!empty($property->whatsapp))
+                                       <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
+                                             data-telNumber="{{ $property->whatsapp }}"
+                                             data-property_id={{ $property->id }}
+                                             data-agency_id={{ $property->agency_id }} data-button_name='Call'>
+
+                                             <i class="fas fa-phone-alt text-primary"></i>
+                                             <span class="d-md-inline-block">Call</span>
+                                       </a>
+                                    @else
+                                       <a href="" class="btn btn-monochrome btn-sm btnCall mt-1 me-1 btnCount"
+                                             data-telNumber="{{ $property->Agency->phone }}"
+                                             data-property_id={{ $property->id }}
+                                             data-agency_id={{ $property->agency_id }} data-button_name='Call'>
+
+                                             <i class="fas fa-phone-alt text-primary"></i>
+                                             <span class="d-md-inline-block">Call</span>
+                                       </a>
+                                    @endif
+
+                                    @if ((new \Jenssegers\Agent\Agent())->isMobile())
+                                       @if (!empty($property->whatsapp))
+                                             <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                                class="btn btn-monochrome btn-sm mt-1 me-1 btnCount"
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }}
+                                                data-button_name='WhatsApp'>
+
+                                                <i class="fab fa-whatsapp text-primary"></i>
+                                                <span class=" d-md-inline-block">WhatsApp</span>
+                                             </a>
+                                       @else
+                                             <button class="btn btn-monochrome btn-sm mt-1 btnCount"
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                                type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
+                                                id="emailBtn"
+                                                data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
+                                                data-title="{{ $property->property_name }}"
+                                                data-agent="{{ $property->agent_name ?? $property->Agency->name }}"
+                                                data-broker="{{ $property->Agency->name ?? '' }}"
+                                                data-bedroom="{{ $property->bedrooms ?? '' }}"
+                                                data-bathroom="{{ $property->bathrooms ?? '' }}"
+                                                data-area="{{ $property->getSqm() ?? '' }}">
+                                                <i class="fas fa-envelope text-primary"></i>
+                                                <span class="d-md-inline-block">
+                                                   Email
+                                                </span>
+                                             </button>
+                                       @endif
+                                    @else
+                                       @if (!empty($property->whatsapp))
+                                             <a href="//api.whatsapp.com/send?phone={{ $property->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                                class="btn btn-monochrome btn-sm mt-1 btnCount me-1"
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }}
+                                                data-button_name='WhatsApp'>
+
+                                                <i class="fab fa-whatsapp text-primary"></i>
+                                                <span class=" d-md-inline-block">WhatsApp</span>
+                                             </a>
+                                       @elseif(!empty($property->Agency->whatsapp))
+                                             <a href="//api.whatsapp.com/send?phone={{ $property->Agency->whatsapp }}&text={{ urlencode($whatsapText) }}"
+                                                class="btn btn-monochrome btn-sm mt-1 btnCount"
+                                                data-property_id={{ $property->id }}
+                                                data-agency_id={{ $property->agency_id }}
+                                                data-button_name='WhatsApp'>
+
+                                                <i class="fab fa-whatsapp text-primary"></i>
+                                                <span class=" d-md-inline-block">WhatsApp</span>
+                                             </a>
+                                       @endif
+
+                                       <button class="btn btn-monochrome btn-sm mt-1 btnCount"
+                                             data-property_id={{ $property->id }}
+                                             data-agency_id={{ $property->agency_id }} data-button_name='Email'
+                                             type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
+                                             id="emailBtn"
+                                             data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
+                                             data-title="{{ $property->property_name }}"
+                                             data-agent="{{ $property->agent_name ?? $property->Agency->name }}"
+                                             data-broker="{{ $property->Agency->name ?? '' }}"
+                                             data-bedroom="{{ $property->bedrooms ?? '' }}"
+                                             data-bathroom="{{ $property->bathrooms ?? '' }}"
+                                             data-area="{{ $property->getSqm() ?? '' }}">
+                                             <i class="fas fa-envelope text-primary"></i>
+                                             <span class="d-md-inline-block">
+                                                Email
+                                             </span>
+                                       </button>
+                                    @endif
+                                 </div>
+                           </div>
+                           @if ((new \Jenssegers\Agent\Agent())->isTablet() || (new \Jenssegers\Agent\Agent())->isDesktop())
+                                 <div class="property-card-extra p-3 d-none d-md-block">
+                                    <div class="property-type">
+                                       @if ($property->featured_property == 1)
+                                             Featured
+                                       @endif
+                                    </div>
+                                    <div>
+                                       <img src="{{ asset('upload/agencies/' . $property->Agency->image) }}"
+                                             width="80" alt="{{ $property->property_name }}">
+                                    </div>
+                                 </div>
+                           @endif
+                        </div>
+                     @endforeach
+                  </div>
+                  
+               <div class="col-lg-9 order-lg-3">
+                     {{-- Pagination starts --}}
+                     <div>
+                        @if (count($properties) > 0)
+                        @if ($properties->total() > getcong('pagination_limit'))
+                           {{ $properties->withQueryString()->links('front.pages.include.pagination') }}
+                        @endif
+                        @endif
+                     </div>
+                     {{-- Pagination ends --}}
+               </div>
+               <div class="col-lg-3 order-lg-2">
+                     <div class="list-sidebar mt-3 mt-lg-0">
+                        <div class="sidebar-links p-3">
+
+                           <div class="g-ads">
+                                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                                                     crossorigin="anonymous"></script>
+                                 <!-- search filter ads -->
+                                 <ins class="adsbygoogle" style="display:block"
+                                    data-ad-client="ca-pub-2421573832685297" data-ad-slot="5528669403"
+                                    data-ad-format="auto" data-full-width-responsive="true"></ins>
+                                 <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                 </script>
+                           </div>
+                        </div>
+                     </div>
+               </div>
+            </div>
             @endif
-
         </div>
     </div>
     <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
-        <div class="container">
-            @if ($properties->onFirstPage())
-                {!! $landing_page_content->page_content ?? '' !!}
-            @endif
-        </div>
+      <div class="container">
+         @if (count($properties) > 0 && $properties->onFirstPage())
+             {!! $landing_page_content->page_content ?? '' !!}
+         @elseif($nearbyProperties->total() > 0)
+            {!! $landing_page_content->page_content ?? '' !!}
+         @endif
+     </div>
     </div>
     <button class="btn btn-primary scrollTopBtn" onclick="scrollToTop()">
         <i class="fas fa-chevron-up"></i>
