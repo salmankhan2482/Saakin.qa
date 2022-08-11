@@ -208,7 +208,7 @@
                                                             </a>
                                                       @endif
 
-                                                      @if (Auth::User()->usertype == 'Admin')
+                                                      {{-- @if (Auth::User()->usertype == 'Admin')
                                                         <a href="{{ route('properties.destroy', Crypt::encryptString($property->id)) }}"
                                                             onclick="return confirm('{{ trans('words.dlt_warning_text') }}')"
                                                             class="dropdown-item">
@@ -223,7 +223,7 @@
                                                                <i class="fa fa-trash"></i>
                                                                {{ trans('words.remove') }}
                                                          </a>
-                                                      @endif
+                                                      @endif --}}
                                                    @endcan
                                                 </div>
                                             </div>
