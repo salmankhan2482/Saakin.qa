@@ -7,20 +7,33 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Search Sub City</h4>
+                    <h4 class="card-title">Subcities</h4>
+                    <a href="{{ route('propertySubCities.create') }}">
+                        <button type="button" class="btn btn-rounded btn-info">
+                            <span class="btn-icon-left text-info">
+                                <i class="fa fa-plus color-info"></i>
+                            </span>
+                            Add
+                        </button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
                         <form action="{{ route('propertySubCities.index') }}" method="GET">
                             <div class="row">
-                                <div class="col-sm-4 offset-sm-2">
+                                <div class="col-sm-6 offset-sm-2">
                                     <input type="text" class="form-control" name="name" placeholder="Search" value="{{ request('name') }}">
                                 </div>
                                
-                                <div class="col-sm-1 mt-2">
-                                    <button type="submit" class="btn btn-dark btn-sm">
+                                <div class="col-sm-1 mt-1">
+                                    <button type="submit" class="btn btn-dark btn-md">
                                         {{ trans('words.search') }}
                                     </button>
+                                </div>
+                                <div class="col-sm-1 mt-1">
+                                    <a href="{{ route('propertySubCities.index') }}" class="btn btn-info btn-md pull-left">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </a>
                                 </div>
                             </div>
                         </form>
@@ -31,19 +44,6 @@
 
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Sub-Cities</h4>
-                    @can('properties-subcity-create')
-                        <a href="{{ route('propertySubCities.create') }}">
-                           <button type="button" class="btn btn-rounded btn-info">
-                              <span class="btn-icon-left text-info">
-                                 <i class="fa fa-plus color-info"></i>
-                              </span>
-                              Add
-                           </button>
-                        </a>
-                     @endcan
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-responsive-sm">

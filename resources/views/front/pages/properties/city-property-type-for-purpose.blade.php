@@ -1,10 +1,20 @@
 @extends("front.layouts.main")
-@if ($landing_page_content != null)
-    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
-    @section('description', $landing_page_content->meta_description)
-    @section('keyword', $landing_page_content->meta_keyword)
+
+@if (strlen($urlResult) > 0)
+
+    @section('title', $subcity_landing_page_content->meta_title . ' | ' . ' Saakin.qa')
+    @section('description', $subcity_landing_page_content->meta_description)
+    @section('keyword', $subcity_landing_page_content->meta_keyword)
     @section('type', 'property')
     @section('url', url()->current())
+
+@elseif ($landing_page_content != null)
+   @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
+   @section('description', $landing_page_content->meta_description)
+   @section('keyword', $landing_page_content->meta_keyword)
+   @section('type', 'property')
+   @section('url', url()->current())
+
 @else
     @section('title', $page_info .' | Saakin.qa')
     @section('description', $data['page_des'] ?? '')
@@ -1604,8 +1614,8 @@
         <div class="container">
             @if (count($properties) > 0 && $properties->onFirstPage())
                 {!! $landing_page_content->page_content ?? '' !!}
-            @elseif($nearbyProperties->total() > 0)
-               {!! $landing_page_content->page_content ?? '' !!}
+            @elseif(!empty($nearbyProperties))
+               {!! $subcity_landing_page_content->page_content ?? '' !!}
             @endif
         </div>
     </div>

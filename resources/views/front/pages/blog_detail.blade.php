@@ -151,7 +151,7 @@
     <div class="inner-content">
         <div class="container">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-8 mt-2">
                   <div class="google-ad mb-4">
                     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
      crossorigin="anonymous"></script>
@@ -227,6 +227,46 @@
                 </div>
                 <div class="col-lg-4 mt-2">
                     <div class="card">
+                        <div class="card-body">
+                            <div class="sidebar-links">
+                                <h4>Popular Properties in Qatar</h4>
+                                <ul class="property-type-list list-unstyled">
+                                    <li>
+                                        <a href="https://www.saakin.qa/rent/apartments-for-rent">
+                                            <i class="fas fa-chevron-right"></i> Apartments for Rent
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.saakin.qa/buy/apartments-for-sale">
+                                            <i class="fas fa-chevron-right"></i> Apartments for Sale
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.saakin.qa/rent/villas-for-rent">
+                                            <i class="fas fa-chevron-right"></i> Villas for Rent
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.saakin.qa/buy/villas-for-sale">
+                                            <i class="fas fa-chevron-right"></i> Villas for Sale
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.saakin.qa/rent/offices-for-rent">
+                                            <i class="fas fa-chevron-right"></i> Offices for Rent
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.saakin.qa/rent/studio-apartments-for-rent">
+                                            <i class="fas fa-chevron-right"></i> Studio Apartments for Rent
+                                        </a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mt-3">
                         <div class="card-body">
                             <h4>Popular Topics</h4>
                             <ul class="property-type-list list-unstyled">

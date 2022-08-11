@@ -9,9 +9,11 @@
                 <div class="card-header">
                     <h4 class="card-title">Agencies</h4>
                     <a href="{{ route('agencies.create') }}">
-                        <button type="button" class="btn btn-rounded btn-info"><span
-                            class="btn-icon-left text-info"><i class="fa fa-plus color-info"></i>
-                        </span>Add</button>
+                        <button type="button" class="btn btn-rounded btn-info">
+                            <span class="btn-icon-left text-info">
+                                <i class="fa fa-plus color-info"></i>
+                            </span>Add
+                        </button>
                     </a>
                 </div>
                 <div class="card-body">
@@ -80,9 +82,14 @@
                                         <td>{{ date('d-m-Y', strtotime($agency->created_at)) ??''}} </td>
                                         <td class="text-center">
                                             @if ($agency->status == 1)
-                                                <i class="fa fa-circle text-success mr-1"></i>
+                                            <span class="badge badge-circle badge-success">
+                                                <i class="fa fa-check"></i>
+                                            </span>
                                             @else
-                                                <i class="fa fa-circle text-danger mr-1"></i>
+
+                                            <span class="badge badge-circle badge-danger">
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                            </span>
                                             @endif
                                         </td>
                                         <td>

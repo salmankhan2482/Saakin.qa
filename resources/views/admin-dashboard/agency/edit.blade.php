@@ -72,7 +72,7 @@
                                         <input type="text" name="password" id="passwordgenerator"   
                                         class="form-control" >
                                 
-                                        <button type="button" class="btn btn-success btn-xs ml-1" onclick="makeid(10);">
+                                        <button type="button" class="btn btn-success btn-xs ml-1 " onclick="makeid(10);">
                                             Generate Password
                                         </button>
                                     </span>
@@ -125,7 +125,11 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label>Status</label>
+                                    <label>Status *
+                                        <small style="font-size: 11px; color:#F00">
+                                            (Unpublish option will disable all Respective Properties)
+                                        </small>
+                                    </label>
                                     <select type="text" name="status" class="form-control">
                                         <option value="1" {{ $data['agency']->status == 1 ? 'selected' : '' }}>Publish</option>
                                         <option value="0" {{ $data['agency']->status == 0 ? 'selected' : '' }}>Unpublish</option>

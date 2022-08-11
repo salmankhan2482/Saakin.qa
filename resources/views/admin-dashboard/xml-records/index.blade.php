@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -40,4 +40,73 @@
     </div>
 </body>
 
-</html>
+</html> --}}
+
+
+@extends('admin-dashboard.layouts.master')
+@section('content')
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+	@endif
+    @if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">×</button>    
+        <strong>{{ $message }}</strong>
+    </div>
+    @endif
+<div class="container-fluid">
+    <!-- row -->
+    <div class="row">
+        <div class="col-xl-12 col-xxl-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Upload XML Feed</h4>
+                    <a href="{{route('dashboard.index')}}">
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form action="{{ route('xml-upload') }}" id="frm-create-course" method="post">
+                            @csrf
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Agency</label>
+                                    <select id="agency" name="agency" class="form-control">
+                                        <option selected>Select Agency</option>
+                                        @foreach($agencies as $agencies)
+                                        <option value="{{$agencies->id}}">{{$agencies->name}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Agent</label>
+                                    <select id="agent" name="agent" class="form-control">
+                                        <option selected>Select Agent</option>
+                                        {{-- @foreach($categories as $category)
+                                        <option value="{{$category->id}}">{{$category->category}}</option>
+                                    @endforeach --}}
+                                    </select>
+                                </div>
+                            </div>
+                             <div class="form-group">
+                                 <label for="file">Select XML File:</label>
+                                 <input type="text" class="form-control" required id="file" name="file" placeholder="Drop Link here">
+                             </div>
+                 
+                             <button type="submit" class="btn btn-primary" id="submit-post">Submit</button>
+                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
