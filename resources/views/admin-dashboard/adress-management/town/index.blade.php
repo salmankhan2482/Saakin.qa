@@ -8,6 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Towns</h4>
+                    @can('properties-town-create')                       
                     <a href="{{ route('propertyTowns.create') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
@@ -16,6 +17,8 @@
                             Add
                         </button>
                     </a>
+                    @endcan
+
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
@@ -43,9 +46,6 @@
 
         <div class="col-12">
             <div class="card">
-                {{-- <div class="card-header">
-                    <h4 class="card-title">Towns</h4>
-                </div> --}}
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-responsive-sm">
@@ -69,15 +69,19 @@
                                 <td>{{ $town->subcity->city->name }}</td>
                                 <td>{{ $town->subcity->name }}</td>
                                 <td>
-                                    <a href="{{ route('propertyTowns.edit', $town->id) }}"
-                                        class="btn btn-primary rounded btn-xs action-btn">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="{{ route('propertyTowns.destroy', $town->id) }}"
-                                        class="btn btn-danger rounded btn-xs action-btn"
-                                        onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                                    @can('properties-town-create')                       
+                                       <a href="{{ route('propertyTowns.edit', $town->id) }}"
+                                          class="btn btn-primary rounded btn-xs action-btn">
+                                          <i class="fa fa-edit"></i>
+                                       </a>
+                                    @endcan
+                                    @can('properties-town-create')                        
+                                       <a href="{{ route('propertyTowns.destroy', $town->id) }}"
+                                          class="btn btn-danger rounded btn-xs action-btn"
+                                          onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                          <i class="fa fa-trash"></i>
+                                       </a>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach

@@ -37,11 +37,17 @@
 
                     {!! Form::model($role, ['method' => 'PATCH', 'route' => ['roles.update', $role->id]]) !!}
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="form-group">
-                                <strong>Name:</strong>
-                                {!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
-                            </div>
+                        <div class="col-10 ">
+                           <div class="form-group">
+                              <strong>Name:</strong>
+                              {!! Form::text('name', null, ['placeholder' => 'Name', 'class' => 'form-control']) !!}
+                           </div>
+                        </div>
+                        <div class="col-2 mt-5">
+                           <div class="card-actions">
+                              <input type="checkbox" id="check-all"/>
+                              <strong for="check-all">Check All</strong>
+                           </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <strong>Permission:</strong>
@@ -67,4 +73,13 @@
             </div>
         </div>
     </div>
+@endsection
+@section('scripts')
+<script>
+   $('#check-all').change(function () {
+       console.log('hit');
+       var checkboxes = $(this).closest('form').find(':checkbox');
+       checkboxes.prop('checked', $(this).is(':checked'));
+   });
+</script>
 @endsection

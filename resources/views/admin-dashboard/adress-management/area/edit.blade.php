@@ -26,7 +26,7 @@
                     <div class="card-header">
                         <h4 class="card-title">Edit Area</h4>
                         <a href="{{ route('propertyAreas.index') }}">
-                            <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                            <button type="button" class="btn rounded action-btn btn-xs btn-info"><i class="fa fa-arrow-left"></i> Back</button>
                         </a>
                     </div>
                     <div class="card-body">
@@ -94,7 +94,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>&nbsp;</label><br>
-                                    <button type="submit" class="btn btn-rounded btn-success">Update</button>
+                                    <button type="submit" class="btn rounded action-btn btn-xs btn-success">Update</button>
                                 </div>
                             </div>
 

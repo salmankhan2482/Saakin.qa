@@ -177,9 +177,7 @@
                                         <td>{{ $property->id }}</td>
                                         <td>{{ Str::limit($property->Agency->name, 15) ?? $property->user->name }}</td>
                                         <td>
-                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}"
-                                                target="_blank">
-
+                                            <a href="{{ url(strtolower($property->property_purpose) . '/' . $property->property_slug . '/' . $property->id) }}" target="_blank">
                                                 {{ Str::limit($property->property_name, 30) }}
                                             </a>
                                         </td>

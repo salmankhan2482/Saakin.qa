@@ -53,10 +53,19 @@
 
         <div class="col-12">
             <div class="card">
-                {{-- <div class="card-header">
                     <h4 class="card-title">Blogs</h4>
-                    
-                </div> --}}
+
+                    @can('blog-create')
+                     <a href="{{ route('blogs.create') }}">
+                           <button type="button" class="btn btn-rounded btn-info">
+                              <span class="btn-icon-left text-info">
+                                 <i class="fa fa-plus color-info"></i>
+                              </span>Add
+                           </button>
+                     </a>
+                    @endcan
+                </div>
+
                 <div class="card-body">
                     @if (Session::has('flash_message'))
                         <div class="alert alert-success">
@@ -89,6 +98,7 @@
                                         <td>
                                             <a href="{{ url('blog/' . $blog->slug) }}" target="_blank">
                                                 {{ Str::limit($blog->title, '30', '') }}
+
                                             </a>
                                         </td>
                                         <td>
@@ -129,20 +139,25 @@
                                                     </g>
                                                 </svg>
                                             </div>
+
                                             <div class="dropdown-menu">
-                                                <a href="{{ route('blogs.status', $blog->id) }}" class="dropdown-item">
-                                                    <i class="fa fa-upload"></i>
-                                                    {{ $blog->status == 1 ? 'Draft' : 'Publish' }}
+                                                @can('blog-edit')
+                                                   <a href="{{ route('blogs.status', $blog->id) }}" class="dropdown-item">
+                                                      <i class="fa fa-upload"></i>
+                                                      {{ $blog->status == 1 ? 'Draft' : 'Publish' }}
                                                 </a>
 
                                                 <a href="{{ route('blogs.edit', $blog->id) }}" class="dropdown-item">
-                                                    <i class="fa fa-edit"></i> Edit
+                                                      <i class="fa fa-edit"></i> Edit
                                                 </a>
+                                                @endcan
 
-                                                <a href="{{ route('blogs.destroy', $blog->id) }}" class="dropdown-item"
-                                                    onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                    <i class="fa fa-trash"></i> Delete
+                                                @can('blog-delete')
+                                                   <a href="{{ route('blogs.destroy', $blog->id) }}" class="dropdown-item"
+                                                      onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                      <i class="fa fa-trash"></i> Delete
                                                 </a>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

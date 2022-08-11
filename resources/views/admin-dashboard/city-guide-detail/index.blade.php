@@ -8,12 +8,15 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">City Guide Details</h4>
-                    <a href="{{ route('city_detail_create') }}">
-                        <button type="button" class="btn btn-rounded btn-info">
-                            <span class="btn-icon-left text-info">
-                                <i class="fa fa-plus color-info"></i>
-                            </span>Add</button>
-                    </a>
+                     @can('city-guide-create')
+                        <a href="{{ route('city_detail_create') }}">
+                           <button type="button" class="btn btn-rounded btn-info">
+                              <span class="btn-icon-left text-info">
+                                 <i class="fa fa-plus color-info"></i>
+                              </span>Add
+                           </button>
+                        </a>
+                     @endcan
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -27,28 +30,29 @@
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @foreach($cityDetails as $i => $cityDetail)
-                                <tr>
+                              @foreach($cityDetails as $i => $cityDetail)
+                                 <tr>
                                     <td>{{ $cityDetail->Cities->name }}</td>
                                     <td>
-                                        <img src="{{asset('upload/cities/'.$cityDetail->Cities->city_image)}}" width="100" alt="{{ $cityDetail->Cities->name.'- city image' }}"/>
+                                          <img src="{{asset('upload/cities/'.$cityDetail->Cities->city_image)}}" width="100" alt="{{ $cityDetail->Cities->name.'- city image' }}"/>
                                     </td>
                                     <td>{{ strip_tags(Str::limit($cityDetail->attributes, 60, '...') )  }}</td>
-                                        <td class="text-center width-100">
-                                            <a href="{{ route('city_detail_edit', $cityDetail->id) }}"
-
-                                                class="btn btn-primary rounded btn-xs action-btn">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a href="{{ route('cities.destroy', $cityDetail->id) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
+                                    <td class="text-center width-100">
+                                       @can('city-guide-edit')
+                                          <a href="{{ route('city_detail_edit', $cityDetail->id) }}" class="btn btn-primary rounded btn-xs action-btn">
+                                             <i class="fa fa-edit"></i>
+                                          </a>
+                                       @endcan
+                                       @can('city-guide-delete')
+                                          <a href="{{ route('cities.destroy', $cityDetail->id) }}"
+                                             class="btn btn-danger rounded btn-xs action-btn"
+                                             onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                             <i class="fa fa-trash"></i>
+                                          </a>
+                                       @endcan
+                                    </td>
+                                 </tr>
+                              @endforeach
                             </tbody>
                         </table>
                     </div>

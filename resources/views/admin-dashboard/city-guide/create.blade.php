@@ -26,7 +26,9 @@
                 <div class="card-header">
                     <h4 class="card-title">Add City</h4>
                     <a href="{{route('cities.index')}}">
-                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> Back</button>
+                        <button type="button" class="btn btn-rounded btn-info"><i class="fa fa-arrow-left"></i> 
+                           Back
+                        </button>
                     </a>
                 </div>
                 <div class="card-body">

@@ -44,9 +44,6 @@
 
         <div class="col-12">
             <div class="card">
-                {{-- <div class="card-header">
-                    <h4 class="card-title">Sub-Cities</h4>  
-                </div> --}}
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-responsive-sm">
@@ -59,7 +56,6 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
-                            
                             <tbody>
                             @foreach ($subCities as $i => $subCity)
                             <tr>
@@ -68,15 +64,19 @@
                                 <td>{{ $subCity->slug }}</td>
                                 <td>{{ $subCity->city->name ?? '' }}</td>
                                 <td>
+                                    @can('properties-subcity-edit')                                       
                                     <a href="{{ route('propertySubCities.edit', $subCity->id) }}"
                                         class="btn btn-primary rounded btn-xs action-btn">
                                         <i class="fa fa-edit"></i>
                                     </a>
+                                    @endcan
+                                    @can('properties-subcity-delete')                                       
                                     <a href="{{ route('propertySubCities.destroy', $subCity->id) }}"
                                         class="btn btn-danger rounded btn-xs action-btn"
                                         onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
                                         <i class="fa fa-trash"></i>
                                     </a>
+                                    @endcan
                                 </td>
                             </tr>
                             @endforeach

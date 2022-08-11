@@ -22,7 +22,6 @@ use Illuminate\Http\Request;
 use App\PropertyNeighborhood;
 use App\Exports\PropertiesExport;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\URL;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -35,11 +34,31 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class PropertiesController extends MainAdminController
 {
-   //public $usertype="";
    public function __construct()
    {
-      //$usertype=Auth::User()->usertype;
       $this->middleware('auth');
+      $this->middleware('permission:properties-list', ['only' => ['index','inactivepropertieslist']]);
+      $this->middleware('permission:properties-create', ['only' => ['create','store']]);
+      $this->middleware('permission:properties-edit', ['only' => ['edit','update']]);
+      $this->middleware('permission:properties-delete', ['only' => ['destroy']]);
+      
+      $this->middleware('permission:gallery-images-list', ['only' => ['listGalleryImages']]);
+      $this->middleware('permission:gallery-images-create', ['only' => ['addGalleryImages','storeGalleryImages']]);
+      $this->middleware('permission:gallery-images-edit', ['only' => ['editGalleryImages','updateGalleryImages']]);
+      $this->middleware('permission:gallery-images-delete', ['only' => ['destroyGalleryImages']]);
+      
+      $this->middleware('permission:neighbor-hood-list', ['only' => ['listNeighbourhood']]);
+      $this->middleware('permission:neighbor-hood-create', ['only' => ['storeNeighbourhood']]);
+      $this->middleware('permission:neighbor-hood-edit', ['only' => ['editNeighbourhood','updateNeighbourhood']]);
+      $this->middleware('permission:neighbor-hood-delete', ['only' => ['destroyNeighbourhood']]);
+      
+      $this->middleware('permission:floor-plan-list', ['only' => ['listFloorPlan']]);
+      $this->middleware('permission:floor-plan-create', ['only' => ['storeFloorPlan']]);
+      $this->middleware('permission:floor-plan-edit', ['only' => ['editFloorPlan','updateFloorPlan']]);
+      $this->middleware('permission:floor-plan-delete', ['only' => ['destroyFloorPlan']]);
+      
+      $this->middleware('permission:properties-plan-update', ['only' => ['plan_update']]);
+      $this->middleware('permission:delete-featured-property-image', ['only' => ['featuredproperty','deleteFeaturedImage']]);
       parent::__construct();
    }
 
@@ -87,6 +106,7 @@ class PropertiesController extends MainAdminController
       $action = 'saakin_index';
       return view('admin-dashboard.properties.index', compact('data', 'action'));
    }
+
    public function inactivepropertieslist()
    {
       $data['propertieslist'] = Properties::when(request('purpose'), function ($query) {
@@ -628,7 +648,6 @@ class PropertiesController extends MainAdminController
       }
 
       $decrypted_id = Crypt::decryptString($id);
-
       $property = Properties::findOrFail($decrypted_id);
 
       if ($property->featured_property == 1) {
@@ -717,20 +736,16 @@ class PropertiesController extends MainAdminController
       }
 
       $propertyGallery = PropertyGallery::findOrFail($gid);
-
       if (!$propertyGallery) {
          abort('404');
       }
 
       $property_name = Properties::where('id', $property_id)->pluck('property_name')->first();
-
       $property_gallery_image = PropertyGallery::where('id', $gid)->first();
-
       $galleryImages = PropertyGallery::where('property_id', $property_id)->get();
 
       return view('admin.pages.property_gallery_images', compact('gid', 'property_id', 'property_name', 'property_gallery_image', 'galleryImages'));
 
-      //return view('admin.pages.edit_property_gallery_image',compact('property_id','gid','property_gallery_image'));
    }
 
    public function updateGalleryImages(Request $request, $property_id, $gid)
@@ -778,14 +793,12 @@ class PropertiesController extends MainAdminController
 
    public function listNeighbourhood($property_id)
    {
-      //dd("in listing");
       if (Auth::User()->usertype != "Admin" && Auth::User()->usertype != "Agency") {
          \Session::flash('flash_message', trans('words.access_denied'));
          return redirect('admin/dashboard');
       }
 
       $property_name = Properties::where('id', $property_id)->pluck('property_name')->first();
-      //dd($property_name);
 
       $neighbourhoods = PropertyNeighborhood::where('property_id', $property_id)->get();
       return view('admin.pages.property_neighbourhood', compact('property_id', 'property_name', 'neighbourhoods'));
@@ -794,7 +807,6 @@ class PropertiesController extends MainAdminController
    public function storeNeighbourhood(Request $request, $property_id)
    {
       $request_data = request()->all();
-
       $rule = array(
          'category_name' => 'required',
          'title' => 'required',
@@ -978,6 +990,7 @@ class PropertiesController extends MainAdminController
 
       return redirect()->back();
    }
+   
    public function deleteFeaturedImage()
    {
       $id = request('property_id');

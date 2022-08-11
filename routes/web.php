@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\TypesController;
-use App\Http\Controllers\SaveSearchController;
-use App\Http\Controllers\Admin\InquiriesController;
 use App\Http\Controllers\Admin\XmlRecordController;
 
 
@@ -27,106 +25,105 @@ Route::get('auth/facebook', 'SocialController@redirectToFacebook')->name('facebo
 
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 
-    Route::get('/ckeditor','OmahadminController@ckeditor')->name('ckeditor');
-    Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
-	Route::post('login', 'IndexController@postLogin');
-	Route::get('logout', 'IndexController@logout');
-    Route::get('/our_backup_database', 'UserController@dbBackup')->name('our_backup_database');
+   Route::get('/ckeditor','OmahadminController@ckeditor')->name('ckeditor');
+   Route::get('/profile/new', 'OmahadminController@profile')->middleware('auth');
+   Route::post('login', 'IndexController@postLogin');
+   Route::get('logout', 'IndexController@logout');
 
-	Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
-	Route::get('profile', 'AdminController@profile')->name('profile');
-	Route::post('profile', 'AdminController@updateProfile');
-	Route::post('profile_pass', 'AdminController@updatePassword');
-    Route::resource('property_type', TypesController::class);
-	Route::get('settings', 'SettingsController@settings')->name('admin.settings');
-	Route::post('settings', 'SettingsController@settingsUpdates');
-	Route::post('smtp_email', 'SettingsController@smtp_email_update');
-	Route::post('payment_info', 'SettingsController@payment_info_update');
-	Route::post('layout_settings', 'SettingsController@layout_settings_update');
-	Route::post('social_links', 'SettingsController@social_links_update');
-	Route::post('addthisdisqus', 'SettingsController@addthisdisqus');
-	Route::post('about_us', 'SettingsController@about_us_page');
-	Route::post('contact_us', 'SettingsController@contact_us_page');
-	Route::post('headfootupdate', 'SettingsController@headfootupdate');
+   Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
+   Route::get('profile', 'AdminController@profile')->name('profile');
+   Route::post('profile', 'AdminController@updateProfile');
+   Route::post('profile_pass', 'AdminController@updatePassword');
+   Route::resource('property_type', TypesController::class);
+   Route::get('settings', 'SettingsController@settings')->name('admin.settings');
+   Route::post('settings', 'SettingsController@settingsUpdates');
+   Route::post('smtp_email', 'SettingsController@smtp_email_update');
+   Route::post('payment_info', 'SettingsController@payment_info_update');
+   Route::post('layout_settings', 'SettingsController@layout_settings_update');
+   Route::post('social_links', 'SettingsController@social_links_update');
+   Route::post('addthisdisqus', 'SettingsController@addthisdisqus');
+   Route::post('about_us', 'SettingsController@about_us_page');
+   Route::post('contact_us', 'SettingsController@contact_us_page');
+   Route::post('headfootupdate', 'SettingsController@headfootupdate');
 
-	Route::get('slider', 'SliderController@sliderlist');
-	Route::get('slider/addslide', 'SliderController@addeditSlide');
-	Route::post('slider/addslide', 'SliderController@addnew');
-	Route::get('slider/addslide/{id}', 'SliderController@editSlide');
-	Route::get('slider/delete/{id}', 'SliderController@delete');
+   Route::get('slider', 'SliderController@sliderlist');
+   Route::get('slider/addslide', 'SliderController@addeditSlide');
+   Route::post('slider/addslide', 'SliderController@addnew');
+   Route::get('slider/addslide/{id}', 'SliderController@editSlide');
+   Route::get('slider/delete/{id}', 'SliderController@delete');
 
-	Route::get('testimonials', 'TestimonialsController@testimonialslist');
-	Route::get('testimonials/addtestimonial', 'TestimonialsController@addeditestimonials');
-	Route::post('testimonials/addtestimonial', 'TestimonialsController@addnew');
-	Route::get('testimonials/addtestimonial/{id}', 'TestimonialsController@edittestimonial');
-	Route::get('testimonials/delete/{id}', 'TestimonialsController@delete');
+   Route::get('testimonials', 'TestimonialsController@testimonialslist');
+   Route::get('testimonials/addtestimonial', 'TestimonialsController@addeditestimonials');
+   Route::post('testimonials/addtestimonial', 'TestimonialsController@addnew');
+   Route::get('testimonials/addtestimonial/{id}', 'TestimonialsController@edittestimonial');
+   Route::get('testimonials/delete/{id}', 'TestimonialsController@delete');
 
-	Route::resource('properties', 'PropertiesController');
-	Route::any('properties/delete/{id}', 'PropertiesController@delete')->name('properties.destroy');
-	Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_properties.index');
+   Route::resource('properties', 'PropertiesController');
+   Route::any('properties/delete/{id}', 'PropertiesController@delete')->name('properties.destroy');
+   Route::get('properties_inactive_listing', 'PropertiesController@inactivepropertieslist')->name('inactive_properties.index');
 
-    Route::get('properties/status/{id}', 'PropertiesController@status')->name('properties.status');
-	Route::get('properties/featuredproperty/{id}', 'PropertiesController@featuredproperty');
-	Route::get('properties_featured', 'FeaturedPropertiesController@propertieslist')->name('featuredproperties.index');
-	
-    Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties')->name('featuredproperties.pending');
-	Route::get('properties/export', 'PropertiesController@property_export');
-	Route::post('properties/plan_update', 'PropertiesController@plan_update')->name('changePlan.update');
+   Route::get('properties/status/{id}', 'PropertiesController@status')->name('properties.status');
+   Route::get('properties/featuredproperty/{id}', 'PropertiesController@featuredproperty');
+   Route::get('properties_featured', 'FeaturedPropertiesController@propertieslist')->name('featuredproperties.index');
 
-    Route::get('properties/gallery/{id}', 'PropertiesController@listGalleryImages');
-    Route::get('properties/generatethumb', 'PropertiesController@generatethumb');
-    Route::get('properties/gallery/{id}/create', 'PropertiesController@addGalleryImages');
-    Route::post('properties/gallery/{id}/create', 'PropertiesController@storeGalleryImages');
-    Route::get('properties/gallery/{id}/edit/{gid}', 'PropertiesController@editGalleryImages');
-    Route::post('properties/gallery/{id}/edit/{gid}', 'PropertiesController@updateGalleryImages');
-    Route::get('properties/gallery/{id}/delete/{gid}', 'PropertiesController@destroyGalleryImages');
+   Route::get('pendingproperties', 'FeaturedPropertiesController@pendingproperties')->name('featuredproperties.pending');
+   Route::get('properties/export', 'PropertiesController@property_export');
+   Route::post('properties/plan_update', 'PropertiesController@plan_update')->name('changePlan.update');
 
-    Route::get('scrapper', 'ScrapperController@index');
-    Route::get('properties/neighbourhood/{id}', 'PropertiesController@listNeighbourhood');
-    Route::get('properties/neighbourhood/{id}/create', 'PropertiesController@addNeighbourhood');
-    Route::post('properties/neighbourhood/{id}/create', 'PropertiesController@storeNeighbourhood');
-    Route::get('properties/neighbourhood/{id}/edit/{gid}', 'PropertiesController@editNeighbourhood');
-    Route::post('properties/neighbourhood/{id}/edit/{gid}', 'PropertiesController@updateNeighbourhood');
-    Route::get('properties/neighbourhood/{id}/delete/{gid}', 'PropertiesController@destroyNeighbourhood');
+   Route::get('properties/gallery/{id}', 'PropertiesController@listGalleryImages');
+   Route::get('properties/generatethumb', 'PropertiesController@generatethumb');
+   Route::get('properties/gallery/{id}/create', 'PropertiesController@addGalleryImages');
+   Route::post('properties/gallery/{id}/create', 'PropertiesController@storeGalleryImages');
+   Route::get('properties/gallery/{id}/edit/{gid}', 'PropertiesController@editGalleryImages');
+   Route::post('properties/gallery/{id}/edit/{gid}', 'PropertiesController@updateGalleryImages');
+   Route::get('properties/gallery/{id}/delete/{gid}', 'PropertiesController@destroyGalleryImages');
 
-    Route::get('properties/floor-plan/{id}', 'PropertiesController@listFloorPlan');
-    Route::get('properties/floor-plan/{id}/create', 'PropertiesController@addFloorPlan');
-    Route::post('properties/floor-plan/{id}/create', 'PropertiesController@storeFloorPlan');
-    Route::get('properties/floor-plan/{id}/edit/{gid}', 'PropertiesController@editFloorPlan');
-    Route::post('properties/floor-plan/{id}/edit/{gid}', 'PropertiesController@updateFloorPlan');
-    Route::get('properties/floor-plan/{id}/delete/{gid}', 'PropertiesController@destroyFloorPlan');
+   Route::get('scrapper', 'ScrapperController@index');
+   Route::get('properties/neighbourhood/{id}', 'PropertiesController@listNeighbourhood');
+   Route::get('properties/neighbourhood/{id}/create', 'PropertiesController@addNeighbourhood');
+   Route::post('properties/neighbourhood/{id}/create', 'PropertiesController@storeNeighbourhood');
+   Route::get('properties/neighbourhood/{id}/edit/{gid}', 'PropertiesController@editNeighbourhood');
+   Route::post('properties/neighbourhood/{id}/edit/{gid}', 'PropertiesController@updateNeighbourhood');
+   Route::get('properties/neighbourhood/{id}/delete/{gid}', 'PropertiesController@destroyNeighbourhood');
 
-    Route::resource('property-types', 'TypesController');
-    Route::get('types/delete/{id}', 'TypesController@delete')->name('property-types.destroy');
+   Route::get('properties/floor-plan/{id}', 'PropertiesController@listFloorPlan');
+   Route::get('properties/floor-plan/{id}/create', 'PropertiesController@addFloorPlan');
+   Route::post('properties/floor-plan/{id}/create', 'PropertiesController@storeFloorPlan');
+   Route::get('properties/floor-plan/{id}/edit/{gid}', 'PropertiesController@editFloorPlan');
+   Route::post('properties/floor-plan/{id}/edit/{gid}', 'PropertiesController@updateFloorPlan');
+   Route::get('properties/floor-plan/{id}/delete/{gid}', 'PropertiesController@destroyFloorPlan');
 
-    Route::resource('property-purpose', 'PropertyPurposeController');
-    Route::get('property-purpose/delete/{id}', 'PropertyPurposeController@destroy')->name('property-purpose.destroy');
+   Route::resource('property-types', 'TypesController');
+   Route::get('types/delete/{id}', 'TypesController@delete')->name('property-types.destroy');
 
-    Route::resource('property-amenity', 'PropertyAmenityController');
-    Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy')->name('property-amenity.destroy');
+   Route::resource('property-purpose', 'PropertyPurposeController');
+   Route::get('property-purpose/delete/{id}', 'PropertyPurposeController@destroy')->name('property-purpose.destroy');
 
-    Route::group(['prefix' => 'user-management', 'middleware' => 'auth'], function() {
-        Route::resource('roles','RoleController');
-        Route::resource('users','UsersController');
-        Route::get('users/delete/{id}','UsersController@destroy')->name('users.destroy');
-        Route::resource('permissions','PermissionController');
-    });
-	
-	Route::get('leads/subscriber', 'SubscriberController@subscriberlist')->name('subscriber');
-	Route::get('subscriber/delete/{id}', 'SubscriberController@delete')->name('subscriber.destroy');
+   Route::resource('property-amenity', 'PropertyAmenityController');
+   Route::get('property-amenity/delete/{id}', 'PropertyAmenityController@destroy')->name('property-amenity.destroy');
+
+   Route::group(['prefix' => 'user-management', 'middleware' => 'auth'], function() {
+      Route::resource('roles','RoleController');
+      Route::resource('users','UsersController');
+      Route::get('users/delete/{id}','UsersController@destroy')->name('users.destroy');
+      Route::resource('permissions','PermissionController');
+   });
+
+   Route::get('leads/subscriber', 'SubscriberController@subscriberlist')->name('subscriber');
+   Route::get('subscriber/delete/{id}', 'SubscriberController@delete')->name('subscriber.destroy');
 
 
-	Route::get('partners', 'PartnersController@partnerslist');
-	Route::get('partners/addpartners', 'PartnersController@addpartners');
-	Route::post('partners/addpartners', 'PartnersController@addnew');
-	Route::get('partners/addpartners/{id}', 'PartnersController@editpartners');
-	Route::get('partners/delete/{id}', 'PartnersController@delete');
+   Route::get('partners', 'PartnersController@partnerslist');
+   Route::get('partners/addpartners', 'PartnersController@addpartners');
+   Route::post('partners/addpartners', 'PartnersController@addnew');
+   Route::get('partners/addpartners/{id}', 'PartnersController@editpartners');
+   Route::get('partners/delete/{id}', 'PartnersController@delete');
 
    Route::get('inquiries', 'LeadsController@inquirieslist')->name('inquiries');
    Route::get('restore/leads', 'LeadsController@restoreLeads')->name('restoreLeads');
    Route::get('leads/property_inquiries', 'LeadsController@property_inquiries')->name('property_inquiries');
-   Route::get('inquiry/create', 'LeadsController@create_inquiry')->name('create_inquiry');
-   Route::post('inquiry/create', 'LeadsController@store_property_inquiry')->name('store_proprty_inquiry');
+   Route::get('lead/create', 'LeadsController@create_lead')->name('create_lead');
+   Route::post('lead/create', 'LeadsController@store_property_inquiry')->name('store_lead');
    Route::get('property_inquiry/edit/{id}', 'LeadsController@edit_property_inquiry');
    Route::post('property_inquiry/update/{id}', 'LeadsController@_property_inquiry');
 
@@ -134,162 +131,159 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
    Route::get('searchagency', 'LeadsController@searchagency')->name('searchagency');
    Route::get('property_search', 'LeadsController@property_search')->name('property_search');
    Route::get('searchautocomplete', 'LeadsController@search_agency_name')->name('searchautocomplete');
-	Route::get('leads/agency_inquiries', 'LeadsController@agency_inquiries')->name('agency_inquiries');
-	Route::get('leads/contact_inquiries', 'LeadsController@contact_inquiries')->name('contact_inquiries');
-	Route::get('leads/comp_reg_inquiries', 'LeadsController@comp_reg_inquiries')->name('comp_reg_inquiries');
+   Route::get('leads/agency_inquiries', 'LeadsController@agency_inquiries')->name('agency_inquiries');
+   Route::get('leads/contact_inquiries', 'LeadsController@contact_inquiries')->name('contact_inquiries');
+   Route::get('leads/comp_reg_inquiries', 'LeadsController@comp_reg_inquiries')->name('comp_reg_inquiries');
    Route::get('view_inquiry/{id}', 'LeadsController@view_inquiry')->name('view_inquiry');
    Route::get('view_forward_inquiry/{id}', 'LeadsController@viewForwardInquiry')->name('viewForwardInquiry');
    Route::get('comment_forward_inquiry/{id}', 'LeadsController@commentForwardLead')->name('commentForwardLead');
    Route::put('comment_forward_inquiry/{id}', 'LeadsController@commentForwardLead')->name('commentForwardLead');
    Route::post('forwardLeadtoAgents', 'LeadsController@forwardLeadtoAgents')->name('forwardLeadtoAgents');
+   Route::get('delete/ForwardLeadAgent/{id}', 'LeadsController@deleteForwardLeadAgent')
+   ->name('deleteForwardLeadAgent');
    Route::get('view_property_inquiry/{id}', 'LeadsController@view_property_inquiry');
    Route::get('view_agency_inquiry/{id}', 'LeadsController@view_agency_inquiry')->name('view_agency_inquiry');
    Route::get('view_contact_inquiry/{id}', 'LeadsController@view_contact_inquiry')->name('view_contact_inquiry');   
 
    Route::get('inquiries/delete/{id}', 'LeadsController@delete')->name('deleteLead');
-	Route::get('notifications', 'LeadsController@notifications')->name('notifications');   
-	Route::get('MarkAllAsRead', 'LeadsController@markAllAsRead')->name('markAllAsRead');   
+   Route::get('lead/edit/{id}', 'LeadsController@editLead')->name('adminLead.edit');
+   Route::put('lead/update', 'LeadsController@updateLead')->name('adminLead.update');
+   Route::get('notifications', 'LeadsController@notifications')->name('notifications');   
+   Route::get('MarkAllAsRead', 'LeadsController@markAllAsRead')->name('markAllAsRead');   
    Route::get('view_notification/{id}', 'LeadsController@view_notification')->name('view_notification');
-	Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');
-	Route::get('subscription_plan/add_plan', 'SubscriptionPlanController@addSubscriptionPlan');
-	Route::get('subscription_plan/edit_plan/{id}', 'SubscriptionPlanController@editSubscriptionPlan');
-	Route::post('subscription_plan/add_edit_plan', 'SubscriptionPlanController@addnew');
-	Route::get('subscription_plan/delete/{id}', 'SubscriptionPlanController@delete');
+   Route::get('subscription_plan', 'SubscriptionPlanController@subscription_plan_list');
+   Route::get('subscription_plan/add_plan', 'SubscriptionPlanController@addSubscriptionPlan');
+   Route::get('subscription_plan/edit_plan/{id}', 'SubscriptionPlanController@editSubscriptionPlan');
+   Route::post('subscription_plan/add_edit_plan', 'SubscriptionPlanController@addnew');
+   Route::get('subscription_plan/delete/{id}', 'SubscriptionPlanController@delete');
 
-	Route::get('transactions', 'TransactionsController@transactions_list');
-	Route::get('transactions/export', 'TransactionsController@transactions_export');
-	Route::get('transactions/user_invoice/{id}', 'TransactionsController@user_invoice');
-    
-    Route::get('properties_for_purpose_page', 'PagesController@properties_for_purpose_page');
-    Route::post('properties_for_purpose_page', 'PagesController@update_properties_for_purpose_page');
+   Route::get('transactions', 'TransactionsController@transactions_list');
+   Route::get('transactions/export', 'TransactionsController@transactions_export');
+   Route::get('transactions/user_invoice/{id}', 'TransactionsController@user_invoice');
+      
+   Route::get('properties_for_purpose_page', 'PagesController@properties_for_purpose_page');
+   Route::post('properties_for_purpose_page', 'PagesController@update_properties_for_purpose_page');
 
-    Route::get('property_type_for_purpose_page', 'PagesController@property_type_for_purpose_page');
-    Route::post('property_type_for_purpose_page', 'PagesController@update_property_type_for_purpose_page');
+   Route::get('property_type_for_purpose_page', 'PagesController@property_type_for_purpose_page');
+   Route::post('property_type_for_purpose_page', 'PagesController@update_property_type_for_purpose_page');
 
-    Route::get('city_property_type_purpose_page', 'PagesController@city_property_type_purpose_page');
-    Route::post('city_property_type_purpose_page', 'PagesController@update_city_property_type_purpose_page');
+   Route::get('city_property_type_purpose_page', 'PagesController@city_property_type_purpose_page');
+   Route::post('city_property_type_purpose_page', 'PagesController@update_city_property_type_purpose_page');
 
-    Route::get('featured_properties_page', 'PagesController@featured_properties_page');
-    Route::post('featured_properties_page', 'PagesController@update_featured_properties_page');
+   Route::get('featured_properties_page', 'PagesController@featured_properties_page');
+   Route::post('featured_properties_page', 'PagesController@update_featured_properties_page');
 
-    Route::get('api-data', 'ApiController@index');
-    Route::post('api-category', 'ApiController@getCategory');
+   Route::get('api-data', 'ApiController@index');
+   Route::post('api-category', 'ApiController@getCategory');
 
-    Route::resource('cities','CityGuideController');
-    Route::get('city/delete/{id}', 'CityGuideController@destroy')->name('cities.destroy');
-    Route::get('city/show/{id}', 'CityGuideController@show')->name('cities.show');
-    
-    Route::get('city-detail/list', 'CityGuideController@listCityDetail')->name('city-details');
-    Route::get('city-detail/create', 'CityGuideController@createCityDetail')->name('city_detail_create');
-    Route::post('city-detail/create', 'CityGuideController@storeCityDetail')->name('city_detail_store');
-    Route::get('city-detail/edit/{id}', 'CityGuideController@editCityDetail')->name('city_detail_edit');
-    Route::post('city-detail/update/{id}', 'CityGuideController@updateCityDetail')->name('city_detail_update');
-    Route::get('city-detail/delete/{id}', 'CityGuideController@destroyCityDetail')->name('city_detail_destroy');
+   Route::resource('cities','CityGuideController');
+   Route::get('city/delete/{id}', 'CityGuideController@destroy')->name('cities.destroy');
+   Route::get('city/show/{id}', 'CityGuideController@show')->name('cities.show');
 
-    Route::resource('blogs', 'BlogController');
-    Route::get('blog/delete/{id}', 'BlogController@destroy')->name('blogs.destroy');
-    Route::get('blog/status/{id}', 'BlogController@status')->name('blogs.status');
+   Route::get('city-detail/list', 'CityGuideController@listCityDetail')->name('city-details');
+   Route::get('city-detail/create', 'CityGuideController@createCityDetail')->name('city_detail_create');
+   Route::post('city-detail/create', 'CityGuideController@storeCityDetail')->name('city_detail_store');
+   Route::get('city-detail/edit/{id}', 'CityGuideController@editCityDetail')->name('city_detail_edit');
+   Route::post('city-detail/update/{id}', 'CityGuideController@updateCityDetail')->name('city_detail_update');
+   Route::get('city-detail/delete/{id}', 'CityGuideController@destroyCityDetail')->name('city_detail_destroy');
 
-    Route::get('blog-category/list', 'BlogController@listBlogCategory')->name('blog-category.index');
-    Route::get('blog-category/create', 'BlogController@createBlogCategory')->name('blog-category.create');
-    Route::post('blog-category/create', 'BlogController@storeBlogCategory')->name('blog-category.store');
-    Route::get('blog-category/edit/{id}', 'BlogController@editBlogCategory')->name('blog-category.edit');
-    Route::post('blog-category/update/{id}', 'BlogController@updateBlogCategory')->name('blog-category.update');
-    Route::get('blog-category/delete/{id}', 'BlogController@destroyBlogCategory')->name('blog-category.destroy');
+   Route::resource('blogs', 'BlogController');
+   Route::get('blog/delete/{id}', 'BlogController@destroy')->name('blogs.destroy');
+   Route::get('blog/status/{id}', 'BlogController@status')->name('blogs.status');
 
-    Route::resource('agencies','AgencyController');
-    Route::get('agency/delete/{id}','AgencyController@delete')->name('agencies.destroy');
-    Route::post('agency/keys', 'AgencyController@goMasterimport')->name('get.agences.keys');
-    Route::get('agencies/export', 'AgencyController@agencies_export')->name('agencies.export');
-    Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');
+   Route::get('blog-category/list', 'BlogController@listBlogCategory')->name('blog-category.index');
+   Route::get('blog-category/create', 'BlogController@createBlogCategory')->name('blog-category.create');
+   Route::post('blog-category/create', 'BlogController@storeBlogCategory')->name('blog-category.store');
+   Route::get('blog-category/edit/{id}', 'BlogController@editBlogCategory')->name('blog-category.edit');
+   Route::post('blog-category/update/{id}', 'BlogController@updateBlogCategory')->name('blog-category.update');
+   Route::get('blog-category/delete/{id}', 'BlogController@destroyBlogCategory')->name('blog-category.destroy');
 
-    //landing pages
-    
-    // Route::get('landing-pages', 'LandingPagesController@index')->name('landing-pages.index');
-    Route::resource('landing-pages', 'LandingPagesController');
-    Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy')->name('landing-pages.destroy');
+   Route::resource('agencies','AgencyController');
+   Route::get('agency/delete/{id}','AgencyController@delete')->name('agencies.destroy');
+   Route::post('agency/keys', 'AgencyController@goMasterimport')->name('get.agences.keys');
+   Route::get('agencies/export', 'AgencyController@agencies_export')->name('agencies.export');
+   Route::post('agencies/import', 'AgencyController@agencies_import')->name('agencies.import');
 
-    Route::get('about_page', 'PagesController@about_page')->name('about_page');
-    Route::post('about_page', 'PagesController@update_about_page')->name('update_about_page');
-    Route::get('terms_page', 'PagesController@terms_page')->name('terms_page');
-    Route::post('terms_page', 'PagesController@update_terms_page')->name('update_terms_page');
-    Route::get('privacy_policy_page', 'PagesController@privacy_policy_page')->name('privacy_page');
-    Route::post('privacy_policy_page', 'PagesController@update_privacy_policy_page')->name('update_privacy_page');
-    Route::get('faq_page', 'PagesController@faq_page')->name('faq_page');
-    Route::post('faq_page', 'PagesController@update_faq_page')->name('update_faq_page');
+   //landing pages
+   Route::resource('landing-pages', 'LandingPagesController');
+   Route::get('landing-pages/delete/{id}', 'LandingPagesController@destroy')->name('landing-pages.destroy');
 
-    Route::group(['prefix' => 'landing-pages'], function(){
+   Route::get('about_page', 'PagesController@about_page')->name('about_page');
+   Route::post('about_page', 'PagesController@update_about_page')->name('update_about_page');
+   Route::get('terms_page', 'PagesController@terms_page')->name('terms_page');
+   Route::post('terms_page', 'PagesController@update_terms_page')->name('update_terms_page');
+   Route::get('privacy_policy_page', 'PagesController@privacy_policy_page')->name('privacy_page');
+   Route::post('privacy_policy_page', 'PagesController@update_privacy_policy_page')->name('update_privacy_page');
+   Route::get('faq_page', 'PagesController@faq_page')->name('faq_page');
+   Route::post('faq_page', 'PagesController@update_faq_page')->name('update_faq_page');
 
-        Route::get('properties-page/content', 'LandingPagesController@properties_page_content')
-            ->name('properties-page-content');
-        Route::post('properties-page/content', 'LandingPagesController@update_properties_page_content')
-            ->name('update-properties-page-content');
-        
-        Route::get('city-guide-page/content', 'PagesController@city_guide_page_content')
-            ->name('city-guide-landing-pages.index');
-        Route::put('update/city-guide-page/content', 'PagesController@update_city_guide_page_content')
-            ->name('city-guide-landing-pages.update');
+   Route::group(['prefix' => 'landing-pages'], function(){
 
-        Route::get('agencies-page/content', 'PagesController@agencies_page_content')
-            ->name('agency-landing-pages.index');
-        Route::put('agencies-page/content', 'PagesController@update_agencies_page_content')
-            ->name('agency-landing-pages.update');
-    });
+      Route::get('properties-page/content', 'LandingPagesController@properties_page_content')
+         ->name('properties-page-content');
+      Route::post('properties-page/content', 'LandingPagesController@update_properties_page_content')
+         ->name('update-properties-page-content');
 
-    Route::resource('popularSearches', 'PopularSearchesController');
-    Route::get('popularSearches/delete/{id}', 'PopularSearchesController@destroy')->name('popularSearches.destroy');
-   
-    Route::group(['prefix' => 'location'], function(){
-        
-        //property cities routes
-        Route::resource('propertyCities', 'PropertyCitiesController');
-        Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
-        //property sub cities routes
-        Route::resource('propertySubCities', 'PropertySubCitiesController');
-        Route::get('propertySubCities/delete/{id}', 'PropertySubCitiesController@destroy')->name('propertySubCities.destroy');
-        //property towns routes
-        Route::resource('propertyTowns', 'PropertyTownsController');
-        Route::get('propertyTowns/delete/{id}', 'PropertyTownsController@destroy')->name('propertyTowns.destroy');
-        //property areas routes
-        Route::resource('propertyAreas', 'PropertyAreasController');
-        Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
+      Route::get('city-guide-page/content', 'PagesController@city_guide_page_content')
+         ->name('city-guide-landing-pages.index');
+      Route::put('update/city-guide-page/content', 'PagesController@update_city_guide_page_content')
+         ->name('city-guide-landing-pages.update');
 
-    });
+      Route::get('agencies-page/content', 'PagesController@agencies_page_content')
+         ->name('agency-landing-pages.index');
+      Route::put('agencies-page/content', 'PagesController@update_agencies_page_content')
+         ->name('agency-landing-pages.update');
+   });
 
-    //property click counter or traffic route
-    Route::group(['prefix' => 'traffic'], function () {
-        Route::get('agencyCallToActionList/{id}', 'ClickCountersController@agencyCallToActionList')
-        ->name('agencyCallToActionList');
-        
-        Route::get('visits_per_month/{id?}', 'ClickCountersController@propertyVisitsPerMonth')
-        ->name('propertyVisits_per_month');
+   Route::resource('popularSearches', 'PopularSearchesController');
+   Route::get('popularSearches/delete/{id}', 'PopularSearchesController@destroy')->name('popularSearches.destroy');
 
-        Route::get('visits_per_month_IPs/{id?}', 'ClickCountersController@propertyVisitsPerMonthIPs')
-        ->name('propertyVisits_per_month_IPs');
-        
-        Route::resource('callToAction', 'ClickCountersController');
-        Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
-        Route::get('trafficUsersIPs/{id?}', 'ClickCountersController@trafficUsersIPs')->name('trafficUsersIPs');
-        Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
-        Route::get('topTenProperties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
-        Route::get('topTenProperties/{id}', 'ClickCountersController@topTenPropertiesList')->name('top_Ten_Properties.list');
-        Route::get('top10areas', 'ClickCountersController@top10Areas')->name('top_10_areas');
-        Route::get('top10areas/{id}', 'ClickCountersController@top10AreasList')->name('top_10_areas.list');
-        Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');
-        
-    });
+   Route::group(['prefix' => 'location'], function(){
+      //property cities routes
+      Route::resource('propertyCities', 'PropertyCitiesController');
+      Route::get('propertyCities/delete/{id}', 'PropertyCitiesController@destroy')->name('propertyCities.destroy');
+      //property sub cities routes
+      Route::resource('propertySubCities', 'PropertySubCitiesController');
+      Route::get('propertySubCities/delete/{id}', 'PropertySubCitiesController@destroy')->name('propertySubCities.destroy');
+      //property towns routes
+      Route::resource('propertyTowns', 'PropertyTownsController');
+      Route::get('propertyTowns/delete/{id}', 'PropertyTownsController@destroy')->name('propertyTowns.destroy');
+      //property areas routes
+      Route::resource('propertyAreas', 'PropertyAreasController');
+      Route::get('propertyAreas/delete/{id}', 'PropertyAreasController@destroy')->name('propertyAreas.destroy');
+   });
 
-    // XML Records
-    Route::match(["get", "post"], "read-xml", [XmlRecordController::class, "index"])->name('xml-upload');
-    Route::get('/listings.xml','XmlRecordController@show')->name('show-xml-record');
+   //property click counter or traffic route
+   Route::group(['prefix' => 'traffic'], function () {
+      Route::get('agencyCallToActionList/{id}', 'ClickCountersController@agencyCallToActionList')
+      ->name('agencyCallToActionList');
+      
+      Route::get('visits_per_month/{id?}', 'ClickCountersController@propertyVisitsPerMonth')
+      ->name('propertyVisits_per_month');
 
-    
-    //company registration resource controller
-    Route::resource('companyRegistration', 'CompanyRegistrationController');
+      Route::get('visits_per_month_IPs/{id?}', 'ClickCountersController@propertyVisitsPerMonthIPs')
+      ->name('propertyVisits_per_month_IPs');
+      
+      Route::resource('callToAction', 'ClickCountersController');
+      Route::get('trafficUsers', 'ClickCountersController@trafficUsers')->name('trafficUsers');
+      Route::get('trafficUsersIPs/{id?}', 'ClickCountersController@trafficUsersIPs')->name('trafficUsersIPs');
+      Route::get('total_clicks', 'ClickCountersController@totalClicks')->name('total_clicks');
+      Route::get('topTenProperties', 'ClickCountersController@topTenProperties')->name('top_Ten_Properties');
+      Route::get('topTenProperties/{id}', 'ClickCountersController@topTenPropertiesList')->name('top_Ten_Properties.list');
+      Route::get('top10areas', 'ClickCountersController@top10Areas')->name('top_10_areas');
+      Route::get('top10areas/{id}', 'ClickCountersController@top10AreasList')->name('top_10_areas.list');
+      Route::get('total_leads', 'ClickCountersController@totalLeads')->name('total_leads');  
+   });
 
-    // MLS
-    Route::resource('mls', 'MLSController');
+   // XML Records
+   Route::match(["get", "post"], "read-xml", [XmlRecordController::class, "index"])->name('xml-upload');
+   Route::get('/listings.xml','XmlRecordController@show')->name('show-xml-record');
 
+   //company registration resource controller
+   Route::resource('companyRegistration', 'CompanyRegistrationController');
+
+   // MLS
+   Route::resource('mls', 'MLSController');
 });
 
 Route::get('/', 'IndexController@index')->name('home');
@@ -326,8 +320,8 @@ Route::get('{property_purpose}/{slug}/{id}', 'PropertiesController@single_proper
 Route::any('send-email-agent', 'PropertiesController@property_details_sendemail');
 
 Route::post('properties/inquiry', 'PropertiesController@property_details_sendemail');
-Route::get('properties', 'PropertiesController@getPropertyListing');
-Route::post('properties', 'PropertiesController@getPropertyListing');
+Route::get('properties', 'PropertiesController@getPropertyListing'); //front end
+Route::post('properties', 'PropertiesController@getPropertyListing'); //front end
 
 Route::get('city-guide', 'CityGuideController@getCityList');
 Route::get('city-guide/{slug}', 'CityGuideController@getCityDetail')->name('cityGuide-detail')

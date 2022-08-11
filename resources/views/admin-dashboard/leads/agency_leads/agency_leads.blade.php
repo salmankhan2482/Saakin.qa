@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">Agency Inquiries</h4>
-                    <a href="{{ route('create_inquiry') }}">
+                    <a href="{{ route('create_lead') }}">
                         <button type="button" class="btn btn-rounded btn-info">
                             <span class="btn-icon-left text-info">
                                 <i class="fa fa-plus color-info"></i>
@@ -44,11 +44,13 @@
                                                 class="btn btn-success rounded btn-xs action-btn">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('deleteLead', $inquiries->id) }}"
-                                                class="btn btn-danger rounded btn-xs action-btn"
-                                                onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                             @can('lead-delete')
+                                                <a href="{{ route('deleteLead', $inquiries->id) }}"
+                                                   class="btn btn-danger rounded btn-xs action-btn"
+                                                   onclick="return confirm('{{ trans('words.dlt_warning_text') }}')">
+                                                   <i class="fa fa-trash"></i>
+                                                </a>
+                                             @endcan
                                         </td>
                                     </tr>
                                 @endforeach
