@@ -281,6 +281,7 @@ class LeadsController extends MainAdminController
    public function view_inquiry($id)
    {
       $lead = Lead::find($id);
+      dump($lead);
       $similarProperties = Properties::where('status', 1)
          ->where('property_purpose', $lead->property_purpose)
          ->where('property_type', $lead->property_type)
@@ -291,7 +292,7 @@ class LeadsController extends MainAdminController
          ->where('town', $lead->town)
          ->where('area', $lead->area)
          ->get();
-
+      // dd($similarProperties);
       $nearBy  = Properties::where('status', 1)
          ->where('property_purpose', $lead->property_purpose)
          ->whereBetween('price', [$lead->price - 2000, $lead->price + 2000]);

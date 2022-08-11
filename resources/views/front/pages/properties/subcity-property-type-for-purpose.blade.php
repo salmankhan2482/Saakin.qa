@@ -1305,8 +1305,13 @@
                                 <h6>Nearby Places</h6>
                                 <ul>
                                     @foreach ($data['nearbyAreasLinks'] as $item)
+                                    
+                                    {{-- Get Respective Cities --}}
+                                    <?php
+                                    $city_slug = App\PropertyCities::where('id', $item->property_cities_id)->value('slug');
+                                    ?>
                                     <li>
-                                        <a href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose) . '-' . Str::slug($item->name)]) }}">
+                                        <a href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_slug),Str::slug($type->plural) . '-for-' . strtolower($property_purpose) . '-' . Str::slug($item->name)]) }}">
                                             {{ $type->plural_name }} for {{ $property_purpose }} in {{ $item->name }}
                                         </a>
                                     </li>

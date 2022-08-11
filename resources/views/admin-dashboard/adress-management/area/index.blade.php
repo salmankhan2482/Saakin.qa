@@ -7,31 +7,6 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">Search Area</h4>
-                </div>
-                <div class="card-body">
-                    <div class="basic-form">
-                        <form action="{{ route('propertyAreas.index') }}" method="GET">
-                            <div class="row" style="ali">
-                                <div class="col-sm-4 offset-sm-2">
-                                    <input type="text" class="form-control" name="name" placeholder="Search" value="{{ request('name') }}">
-                                </div>
-                               
-                                <div class="col-sm-1 mt-2">
-                                    <button type="submit" class="btn btn-dark btn-sm">
-                                        {{ trans('words.search') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>    
-        </div>
-
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
                     <h4 class="card-title">Areas</h4>
                     @can ('properties-area-create')
                      <a href="{{ route('propertyAreas.create') }}">
@@ -44,6 +19,35 @@
                      </a>
                     @endcan
                 </div>
+                <div class="card-body">
+                    <div class="basic-form">
+                        <form action="{{ route('propertyAreas.index') }}" method="GET">
+                            <div class="row" style="ali">
+                                <div class="col-sm-6 offset-sm-2">
+                                    <input type="text" class="form-control" name="name" placeholder="Search" value="{{ request('name') }}">
+                                </div>
+                                <div class="col-sm-1 mt-2">
+                                    <button type="submit" class="btn btn-dark btn-sm">
+                                        {{ trans('words.search') }}
+                                    </button>
+                                </div>
+                                <div class="col-sm-1 mt-1">
+                                    <a href="{{ route('propertyAreas.index') }}" class="btn btn-info btn-md pull-left">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>    
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                {{-- <div class="card-header">
+                    <h4 class="card-title">Areas</h4>
+                </div> --}}
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-hover table-responsive-sm">
