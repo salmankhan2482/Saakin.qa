@@ -12,6 +12,7 @@ use App\Imports\AgenciesImport;
 use App\Mail\AgencyRegisterMail;
 use App\Exports\PropertiesExport;
 use App\Http\Controllers\Controller;
+use App\Properties;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
@@ -73,7 +74,7 @@ class AgencyController extends Controller
             'whatsapp' => 'required|starts_with:00974,974',
             'email' => 'required|email|max:200|unique:users,email',
             'password' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'            
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048'            
         );
         $validator = \Validator::make($data,$rule);
         if ($validator->fails()){   
@@ -185,6 +186,16 @@ class AgencyController extends Controller
         $agency->meta_keyword = $inputs['meta_keyword'];
         $agency->status = $inputs['status'];
 
+        if($inputs['status'] == 0)
+        {
+            $properties = Properties::where('agency_id', $agency->id)->get();
+            foreach($properties as $property)
+            {
+                $property->status = 0;
+                $property->update(); 
+            }
+        }
+
             if($request->hasFile('image')) {
                 $image = $request->file('image'); 
                 $imagename = time().'.'.$image->getClientOriginalExtension();
@@ -236,10 +247,19 @@ class AgencyController extends Controller
         return redirect()->back();
     }
 
-    // public function show()
-    // {
+    public function show($id)
+    {
+        if(Auth::User()->usertype!="Admin"){
+            \Session::flash('flash_message', trans('words.access_denied'));
+            return redirect('admin/dashboard');
+        }
 
-    // }
+        $agency = Agency::where('id', $id)->first();
+        $action = 'saakin_create';
+
+        return view('admin-dashboard.agency.show',compact('agency','action'));
+
+    }
 
     // public function agencies_export()
     // {

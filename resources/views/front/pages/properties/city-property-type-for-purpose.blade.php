@@ -1,10 +1,20 @@
 @extends("front.layouts.main")
-@if ($landing_page_content != null)
-    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
-    @section('description', $landing_page_content->meta_description)
-    @section('keyword', $landing_page_content->meta_keyword)
+
+@if (strlen($urlResult) > 0)
+
+    @section('title', $subcity_landing_page_content->meta_title . ' | ' . ' Saakin.qa')
+    @section('description', $subcity_landing_page_content->meta_description)
+    @section('keyword', $subcity_landing_page_content->meta_keyword)
     @section('type', 'property')
     @section('url', url()->current())
+
+@elseif ($landing_page_content != null)
+   @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
+   @section('description', $landing_page_content->meta_description)
+   @section('keyword', $landing_page_content->meta_keyword)
+   @section('type', 'property')
+   @section('url', url()->current())
+
 @else
     @section('title', $page_info .' | Saakin.qa')
     @section('description', $data['page_des'] ?? '')
@@ -1341,18 +1351,24 @@
                </div>
             @else
             <div class="mb-3">
-               <h1 class="h6">{{ $heading_info ?? '' }}
+               <h1 class="h6">
+                  {{ $heading_info ?? '' }}
+                  <small class="d-block fs-sm fw-normal mt-2">0 results</small>
                   <small class="d-block fs-sm fw-normal mt-2">{{ count($properties) > 0 ? $properties->total() . 'results' : '' }} </small>
                </h1>
+               {{-- <h1 class="h6">                            
+                  {{ $type->plural_name }} for {{ ucfirst($property_purpose) }} in {{ $city_keyword->name }}
+                  <small class="d-block fs-sm fw-normal mt-2">{{ $properties->total() }} results</small>
+            </h1> --}}
             </div>
             <div class="alert alert-info" role="alert">
-               Unfortunately we don't have any {{ $heading_info ?? 'properties' }}
+               Now, We have no {{ $heading_info ?? 'properties' }}
             </div>
             <div class="alert alert-dark" role="alert">
                <p>You can try </p>
                <ul>
-                  <li>Chnaging your location</li>
-                  <li>Choosing from near by properties</li>
+                  <li>Chnage your location</li>
+                  <li>Choose from nearby properties</li>
                </ul>
             </div>
             {{-- list view for near by properties --}}
@@ -1606,8 +1622,8 @@
          
             @if (count($properties) > 0 && $properties->onFirstPage())
                 {!! $landing_page_content->page_content ?? '' !!}
-            @elseif($nearbyProperties->total() > 0)
-               {!! $landing_page_content->page_content ?? '' !!}
+            @elseif(!empty($nearbyProperties))
+               {!! $subcity_landing_page_content->page_content ?? '' !!}
             @endif
         </div>
     </div>

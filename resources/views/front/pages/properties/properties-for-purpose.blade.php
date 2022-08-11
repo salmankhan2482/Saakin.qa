@@ -1256,26 +1256,34 @@
                                 {{--  --}}
                                 <div class="property-item">
                                     <div class="pro-slider">
+                                        @if(!str_starts_with($property->featured_image, 'http'))
                                         <div class="pro-slider-item">
-                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                           
+                                                @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
                                                 <img src="{{ asset('upload/m_properties/mobile_thumb_' . $property->featured_image) }}"
                                                     alt="{{ $property->property_name }}">
-                                            @else
-                                                <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
-                                                    alt="{{ $property->property_name }}">
-                                            @endif
+                                                @else
+                                                    <img src="{{ asset('upload/properties/thumb_' . $property->featured_image) }}"
+                                                        alt="{{ $property->property_name }}">
+                                                @endif
                                         </div>
+                                        @endif
 
                                         @if (count($property->gallery) > 0)
                                             @foreach ($property->gallery as $gallery)
                                                 @if ($loop->index < 5)
                                                     <div class="pro-slider-item">
-                                                        @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
-                                                            <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
+                                                        @if(str_starts_with($gallery->image_name, 'http'))
+                                                        <img src="{{ url($gallery->image_name) }}"
+                                                        alt="{{ $property->property_name }}">
                                                         @else
-                                                            <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
-                                                                alt="{{ $property->property_name }}">
+                                                            @if (!(new \Jenssegers\Agent\Agent())->isDesktop())
+                                                                <img src="{{ asset('upload/m_gallery/') . '/mobile_' . $gallery->image_name }}"
+                                                                    alt="{{ $property->property_name }}">
+                                                            @else
+                                                                <img src="{{ asset('upload/gallery/') . '/' . $gallery->image_name }}"
+                                                                    alt="{{ $property->property_name }}">
+                                                            @endif
                                                         @endif
                                                     </div>
                                                 @endif
@@ -1374,7 +1382,11 @@
                                                     data-agency_id={{ $property->agency_id }} data-button_name='Email'
                                                     type="button" data-bs-toggle="modal" data-bs-target="#emailAgentModal"
                                                     id="emailBtn"
+                                                    @if(str_starts_with($property->featured_image, 'http'))
+                                                    data-image="{{ url($property->featured_image) }}"
+                                                    @else
                                                     data-image="{{ asset('upload/properties/' . $property->featured_image) }}"
+                                                    @endif
                                                     data-title="{{ $property->property_name }}"
                                                     data-agent="{{ $property->agent_name ?? $property->Agency->name }}"
                                                     data-broker="{{ $property->Agency->name ?? '' }}"

@@ -122,7 +122,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function () {
 	Route::get('partners/addpartners/{id}', 'PartnersController@editpartners');
 	Route::get('partners/delete/{id}', 'PartnersController@delete');
 
-	Route::get('inquiries', 'LeadsController@inquirieslist')->name('inquiries');
+   Route::get('inquiries', 'LeadsController@inquirieslist')->name('inquiries');
    Route::get('restore/leads', 'LeadsController@restoreLeads')->name('restoreLeads');
    Route::get('leads/property_inquiries', 'LeadsController@property_inquiries')->name('property_inquiries');
    Route::get('inquiry/create', 'LeadsController@create_inquiry')->name('create_inquiry');

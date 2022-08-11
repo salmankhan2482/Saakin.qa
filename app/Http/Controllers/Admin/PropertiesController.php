@@ -497,6 +497,7 @@ class PropertiesController extends MainAdminController
       if ($request->subcity) {
          $sub_city_slug = strtolower($type->plural . '-for-' . $request->property_purpose . '-' . Str::slug($subcity));
          $property->sub_city_slug = $sub_city_slug;
+         
       } else {
          $property->sub_city_slug = '';
       }

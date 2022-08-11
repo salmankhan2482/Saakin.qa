@@ -16,7 +16,7 @@ class Properties extends Model
 {
     protected $table = 'properties';
 
-    protected $fillable = ['user_id','city','refference_code','agent_name','agent_picture','whatsapp','agent_id','agency_id','property_name','property_slug','property_type','property_purpose','price','garage','land_area','build_area','age','address','map_latitude','map_longitude','rooms','bathrooms','bedrooms','area','description','featured_image','video_code','rental_period','property_features','status','views'];
+    protected $fillable = ['user_id','city','town','subcity','refference_code','agent_name','agent_picture','whatsapp','agent_id','agency_id','property_name','property_slug','sub_city_slug','town_slug','area_slug','property_type','property_purpose','price','garage','land_area','build_area','age','address','address_slug','map_latitude','map_longitude','rooms','bathrooms','bedrooms','area','description','featured_image','video_code','rental_period','property_features','status','views'];
 
     public static function getPropertyInfo($id)
     {
