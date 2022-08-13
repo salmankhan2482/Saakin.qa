@@ -230,7 +230,6 @@ class PropertiesController extends Controller
          //City
          elseif(empty($single_property->subcity) && empty($single_property->town) && empty($single_property->area))
          {
-            dd("Null Subcity");
             $city_slug = $single_property->propertyCity->slug;
             $address_slug = $city_slug;
             $single_property_type_purpose = $property_type.'-for-'.$property_purpose;
@@ -866,11 +865,9 @@ class PropertiesController extends Controller
       $subcity_props = Properties::where('sub_city_slug',$property_type_purpose)->where('city',$city_keyword->id)->get();
       $town_props = Properties::where('town_slug', $property_type_purpose)->where('city', $city_keyword->id)->get();
       $area_props = Properties::where('area_slug', $property_type_purpose)->where('city', $city_keyword->id)->get();
-
+      
       //subcity if
       if (count($subcity_props) > 0) {
-
-         
          $type = Types::where('plural', $property_type)->orWhere('slug', $property_type)->first();
          $properties = Properties::where('status', 1)
             ->where('property_purpose', ucfirst($property_purpose))
@@ -930,9 +927,6 @@ class PropertiesController extends Controller
             ->where("properties.property_type", $type->id)
             ->groupBy('property_sub_cities.name')
             ->where('property_purpose', ucfirst($property_purpose))->limit(6)->get();
-            // dd($data['nearbyAreasLinks']);
-
-            
 
          $purp = ($buyOrRent == 'buy' ? 2 : 1);
          $landing_page_content = LandingPage::where('property_purposes_id', $purp)
@@ -942,7 +936,6 @@ class PropertiesController extends Controller
             ->where('property_towns_id', null)
             ->where('property_areas_id', null)
             ->first();
-
          if ($properties->total() > 0) {
             $meta_description = $properties->random()->property_name . ' Short Term Flats &amp; ' . Str::limit(strip_tags($properties->random()->description), 150) . ' Long Term Rentals✓ Long Term Sale✓ ' . $page_info;
          } else {
@@ -1139,9 +1132,7 @@ class PropertiesController extends Controller
          return view('front.pages.properties.area-property-type-for-purpose', compact('properties','propertyTypes','type','city_keyword','subcity_keyword','town_keyword','area_keyword','property_purpose','meta_description','propertyPurposes','buyOrRent','page_info','landing_page_content','data','saveSearch','nearbyProperties')
          );
       }
-      
-
-      
+ 
       $urlResult = 0;
       if($buyOrRent == 'buy'){
          $prefix = "-for-sale";
@@ -1212,8 +1203,6 @@ class PropertiesController extends Controller
          ->get();
 
       $propertyPurposes = PropertyPurpose::all();
-      // $heading_info='';
-      // $subcity_landing_page_content='';
       $purp = ($buyOrRent == 'buy' ? 2 : 1);
       $landing_page_content = LandingPage::where('property_purposes_id', $purp)
          ->where('property_types_id', $type->id)
@@ -1258,11 +1247,10 @@ class PropertiesController extends Controller
          $record = SaveSearch::where('user_id', auth()->user()->id)->where('link', $currentURL)->first();
          $saveSearch = isset($record) ? 1 : 0;
       }
-
       return view('front.pages.properties.city-property-type-for-purpose',
       compact('properties','propertyTypes','type','city_keyword','subcities',
       'property_purpose','propertyPurposes','buyOrRent','page_info','landing_page_content',
-      'request','data','saveSearch','nearbyProperties','subcity_landing_page_content','heading_info','urlResult'));
+      'request','data','saveSearch','nearbyProperties','urlResult'));
    }
 
    public function featureProperties()
