@@ -416,15 +416,11 @@
 
     $(document).on('click', '.live-search-li', function() {
         var query = 'Stop';
-
         var value = $(this).text();
         $('#country').val(value);
         $('#extra_keywords').html($(this).html());
         $('#country_list').html("");
     });
-
-
-
 
   $('.property_purpose').click(function() {
     $('.property_purpose').removeClass('btn-danger').removeClass('btn-secondary');
@@ -432,7 +428,6 @@
     $(this).removeClass('btn-secondary').addClass('btn-danger');
     $('#property_purpose').val($(this).attr('data-id'));
   });
-
 
 
  
