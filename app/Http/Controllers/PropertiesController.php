@@ -49,6 +49,8 @@ class PropertiesController extends Controller
 
    public function getPropertyListing(Request $request)
    {
+     
+     
       request('bathrooms') == 'Any' ? $request->merge(['bathrooms' => null]) : request('bathrooms');
       request('bedrooms') == 'Any' ? $request->merge(['bedrooms' => null]) : request('bedrooms');
 
@@ -83,6 +85,7 @@ class PropertiesController extends Controller
       $this->propertyrepo->popularSearches($name, $link); //creating popular searches
       
       if (count($properties) == 0) {//getting near by properties
+
          $nearbyProperties =  $this->propertyrepo->getNearbyProperties($request);
          if(count($nearbyProperties) == 0){
             $nearbyProperties =  $this->propertyrepo->getNearbyPropertiesWithoutType($request);
@@ -183,6 +186,70 @@ class PropertiesController extends Controller
       if (!$property) {
          abort('404');
       }
+
+//Auth Check for Displaying Disabled Properties
+
+      if (Auth::User()->usertype == "Admin") {
+         $visitor = request()->ip();
+         $traffic = PageVisits::where('ip_address', $visitor)->where('property_id', $id)
+            ->whereMonth('created_at', Carbon::now()->month)->first();
+         if (auth()->check() && auth()->user()->usertype == 'Admin') {
+         } else {
+            if (!$traffic) {
+   
+               $traffic = new PageVisits();
+               $traffic->ip_address = $visitor;
+               $traffic->property_id = $id;
+               $position = Location::get('https://' . $visitor);
+               // $traffic->country = $position->countryName;
+               $traffic->agency_id = $property->agency_id ?? '';
+               $traffic->save();
+            }
+   
+            $counter = PropertyCounter::where('property_id', $id)->first();
+            if ($counter) {
+               $counter->counter = $counter->counter + 1;
+               $counter->update();
+            } else {
+               $add_counter = new PropertyCounter();
+               $add_counter->property_id = $id;
+               $add_counter->agency_id = $property->agency_id;
+               $add_counter->save();
+            }
+         }
+   
+         $agency = Agency::where('id', $property->agency_id)->first();
+         $neighborhoods = PropertyNeighborhood::where('property_id', $property->id)->get();
+         $property_gallery_images = PropertyGallery::where('property_id', $property->id)->get();
+         $floorPlans = PropertyFloorPlan::where('property_id', $property->id)->get();
+         $documents = PropertyDocument::where('property_id', $property->id)->get();
+         $address =  '';
+         if ($property->area) {
+            if ($property->city && $property->subcity) {
+               $address = $property->propertyCity->name . ', ' . $property->propertySubCity->name . ', ' . $property->propertyTown->name;
+            }
+         } else {
+            if ($property->city && $property->subcity) {
+               $address = $property->propertyCity->name . ', ' . $property->propertySubCity->name;
+            }
+         }
+   
+         $properties = Properties::where('address', $property->address)
+            ->where("status", "1")
+            ->where("property_purpose", $property->property_purpose)
+            ->where("id", "!=", $id)
+            ->where('property_type', $property->property_type)
+            ->orderBy('land_area', 'asc')
+            ->get();
+            
+         $property_counter = PropertyCounter::where('property_id', $property->id)->value('counter');
+         $property_des = Str::limit($property->property_name . '  ' . $property->description, 150, '...');
+      
+      }
+      else
+      {
+
+    
 
       if ($property->status == 0 || $property->id==null)
       {
@@ -294,6 +361,8 @@ class PropertiesController extends Controller
          
       $property_counter = PropertyCounter::where('property_id', $property->id)->value('counter');
       $property_des = Str::limit($property->property_name . '  ' . $property->description, 150, '...');
+
+   }
 
       return view('front.pages.property_detail', compact('property', 'agency', 'neighborhoods', 'property_gallery_images', 'floorPlans', 'documents', 'properties', 'property_des', 'address', 'property_counter'));
    }
@@ -838,6 +907,7 @@ class PropertiesController extends Controller
 
    public function cityPropertyTypeForPurpose($buyOrRent, $city_slug, $property_type_purpose)
    {
+      // dd($buyOrRent.'='.$city_slug.'='.$property_type_purpose);
       $nearbyProperties = '';
 
       if (request()->filled('buyOrRent') && request()->filled('property_type_purpose')) {
@@ -860,12 +930,16 @@ class PropertiesController extends Controller
             $property_purpose = 'Sale';
          }
       }
+    
      
-      
       $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
       $subcity_props = Properties::where('sub_city_slug',$property_type_purpose)->where('city',$city_keyword->id)->get();
       $town_props = Properties::where('town_slug', $property_type_purpose)->where('city', $city_keyword->id)->get();
       $area_props = Properties::where('area_slug', $property_type_purpose)->where('city', $city_keyword->id)->get();
+
+     
+
+     
 
       //subcity if
       if (count($subcity_props) > 0) {
@@ -879,6 +953,11 @@ class PropertiesController extends Controller
             ->where('city', $city_keyword->id);
          $properties = $this->propertyrepo->sortyBy($properties, request());
          $properties = $properties->paginate(getcong('pagination_limit'));
+
+         //Redirect Extra Pagination Pages of Sub-City
+         if (request()->get('page') > 1 && $properties->isEmpty()) {
+            return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
+              } 
 
          $nearbyProperties = $this->propertyrepo->getNearbyProperties(request());
          if(count($nearbyProperties) == 0){
@@ -971,6 +1050,11 @@ class PropertiesController extends Controller
 
          $properties = $this->propertyrepo->sortyBy($properties, request());
          $properties = $properties->paginate(getcong('pagination_limit'));
+
+         //Redirect Extra Pagination Pages of Town
+         if (request()->get('page') > 1 && $properties->isEmpty()) {
+            return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
+              }
 
          if($properties->total() == 0){
             $nearbyProperties = $this->propertyrepo->getNearbyProperties(request());
@@ -1068,6 +1152,11 @@ class PropertiesController extends Controller
 
          $properties = $this->propertyrepo->sortyBy($properties, request());
          $properties = $properties->paginate(getcong('pagination_limit'));
+
+         //Redirect Extra Pagination Pages of Area
+         if (request()->get('page') > 1 && $properties->isEmpty()) {
+            return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
+              }
          
          if($properties->total() == 0){
             $nearbyProperties = $this->propertyrepo->getNearbyProperties(request());
@@ -1140,13 +1229,15 @@ class PropertiesController extends Controller
          );
       }
       
-
+      
       
       $urlResult = 0;
       if($buyOrRent == 'buy'){
          $prefix = "-for-sale";
          $index = strpos($property_type_purpose, $prefix) + strlen($prefix);
+        
          $urlResult = substr($property_type_purpose, $index);
+         
       }else{
          $prefix = "-for-rent";
          $index = strpos($property_type_purpose, $prefix) + strlen($prefix);
@@ -1156,40 +1247,63 @@ class PropertiesController extends Controller
       
       $type = Types::where('plural', $property_type)->firstOrFail();
       $city_keyword = PropertyCities::where('slug', $city_slug)->firstOrFail();
+     
    
       
       $properties = new Properties(); 
+      
 
       if(strlen($urlResult) > 0){
+         //------------- Properties not exists against this URL . We need to show nearby properties ---------------------
          return Redirect::to('/', 301); 
-      }else{
+         // dd('301 redirect');
+      }
+      else if(strlen($urlResult) < 0)
+      {
+         //------------- Wrong URL -----------------
+         return Redirect::to('/', 301); 
+         // dd('401 Error');
+      }
+      else{
+
+ 
+       
          $properties = Properties::where('status', 1)
          ->where('property_purpose', ucfirst($property_purpose))
          ->where('property_type', $type->id)
          ->where('city', $city_keyword->id);
 
+
          $propertiesFlag = 'set flag';
          $properties = $this->propertyrepo->sortyBy($properties, request());
          $properties = $properties->paginate(getcong('pagination_limit'));
-
+        
          
          //Redirect Extra Pagination Pages of Cities
         if (request()->get('page') > 1 && $properties->isEmpty()) {
          return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
        }
-         
          if (empty($properties->count())) {
-            return Redirect::to('/home', 301); 
+            
+            return Redirect::to('/', 301); 
+            
+
+            // //--------------- get nearby properties ----------------
+            // $properties = $this->propertyrepo->getNearbyProperties(request());
+            // if(count($properties) == 0){
+            //    $properties = $this->propertyrepo->getNearbyPropertiesWithoutType(request());
+            // }
+            // dd('properties against this purpose & city not found ..rediect 301');
          }
          
       }
      
         //Redirect Extra Pagination Pages of Cities
         if (request()->get('page') > 1 && empty($properties->count())) {
-      
+        
          return redirect()->route('cpt-purpose',[ $buyOrRent, $city_slug, $property_type_purpose ], 301);
        }
-    
+      
       $propertyTypes =  DB::table('property_types')
          ->join('properties', "property_types.id", "properties.property_type")
          ->select('property_types.*', DB::Raw('COUNT(properties.id) as pcount'))
@@ -1262,7 +1376,7 @@ class PropertiesController extends Controller
       return view('front.pages.properties.city-property-type-for-purpose',
       compact('properties','propertyTypes','type','city_keyword','subcities',
       'property_purpose','propertyPurposes','buyOrRent','page_info','landing_page_content',
-      'request','data','saveSearch','nearbyProperties','subcity_landing_page_content','heading_info','urlResult'));
+      'request','data','saveSearch','nearbyProperties','urlResult'));
    }
 
    public function featureProperties()

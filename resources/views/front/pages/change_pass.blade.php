@@ -1,4 +1,4 @@
-@extends("front-view.layouts.main")
+@extends('front.layouts.main')
 
 @section('content')
     <div class="site-banner" style="background-image: url('{{ asset('assets/images/backgrounds/bg-4.jpg') }}')">
@@ -23,16 +23,22 @@
                             <h5 class="card-title">{{ Auth::user()->name }}</h5>
                             <p class="card-text">{{ Auth::user()->email }}</p>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <a href="{{ URL::to('profile') }}">
-                                <li class="list-group-item"><i class="fa fa-user icon"></i> Profile</li>
-                            </a>
-                            <a href="{{ URL::to('change_pass') }}">
-                                <li class="list-group-item"><i class="fa fa-lock icon"></i> Password</li>
-                            </a>
-                            <a href="{{ URL::to('logout') }}">
-                                <li class="list-group-item"><i class="fas fa-sign-out"></i> Logout</li>
-                            </a>
+                        <ul class="list-group property-type-list list-unstyled p-3">
+                            <li>
+                                <a href="{{ URL::to('profile') }}">
+                                    <i class="fa fa-user icon"></i> Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ URL::to('change_pass') }}">
+                                    <i class="fa fa-lock icon"></i> Password
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ URL::to('logout') }}">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -58,19 +64,24 @@
                             @endif
 
 
-                            {!! Form::open(['url' => 'update_password', 'class' => '', 'name' => 'pass_form', 'id' => 'pass_form', 'role' => 'form']) !!}
+                            {!! Form::open([
+                                'url' => 'update_password',
+                                'class' => '',
+                                'name' => 'pass_form',
+                                'id' => 'pass_form',
+                                'role' => 'form',
+                            ]) !!}
 
                             <div class="form-control-wrap row gx-2 gy-2">
                                 <!--<div id="message" class="alert alert-danger alert-dismissible fade"></div>-->
-                                
+
                                 <div class="form-group col-md-6">
                                     <label>New Password</label>
                                     <input type="text" class="form-control" id="password"
                                         placeholder="{{ trans('words.password') }} *" name="password" required>
                                 </div>
-                                
-                                <div
-                                    class="form-group col-md-6">
+
+                                <div class="form-group col-md-6">
                                     <label>Confirm Password</label>
                                     <input type="password_confirmation" class="form-control" name="password_confirmation"
                                         placeholder="Password Confirmation *" required>
@@ -89,6 +100,3 @@
     </section>
 
 @endsection
-
-
-

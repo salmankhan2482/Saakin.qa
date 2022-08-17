@@ -13,7 +13,8 @@
 @endif
 
 @section('content')
-
+{{-- <h1>asad</h1>
+<div class="dot-elastic"></div> --}}
     <div class="filter-wrap">
         <div class="container">
             <form action="{{ url('properties') }}" class="hero__form v2 filter" method="get">
@@ -1579,6 +1580,14 @@
 
 @push('scripts')
     <script type="text/javascript" src="{{ asset('assets/plugins/slick/slick.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js" integrity="sha512-jNDtFf7qgU0eH/+Z42FG4fw3w7DM/9zbgNPe3wfJlCylVDTT3IgKW5r92Vy9IHa6U50vyMz5gRByIu4YIXFtaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            $('pro-slider').lazyload();
+        });
+    </script>
 
     <script>
         function scrollToTop() {

@@ -18,8 +18,9 @@ class SaveSearchController extends Controller
     {
         
         $searches = SaveSearch::where('user_id',Auth::User()->id)->get();
+        $count = $searches->count();
        
-        return view('front.pages.save-search-properties', compact('searches'));
+        return view('front.pages.save-search-properties', compact('searches','count'));
     }
 
     /**

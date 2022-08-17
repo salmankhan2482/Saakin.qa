@@ -28,6 +28,7 @@
 <!-- Fav and touch icons -->
 <link href="{{ URL::asset('upload/' . getcong('site_favicon')) }}" rel="shortcut icon" type="image/x-icon" />
 <link href="{{ asset('assets/css/fontawesome.css') }}" rel="stylesheet" />
+{{-- <link rel="stylesheet" href="{{ asset('css/three-dots.min.css') }}" /> --}}
 
 {{-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
      crossorigin="anonymous"></script> --}}

@@ -1338,18 +1338,18 @@
                 </div>
             @else
             <div class="mb-3">
-               <h1 class="h6">{{ $heading_info ?? '' }}
+               <h1 class="h6">{{ $heading_info ?? $page_info }}
                   <small class="d-block fs-sm fw-normal mt-2">{{ count($properties) > 0 ? $properties->total() . 'results' : '' }} </small>
                </h1>
             </div>
             <div class="alert alert-info" role="alert">
-               Unfortunately we don't have any {{ $heading_info ?? 'properties' }}
+                Now, We have no {{ $heading_info ?? 'properties like your search' }}
             </div>
             <div class="alert alert-dark" role="alert">
-               <p>You can try </p>
+               <p>You could try </p>
                <ul>
-                  <li>Chnaging your location</li>
-                  <li>Choosing from near by properties</li>
+                  <li>Chnage your location</li>
+                  <li>Choose from near by properties</li>
                </ul>
             </div>
             {{-- list view for near by properties --}}
@@ -1600,7 +1600,7 @@
       <div class="container">
          @if (count($properties) > 0 && $properties->onFirstPage())
              {!! $landing_page_content->page_content ?? '' !!}
-         @elseif($nearbyProperties->total() > 0)
+         @elseif(!empty($nearbyProperties))
             {!! $landing_page_content->page_content ?? '' !!}
          @endif
      </div>

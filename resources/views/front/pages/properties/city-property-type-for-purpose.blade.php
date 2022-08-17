@@ -1,14 +1,6 @@
 @extends("front.layouts.main")
 
-@if (strlen($urlResult) > 0)
-
-    @section('title', $subcity_landing_page_content->meta_title . ' | ' . ' Saakin.qa')
-    @section('description', $subcity_landing_page_content->meta_description)
-    @section('keyword', $subcity_landing_page_content->meta_keyword)
-    @section('type', 'property')
-    @section('url', url()->current())
-
-@elseif ($landing_page_content != null)
+@if ($landing_page_content != null)
    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
    @section('description', $landing_page_content->meta_description)
    @section('keyword', $landing_page_content->meta_keyword)
@@ -1351,18 +1343,18 @@
                </div>
             @else
                <div class="mb-3">
-                  <h1 class="h6">{{ $heading_info ?? '' }}
+                  <h1 class="h6">{{ $heading_info ?? $page_info }}
                      <small class="d-block fs-sm fw-normal mt-2">{{ count($properties) > 0 ? $properties->total() . 'results' : '' }} </small>
                   </h1>
                </div>
                <div class="alert alert-info" role="alert">
-                  Unfortunately we don't have any {{ $heading_info ?? 'properties' }}
+                  Now, We have no {{ $heading_info ?? 'properties like your search' }}
                </div>
                <div class="alert alert-dark" role="alert">
-                  <p>You can try </p>
+                  <p>You could try </p>
                   <ul>
-                     <li>Chnaging your location</li>
-                     <li>Choosing from near by properties</li>
+                     <li>Chnage your location</li>
+                     <li>Choose from near by properties</li>
                   </ul>
                </div>
                {{-- list view for near by properties --}}
@@ -1615,7 +1607,7 @@
             @if (count($properties) > 0 && $properties->onFirstPage())
                 {!! $landing_page_content->page_content ?? '' !!}
             @elseif(!empty($nearbyProperties))
-               {!! $subcity_landing_page_content->page_content ?? '' !!}
+               {!! $landing_page_content->page_content ?? '' !!}
             @endif
         </div>
     </div>

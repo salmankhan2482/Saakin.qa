@@ -190,7 +190,7 @@
 <style>
   .company-registration
 {
-  color: white;
+  color: #009fff;
   padding: 10px;
 }
 </style>
