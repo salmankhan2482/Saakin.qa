@@ -1131,11 +1131,99 @@
                                           </select>
                                        </div>
                                     </div>
-                              </div>
-                           </div>
-                        </form>
-                  </div>
-               @endif
+
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+
+                    <div class="col-lg-9 order-lg-3">
+                        {{-- Pagination starts --}}
+                        <div>
+                            @if ($properties->total() > getcong('pagination_limit'))
+                                {{ $properties->links('front.pages.include.pagination') }}
+                            @endif
+                        </div>
+                        {{-- Pagination ends --}}
+                    </div>
+
+                    <div class="col-lg-3 order-lg-2">
+                        <div class="list-sidebar mt-3 mt-lg-0">
+                            <div class="sidebar-links p-3">
+                                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2421573832685297"
+                                                                crossorigin="anonymous"></script>
+                                <!-- Area Property Type for purpose page listing ads -->
+                                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2421573832685297"
+                                    data-ad-slot="6731050378" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                            </div>
+                            <div class="sidebar-links p-3">
+                                <h6>Popular Searches</h6>
+                                <ul>
+                                    @foreach ($data['popularSearchesLinks'] as $item)
+                                        <li>
+                                            <a href="{{ url($item->link) }}">
+                                                {{ $item->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+
+                            @if (count($data['nearbyAreasLinks']) > 0)
+                                <div class="sidebar-links p-3">
+                                    <h6>Nearby Places</h6>
+                                    <ul>
+                                        @foreach ($data['nearbyAreasLinks'] as $item)
+                                            <li>
+                                                <a
+                                                    href="{{ route('cpt-purpose', [$buyOrRent,Str::slug($city_keyword->slug),Str::slug($type->plural) .'-for-' .strtolower($property_purpose) .'-' .$subcity_keyword->slug .'-' .$town_keyword->slug .'-' .Str::slug($item->name)]) }}">
+                                                    {{ $type->plural_name }} for {{ $property_purpose }} in
+                                                    {{ $item->name }}
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <div class="sidebar-links p-3">
+                                <h6>Properties for {{ request('property_purpose') == 'sale' ? 'Rent' : 'Sale' }}</h6>
+                                <ul>
+                                    <li>
+                                        @if (request('property_purpose') == 'sale')
+                                            <a href="{{ route('property-purpose', ['rent', 'rent']) }}">
+                                                Properties for Rent
+                                            </a>
+                                        @else
+                                            <a href="{{ route('property-purpose', ['buy', 'sale']) }}">
+                                                Properties for Sale
+                                            </a>
+                                        @endif
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+            <div class="mb-3">
+               <h1 class="h6">{{ $heading_info ?? $page_info }}
+                  <small class="d-block fs-sm fw-normal mt-2">{{ count($properties) > 0 ? $properties->total() . 'results' : '' }} </small>
+               </h1>
+            </div>
+            <div class="alert alert-info" role="alert">
+               Now, We have no {{ $heading_info ?? 'properties like your search' }}
+            </div>
+            <div class="alert alert-dark" role="alert">
+               <p>You could try </p>
+               <ul>
+                  <li>Chnage your location</li>
+                  <li>Choose from near by properties</li>
+               </ul>
+
             </div>
 
             {{-- list view --}}
@@ -1417,6 +1505,7 @@
                   </div>
                </div>
             </div>
+
       @else
       <div class="mb-3">
          <h1 class="h6">{{ $heading_info ?? '' }}
@@ -1691,6 +1780,7 @@
    <i class="fas fa-chevron-up"></i>
 </button>
 @include('front.pages.include.saveSearchModal')
+
 @endsection
 
 @push('styles')

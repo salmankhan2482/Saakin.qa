@@ -23,16 +23,27 @@
                             <h5 class="card-title">{{ Auth::user()->name }}</h5>
                             <p class="card-text">{{ Auth::user()->email }}</p>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <a href="{{ URL::to('profile') }}">
-                                <li class="list-group-item"><i class="fa fa-user icon"></i> Profile</li>
-                            </a>
-                            <a href="{{ URL::to('change_pass') }}">
-                                <li class="list-group-item"><i class="fa fa-lock icon"></i> Password</li>
-                            </a>
-                            <a href="{{ URL::to('logout') }}">
-                                <li class="list-group-item"><i class="fas fa-sign-out"></i> Logout</li>
-                            </a>
+                        <ul class="list-group property-type-list list-unstyled p-3">
+                            <li>
+                                <a href="{{ URL::to('save-search') }}">
+                                    <i class="fa fa-user icon"></i> Saved Search
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ URL::to('profile') }}">
+                                    <i class="fa fa-user icon"></i> Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ URL::to('change_pass') }}">
+                                    <i class="fa fa-lock icon"></i> Password
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ URL::to('logout') }}">
+                                    <i class="fas fa-sign-out-alt"></i> Logout
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>

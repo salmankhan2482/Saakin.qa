@@ -247,6 +247,7 @@ class PropertyRepository
             $query->where('agency_id', request()->agent);
          });
 
+
       $commercialIds = array();
       array_push($commercialIds, '14', '17', '23', '27', '4', '13', '7', '34', '16', '35');
 

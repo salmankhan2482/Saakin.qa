@@ -1,14 +1,6 @@
 @extends("front.layouts.main")
 
-@if (strlen($urlResult) > 0)
-
-    @section('title', $subcity_landing_page_content->meta_title . ' | ' . ' Saakin.qa')
-    @section('description', $subcity_landing_page_content->meta_description)
-    @section('keyword', $subcity_landing_page_content->meta_keyword)
-    @section('type', 'property')
-    @section('url', url()->current())
-
-@elseif ($landing_page_content != null)
+@if ($landing_page_content != null)
    @section('title', $landing_page_content->meta_title . ' | ' . ' Saakin.qa')
    @section('description', $landing_page_content->meta_description)
    @section('keyword', $landing_page_content->meta_keyword)
@@ -1379,24 +1371,25 @@
                               </li>
                         </ul>
                      </div>
+
                </div>
             </div>
-         </div>
-      @else
-         <div class="mb-3">
-            <h1 class="h6">{{ $heading_info ?? '' }}
-               <small class="d-block fs-sm fw-normal mt-2">{{ count($properties) > 0 ? $properties->total() . 'results' : '' }} </small>
-            </h1>
-         </div>
-         <div class="alert alert-info" role="alert">
-            Unfortunately we don't have any {{ $heading_info ?? 'properties' }}
-         </div>
-         <div class="alert alert-dark" role="alert">
-            <p>You can try </p>
-            <ul>
-               <li>Chnaging your location</li>
-               <li>Choosing from near by properties</li>
-            </ul>
+               </div>
+            @else
+               <div class="mb-3">
+                  <h1 class="h6">{{ $heading_info ?? $page_info }}
+                     <small class="d-block fs-sm fw-normal mt-2">{{ count($properties) > 0 ? $properties->total() . 'results' : '' }} </small>
+                  </h1>
+               </div>
+               <div class="alert alert-info" role="alert">
+                  Now, We have no {{ $heading_info ?? 'properties like your search' }}
+               </div>
+               <div class="alert alert-dark" role="alert">
+                  <p>You could try </p>
+                  <ul>
+                     <li>Chnage your location</li>
+                     <li>Choose from near by properties</li>
+                  </ul>
          </div>
          {{-- list view for near by properties --}}
          <div class="row gx-3">
@@ -1637,25 +1630,26 @@
                         </div>
                      </div>
                   </div>
-            </div>
-         </div>
-      @endif
-   </div>
-</div>
 
-<div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
-   <div class="container">
-      @if (count($properties) > 0 && $properties->onFirstPage())
-            {!! $landing_page_content->page_content ?? '' !!}
-      @elseif(!empty($nearbyProperties))
-         {!! $subcity_landing_page_content->page_content ?? '' !!}
-      @endif
-   </div>
-</div>
-<button class="btn btn-primary scrollTopBtn" onclick="scrollToTop()">
-   <i class="fas fa-chevron-up"></i>
-</button>
-@include('front.pages.include.saveSearchModal')
+               </div>
+            @endif
+        </div>
+    </div>
+
+    <div class="bg-dark py-4 border-top" style="--bs-bg-opacity: .03;">
+        <div class="container">
+            @if (count($properties) > 0 && $properties->onFirstPage())
+                {!! $landing_page_content->page_content ?? '' !!}
+            @elseif(!empty($nearbyProperties))
+               {!! $landing_page_content->page_content ?? '' !!}
+            @endif
+        </div>
+    </div>
+    <button class="btn btn-primary scrollTopBtn" onclick="scrollToTop()">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    @include('front.pages.include.saveSearchModal')
+
 @endsection
 
 @push('styles')

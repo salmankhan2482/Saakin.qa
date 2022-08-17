@@ -1056,6 +1056,7 @@
                         </div>
 
                      </div>
+
                </form>
             @endif
 
@@ -1665,6 +1666,7 @@
                   @endif
                   @endif
                </div>
+
                {{-- Pagination ends --}}
             </div>
             <div class="col-lg-3 order-lg-2">
@@ -1704,6 +1706,7 @@
 <i class="fas fa-chevron-up"></i>
 </button>
 @include('front.pages.include.saveSearchModal')
+
 @endsection
 
 @push('styles')

@@ -171,6 +171,13 @@
                                                       </a>
                                                    @endcan
 
+                                                   @can('properties-view')
+                                                      <a href="{{ route('properties.show', $property->id) }}"
+                                                      class="dropdown-item">
+                                                         <i class="fa fa-eye"></i> {{ trans('words.view') }}
+                                                      </a>
+                                                   @endcan
+
                                                    @can('gallery-images-edit')
                                                       <a href="{{ url('admin/properties/gallery/' . $property->id) }}"
                                                             class="dropdown-item">

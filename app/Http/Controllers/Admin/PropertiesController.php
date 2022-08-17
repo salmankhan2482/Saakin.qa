@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Admin\MainAdminController;
 use Intervention\Image\ImageManagerStatic as Image;
+use MicrosoftAzure\Storage\Table\Models\Property;
 
 class PropertiesController extends MainAdminController
 {
@@ -537,6 +538,15 @@ class PropertiesController extends MainAdminController
 
       \Session::flash('flash_message', trans('words.updated'));
       return \Redirect::back();
+   }
+
+   public function show($id)
+   {
+      $property = Properties::where('id', $id)->first();
+      $agency = Agency::where('id', $property->agency_id)->first();
+      $property_gallery_images = PropertyGallery::where('property_id', $id)->get();
+      $action = 'saakin_index';
+      return view('admin-dashboard.properties.show',compact('action','property','agency','property_gallery_images'));
    }
 
    public function plan_update(Request $request)
